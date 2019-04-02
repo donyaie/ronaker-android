@@ -8,14 +8,18 @@ class LoginViewModel: BaseViewModel(){
     private lateinit var subscription: Disposable
 
     init{
+
+
     }
+
+
 
 
 
 
     override fun onCleared() {
         super.onCleared()
-//        subscription.dispose()
+        subscription?.dispose()
     }
 
 }

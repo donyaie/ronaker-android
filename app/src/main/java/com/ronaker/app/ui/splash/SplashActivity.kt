@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.login.LoginActivity
+import com.ronaker.app.ui.post.PostListActivity
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -30,7 +31,7 @@ class  SplashActivity : BaseActivity(){
 
     private fun nextActivity() {
         Timer("login",false).schedule(1000){
-            startActivity(LoginActivity.newInstance(this@SplashActivity))
+            startActivity(PostListActivity.newInstance(this@SplashActivity))
             finish()
         }
     }

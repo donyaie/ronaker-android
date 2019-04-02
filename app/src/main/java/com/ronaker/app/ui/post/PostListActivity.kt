@@ -1,5 +1,7 @@
 package com.ronaker.app.ui.post
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
@@ -31,7 +33,7 @@ class PostListActivity: BaseActivity() {
 
     }
 
-    private fun showError(@StringRes errorMessage:Int){
+    private fun showError( errorMessage:String){
 
         errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
         errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
@@ -40,5 +42,11 @@ class PostListActivity: BaseActivity() {
 
     private fun hideError(){
         errorSnackbar?.dismiss()
+    }
+
+    companion object {
+        fun newInstance(context: Context): Intent {
+            return  Intent(context, PostListActivity::class.java)
+        }
     }
 }

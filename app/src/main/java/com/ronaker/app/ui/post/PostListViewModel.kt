@@ -2,13 +2,16 @@ package com.ronaker.app.ui.post
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonParser
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Post
+import com.ronaker.app.network.NetworkError
 import com.ronaker.app.network.PostApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class PostListViewModel: BaseViewModel(){
@@ -16,7 +19,7 @@ class PostListViewModel: BaseViewModel(){
     lateinit var postApi: PostApi
     val postListAdapter: PostListAdapter = PostListAdapter()
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-    val errorMessage:MutableLiveData<Int> = MutableLiveData()
+    val errorMessage:MutableLiveData<String> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadPosts() }
 
     private lateinit var subscription: Disposable
@@ -33,7 +36,7 @@ class PostListViewModel: BaseViewModel(){
             .doOnTerminate { onRetrievePostListFinish() }
             .subscribe(
                 {result ->  onRetrievePostListSuccess(result) },
-                { onRetrievePostListError() }
+                {error -> onRetrievePostListError(NetworkError(error)) }
             )
     }
 
@@ -50,8 +53,9 @@ class PostListViewModel: BaseViewModel(){
         postListAdapter.updatePostList(postList)
     }
 
-    private fun onRetrievePostListError(){
-        errorMessage.value = R.string.post_error
+    private fun onRetrievePostListError(error:NetworkError){
+
+        errorMessage.value = error.detail
 
     }
 
