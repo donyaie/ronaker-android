@@ -1,4 +1,4 @@
-package com.ronaker.app.network
+package com.ronaker.app.base
 
 import com.google.gson.JsonParser
 import retrofit2.HttpException
@@ -39,8 +39,12 @@ class NetworkError( error: Throwable) {
     var detail_code: String? = null;
     var http_error: HttpError? = null;
 
+    var exception_error:Throwable?=null
+
 
     init {
+
+        exception_error=error
         if (error is HttpException) {
             val errorJsonString = (error as HttpException).response()
                 .errorBody()?.string()
@@ -54,7 +58,7 @@ class NetworkError( error: Throwable) {
                 .asJsonObject["detail_code"]
                 .asString
 
-            this.responseCode = (error as HttpException).code();
+            this.responseCode = error .code();
 
             http_error=getHttpError(responseCode!!)
 

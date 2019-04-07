@@ -1,12 +1,12 @@
-package com.ronaker.app.network
+package com.ronaker.app.data.network
 
-import com.ronaker.app.network.request.UserActivePhoneRequestModel
-import com.ronaker.app.network.request.UserAddPhoneRequestModel
-import com.ronaker.app.network.request.UserLoginRequestModel
-import com.ronaker.app.network.request.UserRegisterRequestModel
-import com.ronaker.app.network.response.UserAddPhoneResponceModel
-import com.ronaker.app.network.response.UserInfoResponceModel
-import com.ronaker.app.network.response.UserRegisterResponseModel
+import com.ronaker.app.data.network.request.UserActivePhoneRequestModel
+import com.ronaker.app.data.network.request.UserAddPhoneRequestModel
+import com.ronaker.app.data.network.request.UserLoginRequestModel
+import com.ronaker.app.data.network.request.UserRegisterRequestModel
+import com.ronaker.app.data.network.response.UserAddPhoneResponceModel
+import com.ronaker.app.data.network.response.UserInfoResponceModel
+import com.ronaker.app.data.network.response.UserRegisterResponseModel
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Header

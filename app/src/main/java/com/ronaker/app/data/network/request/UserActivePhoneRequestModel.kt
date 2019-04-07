@@ -1,4 +1,4 @@
-package com.ronaker.app.network.request
+package com.ronaker.app.data.network.request
 
 data class UserActivePhoneRequestModel(
     val phone_number: String

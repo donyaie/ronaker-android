@@ -2,21 +2,22 @@ package com.ronaker.app.ui.post
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.JsonParser
-import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Post
-import com.ronaker.app.network.NetworkError
-import com.ronaker.app.network.PostApi
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.ronaker.app.base.NetworkError
+import com.ronaker.app.data.PostRepository
+import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class PostListViewModel: BaseViewModel(){
+
     @Inject
-    lateinit var postApi: PostApi
+    lateinit var postRepository: PostRepository
+
+
+
+
     val postListAdapter: PostListAdapter = PostListAdapter()
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<String> = MutableLiveData()
@@ -25,19 +26,27 @@ class PostListViewModel: BaseViewModel(){
     private lateinit var subscription: Disposable
 
     init{
+
         loadPosts()
     }
 
     private fun loadPosts(){
-        subscription = postApi.getPosts()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+
+        subscription=postRepository
+            .getPosts()
+
             .doOnSubscribe { onRetrievePostListStart() }
             .doOnTerminate { onRetrievePostListFinish() }
-            .subscribe(
-                {result ->  onRetrievePostListSuccess(result) },
-                {error -> onRetrievePostListError(NetworkError(error)) }
-            )
+            .subscribe {
+                    result -> if (result.isSuccess()){
+                onRetrievePostListSuccess(result.data)
+            }else{
+                onRetrievePostListError(result.error) }}
+
+
+
+
+
     }
 
     private fun onRetrievePostListStart(){
@@ -49,13 +58,17 @@ class PostListViewModel: BaseViewModel(){
         loadingVisibility.value = View.GONE
     }
 
-    private fun onRetrievePostListSuccess(postList:List<Post>){
-        postListAdapter.updatePostList(postList)
+    private fun onRetrievePostListSuccess(postList:List<Post>?){
+
+        if (postList != null) {
+            postListAdapter.updatePostList(postList)
+        }
+
     }
 
-    private fun onRetrievePostListError(error:NetworkError){
+    private fun onRetrievePostListError(error: NetworkError?){
 
-        errorMessage.value = error.detail
+        errorMessage.value = error?.detail
 
     }
 

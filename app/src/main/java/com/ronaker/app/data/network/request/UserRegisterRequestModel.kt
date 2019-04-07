@@ -1,4 +1,4 @@
-package com.ronaker.app.network.request
+package com.ronaker.app.data.network.request
 
 data class UserRegisterRequestModel(  val email: String
                                      , val password: String

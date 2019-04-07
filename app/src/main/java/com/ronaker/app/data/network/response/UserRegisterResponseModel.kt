@@ -1,3 +1,3 @@
-package com.ronaker.app.network.response
+package com.ronaker.app.data.network.response
 
 data class UserRegisterResponseModel(val token: String)

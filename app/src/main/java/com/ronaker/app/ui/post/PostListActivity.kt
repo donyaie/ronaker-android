@@ -25,6 +25,7 @@ class PostListActivity: BaseActivity() {
         binding.postList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         viewModel = ViewModelProviders.of(this).get(PostListViewModel::class.java)
+
         viewModel.errorMessage.observe(this, Observer {
             errorMessage-> if (errorMessage!=null)showError(errorMessage)else hideError()
         })

@@ -1,22 +1,29 @@
 package com.ronaker.app.ui.splash
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.model.Post
-import com.ronaker.app.network.PostApi
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
-
+import kotlin.concurrent.schedule
 class SplashViewModel: BaseViewModel(){
 
     private lateinit var subscription: Disposable
 
+    val goLogin: MutableLiveData<Boolean> = MutableLiveData()
+    val goDashboard: MutableLiveData<Boolean> = MutableLiveData()
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
+
+
+
     init{
+
+            goLogin.value= !userRepository.isLogin()
+
 
     }
 
@@ -24,7 +31,7 @@ class SplashViewModel: BaseViewModel(){
 
     override fun onCleared() {
         super.onCleared()
-//        subscription.dispose()
+//        subscription?.dispose()
     }
 
 }
