@@ -20,15 +20,16 @@
 
             <ImageView
                     android:layout_marginTop="5dp"
-                    android:layout_width="70dp"
+                    android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/logo_ronaker_white"/>
 
             <ImageView
-                    android:layout_width="156dp"
+                    android:layout_width="match_parent"
                     android:layout_height="28dp"
                     android:layout_marginTop="24dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_ronaker_text"/>
 
 
@@ -38,6 +39,7 @@
                     android:layout_marginTop="24dp"
 
                     android:gravity="center"
+                    android:lineHeight="30dp"
                     android:layout_marginRight="40dp"
                     android:layout_marginLeft="40dp"
                     android:text="Rent things you only need for a short time, from your nearby."

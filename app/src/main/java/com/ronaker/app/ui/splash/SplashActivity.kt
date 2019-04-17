@@ -8,6 +8,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.login.LoginActivity
+import com.ronaker.app.utils.AnimationHelper
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -57,6 +58,8 @@ class SplashActivity : BaseActivity() {
 
     override fun finish() {
         super.finish()
+
+        AnimationHelper.animateActivityFade(this)
     }
 
 }

@@ -40,8 +40,10 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_margin">24dp</item>
+        <item name="android:scaleType">fitCenter</item>
+
         <item name="android:src">@drawable/ic_next_white</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:padding">14dp</item>
     </style>
 
 

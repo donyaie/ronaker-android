@@ -8,17 +8,26 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+
+            android:paddingTop="@dimen/statusBarSize"
             android:layout_height="match_parent">
         <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:id="@+id/logo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/progress"
+                android:layout_marginTop="51dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/logo_ronaker_white" />
 
-
+        <ImageView
+                app:layout_constraintTop_toBottomOf="@id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginTop="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_ronaker_text"/>
 
 
         <com.wang.avi.AVLoadingIndicatorView

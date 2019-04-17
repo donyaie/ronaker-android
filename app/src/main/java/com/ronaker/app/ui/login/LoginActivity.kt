@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.Debug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalcute
@@ -96,6 +97,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
