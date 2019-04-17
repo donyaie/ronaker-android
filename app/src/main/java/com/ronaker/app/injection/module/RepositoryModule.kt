@@ -3,11 +3,11 @@ package com.ronaker.app.injection.module
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.General
 import com.ronaker.app.base.PreferencesProvider
-import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.data.network.PostApi
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.PostRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.utils.API_URL
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -82,7 +82,7 @@ object RepositoryModule {
 
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(API_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))

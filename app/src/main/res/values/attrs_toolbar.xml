@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="toolbar_default">Title</string>
+    <string name="toolbar_action_default">Save</string>
+    <declare-styleable name="toolbar_component_attributes">
+
+        <attr name="toolbar_component_title" format="reference"/>
+        <attr name="toolbar_component_action_text" format="reference"/>
+
+        <attr name="toolbar_component_transparent" format="boolean"/>
+        <attr name="toolbar_component_bottom_line" format="boolean"/>
+
+        <attr name="toolbar_component_dot_count" format="integer"/>
+
+        <attr name="toolbar_component_center_container" format="enum">
+            <enum name="NONE" value="0"/>
+            <enum name="DOTS" value="1"/>
+            <enum name="TITLE" value="2"/>
+        </attr>
+
+
+        <attr name="toolbar_component_action_container" format="enum">
+            <enum name="NONE" value="0"/>
+            <enum name="TEXT" value="1"/>
+            <enum name="TWO_BUTTON" value="2"/>
+            <enum name="ONE_BUTTON" value="3"/>
+        </attr>
+
+
+        <attr name="toolbar_component_cancel_container" format="enum">
+            <enum name="NONE" value="0"/>
+            <enum name="BACK" value="1"/>
+            <enum name="CLOSE" value="2"/>
+        </attr>
+
+
+    </declare-styleable>
+</resources>

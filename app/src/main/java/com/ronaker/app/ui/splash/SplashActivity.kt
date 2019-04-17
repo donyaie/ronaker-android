@@ -8,7 +8,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.login.LoginActivity
-import com.ronaker.app.ui.post.PostListActivity
 import java.util.*
 import kotlin.concurrent.schedule
 

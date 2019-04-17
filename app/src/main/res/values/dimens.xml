@@ -5,5 +5,28 @@
     <dimen name="text_size_large">17sp</dimen>
     <dimen name="text_size_heading1">20sp</dimen>
     <dimen name="text_size_heading2">24sp</dimen>
+    
+    
+    
+    <dimen name="toolbar_size">45dp</dimen>
+    
+    
+    <dimen name="toolbar_icon_size">45dp</dimen>
+    <dimen name="toolbar_icon_padding">7dp</dimen>
+    <dimen name="icon_toolbar_size">45dp</dimen>
+    <dimen name="icon_toolbar_padding">7dp</dimen>
+    <dimen name="button_height">42dp</dimen>
+    
+    
+    <dimen name="statusBarSize">24dp</dimen>
+    <dimen name="statusBarSizeMargin">0dp</dimen>
+
+
+
+    <color name="white_opacity_75">#BDffffff</color>
+    <color name="white_opacity_30">#3fffffff</color>
+    <color name="white_opacity_10">#19ffffff</color>
+
+
 
 </resources>

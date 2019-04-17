@@ -8,19 +8,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.utils.view.IPagerFragment
 
-class LoginEmailFragment : BaseFragment(){
+class LoginEmailFragment : BaseFragment() ,IPagerFragment{
 
-    private lateinit var binding: com.ronaker.app.databinding.FragmentLoginHomeBinding
+    private lateinit var binding: com.ronaker.app.databinding.FragmentLoginEmailBinding
     private lateinit var viewModel: LoginViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_email,container , false)
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-        binding.viewModel = viewModel
-        return super.onCreateView(inflater, container, savedInstanceState)
+        activity?.let {
+            viewModel = ViewModelProviders.of(it).get(LoginViewModel::class.java)
+            binding.viewModel = viewModel
+        }
+
+        return binding.root
     }
 
 
@@ -30,5 +34,9 @@ class LoginEmailFragment : BaseFragment(){
             return LoginEmailFragment()
         }
     }
+
+    override fun onSelect() {
+    }
+
 
 }

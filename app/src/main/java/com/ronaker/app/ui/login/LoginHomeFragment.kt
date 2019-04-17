@@ -8,8 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.utils.view.IPagerFragment
+import kotlinx.android.synthetic.main.fragment_login_home.*
 
-class LoginHomeFragment : BaseFragment(){
+class LoginHomeFragment : BaseFragment(), IPagerFragment {
+
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentLoginHomeBinding
     private lateinit var viewModel: LoginViewModel
@@ -18,9 +21,16 @@ class LoginHomeFragment : BaseFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_home,container , false)
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-        binding.viewModel = viewModel
-        return super.onCreateView(inflater, container, savedInstanceState)
+
+
+        activity?.let {
+            viewModel = ViewModelProviders.of(it).get(LoginViewModel::class.java)
+            binding.viewModel = viewModel
+        }
+
+
+
+        return binding.root
     }
 
 
@@ -30,5 +40,7 @@ class LoginHomeFragment : BaseFragment(){
             return LoginHomeFragment()
         }
     }
+    override fun onSelect() {
 
+    }
 }

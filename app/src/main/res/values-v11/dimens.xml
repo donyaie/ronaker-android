@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="statusBarSize">0dp</dimen>
+    <dimen name="statusBarSizeMargin">0dp</dimen>
+
+</resources>

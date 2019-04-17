@@ -7,6 +7,10 @@ import com.ronaker.app.injection.component.AppComponent
 import com.ronaker.app.injection.component.DaggerAppComponent
 import com.ronaker.app.injection.module.AppModule
 import com.ronaker.app.ui.login.LoginActivity
+import io.github.inflationx.calligraphy3.CalligraphyConfig
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor
+import io.github.inflationx.viewpump.ViewPump
+
 
 class General : Application() {
     lateinit var General: AppComponent
@@ -24,6 +28,18 @@ class General : Application() {
         context = this;
         General=initDagger(this)
 
+        ViewPump.init(
+            ViewPump.builder()
+                .addInterceptor(
+                    CalligraphyInterceptor(
+                        CalligraphyConfig.Builder()
+                            .setDefaultFontPath("fonts/regular.otf")
+                            .setFontAttrId(R.attr.fontPath)
+                            .build()
+                    )
+                )
+                .build()
+        )
 
     }
 

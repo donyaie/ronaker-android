@@ -1,26 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
     <data>
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.login.LoginViewModel" />
+                type="com.ronaker.app.ui.login.LoginViewModel"/>
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <TextView
-                android:layout_width="wrap_content"
-                android:text="login"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+        <HorizontalScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center">
+
+                <ImageView
+                        android:id="@+id/background"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:minWidth="500dp"
+                        android:scaleType="centerCrop"
+
+                        android:src="@drawable/bg_login" />
+
+            </RelativeLayout>
+
+
+        </HorizontalScrollView>
+
+
+        <LinearLayout
+                android:id="@+id/overlay_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="vertical"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_gradient_primary_top"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_gradient_primary_bottom"/>
+
+
+        </LinearLayout>
+
+
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+
+                android:id="@+id/toolbar"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/statusBarSize"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:toolbar_component_title="@string/app_name"
+                app:toolbar_component_transparent="true"
+                app:toolbar_component_bottom_line="false"
+                app:toolbar_component_dot_count="3"
+                app:toolbar_component_center_container="NONE"
+                app:toolbar_component_action_container="NONE"
+                app:toolbar_component_cancel_container="NONE"
+        />
 
 
 
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.ronaker.app.utils.view.ViewPagerCustom
+                    android:id="@+id/viewpager"
+                    android:fitsSystemWindows="true"
+                    android:layout_marginTop="@dimen/statusBarSizeMargin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
 </layout>
