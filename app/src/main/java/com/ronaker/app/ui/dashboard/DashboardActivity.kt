@@ -1,5 +1,7 @@
 package com.ronaker.app.ui.dashboard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -21,6 +23,13 @@ class  DashboardActivity : BaseActivity(){
         binding.viewModel = viewModel
 
 
+    }
+
+
+    companion object {
+        fun newInstance(context: Context): Intent {
+            return  Intent(context, DashboardActivity::class.java)
+        }
     }
 
 

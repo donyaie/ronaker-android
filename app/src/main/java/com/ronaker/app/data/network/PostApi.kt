@@ -1,4 +1,4 @@
-package com.ronaker.app.network
+package com.ronaker.app.data.network
 
 import com.ronaker.app.model.Post
 import io.reactivex.Observable
@@ -11,6 +11,6 @@ interface PostApi {
     /**
      * Get the list of the pots from the API
      */
-    @GET("/posts")
+    @GET("/posts/")
     fun getPosts(): Observable<List<Post>>
 }

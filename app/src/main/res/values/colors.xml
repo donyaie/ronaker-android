@@ -15,6 +15,22 @@
     <color name="colorYellow">#FFC44C</color>
 
 
+    <color name="colorTextDark">#3D424D</color>
+    <color name="colorTextLight">#FFFFFF</color>
+
+
+    <color name="colorIconDark">#2E384D</color>
+    <color name="colorIconLight">#FFFFFF</color>
+
+
+    <color name="colorLoading">#40000000</color>
+
+
+
+    <color name="colorAccent_opacity_75">#c5ff5975</color>
+
+    <color name="transparent">#00000000</color>
+
     <color name="white">#ffffff</color>
 
 

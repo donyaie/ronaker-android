@@ -1,4 +1,4 @@
 package com.ronaker.app.utils
 
-/** The base URL of the API */
-const val BASE_URL: String = "https://jsonplaceholder.typicode.com"
+/** The base URL  */
+const val BASE_URL: String = "http://172.98.197.76/"

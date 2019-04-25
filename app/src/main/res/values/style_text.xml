@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Heading.1" parent="android:TextAppearance">
+        <item name="fontPath">fonts/bold.otf</item>
+        <item name="android:textSize">@dimen/text_size_heading2</item>
+    </style>
+
+    <style name="TextAppearance.Heading.2" parent="android:TextAppearance">
+        <item name="fontPath">fonts/bold.otf</item>
+        <item name="android:textSize">@dimen/text_size_heading1</item>
+    </style>
+
+    <style name="TextAppearance.Large.SB" parent="android:TextAppearance">
+        <item name="fontPath">fonts/bold.otf</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+    <style name="TextAppearance.Large.Regular" parent="android:TextAppearance">
+        <item name="fontPath">fonts/regular.otf</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextAppearance.Large.Light" parent="android:TextAppearance">
+        <item name="fontPath">fonts/light.otf</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextAppearance.Medium.SB" parent="android:TextAppearance">
+        <item name="fontPath">fonts/bold.otf</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+
+    <style name="TextAppearance.Medium.Regular" parent="android:TextAppearance">
+        <item name="fontPath">fonts/regular.otf</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+
+    <style name="TextAppearance.Medium.Light" parent="android:TextAppearance">
+        <item name="fontPath">fonts/light.otf</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="TextAppearance.Small.SB" parent="android:TextAppearance">
+        <item name="fontPath">fonts/bold.otf</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+
+    <style name="TextAppearance.Small.Regular" parent="android:TextAppearance">
+        <item name="fontPath">fonts/regular.otf</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+
+
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <style name="SplashTheme" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/white</item>
+
+        <item name="android:dialogTheme">@style/WhiteDialog</item>
+    </style>
+
+
+    <style name="LoginTheme" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/white</item>
+
+        <item name="android:dialogTheme">@style/WhiteDialog</item>
+    </style>
+
+
+</resources>
