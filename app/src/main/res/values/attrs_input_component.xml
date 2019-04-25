@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="input_component_title_default">Name</string>
+
+    <declare-styleable name="input_component_attributes">
+
+        <attr name="input_title" format="reference|string"/>
+        <attr name="input_hint" format="reference|string"/>
+        <attr name="input_text" format="reference|string"/>
+
+        <attr name="input_is_alert" format="boolean"/>
+
+
+
+        <attr name="input_validation_mode" format="enum">
+            <enum name="NONE" value="0"/>
+            <enum name="AUTO" value="1"/>
+        </attr>
+
+
+        <attr name="input_regex" format="string"/>
+
+        <attr name="android:imeOptions"/>
+
+        <attr name="android:inputType"/>
+
+    </declare-styleable>
+</resources>

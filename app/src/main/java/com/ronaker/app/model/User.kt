@@ -11,12 +11,29 @@ package com.ronaker.app.model
  * @property is_phone_number_verified if number verified is true
  */
 data class User(
-    val suid: String?
-    , val email: String?
-    , val is_email_verified: Boolean?
-    , val first_name: String?
-    , val last_name: String?
-    , val phone_number: String?
-    , val is_phone_number_verified: Boolean?
-    , val password: String? = null
-)
+    var suid: String?
+    , var email: String?
+    , var is_email_verified: Boolean?
+    , var first_name: String?
+    , var last_name: String?
+    , var phone_number: String?
+    , var is_phone_number_verified: Boolean?
+    , var password: String? = null
+) {
+    constructor() : this(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    )
+
+    override fun toString(): String {
+        return "User(suid=$suid, email=$email, is_email_verified=$is_email_verified, first_name=$first_name, last_name=$last_name, phone_number=$phone_number, is_phone_number_verified=$is_phone_number_verified, password=$password)"
+    }
+
+
+}

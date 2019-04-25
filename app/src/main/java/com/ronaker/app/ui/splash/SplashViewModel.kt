@@ -7,7 +7,8 @@ import io.reactivex.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
-class SplashViewModel: BaseViewModel(){
+
+class SplashViewModel : BaseViewModel() {
 
     private lateinit var subscription: Disposable
 
@@ -18,15 +19,12 @@ class SplashViewModel: BaseViewModel(){
     lateinit var userRepository: UserRepository
 
 
-
-
-    init{
-
-            goLogin.value= !userRepository.isLogin()
-
-
+    init {
+        if (userRepository.isLogin())
+            goDashboard.value = true
+         else
+            goLogin.value = true
     }
-
 
 
     override fun onCleared() {

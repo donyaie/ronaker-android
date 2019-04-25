@@ -34,6 +34,9 @@ class PostListActivity: BaseActivity() {
 
     }
 
+
+
+
     private fun showError( errorMessage:String){
 
         errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)

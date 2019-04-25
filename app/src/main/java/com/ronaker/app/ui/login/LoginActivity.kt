@@ -4,22 +4,26 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.Debug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
-import java.util.ArrayList
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class LoginActivity : BaseActivity() {
@@ -37,6 +41,7 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var screenLibrary: ScreenCalcute
+
 
 
     internal var loginAction = LoginViewModel.LoginActionEnum.register
@@ -141,6 +146,28 @@ class LoginActivity : BaseActivity() {
         binding.background.getLayoutParams().width = (screenLibrary.screenWidthPixel * 1.2).toInt()
 
         binding.scrollView.setOnTouchListener(View.OnTouchListener { v, event -> true })
+
+        viewModel.errorMessage.observe(this, Observer {
+                errorMessage-> Toast.makeText(this,errorMessage,Toast.LENGTH_LONG).show()
+        })
+
+        viewModel.goNext.observe(this, Observer { value ->
+            if (value == true) {
+                    startActivity(DashboardActivity.newInstance(this@LoginActivity))
+                    finish()
+            }
+        })
+
+        viewModel.loading.observe(this, Observer { value ->
+            if (value == true) {
+               binding.loading.showLoading()
+            }else
+                binding.loading.hideLoading()
+        })
+
+
+        binding.loading.hideLoading()
+
 
 
     }

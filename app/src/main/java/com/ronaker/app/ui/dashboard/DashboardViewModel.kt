@@ -5,7 +5,7 @@ import io.reactivex.disposables.Disposable
 
 class DashboardViewModel: BaseViewModel(){
 
-    private lateinit var subscription: Disposable
+    private  var subscription: Disposable?=null
 
     init{
     }

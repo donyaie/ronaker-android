@@ -7,7 +7,7 @@ import com.ronaker.app.data.network.PostApi
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.PostRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.utils.API_URL
+import com.ronaker.app.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -82,7 +82,7 @@ object RepositoryModule {
 
 
         return Retrofit.Builder()
-            .baseUrl(API_URL)
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))

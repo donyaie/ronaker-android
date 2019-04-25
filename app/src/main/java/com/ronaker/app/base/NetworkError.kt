@@ -1,14 +1,17 @@
 package com.ronaker.app.base
 
 import com.google.gson.JsonParser
+import com.ronaker.app.utils.Debug
 import retrofit2.HttpException
 import java.io.IOException
+import java.lang.Exception
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 
-class NetworkError( error: Throwable) {
+class NetworkError(error: Throwable) {
 
+    internal val TAG = NetworkError::class.java.name
 
     enum class HttpError {
         HttpResponseSuccessOK,
@@ -39,28 +42,32 @@ class NetworkError( error: Throwable) {
     var detail_code: String? = null;
     var http_error: HttpError? = null;
 
-    var exception_error:Throwable?=null
+    var exception_error: Throwable? = null
 
 
     init {
 
-        exception_error=error
+        exception_error = error
         if (error is HttpException) {
             val errorJsonString = (error as HttpException).response()
                 .errorBody()?.string()
+            try {
+                this.detail = JsonParser().parse(errorJsonString)
+                    .asJsonObject["detail"]
+                    .asString
+            } catch (e: Exception) {
+                Debug.Log(TAG, e)
+            }
+            try {
+                this.detail_code = JsonParser().parse(errorJsonString)
+                    .asJsonObject["detail_code"]
+                    .asString
+            } catch (e: Exception) {
+                Debug.Log(TAG, e)
+            }
+            this.responseCode = error.code();
 
-            this.detail = JsonParser().parse(errorJsonString)
-                .asJsonObject["detail"]
-                .asString
-
-
-            this.detail_code = JsonParser().parse(errorJsonString)
-                .asJsonObject["detail_code"]
-                .asString
-
-            this.responseCode = error .code();
-
-            http_error=getHttpError(responseCode!!)
+            http_error = getHttpError(responseCode!!)
 
         } else {
 
@@ -78,7 +85,7 @@ class NetworkError( error: Throwable) {
                 detail_code = "HttpResponseConnectionFailure"
                 http_error = HttpError.HttpResponseConnectionFailure
 
-           } else if (error is IOException) {
+            } else if (error is IOException) {
 
                 detail = "Network Error"
                 responseCode = null
@@ -97,7 +104,7 @@ class NetworkError( error: Throwable) {
     }
 
 
-   private fun getHttpError(code: Int): HttpError {
+    private fun getHttpError(code: Int): HttpError {
 
 
         return if (code == 200) {
@@ -132,9 +139,6 @@ class NetworkError( error: Throwable) {
             HttpError.HttpResponseUnexpectedError
         }
     }
-
-
-
 
 
 }

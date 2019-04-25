@@ -44,7 +44,7 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
     }
 
 
-    fun saveUserToken(token: String) {
+    fun saveUserToken(token: String?) {
         preferencesProvider.putString(TokenKey, token)
     }
 
