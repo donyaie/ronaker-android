@@ -3,6 +3,7 @@ package com.ronaker.app.injection.component
 import android.content.Context
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.injection.module.RepositoryModule
+import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
@@ -22,6 +23,7 @@ interface ViewModelInjector {
     fun inject(viewModel: PostListViewModel)
     fun inject(viewModel: LoginViewModel)
     fun inject(viewModel: SplashViewModel)
+    fun inject(viewModel: ExploreViewModel)
 
 
     @Component.Builder
