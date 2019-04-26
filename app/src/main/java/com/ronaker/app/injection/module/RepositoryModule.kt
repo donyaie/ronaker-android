@@ -6,7 +6,9 @@ import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.data.network.PostApi
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.PostRepository
+import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.data.network.ProductApi
 import com.ronaker.app.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -39,15 +41,27 @@ object RepositoryModule {
 
 
     /**
-     * Provides the Post service implementation.
+     * Provides the User service implementation.
      * @param retrofit the Retrofit object used to instantiate the service
-     * @return the Post service implementation.
+     * @return the User service implementation.
      */
     @Provides
     @Reusable
     @JvmStatic
     internal fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
+    }
+
+    /**
+     * Provides the Product service implementation.
+     * @param retrofit the Retrofit object used to instantiate the service
+     * @return the Product service implementation.
+     */
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideProductApi(retrofit: Retrofit): ProductApi {
+        return retrofit.create(ProductApi::class.java)
     }
 
     @Provides
@@ -64,6 +78,12 @@ object RepositoryModule {
         return PostRepository(postApi)
     }
 
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideProductRepository(productApi: ProductApi,preferencesProvider: PreferencesProvider): ProductRepository {
+        return ProductRepository(productApi,preferencesProvider)
+    }
 
     /**
      * Provides the Retrofit object.

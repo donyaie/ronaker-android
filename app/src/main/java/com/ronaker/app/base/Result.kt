@@ -55,3 +55,5 @@ fun <T> Observable<Result<T>>.onlyHttpExceptionExcluding(vararg codes: Int) : Ob
     return onlyHttpException()
             .filter { codes.contains(it.code()) }
 }
+
+

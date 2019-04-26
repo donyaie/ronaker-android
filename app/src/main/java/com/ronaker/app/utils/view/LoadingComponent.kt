@@ -5,14 +5,22 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ronaker.app.R
+import com.wang.avi.AVLoadingIndicatorView
 
-class LoadingComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs){
+class LoadingComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     lateinit var loadinLayout: ConstraintLayout
 
+    var retry_layout: ConstraintLayout
+    var retry: ImageView
+
+
+    var oClickRetryListener: OnClickRetryListener? = null
+        set
 
     init {
 
@@ -22,45 +30,43 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
         loadinLayout = findViewById(R.id.loading_layout)
-
+        retry_layout = findViewById(R.id.retry_layout)
+        retry=findViewById(R.id.retry)
 
 
         orientation = VERTICAL
 
-//        attrs?.let {
-//            val typedArray = context.obtainStyledAttributes(
-//                it,
-//                R.styleable.input_component_attributes, 0, 0
-//            )
-//
-//            title =
-//                typedArray
-//                    .getString(
-//                        R.styleable
-//                            .input_component_attributes_input_title
-//                    )
-//
-//
-//
-//            typedArray.recycle()
-//        }
+        retry.setOnClickListener(object:View.OnClickListener{
+            override fun onClick(v: View?) {
+                oClickRetryListener?.onClick()
+            }
+
+        })
+
+        showLoading()
+        hideRetry()
+
     }
 
     fun showLoading() {
-
-
-        loadinLayout.visibility= View.VISIBLE
+        loadinLayout.visibility = View.VISIBLE
 
         loadinLayout.animate().alpha(1f).setDuration(200).start()
 
     }
 
+    fun showRetry() {
+        retry.isClickable= true
 
-    fun hideLoading() {
+        retry_layout.visibility = View.VISIBLE
 
-        loadinLayout.animate().alpha(0f).setDuration(200).setListener(object :Animator.AnimatorListener{
+        retry_layout.animate().alpha(1f).setDuration(200).start()
+    }
+
+    fun hideRetry() {
+        retry_layout.animate().alpha(0f).setDuration(200).setListener(object : Animator.AnimatorListener {
             override fun onAnimationEnd(animation: Animator?) {
-                loadinLayout.visibility= View.GONE
+                retry_layout.visibility = View.GONE
             }
 
             override fun onAnimationRepeat(animation: Animator?) {
@@ -74,6 +80,37 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
         }).start()
+
+        retry.isClickable= false
+    }
+
+
+    fun hideLoading() {
+
+        loadinLayout.animate().alpha(0f).setDuration(200).setListener(object : Animator.AnimatorListener {
+            override fun onAnimationEnd(animation: Animator?) {
+                loadinLayout.visibility = View.GONE
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+            }
+
+
+        }).start()
+
+
+    }
+
+
+    interface OnClickRetryListener {
+
+        fun onClick()
 
 
     }

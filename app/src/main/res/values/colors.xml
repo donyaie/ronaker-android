@@ -17,6 +17,7 @@
 
     <color name="colorTextDark">#3D424D</color>
     <color name="colorTextLight">#FFFFFF</color>
+    <color name="colorTextGreyLight">#9398A3</color>
 
 
     <color name="colorIconDark">#2E384D</color>
