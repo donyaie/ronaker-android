@@ -141,15 +141,15 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             lineLayout.visibility = if (isBottomLine) View.VISIBLE else View.GONE
         }
 
-     var title: CharSequence = ""
+     var title: String? = null
         set(value) {
             field = value
-            titleText.text = value
+            titleText.setText(value)
         }
-     var actionTitle: CharSequence = ""
+     var actionTitle: String? = null
         set(value) {
             field = value
-            actionText.text = value
+            actionText.setText(value)
         }
 
      var dotCount: Int = 3
@@ -214,14 +214,12 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
 
-            actionTitle = resources.getText(
-                typedArray
-                    .getResourceId(
-                        R.styleable
-                            .toolbar_component_attributes_toolbar_component_action_text,
-                        R.string.toolbar_action_default
-                    )
-            )
+
+            actionTitle = typedArray
+                .getString(
+                    R.styleable
+                        .toolbar_component_attributes_toolbar_component_action_text
+                )
 
 
             isBottomLine = typedArray
@@ -267,15 +265,11 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
 
-
-            title = resources.getText(
-                typedArray
-                    .getResourceId(
-                        R.styleable
-                            .toolbar_component_attributes_toolbar_component_title,
-                        R.string.toolbar_default
-                    )
-            )
+            title = typedArray
+                .getString(
+                    R.styleable
+                        .toolbar_component_attributes_toolbar_component_title
+                )
 
 
 

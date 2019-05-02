@@ -1,5 +1,6 @@
 package com.ronaker.app.model
 
+import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import com.ronaker.app.data.network.response.ProductItemResponceModel
 
 /**
@@ -37,14 +38,18 @@ data class Product(
 
 
     data class ProductImage(var url:String? ,
-                            var suid:String?){
+                            var suid:String?,var isLocal:Boolean=false){
+
+
+        constructor():this(null,null)
 
     }
 
 }
 
 
-fun List<ProductItemResponceModel>.toModel():List<Product> {
+
+fun List<ProductItemResponceModel>.toProduct():List<Product> {
 
 
     var list:ArrayList<Product> = ArrayList()
@@ -52,6 +57,23 @@ fun List<ProductItemResponceModel>.toModel():List<Product> {
     this.forEach {
 
         var product=Product(it.suid,it.name,it.price_per_day,it.price_per_week,it.price_per_month,it.description,it.avatar,null)
+
+        list.add(product)
+    }
+
+    return list
+
+}
+
+
+fun List<ProductItemImageResponceModel>.toProductImage():List<Product.ProductImage> {
+
+
+    var list:ArrayList<Product.ProductImage> = ArrayList()
+
+    this.forEach {
+
+        var product=Product.ProductImage(it.suid,it.url)
 
         list.add(product)
     }

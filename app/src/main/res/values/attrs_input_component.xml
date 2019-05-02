@@ -12,6 +12,11 @@
         <attr name="input_is_alert" format="boolean"/>
 
 
+        <attr name="input_transparent" format="boolean"/>
+        <attr name="input_dot" format="boolean"/>
+
+        <attr name="input_counter" format="integer"/>
+
 
         <attr name="input_validation_mode" format="enum">
             <enum name="NONE" value="0"/>

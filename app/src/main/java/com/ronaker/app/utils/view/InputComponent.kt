@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ronaker.app.R
 import android.view.inputmethod.EditorInfo
 import android.text.TextWatcher
+import androidx.constraintlayout.solver.GoalRow
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("app:input_text")
@@ -46,28 +47,77 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
         var field = isValid
         if (!field) {
             showNotValidAlert()
-        }else
+        } else
             hideAlert()
 
         return field
     }
 
-    var isValid:Boolean=false
-    get() {
+    var isValid: Boolean = false
+        get() {
 
-        return if (regex != null) {
-            regex!!.matches(input_edit.text)
-        } else {
-            true
+            return if (regex != null) {
+                regex!!.matches(input_edit.text)
+            } else {
+                true
+            }
+
         }
 
-    }
+    var isTransparent: Boolean = true
+        set(value) {
+            field = value
 
 
-    var inputValidationMode: InputValidationMode=InputValidationMode.NONE
+
+            title_text.setTextColor(
+                if (isTransparent) resources.getColor(R.color.colorTextLight) else resources.getColor(
+                    R.color.colorTextDark
+                )
+            )
+            input_edit.setTextColor(
+                if (isTransparent) resources.getColor(R.color.colorTextLight) else resources.getColor(
+                    R.color.colorTextDark
+                )
+            )
+
+            alert_text.setTextColor(
+                if (isTransparent) resources.getColor(R.color.colorTextLight) else resources.getColor(
+                    R.color.colorTextDark
+                )
+            )
+
+
+        }
+
+    var counter: Int = 0
+        set(value) {
+            field = value
+
+            counter_text.setTextColor(if(isTransparent)resources.getColor(R.color.colorTextLight)else resources.getColor(R.color.colorTextDark) )
+
+
+            counter_text.visibility=if(field>0) View.VISIBLE else View.GONE
+
+
+            counter_text.setText( "0/$counter")
+
+
+
+        }
+
+    var hasInputDotValidator:Boolean=true
     set(value) {
         field = value
+
+        inputState_image.visibility=if(field) View.VISIBLE else GONE
     }
+
+    var inputValidationMode: InputValidationMode = InputValidationMode.NONE
+        set(value) {
+            field = value
+        }
+
 
 
 
@@ -80,6 +130,8 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
     lateinit var alert_layer: LinearLayout
     lateinit var alert_image: ImageView
     lateinit var alert_text: TextView
+
+    lateinit var counter_text: TextView
 
 
     var title: String? = null
@@ -142,6 +194,9 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
         override fun afterTextChanged(editable: Editable) {
 
             textChangeValid(editable)
+
+            if(counter>0) counter_text.setText( "${editable.length}/$counter")
+
         }
     }
 
@@ -181,7 +236,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
         alert_layer = findViewById(R.id.alert_layer)
         alert_image = findViewById(R.id.alert_image)
         alert_text = findViewById(R.id.alert_text)
-
+        counter_text = findViewById(R.id.counter_text)
 
 
         input_edit.onFocusChangeListener = this
@@ -195,6 +250,8 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
                 it,
                 R.styleable.input_component_attributes, 0, 0
             )
+
+
 
             title =
                 typedArray
@@ -224,7 +281,12 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
                     true
                 )
 
+            isTransparent = typedArray.getBoolean(R.styleable.input_component_attributes_input_transparent, true)
 
+
+            hasInputDotValidator=typedArray.getBoolean(R.styleable.input_component_attributes_input_dot,true)
+
+            counter = typedArray.getInteger(R.styleable.input_component_attributes_input_counter, 0)
 
 
             inputType = typedArray.getInt(
@@ -276,7 +338,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
         alert_image.setImageResource(
             when (type) {
                 AlertType.Error -> R.drawable.ic_guide_red
-                AlertType.Info -> R.drawable.ic_guide_dark
+                AlertType.Info -> if (isTransparent) R.drawable.ic_guide_dark else R.drawable.ic_guide_light
                 AlertType.Success -> R.drawable.ic_guide_success
             }
 
@@ -306,7 +368,8 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         if (hasFocus) {
             textChangeValid(input_edit.text)
-            input_line.setBackgroundColor(resources.getColor(R.color.white))
+            input_line.setBackgroundColor(if (isTransparent) resources.getColor(R.color.white) else resources.getColor(R.color.colorNavy))
+
         } else {
             textChangeValid(input_edit.text)
             input_line.setBackgroundColor(resources.getColor(R.color.colorPlatinGrey))

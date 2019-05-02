@@ -1,8 +1,9 @@
 package com.ronaker.app
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import com.ronaker.app.injection.component.AppComponent
 import com.ronaker.app.injection.component.DaggerAppComponent
 import com.ronaker.app.injection.module.AppModule
@@ -12,7 +13,7 @@ import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 
 
-class General : Application() {
+class General : MultiDexApplication() {
     lateinit var General: AppComponent
 
     companion object {
@@ -41,6 +42,11 @@ class General : Application() {
                 .build()
         )
 
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     private fun initDagger(app: General): AppComponent =

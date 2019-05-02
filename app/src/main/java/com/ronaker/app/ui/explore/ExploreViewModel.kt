@@ -1,7 +1,5 @@
 package com.ronaker.app.ui.explore
 
-import com.ronaker.app.ui.explore.ItemExploreAdapter
-
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +8,7 @@ import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.toModel
+import com.ronaker.app.model.toProduct
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -76,7 +74,7 @@ class ExploreViewModel: BaseViewModel(){
                          if(result.data?.results?.size!! >0) {
 
                              onRetrieveProductListSuccess(
-                                 result.data?.results?.toModel()
+                                 result.data?.results?.toProduct()
                              )
                          }else{
                              hasNextPage = false

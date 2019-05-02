@@ -16,6 +16,7 @@ android {
         applicationId "com.ronaker.app"
         minSdkVersion 17
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,6 +30,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+
     implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
@@ -87,6 +90,17 @@ dependencies {
 
     //Image Loader
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+
+    implementation'com.google.android.gms:play-services-maps:16.1.0'
+
+
+    //dexter permissions
+    implementation "com.karumi:dexter:5.0.0"
+
+    // crop
+    implementation 'com.github.yalantis:ucrop:2.2.3'
+
+    //implementation
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'

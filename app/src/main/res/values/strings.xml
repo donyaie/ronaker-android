@@ -15,4 +15,6 @@
     <string name="last_name_hint">Enter your last name</string>
     <string name="password_title">Password</string>
     <string name="password_hint">Enter your password</string>
+
+    <string name="google_api_key">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
 </resources>
