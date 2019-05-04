@@ -1,5 +1,7 @@
 package com.ronaker.app.model
 
+import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import com.ronaker.app.data.network.response.ProductItemResponceModel
 
@@ -37,11 +39,15 @@ data class Product(
 
 
 
-    data class ProductImage(var url:String? ,
-                            var suid:String?,var isLocal:Boolean=false){
-
+    data class ProductImage(
+        var url:String?,
+        var suid:String?, var uri: Uri? =null, var isLocal:Boolean=false){
 
         constructor():this(null,null)
+
+
+
+        val progress: MutableLiveData<Boolean> = MutableLiveData()
 
     }
 

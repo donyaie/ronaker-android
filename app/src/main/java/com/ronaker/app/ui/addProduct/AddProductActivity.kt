@@ -27,10 +27,10 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.Dexter
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import android.app.Activity
-import android.content.DialogInterface
 import android.net.Uri
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toFile
 import java.io.IOException
 
 
@@ -251,6 +251,9 @@ class AddProductActivity : BaseActivity() {
     }
 
 
+
+
+
     fun onProfileImageClick() {
         Dexter.withActivity(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -323,11 +326,9 @@ class AddProductActivity : BaseActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 val uri: Uri? = data?.getParcelableExtra("path")
                 try {
-                    // You can update this bitmap to your server
-//                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
 
-                    // loading profile image from local cache
-//                    loadProfile(uri.toString())
+                    uri?.toFile()
+                    viewModel.selectImage(uri)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

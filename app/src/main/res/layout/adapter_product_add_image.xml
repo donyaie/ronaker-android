@@ -28,13 +28,19 @@
                    android:layout_height="155dp"/>
         <ImageView android:layout_width="32dp" android:padding="6dp"
 
-                   android:onClick="@{()->baseViewModel.onClickRemoveImage(viewModel.getID())}"
+                   android:onClick="@{()->baseViewModel.onClickRemoveImage(viewModel.getImage())}"
 
                    app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintRight_toRightOf="parent"
                    android:src="@drawable/ic_remove_red" android:layout_height="32dp"/>
 
+<RelativeLayout android:visibility="gone"
+        app:mutableVisibility="@{viewModel.getLoadingVisibility()}" android:id="@+id/loading" android:background="#39000000" android:gravity="center" android:clickable="true" app:layout_constraintTop_toTopOf="@id/image" app:layout_constraintBottom_toBottomOf="@id/image"
+                app:layout_constraintRight_toRightOf="@id/image" app:layout_constraintLeft_toLeftOf="@id/image" android:layout_width="0dp" android:layout_height="0dp">
 
+    <com.wang.avi.AVLoadingIndicatorView android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+</RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

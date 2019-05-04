@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import android.view.MotionEvent
+
+
 
 class AddProductImageFragment : BaseFragment(), IPagerFragment {
 
@@ -27,8 +30,9 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
         }
 
         var mnager = GridLayoutManager(context, 2)
-        binding.recycler.layoutManager = mnager
 
+        binding.recycler.layoutManager = mnager
+//        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         return binding.root
     }

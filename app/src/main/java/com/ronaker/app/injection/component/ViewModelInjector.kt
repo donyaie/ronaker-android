@@ -4,6 +4,7 @@ import android.content.Context
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.AddProductActivity
+import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.login.LoginViewModel
@@ -27,6 +28,7 @@ interface ViewModelInjector {
     fun inject(viewModel: SplashViewModel)
     fun inject(viewModel: ExploreViewModel)
     fun inject(viewModel: AddProductViewModel)
+    fun inject(viewModel: AddProductImageAdapterViewModel)
 
 
     @Component.Builder

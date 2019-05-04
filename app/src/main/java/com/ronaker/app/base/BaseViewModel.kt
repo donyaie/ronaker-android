@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.ronaker.app.injection.component.DaggerViewModelInjector
 import com.ronaker.app.injection.component.ViewModelInjector
 import com.ronaker.app.injection.module.RepositoryModule
+import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.login.LoginViewModel
@@ -27,10 +28,10 @@ abstract class BaseViewModel : ViewModel() {
         when (this) {
             is PostListViewModel -> injector.inject(this)
             is LoginViewModel -> injector.inject(this)
-
             is SplashViewModel -> injector.inject(this)
             is ExploreViewModel -> injector.inject(this)
             is AddProductViewModel -> injector.inject(this)
+            is AddProductImageAdapterViewModel->injector.inject(this)
         }
 
     }

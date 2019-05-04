@@ -1,5 +1,7 @@
 package com.ronaker.app.ui.addProduct
 
+import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,7 +10,6 @@ import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterProductAddImageBinding
 import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
 import com.ronaker.app.model.Product
-
 class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var productList: ArrayList<Product.ProductImage>
@@ -25,6 +26,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
+
         if (viewType == FullType) {
             val binding: AdapterProductAddImageBinding =
                 DataBindingUtil.inflate(
@@ -33,7 +35,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
                     parent,
                     false
                 )
-            return ViewHolder(binding, baseViewModel)
+            return ViewHolder(binding, baseViewModel,parent.context)
         } else {
             val binding: AdapterProductAddImageEmptyBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -51,7 +53,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EmptyViewHolder)
             holder.bind()
-        else if (holder is AddProductImageAdapter.ViewHolder)
+        else if (holder is ViewHolder)
 
             holder.bind(productList[position])
 
@@ -68,27 +70,64 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     override fun getItemViewType(position: Int): Int {
         var item = productList.get(position)
-        if (item.url == null && item.suid == null)
+        if (item.url == null && item.uri == null)
             return EmptyType
         else
             return FullType
     }
 
+    fun addLocalImage(uri: Uri?) {
+        productList.add(Product.ProductImage(null, null, uri, true))
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(image: Product.ProductImage) {
+
+
+        productList.remove(image)
+        notifyDataSetChanged()
+    }
+
+    fun isAllUploaded(): Boolean {
+        var result = true
+        productList.forEach {
+            if (it.isLocal)
+                result = false
+        }
+        return result
+    }
+
+    fun getimages(): ArrayList<Product.ProductImage> {
+
+        var list= ArrayList<Product.ProductImage>()
+
+        if (productList.size <= 1)
+            return list
+
+        productList.forEach { list.add(it) }
+
+        list.removeAt(0)
+
+        return list
+    }
+
 
     class ViewHolder(
         private val binding: AdapterProductAddImageBinding,
-        val baseViewModel: AddProductViewModel
+        val baseViewModel: AddProductViewModel ,var context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = AddProductImageAdapterViewModel()
 
         fun bind(product: Product.ProductImage) {
-            viewModel.bind(product)
-
-
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
+            viewModel.bind(product, context)
+
+
         }
+
+
     }
 
     class EmptyViewHolder(
@@ -100,5 +139,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
         fun bind() {
             binding.baseViewModel = baseViewModel
         }
+
+
     }
 }
