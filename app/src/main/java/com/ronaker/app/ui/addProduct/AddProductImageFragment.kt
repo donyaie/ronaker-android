@@ -32,7 +32,7 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
         var mnager = GridLayoutManager(context, 2)
 
         binding.recycler.layoutManager = mnager
-//        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
+        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         return binding.root
     }

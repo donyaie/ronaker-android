@@ -127,6 +127,7 @@ class AddProductActivity : BaseActivity() {
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
+        binding.toolbar.actionTextClickListener=View.OnClickListener { finish()}
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -140,6 +141,12 @@ class AddProductActivity : BaseActivity() {
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
+        })
+
+
+
+        viewModel.goNext.observe(this, Observer { value ->
+           finish()
         })
 
         initViewPagerRegister()
@@ -210,6 +217,9 @@ class AddProductActivity : BaseActivity() {
 
 
                 if (loginState == AddProductViewModel.StateEnum.image)
+                    KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
+
+                if (loginState == AddProductViewModel.StateEnum.location)
                     KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
 
 

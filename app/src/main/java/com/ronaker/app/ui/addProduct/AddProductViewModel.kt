@@ -10,7 +10,10 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.data.network.response.ContentImageResponceModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.model.User
+import com.ronaker.app.utils.Debug
 import io.reactivex.disposables.Disposable
+import java.lang.Exception
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 class AddProductViewModel : BaseViewModel() {
@@ -48,7 +51,6 @@ class AddProductViewModel : BaseViewModel() {
 
     var product: Product = Product()
 
-    var emailError = MutableLiveData<Boolean?>()
 
     enum class StateEnum constructor(position: Int) {
         image(0),
@@ -76,16 +78,14 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-
-  lateinit var imagesTemp:ArrayList<Product.ProductImage>
+    lateinit var imagesTemp: ArrayList<Product.ProductImage>
 
     fun onClickImageNext() {
 
 
+        imagesTemp = adapter.getimages()
 
-        imagesTemp=adapter.getimages()
-
-        if(checkInprogressSelectImage())
+        if (checkInprogressSelectImage())
             return
         if (!adapter.isAllUploaded() && imagesTemp.size > 0) {
             uploadAll(imagesTemp)
@@ -93,26 +93,82 @@ class AddProductViewModel : BaseViewModel() {
         ) {
             checkNextSelectImage()
 
-        } else errorMessage.value = "upload all image"
+        } else errorMessage.value = "add images"
 
 
     }
 
-    fun onClickInfoNext() {
+    fun onClickInfoNext(title: String, titleValid: Boolean, description: String, descriptionValid: Boolean) {
+        if (titleValid && descriptionValid) {
+            product.description = description
+            product.name = title
+            viewState.value = StateEnum.price
+        }
 
-        viewState.value = StateEnum.price
     }
 
-    fun onClickPriceNext() {
+    fun onClickPriceNext(
+        dayPrice: String,
+        dayValid: Boolean,
+        weekPrice: String,
+        weekValid: Boolean,
+        monthPrice: String,
+        monthValid: Boolean
+    ) {
 
-        viewState.value = StateEnum.location
+
+        try {
+
+            product.price_per_day = dayPrice.toDouble()
+        } catch (e: Exception) {
+            product.price_per_day = 0.0
+            Debug.Log(TAG, e)
+        }
+
+
+        try {
+
+            product.price_per_week = weekPrice.toDouble()
+        } catch (e: Exception) {
+            product.price_per_week = 0.0
+            Debug.Log(TAG, e)
+        }
+
+        try {
+            product.price_per_month = monthPrice.toDouble()
+        } catch (e: Exception) {
+            product.price_per_month = 0.0
+            Debug.Log(TAG, e)
+        }
+
+        if (product.price_per_day!! > 0 || product.price_per_week!! > 0 || product.price_per_month!! > 0)
+            viewState.value = StateEnum.location
+        else
+            errorMessage.value = "set price"
 
     }
 
     fun onClickLocationNext() {
-
+        createProduct()
     }
 
+
+    fun createProduct() {
+
+        createPostSubscription = productRepository.productCreate(
+            userRepository.getUserToken(),
+            product
+        )
+            .doOnSubscribe { loading.value = true }
+            .doOnTerminate { loading.value = false }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+                    goNext.value = true
+                } else
+                    errorMessage.value = result.error?.detail
+            }
+
+    }
 
     fun onClickRemoveImage(image: Product.ProductImage?) {
 
@@ -157,16 +213,18 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-
-
-    fun checkNextSelectImage():Boolean{
-        var resault=true
-        imagesTemp.forEach {if( it.progress.value==true || it.isLocal )
-            resault=false
+    fun checkNextSelectImage(): Boolean {
+        var resault = true
+        imagesTemp.forEach {
+            if (it.progress.value == true || it.isLocal)
+                resault = false
         }
 
-        if(resault){
-            product.images=imagesTemp
+        if (resault && !imagesTemp.isNullOrEmpty()) {
+
+            product.avatar = imagesTemp[0].url
+            product.avatar_suid = imagesTemp[0].suid
+            product.images = imagesTemp
             viewState.value = StateEnum.info
 
         }
@@ -175,10 +233,11 @@ class AddProductViewModel : BaseViewModel() {
         return resault
     }
 
-    fun checkInprogressSelectImage():Boolean{
-        var resault=false
-        imagesTemp.forEach {if( it.progress.value==true  )
-            resault=true
+    fun checkInprogressSelectImage(): Boolean {
+        var resault = false
+        imagesTemp.forEach {
+            if (it.progress.value == true)
+                resault = true
         }
 
         return resault
@@ -191,8 +250,8 @@ class AddProductViewModel : BaseViewModel() {
             userRepository.getUserToken(),
             model.uri
         )
-            .doOnSubscribe { model.progress.value=true }
-            .doOnTerminate {  model.progress.value=false }
+            .doOnSubscribe { model.progress.value = true }
+            .doOnTerminate { model.progress.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
                     model.url = result.data?.content
@@ -206,8 +265,6 @@ class AddProductViewModel : BaseViewModel() {
 
 
     }
-
-
 
 
 }

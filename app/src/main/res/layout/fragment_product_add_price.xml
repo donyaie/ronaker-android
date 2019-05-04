@@ -95,6 +95,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"/>
 
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -107,8 +108,8 @@
                 android:layout_marginBottom="16dp"
                 android:id="@+id/next_button"
                 android:text="Next"
+                android:onClick="@{()->viewModel.onClickPriceNext(dayInput.getText().toString(),dayInput.checkValid(),weekInput.getText().toString(),weekInput.checkValid(),monthInput.getText().toString(),monthInput.checkValid())}"
 
-                android:onClick="@{()->viewModel.onClickPriceNext()}"
                 style="@style/Button.accent"/>
 
 

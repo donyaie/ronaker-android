@@ -29,7 +29,7 @@
                           android:layout_height="wrap_content"/>
                 <com.ronaker.app.utils.view.InputComponent
                         android:layout_marginRight="24dp"
-                        android:inputType="textPersonName"
+                        android:inputType="text"
                         android:imeOptions="actionNext"
                         android:id="@+id/title_input"
                         app:input_transparent="false"
@@ -68,7 +68,7 @@
                 android:layout_width="160dp"
                 android:layout_marginRight="24dp"
 
-                android:onClick="@{()->viewModel.onClickInfoNext()}"
+                android:onClick="@{()->viewModel.onClickInfoNext(titleInput.getText().toString(),titleInput.checkValid(),descriptionInput.getText().toString(),descriptionInput.checkValid())}"
                 android:layout_marginBottom="16dp"
                 android:id="@+id/next_button"
                 android:text="Next"
