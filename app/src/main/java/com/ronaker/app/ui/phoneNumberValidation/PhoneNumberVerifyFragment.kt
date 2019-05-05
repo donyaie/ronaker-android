@@ -51,10 +51,10 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
     internal fun activeNext(active: Boolean) {
         if (active) {
 
-            binding.nextButton.setEnabled(active)
+            binding.nextButton.isEnabled = active
         } else {
 
-            binding.nextButton.setEnabled(active)
+            binding.nextButton.isEnabled = active
         }
     }
 

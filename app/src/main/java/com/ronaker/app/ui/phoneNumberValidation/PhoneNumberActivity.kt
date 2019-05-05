@@ -145,7 +145,7 @@ class PhoneNumberActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        prePage()
+        finish()
     }
 
 

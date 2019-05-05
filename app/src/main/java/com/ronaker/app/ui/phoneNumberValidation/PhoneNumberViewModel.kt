@@ -1,10 +1,14 @@
 package com.ronaker.app.ui.phoneNumberValidation
 
+import android.os.CountDownTimer
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
+
+
 
 class PhoneNumberViewModel : BaseViewModel() {
 
@@ -16,7 +20,17 @@ class PhoneNumberViewModel : BaseViewModel() {
 
 
     private var addPhoneSubscription: Disposable? = null
+
+    private var resendSubscription: Disposable? = null
+
     private var verifyPhoneSubscription: Disposable? = null
+
+
+    val timerVisibility: MutableLiveData<Int> = MutableLiveData()
+    val resendVisibility: MutableLiveData<Int> = MutableLiveData()
+    val timerValue: MutableLiveData<String> = MutableLiveData()
+
+
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -61,13 +75,49 @@ class PhoneNumberViewModel : BaseViewModel() {
                 if (result.isSuccess()) {
                     mNumber = phone
                     viewState.value = StateEnum.validate
+                    startTimer()
+
                 } else {
                     errorMessage.value = result.error?.detail
                 }
             }
 
     }
+    fun resend(){
+        resendSubscription = userRepository.addUserPhoneNumber(userRepository.getUserToken(), mNumber)
+            .doOnSubscribe { loading.value = true }
+            .doOnTerminate { loading.value = false }
+            .subscribe { result ->
+                loading.value = false
+                if (result.isSuccess()) {
+                    startTimer()
 
+                } else {
+                    errorMessage.value = result.error?.detail
+                }
+            }
+    }
+
+    var  countDounTimer: CountDownTimer?=null
+
+    fun startTimer(){
+        timerValue.value="00"
+        timerVisibility.value= View.VISIBLE
+        resendVisibility.value= View.GONE
+
+        countDounTimer=  object : CountDownTimer(60000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                timerValue.value= (millisUntilFinished / 1000).toString()
+            }
+
+            override fun onFinish() {
+                timerVisibility.value= View.GONE
+                resendVisibility.value= View.VISIBLE
+            }
+        }.start()
+
+    }
 
     fun onClickValidNext(pin: String) {
 
@@ -98,6 +148,9 @@ class PhoneNumberViewModel : BaseViewModel() {
         super.onCleared()
         addPhoneSubscription?.dispose()
         verifyPhoneSubscription?.dispose()
+        resendSubscription?.dispose()
+
+        countDounTimer?.cancel()
     }
 
 
