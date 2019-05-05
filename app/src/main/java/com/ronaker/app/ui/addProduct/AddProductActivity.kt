@@ -31,6 +31,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
+import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import java.io.IOException
 
 
@@ -127,7 +128,7 @@ class AddProductActivity : BaseActivity() {
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
-        binding.toolbar.actionTextClickListener=View.OnClickListener { finish()}
+        binding.toolbar.actionTextClickListener = View.OnClickListener { finish() }
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -146,7 +147,10 @@ class AddProductActivity : BaseActivity() {
 
 
         viewModel.goNext.observe(this, Observer { value ->
-           finish()
+            if (value)
+                startActivity(PhoneNumberActivity.newInstance(this@AddProductActivity))
+            else
+                finish()
         })
 
         initViewPagerRegister()
@@ -259,9 +263,6 @@ class AddProductActivity : BaseActivity() {
 //            binding.backButton.setClickable(false)
         }
     }
-
-
-
 
 
     fun onProfileImageClick() {

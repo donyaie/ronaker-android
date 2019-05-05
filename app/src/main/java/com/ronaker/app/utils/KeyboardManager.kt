@@ -19,8 +19,8 @@ object KeyboardManager {
 
     }
 
-    fun showSoftKeyboard(context: Context, view: View) {
-        val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    fun showSoftKeyboard(context: Context?, view: View) {
+        val inputMethodManager = context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         view.requestFocus()
         inputMethodManager.showSoftInput(view, 0)
         Debug.Log(TAG, "showSoftKeyboardView")

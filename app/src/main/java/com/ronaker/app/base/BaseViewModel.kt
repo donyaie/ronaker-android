@@ -8,6 +8,7 @@ import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.login.LoginViewModel
+import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
@@ -32,6 +33,7 @@ abstract class BaseViewModel : ViewModel() {
             is ExploreViewModel -> injector.inject(this)
             is AddProductViewModel -> injector.inject(this)
             is AddProductImageAdapterViewModel->injector.inject(this)
+            is PhoneNumberViewModel->injector.inject(this)
         }
 
     }

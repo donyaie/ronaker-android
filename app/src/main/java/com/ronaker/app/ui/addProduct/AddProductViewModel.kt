@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
+import com.ronaker.app.base.NetworkError.Companion.error_unverified_phone_number
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -163,9 +164,14 @@ class AddProductViewModel : BaseViewModel() {
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    goNext.value = true
-                } else
-                    errorMessage.value = result.error?.detail
+                    goNext.value = false
+                } else {
+                    if (result.error?.detail_code == error_unverified_phone_number)
+                        goNext.value = true
+                    else
+
+                        errorMessage.value = result.error?.detail
+                }
             }
 
     }

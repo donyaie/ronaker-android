@@ -12,6 +12,7 @@ import com.ncapdevi.fragnav.tabhistory.FragNavTabHistoryController
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.explore.ExploreFragment
+import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 
@@ -87,7 +88,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                 when(index){
                     0->  mNavController.switchTab(INDEX_EXPLORE)
                     1->  Toast.makeText(this@DashboardActivity,"History",Toast.LENGTH_LONG).show()
-                    2->  startActivity(AddProductActivity.newInstance(this@DashboardActivity ))
+//                    2->  startActivity(AddProductActivity.newInstance(this@DashboardActivity ))
+                    2->  startActivity(PhoneNumberActivity.newInstance(this@DashboardActivity ))
                     3->  Toast.makeText(this@DashboardActivity,"Inbox",Toast.LENGTH_LONG).show()
                     4->  Toast.makeText(this@DashboardActivity,"Profile",Toast.LENGTH_LONG).show()
 

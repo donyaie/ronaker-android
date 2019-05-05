@@ -23,7 +23,7 @@
                 android:id="@+id/cancel_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:padding="12dp"
+                android:padding="14dp"
                 android:tint="@color/white"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/ic_back_white"/>

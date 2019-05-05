@@ -38,7 +38,7 @@ interface UserApi {
     /**
      * add phone number to user and recive otp
      */
-    @POST("/api/v1/users/phone_number/?")
+    @POST("/api/v1/users/phone_number/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun addUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserAddPhoneRequestModel): Observable<UserAddPhoneResponceModel>
 

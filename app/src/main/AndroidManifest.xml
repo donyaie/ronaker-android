@@ -53,6 +53,13 @@
 
         <activity
                 android:screenOrientation="portrait"
+                android:theme="@style/phoneNumberTheme"
+
+                android:name=".ui.phoneNumberValidation.PhoneNumberActivity">
+        </activity>
+
+        <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.imagePicker.ImagePickerActivity">
         </activity>
 

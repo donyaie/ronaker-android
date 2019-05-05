@@ -4,8 +4,11 @@ import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.UserApi
+import com.ronaker.app.data.network.request.UserActivePhoneRequestModel
+import com.ronaker.app.data.network.request.UserAddPhoneRequestModel
 import com.ronaker.app.data.network.request.UserLoginRequestModel
 import com.ronaker.app.data.network.request.UserRegisterRequestModel
+import com.ronaker.app.data.network.response.UserAddPhoneResponceModel
 import com.ronaker.app.data.network.response.UserInfoResponceModel
 import com.ronaker.app.data.network.response.UserRegisterResponseModel
 import com.ronaker.app.model.User
@@ -37,7 +40,29 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
 
 
     fun getUserInfo(user_token: String): Observable<Result<UserInfoResponceModel>> {
-        return userApi.getUserInfo(user_token)
+        return userApi.getUserInfo("Token $user_token")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
+    fun addUserPhoneNumber(user_token: String?, phone_number: String): Observable<Result<UserAddPhoneResponceModel>> {
+
+        var phone = UserAddPhoneRequestModel(phone_number)
+        return userApi.addUserPhoneNumber("Token $user_token", phone)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
+    fun activeUserPhoneNumber(
+        user_token: String?,
+        phone_number: String,
+        code: String
+    ): Observable<Result<UserRegisterResponseModel>> {
+
+        var phone = UserActivePhoneRequestModel(phone_number, code)
+        return userApi.activeUserPhoneNumber("Token $user_token", phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 
