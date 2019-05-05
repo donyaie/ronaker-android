@@ -14,13 +14,13 @@ class ItemExploreViewModel : BaseViewModel() {
         productTitle.value = post.name
 
         if (!(post.price_per_day?.equals(0) ?: (false))) {
-            productPrice.value = "$" + post.price_per_day + " per day"
+            productPrice.value = "€" + post.price_per_day + " per day"
         } else if (!(post.price_per_week?.equals(0) ?: (false))) {
 
-            productPrice.value = "$" + post.price_per_week + " per week"
+            productPrice.value = "€" + post.price_per_week + " per week"
         } else if (!(post.price_per_month?.equals(0) ?: (false))) {
 
-            productPrice.value = "$" + post.price_per_month + " per month"
+            productPrice.value = "€" + post.price_per_month + " per month"
         }
         else{
             productPrice.value=""

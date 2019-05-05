@@ -24,5 +24,11 @@
         <item name="android:dialogTheme">@style/WhiteDialog</item>
     </style>
 
+    <style name="phoneNumberTheme" parent="AppTheme">
+
+
+        <item name="android:dialogTheme">@style/WhiteDialog</item>
+    </style>
+
 
 </resources>

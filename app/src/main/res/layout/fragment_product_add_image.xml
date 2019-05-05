@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.addProduct.AddProductViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ScrollView android:layout_width="match_parent" android:fillViewport="true" android:orientation="vertical"
+                    android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:paddingBottom="80dp"
+                    android:layout_height="wrap_content">
+
+                <TextView android:layout_width="match_parent"
+                          app:layout_constraintTop_toTopOf="parent"
+                          android:layout_marginTop="24dp"
+                          android:layout_marginLeft="24dp"
+                          android:layout_marginRight="24dp"
+                          android:text="Add Images of item"
+                          android:textAppearance="@style/TextAppearance.Heading.1"
+                          android:gravity="left"
+                          android:id="@+id/title"
+                          android:textColor="@color/colorTextDark"
+                          android:layout_height="wrap_content"/>
+                <TextView android:layout_width="match_parent"
+                          android:layout_marginLeft="24dp"
+                          android:textColor="@color/colorTextDark"
+                          android:textAppearance="@style/TextAppearance.Medium.Regular"
+                          android:layout_marginTop="16dp"
+                          android:text="Add few images from your item. please use clear image from proper angle…"
+                          android:layout_marginRight="24dp"
+                          android:id="@+id/description"
+                          app:layout_constraintTop_toBottomOf="@id/title"
+                          android:layout_height="wrap_content"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="40dp"
+
+                        app:adapter="@{viewModel.getAdapter()}"
+                        app:layout_constraintTop_toBottomOf="@id/description"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:id="@+id/recycler"
+
+                        android:layout_height="wrap_content"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+        <Button
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="160dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/next_button"
+                android:onClick="@{()->viewModel.onClickImageNext()}"
+
+                android:text="Next"
+                style="@style/Button.accent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

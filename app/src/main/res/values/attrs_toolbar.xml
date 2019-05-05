@@ -6,8 +6,8 @@
     <string name="toolbar_action_default">Save</string>
     <declare-styleable name="toolbar_component_attributes">
 
-        <attr name="toolbar_component_title" format="reference"/>
-        <attr name="toolbar_component_action_text" format="reference"/>
+        <attr name="toolbar_component_title" format="reference|string"/>
+        <attr name="toolbar_component_action_text" format="reference|string"/>
 
         <attr name="toolbar_component_transparent" format="boolean"/>
         <attr name="toolbar_component_bottom_line" format="boolean"/>

@@ -1,5 +1,9 @@
 package com.ronaker.app.model
 
+import android.net.Uri
+import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.data.network.request.ProductCreateRequestModel
+import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import com.ronaker.app.data.network.response.ProductItemResponceModel
 
 /**
@@ -21,9 +25,11 @@ data class Product(
     , var description: String?
     , var avatar: String?
     , var images: ArrayList<ProductImage>?
+    , var avatar_suid: String? = null
 
 ) {
     constructor() : this(
+        null,
         null,
         null,
         null,
@@ -35,27 +41,82 @@ data class Product(
     )
 
 
+    data class ProductImage(
+        var url: String?,
+        var suid: String?, var uri: Uri? = null, var isLocal: Boolean = false
+    ) {
 
-    data class ProductImage(var url:String? ,
-                            var suid:String?){
+        constructor() : this(null, null)
+
+
+        val progress: MutableLiveData<Boolean> = MutableLiveData()
 
     }
 
 }
 
 
-fun List<ProductItemResponceModel>.toModel():List<Product> {
+fun List<ProductItemResponceModel>.toProduct(): List<Product> {
 
 
-    var list:ArrayList<Product> = ArrayList()
+    var list: ArrayList<Product> = ArrayList()
 
     this.forEach {
 
-        var product=Product(it.suid,it.name,it.price_per_day,it.price_per_week,it.price_per_month,it.description,it.avatar,null)
+        var product = Product(
+            it.suid,
+            it.name,
+            it.price_per_day,
+            it.price_per_week,
+            it.price_per_month,
+            it.description,
+            it.avatar,
+            null
+        )
 
         list.add(product)
     }
 
     return list
+
+}
+
+
+fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductImage> {
+
+
+    var list: ArrayList<Product.ProductImage> = ArrayList()
+
+    this.forEach {
+
+        var product = Product.ProductImage(it.suid, it.url)
+
+        list.add(product)
+    }
+
+    return list
+
+}
+
+
+fun Product.toProductCreateModel(): ProductCreateRequestModel {
+
+
+    var imageList = ArrayList<String>()
+
+    this.images?.forEach { if (it.suid != null) imageList.add(it.suid!!) }
+
+    var item = ProductCreateRequestModel(
+        this.name!!,
+        this.price_per_day!!,
+        this.price_per_week!!,
+        this.price_per_month!!,
+        this.description!!,
+        this.avatar_suid!!,
+        imageList
+    )
+
+
+    return item
 
 }

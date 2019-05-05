@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel"/>
+    </data>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+
+                android:id="@+id/toolbar"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/statusBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:toolbar_component_title="@string/app_name"
+                app:toolbar_component_transparent="false"
+                app:toolbar_component_action_text="Cancel"
+                app:toolbar_component_bottom_line="false"
+                app:toolbar_component_dot_count="4"
+                app:toolbar_component_center_container="NONE"
+                app:toolbar_component_action_container="NONE"
+                app:toolbar_component_cancel_container="CLOSE"
+        />
+
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar">
+
+
+            <com.ronaker.app.utils.view.ViewPagerCustom
+                    android:id="@+id/viewpager"
+                    android:fitsSystemWindows="true"
+                    android:layout_marginTop="@dimen/statusBarSizeMargin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+        </RelativeLayout>
+
+        <com.ronaker.app.utils.view.LoadingComponent
+                android:id="@+id/loading" android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"/>
+
+
+    </RelativeLayout>
+
+
+
+</layout>

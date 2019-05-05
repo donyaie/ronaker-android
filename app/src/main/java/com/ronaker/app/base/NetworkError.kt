@@ -44,6 +44,10 @@ class NetworkError(error: Throwable) {
 
     var exception_error: Throwable? = null
 
+    companion object {
+
+        var error_unverified_phone_number = "unverified_phone_number"
+    }
 
     init {
 

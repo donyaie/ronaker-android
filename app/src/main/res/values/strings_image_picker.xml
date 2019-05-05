@@ -1,0 +1,36 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="lbl_set_profile_photo">Set profile image</string>
+    <string name="lbl_take_camera_picture">Take a picture</string>
+    <string name="lbl_choose_from_gallery">Choose from gallery</string>
+    <string name="toast_image_intent_null">Image picker option is missing!</string>
+
+    <string name="dialog_permission_title">Grant Permissions</string>
+    <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="go_to_settings">GOTO SETTINGS</string>
+
+
+    <style name="AppTheme.UCrop" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+
+    <!--uCrop Activity-->
+    <color tools:override="true"  name="ucrop_color_toolbar">#fff</color>
+    <color tools:override="true"  name="ucrop_color_statusbar">#f5f5f5</color>
+    <color tools:override="true"  name="ucrop_color_toolbar_widget">#ffffff</color>
+    <color tools:override="true"  name="ucrop_color_widget">#000</color>
+    <color tools:override="true"  name="ucrop_color_widget_active">#FFFFFF</color>
+    <color tools:override="true"  name="ucrop_color_active_controls_color">#FFFFFF</color>
+    <color tools:override="true"  name="ucrop_color_widget_rotate_mid_line">@color/colorNavy</color>
+    <color tools:override="true"  name="ucrop_color_widget_background">@color/colorNavy</color>
+    <color tools:override="true"  name="ucrop_color_widget_text">#000000</color>
+    <color tools:override="true"  name="ucrop_color_progress_wheel_line">#000000</color>
+    <color tools:override="true"  name="ucrop_color_crop_background">#000</color>
+
+    <!--Crop View-->
+    <color tools:override="true"  name="ucrop_color_default_crop_grid">#80ffffff</color>
+    <color tools:override="true"  name="ucrop_color_default_crop_frame">#ffffff</color>
+    <color tools:override="true"  name="ucrop_color_default_dimmed">#8c000000</color>
+    <color tools:override="true"  name="ucrop_color_default_logo">#4f212121</color>
+
+
+</resources>

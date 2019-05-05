@@ -1,0 +1,72 @@
+package com.ronaker.app.ui.phoneNumberValidation
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
+import com.jakewharton.rxbinding2.widget.RxTextView
+import com.ronaker.app.R
+import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.utils.view.IPagerFragment
+
+class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
+
+    private lateinit var binding: com.ronaker.app.databinding.FragmentPhoneNumberVerifyBinding
+    private lateinit var viewModel: PhoneNumberViewModel
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_phone_number_verify, container, false)
+        activity?.let {
+            viewModel = ViewModelProviders.of(it).get(PhoneNumberViewModel::class.java)
+            binding.viewModel = viewModel
+        }
+
+
+        RxTextView.textChanges(binding.pinEditText).subscribe {
+            validateCode(it.toString())
+        }
+
+
+
+        return binding.root
+    }
+
+    fun validateCode(value: String) {
+
+
+        if (value.length == 4) {
+            activeNext(true)
+        } else {
+            activeNext(false)
+
+        }
+
+
+    }
+
+    internal fun activeNext(active: Boolean) {
+        if (active) {
+
+            binding.nextButton.isEnabled = active
+        } else {
+
+            binding.nextButton.isEnabled = active
+        }
+    }
+
+    companion object {
+
+        fun newInstance(): PhoneNumberVerifyFragment {
+            return PhoneNumberVerifyFragment()
+        }
+    }
+
+    override fun onSelect() {
+    }
+
+
+}
