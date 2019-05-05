@@ -88,8 +88,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                 when(index){
                     0->  mNavController.switchTab(INDEX_EXPLORE)
                     1->  Toast.makeText(this@DashboardActivity,"History",Toast.LENGTH_LONG).show()
-//                    2->  startActivity(AddProductActivity.newInstance(this@DashboardActivity ))
-                    2->  startActivity(PhoneNumberActivity.newInstance(this@DashboardActivity ))
+                    2->  startActivity(AddProductActivity.newInstance(this@DashboardActivity ))
+//                    2->  startActivity(PhoneNumberActivity.newInstance(this@DashboardActivity ))
                     3->  Toast.makeText(this@DashboardActivity,"Inbox",Toast.LENGTH_LONG).show()
                     4->  Toast.makeText(this@DashboardActivity,"Profile",Toast.LENGTH_LONG).show()
 
