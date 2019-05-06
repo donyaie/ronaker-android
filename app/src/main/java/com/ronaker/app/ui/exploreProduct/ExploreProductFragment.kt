@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import android.view.ViewTreeObserver.OnScrollChangedListener
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import kotlinx.android.synthetic.main.component_toolbar.view.*
 
 
@@ -32,6 +33,7 @@ class ExploreProductFragment : BaseFragment() {
 
 
 
+        binding.toolbar.cancelClickListener = View.OnClickListener { (activity as DashboardActivity).backFragment() }
 
         productViewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) {
@@ -48,24 +50,26 @@ class ExploreProductFragment : BaseFragment() {
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
+            try {
+                val scrollY = binding.scrollView.scrollY
 
-            val scrollY = binding.scrollView.scrollY
+                if (scrollY <= binding.avatarImage.height - binding.toolbar.bottom) {
 
-            if (scrollY <= binding.avatarImage.height - binding.toolbar.bottom) {
+                    binding.toolbar.isTransparent = true
+                    binding.toolbar.isBottomLine = false
+                    binding.statusBar.setBackgroundColor(resources.getColor(R.color.transparent))
 
-                binding.toolbar.isTransparent = true
-                binding.toolbar.isBottomLine = false
-                binding.statusBar.setBackgroundColor(resources.getColor(R.color.transparent))
+                } else {
 
-            } else {
+                    binding.toolbar.isTransparent = false
+                    binding.toolbar.isBottomLine = true
 
-                binding.toolbar.isTransparent = false
-                binding.toolbar.isBottomLine = true
+                    binding.statusBar.setBackgroundColor(resources.getColor(R.color.white))
+                }
 
-                binding.statusBar.setBackgroundColor(resources.getColor(R.color.white))
+            } catch (ex: Exception ){
+
             }
-
-
         };
 
 

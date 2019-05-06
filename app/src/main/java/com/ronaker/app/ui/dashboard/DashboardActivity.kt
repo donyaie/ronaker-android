@@ -114,6 +114,12 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         }
     }
 
+    fun backFragment() {
+        if (mNavController != null) {
+            mNavController.popFragment()
+        }
+    }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
