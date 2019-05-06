@@ -7,6 +7,7 @@ import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
+import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
@@ -31,7 +32,7 @@ interface ViewModelInjector {
     fun inject(viewModel: AddProductViewModel)
     fun inject(viewModel: AddProductImageAdapterViewModel)
     fun inject(viewModel: PhoneNumberViewModel)
-
+    fun inject(viewModel: ExploreProductViewModel)
 
     @Component.Builder
     interface Builder {
