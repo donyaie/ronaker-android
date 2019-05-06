@@ -3,6 +3,8 @@ package com.ronaker.app.ui.explore
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.ui.exploreProduct.ExploreProductFragment
 import com.ronaker.app.utils.BASE_URL
 
 class ItemExploreViewModel : BaseViewModel() {
@@ -10,9 +12,13 @@ class ItemExploreViewModel : BaseViewModel() {
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
 
-    fun bind(post: Product) {
-        productTitle.value = post.name
+    lateinit var data: Product
+    lateinit var   activity: DashboardActivity
 
+    fun bind(post: Product, context: DashboardActivity) {
+        data = post
+        productTitle.value = post.name
+        activity=context
         if (!(post.price_per_day?.equals(0) ?: (false))) {
             productPrice.value = "€" + post.price_per_day + " per day"
         } else if (!(post.price_per_week?.equals(0) ?: (false))) {
@@ -21,14 +27,18 @@ class ItemExploreViewModel : BaseViewModel() {
         } else if (!(post.price_per_month?.equals(0) ?: (false))) {
 
             productPrice.value = "€" + post.price_per_month + " per month"
+        } else {
+            productPrice.value = ""
         }
-        else{
-            productPrice.value=""
-        }
 
-        productImage.value= BASE_URL+post.avatar
+        productImage.value = BASE_URL + post.avatar
 
 
+    }
+
+    fun onClickProduct() {
+
+        activity.pushFragment(ExploreProductFragment.newInstance(data.suid))
     }
 
     fun getProductTitle(): MutableLiveData<String> {

@@ -133,6 +133,10 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 actionText.setTextColor(resources.getColor(R.color.colorTextDark))
                 titleText.setTextColor(resources.getColor(R.color.colorTextDark))
             }
+
+
+            cancelContainer=cancelContainer
+            cancelContainer=cancelContainer
         }
 
      var isBottomLine: Boolean = false

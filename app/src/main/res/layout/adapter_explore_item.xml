@@ -9,6 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="172dp"
             android:padding="8dp"
+            android:onClick="@{()->viewModel.onClickProduct()}"
+
             android:layout_gravity="center"
             android:layout_height="216dp">
         <ImageView android:layout_width="156dp"

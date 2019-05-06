@@ -35,8 +35,7 @@ fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
 
     val parentActivity:AppCompatActivity? = view.getParentActivity()
     if(parentActivity != null && url != null) {
-        Glide.with(parentActivity).load(url.value).into(view)
-//            GlideApp.observe(parentActivity, Observer { value -> view.text = value?:""})
+        url.observe(parentActivity, Observer {value ->  Glide.with(parentActivity).load(value).into(view)})
     }
 }
 

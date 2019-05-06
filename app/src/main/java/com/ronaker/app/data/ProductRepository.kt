@@ -7,6 +7,7 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.ProductApi
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
 import com.ronaker.app.data.network.response.ProductCreateResponseModel
+import com.ronaker.app.data.network.response.ProductDetailResponceModel
 import com.ronaker.app.data.network.response.ProductSearchResponceModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.model.toProductCreateModel
@@ -33,6 +34,15 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 
     }
+
+    fun getProduct(token: String?, suid:String): Observable<Result<ProductDetailResponceModel>> {
+        return productApi.getProduct("Token $token",suid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
+
 
 
 }
