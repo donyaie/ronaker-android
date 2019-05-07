@@ -18,6 +18,14 @@ interface ProductApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ProductSearchResponceModel>
 
+    /**
+     * Register new user
+     */
+    @GET("/api/v1/products/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun getMyProduct(@Header("Authorization") authToken: String?): Observable<ProductSearchResponceModel>
+
+
 
     /**
      * Register new user

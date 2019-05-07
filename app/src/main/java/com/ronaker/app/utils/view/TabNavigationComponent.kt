@@ -128,10 +128,10 @@ class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: 
 
     fun select(index: Int) {
 
-        if(index==2) {
-            selectListener?.onSelect(index)
-            return
-        }
+//        if(index==2) {
+//            selectListener?.onSelect(index)
+//            return
+//        }
 
         if(index==selectedIndex)
             selectListener?.onReSelected(index)
