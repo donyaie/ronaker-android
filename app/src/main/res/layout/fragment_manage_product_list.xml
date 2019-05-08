@@ -4,7 +4,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.manageProductList.ManageProductListViewModel"/>
+                type="com.ronaker.app.ui.manageProduct.ManageProductListViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

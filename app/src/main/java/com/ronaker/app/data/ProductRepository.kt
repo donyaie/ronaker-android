@@ -44,6 +44,14 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
     }
 
+    fun productUpdate(token: String?,suid:String, product:Product): Observable<Result<ProductCreateResponseModel>> {
+
+        return productApi.productUpdate("Token $token",suid,product.toProductCreateModel() )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
     fun getProduct(token: String?, suid:String): Observable<Result<ProductDetailResponceModel>> {
         return productApi.getProduct("Token $token",suid)
             .subscribeOn(Schedulers.io())

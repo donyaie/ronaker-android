@@ -1,7 +1,6 @@
-package com.ronaker.app.ui.manageProductList
+package com.ronaker.app.ui.manageProduct
 
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError

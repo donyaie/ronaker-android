@@ -1,11 +1,10 @@
-package com.ronaker.app.ui.manageProductList
+package com.ronaker.app.ui.manageProduct
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
-import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.databinding.AdapterManageProductBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -42,7 +41,7 @@ class ManageProductAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<
        var context: DashboardActivity
     ):RecyclerView.ViewHolder(binding.root){
 
-        private val viewModel = ManageproductAdapterViewModel()
+        private val viewModel = ManageProductAdapterViewModel()
 
         fun bind(product:Product){
             viewModel.bind(product,context)

@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.tabhistory.FragNavTabHistoryController
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.explore.ExploreFragment
-import com.ronaker.app.ui.manageProductList.ManageProductListFragment
+import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 
