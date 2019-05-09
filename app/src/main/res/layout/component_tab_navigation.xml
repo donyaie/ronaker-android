@@ -1,109 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        android:background="@color/white"
-        android:layout_height="56dp">
+        android:layout_height="56dp"
+        android:layout_width="match_parent">
 
-    <RelativeLayout android:layout_width="match_parent" android:background="@color/colorTextGreyLight"
-                    android:alpha="0.2" android:layout_height="1dp"/>
-    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal"
-                  android:weightSum="5" android:layout_height="match_parent">
-
-
-        <LinearLayout android:id="@+id/explore_layout" android:layout_width="0dp" android:gravity="center_horizontal"
-                      android:layout_weight="1"
-                      android:orientation="vertical" android:layout_height="match_parent">
-
-            <ImageView
-                    android:id="@+id/explore_image" android:layout_marginTop="8dp" android:layout_width="26dp"
-                    android:background="@color/colorAccent"
-                    android:layout_height="26dp"/>
-            <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
-                      android:layout_height="wrap_content"
-                      android:text="Explore"
-                      android:id="@+id/explore_text"
-                      android:textAppearance="@style/TextAppearance.Small.Regular"
-                      android:textColor="@color/colorAccent"
-                      android:gravity="center"
-            />
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/history_layout" android:layout_width="0dp" android:gravity="center_horizontal"
-                      android:layout_weight="1"
-                      android:orientation="vertical" android:layout_height="match_parent">
-
-            <ImageView android:id="@+id/history_image" android:layout_marginTop="8dp" android:layout_width="26dp"
-                       android:background="@color/colorTextGreyLight"
-                       android:layout_height="26dp"/>
-            <TextView android:id="@+id/history_text" android:layout_width="match_parent" android:layout_marginTop="4dp"
-                      android:layout_height="wrap_content"
-                      android:text="History"
-                      android:textAppearance="@style/TextAppearance.Small.Regular"
-                      android:textColor="@color/colorTextGreyLight"
-                      android:gravity="center"
-            />
-        </LinearLayout>
+            <RelativeLayout android:layout_width="match_parent" android:background="@color/colorTextGreyLight"
+            android:alpha="0.2" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="match_parent" android:orientation="horizontal"
+                          android:weightSum="5" android:layout_height="match_parent">
 
 
-        <LinearLayout android:id="@+id/addItem_layout" android:layout_width="0dp" android:gravity="center_horizontal"
-                      android:layout_weight="1"
-                      android:orientation="vertical" android:layout_height="match_parent">
+                <LinearLayout android:id="@+id/explore_layout" android:layout_width="0dp"
+                              android:gravity="center_horizontal"
+                              android:layout_weight="1"
+                              android:orientation="vertical" android:layout_height="match_parent">
 
-            <ImageView android:id="@+id/addItem_image" android:layout_marginTop="8dp" android:layout_width="26dp"
-                       android:background="@color/colorTextGreyLight"
-                       android:layout_height="26dp"/>
-            <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
-                      android:layout_height="wrap_content"
-                      android:text="Add Item"
-                      android:id="@+id/addItem_text"
-                      android:textAppearance="@style/TextAppearance.Small.Regular"
-                      android:textColor="@color/colorTextGreyLight"
-                      android:gravity="center"
-            />
-        </LinearLayout>
+                    <ImageView
+                            android:id="@+id/explore_image" android:layout_marginTop="8dp" android:layout_width="26dp"
+                            android:background="@color/colorAccent"
+                            android:layout_height="26dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
+                              android:layout_height="wrap_content"
+                              android:text="Explore"
+                              android:id="@+id/explore_text"
+                              android:textAppearance="@style/TextAppearance.Small.Regular"
+                              android:textColor="@color/colorAccent"
+                              android:gravity="center"
+                    />
+                </LinearLayout>
 
+                <LinearLayout android:id="@+id/history_layout" android:layout_width="0dp"
+                              android:gravity="center_horizontal"
+                              android:layout_weight="1"
+                              android:orientation="vertical" android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="0dp" android:id="@+id/inbox_layout" android:gravity="center_horizontal"
-                      android:layout_weight="1"
-                      android:orientation="vertical" android:layout_height="match_parent">
-
-            <ImageView android:layout_marginTop="8dp" android:id="@+id/inbox_image" android:layout_width="26dp"
-                       android:background="@color/colorTextGreyLight"
-                       android:layout_height="26dp"/>
-            <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
-                      android:layout_height="wrap_content"
-                      android:text="Inbox"
-                      android:id="@+id/inbox_text"
-                      android:textAppearance="@style/TextAppearance.Small.Regular"
-                      android:textColor="@color/colorTextGreyLight"
-                      android:gravity="center"
-            />
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/profile_layout" android:layout_width="0dp" android:gravity="center_horizontal"
-                      android:layout_weight="1"
-                      android:orientation="vertical" android:layout_height="match_parent">
-
-            <ImageView android:layout_marginTop="8dp" android:id="@+id/profile_image" android:layout_width="26dp"
-                       android:background="@color/colorTextGreyLight"
-                       android:layout_height="26dp"/>
-            <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
-                      android:layout_height="wrap_content"
-                      android:text="Profile"
-                      android:id="@+id/profile_text"
-                      android:textAppearance="@style/TextAppearance.Small.Regular"
-                      android:textColor="@color/colorTextGreyLight"
-                      android:gravity="center"
-            />
-        </LinearLayout>
+                    <ImageView android:id="@+id/history_image" android:layout_marginTop="8dp"
+                               android:layout_width="26dp"
+                               android:background="@color/colorTextGreyLight"
+                               android:layout_height="26dp"/>
+                    <TextView android:id="@+id/history_text" android:layout_width="match_parent"
+                              android:layout_marginTop="4dp"
+                              android:layout_height="wrap_content"
+                              android:text="History"
+                              android:textAppearance="@style/TextAppearance.Small.Regular"
+                              android:textColor="@color/colorTextGreyLight"
+                              android:gravity="center"
+                    />
+                </LinearLayout>
 
 
-    </LinearLayout>
+                <LinearLayout android:id="@+id/addItem_layout" android:layout_width="0dp"
+                              android:gravity="center_horizontal"
+                              android:layout_weight="1"
+                              android:orientation="vertical" android:layout_height="match_parent">
+
+                    <ImageView android:id="@+id/addItem_image" android:layout_marginTop="8dp"
+                               android:layout_width="26dp"
+                               android:background="@color/colorTextGreyLight"
+                               android:layout_height="26dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
+                              android:layout_height="wrap_content"
+                              android:text="Add Item"
+                              android:id="@+id/addItem_text"
+                              android:textAppearance="@style/TextAppearance.Small.Regular"
+                              android:textColor="@color/colorTextGreyLight"
+                              android:gravity="center"
+                    />
+                </LinearLayout>
+
+
+                <LinearLayout android:layout_width="0dp" android:id="@+id/inbox_layout"
+                              android:gravity="center_horizontal"
+                              android:layout_weight="1"
+                              android:orientation="vertical" android:layout_height="match_parent">
+
+                    <ImageView android:layout_marginTop="8dp" android:id="@+id/inbox_image" android:layout_width="26dp"
+                               android:background="@color/colorTextGreyLight"
+                               android:layout_height="26dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
+                              android:layout_height="wrap_content"
+                              android:text="Inbox"
+                              android:id="@+id/inbox_text"
+                              android:textAppearance="@style/TextAppearance.Small.Regular"
+                              android:textColor="@color/colorTextGreyLight"
+                              android:gravity="center"
+                    />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/profile_layout" android:layout_width="0dp"
+                              android:gravity="center_horizontal"
+                              android:layout_weight="1"
+                              android:orientation="vertical" android:layout_height="match_parent">
+
+                    <ImageView android:layout_marginTop="8dp" android:id="@+id/profile_image"
+                               android:layout_width="26dp"
+                               android:background="@color/colorTextGreyLight"
+                               android:layout_height="26dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
+                              android:layout_height="wrap_content"
+                              android:text="Profile"
+                              android:id="@+id/profile_text"
+                              android:textAppearance="@style/TextAppearance.Small.Regular"
+                              android:textColor="@color/colorTextGreyLight"
+                              android:gravity="center"
+                    />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
 </LinearLayout>

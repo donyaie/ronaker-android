@@ -9,8 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 import com.ronaker.app.utils.view.LoadingComponent
 
@@ -26,8 +28,9 @@ class ManageProductListFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this).get(ManageProductListViewModel::class.java)
 
         var mnager = GridLayoutManager(context, 2)
-        binding.recycler.layoutManager = mnager
 
+        binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
+        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         viewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
@@ -44,7 +47,12 @@ class ManageProductListFragment : BaseFragment() {
         })
 
 
-
+        binding.addNewProductButton.setOnClickListener{
+            startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+        }
+        binding.addProductButton.setOnClickListener{
+            startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+        }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) {

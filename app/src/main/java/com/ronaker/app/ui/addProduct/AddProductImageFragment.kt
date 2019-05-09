@@ -12,7 +12,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
 import android.view.MotionEvent
-
+import androidx.recyclerview.widget.RecyclerView
 
 
 class AddProductImageFragment : BaseFragment(), IPagerFragment {
@@ -31,7 +31,7 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
 
         var mnager = GridLayoutManager(context, 2)
 
-        binding.recycler.layoutManager = mnager
+        binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
         binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         return binding.root

@@ -38,7 +38,7 @@ class ManageProductAdapterViewModel : BaseViewModel() {
 
     fun onClickProduct() {
 
-        activity.pushFragment(ExploreProductFragment.newInstance(data.suid))
+        activity.pushFragment(ManageProductFragment.newInstance(data.suid))
     }
 
     fun getProductTitle(): MutableLiveData<String> {

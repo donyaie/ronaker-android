@@ -136,7 +136,6 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
             cancelContainer=cancelContainer
-            cancelContainer=cancelContainer
         }
 
      var isBottomLine: Boolean = false

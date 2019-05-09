@@ -39,6 +39,15 @@ fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
     }
 }
 
+//@BindingAdapter("mutableImage")
+//fun setMutableRoundedImage(view: ImageView, url: MutableLiveData<String>?) {
+//
+//    val parentActivity:AppCompatActivity? = view.getParentActivity()
+//    if(parentActivity != null && url != null) {
+//        url.observe(parentActivity, Observer {value ->  Glide.with(parentActivity).load(value).into(view)})
+//    }
+//}
+
 @BindingAdapter("adapter")
 fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
     view.adapter = adapter
