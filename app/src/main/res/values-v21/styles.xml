@@ -13,6 +13,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 
+        <item name="android:textViewStyle">@style/Widget.Ronaker.TextView</item>
 
     </style>
 </resources>
