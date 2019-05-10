@@ -18,7 +18,7 @@
     <style name="Widget.Ronaker.TextView"
            parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">@style/TextAppearance.Medium.Regular</item>
-        <item name="android:lineSpacingMultiplier">1.3</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
     <style name="AppTheme.Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
