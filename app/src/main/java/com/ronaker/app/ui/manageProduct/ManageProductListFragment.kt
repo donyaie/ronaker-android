@@ -75,6 +75,11 @@ class ManageProductListFragment : BaseFragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadProduct()
+    }
+
 
     companion object {
 

@@ -42,10 +42,12 @@ class ManageProductListViewModel : BaseViewModel() {
         dataList = ArrayList()
         productListAdapter = ManageProductAdapter(dataList)
 
-        loadProduct()
+
     }
 
     fun loadProduct() {
+
+        dataList.clear()
 
         subscription = productRepository
             .getMyProduct(userRepository.getUserToken())
