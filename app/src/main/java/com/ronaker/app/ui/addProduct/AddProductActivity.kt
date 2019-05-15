@@ -96,6 +96,11 @@ class AddProductActivity : BaseActivity() {
             boundle.putString(SUID_KEY, suid)
             boundle.putInt(STATE_KEY, state.position)
             intent.putExtras(boundle)
+
+            intent.flags =  Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+
+
             return intent
         }
     }

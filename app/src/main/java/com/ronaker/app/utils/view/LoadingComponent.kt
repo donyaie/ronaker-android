@@ -92,16 +92,17 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     fun showLoading() {
-        loadinLayout.visibility = View.VISIBLE
 
-        loadinLayout.animate().alpha(1f).setDuration(200).start()
+        loadinLayout.animate().cancel()
+        loadinLayout.visibility = View.VISIBLE
+        loadinLayout.animate().alpha(1f).setDuration(50).start()
 
     }
 
     fun showRetry() {
         retry.isClickable = true
 
-        retry_layout.visibility = View.VISIBLE
+        retry_layout.visibility = View.GONE
 
         retry_layout.animate().alpha(1f).setDuration(200).start()
     }
@@ -130,6 +131,8 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun hideLoading() {
 
+
+        loadinLayout.animate().cancel()
         loadinLayout.animate().alpha(0f).setDuration(200).setListener(object : Animator.AnimatorListener {
             override fun onAnimationEnd(animation: Animator?) {
                 loadinLayout.visibility = View.GONE
