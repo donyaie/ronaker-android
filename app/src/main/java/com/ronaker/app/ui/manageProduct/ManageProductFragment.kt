@@ -10,11 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.addProduct.AddProductActivity
+import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardActivity
 
 
 class ManageProductFragment : BaseFragment() {
 
+    private var suid: String?=null
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductBinding
     private lateinit var productViewModel: ManageProductViewModel
 
@@ -48,13 +51,50 @@ class ManageProductFragment : BaseFragment() {
 
 
 
-        productViewModel.loadProduct(this.arguments!!.getString(SUID_KEY))
 
+
+
+        binding.imageLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
+            AddProductActivity.newInstance(it1,
+                it2,AddProductViewModel.StateEnum.image)
+        } }) }
+
+        binding.locationLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
+            AddProductActivity.newInstance(it1,
+                it2,AddProductViewModel.StateEnum.location)
+        } }) }
+
+        binding.nameLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
+            AddProductActivity.newInstance(it1,
+                it2,AddProductViewModel.StateEnum.info)
+        } }) }
+
+        binding.priceLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
+            AddProductActivity.newInstance(it1,
+                it2,AddProductViewModel.StateEnum.price)
+        } }) }
 
 
 
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        fill()
+    }
+
+
+    fun fill(){
+
+         suid=  this.arguments!!.getString(SUID_KEY)
+
+        suid?.let{
+
+            productViewModel.loadProduct(it)
+        }
     }
 
 

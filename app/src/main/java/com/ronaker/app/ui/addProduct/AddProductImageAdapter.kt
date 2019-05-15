@@ -81,6 +81,12 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
         notifyDataSetChanged()
     }
 
+
+    fun addRemoteImage(imageList: List< Product.ProductImage>) {
+        productList.addAll(imageList)
+        notifyDataSetChanged()
+    }
+
     fun removeItem(image: Product.ProductImage) {
 
 

@@ -53,6 +53,8 @@ class AddProductActivity : BaseActivity() {
 
     val REQUEST_IMAGE = 1233
 
+    var UpdateMode = false;
+
 
     internal var loginState = AddProductViewModel.StateEnum.image
         set(value) {
@@ -80,8 +82,21 @@ class AddProductActivity : BaseActivity() {
         }
 
     companion object {
+        var SUID_KEY = "suid"
+        var STATE_KEY = "state"
+
+
         fun newInstance(context: Context): Intent {
             return Intent(context, AddProductActivity::class.java)
+        }
+
+        fun newInstance(context: Context, suid: String, state: AddProductViewModel.StateEnum): Intent {
+            var intent = Intent(context, AddProductActivity::class.java)
+            var boundle = Bundle()
+            boundle.putString(SUID_KEY, suid)
+            boundle.putInt(STATE_KEY, state.position)
+            intent.putExtras(boundle)
+            return intent
         }
     }
 
@@ -95,7 +110,10 @@ class AddProductActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
-        init()
+
+
+
+
 
         viewModel.viewState.observe(this, Observer { state ->
             loginState = state
@@ -112,25 +130,6 @@ class AddProductActivity : BaseActivity() {
         })
 
 
-        loginState = AddProductViewModel.StateEnum.image
-    }
-
-
-    private fun init() {
-
-
-        screenLibrary = ScreenCalcute(this)
-
-        showBack(false)
-        initViewPager()
-        binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
-        binding.toolbar.showNavigator(false, 0)
-
-
-        binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
-        binding.toolbar.actionTextClickListener = View.OnClickListener { finish() }
-
-
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
@@ -143,6 +142,50 @@ class AddProductActivity : BaseActivity() {
             } else
                 binding.loading.hideLoading()
         })
+
+
+
+
+        if (intent.hasExtra(STATE_KEY) && intent.hasExtra(SUID_KEY)) {
+            var suid = intent.getStringExtra(SUID_KEY)
+            var state = AddProductViewModel.StateEnum.get(intent.getIntExtra(STATE_KEY, 0))
+            UpdateMode = true
+
+            init()
+            viewModel.getInfo(suid, state)
+
+
+            loginState = state
+
+        } else {
+            UpdateMode = false
+
+            init()
+            loginState = AddProductViewModel.StateEnum.image
+        }
+
+
+    }
+
+
+    private fun init() {
+
+
+        screenLibrary = ScreenCalcute(this)
+
+        showBack(false)
+        initViewPager()
+        if (UpdateMode)
+            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.NONE
+        else
+            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
+
+
+        binding.toolbar.showNavigator(false, 0)
+
+
+        binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
+        binding.toolbar.actionTextClickListener = View.OnClickListener { finish() }
 
 
 
@@ -162,15 +205,20 @@ class AddProductActivity : BaseActivity() {
 
     internal fun prePage() {
 
-        if (binding.viewpager.getCurrentItem() - 1 === AddProductViewModel.StateEnum.image.position)
+        if (UpdateMode) {
+            finish()
+            return
+        }
+
+        if (binding.viewpager.currentItem - 1 == AddProductViewModel.StateEnum.image.position)
             KeyboardManager.hideSoftKeyboard(this)
 
-        if (binding.viewpager.getCurrentItem() === 0)
+        if (binding.viewpager.currentItem == 0)
             finish()
 
 
-        if (binding.viewpager.getCurrentItem() > AddProductViewModel.StateEnum.image.position) {
-            binding.viewpager.setCurrentItem(binding.viewpager.getCurrentItem() - 1, true)
+        if (binding.viewpager.currentItem > AddProductViewModel.StateEnum.image.position) {
+            binding.viewpager.setCurrentItem(binding.viewpager.currentItem - 1, true)
         }
 
     }
@@ -194,7 +242,7 @@ class AddProductActivity : BaseActivity() {
     internal fun initViewPager() {
 
         binding.viewpager.setScrollDurationFactor(2.0)
-        adapter = ViewPagerAdapter(getSupportFragmentManager())
+        adapter = ViewPagerAdapter(supportFragmentManager)
 
         infoFragment = AddProductInfoFragment()
         locationFragment = AddProductLocationFragment()
@@ -203,7 +251,7 @@ class AddProductActivity : BaseActivity() {
 
 
 
-        binding.viewpager.setAdapter(adapter)
+        binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -226,16 +274,17 @@ class AddProductActivity : BaseActivity() {
                 if (loginState == AddProductViewModel.StateEnum.location)
                     KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
 
+                if (!UpdateMode) {
+                    if (loginState == AddProductViewModel.StateEnum.image) {
 
-                if (loginState == AddProductViewModel.StateEnum.image) {
+                        showBack(false)
+                    } else {
+                        showBack(true)
+                    }
 
-                    showBack(false)
-                } else {
-                    showBack(true)
+
+                    binding.toolbar.showNavigator(true, position)
                 }
-
-
-                binding.toolbar.showNavigator(true, position)
 
             }
 

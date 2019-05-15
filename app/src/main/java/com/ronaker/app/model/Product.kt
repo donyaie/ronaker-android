@@ -89,7 +89,8 @@ fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductIm
 
     this.forEach {
 
-        var product = Product.ProductImage(it.suid, it.url)
+        var product = Product.ProductImage(it.url, it.suid)
+        product.isLocal=false
 
         list.add(product)
     }
@@ -102,17 +103,26 @@ fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductIm
 fun Product.toProductCreateModel(): ProductCreateRequestModel {
 
 
-    var imageList = ArrayList<String>()
+    var imageList:ArrayList<String>? =ArrayList<String>()
 
-    this.images?.forEach { if (it.suid != null) imageList.add(it.suid!!) }
+
+    if( this.images!=null) {
+        this.images?.forEach { if (it.suid != null) imageList?.add(it.suid!!) }
+
+    }
+
+    if(imageList?.size==0){
+        imageList=null
+    }
+
 
     var item = ProductCreateRequestModel(
-        this.name!!,
-        this.price_per_day!!,
-        this.price_per_week!!,
-        this.price_per_month!!,
-        this.description!!,
-        this.avatar_suid!!,
+        this.name,
+        this.price_per_day,
+        this.price_per_week,
+        this.price_per_month,
+        this.description,
+        this.avatar_suid,
         imageList
     )
 

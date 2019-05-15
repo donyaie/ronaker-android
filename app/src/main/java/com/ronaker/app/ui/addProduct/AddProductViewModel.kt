@@ -11,6 +11,7 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.data.network.response.ContentImageResponceModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.model.User
+import com.ronaker.app.model.toProductImage
 import com.ronaker.app.utils.Debug
 import io.reactivex.disposables.Disposable
 import java.lang.Exception
@@ -35,6 +36,21 @@ class AddProductViewModel : BaseViewModel() {
 
 
     private var createPostSubscription: Disposable? = null
+
+
+    private var getproductSubscription: Disposable? = null
+    private var updateproductSubscription: Disposable? = null
+
+
+    private lateinit var updateState: StateEnum
+    private lateinit var updateSuid: String
+
+
+    val productTitle: MutableLiveData<String> = MutableLiveData()
+    val productDescription: MutableLiveData<String> = MutableLiveData()
+    val productPriceDay: MutableLiveData<String> = MutableLiveData()
+    val productPriceMonth: MutableLiveData<String> = MutableLiveData()
+    val productPriceWeek: MutableLiveData<String> = MutableLiveData()
 
 
     private var uploadSubscriptionList: ArrayList<Disposable?> = ArrayList()
@@ -92,6 +108,8 @@ class AddProductViewModel : BaseViewModel() {
             uploadAll(imagesTemp)
         } else if ((adapter.isAllUploaded() && imagesTemp.size > 0)
         ) {
+
+
             checkNextSelectImage()
 
         } else errorMessage.value = "add images"
@@ -103,7 +121,11 @@ class AddProductViewModel : BaseViewModel() {
         if (titleValid && descriptionValid) {
             product.description = description
             product.name = title
-            viewState.value = StateEnum.price
+            if (!updateSuid.isNullOrEmpty()) {
+
+                updateProduct(product)
+            } else
+                viewState.value = StateEnum.price
         }
 
     }
@@ -141,8 +163,10 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_month = 0.0
             Debug.Log(TAG, e)
         }
+        if (!updateSuid.isNullOrEmpty()) {
 
-        if (product.price_per_day!! > 0 || product.price_per_week!! > 0 || product.price_per_month!! > 0)
+            updateProduct(product)
+        } else if (product.price_per_day!! > 0 || product.price_per_week!! > 0 || product.price_per_month!! > 0)
             viewState.value = StateEnum.location
         else
             errorMessage.value = "set price"
@@ -197,12 +221,6 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-    override fun onCleared() {
-        super.onCleared()
-        createPostSubscription?.dispose()
-        uploadSubscriptionList.forEach { it?.dispose() }
-    }
-
     fun selectImage(uri: Uri?) {
 
 
@@ -231,7 +249,15 @@ class AddProductViewModel : BaseViewModel() {
             product.avatar = imagesTemp[0].url
             product.avatar_suid = imagesTemp[0].suid
             product.images = imagesTemp
-            viewState.value = StateEnum.info
+
+
+            if (!updateSuid.isNullOrEmpty()) {
+
+                updateProduct(product)
+            } else
+
+                viewState.value = StateEnum.info
+
 
         }
 
@@ -272,5 +298,87 @@ class AddProductViewModel : BaseViewModel() {
 
     }
 
+    fun updateProduct(product: Product) {
+
+        updateproductSubscription =
+            productRepository.productUpdate(userRepository.getUserToken(), updateSuid, product)
+                .doOnSubscribe { loading.value = true }
+                .doOnTerminate { loading.value = false }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+
+                        goNext.value = false
+                    } else {
+                        errorMessage.value = result.error?.detail
+
+                    }
+                }
+
+
+    }
+
+
+    fun getInfo(suid: String, state: StateEnum) {
+
+        updateState = state
+        updateSuid = suid
+
+        getproductSubscription =
+            productRepository.getProduct(userRepository.getUserToken(), suid).doOnSubscribe { loading.value = true }
+                .doOnTerminate { loading.value = false }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        when (state) {
+                            StateEnum.image -> {
+
+
+                                result.data?.images?.toProductImage()?.let { adapter.addRemoteImage(it) }
+
+                            }
+                            StateEnum.price -> {
+
+
+                                productPriceDay.value =
+                                    if (result.data?.price_per_day != null && result.data.price_per_day?.toInt() != 0) {
+                                        result.data?.price_per_day.toString()
+                                    } else ""
+
+                                productPriceWeek.value =
+                                    if (result.data?.price_per_week != null && result.data.price_per_week?.toInt() != 0) {
+                                        result.data?.price_per_week.toString()
+                                    } else ""
+
+
+                                productPriceMonth.value =
+                                    if (result.data?.price_per_month != null && result.data.price_per_month?.toInt() != 0) {
+                                        result.data?.price_per_month.toString()
+                                    } else ""
+
+                            }
+                            StateEnum.info -> {
+
+                                productTitle.value = result.data?.name
+                                productDescription.value = result.data?.description
+                            }
+                            StateEnum.location -> {
+
+                            }
+                        }
+                    } else {
+                        errorMessage.value = result.error?.detail
+                        goNext.value = false
+                    }
+                }
+
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        createPostSubscription?.dispose()
+        uploadSubscriptionList.forEach { it?.dispose() }
+        getproductSubscription?.dispose()
+        updateproductSubscription?.dispose()
+    }
 
 }

@@ -25,9 +25,9 @@ class AddProductImageAdapterViewModel : BaseViewModel() {
     fun bind(post: Product.ProductImage, context: Context) {
 
         imageModel = post
-        if (post.uri!=null)
+        if (post.uri!=null && !post.uri.toString().isNullOrEmpty())
             productImage.value = post.uri?.toString()
-        else if(post.url!=null)
+        else if(!post.url.isNullOrEmpty())
             productImage.value = BASE_URL + post.url
 
         imageModel.progress.observe(context as LifecycleOwner, Observer { state ->
