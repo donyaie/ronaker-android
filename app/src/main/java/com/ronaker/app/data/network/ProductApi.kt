@@ -12,15 +12,23 @@ import retrofit2.http.*
  */
 interface ProductApi {
     /**
-     * Register new user
+     * search in products
      */
     @POST("/api/v1/products/search")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ProductSearchResponceModel>
 
+    /**
+     * get my created product
+     */
+    @GET("/api/v1/products/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun getMyProduct(@Header("Authorization") authToken: String?): Observable<ProductSearchResponceModel>
+
+
 
     /**
-     * Register new user
+     * create new product
      */
     @POST("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -28,7 +36,17 @@ interface ProductApi {
 
 
     /**
-     * Register new user
+     * create new product
+     */
+    @PATCH("/api/v1/products/{suid}/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun productUpdate(@Header("Authorization") authToken: String?,@Path("suid") suid:String,@Body request: ProductCreateRequestModel): Observable<ProductCreateResponseModel>
+
+
+
+
+    /**
+     * get product detail
      */
     @GET("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")

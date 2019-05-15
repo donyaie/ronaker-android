@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.tabhistory.FragNavTabHistoryController
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.explore.ExploreFragment
-import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
+import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 
@@ -21,10 +20,11 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     override fun getRootFragment(index: Int): Fragment {
-       return when(index){
-           INDEX_EXPLORE->ExploreFragment.newInstance()
-           else ->ExploreFragment.newInstance()
-       }
+        return when (index) {
+            INDEX_EXPLORE -> ExploreFragment.newInstance()
+            INDEX_ITEMADD -> ManageProductListFragment.newInstance()
+            else -> ExploreFragment.newInstance()
+        }
     }
 
     override fun onFragmentTransaction(fragment: Fragment?, transactionType: FragNavController.TransactionType?) {
@@ -37,8 +37,9 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     private val INDEX_EXPLORE = FragNavController.TAB1
     private val INDEX_HISTORY = FragNavController.TAB2
-    private val INDEX_INBOX = FragNavController.TAB3
-    private val INDEX_PROFILE = FragNavController.TAB4
+    private val INDEX_ITEMADD = FragNavController.TAB3
+    private val INDEX_INBOX = FragNavController.TAB4
+    private val INDEX_PROFILE = FragNavController.TAB5
 
     lateinit var mNavController: FragNavController
     lateinit var builder: FragNavController.Builder
@@ -68,30 +69,31 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             binding.navigation.select(INDEX_EXPLORE)
         }
 
-        builder = FragNavController.newBuilder(savedInstanceState, supportFragmentManager, com.ronaker.app.R.id.container)
-            .transactionListener(this)
-            .rootFragmentListener(this, 5)
-            .popStrategy(FragNavTabHistoryController.UNIQUE_TAB_HISTORY)
-            .switchController { index, transactionOptions -> binding.navigation.select(index) }
+        builder =
+            FragNavController.newBuilder(savedInstanceState, supportFragmentManager, com.ronaker.app.R.id.container)
+                .transactionListener(this)
+                .rootFragmentListener(this, 5)
+                .popStrategy(FragNavTabHistoryController.UNIQUE_TAB_HISTORY)
+                .switchController { index, transactionOptions -> binding.navigation.select(index) }
 
 
-        mNavController=builder.build()
+        mNavController = builder.build()
 
 
-        binding.navigation.selectListener= object : TabNavigationComponent.OnSelectItemListener {
+        binding.navigation.selectListener = object : TabNavigationComponent.OnSelectItemListener {
             override fun onReSelected(index: Int) {
                 mNavController.clearStack()
             }
 
             override fun onSelect(index: Int) {
 
-                when(index){
-                    0->  mNavController.switchTab(INDEX_EXPLORE)
-                    1->  Toast.makeText(this@DashboardActivity,"History",Toast.LENGTH_LONG).show()
-                    2->  startActivity(AddProductActivity.newInstance(this@DashboardActivity ))
+                when (index) {
+                    0 -> mNavController.switchTab(INDEX_EXPLORE)
+                    1 -> Toast.makeText(this@DashboardActivity, "History", Toast.LENGTH_LONG).show()
+                    2 -> mNavController.switchTab(INDEX_ITEMADD)
 //                    2->  startActivity(PhoneNumberActivity.newInstance(this@DashboardActivity ))
-                    3->  Toast.makeText(this@DashboardActivity,"Inbox",Toast.LENGTH_LONG).show()
-                    4->  Toast.makeText(this@DashboardActivity,"Profile",Toast.LENGTH_LONG).show()
+                    3 -> Toast.makeText(this@DashboardActivity, "Inbox", Toast.LENGTH_LONG).show()
+                    4 -> Toast.makeText(this@DashboardActivity, "Profile", Toast.LENGTH_LONG).show()
 
 
                 }
@@ -99,12 +101,13 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         }
 
 
-
     }
 
     companion object {
         fun newInstance(context: Context): Intent {
-            return Intent(context, DashboardActivity::class.java)
+            var intent = Intent(context, DashboardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            return intent
         }
     }
 

@@ -33,6 +33,7 @@
                         android:imeOptions="actionNext"
                         android:id="@+id/title_input"
                         app:input_transparent="false"
+                        app:inputMutableText="@{viewModel.getProductTitle()}"
                         app:input_title="Title"
 
                         app:input_hint="Enter Title"
@@ -50,6 +51,7 @@
                         android:imeOptions="actionNext"
                         android:id="@+id/description_input"
 
+                        app:inputMutableText="@{viewModel.getProductDescription()}"
                         app:input_title="Description"
                         app:input_hint="Describe  your item like model or color and..."
                         app:input_regex="^\\s*(?:\\S\\s*){2,500}$"

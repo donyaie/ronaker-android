@@ -101,6 +101,8 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.3'
 
 
+    // rounded image view
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //number
 

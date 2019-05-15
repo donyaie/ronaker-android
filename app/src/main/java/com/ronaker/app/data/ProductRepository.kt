@@ -28,8 +28,25 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
     }
 
+    fun getMyProduct(token: String?): Observable<Result<ProductSearchResponceModel>> {
+
+
+        return productApi.getMyProduct("Token $token" )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
     fun productCreate(token: String?, product:Product): Observable<Result<ProductCreateResponseModel>> {
         return productApi.productCreate("Token $token",product.toProductCreateModel() )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
+    fun productUpdate(token: String?,suid:String, product:Product): Observable<Result<ProductCreateResponseModel>> {
+
+        return productApi.productUpdate("Token $token",suid,product.toProductCreateModel() )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="loading_component_attributes">
+
+
+        <attr name="loading_transparent" format="boolean"/>
+
+    </declare-styleable>
+</resources>

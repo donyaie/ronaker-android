@@ -1,6 +1,7 @@
 package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.response.ContentImageResponceModel
+import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import com.ronaker.app.data.network.response.ProductSearchResponceModel
 import com.ronaker.app.model.Post
 import io.reactivex.Observable
@@ -16,7 +17,7 @@ import retrofit2.http.*
  */
 interface ContentApi {
     /**
-     * Register new user
+     * upload  new image
      */
     @POST("/api/v1/contents/images/")
     @Multipart
@@ -24,8 +25,17 @@ interface ContentApi {
 
 
 
+
     /**
-     * Register new user
+     * delete image
+     */
+    @POST("/api/v1/contents/images/{suid}/")
+    @Multipart
+    fun deleteImage(@Header("Authorization") authToken: String?, @Path("suid") suid:String ): Observable<ProductCreateResponseModel>
+
+
+    /**
+     * upload  new image
      */
     @POST("/api/v1/contents/images/")
     @Multipart
@@ -35,7 +45,7 @@ interface ContentApi {
 
 
     /**
-     * Register new user
+     * upload  new image
      */
     @POST("/api/v1/contents/images/")
     @Multipart

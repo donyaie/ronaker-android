@@ -7,9 +7,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.forEach
 import com.ronaker.app.R
+import com.ronaker.app.utils.ScreenCalcute
 
 
 class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) :
@@ -20,7 +22,7 @@ class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: 
     lateinit var imageList: ArrayList<ImageView>
     lateinit var textList: ArrayList<TextView>
 
-    var selectedIndex:Int?=null
+    var selectedIndex: Int? = null
 
     var selectListener: OnSelectItemListener? = null
         set
@@ -60,8 +62,7 @@ class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: 
         textList.add(findViewById(R.id.profile_text))
 
 
-        orientation = VERTICAL
-
+        orientation= VERTICAL
 
 
         layoutList.get(0).setOnClickListener(object : View.OnClickListener {
@@ -128,15 +129,15 @@ class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: 
 
     fun select(index: Int) {
 
-        if(index==2) {
-            selectListener?.onSelect(index)
-            return
-        }
+//        if(index==2) {
+//            selectListener?.onSelect(index)
+//            return
+//        }
 
-        if(index==selectedIndex)
+        if (index == selectedIndex)
             selectListener?.onReSelected(index)
 
-        selectedIndex=index
+        selectedIndex = index
 
         textList.forEach {
             it.setTextColor(resources.getColor(R.color.colorTextGreyLight))

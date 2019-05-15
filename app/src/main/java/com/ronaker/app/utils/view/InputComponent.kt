@@ -14,12 +14,28 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ronaker.app.R
 import android.view.inputmethod.EditorInfo
 import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.solver.GoalRow
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.ronaker.app.utils.extension.getParentActivity
 
 @BindingAdapter("app:input_text")
 fun textBind(input: InputComponent, value: String?) {
     input.text = value
+}
+
+@BindingAdapter("inputMutableText")
+fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && text != null) {
+
+
+
+        text.observe(parentActivity, Observer { value -> view.text = value?:""})
+    }
 }
 
 
