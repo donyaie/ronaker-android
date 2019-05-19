@@ -29,7 +29,7 @@ class ManageProductListFragment : BaseFragment() {
         var mnager = GridLayoutManager(context, 2)
 
         binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
-        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
+//        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         viewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
@@ -38,10 +38,12 @@ class ManageProductListFragment : BaseFragment() {
         viewModel.emptyView.observe(this, Observer { loading ->
             if (loading) {
                 binding.emptyLayout.visibility = View.VISIBLE
-                binding.addNewProductButton.visibility = View.GONE
+                binding.addNewProductButton.visibility = View.INVISIBLE
+                binding.addNewProductButton.isClickable= false
             } else {
                 binding.emptyLayout.visibility = View.GONE
                 binding.addNewProductButton.visibility = View.VISIBLE
+                binding.addNewProductButton.isClickable= true
             }
         })
 
