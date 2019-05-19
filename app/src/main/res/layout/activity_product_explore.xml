@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.exploreProduct.ExploreProductViewModel"/>
+    </data>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            <com.ronaker.app.utils.view.ViewPagerCustom
+                    android:id="@+id/viewpager"
+                    android:fitsSystemWindows="true"
+                    android:layout_marginTop="@dimen/statusBarSizeMargin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+        </RelativeLayout>
+
+        <com.ronaker.app.utils.view.LoadingComponent
+                android:id="@+id/loading" android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"/>
+
+
+    </RelativeLayout>
+
+
+
+</layout>
