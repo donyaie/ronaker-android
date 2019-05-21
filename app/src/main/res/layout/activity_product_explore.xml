@@ -16,22 +16,11 @@
 
 
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-            <com.ronaker.app.utils.view.ViewPagerCustom
-                    android:id="@+id/viewpager"
-                    android:fitsSystemWindows="true"
-                    android:layout_marginTop="@dimen/statusBarSizeMargin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-
-        </RelativeLayout>
+        <fragment  class="com.ronaker.app.ui.exploreProduct.ExploreProductFragment" android:id="@+id/fragment" android:layout_width="match_parent" android:layout_height="match_parent"></fragment>
 
         <com.ronaker.app.utils.view.LoadingComponent
+
+                app:loading_transparent="false"
                 android:id="@+id/loading" android:layout_width="match_parent"
                                                      android:layout_height="match_parent"/>
 
