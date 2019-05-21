@@ -98,7 +98,7 @@
 
                         <TextView android:layout_width="wrap_content"
                                   android:textColor="@color/colorTextDark"
-                                  android:layout_weight=".95" android:text="Name"
+                                  android:layout_weight=".95" android:text="Name and Description"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp"  android:src="@drawable/ic_chevron_right"
@@ -123,7 +123,7 @@
 
                         <TextView android:layout_width="wrap_content"
                                   android:textColor="@color/colorTextDark"
-                                  android:layout_weight=".95" android:text="Images"
+                                  android:layout_weight=".95" android:text="Images gallery"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp"
