@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 
 class ExploreProductFragment : BaseFragment() {
 
@@ -61,7 +62,7 @@ class ExploreProductFragment : BaseFragment() {
 
         productViewModel.checkout.observe(this, Observer { suid ->
 
-            Toast.makeText(context,suid,Toast.LENGTH_LONG).show()
+            startActivity(context?.let { CheckoutCalendarActivity.newInstance(it,suid) })
 
         })
 

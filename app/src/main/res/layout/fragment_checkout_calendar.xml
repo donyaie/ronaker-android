@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+
+        <RelativeLayout android:id="@+id/status_bar" android:background="@color/transparent"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_width="match_parent"
+                        android:layout_height="@dimen/statusBarSize"/>
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+                app:layout_constraintTop_toBottomOf="@id/status_bar"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:toolbar_component_transparent="true"
+                app:toolbar_component_bottom_line="false"
+                app:toolbar_component_dot_count="3"
+                app:toolbar_component_center_container="NONE"
+                app:toolbar_component_action_container="TWO_BUTTON"
+                app:toolbar_component_cancel_container="CLOSE"
+        />
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/header" app:layout_constraintTop_toBottomOf="@id/toolbar"  android:layout_width="match_parent" android:layout_height="104dp">
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.savvi.rangedatepicker.CalendarPickerView
+                android:id="@+id/calendar_view"
+                app:layout_constraintTop_toBottomOf="@id/header"
+                android:layout_width="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:tsquare_displayHeader="false"
+                android:paddingBottom="16dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:clipToPadding="false"
+                app:tsquare_dividerColor="@color/transparent"
+                app:tsquare_headerTextColor="@color/colorTextDark"
+        />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
