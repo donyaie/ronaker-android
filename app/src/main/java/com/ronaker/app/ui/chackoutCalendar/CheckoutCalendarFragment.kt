@@ -31,14 +31,27 @@ class CheckoutCalendarFragment : BaseFragment() {
         }
 
 
+        initCalendar()
 
+        binding.toolbar.actionTextClickListener= View.OnClickListener {
+            binding.calendarView.clearSelectedDates()
+
+            viewModel.clearDates()
+        }
+
+
+        return binding.root
+    }
+
+
+    fun initCalendar(){
 
 
 
         var nextYear: Calendar = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
 
-         var lastYear:Calendar = Calendar.getInstance();
+        var lastYear:Calendar = Calendar.getInstance();
 //        lastYear.add(Calendar.DAY_OF_MONTH, - 5);
 //
 //        val list = ArrayList<Int>()
@@ -67,12 +80,24 @@ class CheckoutCalendarFragment : BaseFragment() {
 //            .withDeactivateDates(list)
             .withHighlightedDates(arrayList)
 
+        binding.calendarView.setOnDateSelectedListener(object:CalendarPickerView.OnDateSelectedListener{
+            override fun onDateSelected(date: Date) {
+
+                viewModel.UpdateDate( binding.calendarView.selectedDates)
+
+            }
+
+            override fun onDateUnselected(date: Date) {
+
+                viewModel.UpdateDate( binding.calendarView.selectedDates)
+            }
+
+        })
+
+
+
+
         binding.calendarView.scrollToDate(Date())
-
-
-        return binding.root
     }
-
-
 
 }
