@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,6 +31,8 @@ class ManageProductListFragment : BaseFragment() {
 
         binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
+
+        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
 
         viewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
