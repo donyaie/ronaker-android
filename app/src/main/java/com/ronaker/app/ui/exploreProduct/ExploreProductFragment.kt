@@ -10,10 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
-import android.view.ViewTreeObserver.OnScrollChangedListener
-import com.ronaker.app.ui.dashboard.DashboardActivity
-import kotlinx.android.synthetic.main.component_toolbar.view.*
-
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 
 class ExploreProductFragment : BaseFragment() {
 
@@ -23,26 +20,15 @@ class ExploreProductFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
 
-        binding = DataBindingUtil.inflate(inflater, com.ronaker.app.R.layout.fragment_explore_product, container, false)
-        productViewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore_product, container, false)
+
+        activity?.let {
+            productViewModel = ViewModelProviders.of(it).get(ExploreProductViewModel::class.java)
+            binding.viewModel = productViewModel
+        }
 
 
-        productViewModel.loading.observe(this, Observer { loading ->
-            if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
-        })
-
-
-
-        binding.toolbar.cancelClickListener = View.OnClickListener { (activity as DashboardActivity).backFragment() }
-
-        productViewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage != null) {
-                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-//                binding.loading.showRetry()
-            } else {
-//                binding.loading.hideRetry()
-            }
-        })
+        binding.toolbar.cancelClickListener = View.OnClickListener { activity ?.onBackPressed() }
 
 
         binding.viewModel = productViewModel
@@ -73,9 +59,12 @@ class ExploreProductFragment : BaseFragment() {
         };
 
 
-        productViewModel.loadProduct(this.arguments!!.getString(SUID_KEY))
 
+        productViewModel.checkout.observe(this, Observer { suid ->
 
+            startActivity(context?.let { CheckoutCalendarActivity.newInstance(it,suid) })
+
+        })
 
 
 
@@ -83,18 +72,6 @@ class ExploreProductFragment : BaseFragment() {
     }
 
 
-    companion object {
-
-        private var SUID_KEY = "suid"
-
-        fun newInstance(suid: String?): ExploreProductFragment {
-            val bundle = Bundle()
-            bundle.putString(SUID_KEY, suid)
-            val fragment = ExploreProductFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
 
 
 }

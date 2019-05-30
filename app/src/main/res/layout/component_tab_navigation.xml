@@ -46,7 +46,7 @@
                     <TextView android:id="@+id/history_text" android:layout_width="match_parent"
                               android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="History"
+                              android:text="Orders"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorTextGreyLight"
                               android:gravity="center"
@@ -65,7 +65,7 @@
                                android:layout_height="26dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="Add Item"
+                              android:text="Items"
                               android:id="@+id/addItem_text"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorTextGreyLight"

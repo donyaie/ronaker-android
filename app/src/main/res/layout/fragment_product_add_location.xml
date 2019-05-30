@@ -70,7 +70,9 @@
                                                android:layout_width="match_parent"
                                                android:layout_height="48dp">
                 <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                                   android:layout_height="match_parent">
+
+
+                                                                   android:layout_height="48dp">
                     <TextView android:text="Search your Location" android:layout_width="match_parent"
                               android:gravity="left|center_vertical"
 

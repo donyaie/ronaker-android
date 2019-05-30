@@ -24,6 +24,15 @@
         <item name="android:dialogTheme">@style/WhiteDialog</item>
     </style>
 
+    <style name="DashboardTheme" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
     <style name="phoneNumberTheme" parent="AppTheme">
 
 

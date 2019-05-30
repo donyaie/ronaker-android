@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.exploreProduct.ExploreProductViewModel"/>
+    </data>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+
+
+        <fragment  class="com.ronaker.app.ui.exploreProduct.ExploreProductFragment" android:id="@+id/fragment" android:layout_width="match_parent" android:layout_height="match_parent"></fragment>
+
+        <com.ronaker.app.utils.view.LoadingComponent
+
+                app:loading_transparent="false"
+                android:id="@+id/loading" android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"/>
+
+
+    </RelativeLayout>
+
+
+
+</layout>

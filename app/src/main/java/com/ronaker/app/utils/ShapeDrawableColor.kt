@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 
 
 class ShapeDrawableHelper {
@@ -53,8 +54,9 @@ class ShapeDrawableHelper {
         }
 
         fun setIconSVGColorRes(context: Context, imageView: ImageView, iconID: Int, colorID: Int) {
-            val mDrawable = context.resources.getDrawable(iconID)
-            mDrawable.colorFilter = PorterDuffColorFilter(context.resources.getColor(colorID), PorterDuff.Mode.MULTIPLY)
+            val mDrawable = ContextCompat.getDrawable(context,iconID)
+
+            mDrawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context, colorID), PorterDuff.Mode.SRC_IN)
 
 
             imageView.setImageDrawable(mDrawable)

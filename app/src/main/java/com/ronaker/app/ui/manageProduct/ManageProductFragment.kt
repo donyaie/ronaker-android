@@ -17,7 +17,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 
 class ManageProductFragment : BaseFragment() {
 
-    private var suid: String?=null
+    private var suid: String? = null
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductBinding
     private lateinit var productViewModel: ManageProductViewModel
 
@@ -54,25 +54,49 @@ class ManageProductFragment : BaseFragment() {
 
 
 
-        binding.imageLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
-            AddProductActivity.newInstance(it1,
-                it2,AddProductViewModel.StateEnum.image)
-        } }) }
+        binding.imageLayout.setOnClickListener {
+            startActivity(context?.let { it1 ->
+                suid?.let { it2 ->
+                    AddProductActivity.newInstance(
+                        it1,
+                        it2, AddProductViewModel.StateEnum.image
+                    )
+                }
+            })
+        }
 
-        binding.locationLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
-            AddProductActivity.newInstance(it1,
-                it2,AddProductViewModel.StateEnum.location)
-        } }) }
+        binding.locationLayout.setOnClickListener {
+            startActivity(context?.let { it1 ->
+                suid?.let { it2 ->
+                    AddProductActivity.newInstance(
+                        it1,
+                        it2, AddProductViewModel.StateEnum.location
+                    )
+                }
+            })
+        }
 
-        binding.nameLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
-            AddProductActivity.newInstance(it1,
-                it2,AddProductViewModel.StateEnum.info)
-        } }) }
+        binding.nameLayout.setOnClickListener {
+            startActivity(context?.let { it1 ->
+                suid?.let { it2 ->
+                    AddProductActivity.newInstance(
+                        it1,
+                        it2, AddProductViewModel.StateEnum.info
+                    )
+                }
+            })
+        }
 
-        binding.priceLayout.setOnClickListener { startActivity(context?.let { it1 -> suid?.let { it2 ->
-            AddProductActivity.newInstance(it1,
-                it2,AddProductViewModel.StateEnum.price)
-        } }) }
+        binding.priceLayout.setOnClickListener {
+            startActivity(context?.let { it1 ->
+                suid?.let { it2 ->
+                    AddProductActivity.newInstance(
+                        it1,
+                        it2, AddProductViewModel.StateEnum.price
+                    )
+                }
+            })
+        }
 
 
 
@@ -87,11 +111,11 @@ class ManageProductFragment : BaseFragment() {
     }
 
 
-    fun fill(){
+    fun fill() {
 
-         suid=  this.arguments!!.getString(SUID_KEY)
+        suid = this.arguments!!.getString(SUID_KEY)
 
-        suid?.let{
+        suid?.let {
 
             productViewModel.loadProduct(it)
         }

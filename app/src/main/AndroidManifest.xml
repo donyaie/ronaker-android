@@ -29,6 +29,7 @@
 
 
         <activity
+                android:theme="@style/DashboardTheme"
                 android:screenOrientation="portrait"
                 android:name=".ui.post.PostListActivity">
 
@@ -42,11 +43,24 @@
         </activity>
 
         <activity
+                android:theme="@style/DashboardTheme"
                 android:screenOrientation="portrait"
                 android:name=".ui.dashboard.DashboardActivity">
         </activity>
+        <activity
+                android:theme="@style/DashboardTheme"
+                android:screenOrientation="portrait"
+                android:name=".ui.exploreProduct.ExploreProductActivity">
+        </activity>
 
         <activity
+                android:theme="@style/DashboardTheme"
+                android:screenOrientation="portrait"
+                android:name=".ui.chackoutCalendar.CheckoutCalendarActivity">
+        </activity>
+
+        <activity
+                android:theme="@style/DashboardTheme"
                 android:screenOrientation="portrait"
                 android:name=".ui.addProduct.AddProductActivity">
         </activity>
@@ -95,5 +109,8 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/file_paths" />
         </provider>
+
+
+
     </application>
 </manifest>

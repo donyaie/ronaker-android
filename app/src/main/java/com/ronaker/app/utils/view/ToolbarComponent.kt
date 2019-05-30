@@ -2,6 +2,7 @@ package com.ronaker.app.utils.view
 
 import android.animation.Animator
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         NONE, TEXT, TWO_BUTTON, ONE_BUTTON
     }
 
-     var centerContainer: CenterContainer = CenterContainer.TITLE
+    var centerContainer: CenterContainer = CenterContainer.TITLE
         set(value) {
 
             field = value
@@ -55,71 +56,64 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             }
         }
 
-     var cancelContainer: CancelContainer = CancelContainer.BACK
-    set(value) {
+    var cancelContainer: CancelContainer = CancelContainer.BACK
+        set(value) {
 
-        field = value
-        when (cancelContainer) {
-            CancelContainer.NONE -> {
-                cancelButton.visibility = View.GONE
-            }
-            CancelContainer.BACK -> {
+            field = value
+            when (cancelContainer) {
+                CancelContainer.NONE -> {
+                    cancelButton.visibility = View.GONE
+                }
+                CancelContainer.BACK -> {
 
-                cancelButton.visibility = View.VISIBLE
+                    cancelButton.visibility = View.VISIBLE
 
-                if (isTransparent)
                     cancelButton.setImageResource(R.drawable.ic_back_white)
-                else
-                    ShapeDrawableHelper.setIconSVGColorRes(
-                        context,
-                        cancelButton,
-                        R.drawable.ic_back_white,
-                        R.color.colorIconDark
-                    )
+                    if (isTransparent)
+                        cancelButton.drawable.clearColorFilter()
+                    else
+                        cancelButton.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
 
+                }
+                CancelContainer.CLOSE -> {
 
-            }
-            CancelContainer.CLOSE -> {
-
-                cancelButton.visibility = View.VISIBLE
-
-                if (isTransparent)
+                    cancelButton.visibility = View.VISIBLE
                     cancelButton.setImageResource(R.drawable.ic_close)
-                else
-                    ShapeDrawableHelper.setIconSVGColorRes(
-                        context,
-                        cancelButton,
-                        R.drawable.ic_close,
-                        R.color.colorIconDark
-                    )
-            }
+                    if (isTransparent)
+                        cancelButton.drawable.clearColorFilter()
+                    else {
 
-        }
-    }
+                        cancelButton.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
 
-     var actionContainer: ActionContainer = ActionContainer.NONE
-    set(value) {
+                    }
+                }
 
-        field = value
-
-        when (actionContainer) {
-            ActionContainer.NONE -> {
-                actionLayout.visibility = View.GONE
-            }
-            ActionContainer.TEXT -> {
-                actionLayout.visibility = View.VISIBLE
-                actionText.visibility = View.VISIBLE
-            }
-            else -> {
-                actionLayout.visibility = View.GONE
             }
         }
 
-    }
+    var actionContainer: ActionContainer = ActionContainer.NONE
+        set(value) {
+
+            field = value
+
+            when (actionContainer) {
+                ActionContainer.NONE -> {
+                    actionLayout.visibility = View.GONE
+                }
+                ActionContainer.TEXT -> {
+                    actionLayout.visibility = View.VISIBLE
+                    actionText.visibility = View.VISIBLE
+                }
+                else -> {
+                    actionLayout.visibility = View.GONE
+                }
+            }
+
+        }
 
     private lateinit var screenLibrary: ScreenCalcute
 
-     var isTransparent: Boolean = false
+    var isTransparent: Boolean = false
         set(value) {
 
             field = value
@@ -135,27 +129,27 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             }
 
 
-            cancelContainer=cancelContainer
+            cancelContainer = cancelContainer
         }
 
-     var isBottomLine: Boolean = false
+    var isBottomLine: Boolean = false
         set(value) {
             field = value
             lineLayout.visibility = if (isBottomLine) View.VISIBLE else View.GONE
         }
 
-     var title: String? = null
+    var title: String? = null
         set(value) {
             field = value
             titleText.setText(value)
         }
-     var actionTitle: String? = null
+    var actionTitle: String? = null
         set(value) {
             field = value
             actionText.setText(value)
         }
 
-     var dotCount: Int = 3
+    var dotCount: Int = 3
         set(value) {
             field = value
             initDotCount()
@@ -176,14 +170,14 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private var containerLayout: ConstraintLayout
 
-     var cancelClickListener: OnClickListener? = null
+    var cancelClickListener: OnClickListener? = null
         set(value) {
             field = value
             cancelButton.setOnClickListener(cancelClickListener)
 
         }
 
-     var actionTextClickListener: OnClickListener? = null
+    var actionTextClickListener: OnClickListener? = null
         set(value) {
 
             field = value
