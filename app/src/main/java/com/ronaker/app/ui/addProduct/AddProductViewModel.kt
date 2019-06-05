@@ -43,7 +43,7 @@ class AddProductViewModel : BaseViewModel() {
 
 
     private lateinit var updateState: StateEnum
-    private lateinit var updateSuid: String
+    private  var updateSuid: String?=null
 
 
     val productTitle: MutableLiveData<String> = MutableLiveData()
@@ -301,18 +301,20 @@ class AddProductViewModel : BaseViewModel() {
     fun updateProduct(product: Product) {
 
         updateproductSubscription =
-            productRepository.productUpdate(userRepository.getUserToken(), updateSuid, product)
-                .doOnSubscribe { loading.value = true }
-                .doOnTerminate { loading.value = false }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
+            updateSuid?.let {
+                productRepository.productUpdate(userRepository.getUserToken(), it, product)
+                    .doOnSubscribe { loading.value = true }
+                    .doOnTerminate { loading.value = false }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
 
-                        goNext.value = false
-                    } else {
-                        errorMessage.value = result.error?.detail
+                            goNext.value = false
+                        } else {
+                            errorMessage.value = result.error?.detail
 
+                        }
                     }
-                }
+            }
 
 
     }

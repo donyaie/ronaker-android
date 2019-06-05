@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.orders.OrdersViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+
+
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:id="@+id/recycler"
+                                                   app:layout_constraintLeft_toLeftOf="parent"
+                                                   app:layout_constraintRight_toRightOf="parent"
+
+                                                   app:adapter="@{viewModel.getProductListAdapter()}"
+                                                   app:layout_constraintTop_toBottomOf="@id/header"
+                                                   app:layout_constraintBottom_toBottomOf="parent"
+                                                   android:layout_height="0dp"/>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/header"
+                                                           app:layout_constraintTop_toTopOf="parent"
+                                                           android:layout_width="match_parent"
+                                                           android:layout_height="wrap_content">
+            <com.ronaker.app.utils.view.ToolbarComponent
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/toolbar"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/statusBarSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:toolbar_component_title="Orders"
+                    app:toolbar_component_transparent="false"
+                    app:toolbar_component_action_text="Cancel"
+                    app:toolbar_component_bottom_line="false"
+                    app:toolbar_component_dot_count="4"
+                    app:toolbar_component_center_container="TITLE"
+                    app:toolbar_component_action_container="NONE"
+                    app:toolbar_component_cancel_container="NONE">
+
+
+            </com.ronaker.app.utils.view.ToolbarComponent>
+
+
+            <LinearLayout app:layout_constraintTop_toBottomOf="@id/toolbar" android:background="@color/colorPlatinGrey"
+                          android:gravity="center_vertical|left" android:weightSum="4" android:orientation="horizontal"
+                          android:layout_width="match_parent" android:layout_height="48dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout android:orientation="horizontal"
+                                                                   android:gravity="center"
+                                                                   android:layout_width="0dp"
+                                                                   android:layout_weight="1"
+                                                                   android:layout_height="wrap_content">
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintRight_toRightOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toLeftOf="parent"
+                              android:id="@+id/text1"
+                              android:background="@drawable/background_prinery_corner"
+
+                              android:textAppearance="@style/TextAppearance.Medium.Regular"
+                              android:paddingRight="15dp"
+                              android:paddingLeft="15dp"
+                              android:textColor="@color/colorTextLight" android:layout_width="wrap_content"
+                              android:text="All" android:layout_height="wrap_content"/>
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toRightOf="@id/text1"
+                              android:minHeight="24dp"
+                              android:gravity="center"
+
+                              android:layout_marginLeft="2dp"
+                              android:background="@drawable/background_accent_corner"
+                              android:paddingRight="4dp"
+                              android:paddingLeft="4dp"
+                              android:visibility="gone"
+                              android:textAppearance="@style/TextAppearance.Small.SB"
+                              android:textColor="@color/colorTextLight" android:layout_width="wrap_content"
+                              android:text="1" android:layout_height="wrap_content"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout android:orientation="horizontal"
+                                                                   android:gravity="center"
+                                                                   android:layout_width="0dp"
+                                                                   android:layout_weight="1"
+                                                                   android:layout_height="wrap_content">
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintRight_toRightOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toLeftOf="parent"
+                              android:id="@+id/text2"
+
+                              android:textAppearance="@style/TextAppearance.Medium.Regular"
+                              android:textColor="@color/colorTextGreyLight" android:layout_width="wrap_content"
+                              android:text="Renting" android:layout_height="wrap_content"/>
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toRightOf="@id/text2"
+
+                              android:layout_marginLeft="2dp"
+                              android:background="@drawable/background_accent_corner"
+                              android:paddingRight="4dp"
+                              android:paddingLeft="4dp"
+                              android:visibility="gone"
+                              android:textAppearance="@style/TextAppearance.Small.SB"
+                              android:textColor="@color/colorTextLight" android:layout_width="wrap_content"
+                              android:text="1" android:layout_height="wrap_content"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout android:orientation="horizontal"
+                                                                   android:gravity="center"
+                                                                   android:layout_width="0dp"
+                                                                   android:layout_weight="1"
+                                                                   android:layout_height="wrap_content">
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintRight_toRightOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toLeftOf="parent"
+                              android:id="@+id/text3"
+
+                              android:textAppearance="@style/TextAppearance.Medium.Regular"
+                              android:textColor="@color/colorTextGreyLight" android:layout_width="wrap_content"
+                              android:text="Lending" android:layout_height="wrap_content"/>
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toRightOf="@id/text3"
+
+                              android:layout_marginLeft="2dp"
+                              android:background="@drawable/background_accent_corner"
+                              android:paddingRight="4dp"
+                              android:paddingLeft="4dp"
+                              android:textAppearance="@style/TextAppearance.Small.SB"
+                              android:textColor="@color/colorTextLight" android:layout_width="wrap_content"
+                              android:text="1" android:layout_height="wrap_content"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout android:orientation="horizontal"
+                                                                   android:gravity="center"
+                                                                   android:layout_width="0dp"
+                                                                   android:layout_weight="1"
+                                                                   android:layout_height="wrap_content">
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintRight_toRightOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toLeftOf="parent"
+                              android:id="@+id/text4"
+
+                              android:textAppearance="@style/TextAppearance.Medium.Regular"
+                              android:textColor="@color/colorTextGreyLight" android:layout_width="wrap_content"
+                              android:text="Archive" android:layout_height="wrap_content"/>
+
+                    <TextView app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintBottom_toBottomOf="parent"
+                              app:layout_constraintLeft_toRightOf="@id/text4"
+
+                              android:layout_marginLeft="2dp"
+                              android:background="@drawable/background_accent_corner"
+                              android:paddingRight="4dp"
+                              android:paddingLeft="4dp"
+                              android:visibility="gone"
+                              android:textAppearance="@style/TextAppearance.Small.SB"
+                              android:textColor="@color/colorTextLight" android:layout_width="wrap_content"
+                              android:text="1" android:layout_height="wrap_content"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.ronaker.app.utils.view.LoadingComponent android:layout_width="match_parent"
+                                                     android:id="@+id/loading"
+
+                                                     app:loading_transparent="false"
+                                                     app:layout_constraintBottom_toBottomOf="parent"
+                                                     android:layout_height="match_parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

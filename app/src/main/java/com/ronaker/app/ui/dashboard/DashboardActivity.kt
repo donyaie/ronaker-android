@@ -12,6 +12,7 @@ import com.ncapdevi.fragnav.tabhistory.FragNavTabHistoryController
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.explore.ExploreFragment
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
+import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 
@@ -23,6 +24,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         return when (index) {
             INDEX_EXPLORE -> ExploreFragment.newInstance()
             INDEX_ITEMADD -> ManageProductListFragment.newInstance()
+            INDEX_ORDERS -> OrdersFragment.newInstance()
             else -> ExploreFragment.newInstance()
         }
     }
@@ -36,7 +38,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
     private val INDEX_EXPLORE = FragNavController.TAB1
-    private val INDEX_HISTORY = FragNavController.TAB2
+    private val INDEX_ORDERS = FragNavController.TAB2
     private val INDEX_ITEMADD = FragNavController.TAB3
     private val INDEX_INBOX = FragNavController.TAB4
     private val INDEX_PROFILE = FragNavController.TAB5
@@ -89,7 +91,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
                 when (index) {
                     0 -> mNavController.switchTab(INDEX_EXPLORE)
-                    1 -> Toast.makeText(this@DashboardActivity, "History", Toast.LENGTH_LONG).show()
+                    1 ->  mNavController.switchTab(INDEX_ORDERS)
                     2 -> mNavController.switchTab(INDEX_ITEMADD)
 //                    2->  startActivity(PhoneNumberActivity.newInstance(this@DashboardActivity ))
                     3 -> Toast.makeText(this@DashboardActivity, "Inbox", Toast.LENGTH_LONG).show()
