@@ -84,7 +84,7 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
         firstDayVisibility.value= View.VISIBLE
 
-        firstDay.value= SimpleDateFormat("EEEE").format(date)
+        firstDay.value= SimpleDateFormat("EEEE,").format(date)
         firstDate.value=SimpleDateFormat("dd MMMM").format(date)
 
     }

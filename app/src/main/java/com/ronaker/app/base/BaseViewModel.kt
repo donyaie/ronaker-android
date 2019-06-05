@@ -12,6 +12,7 @@ import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
+import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
@@ -43,6 +44,7 @@ abstract class BaseViewModel : ViewModel() {
             is ManageProductViewModel->injector.inject(this)
 
             is CheckoutCalendarViewModel->injector.inject(this)
+            is OrdersViewModel ->injector.inject(this)
         }
 
     }
