@@ -23,7 +23,7 @@
                 android:id="@+id/cancel_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:padding="16dp"
+                android:padding="18dp"
                 android:tint="@color/white"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/ic_back_white"/>
@@ -60,8 +60,34 @@
                       android:layout_height="match_parent">
 
 
+
+
+            <ImageView
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/action1_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="15dp"
+                    android:tint="@color/white"
+                    android:src="@drawable/ic_share_white"/>
+            <ImageView
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/action2_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="15dp"
+                    android:tint="@color/white"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_fave_white"/>
+
+
             <TextView android:id="@+id/action_text" android:layout_width="57dp"
                       android:text="Save"
+
                       android:gravity="right|center_vertical"
                       android:paddingRight="12dp"
                       android:textAppearance="@style/TextAppearance.Small.Regular"
@@ -69,6 +95,9 @@
                       android:textColor="@color/colorTextLight"
                       android:layout_height="match_parent"/>
         </LinearLayout>
+
+
+
 
         <RelativeLayout
                 android:id="@+id/line" app:layout_constraintBottom_toBottomOf="parent"
