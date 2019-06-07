@@ -25,7 +25,7 @@
                 app:toolbar_component_action_text="Clear"
                 app:toolbar_component_center_container="NONE"
                 app:toolbar_component_action_container="TEXT"
-                app:toolbar_component_cancel_container="NONE"
+                app:toolbar_component_cancel_container="CLOSE"
         />
 
         <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/header"
