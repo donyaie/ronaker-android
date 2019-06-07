@@ -1,5 +1,7 @@
 package com.ronaker.app.ui.splash
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -53,6 +55,14 @@ class SplashActivity : BaseActivity() {
         binding.viewModel = viewModel
 
 
+    }
+
+    companion object {
+        fun newInstance(context: Context): Intent {
+            var intent = Intent(context, SplashActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            return intent
+        }
     }
 
 

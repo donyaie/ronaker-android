@@ -15,6 +15,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:paddingBottom="80dp"
                     android:layout_height="match_parent">
 
                 <TextView android:layout_width="match_parent"
@@ -50,7 +51,6 @@
                         android:layout_marginRight="24dp"
                         android:inputType="textPassword"
 
-                        android:layout_marginBottom="80dp"
 
                         app:input_transparent="true"
                         android:imeOptions="actionNext"

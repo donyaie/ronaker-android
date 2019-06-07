@@ -11,6 +11,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:onClick="@{()->viewModel.onClickProduct()}"
             app:cardElevation="5dp"
             app:cardCornerRadius="3dp"
@@ -98,9 +99,8 @@
 
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                           android:layout_weight=".95"
-                          android:layout_marginLeft="16dp"
+                          android:layout_marginLeft="10dp"
                           app:layout_constraintLeft_toLeftOf="parent"
-                          android:layout_marginTop="2dp"
                           android:id="@+id/status"
                           android:gravity="left"
                           android:text="Lend | Canceled order"

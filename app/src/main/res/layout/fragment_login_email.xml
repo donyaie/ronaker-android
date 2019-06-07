@@ -14,6 +14,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:paddingBottom="80dp"
                     android:layout_height="match_parent">
 
                 <TextView android:layout_width="match_parent"
@@ -35,7 +36,6 @@
                         android:inputType="textEmailAddress"
                         android:imeOptions="actionNext"
                         app:input_transparent="true"
-                        android:layout_marginBottom="80dp"
                         android:id="@+id/email_input"
                         app:input_validation_mode="AUTO"
                         app:input_title="@string/email"

@@ -11,8 +11,10 @@ import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.tabhistory.FragNavTabHistoryController
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.explore.ExploreFragment
+import com.ronaker.app.ui.inbox.InboxFragment
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
+import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 
@@ -25,6 +27,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             INDEX_EXPLORE -> ExploreFragment.newInstance()
             INDEX_ITEMADD -> ManageProductListFragment.newInstance()
             INDEX_ORDERS -> OrdersFragment.newInstance()
+            INDEX_PROFILE -> ProfileFragment.newInstance()
+            INDEX_INBOX-> InboxFragment.newInstance()
             else -> ExploreFragment.newInstance()
         }
     }
@@ -93,9 +97,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                     0 -> mNavController.switchTab(INDEX_EXPLORE)
                     1 ->  mNavController.switchTab(INDEX_ORDERS)
                     2 -> mNavController.switchTab(INDEX_ITEMADD)
-//                    2->  startActivity(PhoneNumberActivity.newInstance(this@DashboardActivity ))
-                    3 -> Toast.makeText(this@DashboardActivity, "Inbox", Toast.LENGTH_LONG).show()
-                    4 -> Toast.makeText(this@DashboardActivity, "Profile", Toast.LENGTH_LONG).show()
+                    3 -> mNavController.switchTab(INDEX_INBOX)
+                    4 -> mNavController.switchTab(INDEX_PROFILE)
 
 
                 }
