@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -31,12 +33,29 @@ class CheckoutCalendarFragment : BaseFragment() {
         }
 
 
+
+
+        viewModel.nextStep.observe(this, Observer { value ->
+
+
+
+            activity?.let {
+                it.finish()
+                startActivity(OrderMessageActivity.newInstance(it,value) )}
+        })
+
+
         initCalendar()
 
         binding.toolbar.actionTextClickListener= View.OnClickListener {
             binding.calendarView.clearSelectedDates()
 
             viewModel.clearDates()
+        }
+
+        binding.toolbar.cancelClickListener=View.OnClickListener {
+
+            activity?.finish()
         }
 
 

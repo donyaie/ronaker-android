@@ -103,7 +103,17 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 ActionContainer.TEXT -> {
                     actionLayout.visibility = View.VISIBLE
                     actionText.visibility = View.VISIBLE
+
+                    action1Button.visibility=View.GONE
+                    action2Button.visibility=View.GONE
                 }
+                ActionContainer.TWO_BUTTON -> {
+                    actionLayout.visibility = View.VISIBLE
+                    actionText.visibility = View.GONE
+                    action1Button.visibility=View.VISIBLE
+                    action2Button.visibility=View.VISIBLE
+                }
+
                 else -> {
                     actionLayout.visibility = View.GONE
                 }
@@ -113,23 +123,46 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private lateinit var screenLibrary: ScreenCalcute
 
+    /*
+
+      if (isTransparent)
+                        cancelButton.drawable.clearColorFilter()
+                    else
+                        cancelButton.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
+
+
+     */
+
     var isTransparent: Boolean = false
         set(value) {
 
             field = value
+
+            action1Button.setImageResource(action1Src)
+            action2Button.setImageResource(action2Src)
+
             if (isTransparent) {
                 containerLayout.setBackgroundColor(resources.getColor(R.color.transparent))
                 actionText.setTextColor(resources.getColor(R.color.colorTextLight))
                 titleText.setTextColor(resources.getColor(R.color.colorTextLight))
 
+                action1Button.drawable.clearColorFilter()
+                action2Button.drawable.clearColorFilter()
+
             } else {
                 containerLayout.setBackgroundColor(resources.getColor(R.color.white))
                 actionText.setTextColor(resources.getColor(R.color.colorTextDark))
+
+                action1Button.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
+                action2Button.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
+
+
                 titleText.setTextColor(resources.getColor(R.color.colorTextDark))
             }
 
 
             cancelContainer = cancelContainer
+
         }
 
     var isBottomLine: Boolean = false
@@ -143,6 +176,21 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             field = value
             titleText.setText(value)
         }
+
+
+    var action1Src: Int =  R.drawable.ic_share_white
+        set(value) {
+            field = value
+            action1Button.setImageResource(value)
+        }
+
+    var action2Src: Int =R.drawable.ic_fave_white
+        set(value) {
+            field = value
+            action2Button.setImageResource(value)
+        }
+
+
     var actionTitle: String? = null
         set(value) {
             field = value
@@ -162,6 +210,8 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private var lineLayout: RelativeLayout
     private var actionText: TextView
+    private var action1Button: ImageView
+    private var action2Button: ImageView
     private var actionLayout: LinearLayout
 
     private var cancelButton: ImageView
@@ -181,7 +231,23 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         set(value) {
 
             field = value
-            actionText.setOnClickListener(actionTextClickListener)
+            actionText.setOnClickListener(value)
+
+        }
+
+    var action1BouttonClickListener: OnClickListener? = null
+        set(value) {
+
+            field = value
+            action1Button.setOnClickListener(value)
+
+        }
+
+    var action2BouttonClickListener: OnClickListener? = null
+        set(value) {
+
+            field = value
+            action2Button.setOnClickListener(value)
 
         }
 
@@ -198,6 +264,9 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         cancelButton = findViewById(R.id.cancel_button)
         countDots = findViewById(R.id.countDots)
         containerLayout = findViewById(R.id.container_layout)
+
+        action1Button = findViewById(R.id.action1_button)
+        action2Button = findViewById(R.id.action2_button)
 
         orientation = VERTICAL
 
@@ -253,6 +322,8 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
 
+
+
             cancelContainer = CancelContainer.values()[typedArray
                 .getInt(
                     R.styleable
@@ -269,6 +340,19 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 )
 
 
+             action1Src=typedArray
+                .getResourceId(
+                    R.styleable
+                        .toolbar_component_attributes_toolbar_component_action1src,
+                    R.drawable.ic_share_white
+                )
+
+             action2Src=typedArray
+                .getResourceId(
+                    R.styleable
+                        .toolbar_component_attributes_toolbar_component_action2src,
+                    R.drawable.ic_fave_white
+                )
 
             dotCount = typedArray
                 .getInt(

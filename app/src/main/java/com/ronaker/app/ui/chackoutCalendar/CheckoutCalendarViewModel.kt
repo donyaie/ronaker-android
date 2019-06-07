@@ -36,6 +36,8 @@ class CheckoutCalendarViewModel : BaseViewModel() {
     val lastDay: MutableLiveData<String> = MutableLiveData()
     val lastDate: MutableLiveData<String> = MutableLiveData()
 
+    val nextStep: MutableLiveData<String> = MutableLiveData()
+
     val setDatesVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -57,46 +59,49 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
     }
 
-    fun onClickSetDays(){
+    fun onClickSetDays() {
 
+
+
+        nextStep.value=suid
     }
 
     fun unSelectFirstDate() {
 
-        firstDayVisibility.value= View.GONE
+        firstDayVisibility.value = View.GONE
 
-        firstDate.value="Borrow Day"
+        firstDate.value = "Borrow Day"
 
     }
 
     fun unSelectLastDate() {
 
 
-        lastDayVisibility.value= View.GONE
+        lastDayVisibility.value = View.GONE
 
-        lastDate.value="Return Day"
+        lastDate.value = "Return Day"
 
-        setDatesVisibility.value=View.GONE
+        setDatesVisibility.value = View.GONE
 
     }
 
     fun selectFirst(date: Date) {
 
-        firstDayVisibility.value= View.VISIBLE
+        firstDayVisibility.value = View.VISIBLE
 
-        firstDay.value= SimpleDateFormat("EEEE,").format(date)
-        firstDate.value=SimpleDateFormat("dd MMMM").format(date)
+        firstDay.value = SimpleDateFormat("EEEE,").format(date)
+        firstDate.value = SimpleDateFormat("dd MMMM").format(date)
 
     }
 
     fun selectLast(date: Date) {
 
-        lastDayVisibility.value= View.VISIBLE
+        lastDayVisibility.value = View.VISIBLE
 
-        lastDay.value= SimpleDateFormat("EEEE").format(date)
-        lastDate.value=SimpleDateFormat("dd MMMM").format(date)
+        lastDay.value = SimpleDateFormat("EEEE").format(date)
+        lastDate.value = SimpleDateFormat("dd MMMM").format(date)
 
-        setDatesVisibility.value=View.VISIBLE
+        setDatesVisibility.value = View.VISIBLE
     }
 
     override fun onCleared() {

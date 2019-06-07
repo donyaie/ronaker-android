@@ -16,7 +16,7 @@
                     android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                               android:paddingBottom="180dp"
+                                                               android:paddingBottom="100dp"
                                                                android:layout_height="wrap_content">
 
 
@@ -49,7 +49,7 @@
                           android:layout_marginRight="24dp"
                           android:layout_marginTop="24dp"
                           android:layout_marginBottom="24dp"
-                          android:textAppearance="@style/TextAppearance.Large.Light"
+                          android:textAppearance="@style/TextAppearance.Medium.Light"
                           android:id="@+id/description_text"
                           android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
@@ -85,6 +85,7 @@
                             <TextView android:text="Location Address" android:layout_width="match_parent"
                                       android:gravity="left|center_vertical"
 
+                                      app:mutableText="@{viewModel.getProductAddress()}"
                                       android:paddingLeft="16dp"
                                       android:textAppearance="@style/TextAppearance.Medium.SB"
 
@@ -114,6 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:toolbar_component_transparent="true"
+                app:toolbar_component_action1src="@drawable/ic_share_white"
+                app:toolbar_component_action2src="@drawable/ic_fave_white"
                 app:toolbar_component_bottom_line="false"
                 app:toolbar_component_dot_count="3"
                 app:toolbar_component_center_container="NONE"
@@ -124,6 +127,33 @@
                                                            android:background="@color/white"
                                                            app:layout_constraintBottom_toBottomOf="parent"
                                                            android:layout_height="80dp">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/price"
+                      app:layout_constraintTop_toTopOf="parent"
+                      app:layout_constraintLeft_toLeftOf="parent"
+                      android:layout_marginLeft="26dp"
+                      android:layout_marginTop="16dp"
+
+                      app:mutableText="@{viewModel.getProductPrice()}"
+
+                      android:textAppearance="@style/TextAppearance.Heading.2"
+                      android:text="$0"
+
+            />
+
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/priceTitle"
+                      app:mutableText="@{viewModel.getProductPriceTitle()}"
+                      app:layout_constraintTop_toBottomOf="@id/price"
+                      app:layout_constraintLeft_toLeftOf="parent"
+                      android:textAppearance="@style/TextAppearance.Small.Regular"
+                      android:layout_marginLeft="26dp"
+                      android:text="Per Day"
+
+            />
+
 
             <RelativeLayout android:layout_width="match_parent" app:layout_constraintTop_toTopOf="parent"
                             android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
