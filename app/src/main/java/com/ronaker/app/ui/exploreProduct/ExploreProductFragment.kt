@@ -39,7 +39,7 @@ class ExploreProductFragment : BaseFragment() {
             try {
                 val scrollY = binding.scrollView.scrollY
 
-                if (scrollY <= binding.avatarImage.height - binding.toolbar.bottom) {
+                if (scrollY <= binding.avatarImage.height/2 - binding.toolbar.bottom) {
 
                     binding.toolbar.isTransparent = true
                     binding.toolbar.isBottomLine = false
