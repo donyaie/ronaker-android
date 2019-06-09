@@ -9,6 +9,7 @@ import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
+import com.ronaker.app.ui.inbox.InboxViewModel
 import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
@@ -16,6 +17,7 @@ import com.ronaker.app.ui.orderMessage.OrderMessageViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
+import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
 abstract class BaseViewModel : ViewModel() {
@@ -47,6 +49,8 @@ abstract class BaseViewModel : ViewModel() {
             is CheckoutCalendarViewModel->injector.inject(this)
             is OrdersViewModel ->injector.inject(this)
             is OrderMessageViewModel->injector.inject(this)
+            is ProfileViewModel->injector.inject(this)
+            is InboxViewModel ->injector.inject(this)
         }
 
     }

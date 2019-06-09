@@ -6,6 +6,7 @@ import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
+import com.ronaker.app.ui.inbox.InboxViewModel
 import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
@@ -13,6 +14,7 @@ import com.ronaker.app.ui.orderMessage.OrderMessageViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
+import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -28,6 +30,7 @@ interface ViewModelInjector {
      * @param viewModel ViewModel in which to inject the dependencies
      */
     fun inject(viewModel: PostListViewModel)
+
     fun inject(viewModel: LoginViewModel)
     fun inject(viewModel: SplashViewModel)
     fun inject(viewModel: ExploreViewModel)
@@ -40,7 +43,8 @@ interface ViewModelInjector {
     fun inject(viewModel: CheckoutCalendarViewModel)
     fun inject(viewModel: OrdersViewModel)
     fun inject(viewModel: OrderMessageViewModel)
-
+    fun inject(viewModel: ProfileViewModel)
+    fun inject(viewModel: InboxViewModel)
 
 
     @Component.Builder
