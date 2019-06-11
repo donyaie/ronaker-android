@@ -1,7 +1,9 @@
 package com.ronaker.app.ui.addProduct
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
 import com.ronaker.app.base.NetworkError.Companion.error_unverified_phone_number
@@ -26,6 +28,9 @@ class AddProductViewModel : BaseViewModel() {
     @Inject
     lateinit var userRepository: UserRepository
 
+
+    @Inject
+    lateinit var context: Context
 
     @Inject
     lateinit var productRepository: ProductRepository
@@ -112,7 +117,7 @@ class AddProductViewModel : BaseViewModel() {
 
             checkNextSelectImage()
 
-        } else errorMessage.value = "add images"
+        } else errorMessage.value = context.getString(R.string.error_add_image)
 
 
     }
@@ -169,7 +174,7 @@ class AddProductViewModel : BaseViewModel() {
         } else if (product.price_per_day!! > 0 || product.price_per_week!! > 0 || product.price_per_month!! > 0)
             viewState.value = StateEnum.location
         else
-            errorMessage.value = "set price"
+            errorMessage.value = context.getString(R.string.error_set_price)
 
     }
 

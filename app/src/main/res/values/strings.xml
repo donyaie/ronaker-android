@@ -1,6 +1,17 @@
 <resources>
-    <string name="app_name">Ronaker</string>
+    <string name="app_name" translatable="false">Ronaker</string>
 
+
+
+    <string name="caption_title" translatable="false">Text</string>
+
+
+
+    <string name="google_api_key" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
+
+    <string name="title_defult_price" translatable="false">€0</string>
+
+    <string name="title_curency_symbol" translatable="false">€</string>
 
 
     <string name="retry">Retry</string>
@@ -16,5 +27,75 @@
     <string name="password_title">Password</string>
     <string name="password_hint">Enter your password</string>
 
-    <string name="google_api_key">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
+
+    <string name="title_menu_explore">Explore</string>
+    <string name="title_menu_orders">Orders</string>
+    <string name="title_menu_items">Items</string>
+    <string name="title_menu_inbox">Inbox</string>
+    <string name="title_menu_profile">Profile</string>
+    <string name="title_button_set_dates">Set Dates</string>
+    <string name="title_search_here">Search here …</string>
+    <string name="title_button_check_out">Check Out</string>
+    <string name="title_your_inbox">Your Inbox</string>
+    <string name="title_what_s_your_email_address">What’s your email address?</string>
+    <string name="title_login_home">Rent things you only need for a short time, from your nearby.</string>
+    <string name="title_button_create_account">Create Account</string>
+    <string name="titile_button_login">Login</string>
+    <string name="title_and_what_s_your_name">And what’s your name?</string>
+    <string name="title_done_njust_choice_a_password">Done! Just choose a password.</string>
+    <string name="title_button_done">Done!</string>
+    <string name="title_welcome_back">Welcome back.</string>
+    <string name="titile_button_login_to_your_account">Login to your account</string>
+    <string name="title_is_item_available">Is the item available?</string>
+    <string name="title_active">Active</string>
+    <string name="title_name_and_description">Name and Description</string>
+    <string name="title_images_gallery">Images gallery</string>
+    <string name="title_asking_price">Asking price</string>
+    <string name="title_location">Location</string>
+    <string name="title_your_listings">Your Listings</string>
+    <string name="title_start_to_make_money_from_your_items">Start to make money from your items.</string>
+    <string name="title_button_add_first_item">Add First Item</string>
+    <string name="title_add_item">+ Add Item</string>
+    <string name="title_send_a_meesage_to_owner">Send a Message to owner</string>
+    <string name="title_send_request">Send Request</string>
+    <string name="title_all">All</string>
+    <string name="title_renting">Renting</string>
+    <string name="title_lending">Lending</string>
+    <string name="title_archive">Archive</string>
+    <string name="title_verify_your_phone">Verify Your Phone</string>
+    <string name="title_please_enter_the_code_we_texted_to_your_number">Please enter the code we texted to your number</string>
+    <string name="title_seconds_to_resend">seconds to resend</string>
+    <string name="title_did_not_get_the_code_yet">Did not get the code yet?</string>
+    <string name="title_resend">Resend</string>
+    <string name="title_please_enter_your_phone">Please Enter Your Phone</string>
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to
+        verify your phone number
+    </string>
+    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your
+        item. please use clear image from proper angle…
+    </string>
+    <string name="title_button_next">Next</string>
+    <string name="title_tell_about_your_item">Tell about your item</string>
+    <string name="title_button_set_your_location">Set your Location</string>
+    <string name="title_we_will_not_show_your_exact_address_to_users">We will not show your exact address to users.
+    </string>
+    <string name="title_search_your_location">Search your Location</string>
+    <string name="title_button_set_location">Set Location</string>
+    <string name="title_set_your_asking_price">Set your asking price.</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_logout">Logout</string>
+    <string name="error_set_price">please set price</string>
+    <string name="error_add_image">add images</string>
+    <string name="title_borrow_day">Borrow Day</string>
+    <string name="title_return_day">Return Day</string>
+    <string name="title_per_day">Per day</string>
+    <string name="title_per_week">Per week</string>
+    <string name="title_per_month">Per month</string>
+    <string name="title_add_images_of_item">Add Images of item</string>
+    <string name="title_add_new_image">Add new image</string>
+    <string name="title_phone_number">Phone Number</string>
+    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Please input the price you ask for
+        renting out the item.
+    </string>
+    <string name="title_you_have_not_any_item_yet">You have not any item yet.</string>
 </resources>

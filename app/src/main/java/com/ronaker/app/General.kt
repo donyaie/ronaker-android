@@ -8,9 +8,13 @@ import com.ronaker.app.injection.component.AppComponent
 import com.ronaker.app.injection.component.DaggerAppComponent
 import com.ronaker.app.injection.module.AppModule
 import com.ronaker.app.ui.login.LoginActivity
+import com.ronaker.app.utils.FONT_PATH
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
+import com.ronaker.app.utils.LocaleHelper
+
+
 
 
 class General : MultiDexApplication() {
@@ -34,7 +38,7 @@ class General : MultiDexApplication() {
                 .addInterceptor(
                     CalligraphyInterceptor(
                         CalligraphyConfig.Builder()
-                            .setDefaultFontPath("fonts/regular.otf")
+                            .setDefaultFontPath(FONT_PATH)
                             .setFontAttrId(R.attr.fontPath)
                             .build()
                     )
@@ -44,8 +48,10 @@ class General : MultiDexApplication() {
 
     }
 
+
+
     override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
+        super.attachBaseContext(base?.let { LocaleHelper.onAttach(it, "en") })
         MultiDex.install(this)
     }
 

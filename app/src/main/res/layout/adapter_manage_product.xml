@@ -28,7 +28,7 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   app:layout_constraintTop_toBottomOf="@id/image"
                   android:layout_marginTop="8dp"
-                  android:text="Active"
+                  android:text="@string/caption_title"
                   android:paddingLeft="4dp"
                   android:paddingRight="4dp"
                   android:minHeight="20dp"
@@ -44,7 +44,7 @@ android:gravity="center"
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   app:layout_constraintTop_toBottomOf="@id/active"
                   android:layout_marginTop="4dp"
-                  android:text="title"
+                  android:text="@string/caption_title"
 
                   app:mutableText="@{viewModel.getProductTitle()}"
                   android:id="@+id/title"
@@ -58,7 +58,7 @@ android:gravity="center"
                   android:id="@+id/price"
 
                   app:mutableText="@{viewModel.getProductPrice()}"
-                  android:text="price"
+                  android:text="@string/caption_title"
                   android:textAppearance="@style/TextAppearance.Small.Regular"
                   android:lines="1"/>
 

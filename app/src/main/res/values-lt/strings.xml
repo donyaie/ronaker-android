@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ronaker</string>
+    <string name="dialog_permission_message">Šiai programai reikia leidimo naudoti šią funkciją. Juos galite suteikti
+        programų nustatymuose.
+    </string>
+    <string name="dialog_permission_title">Suteikti leidimus</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Įveskite savo elektroninio pašto adresą</string>
+    <string name="error_add_image">pridėti vaizdus</string>
+    <string name="error_set_price">prašome nustatyti kainą</string>
+    <string name="first_name_hint">Įveskite savo vardą</string>
+    <string name="first_name_title">Pirmas vardas</string>
+    <string name="go_to_settings">EIKITE Į NUSTATYMUS</string>
+    <string name="input_component_title_default">vardas</string>
+    <string name="last_name_hint">Įveskite savo pavardę</string>
+    <string name="last_name_title">Pavardė</string>
+    <string name="lbl_choose_from_gallery">Pasirinkite iš galerijos</string>
+    <string name="lbl_set_profile_photo">Nustatykite profilio vaizdą</string>
+    <string name="lbl_take_camera_picture">Nufotografuok</string>
+    <string name="password_hint">Įveskite savo slaptažodį</string>
+    <string name="post_error">Įkeliant įrašus įvyko klaida</string>
+    <string name="password_title">Slaptažodis</string>
+    <string name="retry">Bandykite dar kartą</string>
+    <string name="titile_button_login">Prisijungti</string>
+    <string name="titile_button_login_to_your_account">Prisijunkite prie savo paskyros</string>
+    <string name="title_active">Aktyvus</string>
+    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Pridėkite keletą
+        nuotraukų iš savo\n elementą. prašome naudoti aiškų vaizdą iš tinkamo kampo …
+    </string>
+    <string name="title_add_images_of_item">Pridėti paveikslėlio elementą</string>
+    <string name="title_add_item">+ Pridėti elementą</string>
+    <string name="title_add_new_image">Pridėti naują vaizdą</string>
+    <string name="title_all">Viskas</string>
+    <string name="title_and_what_s_your_name">Ir koks tavo vardas?</string>
+    <string name="title_archive">Archyvas</string>
+    <string name="title_asking_price">Kaina</string>
+    <string name="title_borrow_day">Paskolos diena</string>
+    <string name="title_button_add_first_item">Pridėti pirmąjį elementą</string>
+    <string name="title_button_check_out">Išsiregistravimas</string>
+    <string name="title_button_create_account">Sukurti paskyrą</string>
+    <string name="title_button_done">Padaryta!</string>
+    <string name="title_button_next">Kitas</string>
+    <string name="title_button_set_dates">Nustatyti datas</string>
+    <string name="title_button_set_location">Nustatyti vietą</string>
+    <string name="title_button_set_your_location">Nustatykite savo vietą</string>
+    <string name="title_did_not_get_the_code_yet">Dar negavote kodo?</string>
+    <string name="title_done_njust_choice_a_password">Padaryta! Tiesiog pasirinkite slaptažodį.</string>
+    <string name="title_images_gallery">Nuotraukų galerija</string>
+    <string name="title_is_item_available">Ar elementas galimas?</string>
+    <string name="title_lending">Skolinimas</string>
+    <string name="title_location">Vieta</string>
+    <string name="title_login_home">Nuomokite daiktus, kuriuos jums reikia tik trumpą laiką, iš savo artimiausio.
+    </string>
+    <string name="title_logout">Atsijungti</string>
+    <string name="title_menu_explore">Naršyti</string>
+    <string name="title_menu_inbox">Pašto dėžutę</string>
+    <string name="title_menu_items">Elementai</string>
+    <string name="title_menu_orders">Užsakymai</string>
+    <string name="title_menu_profile">Profilis</string>
+    <string name="title_name_and_description">Pavadinimas ir aprašymas</string>
+    <string name="title_per_day">Per dieną</string>
+    <string name="title_per_month">Per mėnesį</string>
+    <string name="title_per_week">Per savaitę</string>
+    <string name="title_phone_number">Telefono numeris</string>
+    <string name="title_please_enter_the_code_we_texted_to_your_number">Įveskite kodą, kurį gavome savo numeriu</string>
+    <string name="title_please_enter_your_phone">Įveskite savo telefoną</string>
+    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Prašome įvesti kainą, kurią prašote
+        išsinuomoti.
+    </string>
+    <string name="title_profile">Profilis</string>
+    <string name="title_renting">Nuoma</string>
+    <string name="title_resend">Persiūsti</string>
+    <string name="title_return_day">Grįžimo diena</string>
+    <string name="title_search_here">Ieškoti čia ...</string>
+    <string name="title_search_your_location">Ieškoti savo vietovėje</string>
+    <string name="title_seconds_to_resend">per kelias sekundes</string>
+    <string name="title_send_a_meesage_to_owner">Siųsti žinutę savininkui</string>
+    <string name="title_send_request">Išsiųsti prašmą</string>
+    <string name="title_set_your_asking_price">Nustatykite užklausos kainą.</string>
+    <string name="title_start_to_make_money_from_your_items">Pradėkite užsidirbti pinigų iš savo daiktų.</string>
+    <string name="title_tell_about_your_item">Pasakykite apie savo elementą</string>
+    <string name="title_verify_your_phone">Patikrinkite savo telefoną</string>
+    <string name="title_we_will_not_show_your_exact_address_to_users">Mes nerodysime jūsų tikslaus adreso naudotojams.
+    </string>
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">Mes patvirtinsime 5 skaitmenų kodą,
+        kad patvirtintume jūsų telefono numerį
+    </string>
+    <string name="title_welcome_back">Sveikas sugrįžęs.</string>
+    <string name="title_what_s_your_email_address">Kas yra jūsų el. Pašto adresas?</string>
+    <string name="title_you_have_not_any_item_yet">Dar neturite jokių elementų.</string>
+    <string name="title_your_inbox">Jūsų gautieji</string>
+    <string name="title_your_listings">Jūsų skelbimai</string>
+    <string name="toast_image_intent_null">Trūksta vaizdo parinkiklio parinkties!</string>
+</resources>

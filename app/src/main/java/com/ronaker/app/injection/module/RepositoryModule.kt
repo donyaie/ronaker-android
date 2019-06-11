@@ -1,5 +1,6 @@
 package com.ronaker.app.injection.module
 
+import android.content.Context
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.General
 import com.ronaker.app.base.PreferencesProvider
@@ -142,8 +143,23 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun providePreferencesInterface(): PreferencesProvider {
+    internal fun providePreferencesInterface(context:Context): PreferencesProvider {
 
-        return PreferencesProvider(General.context)
+        return PreferencesProvider(context)
     }
+
+
+    /**
+     * Provides the Context object.
+     * @return the Context object
+     */
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideContext(): Context {
+
+        return General.context
+    }
+
+
 }

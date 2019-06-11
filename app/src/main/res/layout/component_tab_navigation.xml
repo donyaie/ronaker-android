@@ -26,7 +26,7 @@
                             android:layout_height="26dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="Explore"
+                              android:text="@string/title_menu_explore"
                               android:id="@+id/explore_text"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorAccent"
@@ -46,7 +46,7 @@
                     <TextView android:id="@+id/history_text" android:layout_width="match_parent"
                               android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="Orders"
+                              android:text="@string/title_menu_orders"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorTextGreyLight"
                               android:gravity="center"
@@ -65,7 +65,7 @@
                                android:layout_height="26dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="Items"
+                              android:text="@string/title_menu_items"
                               android:id="@+id/addItem_text"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorTextGreyLight"
@@ -84,7 +84,7 @@
                                android:layout_height="26dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="Inbox"
+                              android:text="@string/title_menu_inbox"
                               android:id="@+id/inbox_text"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorTextGreyLight"
@@ -103,7 +103,7 @@
                                android:layout_height="26dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
-                              android:text="Profile"
+                              android:text="@string/title_menu_profile"
                               android:id="@+id/profile_text"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:textColor="@color/colorTextGreyLight"

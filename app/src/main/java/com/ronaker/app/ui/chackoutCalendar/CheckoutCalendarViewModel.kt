@@ -1,8 +1,10 @@
 package com.ronaker.app.ui.chackoutCalendar
 
 
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -23,6 +25,9 @@ class CheckoutCalendarViewModel : BaseViewModel() {
     lateinit
     var userRepository: UserRepository
 
+    @Inject
+    lateinit
+    var context: Context
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -70,7 +75,7 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
         firstDayVisibility.value = View.GONE
 
-        firstDate.value = "Borrow Day"
+        firstDate.value = context.getString(R.string.title_borrow_day)
 
     }
 
@@ -79,7 +84,7 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
         lastDayVisibility.value = View.GONE
 
-        lastDate.value = "Return Day"
+        lastDate.value = context.getString(R.string.title_return_day)
 
         setDatesVisibility.value = View.GONE
 

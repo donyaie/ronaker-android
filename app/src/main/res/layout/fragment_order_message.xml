@@ -41,7 +41,7 @@
                           android:layout_marginTop="24dp"
                           android:layout_marginLeft="24dp"
                           android:layout_marginRight="24dp"
-                          android:text="Send a Meesage to owner"
+                          android:text="@string/title_send_a_meesage_to_owner"
                           android:textAppearance="@style/TextAppearance.Heading.1"
                           android:gravity="left"
                           android:id="@+id/title"
@@ -84,7 +84,7 @@
                       app:mutableText="@{viewModel.getProductPrice()}"
 
                       android:textAppearance="@style/TextAppearance.Heading.2"
-                      android:text="$0"
+                      android:text="@string/title_defult_price"
 
             />
 
@@ -105,7 +105,7 @@
                             android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
 
 
-            <Button style="@style/Button.accent" android:text="Send Request"
+            <Button style="@style/Button.accent" android:text="@string/title_send_request"
                     android:id="@+id/checkout"
 
                     app:layout_constraintRight_toRightOf="parent"

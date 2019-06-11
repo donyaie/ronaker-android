@@ -1,7 +1,9 @@
 package com.ronaker.app.ui.exploreProduct
 
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -19,6 +21,9 @@ class ExploreProductViewModel : BaseViewModel() {
     @Inject
     lateinit
     var userRepository: UserRepository
+    @Inject
+    lateinit
+    var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -59,16 +64,16 @@ class ExploreProductViewModel : BaseViewModel() {
                     productTitle.value = result.data?.name
                     if(result.data?.price_per_day!=0.0){
 
-                        productPrice.value=String.format( "$%.02f",result.data?.price_per_day)
-                        productPriceTitle.value="Per day"
+                        productPrice.value=String.format( "%s%.02f",context.getString(R.string.title_curency_symbol),result.data?.price_per_day)
+                        productPriceTitle.value=context.getString( R.string.title_per_day)
                     }else if(result.data?.price_per_week!=0.0){
 
-                        productPrice.value=String.format( "$%.02f",result.data?.price_per_week)
-                        productPriceTitle.value="Per week"
+                        productPrice.value=String.format( "%s%.02f",context.getString(R.string.title_curency_symbol),result.data?.price_per_week)
+                        productPriceTitle.value=context.getString( R.string.title_per_week)
                     }else if(result.data?.price_per_month!=0.0){
 
-                        productPrice.value=String.format( "$%.02f",result.data?.price_per_month)
-                        productPriceTitle.value="Per month"
+                        productPrice.value=String.format( "%s%.02f",context.getString(R.string.title_curency_symbol),result.data?.price_per_month)
+                        productPriceTitle.value=context.getString( R.string.title_per_month)
                     }
 
 //                    productAddress.value=result.data?

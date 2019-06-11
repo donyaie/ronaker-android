@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 import com.ronaker.app.utils.view.LoadingComponent
@@ -46,6 +47,11 @@ class ProfileFragment : BaseFragment() {
         })
 
         binding.viewModel = viewModel
+
+        binding.language.setOnClickListener{
+            activity?.let { it1 -> LanguageDialog.showDialog(it1) }
+
+        }
 
 
         return binding.root

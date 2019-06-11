@@ -47,7 +47,7 @@
 
                 android:textAppearance="@style/TextAppearance.Medium.SB"
                 android:textColor="@color/colorTextLight"
-                android:text="Title"
+                android:text="@string/caption_title"
 
         />
 
@@ -86,7 +86,7 @@
 
 
             <TextView android:id="@+id/action_text" android:layout_width="57dp"
-                      android:text="Save"
+                      android:text="@string/caption_title"
 
                       android:gravity="right|center_vertical"
                       android:paddingRight="12dp"
