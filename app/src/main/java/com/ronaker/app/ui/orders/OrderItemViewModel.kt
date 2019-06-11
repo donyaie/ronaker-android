@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orders
 
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -19,7 +20,7 @@ class OrderItemViewModel : BaseViewModel() {
     fun bind(item: Order, context: DashboardActivity) {
         data = item
         productTitle.value=item.title
-        productPrice.value=String.format("$%.02f", item.price)
+        productPrice.value=String.format("%s%.02f",context.getString(R.string.title_curency_symbol), item.price)
         productImage.value= BASE_URL+ item.avatar
         productDate.value=SimpleDateFormat("dd MMM").format(item.fromDate)+"-"+SimpleDateFormat("dd MMM").format(item.toDate)
     }

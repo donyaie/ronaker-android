@@ -22,7 +22,7 @@
                           android:layout_marginTop="24dp"
                           android:layout_marginLeft="24dp"
                           android:layout_marginRight="24dp"
-                          android:text="What’s your email address?"
+                          android:text="@string/title_what_s_your_email_address"
                           android:textAppearance="@style/TextAppearance.Heading.1"
                           android:gravity="left"
                           android:id="@+id/title"

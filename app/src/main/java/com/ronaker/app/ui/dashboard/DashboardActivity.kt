@@ -67,11 +67,18 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
 
+
+    override fun recreate() {
+        super.recreate()
+        binding.navigation.select(INDEX_EXPLORE)
+    }
+
+
     fun initNavigation(savedInstanceState: Bundle?) {
 
 
         val initial = savedInstanceState == null
-        if (initial) {
+        if (initial || isChangingConfigurations) {
             binding.navigation.select(INDEX_EXPLORE)
         }
 

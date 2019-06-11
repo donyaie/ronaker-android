@@ -19,7 +19,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:textAppearance="@style/TextAppearance.Medium.SB"
                 android:textColor="@color/colorTextLight"
-                android:text="Title"
+                android:text="@string/caption_title"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <EditText app:layout_constraintTop_toBottomOf="@id/title_text"
@@ -27,7 +27,7 @@
                   android:gravity="left|center_vertical"
                   android:textColor="@color/colorTextLight"
                   android:background="@null"
-                  android:hint="Place Holder Here"
+                  android:hint="@string/caption_title"
                   android:paddingBottom="8dp"
                   android:paddingTop="8dp"
                   android:minHeight="53dp"
@@ -71,7 +71,7 @@
                       android:gravity="left|top"
                       android:layout_weight=".95"
                       android:layout_marginTop="7dp"
-                      android:text="Alert"
+                      android:text="@string/caption_title"
                       android:alpha="0"
 
                       android:id="@+id/alert_text"
@@ -86,6 +86,7 @@
                     android:textAppearance="@style/TextAppearance.Small.Regular"
                     android:textColor="@color/colorTextLight"
                     android:layout_marginTop="7dp" android:text="0/0" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
 

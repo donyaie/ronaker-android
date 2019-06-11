@@ -26,7 +26,7 @@
                           android:layout_marginTop="24dp"
                           android:layout_marginLeft="24dp"
                           android:layout_marginRight="24dp"
-                          android:text="Plese Enter Your Phone"
+                          android:text="@string/title_please_enter_your_phone"
                           android:textAppearance="@style/TextAppearance.Heading.1"
                           android:gravity="left"
                           android:id="@+id/title"
@@ -37,7 +37,7 @@
                           android:textColor="@color/colorTextDark"
                           android:textAppearance="@style/TextAppearance.Medium.Regular"
                           android:layout_marginTop="16dp"
-                          android:text="We will Text you a 5 digit code to verify your phone number"
+                          android:text="@string/title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number"
                           android:layout_marginRight="24dp"
                           android:id="@+id/description"
                           app:layout_constraintTop_toBottomOf="@id/title"
@@ -59,7 +59,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:text="Phone Number"
+                            android:text="@string/title_phone_number"
                             android:textColor="@color/colorTextDark"
                             android:textAppearance="@style/TextAppearance.Medium.SB"
 
@@ -164,7 +164,6 @@
                 android:onClick="@{()->view.onClickNext()}"
                 android:layout_marginBottom="16dp"
                 android:id="@+id/next_button"
-                android:text="Next"
                 style="@style/Button.circle.accent"/>
 
 

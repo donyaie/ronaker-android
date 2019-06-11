@@ -17,7 +17,7 @@
                   android:layout_marginTop="16dp"
                   android:layout_marginLeft="24dp"
                   android:layout_marginRight="24dp"
-                  android:text="Set your Location"
+                  android:text="@string/title_button_set_your_location"
                   android:textAppearance="@style/TextAppearance.Heading.1"
                   android:gravity="left"
                   android:id="@+id/title"
@@ -40,7 +40,7 @@
                       android:gravity="top|left"
                       android:textColor="@color/colorTextDark"
                       android:textAppearance="@style/TextAppearance.Medium.Regular"
-                      android:text="We will not show your exact address to users."
+                      android:text="@string/title_we_will_not_show_your_exact_address_to_users"
                       android:layout_marginTop="7dp" android:layout_marginLeft="8dp" android:layout_weight=".96"
                       android:layout_height="wrap_content"/>
 
@@ -73,7 +73,7 @@
 
 
                                                                    android:layout_height="48dp">
-                    <TextView android:text="Search your Location" android:layout_width="match_parent"
+                    <TextView android:text="@string/title_search_your_location" android:layout_width="match_parent"
                               android:gravity="left|center_vertical"
 
                               android:paddingLeft="16dp"
@@ -115,7 +115,7 @@
                 android:id="@+id/next_button"
 
                 android:onClick="@{()->viewModel.onClickLocationNext()}"
-                android:text="Set Location"
+                android:text="@string/title_button_set_location"
                 style="@style/Button.accent"/>
 
 

@@ -21,7 +21,7 @@
                           android:layout_marginTop="24dp"
                           android:layout_marginLeft="24dp"
                           android:layout_marginRight="24dp"
-                          android:text="Set your asking price."
+                          android:text="@string/title_set_your_asking_price"
                           android:textAppearance="@style/TextAppearance.Heading.1"
                           android:gravity="left"
                           android:id="@+id/title"
@@ -33,7 +33,7 @@
                           android:textColor="@color/colorTextDark"
                           android:textAppearance="@style/TextAppearance.Medium.Regular"
                           android:layout_marginTop="16dp"
-                          android:text="Please input the price you ask for renting out the item."
+                          android:text="@string/title_please_input_the_price_you_ask_for_renting_out_the_item"
                           android:layout_marginRight="24dp"
                           android:id="@+id/description"
                           app:layout_constraintTop_toBottomOf="@id/title"
@@ -111,7 +111,7 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="16dp"
                 android:id="@+id/next_button"
-                android:text="Next"
+                android:text="@string/title_button_next"
                 android:onClick="@{()->viewModel.onClickPriceNext(dayInput.getText().toString(),dayInput.checkValid(),weekInput.getText().toString(),weekInput.checkValid(),monthInput.getText().toString(),monthInput.checkValid())}"
 
                 style="@style/Button.accent"/>

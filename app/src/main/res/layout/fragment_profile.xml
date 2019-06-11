@@ -15,7 +15,7 @@
                   app:layout_constraintTop_toTopOf="parent"
 
 
-                  android:text="Profile"
+                  android:text="@string/title_profile"
                   android:layout_marginRight="24dp"
                   android:layout_marginLeft="24dp"
                   android:layout_marginTop="80dp"
@@ -34,7 +34,19 @@
                       android:textColor="@color/colorTextDark"
                       android:onClick="@{()->viewModel.onClickLogout()}"
 
-                      android:gravity="left|center_vertical" android:text="Logout"/>
+                      android:gravity="left|center_vertical" android:text="@string/title_logout"/>
+
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_marginLeft="24dp" android:layout_marginRight="24dp" android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+
+            <TextView android:layout_width="match_parent" android:layout_height="50dp" android:paddingRight="24dp"
+                      android:paddingLeft="24dp"
+                      android:id="@+id/language"
+                      android:textAppearance="@style/TextAppearance.Large.SB"
+                      android:textColor="@color/colorTextDark"
+
+                      android:gravity="left|center_vertical" android:text="Change Language"/>
+
 
 
         </LinearLayout>

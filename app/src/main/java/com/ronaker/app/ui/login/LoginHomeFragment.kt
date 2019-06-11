@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.utils.view.IPagerFragment
 import kotlinx.android.synthetic.main.fragment_login_home.*
 
@@ -28,7 +29,9 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
             binding.viewModel = viewModel
         }
 
-
+      binding.  languageChange.setOnClickListener{
+          activity?.let { it1 -> LanguageDialog.showDialog(it1) }
+      }
 
         return binding.root
     }

@@ -23,7 +23,7 @@
                           android:layout_marginTop="24dp"
                           android:layout_marginLeft="24dp"
                           android:layout_marginRight="24dp"
-                          android:text="Welcome back."
+                          android:text="@string/title_welcome_back"
                           android:textAppearance="@style/TextAppearance.Heading.1"
                           android:gravity="left"
                           android:id="@+id/title"
@@ -77,7 +77,7 @@
                 android:layout_marginLeft="24dp"
                 android:onClick="@{()->viewModel.onClickLoginSignIn(emailInput.getText().toString(),emailInput.checkValid(),passwordInput.getText().toString(),passwordInput.checkValid())}"
 
-                android:text="Login to your account"
+                android:text="@string/titile_button_login_to_your_account"
                 style="@style/Button.accent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

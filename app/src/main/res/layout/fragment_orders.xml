@@ -70,7 +70,7 @@
                               android:paddingRight="15dp"
                               android:paddingLeft="15dp"
                               android:textColor="@color/colorTextLight" android:layout_width="wrap_content"
-                              android:text="All" android:layout_height="wrap_content"/>
+                              android:text="@string/title_all" android:layout_height="wrap_content"/>
 
                     <TextView app:layout_constraintTop_toTopOf="parent"
                               app:layout_constraintBottom_toBottomOf="parent"
@@ -104,7 +104,7 @@
 
                               android:textAppearance="@style/TextAppearance.Medium.Regular"
                               android:textColor="@color/colorTextGreyLight" android:layout_width="wrap_content"
-                              android:text="Renting" android:layout_height="wrap_content"/>
+                              android:text="@string/title_renting" android:layout_height="wrap_content"/>
 
                     <TextView app:layout_constraintTop_toTopOf="parent"
                               app:layout_constraintBottom_toBottomOf="parent"
@@ -136,7 +136,7 @@
 
                               android:textAppearance="@style/TextAppearance.Medium.Regular"
                               android:textColor="@color/colorTextGreyLight" android:layout_width="wrap_content"
-                              android:text="Lending" android:layout_height="wrap_content"/>
+                              android:text="@string/title_lending" android:layout_height="wrap_content"/>
 
                     <TextView app:layout_constraintTop_toTopOf="parent"
                               app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +167,7 @@
 
                               android:textAppearance="@style/TextAppearance.Medium.Regular"
                               android:textColor="@color/colorTextGreyLight" android:layout_width="wrap_content"
-                              android:text="Archive" android:layout_height="wrap_content"/>
+                              android:text="@string/title_archive" android:layout_height="wrap_content"/>
 
                     <TextView app:layout_constraintTop_toTopOf="parent"
                               app:layout_constraintBottom_toBottomOf="parent"

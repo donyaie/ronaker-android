@@ -53,7 +53,7 @@
                                                android:layout_height="wrap_content">
                 <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
                                                                    android:layout_height="48dp">
-                    <TextView android:text="Search here ..." android:layout_width="match_parent"
+                    <TextView android:text="@string/title_search_here" android:layout_width="match_parent"
                               android:gravity="left|center_vertical"
 
                               android:paddingLeft="16dp"

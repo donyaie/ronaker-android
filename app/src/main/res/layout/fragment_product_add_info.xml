@@ -21,7 +21,7 @@
                           android:layout_marginTop="24dp"
                           android:layout_marginLeft="24dp"
                           android:layout_marginRight="24dp"
-                          android:text="Tell about your item"
+                          android:text="@string/title_tell_about_your_item"
                           android:textAppearance="@style/TextAppearance.Heading.1"
                           android:gravity="left"
                           android:id="@+id/title"
@@ -73,7 +73,7 @@
                 android:onClick="@{()->viewModel.onClickInfoNext(titleInput.getText().toString(),titleInput.checkValid(),descriptionInput.getText().toString(),descriptionInput.checkValid())}"
                 android:layout_marginBottom="16dp"
                 android:id="@+id/next_button"
-                android:text="Next"
+                android:text="@string/title_button_next"
                 style="@style/Button.accent"/>
 
 
