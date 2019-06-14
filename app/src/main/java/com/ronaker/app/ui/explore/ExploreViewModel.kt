@@ -74,7 +74,7 @@ class ExploreViewModel: BaseViewModel(){
                          if(result.data?.results?.size!! >0) {
 
                              onRetrieveProductListSuccess(
-                                 result.data?.results?.toProduct()
+                                 result.data.results.toProduct()
                              )
                          }else{
                              hasNextPage = false

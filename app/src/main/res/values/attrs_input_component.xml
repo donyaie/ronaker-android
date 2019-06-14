@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="input_component_title_default">Name</string>
 
     <declare-styleable name="input_component_attributes">
 

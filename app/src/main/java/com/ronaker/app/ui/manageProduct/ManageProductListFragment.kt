@@ -29,7 +29,7 @@ class ManageProductListFragment : BaseFragment() {
 
         var mnager = GridLayoutManager(context, 2)
 
-        binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
+        binding.recycler.layoutManager = mnager
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler,false)

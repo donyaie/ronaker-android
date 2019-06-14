@@ -12,12 +12,13 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.ronaker.app.R
 import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.ShapeDrawableHelper
 
 
-class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
 
     enum class CenterContainer {
@@ -121,7 +122,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
         }
 
-    private lateinit var screenLibrary: ScreenCalcute
+    private  var screenLibrary: ScreenCalcute
 
     /*
 
@@ -142,22 +143,22 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             action2Button.setImageResource(action2Src)
 
             if (isTransparent) {
-                containerLayout.setBackgroundColor(resources.getColor(R.color.transparent))
-                actionText.setTextColor(resources.getColor(R.color.colorTextLight))
-                titleText.setTextColor(resources.getColor(R.color.colorTextLight))
+                containerLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.transparent))
+                actionText.setTextColor(ContextCompat.getColor(context,R.color.colorTextLight))
+                titleText.setTextColor(ContextCompat.getColor(context,R.color.colorTextLight))
 
                 action1Button.drawable.clearColorFilter()
                 action2Button.drawable.clearColorFilter()
 
             } else {
-                containerLayout.setBackgroundColor(resources.getColor(R.color.white))
-                actionText.setTextColor(resources.getColor(R.color.colorTextDark))
+                containerLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                actionText.setTextColor(ContextCompat.getColor(context,R.color.colorTextDark))
 
                 action1Button.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
                 action2Button.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
 
 
-                titleText.setTextColor(resources.getColor(R.color.colorTextDark))
+                titleText.setTextColor(ContextCompat.getColor(context,R.color.colorTextDark))
             }
 
 
@@ -272,7 +273,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
         screenLibrary = ScreenCalcute(context)
 
-        attrs?.let {
+        attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
                 R.styleable.toolbar_component_attributes, 0, 0
@@ -374,7 +375,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             countDots.removeAllViewsInLayout()
             for (i in 0 until dotCount) {
                 dots[i] = ImageView(context)
-                dots[i]!!.setImageDrawable(getResources().getDrawable(com.ronaker.app.R.drawable.navigate_dot_normal))
+                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_normal))
 
                 val params = LinearLayout.LayoutParams(
                     screenLibrary.DP2Pixel(9),
@@ -388,7 +389,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 countDots.addView(dots[i], params)
             }
 
-            dots[0]!!.setImageDrawable(getResources().getDrawable(com.ronaker.app.R.drawable.navigate_dot_select))
+            dots[0]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_select))
         }
     }
 
@@ -409,7 +410,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
                             override fun onAnimationEnd(animation: Animator) {
 
-                                dots[position]!!.setImageDrawable(resources.getDrawable(com.ronaker.app.R.drawable.navigate_dot_select))
+                                dots[position]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_select))
                                 dots[position]!!.setPadding(0, 0, 0, 0)
                                 dots[position]!!.animate().scaleX(1f).scaleY(1f).setDuration(200).setListener(null)
                                     .start()
@@ -424,7 +425,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                             }
                         }).start()
                 } else {
-                    dots[i]!!.setImageDrawable(resources.getDrawable(com.ronaker.app.R.drawable.navigate_dot_normal))
+                    dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_normal))
                     dots[i]!!.setPadding(3, 3, 3, 3)
                     dots[i]!!.animate().scaleX(1f).scaleY(1f).setDuration(200).setListener(null).start()
 
@@ -437,7 +438,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         } else {
 
             for (i in 0 until dotCount) {
-                dots[i]!!.setImageDrawable(resources.getDrawable(com.ronaker.app.R.drawable.navigate_dot_normal))
+                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_normal))
                 dots[i]!!.setPadding(3, 3, 3, 3)
                 dots[i]!!.animate().scaleX(0f).scaleY(0f).setDuration(100).setListener(null).start()
 

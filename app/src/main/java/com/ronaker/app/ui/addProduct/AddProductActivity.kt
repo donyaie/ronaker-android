@@ -412,12 +412,12 @@ class AddProductActivity : BaseActivity() {
         builder.setPositiveButton(
             getString(R.string.go_to_settings)
 
-        ) { dialog, which ->
+        ) { dialog, _ ->
             dialog?.cancel()
             openSettings()
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
-        { dialog, which -> dialog?.cancel() }
+        { dialog, _ -> dialog?.cancel() }
         builder.show()
     }
 

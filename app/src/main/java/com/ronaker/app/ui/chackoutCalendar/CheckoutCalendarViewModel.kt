@@ -8,6 +8,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.utils.LocaleHelper
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -94,8 +95,8 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
         firstDayVisibility.value = View.VISIBLE
 
-        firstDay.value = SimpleDateFormat("EEEE,").format(date)
-        firstDate.value = SimpleDateFormat("dd MMMM").format(date)
+        firstDay.value = SimpleDateFormat("EEEE,", Locale.getDefault()).format(date)
+        firstDate.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(date)
 
     }
 
@@ -103,8 +104,8 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
         lastDayVisibility.value = View.VISIBLE
 
-        lastDay.value = SimpleDateFormat("EEEE").format(date)
-        lastDate.value = SimpleDateFormat("dd MMMM").format(date)
+        lastDay.value = SimpleDateFormat("EEEE", Locale.getDefault()).format(date)
+        lastDate.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(date)
 
         setDatesVisibility.value = View.VISIBLE
     }

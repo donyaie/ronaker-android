@@ -346,19 +346,19 @@ class AddProductViewModel : BaseViewModel() {
 
 
                                 productPriceDay.value =
-                                    if (result.data?.price_per_day != null && result.data.price_per_day?.toInt() != 0) {
-                                        result.data?.price_per_day.toString()
+                                    if (result.data?.price_per_day != null && result.data.price_per_day.toInt() != 0) {
+                                        result.data.price_per_day.toString()
                                     } else ""
 
                                 productPriceWeek.value =
-                                    if (result.data?.price_per_week != null && result.data.price_per_week?.toInt() != 0) {
-                                        result.data?.price_per_week.toString()
+                                    if (result.data?.price_per_week != null && result.data.price_per_week.toInt() != 0) {
+                                        result.data.price_per_week.toString()
                                     } else ""
 
 
                                 productPriceMonth.value =
-                                    if (result.data?.price_per_month != null && result.data.price_per_month?.toInt() != 0) {
-                                        result.data?.price_per_month.toString()
+                                    if (result.data?.price_per_month != null && result.data.price_per_month.toInt() != 0) {
+                                        result.data.price_per_month.toString()
                                     } else ""
 
                             }

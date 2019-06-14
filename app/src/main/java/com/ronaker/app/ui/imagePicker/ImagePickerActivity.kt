@@ -1,25 +1,25 @@
 package com.ronaker.app.ui.imagePicker
 
 import android.Manifest
-import android.provider.OpenableColumns
-import android.content.ContentResolver
-import androidx.core.content.FileProvider.getUriForFile
 import android.app.Activity
-import android.content.Intent
-import com.yalantis.ucrop.UCrop
-import androidx.core.content.ContextCompat
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import android.content.ContentResolver
 import android.content.Context
-import com.karumi.dexter.Dexter
-import android.provider.MediaStore
-import android.widget.Toast
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.OpenableColumns
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider.getUriForFile
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.yalantis.ucrop.UCrop
 import java.io.File
 
 
@@ -207,7 +207,7 @@ class ImagePickerActivity : BaseActivity() {
 
         val REQUEST_IMAGE_CAPTURE = 0
         val REQUEST_GALLERY_IMAGE = 1
-       lateinit var fileName: String
+        lateinit var fileName: String
 
         fun showImagePickerOptions(context: Context, listener: PickerOptionListener) {
             // setup the alert builder
@@ -232,11 +232,14 @@ class ImagePickerActivity : BaseActivity() {
         }
 
         private fun queryName(resolver: ContentResolver, uri: Uri?): String {
-            val returnCursor = resolver.query(uri!!, null, null, null, null)!!
-            val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            returnCursor.moveToFirst()
-            val name = returnCursor.getString(nameIndex)
-            returnCursor.close()
+            var name = ""
+
+            val returnCursor = resolver.query(uri!!, null, null, null, null)
+            val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            returnCursor?.moveToFirst()
+            if (nameIndex != null)
+                name = returnCursor.getString(nameIndex)
+            returnCursor?.close()
             return name
         }
 

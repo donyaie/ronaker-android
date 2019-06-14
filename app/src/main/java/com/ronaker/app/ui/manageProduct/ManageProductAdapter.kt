@@ -11,11 +11,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.extension.getParentActivity
 
 class ManageProductAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<ManageProductAdapter.ViewHolder>() {
-    private lateinit var productList:List<Product>
-
-    init {
-        productList=dataList
-    }
+    private  var productList:List<Product> = dataList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: AdapterManageProductBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_manage_product, parent, false)
@@ -29,7 +25,7 @@ class ManageProductAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return if(::productList.isInitialized) productList.size else 0
+        return productList.size
     }
 
     fun updateproductList(){

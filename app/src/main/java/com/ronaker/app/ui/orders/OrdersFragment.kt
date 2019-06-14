@@ -37,7 +37,7 @@ class OrdersFragment : BaseFragment() {
         })
 
 
-        viewModel.resetList.observe(this, Observer { loading ->
+        viewModel.resetList.observe(this, Observer {
             scrollListener.resetState()
         })
 

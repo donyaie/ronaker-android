@@ -87,7 +87,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                 .transactionListener(this)
                 .rootFragmentListener(this, 5)
                 .popStrategy(FragNavTabHistoryController.UNIQUE_TAB_HISTORY)
-                .switchController { index, transactionOptions -> binding.navigation.select(index) }
+                .switchController { index, _ -> binding.navigation.select(index) }
 
 
         mNavController = builder.build()
@@ -124,23 +124,21 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
     fun pushFragment(fragment: Fragment) {
-        if (mNavController != null) {
+
             mNavController.pushFragment(fragment)
-        }
+
     }
 
     fun backFragment() {
-        if (mNavController != null) {
             mNavController.popFragment()
-        }
+
     }
 
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if (mNavController != null) {
             mNavController.onSaveInstanceState(outState)
-        }
+
     }
 
 

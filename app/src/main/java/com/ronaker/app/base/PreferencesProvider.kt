@@ -1,6 +1,7 @@
 package com.ronaker.app.base
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -13,7 +14,7 @@ class PreferencesProvider(context: Context) {
    lateinit var context: Context
 
 
-    private var preferences: SharedPreferences? = null
+    private lateinit var preferences: SharedPreferences
 
     lateinit  var editor: SharedPreferences.Editor
 
@@ -23,7 +24,7 @@ class PreferencesProvider(context: Context) {
             this.context = context
             preferences = PreferenceManager
                 .getDefaultSharedPreferences(context)
-            editor = preferences!!.edit()
+            editor = preferences.edit()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -31,7 +32,7 @@ class PreferencesProvider(context: Context) {
     }
 
     operator fun contains(key: String): Boolean {
-        return preferences!!.contains(key)
+        return preferences.contains(key)
     }
 
     fun putString(key: String, value: String?): Boolean {

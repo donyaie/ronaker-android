@@ -10,12 +10,14 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import io.reactivex.disposables.Disposable
 
 class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentPhoneNumberVerifyBinding
     private lateinit var viewModel: PhoneNumberViewModel
 
+    var disposable:Disposable?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -26,7 +28,7 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
         }
 
 
-        RxTextView.textChanges(binding.pinEditText).subscribe {
+        disposable=   RxTextView.textChanges(binding.pinEditText).subscribe {
             validateCode(it.toString())
         }
 
@@ -68,5 +70,9 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
     override fun onSelect() {
     }
 
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
+    }
 
 }

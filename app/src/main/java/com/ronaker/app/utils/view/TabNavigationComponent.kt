@@ -9,18 +9,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.ronaker.app.R
 import com.ronaker.app.utils.ScreenCalcute
 
 
-class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) :
+class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs) {
 
 
-    lateinit var layoutList: ArrayList<LinearLayout>
-    lateinit var imageList: ArrayList<ImageView>
-    lateinit var textList: ArrayList<TextView>
+     var layoutList: ArrayList<LinearLayout>
+     var imageList: ArrayList<ImageView>
+     var textList: ArrayList<TextView>
 
     var selectedIndex: Int? = null
 
@@ -140,15 +141,15 @@ class TabNavigationComponent @JvmOverloads constructor(context: Context, attrs: 
         selectedIndex = index
 
         textList.forEach {
-            it.setTextColor(resources.getColor(R.color.colorTextGreyLight))
+            it.setTextColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
         }
         imageList.forEach {
-            it.setBackgroundColor(resources.getColor(R.color.colorTextGreyLight))
+            it.setBackgroundColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
         }
 
 
-        textList.get(index).setTextColor(resources.getColor(R.color.colorAccent))
-        imageList.get(index).setBackgroundColor(resources.getColor(R.color.colorAccent))
+        textList.get(index).setTextColor(ContextCompat.getColor(context,R.color.colorAccent))
+        imageList.get(index).setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
         selectListener?.onSelect(index)
 
     }

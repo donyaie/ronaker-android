@@ -45,13 +45,13 @@ class ContentRepository(val contentApi: ContentApi) {
     }
 
     private fun createRequestBody(file: File?): RequestBody {
-        return RequestBody.create(MediaType.parse("image/*"), file)
+        return RequestBody.create(MediaType.parse("image/*"), file!!)
     }
 
     fun uploadImage(token: String?, filePath: String): Flowable<Double> {
         return Flowable.create({ emitter ->
             try {
-                val response = contentApi.uploadImage("Token $token", createMultipartBody(filePath, emitter)).blockingGet()
+                contentApi.run { uploadImage("Token $token", createMultipartBody(filePath, emitter)).blockingGet() }
 
                 emitter.onComplete()
             } catch (e: Exception) {
@@ -81,9 +81,9 @@ class ContentRepository(val contentApi: ContentApi) {
         val file = filePath?.toFile()
         var call:Call<ContentImageResponceModel>?=null
         //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        val mFile = RequestBody.create(MediaType.parse("image/*"), file)
-        val fileToUpload = MultipartBody.Part.createFormData("content", file?.name, mFile)
-        val filename = RequestBody.create(MediaType.parse("text/plain"), file?.name)
+        val mFile = RequestBody.create(MediaType.parse("image/*"), file!!)
+        val fileToUpload = MultipartBody.Part.createFormData("content", file.name, mFile)
+//        val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
 
         try {
             call = contentApi.uploadImageWithoutProgressr("Token $token", fileToUpload)

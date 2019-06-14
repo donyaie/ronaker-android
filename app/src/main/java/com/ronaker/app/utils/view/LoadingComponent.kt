@@ -8,12 +8,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.ronaker.app.R
 import com.wang.avi.AVLoadingIndicatorView
 
-class LoadingComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
-    lateinit var loadinLayout: ConstraintLayout
+     var loadinLayout: ConstraintLayout
 
     var retry_layout: ConstraintLayout
     var retry: ImageView
@@ -25,17 +26,17 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             field = value
             if (isTransparent) {
 
-                loadinLayout.setBackgroundColor(resources.getColor(R.color.colorLoading))
+                loadinLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.colorLoading))
 
-                retry.setBackgroundColor(resources.getColor(R.color.colorLoading))
-                progress.setIndicatorColor(resources.getColor(R.color.colorPlatinGrey))
+                retry.setBackgroundColor(ContextCompat.getColor(context,R.color.colorLoading))
+                progress.setIndicatorColor(ContextCompat.getColor(context,R.color.colorPlatinGrey))
 
             } else {
 
-                loadinLayout.setBackgroundColor(resources.getColor(R.color.white))
+                loadinLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
 
-                retry.setBackgroundColor(resources.getColor(R.color.white))
-                progress.setIndicatorColor(resources.getColor(R.color.colorPlatinGrey))
+                retry.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                progress.setIndicatorColor(ContextCompat.getColor(context,R.color.colorPlatinGrey))
             }
 
 
@@ -70,7 +71,7 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
 
-        attrs?.let {
+        attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
                 R.styleable.loading_component_attributes, 0, 0
@@ -84,10 +85,12 @@ class LoadingComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                     true
                 )
 
-
-
-
+            typedArray.recycle()
         }
+
+
+
+
 
     }
 

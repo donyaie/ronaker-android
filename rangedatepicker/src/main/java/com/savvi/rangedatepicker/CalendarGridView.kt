@@ -136,7 +136,8 @@ class CalendarGridView(context: Context, attrs: AttributeSet) : ViewGroup(contex
     }
 
     override fun onLayout(changed: Boolean, left: Int, mtop: Int, right: Int, bottom: Int) {
-        var top = mtop
+
+        var top= mtop
         val start = System.currentTimeMillis()
         top = 0
         var c = 0

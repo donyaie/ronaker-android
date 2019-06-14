@@ -25,6 +25,7 @@ import java.util.TimeZone
 import kotlin.collections.ArrayList
 
 
+@Suppress("NAME_SHADOWING")
 class CalendarPickerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
     private var subTitles: ArrayList<SubTitle>? = null
 

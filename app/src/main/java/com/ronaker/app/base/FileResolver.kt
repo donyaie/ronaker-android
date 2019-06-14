@@ -12,15 +12,19 @@ internal class FileResolver(private val contentResolver: ContentResolver) {
         if (selectedImage == null) {
             return null
         }
+        var filePath:String?=null
 
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = contentResolver.query(selectedImage, filePathColumn, null, null, null) ?: return null
+        val cursor = contentResolver.query(selectedImage, filePathColumn, null, null, null)
 
-        cursor.moveToFirst()
+        cursor?.moveToFirst()
+        if (cursor != null) {
+            val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+             filePath = cursor.getString(columnIndex)
+        }
 
-        val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-        val filePath = cursor.getString(columnIndex)
-        cursor.close()
+        cursor?.close()
+
 
         return filePath
     }

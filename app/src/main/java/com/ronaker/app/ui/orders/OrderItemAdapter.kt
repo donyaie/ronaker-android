@@ -13,11 +13,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.extension.getParentActivity
 
 class OrderItemAdapter(dataList: ArrayList<Order>) : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
-    private lateinit var datalist:List<Order>
-
-    init {
-        this.datalist=dataList
-    }
+    private  var datalist:List<Order> = dataList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: AdapterOrdreItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_ordre_item, parent, false)
@@ -31,7 +27,7 @@ class OrderItemAdapter(dataList: ArrayList<Order>) : RecyclerView.Adapter<OrderI
     }
 
     override fun getItemCount(): Int {
-        return if(::datalist.isInitialized) datalist.size else 0
+        return  datalist.size
     }
 
     fun updateproductList(){
