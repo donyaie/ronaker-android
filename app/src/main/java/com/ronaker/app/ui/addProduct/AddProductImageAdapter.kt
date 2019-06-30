@@ -12,7 +12,7 @@ import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
 import com.ronaker.app.model.Product
 class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private lateinit var productList: ArrayList<Product.ProductImage>
+    private  var productList: ArrayList<Product.ProductImage> = ArrayList()
 
 
     val EmptyType = 0;
@@ -20,7 +20,6 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
 
     init {
-        productList = ArrayList()
         productList.add(Product.ProductImage())
     }
 
@@ -61,7 +60,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return if (::productList.isInitialized) productList.size else 0
+        return  productList.size
     }
 
     fun updateproductList() {

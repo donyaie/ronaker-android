@@ -51,10 +51,10 @@ class OrdersFragment : BaseFragment() {
             }
         })
 
-        binding.loading.oClickRetryListener = object : LoadingComponent.OnClickRetryListener {
-            override fun onClick() {
+        binding.loading.oClickRetryListener = View.OnClickListener {
+
                 viewModel.loadProduct()
-            }
+
 
         }
 //

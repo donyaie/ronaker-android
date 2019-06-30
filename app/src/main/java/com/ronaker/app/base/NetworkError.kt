@@ -54,7 +54,7 @@ class NetworkError(error: Throwable) {
         exception_error = error
         if (error is HttpException) {
             val errorJsonString = (error ).response()
-                .errorBody()?.string()
+                ?.errorBody()?.string()
             try {
                 this.detail = JsonParser().parse(errorJsonString)
                     .asJsonObject["detail"]

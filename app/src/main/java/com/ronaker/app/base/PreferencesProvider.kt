@@ -86,7 +86,7 @@ class PreferencesProvider(context: Context) {
     }
 
     fun getString(key: String, defValue: String?): String? {
-        return preferences!!.getString(key, defValue)
+        return preferences.getString(key, defValue)
     }
 
 //    fun getObject(key: String, type: Type): Any {
@@ -114,19 +114,19 @@ class PreferencesProvider(context: Context) {
 
 
     fun getInt(key: String, defValue: Int): Int {
-        return preferences!!.getInt(key, defValue)
+        return preferences.getInt(key, defValue)
     }
 
     fun getLong(key: String, defValue: Long): Long {
-        return preferences!!.getLong(key, defValue)
+        return preferences.getLong(key, defValue)
     }
 
     fun getBoolean(key: String, defValue: Boolean?): Boolean? {
-        return preferences!!.getBoolean(key, defValue!!)
+        return preferences.getBoolean(key, defValue!!)
     }
 
     fun getFloat(key: String, defValue: Float?): Float? {
-        return preferences!!.getFloat(key, defValue!!)
+        return preferences.getFloat(key, defValue!!)
     }
 
     fun clearAll() {

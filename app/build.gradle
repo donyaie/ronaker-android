@@ -7,6 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
     compileSdkVersion 28
 
     dataBinding {
@@ -30,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -52,7 +57,7 @@ dependencies {
     kapt "com.android.databinding:compiler:3.1.4"
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation('com.squareup.retrofit2:retrofit:2.6.0')
             {
                 // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
                 exclude module: 'okhttp'
@@ -60,38 +65,38 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
 
-    implementation "com.squareup.okhttp3:okhttp:3.12.0"
-    implementation "com.squareup.okhttp3:logging-interceptor:3.12.0"
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
 
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     // Dagger 2
-    implementation "com.google.dagger:dagger:$dagger2_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    implementation "com.google.dagger:dagger:2.23.2"
+    kapt "com.google.dagger:dagger-compiler:2.23.2"
     compileOnly "org.glassfish:javax.annotation:3.1.1"
 
     implementation 'com.wang.avi:library:2.1.3'
 
     //calligraphy3 font library
-    implementation 'io.github.inflationx:calligraphy3:3.1.0'
-    implementation 'io.github.inflationx:viewpump:1.0.0'
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
 
     //Rx
     implementation "io.reactivex.rxjava2:rxjava:2.2.8"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     // RxBindig
-    implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
-    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.1.1"
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0'
 
 
     //fragment stack manager
-    implementation 'com.ncapdevi:frag-nav:2.4.0'
+    implementation 'com.ncapdevi:frag-nav:3.3.0'
 
     //Image Loader
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-    implementation'com.google.android.gms:play-services-maps:16.1.0'
+    implementation'com.google.android.gms:play-services-maps:17.0.0'
 
 
     //dexter permissions
@@ -107,7 +112,7 @@ dependencies {
     //number
 
     implementation 'com.hbb20:ccp:2.2.9'
-    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.10.11'
+    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.10.14'
     implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.

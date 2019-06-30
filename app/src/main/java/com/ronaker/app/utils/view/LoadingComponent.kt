@@ -28,22 +28,26 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
                 loadinLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.colorLoading))
 
-                retry.setBackgroundColor(ContextCompat.getColor(context,R.color.colorLoading))
+                retry_layout.setBackgroundColor(ContextCompat.getColor(context,R.color.colorLoading))
                 progress.setIndicatorColor(ContextCompat.getColor(context,R.color.colorPlatinGrey))
 
             } else {
 
                 loadinLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
 
-                retry.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                retry_layout.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
                 progress.setIndicatorColor(ContextCompat.getColor(context,R.color.colorPlatinGrey))
             }
 
 
         }
 
-    var oClickRetryListener: OnClickRetryListener? = null
-        set
+    var oClickRetryListener: OnClickListener? = null
+        set(value){
+
+            field = value
+            retry.setOnClickListener(value)
+        }
 
     init {
 
@@ -59,15 +63,8 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
         orientation = VERTICAL
 
-        retry.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                oClickRetryListener?.onClick()
-            }
-
-        })
-
         showLoading()
-        hideRetry()
+//        hideRetry()
 
 
 
@@ -96,37 +93,32 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
     fun showLoading() {
 
-        loadinLayout.animate().cancel()
+//        loadinLayout.animate().cancel()
         loadinLayout.visibility = View.VISIBLE
+        loadinLayout.isClickable=true
+        loadinLayout.isFocusable=true
+        loadinLayout.isEnabled=true
         loadinLayout.animate().alpha(1f).setDuration(50).start()
 
     }
 
     fun showRetry() {
         retry.isClickable = true
+//        retry_layout.animate().cancel()
+        retry_layout.visibility = View.VISIBLE
+        retry_layout.isClickable=true
+        retry_layout.isFocusable=true
+        retry_layout.isEnabled=true
 
-        retry_layout.visibility = View.GONE
-
-        retry_layout.animate().alpha(1f).setDuration(200).start()
+        retry_layout.animate().alpha(1f).setDuration(50).start()
     }
 
     fun hideRetry() {
-        retry_layout.animate().alpha(0f).setDuration(200).setListener(object : Animator.AnimatorListener {
-            override fun onAnimationEnd(animation: Animator?) {
-                retry_layout.visibility = View.GONE
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-
-            override fun onAnimationStart(animation: Animator?) {
-            }
-
-
-        }).start()
+//        retry_layout.animate().cancel()
+        retry_layout.animate().alpha(0f).setDuration(200).start()
+        retry_layout.isClickable=false
+        retry_layout.isFocusable=false
+        retry_layout.isEnabled=false
 
         retry.isClickable = false
     }
@@ -134,34 +126,14 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
     fun hideLoading() {
 
-
-        loadinLayout.animate().cancel()
-        loadinLayout.animate().alpha(0f).setDuration(200).setListener(object : Animator.AnimatorListener {
-            override fun onAnimationEnd(animation: Animator?) {
-                loadinLayout.visibility = View.GONE
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-
-            override fun onAnimationStart(animation: Animator?) {
-            }
-
-
-        }).start()
+//        loadinLayout.animate().cancel()
+        loadinLayout.animate().alpha(0f).setDuration(200).start()
+        loadinLayout.isClickable=false
+        loadinLayout.isFocusable=false
+        loadinLayout.isEnabled=false
 
 
     }
 
-
-    interface OnClickRetryListener {
-
-        fun onClick()
-
-
-    }
 
 }

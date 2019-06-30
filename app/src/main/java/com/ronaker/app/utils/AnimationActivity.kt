@@ -15,6 +15,7 @@ class AnimationHelper {
 
         fun animateActivityFade(activity: Activity) {
             activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
         }
     }
 }

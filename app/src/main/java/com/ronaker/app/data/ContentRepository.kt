@@ -12,7 +12,7 @@ import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.*
+import okhttp3.MediaType
 import java.io.File
 import okhttp3.RequestBody
 import okhttp3.MultipartBody
@@ -77,11 +77,11 @@ class ContentRepository(val contentApi: ContentApi) {
     }
 
 
-    fun uploadImageAsync(token: String?, filePath: Uri?, callback: FileUploadListener):Call<ContentImageResponceModel>? {
-        val file = filePath?.toFile()
+    fun uploadImageAsync(token: String?, filePath: Uri, callback: FileUploadListener):Call<ContentImageResponceModel>? {
+        val file = filePath.toFile()
         var call:Call<ContentImageResponceModel>?=null
         //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        val mFile = RequestBody.create(MediaType.parse("image/*"), file!!)
+        val mFile = RequestBody.create(MediaType.parse("image/*"), file)
         val fileToUpload = MultipartBody.Part.createFormData("content", file.name, mFile)
 //        val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
 

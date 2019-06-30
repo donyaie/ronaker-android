@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.view.LoadingComponent
 
 class ExploreProductActivity : BaseActivity() {
 
@@ -33,9 +34,9 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AnimationHelper.animateActivityFade(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
         viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
@@ -51,14 +52,27 @@ class ExploreProductActivity : BaseActivity() {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
-
-
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
         })
+
+
+
+        viewModel.retry.observe(this, Observer { value ->
+            if (value == true) {
+                binding.loading.showRetry()
+            } else
+                binding.loading.hideRetry()
+        })
+
+        binding.loading.oClickRetryListener=View.OnClickListener {
+
+            viewModel.onRetry()
+        }
+
 
 //        viewModel.goNext.observe(this, Observer { value ->
 //            if (value)
@@ -82,7 +96,11 @@ class ExploreProductActivity : BaseActivity() {
 
     }
 
+    override fun onStart() {
 
+        AnimationHelper.animateActivityFade(this)
+        super.onStart()
+    }
 
 
 
