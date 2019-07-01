@@ -24,6 +24,7 @@ class ManageProductViewModel : BaseViewModel() {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val   productImage: MutableLiveData<String> = MutableLiveData()
@@ -43,7 +44,7 @@ class ManageProductViewModel : BaseViewModel() {
         subscription = productRepository
             .getProduct(userRepository.getUserToken(), suid)
 
-            .doOnSubscribe { loading.value=true}
+            .doOnSubscribe { retry.value=false; loading.value=true}
             .doOnTerminate {loading.value=false}
             .subscribe { result ->
                 if (result.isSuccess()) {
@@ -51,6 +52,7 @@ class ManageProductViewModel : BaseViewModel() {
                     productDescription.value=result.data?.description
                     productTitle.value=result.data?.name
                 } else {
+                    retry.value=true;
                    errorMessage.value=result.error?.detail
                 }
             }
@@ -63,6 +65,7 @@ class ManageProductViewModel : BaseViewModel() {
         super.onCleared()
         subscription?.dispose()
     }
+
 
 
 }

@@ -27,19 +27,19 @@ class ManageProductListViewModel : BaseViewModel() {
     internal var hasNextPage = true
 
 
-    var dataList: ArrayList<Product>
+    var dataList: ArrayList<Product> = ArrayList()
 
 
     var productListAdapter: ManageProductAdapter
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<Boolean> = MutableLiveData()
     val emptyView: MutableLiveData<Boolean> = MutableLiveData()
 
 
     private lateinit var subscription: Disposable
 
     init {
-        dataList = ArrayList()
         productListAdapter = ManageProductAdapter(dataList)
 
 
@@ -75,8 +75,11 @@ class ManageProductListViewModel : BaseViewModel() {
 
 
     private fun onRetrieveProductListStart() {
+        retry.value = false
+        if (page <=1 ) {
+            loading.value = true
 
-        if (page == 0) loading.value = true
+        }
         errorMessage.value = null
     }
 
@@ -96,6 +99,8 @@ class ManageProductListViewModel : BaseViewModel() {
     private fun onRetrieveProductListError(error: NetworkError?) {
 
         errorMessage.value = error?.detail
+        if(page<=1)
+            retry.value = true
 
     }
 
@@ -108,6 +113,10 @@ class ManageProductListViewModel : BaseViewModel() {
     fun loadMore() {
 //        loadProduct()
 
+    }
+
+    fun retry(){
+        loadProduct()
     }
 
 }

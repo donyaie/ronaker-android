@@ -38,6 +38,10 @@ class ManageProductListFragment : BaseFragment() {
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
 
+        viewModel.retry.observe(this, Observer { loading ->
+            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+        })
+
         viewModel.emptyView.observe(this, Observer { loading ->
             if (loading) {
                 binding.emptyLayout.visibility = View.VISIBLE
@@ -69,7 +73,7 @@ class ManageProductListFragment : BaseFragment() {
 
         binding.loading.oClickRetryListener = View.OnClickListener {
 
-                viewModel.loadProduct()
+                viewModel.retry()
 
 
         }

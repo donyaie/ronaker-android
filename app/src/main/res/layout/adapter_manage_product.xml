@@ -6,8 +6,9 @@
                 name="viewModel"
                 type="com.ronaker.app.ui.manageProduct.ManageProductAdapterViewModel"/>
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="172dp"
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:padding="8dp"
             android:onClick="@{()->viewModel.onClickProduct()}"
 
@@ -16,10 +17,11 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
                 app:riv_corner_radius="3dp"
-                android:layout_width="156dp"
+                android:layout_width="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/image"
 
+                android:background="@drawable/background_image_corner"
                 android:scaleType="centerCrop"
                 app:mutableImage="@{viewModel.getProductImage()}"
                 app:layout_constraintRight_toRightOf="parent"
@@ -31,6 +33,7 @@
                   android:text="Active"
                   android:paddingLeft="4dp"
                   android:paddingRight="4dp"
+                  android:layout_gravity="left"
                   android:minHeight="20dp"
                   android:gravity="center"
                   app:layout_constraintLeft_toLeftOf="parent"
@@ -63,6 +66,6 @@
                   android:lines="1"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

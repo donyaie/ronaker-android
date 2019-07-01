@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,11 +28,20 @@ class ManageProductFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, com.ronaker.app.R.layout.fragment_manage_product, container, false)
         productViewModel = ViewModelProviders.of(this).get(ManageProductViewModel::class.java)
 
+        binding.viewModel = productViewModel
+
 
         productViewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
+        productViewModel.retry.observe(this, Observer { loading ->
+            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+        })
 
+        binding.loading.oClickRetryListener=View.OnClickListener {
+
+            fill()
+        }
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { (activity as DashboardActivity).backFragment() }
@@ -45,8 +55,6 @@ class ManageProductFragment : BaseFragment() {
             }
         })
 
-
-        binding.viewModel = productViewModel
 
 
 
@@ -98,7 +106,33 @@ class ManageProductFragment : BaseFragment() {
             })
         }
 
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
+            try {
+                val scrollY = binding.scrollView.scrollY
+
+                if (scrollY <= binding.avatarImage.height/2 - binding.toolbar.bottom) {
+
+                    binding.toolbar.isTransparent = true
+                    binding.toolbar.isBottomLine = false
+                    context?.let {
+                        binding.statusBar.setBackgroundColor(
+                            ContextCompat.getColor(it,R.color.transparent)
+                        )
+                    }
+
+                } else {
+
+                    binding.toolbar.isTransparent = false
+                    binding.toolbar.isBottomLine = true
+
+                    context?.let {    binding.statusBar.setBackgroundColor(ContextCompat.getColor(it,R.color.white)) }
+                }
+
+            } catch (ex: Exception ){
+
+            }
+        };
 
 
         return binding.root
@@ -107,6 +141,7 @@ class ManageProductFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
 
+        binding.loading.showLoading()
         fill()
     }
 

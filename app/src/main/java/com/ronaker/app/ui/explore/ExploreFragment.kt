@@ -39,6 +39,8 @@ class ExploreFragment : BaseFragment() {
             if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
         })
 
+
+
         viewModel.resetList.observe(this, Observer {
             scrollListener.resetState()
         })
