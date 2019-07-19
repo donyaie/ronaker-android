@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager
 
 class ViewPagerCustom : ViewPager {
 
+
+
     private var isPagingEnabled = false
 
     private var mScroller: ScrollerCustomDuration? = null
@@ -19,6 +21,8 @@ class ViewPagerCustom : ViewPager {
 
 
         postInitViewPager()
+
+
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
@@ -31,13 +35,15 @@ class ViewPagerCustom : ViewPager {
      */
     private fun postInitViewPager() {
         try {
-            val scroller = ViewPager::class.java!!.getDeclaredField("mScroller")
-            scroller.setAccessible(true)
-            val interpolator = ViewPager::class.java!!.getDeclaredField("sInterpolator")
-            interpolator.setAccessible(true)
+
+
+            val scroller = ViewPager::class.java.getDeclaredField("mScroller")
+            scroller.isAccessible = true
+            val interpolator = ViewPager::class.java.getDeclaredField("sInterpolator")
+            interpolator.isAccessible = true
 
             mScroller = ScrollerCustomDuration(
-                getContext(),
+                context,
                 interpolator.get(null) as Interpolator
             )
             scroller.set(this, mScroller)

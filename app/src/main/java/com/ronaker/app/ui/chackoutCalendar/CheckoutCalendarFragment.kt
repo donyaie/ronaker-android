@@ -80,7 +80,7 @@ class CheckoutCalendarFragment : BaseFragment() {
 //        binding.calendarView.deactivateDates(list)
         val arrayList = ArrayList<Date>()
         try {
-            val dateformat = SimpleDateFormat("dd-MM-yyyy")
+//            val dateformat = SimpleDateFormat("dd-MM-yyyy")
 
 //            val strdate = "22-5-2019"
 //            val strdate2 = "26-5-2019"

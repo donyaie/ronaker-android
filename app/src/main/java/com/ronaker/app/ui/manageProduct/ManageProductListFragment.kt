@@ -29,13 +29,17 @@ class ManageProductListFragment : BaseFragment() {
 
         var mnager = GridLayoutManager(context, 2)
 
-        binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
+        binding.recycler.layoutManager = mnager
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
 
         viewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
+        })
+
+        viewModel.retry.observe(this, Observer { loading ->
+            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
         })
 
         viewModel.emptyView.observe(this, Observer { loading ->
@@ -67,10 +71,10 @@ class ManageProductListFragment : BaseFragment() {
             }
         })
 
-        binding.loading.oClickRetryListener = object : LoadingComponent.OnClickRetryListener {
-            override fun onClick() {
-                viewModel.loadProduct()
-            }
+        binding.loading.oClickRetryListener = View.OnClickListener {
+
+                viewModel.retry()
+
 
         }
         binding.viewModel = viewModel

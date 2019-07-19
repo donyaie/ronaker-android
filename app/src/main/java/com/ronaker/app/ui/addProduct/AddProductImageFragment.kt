@@ -12,6 +12,9 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
 import android.view.MotionEvent
+import androidx.core.app.CoreComponentFactory
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -31,8 +34,11 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
 
         var mnager = GridLayoutManager(context, 2)
 
-        binding.recycler.layoutManager = mnager as RecyclerView.LayoutManager?
-        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
+        binding.recycler.layoutManager = mnager
+
+
+        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+//        binding.recycler.setOnTouchListener { _, _ -> true }
 
         return binding.root
     }

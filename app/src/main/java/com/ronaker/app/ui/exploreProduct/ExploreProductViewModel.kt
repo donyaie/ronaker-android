@@ -27,6 +27,7 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val retry: MutableLiveData<Boolean> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val checkout: MutableLiveData<String> = MutableLiveData()
 
@@ -55,30 +56,47 @@ class ExploreProductViewModel : BaseViewModel() {
         subscription = productRepository
             .getProduct(userRepository.getUserToken(), suid)
 
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe {
+                retry.value = false
+                loading.value = true
+            }
+            .doOnTerminate {
+                loading.value = false
+            }
+
             .subscribe { result ->
                 if (result.isSuccess()) {
                     productImage.value = BASE_URL + result.data?.avatar
                     productDescription.value = result.data?.description
                     productTitle.value = result.data?.name
-                    if(result.data?.price_per_day!=0.0){
+                    if (result.data?.price_per_day != 0.0) {
 
-                        productPrice.value=String.format( "%s%.02f",context.getString(R.string.title_curency_symbol),result.data?.price_per_day)
-                        productPriceTitle.value=context.getString( R.string.title_per_day)
-                    }else if(result.data?.price_per_week!=0.0){
+                        productPrice.value = String.format(
+                            "%s%.02f",
+                            context.getString(R.string.title_curency_symbol),
+                            result.data?.price_per_day
+                        )
+                        productPriceTitle.value = context.getString(R.string.title_per_day)
+                    } else if (result.data.price_per_week != 0.0) {
 
-                        productPrice.value=String.format( "%s%.02f",context.getString(R.string.title_curency_symbol),result.data?.price_per_week)
-                        productPriceTitle.value=context.getString( R.string.title_per_week)
-                    }else if(result.data?.price_per_month!=0.0){
+                        productPrice.value = String.format(
+                            "%s%.02f", context.getString(R.string.title_curency_symbol),
+                            result.data.price_per_week
+                        )
+                        productPriceTitle.value = context.getString(R.string.title_per_week)
+                    } else if (result.data.price_per_month != 0.0) {
 
-                        productPrice.value=String.format( "%s%.02f",context.getString(R.string.title_curency_symbol),result.data?.price_per_month)
-                        productPriceTitle.value=context.getString( R.string.title_per_month)
+                        productPrice.value = String.format(
+                            "%s%.02f", context.getString(R.string.title_curency_symbol),
+                            result.data.price_per_month
+                        )
+                        productPriceTitle.value = context.getString(R.string.title_per_month)
                     }
 
 //                    productAddress.value=result.data?
 
                 } else {
+                    retry.value = true
                     errorMessage.value = result.error?.detail
                 }
             }
@@ -90,6 +108,11 @@ class ExploreProductViewModel : BaseViewModel() {
     fun checkOut() {
 
         checkout.value = suid
+    }
+
+
+    fun onRetry(){
+        loadProduct(suid)
     }
 
 

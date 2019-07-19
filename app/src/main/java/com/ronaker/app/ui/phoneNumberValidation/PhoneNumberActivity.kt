@@ -111,7 +111,7 @@ class PhoneNumberActivity : BaseActivity() {
 
 
 
-        viewModel.goNext.observe(this, Observer { value ->
+        viewModel.goNext.observe(this, Observer {
            finish()
         })
 
@@ -125,7 +125,7 @@ class PhoneNumberActivity : BaseActivity() {
     internal fun prePage() {
 
 
-        if (binding.viewpager.currentItem === 0)
+        if (binding.viewpager.currentItem == 0)
             finish()
 
 

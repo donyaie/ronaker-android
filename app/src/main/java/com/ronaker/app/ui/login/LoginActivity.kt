@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -145,7 +146,7 @@ class LoginActivity : BaseActivity() {
 
         binding.background.getLayoutParams().width = (screenLibrary.screenWidthPixel * 1.2).toInt()
 
-        binding.scrollView.setOnTouchListener(View.OnTouchListener { v, event -> true })
+        binding.scrollView.setOnTouchListener { _, _ -> true }
 
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage-> Toast.makeText(this,errorMessage,Toast.LENGTH_LONG).show()
@@ -175,15 +176,15 @@ class LoginActivity : BaseActivity() {
 
     internal fun prePage() {
 
-        if (binding.viewpager.getCurrentItem() - 1 === LoginViewModel.LoginStateEnum.home.position)
+        if (binding.viewpager.currentItem - 1 == LoginViewModel.LoginStateEnum.home.position)
             KeyboardManager.hideSoftKeyboard(this)
 
-        if (binding.viewpager.getCurrentItem() === 0)
+        if (binding.viewpager.currentItem == 0)
             finish()
 
 
-        if (binding.viewpager.getCurrentItem() > LoginViewModel.LoginStateEnum.home.position) {
-            binding.viewpager.setCurrentItem(binding.viewpager.getCurrentItem() - 1, true)
+        if (binding.viewpager.currentItem > LoginViewModel.LoginStateEnum.home.position) {
+            binding.viewpager.setCurrentItem(binding.viewpager.currentItem - 1, true)
         }
 
     }
@@ -191,6 +192,7 @@ class LoginActivity : BaseActivity() {
 
     fun initViewPagerLogin() {
         adapter.clear()
+
         adapter.addFragment(homeFragment)
         adapter.addFragment(signInFragment)
 

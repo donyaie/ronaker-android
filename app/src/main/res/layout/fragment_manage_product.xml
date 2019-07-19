@@ -21,7 +21,7 @@
 
                 <ImageView
                         android:scaleType="centerCrop"
-
+                        android:background="@color/colorPlatinGrey"
                         app:mutableImage="@{viewModel.getProductImage()}"
                         android:layout_width="match_parent" android:id="@+id/avatar_image"
                         app:layout_constraintTop_toTopOf="parent" android:layout_height="320dp"/>
@@ -57,7 +57,7 @@
                                   android:paddingRight="24dp"
                                   android:orientation="horizontal"
                                   android:layout_height="80dp">
-                        <LinearLayout android:layout_width="wrap_content"
+                        <LinearLayout android:layout_width="0dp"
                                       android:orientation="vertical"
 
                                       android:layout_weight=".95"
@@ -79,7 +79,9 @@
 
                         </LinearLayout>
 
-                        <androidx.appcompat.widget.SwitchCompat android:layout_width="wrap_content" android:id="@+id/active_switch" android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.SwitchCompat android:layout_width="wrap_content"
+                                                                android:id="@+id/active_switch"
+                                                                android:layout_height="wrap_content"/>
 
 
                     </LinearLayout>
@@ -96,12 +98,12 @@
                                   android:orientation="horizontal"
                                   android:layout_height="56dp">
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView android:layout_width="0dp"
                                   android:textColor="@color/colorTextDark"
                                   android:layout_weight=".95" android:text="@string/title_name_and_description"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
-                        <ImageView android:layout_width="20dp"  android:src="@drawable/ic_chevron_right"
+                        <ImageView android:layout_width="20dp" android:src="@drawable/ic_chevron_right"
 
                                    android:padding="3dp"
                                    android:layout_height="20dp"/>
@@ -121,7 +123,7 @@
                                   android:orientation="horizontal"
                                   android:layout_height="56dp">
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView android:layout_width="0dp"
                                   android:textColor="@color/colorTextDark"
                                   android:layout_weight=".95" android:text="@string/title_images_gallery"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
@@ -145,12 +147,13 @@
                                   android:orientation="horizontal"
                                   android:layout_height="56dp">
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView android:layout_width="0dp"
                                   android:textColor="@color/colorTextDark"
                                   android:layout_weight=".95" android:text="@string/title_asking_price"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
-                        <ImageView android:layout_width="20dp" android:padding="3dp" android:src="@drawable/ic_chevron_right"
+                        <ImageView android:layout_width="20dp" android:padding="3dp"
+                                   android:src="@drawable/ic_chevron_right"
                                    android:layout_height="20dp"/>
 
 
@@ -168,12 +171,13 @@
                                   android:orientation="horizontal"
                                   android:layout_height="56dp">
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView android:layout_width="0dp"
                                   android:textColor="@color/colorTextDark"
                                   android:layout_weight=".95" android:text="@string/title_location"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
-                        <ImageView android:layout_width="20dp" android:padding="3dp" android:src="@drawable/ic_chevron_right"
+                        <ImageView android:layout_width="20dp" android:padding="3dp"
+                                   android:src="@drawable/ic_chevron_right"
                                    android:layout_height="20dp"/>
 
 
@@ -211,7 +215,6 @@
 
         <com.ronaker.app.utils.view.LoadingComponent android:layout_width="match_parent"
                                                      android:id="@+id/loading"
-                                                     android:visibility="gone"
                                                      app:loading_transparent="false"
                                                      app:layout_constraintTop_toTopOf="parent"
                                                      app:layout_constraintBottom_toBottomOf="parent"

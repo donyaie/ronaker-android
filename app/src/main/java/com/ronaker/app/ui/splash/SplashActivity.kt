@@ -14,6 +14,7 @@ import com.ronaker.app.utils.AnimationHelper
 import java.util.*
 import kotlin.concurrent.schedule
 
+
 class SplashActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivitySplashBinding
@@ -33,8 +34,8 @@ class SplashActivity : BaseActivity() {
 
 
                 Timer("login", false).schedule(1000) {
-
                     startActivity(LoginActivity.newInstance(this@SplashActivity))
+
                     finish()
 
                 }
@@ -45,7 +46,6 @@ class SplashActivity : BaseActivity() {
             if (value == true) {
 
                 Timer("login", false).schedule(1000) {
-
                     startActivity(DashboardActivity.newInstance(this@SplashActivity))
                     finish()
                 }
@@ -68,8 +68,9 @@ class SplashActivity : BaseActivity() {
 
     override fun finish() {
         super.finish()
-
         AnimationHelper.animateActivityFade(this)
+//
+
     }
 
 }

@@ -14,6 +14,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import io.reactivex.disposables.Disposable
 
 class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
@@ -27,6 +28,8 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
     internal var validNumber: Phonenumber.PhoneNumber? = null
 
     internal var inPhoneChange = false
+
+    var disposable:Disposable?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -43,7 +46,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
         phoneNumberUtil = PhoneNumberUtil.getInstance()
 
-        binding.phoneEditText.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+        binding.phoneEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (hasFocus)
                 binding.phoneLine.alpha = 1f
             else
@@ -57,7 +60,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         }
 
 
-        RxTextView.textChanges(binding.phoneEditText).subscribe {
+      disposable=   RxTextView.textChanges(binding.phoneEditText).subscribe {
 
             if (it.isNotEmpty())
                 showClear(true)
@@ -197,6 +200,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         }
     }
 
+
     companion object {
 
         fun newInstance(): PhoneNumberFragment {
@@ -206,5 +210,10 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
     override fun onSelect() {
 
+    }
+
+    override fun onDestroy() {
+         disposable?.dispose()
+        super.onDestroy()
     }
 }

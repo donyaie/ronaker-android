@@ -2,8 +2,6 @@
 <resources>
 
 
-    <string name="toolbar_default" translatable="false">Title</string>
-    <string name="toolbar_action_default" translatable="false">Save</string>
     <declare-styleable name="toolbar_component_attributes">
 
         <attr name="toolbar_component_title" format="reference|string"/>

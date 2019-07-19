@@ -35,9 +35,13 @@ class ExploreFragment : BaseFragment() {
         viewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
+        viewModel.retry.observe(this, Observer { loading ->
+            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+        })
 
 
-        viewModel.resetList.observe(this, Observer { loading ->
+
+        viewModel.resetList.observe(this, Observer {
             scrollListener.resetState()
         })
 
@@ -51,10 +55,10 @@ class ExploreFragment : BaseFragment() {
             }
         })
 
-        binding.loading.oClickRetryListener = object : LoadingComponent.OnClickRetryListener {
-            override fun onClick() {
-                viewModel.loadProduct()
-            }
+        binding.loading.oClickRetryListener = View.OnClickListener{
+
+                viewModel.retry()
+
 
         }
 //

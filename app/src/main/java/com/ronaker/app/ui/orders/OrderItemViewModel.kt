@@ -7,6 +7,7 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.BASE_URL
 import java.text.SimpleDateFormat
+import java.util.*
 
 class OrderItemViewModel : BaseViewModel() {
     private val productTitle = MutableLiveData<String>()
@@ -22,7 +23,7 @@ class OrderItemViewModel : BaseViewModel() {
         productTitle.value=item.title
         productPrice.value=String.format("%s%.02f",context.getString(R.string.title_curency_symbol), item.price)
         productImage.value= BASE_URL+ item.avatar
-        productDate.value=SimpleDateFormat("dd MMM").format(item.fromDate)+"-"+SimpleDateFormat("dd MMM").format(item.toDate)
+        productDate.value=SimpleDateFormat("dd MMM", Locale.getDefault()).format(item.fromDate)+"-"+SimpleDateFormat("dd MMM",Locale.getDefault()).format(item.toDate)
     }
 
     fun onClickProduct() {

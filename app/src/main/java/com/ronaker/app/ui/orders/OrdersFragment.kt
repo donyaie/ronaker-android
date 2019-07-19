@@ -37,7 +37,7 @@ class OrdersFragment : BaseFragment() {
         })
 
 
-        viewModel.resetList.observe(this, Observer { loading ->
+        viewModel.resetList.observe(this, Observer {
             scrollListener.resetState()
         })
 
@@ -51,10 +51,10 @@ class OrdersFragment : BaseFragment() {
             }
         })
 
-        binding.loading.oClickRetryListener = object : LoadingComponent.OnClickRetryListener {
-            override fun onClick() {
+        binding.loading.oClickRetryListener = View.OnClickListener {
+
                 viewModel.loadProduct()
-            }
+
 
         }
 //

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ronaker</string>
     <string name="dialog_permission_message">Šiai programai reikia leidimo naudoti šią funkciją. Juos galite suteikti
         programų nustatymuose.
     </string>
@@ -12,7 +11,6 @@
     <string name="first_name_hint">Įveskite savo vardą</string>
     <string name="first_name_title">Pirmas vardas</string>
     <string name="go_to_settings">EIKITE Į NUSTATYMUS</string>
-    <string name="input_component_title_default">vardas</string>
     <string name="last_name_hint">Įveskite savo pavardę</string>
     <string name="last_name_title">Pavardė</string>
     <string name="lbl_choose_from_gallery">Pasirinkite iš galerijos</string>
@@ -72,7 +70,7 @@
     <string name="title_renting">Nuoma</string>
     <string name="title_resend">Persiūsti</string>
     <string name="title_return_day">Grįžimo diena</string>
-    <string name="title_search_here">Ieškoti čia ...</string>
+    <string name="title_search_here">Ieškoti čia …</string>
     <string name="title_search_your_location">Ieškoti savo vietovėje</string>
     <string name="title_seconds_to_resend">per kelias sekundes</string>
     <string name="title_send_a_meesage_to_owner">Siųsti žinutę savininkui</string>

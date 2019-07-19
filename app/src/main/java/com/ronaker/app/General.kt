@@ -53,10 +53,15 @@ class General : MultiDexApplication() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base?.let { LocaleHelper.onAttach(it, "en") })
         MultiDex.install(this)
+
+        base?.let { context= base}
     }
+
+
 
     private fun initDagger(app: General): AppComponent =
         DaggerAppComponent.builder()
-            .appModule(AppModule(app))
+//            .appModule(AppModule(app))app
+
             .build()
 }

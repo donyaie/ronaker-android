@@ -42,7 +42,7 @@ class ProfileFragment : BaseFragment() {
             }
         })
 
-        viewModel.logOutAction.observe(this, Observer { logout ->
+        viewModel.logOutAction.observe(this, Observer {
             startActivity(activity?.let { SplashActivity.newInstance(it) })
         })
 

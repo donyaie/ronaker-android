@@ -12,11 +12,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.extension.getParentActivity
 
 class ItemExploreAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
-    private lateinit var productList:List<Product>
-
-    init {
-        productList=dataList
-    }
+    private  var productList:List<Product> = dataList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: AdapterExploreItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_explore_item, parent, false)
@@ -30,7 +26,7 @@ class ItemExploreAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<It
     }
 
     override fun getItemCount(): Int {
-        return if(::productList.isInitialized) productList.size else 0
+        return  productList.size
     }
 
     fun updateproductList(){

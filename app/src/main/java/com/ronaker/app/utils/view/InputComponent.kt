@@ -3,22 +3,22 @@ package com.ronaker.app.utils.view
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.ronaker.app.R
-import android.view.inputmethod.EditorInfo
-import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.solver.GoalRow
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.ronaker.app.R
 import com.ronaker.app.utils.extension.getParentActivity
 
 @BindingAdapter("app:input_text")
@@ -30,16 +30,15 @@ fun textBind(input: InputComponent, value: String?) {
 fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && text != null) {
+    if (parentActivity != null && text != null) {
 
 
-
-        text.observe(parentActivity, Observer { value -> view.text = value?:""})
+        text.observe(parentActivity, Observer { value -> view.text = value ?: "" })
     }
 }
 
 
-class InputComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs),
+class InputComponent constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs),
     View.OnFocusChangeListener {
 
     enum class AlertType {
@@ -71,12 +70,10 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
 
     var isValid: Boolean = false
         get() {
-
-            return if (regex != null) {
-                regex!!.matches(input_edit.text)
-            } else {
-                true
-            }
+            if (regex != null)
+                return regex!!.matches(input_edit.text)
+            else
+                return true
 
         }
 
@@ -87,20 +84,28 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
 
 
             title_text.setTextColor(
-                if (isTransparent) resources.getColor(R.color.colorTextLight) else resources.getColor(
+
+
+                if (isTransparent) ContextCompat.getColor(context, R.color.colorTextLight) else ContextCompat.getColor(
+                    context,
                     R.color.colorTextDark
                 )
+
             )
             input_edit.setTextColor(
-                if (isTransparent) resources.getColor(R.color.colorTextLight) else resources.getColor(
+                if (isTransparent) ContextCompat.getColor(context, R.color.colorTextLight) else ContextCompat.getColor(
+                    context,
                     R.color.colorTextDark
                 )
+
             )
 
             alert_text.setTextColor(
-                if (isTransparent) resources.getColor(R.color.colorTextLight) else resources.getColor(
+                if (isTransparent) ContextCompat.getColor(context, R.color.colorTextLight) else ContextCompat.getColor(
+                    context,
                     R.color.colorTextDark
                 )
+
             )
 
 
@@ -110,24 +115,28 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
         set(value) {
             field = value
 
-            counter_text.setTextColor(if(isTransparent)resources.getColor(R.color.colorTextLight)else resources.getColor(R.color.colorTextDark) )
+            counter_text.setTextColor(
+                if (isTransparent) ContextCompat.getColor(
+                    context,
+                    R.color.colorTextLight
+                ) else ContextCompat.getColor(context, R.color.colorTextDark)
+            )
 
 
-            counter_text.visibility=if(field>0) View.VISIBLE else View.GONE
+            counter_text.visibility = if (field > 0) View.VISIBLE else View.GONE
 
 
-            counter_text.setText( "0/$counter")
-
+            counter_text.text = "0/$value"
 
 
         }
 
-    var hasInputDotValidator:Boolean=true
-    set(value) {
-        field = value
+    var hasInputDotValidator: Boolean = true
+        set(value) {
+            field = value
 
-        inputState_image.visibility=if(field) View.VISIBLE else GONE
-    }
+            inputState_image.visibility = if (field) View.VISIBLE else GONE
+        }
 
     var inputValidationMode: InputValidationMode = InputValidationMode.NONE
         set(value) {
@@ -135,17 +144,14 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
 
-
-
-
-    lateinit var container_layout: ConstraintLayout
-    lateinit var title_text: TextView
-    lateinit var input_edit: EditText
-    lateinit var inputState_image: ImageView
-    lateinit var input_line: LinearLayout
-    lateinit var alert_layer: LinearLayout
-    lateinit var alert_image: ImageView
-    lateinit var alert_text: TextView
+    var container_layout: ConstraintLayout
+    var title_text: TextView
+    var input_edit: EditText
+    var inputState_image: ImageView
+    var input_line: LinearLayout
+    var alert_layer: LinearLayout
+    var alert_image: ImageView
+    var alert_text: TextView
 
     lateinit var counter_text: TextView
 
@@ -181,7 +187,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
             alert_layer.visibility = if (value) View.VISIBLE else View.GONE
         }
 
-    var regex: Regex? = null
+    var regex: Regex?=null
 
 
     var imeOptions: Int = 0
@@ -211,7 +217,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
 
             textChangeValid(editable)
 
-            if(counter>0) counter_text.setText( "${editable.length}/$counter")
+            if (counter > 0) counter_text.text = "${editable.length}/$counter"
 
         }
     }
@@ -225,7 +231,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
             hideAlert()
         } else if (input_edit.isFocused)
             showInputIcon(InputAlertType.Clear)
-        else if (regex != null && regex!!.matches(editable)) {
+        else if (regex?.matches(editable)==true) {
             showInputIcon(InputAlertType.Filled)
             hideAlert()
         } else {
@@ -261,7 +267,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
 
         orientation = VERTICAL
 
-        attrs?.let {
+        attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
                 R.styleable.input_component_attributes, 0, 0
@@ -300,7 +306,7 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
             isTransparent = typedArray.getBoolean(R.styleable.input_component_attributes_input_transparent, true)
 
 
-            hasInputDotValidator=typedArray.getBoolean(R.styleable.input_component_attributes_input_dot,true)
+            hasInputDotValidator = typedArray.getBoolean(R.styleable.input_component_attributes_input_dot, true)
 
             counter = typedArray.getInteger(R.styleable.input_component_attributes_input_counter, 0)
 
@@ -321,7 +327,8 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
                     .input_component_attributes_input_regex
             )
 
-            regex = regexString.toRegex()
+
+            regex = regexString?. toRegex()
 
 
             inputState_image.setOnClickListener {
@@ -384,11 +391,16 @@ class InputComponent @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         if (hasFocus) {
             textChangeValid(input_edit.text)
-            input_line.setBackgroundColor(if (isTransparent) resources.getColor(R.color.white) else resources.getColor(R.color.colorNavy))
+            input_line.setBackgroundColor(
+                if (isTransparent) ContextCompat.getColor(
+                    context,
+                    R.color.white
+                ) else ContextCompat.getColor(context, R.color.colorNavy)
+            )
 
         } else {
             textChangeValid(input_edit.text)
-            input_line.setBackgroundColor(resources.getColor(R.color.colorPlatinGrey))
+            input_line.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPlatinGrey))
         }
     }
 

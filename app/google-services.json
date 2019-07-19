@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "55796100235",
+    "firebase_url": "https://bizfer-460c2.firebaseio.com",
+    "project_id": "bizfer-460c2",
+    "storage_bucket": "bizfer-460c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55796100235:android:70983295e7f07378",
+        "android_client_info": {
+          "package_name": "com.ronaker.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "55796100235-3542rml8k2uekno4pea0vp2oi6ro9n3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOHDmKRPh9-fFXJ6zUO-d3AGfViYmxkQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "55796100235-3542rml8k2uekno4pea0vp2oi6ro9n3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
