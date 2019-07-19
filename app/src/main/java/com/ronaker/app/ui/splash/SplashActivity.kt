@@ -13,8 +13,6 @@ import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.utils.AnimationHelper
 import java.util.*
 import kotlin.concurrent.schedule
-import android.app.ActivityOptions
-
 
 
 class SplashActivity : BaseActivity() {
@@ -26,7 +24,7 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, com.ronaker.app.R.layout.activity_splash)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
@@ -36,10 +34,8 @@ class SplashActivity : BaseActivity() {
 
 
                 Timer("login", false).schedule(1000) {
-                    val bundle = ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity).toBundle()
-                    startActivity(LoginActivity.newInstance(this@SplashActivity),bundle)
+                    startActivity(LoginActivity.newInstance(this@SplashActivity))
 
-//                    AnimationHelper.animateActivityFade(this@SplashActivity)
                     finish()
 
                 }
@@ -50,9 +46,7 @@ class SplashActivity : BaseActivity() {
             if (value == true) {
 
                 Timer("login", false).schedule(1000) {
-
                     startActivity(DashboardActivity.newInstance(this@SplashActivity))
-//                    AnimationHelper.animateActivityFade(this@SplashActivity)
                     finish()
                 }
             }

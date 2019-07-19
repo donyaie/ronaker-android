@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:background="@drawable/background_image_corner"
 
+
                    app:layout_constraintTop_toTopOf="parent"
                    android:id="@+id/image"
                    android:scaleType="centerCrop"

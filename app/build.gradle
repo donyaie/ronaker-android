@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'io.fabric'
+
 android {
 
     compileOptions {
@@ -120,6 +122,13 @@ dependencies {
     }
 
 
+    //firebace
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+
+    // Add dependency
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+
     //picker
     implementation project(path: ':rangedatepicker')
 
@@ -130,3 +139,6 @@ dependencies {
 
 
 }
+
+
+apply plugin: 'com.google.gms.google-services'

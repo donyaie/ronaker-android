@@ -7,7 +7,7 @@
 
 
 
-    <string name="google_api_key" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
+    <!--<string name="google_api_key" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>-->
 
     <string name="title_defult_price" translatable="false">€0</string>
 
