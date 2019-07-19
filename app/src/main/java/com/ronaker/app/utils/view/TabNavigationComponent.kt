@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.ronaker.app.R
 import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ShapeDrawableHelper
 
 
 class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet) :
@@ -144,12 +145,14 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
             it.setTextColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
         }
         imageList.forEach {
-            it.setBackgroundColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
+//            it.setBackgroundColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
+            ShapeDrawableHelper.changeSvgDrawableColor(context,R.color.colorTextGreyLight,it)
         }
 
 
-        textList.get(index).setTextColor(ContextCompat.getColor(context,R.color.colorAccent))
-        imageList.get(index).setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
+        textList[index].setTextColor(ContextCompat.getColor(context,R.color.colorAccent))
+//        imageList[index].setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
+        ShapeDrawableHelper.changeSvgDrawableColor(context,R.color.colorAccent,imageList[index])
         selectListener?.onSelect(index)
 
     }

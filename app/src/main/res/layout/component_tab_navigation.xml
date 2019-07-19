@@ -21,9 +21,11 @@
                               android:orientation="vertical" android:layout_height="match_parent">
 
                     <ImageView
-                            android:id="@+id/explore_image" android:layout_marginTop="8dp" android:layout_width="26dp"
-                            android:background="@color/colorAccent"
-                            android:layout_height="26dp"/>
+                            android:id="@+id/explore_image" android:layout_marginTop="8dp" android:layout_width="24dp"
+                            app:srcCompat="@drawable/ic_tab_explore"
+                            android:tint="@color/colorAccent"
+
+                            android:layout_height="24dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
                               android:text="@string/title_menu_explore"
@@ -40,9 +42,9 @@
                               android:orientation="vertical" android:layout_height="match_parent">
 
                     <ImageView android:id="@+id/history_image" android:layout_marginTop="8dp"
-                               android:layout_width="26dp"
-                               android:background="@color/colorTextGreyLight"
-                               android:layout_height="26dp"/>
+                               android:layout_width="24dp"
+                               app:srcCompat="@drawable/ic_tab_orders"
+                               android:layout_height="24dp"/>
                     <TextView android:id="@+id/history_text" android:layout_width="match_parent"
                               android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
@@ -57,12 +59,13 @@
                 <LinearLayout android:id="@+id/addItem_layout" android:layout_width="0dp"
                               android:gravity="center_horizontal"
                               android:layout_weight="1"
+
                               android:orientation="vertical" android:layout_height="match_parent">
 
                     <ImageView android:id="@+id/addItem_image" android:layout_marginTop="8dp"
-                               android:layout_width="26dp"
-                               android:background="@color/colorTextGreyLight"
-                               android:layout_height="26dp"/>
+                               android:layout_width="24dp"
+                               app:srcCompat="@drawable/ic_tab_items"
+                               android:layout_height="24dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
                               android:text="@string/title_menu_items"
@@ -79,9 +82,10 @@
                               android:layout_weight="1"
                               android:orientation="vertical" android:layout_height="match_parent">
 
-                    <ImageView android:layout_marginTop="8dp" android:id="@+id/inbox_image" android:layout_width="26dp"
-                               android:background="@color/colorTextGreyLight"
-                               android:layout_height="26dp"/>
+                    <ImageView android:layout_marginTop="8dp" android:id="@+id/inbox_image" android:layout_width="24dp"
+                               app:srcCompat="@drawable/ic_tab_inbox"
+
+                               android:layout_height="24dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
                               android:text="@string/title_menu_inbox"
@@ -98,9 +102,9 @@
                               android:orientation="vertical" android:layout_height="match_parent">
 
                     <ImageView android:layout_marginTop="8dp" android:id="@+id/profile_image"
-                               android:layout_width="26dp"
-                               android:background="@color/colorTextGreyLight"
-                               android:layout_height="26dp"/>
+                               android:layout_width="24dp"
+                               app:srcCompat="@drawable/ic_tab_profile"
+                               android:layout_height="24dp"/>
                     <TextView android:layout_width="match_parent" android:layout_marginTop="4dp"
                               android:layout_height="wrap_content"
                               android:text="@string/title_menu_profile"
