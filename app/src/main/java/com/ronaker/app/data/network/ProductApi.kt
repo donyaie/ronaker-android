@@ -16,7 +16,7 @@ interface ProductApi {
      */
     @POST("/api/v1/products/search")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ProductSearchResponceModel>
+    fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Query("query") query: String?): Observable<ProductSearchResponceModel>
 
     /**
      * get my created product

@@ -52,6 +52,13 @@
         </activity>
 
         <activity
+                android:screenOrientation="portrait"
+                android:theme="@style/DashboardTheme"
+                android:windowSoftInputMode="adjustResize"
+                android:name=".ui.search.SearchActivity">
+        </activity>
+
+        <activity
                 android:theme="@style/DashboardTheme"
                 android:screenOrientation="portrait"
                 android:name=".ui.dashboard.DashboardActivity">

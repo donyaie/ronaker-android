@@ -103,7 +103,7 @@
                                   android:layout_weight=".95" android:text="@string/title_name_and_description"
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
-                        <ImageView android:layout_width="20dp" android:src="@drawable/ic_chevron_right"
+                        <ImageView android:layout_width="20dp" app:srcCompat="@drawable/ic_chevron_right"
 
                                    android:padding="3dp"
                                    android:layout_height="20dp"/>
@@ -129,7 +129,7 @@
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp"
-                                   android:padding="3dp" android:src="@drawable/ic_chevron_right"
+                                   android:padding="3dp" app:srcCompat="@drawable/ic_chevron_right"
                                    android:layout_height="20dp"/>
 
 
@@ -153,7 +153,7 @@
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp" android:padding="3dp"
-                                   android:src="@drawable/ic_chevron_right"
+                                   app:srcCompat="@drawable/ic_chevron_right"
                                    android:layout_height="20dp"/>
 
 
@@ -177,7 +177,7 @@
                                   android:textAppearance="@style/TextAppearance.Large.Light"
                                   android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp" android:padding="3dp"
-                                   android:src="@drawable/ic_chevron_right"
+                                   app:srcCompat="@drawable/ic_chevron_right"
                                    android:layout_height="20dp"/>
 
 

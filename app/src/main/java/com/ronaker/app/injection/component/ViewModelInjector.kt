@@ -15,6 +15,7 @@ import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
+import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -45,6 +46,7 @@ interface ViewModelInjector {
     fun inject(viewModel: OrderMessageViewModel)
     fun inject(viewModel: ProfileViewModel)
     fun inject(viewModel: InboxViewModel)
+    fun inject(viewModel: SearchViewModel)
 
 
     @Component.Builder

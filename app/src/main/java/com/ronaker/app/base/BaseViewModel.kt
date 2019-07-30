@@ -18,6 +18,7 @@ import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
+import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
 abstract class BaseViewModel : ViewModel() {
@@ -51,6 +52,7 @@ abstract class BaseViewModel : ViewModel() {
             is OrderMessageViewModel->injector.inject(this)
             is ProfileViewModel->injector.inject(this)
             is InboxViewModel ->injector.inject(this)
+            is SearchViewModel ->injector.inject(this)
         }
 
     }

@@ -34,7 +34,7 @@
                         android:minWidth="500dp"
                         android:scaleType="centerCrop"
 
-                        android:src="@drawable/bg_login" />
+                        app:srcCompat="@drawable/bg_login" />
 
             </RelativeLayout>
 

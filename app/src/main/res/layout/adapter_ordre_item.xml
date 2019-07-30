@@ -94,7 +94,7 @@
                           android:orientation="horizontal" app:layout_constraintTop_toBottomOf="@id/split"
                           android:layout_width="match_parent" android:layout_height="47dp">
 
-                <ImageView android:layout_width="24dp" android:padding="4dp" android:src="@drawable/ic_remove_red"
+                <ImageView android:layout_width="24dp" android:padding="4dp" app:srcCompat="@drawable/ic_remove_red"
                            android:layout_height="24dp"/>
 
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"

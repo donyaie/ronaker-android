@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources  >
 
     <style name="Button.accent" parent="android:Widget.Button">
         <item name="fontPath">fonts/regular.otf</item>
@@ -43,7 +43,7 @@
         <item name="android:layout_margin">24dp</item>
         <item name="android:scaleType">fitCenter</item>
 
-        <item name="android:src">@drawable/ic_next_white</item>
+        <item  name="srcCompat">@drawable/ic_next_white</item>
         <item name="android:padding">14dp</item>
     </style>
 

@@ -35,7 +35,7 @@
 
                    app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintRight_toRightOf="parent"
-                   android:src="@drawable/ic_remove_red" android:layout_height="32dp"/>
+                   app:srcCompat="@drawable/ic_remove_red" android:layout_height="32dp"/>
 
 <RelativeLayout android:visibility="gone"
                 android:focusable="true"

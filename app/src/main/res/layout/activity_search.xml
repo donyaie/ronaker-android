@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.search.SearchViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+        <LinearLayout
+
+
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:id="@+id/header"
+                android:gravity="center"
+                android:layout_margin="3dp"
+
+                android:orientation='horizontal'
+                android:layout_height="wrap_content">
+
+
+            <androidx.cardview.widget.CardView app:cardElevation="16dp"
+                                               app:cardCornerRadius="3dp"
+                                               android:transitionName="search"
+                                               app:layout_constraintTop_toTopOf="parent"
+
+                                               android:layout_weight=".95"
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content">
+                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+
+                                                                   android:layout_height="48dp">
+                    <EditText android:hint="@string/title_search_here" android:layout_width="match_parent"
+                              android:gravity="left|center_vertical"
+                              android:background="@null"
+                              android:paddingLeft="16dp"
+                              android:inputType="text"
+                              android:textAppearance="@style/TextAppearance.Medium.SB"
+                              android:imeOptions="actionSearch"
+                              android:id="@+id/search_edit"
+                              android:textColor="@color/colorTextGreyLight"
+                              android:layout_height="match_parent"/>
+
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                               app:srcCompat="@drawable/ic_field_clear"
+                               app:layout_constraintRight_toRightOf="parent"
+                               android:layout_marginRight="12dp"
+                               android:padding="2dp"
+                               android:alpha=".6"
+                               android:id="@+id/clear_text"
+                               app:layout_constraintTop_toTopOf="parent"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               android:tint="@color/colorTextGreyLight"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView android:layout_width="wrap_content"
+                      android:transitionName="searchCancel"
+                      android:text="Cancel"
+                      android:layout_height="48dp"
+                      android:id="@+id/cancelSearch"
+                      android:gravity="center"
+                      android:textColor="@color/colorTextDark"
+                      android:textAppearance="@style/TextAppearance.Small.Regular"
+
+                      android:layout_marginRight="16dp"
+
+
+            />
+
+
+        </LinearLayout>
+
+
+        <com.ronaker.app.utils.view.LoadingComponent
+                android:visibility="gone"
+                app:loading_transparent="false"
+                android:id="@+id/loading" android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
