@@ -19,10 +19,10 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
 
 
-    fun productSearch(token: String?, page:Int): Observable<Result<ProductSearchResponceModel>> {
+    fun productSearch(token: String?,query:String?, page:Int): Observable<Result<ProductSearchResponceModel>> {
 
 
-        return productApi.productSearch("Token $token",page )
+        return productApi.productSearch("Token $token",page, query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 

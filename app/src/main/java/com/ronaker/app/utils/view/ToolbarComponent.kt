@@ -3,7 +3,6 @@ package com.ronaker.app.utils.view
 import android.animation.Animator
 import android.content.Context
 import android.graphics.PorterDuff
-import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +14,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.ronaker.app.R
 import com.ronaker.app.utils.ScreenCalcute
-import com.ronaker.app.utils.ShapeDrawableHelper
 
 
-class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
 
     enum class CenterContainer {

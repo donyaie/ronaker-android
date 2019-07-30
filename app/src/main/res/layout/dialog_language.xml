@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:padding="16dp"
@@ -7,7 +8,7 @@
 
     <LinearLayout  android:minHeight="48dp" android:id="@+id/englishLan" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <ImageView  android:layout_marginRight="16dp" android:src="@drawable/ic_united_kingdom"  android:layout_width="30dp" android:layout_height="30dp"/>
+        <ImageView  android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_united_kingdom"  android:layout_width="30dp" android:layout_height="30dp"/>
 
         <TextView android:text="English" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"/>
 
@@ -16,7 +17,7 @@
 
     <LinearLayout android:id="@+id/lithuaniaLan" android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <ImageView android:layout_marginRight="16dp" android:src="@drawable/ic_lithuania" android:layout_width="30dp" android:layout_height="30dp"/>
+        <ImageView android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_lithuania" android:layout_width="30dp" android:layout_height="30dp"/>
 
         <TextView android:text="Lithuanian" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"/>
 

@@ -1,5 +1,9 @@
 package com.ronaker.app.ui.explore
 
+import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +18,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.post.PostListViewModel
+import com.ronaker.app.ui.search.SearchActivity
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 import com.ronaker.app.utils.view.LoadingComponent
+import androidx.core.app.ActivityOptionsCompat
+
+
 
 class ExploreFragment : BaseFragment() {
 
@@ -40,6 +48,35 @@ class ExploreFragment : BaseFragment() {
         })
 
 
+
+        viewModel.searchValue.observe(this, Observer { value->
+
+            // Check if we're running on Android 5.0 or higher
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+//
+//                val options = ActivityOptions
+//                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
+
+                val p1 =  androidx.core.util.Pair<View,String>(binding.searchLayout, "search")
+                val p2 =  androidx.core.util.Pair<View,String>(binding.cancelSearch, "searchCancel")
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
+
+
+
+                activity?.let { startActivityForResult( SearchActivity.newInstance(it),SearchActivity.ResultCode,options.toBundle()) }
+
+            } else {
+                // Swap without transition
+                activity?.let { startActivityForResult( SearchActivity.newInstance(it),SearchActivity.ResultCode) }
+            }
+
+
+
+
+
+
+        })
 
         viewModel.resetList.observe(this, Observer {
             scrollListener.resetState()
@@ -86,6 +123,13 @@ class ExploreFragment : BaseFragment() {
         };
         binding.recycler.addOnScrollListener(scrollListener)
 
+
+        binding.backImage.setOnClickListener {
+
+            clearSearchValue()
+        }
+
+
         binding.viewModel = viewModel
 
 
@@ -100,5 +144,52 @@ class ExploreFragment : BaseFragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if(requestCode==SearchActivity.ResultCode && resultCode==0){
+
+            if (data != null) {
+               var searchValue= data.getStringExtra(SearchActivity.Search_KEY )
+
+                setSearchValue(searchValue)
+            }
+
+
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+
+
+    }
+
+
+
+    fun setSearchValue(search:String){
+
+
+
+        binding.searchText.text=search
+
+        binding.backImage.visibility=View.VISIBLE
+        binding.searchImage.visibility=View.GONE
+
+
+        viewModel.search(search)
+
+
+    }
+
+    fun clearSearchValue(){
+
+
+        binding.searchText.setText(R.string.title_search_here)
+
+        binding.backImage.visibility=View.GONE
+        binding.searchImage.visibility=View.VISIBLE
+        viewModel.search(null)
+    }
 
 }

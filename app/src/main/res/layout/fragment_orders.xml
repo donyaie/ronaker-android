@@ -195,6 +195,7 @@
         <com.ronaker.app.utils.view.LoadingComponent android:layout_width="match_parent"
                                                      android:id="@+id/loading"
 
+                                                     android:visibility="gone"
                                                      app:loading_transparent="false"
                                                      app:layout_constraintBottom_toBottomOf="parent"
                                                      android:layout_height="match_parent"/>

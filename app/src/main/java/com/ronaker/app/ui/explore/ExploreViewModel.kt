@@ -39,6 +39,9 @@ class ExploreViewModel : BaseViewModel() {
     val errorClickListener = View.OnClickListener { loadProduct() }
 
 
+    val searchValue: MutableLiveData<String> = MutableLiveData()
+
+
     internal fun reset() {
 
         page = 0
@@ -64,7 +67,7 @@ class ExploreViewModel : BaseViewModel() {
             page++
 
             subscription = productRepository
-                .productSearch(userRepository.getUserToken(), page)
+                .productSearch(userRepository.getUserToken(),query, page)
 
                 .doOnSubscribe { onRetrieveProductListStart() }
                 .doOnTerminate { onRetrieveProductListFinish() }
@@ -116,6 +119,12 @@ class ExploreViewModel : BaseViewModel() {
 
     }
 
+    fun onClickSearch(){
+
+        searchValue.value=""
+
+    }
+
 
     override fun onCleared() {
         super.onCleared()
@@ -129,6 +138,17 @@ class ExploreViewModel : BaseViewModel() {
 
     fun retry(){
         reset()
+        loadProduct()
+
+    }
+
+
+    var query:String?=null
+
+    fun search(search: String?) {
+
+        reset()
+        query=search
         loadProduct()
 
     }
