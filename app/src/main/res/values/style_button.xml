@@ -27,6 +27,7 @@
 
     <style name="Button.transparent.light" parent="android:Widget.Button">
         <item name="fontPath">fonts/regular.otf</item>
+        <item name="android:minWidth">155dp</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:background">@drawable/selector_corner_dark</item>
         <item name="android:layout_height">42dp</item>

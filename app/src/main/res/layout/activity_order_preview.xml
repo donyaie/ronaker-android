@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.orderPreview.OrderPreviewViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/toolbar"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/statusBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:toolbar_component_title="@string/app_name"
+                app:toolbar_component_transparent="false"
+                app:toolbar_component_action_text="Cancel"
+                app:toolbar_component_bottom_line="false"
+                app:toolbar_component_dot_count="4"
+                app:toolbar_component_center_container="NONE"
+                app:toolbar_component_action_container="NONE"
+                app:toolbar_component_cancel_container="CLOSE"
+        />
+
+        <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                               app:layout_constraintTop_toBottomOf="@id/toolbar"
+                                               app:layout_constraintBottom_toTopOf="@id/footer"
+                                               android:layout_height="0dp">
+
+            <LinearLayout android:orientation="vertical" android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+
+
+                <LinearLayout android:orientation="horizontal" android:minHeight="112dp" android:gravity="center"
+                              android:layout_width="match_parent" android:layout_height="wrap_content">
+
+
+                    <LinearLayout android:orientation="vertical" android:layout_width="0dp"
+                                  android:layout_weight=".95"
+                                  android:layout_marginRight="16dp"
+                                  android:layout_marginLeft="24dp"
+                                  android:layout_height="wrap_content">
+
+
+                        <TextView android:textAppearance="@style/TextAppearance.Medium.SB" android:minLines="2"
+
+                                  android:text="sample product"
+                                  android:textColor="@color/colorTextDark"
+                                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+                        <TextView android:textAppearance="@style/TextAppearance.Large.Regular"
+
+                                  android:text="$124 for 2 day"
+                                  android:layout_marginTop="16dp"
+                                  android:textColor="@color/colorTextDark"
+                                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
+                    <com.makeramen.roundedimageview.RoundedImageView android:layout_width="80dp"
+                                                                     app:riv_corner_radius="3dp"
+
+android:src="@color/colorPlatinGrey"
+                                                                     android:layout_marginRight="24dp"
+                                                                     android:scaleType="fitCenter"
+                                                                     app:srcCompat="@drawable/ic_empty_product"
+                                                                     android:layout_height="80dp"/>
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp" android:background="@color/colorPlatinGrey"/>
+
+
+                <LinearLayout android:minHeight="72dp" android:layout_marginRight="24dp"
+                              android:layout_marginLeft="24dp" android:gravity="center"
+                              android:layout_width="match_parent" android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+
+
+                    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content"
+                                  android:layout_weight=".50"
+                                  android:gravity="left"
+                                  android:layout_height="wrap_content">
+
+                        <TextView android:layout_marginBottom="4dp"
+                                  android:textAppearance="@style/TextAppearance.Small.Regular" android:text="Monday"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+                        <TextView android:textAppearance="@style/TextAppearance.Large.Regular" android:text="21 May"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+                    <ImageView android:layout_width="24dp" app:srcCompat="@drawable/ic_chevron_right"
+                               android:tint="@color/colorIconDark" android:layout_height="24dp"/>
+
+
+                    <LinearLayout android:layout_weight=".50" android:orientation="vertical"
+                                  android:layout_width="wrap_content"
+                                  android:gravity="right"
+                                  android:layout_height="wrap_content">
+
+                        <TextView android:layout_marginBottom="4dp"
+                                  android:textAppearance="@style/TextAppearance.Small.Regular" android:text="Friday"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+                        <TextView android:textAppearance="@style/TextAppearance.Large.Regular" android:text="23 May"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp" android:background="@color/colorPlatinGrey"/>
+
+
+                <LinearLayout android:layout_width="match_parent" android:paddingRight="24dp" android:paddingLeft="24dp"
+                              android:minHeight="112dp" android:gravity="center" android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+
+
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight=".95"
+
+                                  android:orientation="vertical"
+                                  android:layout_height="wrap_content">
+
+
+                        <TextView android:textAppearance="@style/TextAppearance.Heading.2" android:text="David"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+                        <LinearLayout android:layout_marginTop="11dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      android:orientation="horizontal">
+
+
+                            <ImageView android:layout_marginRight="8dp" android:layout_width="32dp" app:srcCompat="@drawable/ic_rating" android:layout_height="32dp"/>
+
+
+                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+                                <TextView android:textAppearance="@style/TextAppearance.Large.SB" android:text="87%"
+                                          android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+                                <TextView android:textAppearance="@style/TextAppearance.Medium.Light" android:text="positive rate"
+                                          android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView app:riv_corner_radius="32dp"
+                                                                     android:layout_width="64dp"
+                                                                     android:src="@color/colorPlatinGrey"
+                                                                     android:layout_height="64dp"/>
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp" android:background="@color/colorPlatinGrey"/>
+
+
+
+
+                <TextView android:text="Description" android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+
+
+            </LinearLayout>
+
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/footer" android:layout_width="match_parent"
+                                                           android:background="@color/white"
+
+                                                           app:layout_constraintBottom_toBottomOf="parent"
+                                                           android:layout_height="80dp">
+            <RelativeLayout android:layout_width="match_parent" app:layout_constraintTop_toTopOf="parent"
+                            android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+
+            <Button style="@style/Button.transparent.light" android:text="Decline"
+
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="24dp"
+                    android:layout_width="wrap_content"
+
+            />
+
+
+            <Button style="@style/Button.accent" android:text="Accept"
+
+
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginRight="24dp"
+                    android:layout_width="wrap_content"
+
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.ronaker.app.utils.view.LoadingComponent
+                android:visibility="gone"
+                app:loading_transparent="false"
+                android:id="@+id/loading" android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

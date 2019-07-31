@@ -5,6 +5,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.BASE_URL
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +21,7 @@ class OrderItemViewModel : BaseViewModel() {
 
     fun bind(item: Order, context: DashboardActivity) {
         data = item
+        activity=context
         productTitle.value=item.title
         productPrice.value=String.format("%s%.02f",context.getString(R.string.title_curency_symbol), item.price)
         productImage.value= BASE_URL+ item.avatar
@@ -29,7 +31,7 @@ class OrderItemViewModel : BaseViewModel() {
     fun onClickProduct() {
 
 
-//        activity.startActivity(data.suid?.let { ExploreProductActivity.newInstance(activity, it) })
+        activity.startActivity(data.suid?.let { OrderPreviewActivity.newInstance(activity, it) })
     }
 
     fun getProductTitle(): MutableLiveData<String> {
