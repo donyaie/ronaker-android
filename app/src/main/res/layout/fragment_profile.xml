@@ -100,6 +100,7 @@
 
                     <ImageView android:layout_width="32dp" android:layout_height="32dp"
                                android:layout_marginRight="16dp"
+                               android:padding="6dp"
                                app:srcCompat="@drawable/ic_settings"
                                android:layout_marginLeft="24dp"/>
 
@@ -129,6 +130,7 @@
                     <ImageView android:layout_width="32dp" android:layout_height="32dp"
                                android:layout_marginRight="16dp"
                                app:srcCompat="@drawable/ic_credit"
+                               android:padding="6dp"
                                android:layout_marginLeft="24dp"/>
 
                     <TextView android:layout_width="0dp"
