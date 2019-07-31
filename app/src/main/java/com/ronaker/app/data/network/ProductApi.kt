@@ -1,6 +1,7 @@
 package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
+import com.ronaker.app.data.network.request.ProductSearchRequestModel
 import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import com.ronaker.app.data.network.response.ProductDetailResponceModel
 import com.ronaker.app.data.network.response.ProductSearchResponceModel
@@ -16,7 +17,7 @@ interface ProductApi {
      */
     @POST("/api/v1/products/search")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Query("query") query: String?): Observable<ProductSearchResponceModel>
+    fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Body request: ProductSearchRequestModel?): Observable<ProductSearchResponceModel>
 
     /**
      * get my created product
