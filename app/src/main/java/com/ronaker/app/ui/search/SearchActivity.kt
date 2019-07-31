@@ -99,8 +99,8 @@ class SearchActivity : BaseActivity() {
 
     fun getSearchValue():String?
     {
-        if ( intent.hasExtra(SUID_KEY)) {
-            var value = intent.getStringExtra(SUID_KEY)
+        if ( intent.hasExtra(Search_KEY)) {
+            var value = intent.getStringExtra(Search_KEY)
 
             return value
 
