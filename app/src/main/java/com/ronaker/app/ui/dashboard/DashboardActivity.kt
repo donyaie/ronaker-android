@@ -18,6 +18,7 @@ import com.ronaker.app.ui.inbox.InboxFragment
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
+import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 
@@ -57,6 +58,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private lateinit var viewModel: DashboardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, com.ronaker.app.R.layout.activity_dashboard)

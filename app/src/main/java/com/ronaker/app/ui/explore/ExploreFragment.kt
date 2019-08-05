@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.explore
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,20 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
-import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.search.SearchActivity
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
-import com.ronaker.app.utils.view.LoadingComponent
-import androidx.core.app.ActivityOptionsCompat
-
 
 
 class ExploreFragment : BaseFragment() {
@@ -30,11 +25,15 @@ class ExploreFragment : BaseFragment() {
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
     private lateinit var viewModel: ExploreViewModel
 
-  lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    lateinit var scrollListener: EndlessRecyclerViewScrollListener
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         viewModel = ViewModelProviders.of(this).get(ExploreViewModel::class.java)
+
+
+
+        binding.viewModel = viewModel
 
         var mnager = GridLayoutManager(context, 2)
         binding.recycler.layoutManager = mnager
@@ -49,7 +48,7 @@ class ExploreFragment : BaseFragment() {
 
 
 
-        viewModel.searchValue.observe(this, Observer { value->
+        viewModel.searchValue.observe(this, Observer { value ->
 
             // Check if we're running on Android 5.0 or higher
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -58,22 +57,24 @@ class ExploreFragment : BaseFragment() {
 //                val options = ActivityOptions
 //                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
 
-                val p1 =  androidx.core.util.Pair<View,String>(binding.searchLayout, "search")
-                val p2 =  androidx.core.util.Pair<View,String>(binding.cancelSearch, "searchCancel")
+                val p1 = androidx.core.util.Pair<View, String>(binding.searchLayout, "search")
+                val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
 
 
 
-                activity?.let { startActivityForResult( SearchActivity.newInstance(it),SearchActivity.ResultCode,options.toBundle()) }
+                activity?.let {
+                    startActivityForResult(
+                        SearchActivity.newInstance(it),
+                        SearchActivity.ResultCode,
+                        options.toBundle()
+                    )
+                }
 
             } else {
                 // Swap without transition
-                activity?.let { startActivityForResult( SearchActivity.newInstance(it),SearchActivity.ResultCode) }
+                activity?.let { startActivityForResult(SearchActivity.newInstance(it), SearchActivity.ResultCode) }
             }
-
-
-
-
 
 
         })
@@ -92,14 +93,14 @@ class ExploreFragment : BaseFragment() {
             }
         })
 
-        binding.loading.oClickRetryListener = View.OnClickListener{
+        binding.loading.oClickRetryListener = View.OnClickListener {
 
-                viewModel.retry()
+            viewModel.retry()
 
 
         }
 //
-      scrollListener = object : EndlessRecyclerViewScrollListener(mnager) {
+        scrollListener = object : EndlessRecyclerViewScrollListener(mnager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
 
                 viewModel.loadMore()
@@ -112,10 +113,10 @@ class ExploreFragment : BaseFragment() {
 
 
 
-                if(!view.canScrollVertically(-1)){
+                if (!view.canScrollVertically(-1)) {
 
-                    binding.header.cardElevation=0f
-                }else {
+                    binding.header.cardElevation = 0f
+                } else {
                     binding.header.cardElevation = 10f
                 }
 
@@ -130,7 +131,7 @@ class ExploreFragment : BaseFragment() {
         }
 
 
-        binding.viewModel = viewModel
+
 
 
         return binding.root
@@ -146,14 +147,17 @@ class ExploreFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if(requestCode==SearchActivity.ResultCode && resultCode==0){
+        if (requestCode == SearchActivity.ResultCode && resultCode == 0) {
 
             if (data != null) {
-               var searchValue= data.getStringExtra(SearchActivity.Search_KEY )
+                var searchValue = data.getStringExtra(SearchActivity.Search_KEY)
 
-                setSearchValue(searchValue)
+                if (searchValue==null || searchValue.isEmpty())
+                    clearSearchValue()
+                else
+
+                    setSearchValue(searchValue)
             }
-
 
 
         }
@@ -161,20 +165,16 @@ class ExploreFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
 
-
-
     }
 
 
-
-    fun setSearchValue(search:String){
-
+    fun setSearchValue(search: String) {
 
 
-        binding.searchText.text=search
+        binding.searchText.text = search
 
-        binding.backImage.visibility=View.VISIBLE
-        binding.searchImage.visibility=View.GONE
+        binding.backImage.visibility = View.VISIBLE
+        binding.searchImage.visibility = View.GONE
 
 
         viewModel.search(search)
@@ -182,13 +182,13 @@ class ExploreFragment : BaseFragment() {
 
     }
 
-    fun clearSearchValue(){
+    fun clearSearchValue() {
 
 
         binding.searchText.setText(R.string.title_search_here)
 
-        binding.backImage.visibility=View.GONE
-        binding.searchImage.visibility=View.VISIBLE
+        binding.backImage.visibility = View.GONE
+        binding.searchImage.visibility = View.VISIBLE
         viewModel.search(null)
     }
 

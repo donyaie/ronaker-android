@@ -32,9 +32,9 @@ class CheckoutCalendarActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_checkout_calendar)
 
         viewModel = ViewModelProviders.of(this).get(CheckoutCalendarViewModel::class.java)
@@ -69,7 +69,7 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
         } else {
-            finish()
+            finishSafe()
         }
 
 
@@ -80,7 +80,7 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
-        finish()
+        super.onBackPressed()
     }
 
 

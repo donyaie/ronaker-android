@@ -29,10 +29,9 @@ class ExploreProductFragment : BaseFragment() {
         }
 
 
+
         binding.toolbar.cancelClickListener = View.OnClickListener { activity ?.onBackPressed() }
 
-
-        binding.viewModel = productViewModel
 
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
@@ -67,7 +66,7 @@ class ExploreProductFragment : BaseFragment() {
 
         productViewModel.checkout.observe(this, Observer { suid ->
 
-            startActivity(context?.let { CheckoutCalendarActivity.newInstance(it,suid) })
+            startActivityMakeScene(context?.let { CheckoutCalendarActivity.newInstance(it,suid) })
 
         })
 

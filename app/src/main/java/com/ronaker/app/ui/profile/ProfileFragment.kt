@@ -46,7 +46,7 @@ class ProfileFragment : BaseFragment() {
         })
 
         viewModel.logOutAction.observe(this, Observer {
-            startActivity(activity?.let { SplashActivity.newInstance(it) })
+            startActivityMakeScene(activity?.let { SplashActivity.newInstance(it) })
         })
 
         binding.viewModel = viewModel

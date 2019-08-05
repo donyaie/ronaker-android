@@ -66,11 +66,4 @@ class SplashActivity : BaseActivity() {
     }
 
 
-    override fun finish() {
-        super.finish()
-        AnimationHelper.animateActivityFade(this)
-//
-
-    }
-
 }

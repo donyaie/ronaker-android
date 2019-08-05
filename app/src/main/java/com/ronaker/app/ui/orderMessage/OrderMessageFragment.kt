@@ -40,7 +40,7 @@ class OrderMessageFragment : BaseFragment() {
 
         binding.toolbar.cancelClickListener=View.OnClickListener {
 
-            activity?.finish()
+            finishSafe()
         }
 
 

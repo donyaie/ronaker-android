@@ -29,6 +29,16 @@
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="PopTheme" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
@@ -42,7 +52,7 @@
 
     </style>
 
-    <style name="phoneNumberTheme" parent="AppTheme">
+    <style name="phoneNumberTheme" parent="PopTheme">
 
 
         <item name="android:dialogTheme">@style/WhiteDialog</item>

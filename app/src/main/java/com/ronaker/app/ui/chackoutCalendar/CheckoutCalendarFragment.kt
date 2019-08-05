@@ -38,10 +38,14 @@ class CheckoutCalendarFragment : BaseFragment() {
         viewModel.nextStep.observe(this, Observer { value ->
 
 
-
             activity?.let {
-                it.finish()
-                startActivity(OrderMessageActivity.newInstance(it,value) )}
+
+                startActivityMakeScene(OrderMessageActivity.newInstance(it,value) )}
+
+
+
+            finishSafe()
+
         })
 
 
@@ -55,7 +59,7 @@ class CheckoutCalendarFragment : BaseFragment() {
 
         binding.toolbar.cancelClickListener=View.OnClickListener {
 
-            activity?.finish()
+            finishSafe()
         }
 
 

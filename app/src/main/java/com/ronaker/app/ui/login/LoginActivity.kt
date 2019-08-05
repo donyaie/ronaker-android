@@ -5,12 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
@@ -24,7 +22,6 @@ import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
 import java.util.*
-import kotlin.concurrent.schedule
 
 
 class LoginActivity : BaseActivity() {
@@ -101,9 +98,9 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
@@ -154,8 +151,8 @@ class LoginActivity : BaseActivity() {
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value == true) {
-                    startActivity(DashboardActivity.newInstance(this@LoginActivity))
-                    finish()
+                    startActivityMakeScene(DashboardActivity.newInstance(this@LoginActivity))
+                    finishSafe()
             }
         })
 
@@ -180,7 +177,7 @@ class LoginActivity : BaseActivity() {
             KeyboardManager.hideSoftKeyboard(this)
 
         if (binding.viewpager.currentItem == 0)
-            finish()
+            finishSafe()
 
 
         if (binding.viewpager.currentItem > LoginViewModel.LoginStateEnum.home.position) {

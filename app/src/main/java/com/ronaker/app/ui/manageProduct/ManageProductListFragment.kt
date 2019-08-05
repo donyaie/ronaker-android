@@ -56,10 +56,10 @@ class ManageProductListFragment : BaseFragment() {
 
 
         binding.addNewProductButton.setOnClickListener{
-            startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
         binding.addProductButton.setOnClickListener{
-            startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->

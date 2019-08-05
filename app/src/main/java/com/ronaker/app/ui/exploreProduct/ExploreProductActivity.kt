@@ -1,7 +1,9 @@
 package com.ronaker.app.ui.exploreProduct
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -34,7 +36,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.animateActivityFade(this)
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
@@ -42,11 +44,6 @@ class ExploreProductActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
 
         binding.viewModel = viewModel
-
-
-
-
-
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
@@ -76,36 +73,47 @@ class ExploreProductActivity : BaseActivity() {
 
 //        viewModel.goNext.observe(this, Observer { value ->
 //            if (value)
-//                startActivity(PhoneNumberActivity.newInstance(this@ExploreProductActivity))
+//                startActivityMakeScene(PhoneNumberActivity.newInstance(this@ExploreProductActivity))
 //            else
 //                finish()
 //        })
 
 
-        if ( intent.hasExtra(SUID_KEY)) {
-            var suid = intent.getStringExtra(SUID_KEY)
 
-            viewModel.loadProduct(suid)
-
-
-
-        } else {
-            finish()
-        }
 
 
     }
 
     override fun onStart() {
 
-        AnimationHelper.animateActivityFade(this)
+//        AnimationHelper.setFadeTransition(this)
         super.onStart()
+
+        if(isFistStart()){
+            if ( intent.hasExtra(SUID_KEY)) {
+                var suid = intent.getStringExtra(SUID_KEY)
+
+                viewModel.loadProduct(suid)
+
+
+
+            } else {
+                finishSafe()
+            }
+        }
+
+
+
+
     }
 
 
 
+
+
+
     override fun onBackPressed() {
-        finish()
+      super.onBackPressed();
     }
 
 

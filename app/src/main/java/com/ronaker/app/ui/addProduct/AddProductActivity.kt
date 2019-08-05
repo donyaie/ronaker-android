@@ -1,11 +1,16 @@
 package com.ronaker.app.ui.addProduct
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -13,25 +18,20 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.imagePicker.ImagePickerActivity
+import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.Debug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.karumi.dexter.Dexter
-import com.ronaker.app.ui.imagePicker.ImagePickerActivity
-import android.app.Activity
-import android.net.Uri
-import android.provider.Settings
-import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toFile
-import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import java.io.IOException
 
 
@@ -97,7 +97,7 @@ class AddProductActivity : BaseActivity() {
             boundle.putInt(STATE_KEY, state.position)
             intent.putExtras(boundle)
 
-            intent.flags =  Intent.FLAG_ACTIVITY_SINGLE_TOP
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
 
 
 
@@ -106,15 +106,14 @@ class AddProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
 
         viewModel = ViewModelProviders.of(this).get(AddProductViewModel::class.java)
 
         binding.viewModel = viewModel
-
 
 
 
@@ -143,6 +142,7 @@ class AddProductActivity : BaseActivity() {
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -151,25 +151,41 @@ class AddProductActivity : BaseActivity() {
 
 
 
-        if (intent.hasExtra(STATE_KEY) && intent.hasExtra(SUID_KEY)) {
-            var suid = intent.getStringExtra(SUID_KEY)
-            var state = AddProductViewModel.StateEnum.get(intent.getIntExtra(STATE_KEY, 0))
-            UpdateMode = true
-
-            init()
-            viewModel.getInfo(suid, state)
 
 
-            loginState = state
+    }
 
-        } else {
-            UpdateMode = false
 
-            init()
-            loginState = AddProductViewModel.StateEnum.image
+    override fun onStart() {
+        super.onStart()
+
+        if (isFistStart()) {
+            if (getSuid() != null) {
+
+                var state = AddProductViewModel.StateEnum.get(intent.getIntExtra(STATE_KEY, 0))
+                UpdateMode = true
+
+                init()
+                getSuid()?.let { viewModel.getInfo(it, state) }
+
+
+                loginState = state
+
+            } else {
+                binding.loading.visibility = View.GONE
+                UpdateMode = false
+
+                init()
+                loginState = AddProductViewModel.StateEnum.image
+            }
+
         }
 
+    }
 
+
+    fun getSuid(): String? {
+        return intent.getStringExtra(SUID_KEY)
     }
 
 
@@ -190,19 +206,18 @@ class AddProductActivity : BaseActivity() {
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
-        binding.toolbar.actionTextClickListener = View.OnClickListener { finish() }
+        binding.toolbar.actionTextClickListener = View.OnClickListener { finishSafe() }
 
 
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value)
-                startActivity(PhoneNumberActivity.newInstance(this@AddProductActivity))
+                startActivityMakeScene(PhoneNumberActivity.newInstance(this@AddProductActivity))
             else
-                finish()
+                finishSafe()
         })
 
         initViewPagerRegister()
-        binding.loading.hideLoading()
 
 
     }
@@ -211,7 +226,7 @@ class AddProductActivity : BaseActivity() {
     internal fun prePage() {
 
         if (UpdateMode) {
-            finish()
+            finishSafe()
             return
         }
 
@@ -219,7 +234,7 @@ class AddProductActivity : BaseActivity() {
             KeyboardManager.hideSoftKeyboard(this)
 
         if (binding.viewpager.currentItem == 0)
-            finish()
+            finishSafe()
 
 
         if (binding.viewpager.currentItem > AddProductViewModel.StateEnum.image.position) {
