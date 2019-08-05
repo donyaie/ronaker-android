@@ -94,7 +94,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                         android:orientation="horizontal"
+                        android:orientation="horizontal"
                         android:layout_marginTop="20dp" android:gravity="center" android:layout_width="match_parent"
                         android:layout_height="64dp">
 
@@ -121,10 +121,12 @@
                                 android:background="@color/colorPlatinGrey"/>
 
 
-
                 <LinearLayout
-                      android:orientation="horizontal"
-                       android:gravity="center" android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/payment_layout"
+
+
+                        android:gravity="center" android:layout_width="match_parent"
                         android:layout_height="64dp">
 
 
@@ -150,11 +152,9 @@
                                 android:background="@color/colorPlatinGrey"/>
 
 
-
-
                 <LinearLayout
                         android:onClick="@{()->viewModel.onClickLogout()}" android:orientation="horizontal"
-                      android:gravity="center" android:layout_width="match_parent"
+                        android:gravity="center" android:layout_width="match_parent"
                         android:layout_height="64dp">
 
 
@@ -179,10 +179,9 @@
                                 android:background="@color/colorPlatinGrey"/>
 
 
-
                 <LinearLayout
-                       android:orientation="horizontal"
-                    android:gravity="center" android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center" android:layout_width="match_parent"
 
 
                         android:id="@+id/language"
