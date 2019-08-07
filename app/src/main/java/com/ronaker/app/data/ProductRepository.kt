@@ -7,9 +7,7 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.ProductApi
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
 import com.ronaker.app.data.network.request.ProductSearchRequestModel
-import com.ronaker.app.data.network.response.ProductCreateResponseModel
-import com.ronaker.app.data.network.response.ProductDetailResponceModel
-import com.ronaker.app.data.network.response.ProductSearchResponceModel
+import com.ronaker.app.data.network.response.*
 import com.ronaker.app.model.Product
 import com.ronaker.app.model.toProductCreateModel
 import io.reactivex.Observable
@@ -20,7 +18,7 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
 
 
-    fun productSearch(token: String?,query:String?, page:Int): Observable<Result<ProductSearchResponceModel>> {
+    fun productSearch(token: String?,query:String?, page:Int): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
 
 
       var request:ProductSearchRequestModel?=null
@@ -35,7 +33,7 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
     }
 
-    fun getMyProduct(token: String?): Observable<Result<ProductSearchResponceModel>> {
+    fun getMyProduct(token: String?): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
 
 
         return productApi.getMyProduct("Token $token" )

@@ -63,6 +63,12 @@ class ManageProductListViewModel : BaseViewModel() {
                         onRetrieveProductListSuccess(
                             result.data.results.toProduct()
                         )
+
+                        if(result.data?.next==null)
+                        {
+                            hasNextPage = false
+                        }
+
                     } else {
                         hasNextPage = false
                         emptyView.value = true

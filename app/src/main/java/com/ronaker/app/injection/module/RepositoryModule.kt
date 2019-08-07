@@ -4,14 +4,8 @@ import android.content.Context
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.General
 import com.ronaker.app.base.PreferencesProvider
-import com.ronaker.app.data.ContentRepository
-import com.ronaker.app.data.network.PostApi
-import com.ronaker.app.data.network.UserApi
-import com.ronaker.app.data.PostRepository
-import com.ronaker.app.data.ProductRepository
-import com.ronaker.app.data.UserRepository
-import com.ronaker.app.data.network.ContentApi
-import com.ronaker.app.data.network.ProductApi
+import com.ronaker.app.data.*
+import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -55,6 +49,19 @@ object RepositoryModule {
         return retrofit.create(UserApi::class.java)
     }
 
+
+
+    /**
+     * Provides the category service implementation.
+     * @param retrofit the Retrofit object used to instantiate the service
+     * @return the User service implementation.
+     */
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideCategoryApi(retrofit: Retrofit): CategoryApi {
+        return retrofit.create(CategoryApi::class.java)
+    }
 
 
     /**
@@ -109,6 +116,13 @@ object RepositoryModule {
     @JvmStatic
     internal fun provideProductRepository(productApi: ProductApi,preferencesProvider: PreferencesProvider): ProductRepository {
         return ProductRepository(productApi,preferencesProvider)
+    }
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideCategoryRepository(api: CategoryApi,preferencesProvider: PreferencesProvider): CategoryRepository {
+        return CategoryRepository(api,preferencesProvider)
     }
 
     /**
