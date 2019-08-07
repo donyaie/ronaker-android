@@ -26,9 +26,13 @@ data class Product(
     , var avatar: String?
     , var images: ArrayList<ProductImage>?
     , var avatar_suid: String? = null
+    , var new_categories: ArrayList<String>? = null
+    , var categories: ArrayList<Category>?=null
 
 ) {
     constructor() : this(
+        null,
+        null,
         null,
         null,
         null,
@@ -71,7 +75,10 @@ fun List<ProductItemResponceModel>.toProduct(): List<Product> {
             it.price_per_month,
             it.description,
             it.avatar,
-            null
+            null,
+            null,
+            null,
+            if(it.categories!=null) it.categories.toCategoryList() as ArrayList<Category> else ArrayList()
         )
 
         list.add(product)
@@ -90,7 +97,7 @@ fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductIm
     this.forEach {
 
         var product = Product.ProductImage(it.url, it.suid)
-        product.isLocal=false
+        product.isLocal = false
 
         list.add(product)
     }
@@ -103,16 +110,16 @@ fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductIm
 fun Product.toProductCreateModel(): ProductCreateRequestModel {
 
 
-    var imageList:ArrayList<String>? =ArrayList<String>()
+    var imageList: ArrayList<String>? = ArrayList<String>()
 
 
-    if( this.images!=null) {
+    if (this.images != null) {
         this.images?.forEach { if (it.suid != null) imageList?.add(it.suid!!) }
 
     }
 
-    if(imageList?.size==0){
-        imageList=null
+    if (imageList?.size == 0) {
+        imageList = null
     }
 
 
@@ -123,7 +130,8 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
         this.price_per_month,
         this.description,
         this.avatar_suid,
-        imageList
+        imageList,
+        this.new_categories
     )
 
 

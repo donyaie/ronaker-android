@@ -3,10 +3,12 @@ package com.ronaker.app.ui.addProduct
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
 import com.ronaker.app.base.NetworkError.Companion.error_unverified_phone_number
+import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -35,12 +37,18 @@ class AddProductViewModel : BaseViewModel() {
     @Inject
     lateinit var productRepository: ProductRepository
 
+    @Inject
+    lateinit var categoryRepository: CategoryRepository
+
 
     @Inject
     lateinit var contentRepository: ContentRepository
 
 
     private var createPostSubscription: Disposable? = null
+
+
+    private var getCategorySubscription: Disposable? = null
 
 
     private var getproductSubscription: Disposable? = null
@@ -73,12 +81,49 @@ class AddProductViewModel : BaseViewModel() {
 
     var product: Product = Product()
 
+    val viewState: MutableLiveData<StateEnum> = MutableLiveData()
+
+    lateinit var imagesTemp: ArrayList<Product.ProductImage>
+
+    init {
+        adapter = AddProductImageAdapter(this)
+
+    }
+
+
+    fun stateChange(state:StateEnum){
+
+        if(state==StateEnum.category){
+            updateCategoryList()
+        }
+
+    }
+
+    fun updateCategoryList(){
+
+
+        getCategorySubscription =
+            categoryRepository.getCategories(userRepository.getUserToken()).doOnSubscribe { loading.value = true }
+                .doOnTerminate {
+                    loading.value = false
+                }
+                .subscribe { result ->
+
+
+
+
+                }
+
+
+    }
+
 
     enum class StateEnum constructor(position: Int) {
         image(0),
         info(1),
-        price(2),
-        location(3);
+        category(2),
+        price(3),
+        location(4);
 
         var position: Int = 0
             internal set
@@ -100,7 +145,6 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-    lateinit var imagesTemp: ArrayList<Product.ProductImage>
 
     fun onClickImageNext() {
 
@@ -130,9 +174,14 @@ class AddProductViewModel : BaseViewModel() {
 
                 updateProduct(product)
             } else
-                viewState.value = StateEnum.price
+                viewState.value = StateEnum.category
         }
 
+    }
+
+
+    fun  onClickCategoryNext(){
+        viewState.value = StateEnum.price
     }
 
     fun onClickPriceNext(
@@ -217,13 +266,6 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-    val viewState: MutableLiveData<StateEnum> = MutableLiveData()
-
-
-    init {
-        adapter = AddProductImageAdapter(this)
-
-    }
 
 
     fun selectImage(uri: Uri?) {
@@ -386,6 +428,8 @@ class AddProductViewModel : BaseViewModel() {
         uploadSubscriptionList.forEach { it?.dispose() }
         getproductSubscription?.dispose()
         updateproductSubscription?.dispose()
+
+        getCategorySubscription?.dispose()
     }
 
 }
