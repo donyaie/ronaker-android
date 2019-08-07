@@ -31,9 +31,7 @@ data class User(
         null
     )
 
-    override fun toString(): String {
-        return "User(suid=$suid, email=$email, is_email_verified=$is_email_verified, first_name=$first_name, last_name=$last_name, phone_number=$phone_number, is_phone_number_verified=$is_phone_number_verified, password=$password)"
-    }
+
 
 
 }
