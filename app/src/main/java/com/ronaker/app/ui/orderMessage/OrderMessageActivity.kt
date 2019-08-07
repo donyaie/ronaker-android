@@ -32,9 +32,10 @@ class OrderMessageActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_message)
 
         viewModel = ViewModelProviders.of(this).get(OrderMessageViewModel::class.java)
@@ -69,7 +70,7 @@ class OrderMessageActivity : BaseActivity() {
 
 
         } else {
-            finish()
+            finishSafe()
         }
 
 
@@ -77,11 +78,6 @@ class OrderMessageActivity : BaseActivity() {
 
 
 
-
-
-    override fun onBackPressed() {
-        finish()
-    }
 
 
 

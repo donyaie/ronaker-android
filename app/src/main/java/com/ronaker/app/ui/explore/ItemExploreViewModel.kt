@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.explore
 
+import android.app.ActivityOptions
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
@@ -46,7 +47,7 @@ class ItemExploreViewModel : BaseViewModel() {
     fun onClickProduct() {
 
 
-        activity.startActivity(data.suid?.let { ExploreProductActivity.newInstance(activity, it) })
+        activity.startActivityMakeScene(data.suid?.let { ExploreProductActivity.newInstance(activity, it) })
     }
 
     fun getProductTitle(): MutableLiveData<String> {

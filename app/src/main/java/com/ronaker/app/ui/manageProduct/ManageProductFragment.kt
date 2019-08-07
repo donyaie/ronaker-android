@@ -18,7 +18,6 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 
 class ManageProductFragment : BaseFragment() {
 
-    private var suid: String? = null
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductBinding
     private lateinit var productViewModel: ManageProductViewModel
 
@@ -63,8 +62,8 @@ class ManageProductFragment : BaseFragment() {
 
 
         binding.imageLayout.setOnClickListener {
-            startActivity(context?.let { it1 ->
-                suid?.let { it2 ->
+            startActivityMakeScene(context?.let { it1 ->
+                getSuid()?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.image
@@ -74,8 +73,8 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.locationLayout.setOnClickListener {
-            startActivity(context?.let { it1 ->
-                suid?.let { it2 ->
+            startActivityMakeScene(context?.let { it1 ->
+                getSuid()?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.location
@@ -85,8 +84,8 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.nameLayout.setOnClickListener {
-            startActivity(context?.let { it1 ->
-                suid?.let { it2 ->
+            startActivityMakeScene(context?.let { it1 ->
+                getSuid()?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.info
@@ -96,8 +95,8 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.priceLayout.setOnClickListener {
-            startActivity(context?.let { it1 ->
-                suid?.let { it2 ->
+            startActivityMakeScene(context?.let { it1 ->
+                getSuid()?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.price
@@ -141,19 +140,22 @@ class ManageProductFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
 
-        binding.loading.showLoading()
         fill()
     }
 
 
     fun fill() {
 
-        suid = this.arguments!!.getString(SUID_KEY)
 
-        suid?.let {
 
-            productViewModel.loadProduct(it)
-        }
+
+           getSuid()?.let { productViewModel.loadProduct(it) }
+
+
+    }
+
+    fun getSuid():String?{
+       return  this.arguments!!.getString(SUID_KEY)
     }
 
 
@@ -168,6 +170,7 @@ class ManageProductFragment : BaseFragment() {
             fragment.arguments = bundle
             return fragment
         }
+
     }
 
 

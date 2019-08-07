@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -36,9 +35,10 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_preview)
 
         viewModel = ViewModelProviders.of(this).get(OrderPreviewViewModel::class.java)
@@ -66,7 +66,7 @@ class OrderPreviewActivity : BaseActivity() {
 
         binding.toolbar.cancelClickListener= View.OnClickListener {
 
-            finish()
+            finishSafe()
         }
 
 
@@ -88,12 +88,6 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
 
-
-
-
-    override fun onBackPressed() {
-        finish()
-    }
 
 
 

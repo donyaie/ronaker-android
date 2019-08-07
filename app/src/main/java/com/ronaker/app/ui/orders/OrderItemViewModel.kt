@@ -31,7 +31,7 @@ class OrderItemViewModel : BaseViewModel() {
     fun onClickProduct() {
 
 
-        activity.startActivity(data.suid?.let { OrderPreviewActivity.newInstance(activity, it) })
+        activity.startActivityMakeScene(data.suid?.let { OrderPreviewActivity.newInstance(activity, it) })
     }
 
     fun getProductTitle(): MutableLiveData<String> {

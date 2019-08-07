@@ -61,9 +61,10 @@ class PhoneNumberActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_number)
 
         viewModel = ViewModelProviders.of(this).get(PhoneNumberViewModel::class.java)
@@ -93,7 +94,7 @@ class PhoneNumberActivity : BaseActivity() {
         binding.toolbar.showNavigator(false, 0)
 
 
-        binding.toolbar.cancelClickListener = View.OnClickListener { finish() }
+        binding.toolbar.cancelClickListener = View.OnClickListener { finishSafe() }
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -112,7 +113,7 @@ class PhoneNumberActivity : BaseActivity() {
 
 
         viewModel.goNext.observe(this, Observer {
-           finish()
+           finishSafe()
         })
 
         initViewPagerRegister()
@@ -126,7 +127,7 @@ class PhoneNumberActivity : BaseActivity() {
 
 
         if (binding.viewpager.currentItem == 0)
-            finish()
+            finishSafe()
 
 
         if (binding.viewpager.getCurrentItem() > PhoneNumberViewModel.StateEnum.number.position) {
@@ -145,7 +146,7 @@ class PhoneNumberActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        finish()
+       super.onBackPressed()
     }
 
 

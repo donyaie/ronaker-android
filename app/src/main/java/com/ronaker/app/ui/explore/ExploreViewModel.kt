@@ -78,10 +78,18 @@ class ExploreViewModel : BaseViewModel() {
                             onRetrieveProductListSuccess(
                                 result.data.results.toProduct()
                             )
+
+                            if(result.data.next==null)
+
+                                hasNextPage = false
+
                         } else {
                             hasNextPage = false
                         }
                     } else {
+
+
+
                         onRetrieveProductListError(result.error)
                     }
                 }
@@ -105,8 +113,13 @@ class ExploreViewModel : BaseViewModel() {
     private fun onRetrieveProductListSuccess(productList: List<Product>?) {
 
         if (productList != null) {
+
+            var insertIndex=0
+            if(dataList.size>0)
+                insertIndex=dataList.size
+
             dataList.addAll(productList)
-            productListAdapter.updateproductList()
+            productListAdapter.notifyItemRangeInserted(insertIndex,productList.size )
         }
 
     }

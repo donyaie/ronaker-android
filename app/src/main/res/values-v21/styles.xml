@@ -12,6 +12,8 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
 
+        <item name="android:windowActivityTransitions">true</item>
+
         <item name="android:textViewStyle">@style/Widget.Ronaker.TextView</item>
 
     </style>

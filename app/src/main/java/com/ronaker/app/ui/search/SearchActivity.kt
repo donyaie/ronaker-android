@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
-import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : BaseActivity() {
 
@@ -21,10 +20,9 @@ class SearchActivity : BaseActivity() {
     private lateinit var viewModel: SearchViewModel
 
 
-
     companion object {
         var SUID_KEY = "suid"
-        val ResultCode=333
+        val ResultCode = 333
         var Search_KEY = "searchValue"
 
         fun newInstance(context: Context): Intent {
@@ -38,9 +36,9 @@ class SearchActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.animateActivityFade(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
         viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
@@ -66,18 +64,26 @@ class SearchActivity : BaseActivity() {
         })
 
 
-        binding.cancelSearch.setOnClickListener{
-            finish()
+        binding.cancelSearch.setOnClickListener {
+            finishSafe()
         }
 
-        binding.searchEdit.setOnEditorActionListener{v, actionId, event->
+        binding.searchEdit.setOnEditorActionListener { v, actionId, event ->
 
-            if(actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH){
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                var intent=Intent()
-                intent.putExtra(Search_KEY,binding.searchEdit.text.toString())
-                setResult(0,intent)
-                finish()
+                var intent = Intent()
+
+
+                val value = binding.searchEdit.text.toString()
+
+
+
+                intent.putExtra(Search_KEY, value)
+
+                setResult(0, intent)
+
+                finishSafe()
                 true
             } else {
                 false
@@ -86,24 +92,19 @@ class SearchActivity : BaseActivity() {
         }
 
 
-        binding.clearText.setOnClickListener{
+        binding.clearText.setOnClickListener {
             binding.searchEdit.text.clear()
         }
-
 
 
     }
 
 
-
-
-    fun getSearchValue():String?
-    {
-        if ( intent.hasExtra(Search_KEY)) {
+    fun getSearchValue(): String? {
+        if (intent.hasExtra(Search_KEY)) {
             var value = intent.getStringExtra(Search_KEY)
 
             return value
-
 
 
         }
@@ -111,15 +112,9 @@ class SearchActivity : BaseActivity() {
     }
 
 
-
-
-
     override fun onBackPressed() {
-        finish()
+       super.onBackPressed()
     }
-
-
-
 
 
 }
