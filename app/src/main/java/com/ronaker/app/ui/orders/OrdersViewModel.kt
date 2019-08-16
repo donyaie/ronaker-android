@@ -9,8 +9,8 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
 import io.reactivex.disposables.Disposable
+import java.util.logging.Filter
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class OrdersViewModel : BaseViewModel() {
 
@@ -22,7 +22,6 @@ class OrdersViewModel : BaseViewModel() {
     @Inject
     lateinit
     var userRepository: UserRepository
-
 
 
     @Inject
@@ -40,6 +39,7 @@ class OrdersViewModel : BaseViewModel() {
     var productListAdapter: OrderItemAdapter
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<Boolean> = MutableLiveData()
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -49,35 +49,40 @@ class OrdersViewModel : BaseViewModel() {
         dataList = ArrayList()
         productListAdapter = OrderItemAdapter(dataList)
 
-        loadProduct()
+
     }
+    var mFilter:String?=null
 
-    fun loadProduct() {
+    fun loadData(filter: String?) {
+
+        mFilter=filter
+
         dataList.clear()
-             subscription = orderRepository
-                 .getOrders(userRepository.getUserToken(),null)
+        subscription?.dispose()
+        subscription = orderRepository
+            .getOrders(userRepository.getUserToken(), filter)
 
-                 .doOnSubscribe { loading.value=true }
-                 .doOnTerminate {loading.value=false}
-                 .subscribe { result ->
-                     if (result.isSuccess()) {
-                         if(result.data?.results?.size!! >0) {
+            .doOnSubscribe { loading.value = true }
+            .doOnTerminate { loading.value = false }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+                    if (result.data?.results?.size!! > 0) {
 
 
-                             dataList.addAll(result.data?.results?.toOrderList())
-                             productListAdapter.updateproductList()
+                        dataList.addAll(result.data?.results?.toOrderList())
+                        productListAdapter.updateproductList()
 
-                             if(result.data?.next==null)
-                                 hasNextPage = false
+                        if (result.data?.next == null)
+                            hasNextPage = false
 
-                         }else{
-                             hasNextPage = false
-                         }
-                     } else {
+                    } else {
+                        hasNextPage = false
+                    }
+                } else {
 
-                         errorMessage.value=result.error?.detail
-                     }
-                 }
+                    errorMessage.value = result.error?.detail
+                }
+            }
 
 
     }
@@ -88,9 +93,12 @@ class OrdersViewModel : BaseViewModel() {
         subscription?.dispose()
     }
 
-    fun loadMore() {
-        loadProduct()
+
+
+    fun retry() {
+        loadData(mFilter)
 
     }
+
 
 }
