@@ -51,7 +51,7 @@ object RepositoryModule {
 
 
 
-    /**
+       /**
      * Provides the category service implementation.
      * @param retrofit the Retrofit object used to instantiate the service
      * @return the User service implementation.
@@ -61,6 +61,19 @@ object RepositoryModule {
     @JvmStatic
     internal fun provideCategoryApi(retrofit: Retrofit): CategoryApi {
         return retrofit.create(CategoryApi::class.java)
+    }
+
+
+    /**
+     * Provides the order service implementation.
+     * @param retrofit the Retrofit object used to instantiate the service
+     * @return the Order service implementation.
+     */
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideOrderApi(retrofit: Retrofit): OrderApi {
+        return retrofit.create(OrderApi::class.java)
     }
 
 
@@ -123,6 +136,15 @@ object RepositoryModule {
     @JvmStatic
     internal fun provideCategoryRepository(api: CategoryApi,preferencesProvider: PreferencesProvider): CategoryRepository {
         return CategoryRepository(api,preferencesProvider)
+    }
+
+
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideOrderRepository(api: OrderApi,preferencesProvider: PreferencesProvider): OrderRepository {
+        return OrderRepository(api,preferencesProvider)
     }
 
     /**

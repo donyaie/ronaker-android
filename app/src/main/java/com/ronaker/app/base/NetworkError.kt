@@ -3,11 +3,11 @@ package com.ronaker.app.base
 import com.google.gson.JsonParser
 import com.ronaker.app.utils.Debug
 import retrofit2.HttpException
+import java.io.EOFException
 import java.io.IOException
 import java.lang.Exception
 import java.net.ConnectException
 import java.net.SocketTimeoutException
-
 
 class NetworkError(error: Throwable) {
 
@@ -53,7 +53,7 @@ class NetworkError(error: Throwable) {
 
         exception_error = error
         if (error is HttpException) {
-            val errorJsonString = (error ).response()
+            val errorJsonString = error.response()
                 ?.errorBody()?.string()
             try {
                 this.detail = JsonParser().parse(errorJsonString)
@@ -73,38 +73,44 @@ class NetworkError(error: Throwable) {
 
             http_error = getHttpError(responseCode!!)
 
+        }else if(error is EOFException) {
+
+            detail = "Empty Exception"
+            responseCode = 200
+            detail_code = "Empty"
+            http_error = HttpError.HttpResponseSuccessOK
+
+
+        }else  if (error is SocketTimeoutException) {
+
+            detail = "Network Timeout"
+            responseCode = null
+            detail_code = "HttpResponseNetworkTimeout"
+            http_error = HttpError.HttpResponseNetworkTimeout
+
+        } else if (error is ConnectException) {
+
+            detail = "Connection Failure"
+            responseCode = null
+            detail_code = "HttpResponseConnectionFailure"
+            http_error = HttpError.HttpResponseConnectionFailure
+
+        } else if (error is IOException) {
+
+            detail = "Network Error"
+            responseCode = null
+            detail_code = "HttpResponseNetworkError"
+            http_error = HttpError.HttpResponseNetworkError
+
         } else {
 
-            if (error is SocketTimeoutException) {
-
-                detail = "Network Timeout"
-                responseCode = null
-                detail_code = "HttpResponseNetworkTimeout"
-                http_error = HttpError.HttpResponseNetworkTimeout
-
-            } else if (error is ConnectException) {
-
-                detail = "Connection Failure"
-                responseCode = null
-                detail_code = "HttpResponseConnectionFailure"
-                http_error = HttpError.HttpResponseConnectionFailure
-
-            } else if (error is IOException) {
-
-                detail = "Network Error"
-                responseCode = null
-                detail_code = "HttpResponseNetworkError"
-                http_error = HttpError.HttpResponseNetworkError
-
-            } else {
-
-                detail = "Failure"
-                responseCode = null
-                detail_code = "HttpResponseFailure"
-                http_error = HttpError.HttpResponseFailure
-            }
-
+            detail = "Failure"
+            responseCode = null
+            detail_code = "HttpResponseFailure"
+            http_error = HttpError.HttpResponseFailure
         }
+
+
     }
 
 

@@ -60,26 +60,14 @@ data class Product(
 }
 
 
-fun List<ProductItemResponceModel>.toProduct(): List<Product> {
+fun List<ProductItemResponceModel>.toProductList(): List<Product> {
 
 
     var list: ArrayList<Product> = ArrayList()
 
     this.forEach {
 
-        var product = Product(
-            it.suid,
-            it.name,
-            it.price_per_day,
-            it.price_per_week,
-            it.price_per_month,
-            it.description,
-            it.avatar,
-            null,
-            null,
-            null,
-            if(it.categories!=null) it.categories.toCategoryList() as ArrayList<Category> else ArrayList()
-        )
+        var product = it.toProduct()
 
         list.add(product)
     }
@@ -87,6 +75,32 @@ fun List<ProductItemResponceModel>.toProduct(): List<Product> {
     return list
 
 }
+
+
+fun ProductItemResponceModel.toProduct(): Product {
+
+
+
+        var product = Product(
+            this.suid,
+            this.name,
+            this.price_per_day,
+            this.price_per_week,
+            this.price_per_month,
+            this.description,
+            this.avatar,
+            null,
+            null,
+            null,
+            if(this.categories!=null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList()
+        )
+
+
+
+    return product
+
+}
+
 
 
 fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductImage> {
