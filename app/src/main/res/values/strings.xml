@@ -98,4 +98,5 @@
         renting out the item.
     </string>
     <string name="title_you_have_not_any_item_yet">You have not any item yet.</string>
+    <string name="title_select_category">Select Category</string>
 </resources>

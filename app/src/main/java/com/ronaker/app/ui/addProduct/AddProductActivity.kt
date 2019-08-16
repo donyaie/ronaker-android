@@ -46,6 +46,7 @@ class AddProductActivity : BaseActivity() {
     private lateinit var infoFragment: AddProductInfoFragment
     private lateinit var priceFragment: AddProductPriceFragment
     private lateinit var locationFragment: AddProductLocationFragment
+    private lateinit var categoryFragment: AddProductCategoryFragment
 
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var screenLibrary: ScreenCalcute
@@ -56,12 +57,12 @@ class AddProductActivity : BaseActivity() {
     var UpdateMode = false;
 
 
-    internal var loginState = AddProductViewModel.StateEnum.image
+    internal var actionState = AddProductViewModel.StateEnum.image
         set(value) {
             field = value
 
 
-            when (loginState) {
+            when (actionState) {
 
                 AddProductViewModel.StateEnum.image -> {
                     binding.viewpager.currentItem = AddProductViewModel.StateEnum.image.position
@@ -76,6 +77,10 @@ class AddProductActivity : BaseActivity() {
                 AddProductViewModel.StateEnum.location -> {
 
                     binding.viewpager.currentItem = AddProductViewModel.StateEnum.location.position
+                }
+                AddProductViewModel.StateEnum.category -> {
+
+                    binding.viewpager.currentItem = AddProductViewModel.StateEnum.category.position
                 }
             }
 
@@ -120,7 +125,8 @@ class AddProductActivity : BaseActivity() {
 
 
         viewModel.viewState.observe(this, Observer { state ->
-            loginState = state
+            viewModel.stateChange(state)
+            actionState = state
 
         })
 
@@ -169,14 +175,14 @@ class AddProductActivity : BaseActivity() {
                 getSuid()?.let { viewModel.getInfo(it, state) }
 
 
-                loginState = state
+                actionState = state
 
             } else {
                 binding.loading.visibility = View.GONE
                 UpdateMode = false
 
                 init()
-                loginState = AddProductViewModel.StateEnum.image
+                actionState = AddProductViewModel.StateEnum.image
             }
 
         }
@@ -248,6 +254,7 @@ class AddProductActivity : BaseActivity() {
         adapter.clear()
         adapter.addFragment(imageFragment)
         adapter.addFragment(infoFragment)
+        adapter.addFragment(categoryFragment)
         adapter.addFragment(priceFragment)
         adapter.addFragment(locationFragment)
         binding.viewpager.adapter?.notifyDataSetChanged()
@@ -265,6 +272,7 @@ class AddProductActivity : BaseActivity() {
         adapter = ViewPagerAdapter(supportFragmentManager)
 
         infoFragment = AddProductInfoFragment()
+        categoryFragment = AddProductCategoryFragment()
         locationFragment = AddProductLocationFragment()
         priceFragment = AddProductPriceFragment()
         imageFragment = AddProductImageFragment()
@@ -281,21 +289,21 @@ class AddProductActivity : BaseActivity() {
             override fun onPageSelected(position: Int) {
 
 
-                loginState = AddProductViewModel.StateEnum.get(position)
+                actionState = AddProductViewModel.StateEnum.get(position)
 
 
-                Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
+                Debug.Log(TAG, String.format("onSelect:%s", actionState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 
-                if (loginState == AddProductViewModel.StateEnum.image)
+                if (actionState == AddProductViewModel.StateEnum.image)
                     KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
 
-                if (loginState == AddProductViewModel.StateEnum.location)
+                if (actionState == AddProductViewModel.StateEnum.location)
                     KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
 
                 if (!UpdateMode) {
-                    if (loginState == AddProductViewModel.StateEnum.image) {
+                    if (actionState == AddProductViewModel.StateEnum.image) {
 
                         showBack(false)
                     } else {

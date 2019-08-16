@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.ronaker.app.R
 import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ShapeDrawableHelper
 
 
 class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -58,6 +59,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
     var cancelContainer: CancelContainer = CancelContainer.BACK
         set(value) {
 
+            cancelButton.setImageResource(0)
             field = value
             when (cancelContainer) {
                 CancelContainer.NONE -> {
@@ -67,11 +69,14 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
                     cancelButton.visibility = View.VISIBLE
 
+
                     cancelButton.setImageResource(R.drawable.ic_back_white)
+
                     if (isTransparent)
-                        cancelButton.drawable.clearColorFilter()
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
                     else
-                        cancelButton.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
+
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
 
                 }
                 CancelContainer.CLOSE -> {
@@ -79,10 +84,9 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                     cancelButton.visibility = View.VISIBLE
                     cancelButton.setImageResource(R.drawable.ic_close)
                     if (isTransparent)
-                        cancelButton.drawable.clearColorFilter()
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
                     else {
-
-                        cancelButton.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
 
                     }
                 }
@@ -103,14 +107,51 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                     actionLayout.visibility = View.VISIBLE
                     actionText.visibility = View.VISIBLE
 
-                    action1Button.visibility=View.GONE
-                    action2Button.visibility=View.GONE
+                    action1Button.visibility = View.GONE
+                    action2Button.visibility = View.GONE
+
+
+                    if (isTransparent) {
+                        actionText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLight))
+
+                    } else {
+                        actionText.setTextColor(ContextCompat.getColor(context, R.color.colorTextDark))
+
+                    }
+
+
                 }
                 ActionContainer.TWO_BUTTON -> {
                     actionLayout.visibility = View.VISIBLE
                     actionText.visibility = View.GONE
-                    action1Button.visibility=View.VISIBLE
-                    action2Button.visibility=View.VISIBLE
+                    action1Button.visibility = View.VISIBLE
+                    action2Button.visibility = View.VISIBLE
+
+
+
+                    action1Button.setImageResource(0)
+                    action2Button.setImageResource(0)
+
+
+                    action1Button.setImageResource(action1Src)
+                    action2Button.setImageResource(action2Src)
+
+
+
+                    if (isTransparent) {
+
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, action1Button)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, action2Button)
+
+
+
+                    } else {
+
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, action1Button)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, action2Button)
+
+
+                    }
                 }
 
                 else -> {
@@ -120,47 +161,30 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
         }
 
-    private  var screenLibrary: ScreenCalcute
-
-    /*
-
-      if (isTransparent)
-                        cancelButton.drawable.clearColorFilter()
-                    else
-                        cancelButton.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
+    private var screenLibrary: ScreenCalcute
 
 
-     */
 
     var isTransparent: Boolean = false
         set(value) {
 
             field = value
 
-            action1Button.setImageResource(action1Src)
-            action2Button.setImageResource(action2Src)
 
             if (isTransparent) {
-                containerLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.transparent))
-                actionText.setTextColor(ContextCompat.getColor(context,R.color.colorTextLight))
-                titleText.setTextColor(ContextCompat.getColor(context,R.color.colorTextLight))
-
-                action1Button.drawable.clearColorFilter()
-                action2Button.drawable.clearColorFilter()
+                containerLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+                titleText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLight))
 
             } else {
-                containerLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
-                actionText.setTextColor(ContextCompat.getColor(context,R.color.colorTextDark))
+                containerLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
-                action1Button.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
-                action2Button.setColorFilter(R.color.colorIconDark, PorterDuff.Mode.SRC_IN)
-
-
-                titleText.setTextColor(ContextCompat.getColor(context,R.color.colorTextDark))
+                titleText.setTextColor(ContextCompat.getColor(context, R.color.colorTextDark))
             }
 
 
             cancelContainer = cancelContainer
+
+            actionContainer=actionContainer
 
         }
 
@@ -177,13 +201,13 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         }
 
 
-    var action1Src: Int =  R.drawable.ic_share_white
+    var action1Src: Int = 0
         set(value) {
             field = value
             action1Button.setImageResource(value)
         }
 
-    var action2Src: Int =R.drawable.ic_fave_white
+    var action2Src: Int = 0
         set(value) {
             field = value
             action2Button.setImageResource(value)
@@ -339,14 +363,14 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 )
 
 
-             action1Src=typedArray
+            action1Src = typedArray
                 .getResourceId(
                     R.styleable
                         .toolbar_component_attributes_toolbar_component_action1src,
                     R.drawable.ic_share_white
                 )
 
-             action2Src=typedArray
+            action2Src = typedArray
                 .getResourceId(
                     R.styleable
                         .toolbar_component_attributes_toolbar_component_action2src,
@@ -373,7 +397,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
             countDots.removeAllViewsInLayout()
             for (i in 0 until dotCount) {
                 dots[i] = ImageView(context)
-                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_normal))
+                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
 
                 val params = LinearLayout.LayoutParams(
                     screenLibrary.DP2Pixel(9),
@@ -387,7 +411,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 countDots.addView(dots[i], params)
             }
 
-            dots[0]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_select))
+            dots[0]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_select))
         }
     }
 
@@ -408,7 +432,12 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
 
                             override fun onAnimationEnd(animation: Animator) {
 
-                                dots[position]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_select))
+                                dots[position]!!.setImageDrawable(
+                                    ContextCompat.getDrawable(
+                                        context,
+                                        R.drawable.navigate_dot_select
+                                    )
+                                )
                                 dots[position]!!.setPadding(0, 0, 0, 0)
                                 dots[position]!!.animate().scaleX(1f).scaleY(1f).setDuration(200).setListener(null)
                                     .start()
@@ -423,7 +452,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                             }
                         }).start()
                 } else {
-                    dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_normal))
+                    dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
                     dots[i]!!.setPadding(3, 3, 3, 3)
                     dots[i]!!.animate().scaleX(1f).scaleY(1f).setDuration(200).setListener(null).start()
 
@@ -436,7 +465,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         } else {
 
             for (i in 0 until dotCount) {
-                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.navigate_dot_normal))
+                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
                 dots[i]!!.setPadding(3, 3, 3, 3)
                 dots[i]!!.animate().scaleX(0f).scaleY(0f).setDuration(100).setListener(null).start()
 

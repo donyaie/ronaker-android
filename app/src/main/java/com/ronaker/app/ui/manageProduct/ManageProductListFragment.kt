@@ -27,9 +27,9 @@ class ManageProductListFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product_list, container, false)
         viewModel = ViewModelProviders.of(this).get(ManageProductListViewModel::class.java)
 
-        var mnager = GridLayoutManager(context, 2)
 
-        binding.recycler.layoutManager = mnager
+
+        binding.recycler.layoutManager = GridLayoutManager(context, 2)
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler,false)

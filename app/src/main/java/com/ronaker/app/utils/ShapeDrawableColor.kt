@@ -19,16 +19,18 @@ import androidx.appcompat.content.res.AppCompatResources
 
 class ShapeDrawableHelper {
 
-    // ==== final variables ==== //
-    val TAG: String = ShapeDrawableHelper::class.java.name
 
     companion object {
 
+        // ==== final variables ==== //
+        val TAG: String = ShapeDrawableHelper::class.java.name
         fun changeSvgDrawableColor(context:Context, colorRes:Int, view:ImageView){
-
-
-
-            DrawableCompat.setTint(view.getDrawable(),ContextCompat.getColor(context,colorRes));
+            try {
+                DrawableCompat.setTint(view.drawable, ContextCompat.getColor(context, colorRes));
+            }catch (e:Exception)
+            {
+                Debug.Log(TAG,e)
+            }
         }
 
     }
