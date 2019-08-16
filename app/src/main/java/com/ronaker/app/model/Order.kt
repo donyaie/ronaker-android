@@ -13,6 +13,62 @@ data class Order(val suid: String,
                  val status:String,
                  val product:Product){
 
+    enum class OrderStatusEnum constructor(key: String) {
+        Pending("pending"),
+        Accepted("accepted"),
+        Finished("finished"),
+        Canceled("canceled"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String): OrderStatusEnum {
+                var state = None
+                for (stateEnum in OrderStatusEnum.values()) {
+                    if (position.compareTo(stateEnum.key) == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
+
+
+
+    enum class OrderTypeEnum constructor(key: String) {
+        Lending("lending"),
+        Renting("renting"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String): OrderTypeEnum {
+                var state = None
+                for (stateEnum in OrderTypeEnum.values()) {
+                    if (position.compareTo(stateEnum.key) == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
+
 }
 
 
