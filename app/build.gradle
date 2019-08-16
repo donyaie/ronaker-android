@@ -34,6 +34,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        }
     }
 }
 
@@ -68,8 +74,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
 
 
-    implementation 'com.squareup.okhttp3:okhttp:3.12.3'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
 
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
@@ -99,7 +105,7 @@ dependencies {
     //Image Loader
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-    implementation'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 
     //dexter permissions
@@ -116,7 +122,7 @@ dependencies {
 
     implementation 'com.hbb20:ccp:2.2.9'
     implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.10.16'
-    implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
+    implementation('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.
         exclude group: 'androidx.appcompat', module: 'appcompat'
@@ -144,6 +150,8 @@ dependencies {
 
     implementation 'com.braintreepayments.api:drop-in:4.2.0'
 
+    //memory lake
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
 
 }
 

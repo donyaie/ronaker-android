@@ -2,6 +2,7 @@ package com.ronaker.app.utils
 
 import android.app.Activity
 import android.os.Build
+import android.transition.Fade
 import android.transition.Slide
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,9 @@ class AnimationHelper {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val slide = Slide()
                 slide.slideEdge = Gravity.BOTTOM
-
+//
+//
+//                val fade=Fade()
 
                 activity.window.enterTransition = slide
 
