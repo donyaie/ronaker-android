@@ -26,6 +26,15 @@ interface OrderApi {
     fun createOrder(@Header("Authorization") authToken: String,@Body request: OrderCreateRequestModel): Observable<FreeResponseModel>
 
 
+    /**
+     * create Order
+     */
+    @PUT("/api/v1/orders/{order_suid}/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun updateOrderStatus(@Header("Authorization") authToken: String,@Body request: OrderUpdateRequestModel): Observable<FreeResponseModel>
+
+
+
 
 
 }

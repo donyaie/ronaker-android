@@ -1,3 +1,5 @@
 package com.ronaker.app.data.network.response
 
-data class UserRegisterResponseModel(val token: String)
+import com.google.gson.annotations.SerializedName
+
+data class UserRegisterResponseModel(   @SerializedName("token") val token: String)

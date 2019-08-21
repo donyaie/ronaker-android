@@ -8,3 +8,4 @@ data class ListResponseModel<T>(@SerializedName("count") val count: Int,
                                 @SerializedName("results")   val results: List<T>? )
 
 
+

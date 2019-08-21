@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.model.Product
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
@@ -40,7 +41,8 @@ class CheckoutCalendarFragment : BaseFragment() {
 
             activity?.let {
 
-                startActivityMakeScene(OrderMessageActivity.newInstance(it,value) )}
+                startActivityMakeScene(OrderMessageActivity.newInstance(it,
+                   getProduct(),viewModel.startDate,viewModel.endDate) )}
 
 
 
@@ -122,5 +124,15 @@ class CheckoutCalendarFragment : BaseFragment() {
 
         binding.calendarView.scrollToDate(Date())
     }
+
+
+
+
+
+    fun getProduct(): Product?{
+        return   activity?.intent?.getParcelableExtra(CheckoutCalendarActivity.PRODUCT_KEY)
+    }
+
+
 
 }

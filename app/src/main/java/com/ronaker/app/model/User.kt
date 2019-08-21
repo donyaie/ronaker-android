@@ -1,5 +1,9 @@
 package com.ronaker.app.model
 
+import android.os.Parcelable
+import com.ronaker.app.data.network.response.UserInfoResponceModel
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Class which provides a model for User
  * @constructor Sets all properties of the post
@@ -10,6 +14,7 @@ package com.ronaker.app.model
  * @property phone_number the number of user
  * @property is_phone_number_verified if number verified is true
  */
+@Parcelize
 data class User(
     var suid: String?
     , var email: String?
@@ -19,7 +24,7 @@ data class User(
     , var phone_number: String?
     , var is_phone_number_verified: Boolean?
     , var password: String? = null
-) {
+): Parcelable {
     constructor() : this(
         null,
         null,
@@ -33,5 +38,24 @@ data class User(
 
 
 
+}
+
+
+fun UserInfoResponceModel.toUser(): User {
+
+
+        var value = User(
+            this.suid,
+            this.email,
+            this.is_email_verified,
+            this.first_name,
+            this.last_name,
+            this.phone_number,
+            this.is_phone_number_verified
+
+        )
+
+
+    return value
 
 }

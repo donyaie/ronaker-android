@@ -1,4 +1,6 @@
 package com.ronaker.app.data.network.response
 
-data class ProductItemImageResponceModel(val url: String,
-                                         val suid: String )
+import com.google.gson.annotations.SerializedName
+
+data class ProductItemImageResponceModel(@SerializedName("url") val url: String,
+                                         @SerializedName("suid")  val suid: String )

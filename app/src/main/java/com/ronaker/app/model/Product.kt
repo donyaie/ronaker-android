@@ -1,10 +1,13 @@
 package com.ronaker.app.model
 
 import android.net.Uri
+import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
+import com.ronaker.app.data.network.response.ProductDetailResponceModel
 import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import com.ronaker.app.data.network.response.ProductItemResponceModel
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Class which provides a model for User
@@ -16,6 +19,7 @@ import com.ronaker.app.data.network.response.ProductItemResponceModel
  * @property phone_number the number of user
  * @property is_phone_number_verified if number verified is true
  */
+@Parcelize
 data class Product(
     var suid: String?
     , var name: String?
@@ -29,7 +33,7 @@ data class Product(
     , var new_categories: ArrayList<String>? = null
     , var categories: ArrayList<Category>?=null
 
-) {
+): Parcelable {
     constructor() : this(
         null,
         null,
@@ -44,11 +48,11 @@ data class Product(
         null
     )
 
-
+    @Parcelize
     data class ProductImage(
         var url: String?,
         var suid: String?, var uri: Uri? = null, var isLocal: Boolean = false
-    ) {
+    ): Parcelable  {
 
         constructor() : this(null, null)
 
@@ -94,6 +98,27 @@ fun ProductItemResponceModel.toProduct(): Product {
             null,
             if(this.categories!=null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList()
         )
+
+
+
+    return product
+
+}
+
+fun ProductDetailResponceModel.toProductDetail(): Product {
+
+
+
+    var product = Product(
+        this.suid,
+        this.name,
+        this.price_per_day,
+        this.price_per_week,
+        this.price_per_month,
+        this.description,
+        this.avatar,
+        null
+    )
 
 
 

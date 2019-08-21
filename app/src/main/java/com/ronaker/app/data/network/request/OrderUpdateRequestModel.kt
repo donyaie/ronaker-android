@@ -2,6 +2,7 @@ package com.ronaker.app.data.network.request
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductSearchRequestModel( @SerializedName("name")val name: String?)
+
+data class OrderUpdateRequestModel( @SerializedName("status") val status: String)
 
 

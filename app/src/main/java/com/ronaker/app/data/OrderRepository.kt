@@ -7,6 +7,7 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.CategoryApi
 import com.ronaker.app.data.network.OrderApi
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
+import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.response.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,6 +39,15 @@ class OrderRepository(private val api: OrderApi, private val preferencesProvider
     }
 
 
+    fun updateOrderStatus(token: String?, status:String ): Observable<Result<FreeResponseModel>> {
+
+        var request=OrderUpdateRequestModel(status)
+
+        return api.updateOrderStatus("Token $token",request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
 
 
 

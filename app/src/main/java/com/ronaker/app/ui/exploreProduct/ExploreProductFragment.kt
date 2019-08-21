@@ -66,7 +66,7 @@ class ExploreProductFragment : BaseFragment() {
 
         productViewModel.checkout.observe(this, Observer { suid ->
 
-            startActivityMakeScene(context?.let { CheckoutCalendarActivity.newInstance(it,suid) })
+            startActivityMakeScene(context?.let { CheckoutCalendarActivity.newInstance(it,productViewModel.product) })
 
         })
 

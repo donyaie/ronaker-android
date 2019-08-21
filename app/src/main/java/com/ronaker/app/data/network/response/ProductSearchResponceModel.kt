@@ -1,8 +1,10 @@
 package com.ronaker.app.data.network.response
 
-data class ProductSearchResponceModel(val count: Int ,
-                                      val next: String? ,
-                                      val previous: String? ,
-                                      val results: List<ProductItemResponceModel>? )
+import com.google.gson.annotations.SerializedName
+
+data class ProductSearchResponceModel(@SerializedName("count") val count: Int,
+                                      @SerializedName("next")  val next: String?,
+                                      @SerializedName("previous")  val previous: String?,
+                                      @SerializedName("results")  val results: List<ProductItemResponceModel>? )
 
 

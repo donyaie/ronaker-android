@@ -122,7 +122,7 @@ class OrdersFragment : BaseFragment() {
             0->filter=null
             1->filter= Order.OrderTypeEnum.Renting.key
             2->filter= Order.OrderTypeEnum.Lending.key
-            3->filter=null
+            3->filter= "archive"
         }
 
 

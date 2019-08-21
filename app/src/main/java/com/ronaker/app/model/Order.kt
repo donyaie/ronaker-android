@@ -1,9 +1,11 @@
 package com.ronaker.app.model
 
+import android.os.Parcelable
 import com.ronaker.app.data.network.response.OrderResponseModel
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-
+@Parcelize
 data class Order(val suid: String,
                  val message: String,
                  val fromDate: Date,
@@ -11,7 +13,9 @@ data class Order(val suid: String,
                  val price: Double,
                  val orderType:String,
                  val status:String,
-                 val product:Product){
+                 val product:Product,
+                 val productOwner:User?,
+                 val orderUser:User?): Parcelable {
 
     enum class OrderStatusEnum constructor(key: String) {
         Pending("pending"),
@@ -88,7 +92,9 @@ fun List<OrderResponseModel>.toOrderList(): List<Order> {
             it.price,
             it.order_type,
             it.status,
-            it.product.toProduct()
+            it.product.toProduct(),
+            it.product_owner?.toUser(),
+            it.order_user?.toUser()
         )
 
         list.add(product)

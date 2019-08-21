@@ -7,6 +7,8 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.Product
+import com.ronaker.app.model.toProductDetail
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -40,6 +42,7 @@ class ExploreProductViewModel : BaseViewModel() {
     val productPriceTitle: MutableLiveData<String> = MutableLiveData()
     val productAddress: MutableLiveData<String> = MutableLiveData()
 
+    lateinit  var product:Product
 
     lateinit var suid: String
 
@@ -66,6 +69,9 @@ class ExploreProductViewModel : BaseViewModel() {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
+
+                   product= result.data?.toProductDetail()!!
+
                     productImage.value = BASE_URL + result.data?.avatar
                     productDescription.value = result.data?.description
                     productTitle.value = result.data?.name

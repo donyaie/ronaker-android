@@ -10,4 +10,6 @@ data class OrderResponseModel(@SerializedName("suid") val suid: String,
                               @SerializedName("message")  val message: String,
                               @SerializedName("order_type")  val order_type: String,
                               @SerializedName("product")  val product: ProductItemResponceModel,
-                              @SerializedName("status")  val status: String)
+                              @SerializedName("status")  val status: String,
+                              @SerializedName("order_user") val order_user:UserInfoResponceModel?,
+                              @SerializedName("product_owner") val product_owner:UserInfoResponceModel?)

@@ -1,4 +1,7 @@
 package com.ronaker.app.data.network.response
 
-data class UserAddPhoneResponceModel(val phone_number: String
+import com.google.gson.annotations.SerializedName
+
+data class UserAddPhoneResponceModel(
+    @SerializedName("phone_number")val phone_number: String
                                    )

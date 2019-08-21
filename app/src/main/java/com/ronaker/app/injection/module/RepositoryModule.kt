@@ -1,6 +1,7 @@
 package com.ronaker.app.injection.module
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.General
 import com.ronaker.app.base.PreferencesProvider
@@ -24,17 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
 object RepositoryModule {
-    /**
-     * Provides the Post service implementation.
-     * @param retrofit the Retrofit object used to instantiate the service
-     * @return the Post service implementation.
-     */
-    @Provides
-    @Reusable
-    @JvmStatic
-    internal fun providePostApi(retrofit: Retrofit): PostApi {
-        return retrofit.create(PostApi::class.java)
-    }
+
 
 
     /**
@@ -109,12 +100,6 @@ object RepositoryModule {
         return UserRepository(userApi,preferencesProvider)
     }
 
-    @Provides
-    @Reusable
-    @JvmStatic
-    internal fun providePostRepository(postApi: PostApi): PostRepository {
-        return PostRepository(postApi)
-    }
 
     @Provides
     @Reusable
@@ -155,6 +140,13 @@ object RepositoryModule {
     @Reusable
     @JvmStatic
     internal fun provideRetrofitInterface(): Retrofit {
+        val JSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        val GSON = GsonBuilder()
+            .setDateFormat(JSON_DATE_FORMAT)
+//            .serializeNulls()
+            .create()
+
 
         val client = OkHttpClient().newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -166,7 +158,7 @@ object RepositoryModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GSON))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
     }

@@ -1,6 +1,8 @@
 package com.ronaker.app.data.network.request
 
-data class UserRegisterRequestModel(  val email: String
-                                     , val password: String
-                                     , val first_name: String
-                                     , val last_name: String)
+import com.google.gson.annotations.SerializedName
+
+data class UserRegisterRequestModel(  @SerializedName("email") val email: String
+                                     , @SerializedName("password") val password: String
+                                     , @SerializedName("first_name") val first_name: String
+                                     , @SerializedName("last_name") val last_name: String)

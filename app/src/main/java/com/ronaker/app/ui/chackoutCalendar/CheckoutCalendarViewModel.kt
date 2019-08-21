@@ -47,6 +47,11 @@ class CheckoutCalendarViewModel : BaseViewModel() {
     val setDatesVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
+    var startDate:Date?=null
+    var endDate:Date?=null
+
+
+
     lateinit var suid: String
 
 
@@ -98,6 +103,8 @@ class CheckoutCalendarViewModel : BaseViewModel() {
         firstDay.value = SimpleDateFormat("EEEE,", Locale.getDefault()).format(date)
         firstDate.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(date)
 
+        startDate=date
+
     }
 
     fun selectLast(date: Date) {
@@ -108,6 +115,9 @@ class CheckoutCalendarViewModel : BaseViewModel() {
         lastDate.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(date)
 
         setDatesVisibility.value = View.VISIBLE
+
+
+        endDate=date
     }
 
     override fun onCleared() {

@@ -19,6 +19,12 @@ android {
     dataBinding {
         enabled = true
     }
+
+    // Add for using latest experimental build of Android Extensions
+    androidExtensions {
+        experimental = true
+    }
+
     defaultConfig {
         applicationId "com.ronaker.app"
         minSdkVersion 21

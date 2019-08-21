@@ -1,18 +1,17 @@
 package com.ronaker.app.data.network.response
 
+import com.google.gson.annotations.SerializedName
 import com.ronaker.app.model.User
 
 data class UserInfoResponceModel(
-    val suid: String
-    , val email: String
-    , val is_email_verified: Boolean?
-    , val first_name: String
-    , val last_name: String
-    , val phone_number: String?
-    , val is_phone_number_verified: Boolean?
+    @SerializedName("suid") val suid: String
+    ,@SerializedName("email") val email: String
+    ,@SerializedName("is_email_verified") val is_email_verified: Boolean?
+    ,@SerializedName("first_name") val first_name: String
+    ,@SerializedName("last_name") val last_name: String
+    ,@SerializedName("phone_number") val phone_number: String?
+    ,@SerializedName("is_phone_number_verified") val is_phone_number_verified: Boolean?
 ){
 
-    fun map():User{
-        return User(suid,email,is_email_verified,first_name,last_name,phone_number,is_phone_number_verified)
-    }
+
 }
