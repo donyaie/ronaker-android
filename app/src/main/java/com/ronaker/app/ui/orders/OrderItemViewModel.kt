@@ -34,18 +34,22 @@ class OrderItemViewModel : BaseViewModel() {
             ).format(item.toDate)
 
 
+        val ownerName=item.productOwner?.first_name+" "+item.productOwner?.last_name
+
+        val userName=item.orderUser?.first_name+" "+item.orderUser?.last_name
+
 
         when (Order.OrderStatusEnum.get(item.status)) {
             Order.OrderStatusEnum.Accepted -> {
 
                 orderStatusImage.value=R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="You accepted request"
+                    orderStatus.value="You accepted $userName request"
                 }else{
 
-                    orderStatus.value="Your request accepted"
+                    orderStatus.value="Your request accepted by $ownerName"
                 }
 
 
@@ -54,7 +58,7 @@ class OrderItemViewModel : BaseViewModel() {
 
                 orderStatusImage.value=R.drawable.ic_remove_red
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value="Lend | Canceled Order"
                 }else{
@@ -70,7 +74,7 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_guide_success
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value="Lend | Completed Order"
                 }else{
@@ -83,12 +87,12 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_pending
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="Someone requested to rent your item"
+                    orderStatus.value="$userName requested to rent your item"
                 }else{
 
-                    orderStatus.value="Pending to accept from Owner"
+                    orderStatus.value="Pending to accept from $ownerName"
                 }
 
             }
