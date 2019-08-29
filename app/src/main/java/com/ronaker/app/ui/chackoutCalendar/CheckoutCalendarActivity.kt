@@ -20,7 +20,7 @@ class CheckoutCalendarActivity : BaseActivity() {
     private lateinit var viewModel: CheckoutCalendarViewModel
 
     companion object {
-        var PRODUCT_KEY = "product"
+        var PRODUCT_KEY = "mProduct"
 
         fun newInstance(context: Context, product:Product): Intent {
             var intent = Intent(context, CheckoutCalendarActivity::class.java)

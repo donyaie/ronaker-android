@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.Order
 import com.ronaker.app.utils.AnimationHelper
 
 class OrderPreviewActivity : BaseActivity() {
@@ -22,12 +23,12 @@ class OrderPreviewActivity : BaseActivity() {
 
 
     companion object {
-        var SUID_KEY = "suid"
+        var Order_KEY = "order"
 
-        fun newInstance(context: Context,suid:String): Intent {
+        fun newInstance(context: Context,order: Order?): Intent {
             var intent = Intent(context, OrderPreviewActivity::class.java)
             var boundle = Bundle()
-            boundle.putString(SUID_KEY, suid)
+            boundle.putParcelable(Order_KEY, order)
             intent.putExtras(boundle)
 
             return intent
@@ -70,16 +71,19 @@ class OrderPreviewActivity : BaseActivity() {
         }
 
 
+        getOrder()?.let { viewModel.load(it) }
+
+
 
     }
 
 
 
 
-    fun getSuid():String?
+    fun getOrder():Order?
     {
-        if ( intent.hasExtra(SUID_KEY)) {
-            var value = intent.getStringExtra(SUID_KEY)
+        if ( intent.hasExtra(Order_KEY)) {
+            var value = intent.getParcelableExtra<Order?>(Order_KEY)
 
             return value
 

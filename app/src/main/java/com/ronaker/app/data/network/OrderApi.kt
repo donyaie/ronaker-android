@@ -31,7 +31,7 @@ interface OrderApi {
      */
     @PUT("/api/v1/orders/{order_suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun updateOrderStatus(@Header("Authorization") authToken: String,@Body request: OrderUpdateRequestModel): Observable<FreeResponseModel>
+    fun updateOrderStatus(@Header("Authorization") authToken: String, @Path("order_suid") suid:String, @Body request: OrderUpdateRequestModel): Observable<FreeResponseModel>
 
 
 

@@ -50,7 +50,7 @@ class ManageProductAdapterViewModel : BaseViewModel() {
 
     fun onClickProduct() {
 
-        activity.pushFragment(ManageProductFragment.newInstance(data.suid))
+        activity.pushFragment(ManageProductFragment.newInstance(data))
     }
 
     fun getProductTitle(): MutableLiveData<String> {

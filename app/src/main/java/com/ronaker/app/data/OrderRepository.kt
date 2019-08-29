@@ -39,11 +39,11 @@ class OrderRepository(private val api: OrderApi, private val preferencesProvider
     }
 
 
-    fun updateOrderStatus(token: String?, status:String ): Observable<Result<FreeResponseModel>> {
+    fun updateOrderStatus(token: String?,suid:String, status:String ): Observable<Result<FreeResponseModel>> {
 
         var request=OrderUpdateRequestModel(status)
 
-        return api.updateOrderStatus("Token $token",request)
+        return api.updateOrderStatus("Token $token",suid,request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 

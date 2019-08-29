@@ -21,7 +21,7 @@ class OrderMessageActivity : BaseActivity() {
     private lateinit var viewModel: OrderMessageViewModel
 
     companion object {
-        var PRODUCT_KEY = "product"
+        var PRODUCT_KEY = "mProduct"
         var STARTDATE_KEY = "start_date"
         var ENDDATE_KEY = "end_date"
 

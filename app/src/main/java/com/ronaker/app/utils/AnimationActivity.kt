@@ -29,13 +29,13 @@ class AnimationHelper {
 
 //            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val slide = Slide()
-                slide.slideEdge = Gravity.BOTTOM
+//                val slide = Slide()
+//                slide.slideEdge = Gravity.BOTTOM
+////
 //
-//
-//                val fade=Fade()
+                val fade=Fade()
 
-                activity.window.enterTransition = slide
+                activity.window.enterTransition = fade
 
             }
         }

@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.explore
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -41,7 +40,7 @@ class ItemExploreAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<It
         private val viewModel = ItemExploreViewModel()
 
         fun bind(product:Product){
-            viewModel.bind(product,context)
+            viewModel.bind(product,binding,context)
             binding.viewModel = viewModel
         }
     }
