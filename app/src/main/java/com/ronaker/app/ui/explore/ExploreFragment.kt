@@ -37,15 +37,28 @@ class ExploreFragment : BaseFragment() {
 
         var mnager = GridLayoutManager(context, 2)
         binding.recycler.layoutManager = mnager
-
+        binding.loading.hideLoading()
 
         viewModel.loading.observe(this, Observer { loading ->
-            if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
+//            if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
+
+            if (loading)binding.refreshLayout.setRefreshing(true) else binding.refreshLayout.setRefreshing(false)
+
         })
         viewModel.retry.observe(this, Observer { loading ->
             if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+
+
+
+
         })
 
+
+        binding.refreshLayout.setOnRefreshListener {
+
+
+            viewModel.retry()
+        }
 
 
         viewModel.searchValue.observe(this, Observer { value ->
@@ -57,7 +70,7 @@ class ExploreFragment : BaseFragment() {
 //                val options = ActivityOptions
 //                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
 
-                val p1 = androidx.core.util.Pair<View, String>(binding.searchLayout, "search")
+                val p1 = androidx.core.util.Pair<View, String>(binding.searchLayout as View, "search")
                 val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
 
