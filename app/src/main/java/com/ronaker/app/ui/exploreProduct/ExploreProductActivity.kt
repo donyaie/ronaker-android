@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -118,9 +119,7 @@ class ExploreProductActivity : BaseActivity() {
                     binding.toolbar.isTransparent = true
                     binding.toolbar.isBottomLine = false
 
-                    binding.statusBar.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.transparent)
-                    )
+
 
 
                 } else {
@@ -128,7 +127,6 @@ class ExploreProductActivity : BaseActivity() {
                     binding.toolbar.isTransparent = false
                     binding.toolbar.isBottomLine = true
 
-                    binding.statusBar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
                 }
 
             } catch (ex: Exception) {
@@ -157,9 +155,16 @@ class ExploreProductActivity : BaseActivity() {
             getSUID()?.let { viewModel.loadProduct(it) }
 
             getProduct()?.let { viewModel.loadProduct(it) }
+
+
+            Handler().postDelayed({
+                binding.scrollView.smoothScrollTo(0,0)
+                binding.toolbar.isTransparent = true
+                binding.toolbar.isBottomLine = false
+            },500)
+
         }
 
-        binding.scrollView.smoothScrollTo(0,0)
 
     }
 

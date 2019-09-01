@@ -117,12 +117,9 @@
 
             </ScrollView>
 
-            <RelativeLayout android:id="@+id/status_bar" android:background="@color/transparent"
-                            app:layout_constraintTop_toTopOf="parent" android:layout_width="match_parent"
-                            android:layout_height="@dimen/statusBarSize"/>
 
             <com.ronaker.app.utils.view.ToolbarComponent
-                    app:layout_constraintTop_toBottomOf="@id/status_bar"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

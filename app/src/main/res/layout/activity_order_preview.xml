@@ -18,7 +18,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/toolbar"
                 android:layout_gravity="top"
-                android:layout_marginTop="@dimen/statusBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:toolbar_component_title="@string/app_name"

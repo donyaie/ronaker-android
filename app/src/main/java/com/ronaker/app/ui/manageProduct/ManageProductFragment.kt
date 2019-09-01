@@ -106,18 +106,13 @@ class ManageProductFragment : BaseFragment() {
 
                     binding.toolbar.isTransparent = true
                     binding.toolbar.isBottomLine = false
-                    context?.let {
-                        binding.statusBar.setBackgroundColor(
-                            ContextCompat.getColor(it,R.color.transparent)
-                        )
-                    }
+
 
                 } else {
 
                     binding.toolbar.isTransparent = false
                     binding.toolbar.isBottomLine = true
 
-                    context?.let {    binding.statusBar.setBackgroundColor(ContextCompat.getColor(it,R.color.white)) }
                 }
 
             } catch (ex: Exception ){
