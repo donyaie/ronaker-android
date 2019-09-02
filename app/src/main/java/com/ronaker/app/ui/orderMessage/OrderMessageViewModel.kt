@@ -72,9 +72,10 @@ class OrderMessageViewModel : BaseViewModel() {
         productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), mPrice)
 
 
+       var user= userRepository.getUserInfo()
 
 
-        orderMessage.value="Hi I'm \n" +
+        orderMessage.value="Hi I'm ${user?.first_name} ${user?.last_name}\n" +
                 "I need your ${product.name} for $days day${if(days==1L)"" else "s" }\n" +
                 "thank you."
 
