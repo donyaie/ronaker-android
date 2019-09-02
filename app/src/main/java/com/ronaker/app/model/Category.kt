@@ -1,7 +1,9 @@
 package com.ronaker.app.model
 
+import android.os.Parcelable
 import com.ronaker.app.data.network.response.CategoriesResponseModel
 import com.ronaker.app.data.network.response.ProductItemImageResponceModel
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Class which provides a model for User
@@ -13,12 +15,13 @@ import com.ronaker.app.data.network.response.ProductItemImageResponceModel
  * @property phone_number the number of user
  * @property is_phone_number_verified if number verified is true
  */
+@Parcelize
 data class Category(
     var suid: String
     , var title: String
     , var avatar: String
     , var sub_categories: List<Category>?
-) {
+): Parcelable {
 
 
 }

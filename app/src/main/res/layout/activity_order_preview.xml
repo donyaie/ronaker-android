@@ -18,7 +18,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/toolbar"
                 android:layout_gravity="top"
-                android:layout_marginTop="@dimen/statusBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:toolbar_component_title="@string/app_name"
@@ -53,6 +52,8 @@
 
                         <TextView android:textAppearance="@style/TextAppearance.Medium.SB" android:minLines="2"
 
+                                  app:mutableText="@{viewModel.getProductTitle()}"
+
                                   android:text="sample product"
                                   android:textColor="@color/colorTextDark"
                                   android:layout_width="match_parent" android:layout_height="wrap_content"/>
@@ -60,6 +61,7 @@
 
                         <TextView android:textAppearance="@style/TextAppearance.Large.Regular"
 
+                                  app:mutableText="@{viewModel.getDayNumber()}"
                                   android:text="$124 for 2 day"
                                   android:layout_marginTop="16dp"
                                   android:textColor="@color/colorTextDark"
@@ -72,6 +74,8 @@
                                                                      app:riv_corner_radius="3dp"
 
 android:src="@color/colorPlatinGrey"
+
+                                                                     app:mutableImage="@{viewModel.getProductImage()}"
                                                                      android:layout_marginRight="24dp"
                                                                      android:scaleType="fitCenter"
                                                                      app:srcCompat="@drawable/ic_empty_product"
@@ -98,10 +102,13 @@ android:src="@color/colorPlatinGrey"
                                   android:layout_height="wrap_content">
 
                         <TextView android:layout_marginBottom="4dp"
+                                  app:mutableText="@{viewModel.getStartDayName()}"
                                   android:textAppearance="@style/TextAppearance.Small.Regular" android:text="Monday"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
                         <TextView android:textAppearance="@style/TextAppearance.Large.Regular" android:text="21 May"
+
+                                  app:mutableText="@{viewModel.getFirstDayMonth()}"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 
@@ -116,10 +123,14 @@ android:src="@color/colorPlatinGrey"
                                   android:layout_height="wrap_content">
 
                         <TextView android:layout_marginBottom="4dp"
+
+                                  app:mutableText="@{viewModel.getEndDayName()}"
                                   android:textAppearance="@style/TextAppearance.Small.Regular" android:text="Friday"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
                         <TextView android:textAppearance="@style/TextAppearance.Large.Regular" android:text="23 May"
+
+                                  app:mutableText="@{viewModel.getEndDayMonth()}"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 
@@ -146,6 +157,8 @@ android:src="@color/colorPlatinGrey"
 
 
                         <TextView android:textAppearance="@style/TextAppearance.Heading.2" android:text="David"
+
+                                  app:mutableText="@{viewModel.getUserName()}"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 
@@ -175,6 +188,8 @@ android:src="@color/colorPlatinGrey"
 
                     <com.makeramen.roundedimageview.RoundedImageView app:riv_corner_radius="32dp"
                                                                      android:layout_width="64dp"
+
+                                                                     app:mutableImage="@{viewModel.getUserImage()}"
                                                                      android:src="@color/colorPlatinGrey"
                                                                      android:layout_height="64dp"/>
 
@@ -189,7 +204,10 @@ android:src="@color/colorPlatinGrey"
 
 
 
-                <TextView android:text="Description" android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                <TextView android:text="Description"
+
+                          app:mutableText="@{viewModel.getOrderDescription()}"
+                          android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
 
 
@@ -200,7 +218,8 @@ android:src="@color/colorPlatinGrey"
 
         </androidx.core.widget.NestedScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/footer" android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                app:mutableVisibility="@{viewModel.getActionVisibility()}"  android:id="@+id/footer" android:layout_width="match_parent"
                                                            android:background="@color/white"
 
                                                            app:layout_constraintBottom_toBottomOf="parent"
@@ -208,28 +227,68 @@ android:src="@color/colorPlatinGrey"
             <RelativeLayout android:layout_width="match_parent" app:layout_constraintTop_toTopOf="parent"
                             android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
 
-            <Button style="@style/Button.transparent.light" android:text="Decline"
+
+            <LinearLayout android:layout_width="match_parent" android:weightSum="4" android:orientation="horizontal" android:gravity="center" android:layout_height="match_parent">
 
 
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginLeft="24dp"
-                    android:layout_width="wrap_content"
 
-            />
+                <Button style="@style/Button.transparent" android:text="Decline"
+
+android:layout_weight="1"
+                        app:mutableVisibility="@{viewModel.getDeclineVisibility()}"
+
+                        android:onClick="@{()->viewModel.onClickDecline()}"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+
+                />
 
 
-            <Button style="@style/Button.accent" android:text="Accept"
+                <Button style="@style/Button.accent" android:text="Accept"
+
+                        android:layout_weight="1"
+                        app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
+
+                        android:onClick="@{()->viewModel.onClickAccept()}"
+
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+
+                />
 
 
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginRight="24dp"
-                    android:layout_width="wrap_content"
+                <Button style="@style/Button.transparent" android:text="Cancel"
 
-            />
+                        android:layout_weight="1"
+                        app:mutableVisibility="@{viewModel.getCancelVisibility()}"
+
+                        android:onClick="@{()->viewModel.onClickCanceled()}"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+
+                />
+
+
+                <Button style="@style/Button.accent" android:text="Finish"
+
+                        android:layout_weight="1"
+                        app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
+
+                        android:onClick="@{()->viewModel.onClickFinished()}"
+
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+
+                />
+
+
+
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

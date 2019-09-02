@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AnimationHelper
 
 class CheckoutCalendarActivity : BaseActivity() {
@@ -19,12 +20,12 @@ class CheckoutCalendarActivity : BaseActivity() {
     private lateinit var viewModel: CheckoutCalendarViewModel
 
     companion object {
-        var SUID_KEY = "suid"
+        var PRODUCT_KEY = "mProduct"
 
-        fun newInstance(context: Context, suid: String): Intent {
+        fun newInstance(context: Context, product:Product): Intent {
             var intent = Intent(context, CheckoutCalendarActivity::class.java)
             var boundle = Bundle()
-            boundle.putString(SUID_KEY, suid)
+            boundle.putParcelable(PRODUCT_KEY, product)
             intent.putExtras(boundle)
 
             return intent
@@ -61,10 +62,17 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
 
-        if ( intent.hasExtra(SUID_KEY)) {
-            var suid = intent.getStringExtra(SUID_KEY)
+        if ( intent.hasExtra(PRODUCT_KEY)) {
 
-            viewModel.loadProduct(suid)
+            getProduct()?.let {
+
+
+
+                viewModel.loadProduct(it.suid!!)
+
+
+
+            }
 
 
 
@@ -75,6 +83,12 @@ class CheckoutCalendarActivity : BaseActivity() {
 
     }
 
+
+
+
+    fun getProduct():Product?{
+      return  intent.getParcelableExtra(PRODUCT_KEY)
+    }
 
 
 

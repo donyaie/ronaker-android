@@ -90,22 +90,36 @@
                     android:background="@color/colorPlatinGrey"
                     android:layout_width="match_parent" android:layout_height="1dp"/>
 
-            <LinearLayout android:paddingLeft="16dp" android:paddingRight="16dp" android:gravity="center_vertical"
+            <LinearLayout android:paddingLeft="12dp" android:paddingRight="12dp" android:gravity="center_vertical"
                           android:orientation="horizontal" app:layout_constraintTop_toBottomOf="@id/split"
                           android:layout_width="match_parent" android:layout_height="47dp">
 
                 <ImageView android:layout_width="24dp" android:padding="4dp" app:srcCompat="@drawable/ic_remove_red"
+
+
+
+                           app:mutableImageSrc="@{viewModel.getOrderStatusImage()}"
+
                            android:layout_height="24dp"/>
 
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                           android:layout_weight=".95"
                           android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
                           app:layout_constraintLeft_toLeftOf="parent"
                           android:id="@+id/status"
                           android:gravity="left"
+
+                          app:mutableText="@{viewModel.getOrderStatus()}"
                           android:text="Lend | Canceled order"
                           android:textAppearance="@style/TextAppearance.Small.Regular"
                           android:lines="1"/>
+
+                <ImageView android:layout_width="24dp" android:padding="4dp" app:srcCompat="@drawable/ic_chevron_right"
+
+
+                           android:tint="@color/colorAshGrey"
+                           android:layout_height="24dp"/>
 
 
             </LinearLayout>

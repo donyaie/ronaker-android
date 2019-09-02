@@ -1,13 +1,15 @@
 package com.ronaker.app.data.network.response
 
+import com.google.gson.annotations.SerializedName
+
 data class ProductItemResponceModel(
-    val suid: String,
-    val name: String,
-    val price_per_day: Double,
-    val price_per_week: Double,
-    val price_per_month: Double,
-    val description: String,
-    val avatar: String,
-    val images: List<ProductItemImageResponceModel>?,
-    val categories: List<CategoriesResponseModel>?
+    @SerializedName("suid")   val suid: String,
+    @SerializedName("name")    val name: String,
+    @SerializedName("price_per_day")  val price_per_day: Double,
+    @SerializedName("price_per_week")  val price_per_week: Double,
+    @SerializedName("price_per_month")   val price_per_month: Double,
+    @SerializedName("description")   val description: String,
+    @SerializedName("avatar")   val avatar: String,
+    @SerializedName("images")   val images: List<ProductItemImageResponceModel>?,
+    @SerializedName("categories")  val categories: List<CategoriesResponseModel>?
 )

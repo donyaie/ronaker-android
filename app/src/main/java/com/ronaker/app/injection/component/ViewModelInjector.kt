@@ -14,7 +14,6 @@ import com.ronaker.app.ui.orderMessage.OrderMessageViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
-import com.ronaker.app.ui.post.PostListViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
@@ -27,12 +26,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [(RepositoryModule::class)])
 interface ViewModelInjector {
-    /**
-     * Injects required dependencies into the specified PostListViewModel.
-     * @param viewModel ViewModel in which to inject the dependencies
-     */
-    fun inject(viewModel: PostListViewModel)
-
     fun inject(viewModel: LoginViewModel)
     fun inject(viewModel: SplashViewModel)
     fun inject(viewModel: ExploreViewModel)

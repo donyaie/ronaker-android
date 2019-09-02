@@ -9,7 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AnimationHelper
+import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
 
@@ -19,12 +21,28 @@ class OrderMessageActivity : BaseActivity() {
     private lateinit var viewModel: OrderMessageViewModel
 
     companion object {
-        var SUID_KEY = "suid"
+        var PRODUCT_KEY = "mProduct"
+        var STARTDATE_KEY = "start_date"
+        var ENDDATE_KEY = "end_date"
 
-        fun newInstance(context: Context, suid: String): Intent {
+        fun newInstance(
+            context: Context,
+            product: Product?,
+            startDate: Date?,
+            endDate: Date?
+        ): Intent {
             var intent = Intent(context, OrderMessageActivity::class.java)
             var boundle = Bundle()
-            boundle.putString(SUID_KEY, suid)
+
+            if (endDate != null && startDate != null) {
+
+                boundle.putParcelable(PRODUCT_KEY, product)
+                boundle.putLong(STARTDATE_KEY, startDate.time)
+
+                boundle.putLong(ENDDATE_KEY, endDate.time)
+            }
+
+
             intent.putExtras(boundle)
 
             return intent
@@ -51,6 +69,9 @@ class OrderMessageActivity : BaseActivity() {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
+        viewModel.next.observe(this, Observer { value ->
+           finishSafe()
+        })
 
 
         viewModel.loading.observe(this, Observer { value ->
@@ -62,11 +83,10 @@ class OrderMessageActivity : BaseActivity() {
 
 
 
-        if ( intent.hasExtra(SUID_KEY)) {
-            var suid = intent.getStringExtra(SUID_KEY)
+        if (intent.hasExtra(PRODUCT_KEY)) {
 
-            viewModel.loadProduct(suid)
 
+            getProduct()?.let { viewModel.loadProduct(it,getStartDate(),getEndDate()) }
 
 
         } else {
@@ -77,10 +97,21 @@ class OrderMessageActivity : BaseActivity() {
     }
 
 
+    fun getProduct(): Product? {
+        return intent.getParcelableExtra(PRODUCT_KEY)
+    }
 
 
+    fun getStartDate(): Date {
 
 
+        return Date(intent.getLongExtra( STARTDATE_KEY,-1))
+    }
+
+
+    fun getEndDate(): Date {
+        return Date(intent.getLongExtra( ENDDATE_KEY,-1))
+    }
 
 
 }

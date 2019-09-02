@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.ronaker.app.R
 import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.ShapeDrawableHelper
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 
 class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -175,10 +176,16 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
                 containerLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
                 titleText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLight))
 
+                statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+
             } else {
                 containerLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
                 titleText.setTextColor(ContextCompat.getColor(context, R.color.colorTextDark))
+
+                statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+
+
             }
 
 
@@ -238,6 +245,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
     private var actionLayout: LinearLayout
 
     private var cancelButton: ImageView
+    private var statusBar: StatusBarSizeView
 
     private var countDots: LinearLayout
 
@@ -287,6 +295,7 @@ class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: Attrib
         cancelButton = findViewById(R.id.cancel_button)
         countDots = findViewById(R.id.countDots)
         containerLayout = findViewById(R.id.container_layout)
+        statusBar=findViewById(R.id.statusBar)
 
         action1Button = findViewById(R.id.action1_button)
         action2Button = findViewById(R.id.action2_button)

@@ -2,12 +2,9 @@ package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.response.ContentImageResponceModel
 import com.ronaker.app.data.network.response.ProductCreateResponseModel
-import com.ronaker.app.data.network.response.ProductSearchResponceModel
-import com.ronaker.app.model.Post
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody
-import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

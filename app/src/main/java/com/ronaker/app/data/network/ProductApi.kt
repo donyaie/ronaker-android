@@ -18,16 +18,16 @@ interface ProductApi {
     fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Body request: ProductSearchRequestModel?): Observable<ListResponseModel<ProductItemResponceModel>>
 
     /**
-     * get my created product
+     * get my created mProduct
      */
     @GET("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getMyProduct(@Header("Authorization") authToken: String?): Observable<ListResponseModel<ProductItemResponceModel>>
+    fun getMyProduct(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ListResponseModel<ProductItemResponceModel>>
 
 
 
     /**
-     * create new product
+     * create new mProduct
      */
     @POST("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -35,7 +35,7 @@ interface ProductApi {
 
 
     /**
-     * create new product
+     * create new mProduct
      */
     @PATCH("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -45,7 +45,7 @@ interface ProductApi {
 
 
     /**
-     * get product detail
+     * get mProduct detail
      */
     @GET("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")

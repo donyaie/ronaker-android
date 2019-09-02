@@ -115,7 +115,7 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
 //                R.styleable.input_component_attributes, 0, 0
 //            )
 //
-//            title =
+//            message =
 //                typedArray
 //                    .getString(
 //                        R.styleable

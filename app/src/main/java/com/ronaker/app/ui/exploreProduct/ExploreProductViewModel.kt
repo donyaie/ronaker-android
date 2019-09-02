@@ -7,6 +7,8 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.Product
+import com.ronaker.app.model.toProductDetail
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -40,6 +42,7 @@ class ExploreProductViewModel : BaseViewModel() {
     val productPriceTitle: MutableLiveData<String> = MutableLiveData()
     val productAddress: MutableLiveData<String> = MutableLiveData()
 
+    lateinit  var mProduct:Product
 
     lateinit var suid: String
 
@@ -47,6 +50,17 @@ class ExploreProductViewModel : BaseViewModel() {
     private var subscription: Disposable? = null
 
     init {
+
+    }
+
+
+
+    fun loadProduct(product: Product) {
+
+        loading.value = false
+        this.suid = product.suid!!
+        mProduct=product
+        fillProduct(product)
 
     }
 
@@ -66,34 +80,40 @@ class ExploreProductViewModel : BaseViewModel() {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    productImage.value = BASE_URL + result.data?.avatar
-                    productDescription.value = result.data?.description
-                    productTitle.value = result.data?.name
-                    if (result.data?.price_per_day != 0.0) {
 
-                        productPrice.value = String.format(
-                            "%s%.02f",
-                            context.getString(R.string.title_curency_symbol),
-                            result.data?.price_per_day
-                        )
-                        productPriceTitle.value = context.getString(R.string.title_per_day)
-                    } else if (result.data.price_per_week != 0.0) {
+                   mProduct= result.data?.toProductDetail()!!
 
-                        productPrice.value = String.format(
-                            "%s%.02f", context.getString(R.string.title_curency_symbol),
-                            result.data.price_per_week
-                        )
-                        productPriceTitle.value = context.getString(R.string.title_per_week)
-                    } else if (result.data.price_per_month != 0.0) {
 
-                        productPrice.value = String.format(
-                            "%s%.02f", context.getString(R.string.title_curency_symbol),
-                            result.data.price_per_month
-                        )
-                        productPriceTitle.value = context.getString(R.string.title_per_month)
-                    }
+                    fillProduct(mProduct)
 
-//                    productAddress.value=result.data?
+//                    productImage.value = BASE_URL + result.data?.avatar
+//                    productDescription.value = result.data?.description
+//                    productTitle.value = result.data?.name
+//                    if (result.data?.price_per_day != 0.0) {
+//
+//                        productPrice.value = String.format(
+//                            "%s%.02f",
+//                            context.getString(R.string.title_curency_symbol),
+//                            result.data?.price_per_day
+//                        )
+//                        productPriceTitle.value = context.getString(R.string.title_per_day)
+//                    } else if (result.data.price_per_week != 0.0) {
+//
+//                        productPrice.value = String.format(
+//                            "%s%.02f", context.getString(R.string.title_curency_symbol),
+//                            result.data.price_per_week
+//                        )
+//                        productPriceTitle.value = context.getString(R.string.title_per_week)
+//                    } else if (result.data.price_per_month != 0.0) {
+//
+//                        productPrice.value = String.format(
+//                            "%s%.02f", context.getString(R.string.title_curency_symbol),
+//                            result.data.price_per_month
+//                        )
+//                        productPriceTitle.value = context.getString(R.string.title_per_month)
+//                    }
+//
+////                    productAddress.value=result.data?
 
                 } else {
                     retry.value = true
@@ -101,6 +121,39 @@ class ExploreProductViewModel : BaseViewModel() {
                 }
             }
 
+
+    }
+
+
+
+    fun fillProduct(product:Product){
+
+        productImage.value = BASE_URL + product.avatar
+        productDescription.value = product.description
+        productTitle.value = product.name
+        if (product.price_per_day != 0.0) {
+
+            productPrice.value = String.format(
+                "%s%.02f",
+                context.getString(R.string.title_curency_symbol),
+                product.price_per_day
+            )
+            productPriceTitle.value = context.getString(R.string.title_per_day)
+        } else if (product.price_per_week != 0.0) {
+
+            productPrice.value = String.format(
+                "%s%.02f", context.getString(R.string.title_curency_symbol),
+                product.price_per_week
+            )
+            productPriceTitle.value = context.getString(R.string.title_per_week)
+        } else if (product.price_per_month != 0.0) {
+
+            productPrice.value = String.format(
+                "%s%.02f", context.getString(R.string.title_curency_symbol),
+                product.price_per_month
+            )
+            productPriceTitle.value = context.getString(R.string.title_per_month)
+        }
 
     }
 

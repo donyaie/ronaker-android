@@ -33,10 +33,10 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
     }
 
-    fun getMyProduct(token: String?): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
+    fun getMyProduct(token: String?, page:Int): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
 
 
-        return productApi.getMyProduct("Token $token" )
+        return productApi.getMyProduct("Token $token",page )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 

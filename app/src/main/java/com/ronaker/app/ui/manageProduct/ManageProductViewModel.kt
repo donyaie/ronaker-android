@@ -1,11 +1,12 @@
 package com.ronaker.app.ui.manageProduct
 
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.Product
+import com.ronaker.app.model.toProductDetail
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -22,20 +23,30 @@ class ManageProductViewModel : BaseViewModel() {
     var userRepository: UserRepository
 
 
+    lateinit var mProduct: Product
+
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    val   productImage: MutableLiveData<String> = MutableLiveData()
-    val   productTitle: MutableLiveData<String> = MutableLiveData()
-    val   productDescription: MutableLiveData<String> = MutableLiveData()
+    val productImage: MutableLiveData<String> = MutableLiveData()
+    val productTitle: MutableLiveData<String> = MutableLiveData()
+    val productDescription: MutableLiveData<String> = MutableLiveData()
 
 
-    private  var subscription: Disposable?=null
+    private var subscription: Disposable? = null
 
     init {
 
+    }
+
+
+    fun loadProduct(product: Product) {
+        loading.value = false
+        mProduct = product
+        fillProduct(product)
     }
 
     fun loadProduct(suid: String) {
@@ -44,16 +55,17 @@ class ManageProductViewModel : BaseViewModel() {
         subscription = productRepository
             .getProduct(userRepository.getUserToken(), suid)
 
-            .doOnSubscribe { retry.value=false; loading.value=true}
-            .doOnTerminate {loading.value=false}
+            .doOnSubscribe { retry.value = false; loading.value = true }
+            .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    productImage.value= BASE_URL + result.data?.avatar
-                    productDescription.value=result.data?.description
-                    productTitle.value=result.data?.name
+                    mProduct = result.data?.toProductDetail()!!
+                    fillProduct(mProduct)
+
+
                 } else {
-                    retry.value=true;
-                   errorMessage.value=result.error?.detail
+                    retry.value = true;
+                    errorMessage.value = result.error?.detail
                 }
             }
 
@@ -61,11 +73,17 @@ class ManageProductViewModel : BaseViewModel() {
     }
 
 
+    private fun fillProduct(product: Product) {
+        productImage.value = BASE_URL + product.avatar
+        productDescription.value = product.description
+        productTitle.value = product.name
+    }
+
+
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
     }
-
 
 
 }

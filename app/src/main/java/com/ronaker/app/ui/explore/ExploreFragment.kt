@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
@@ -26,7 +27,11 @@ class ExploreFragment : BaseFragment() {
     private lateinit var viewModel: ExploreViewModel
 
     lateinit var scrollListener: EndlessRecyclerViewScrollListener
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         viewModel = ViewModelProviders.of(this).get(ExploreViewModel::class.java)
@@ -37,15 +42,28 @@ class ExploreFragment : BaseFragment() {
 
         var mnager = GridLayoutManager(context, 2)
         binding.recycler.layoutManager = mnager
-
+        binding.loading.hideLoading()
 
         viewModel.loading.observe(this, Observer { loading ->
-            if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
+            //            if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
+
+            if (loading) binding.refreshLayout.setRefreshing(true) else binding.refreshLayout.setRefreshing(
+                false
+            )
+
         })
         viewModel.retry.observe(this, Observer { loading ->
             if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+
+
         })
 
+
+        binding.refreshLayout.setOnRefreshListener {
+
+
+            viewModel.retry()
+        }
 
 
         viewModel.searchValue.observe(this, Observer { value ->
@@ -57,9 +75,11 @@ class ExploreFragment : BaseFragment() {
 //                val options = ActivityOptions
 //                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
 
-                val p1 = androidx.core.util.Pair<View, String>(binding.searchLayout, "search")
+                val p1 =
+                    androidx.core.util.Pair<View, String>(binding.searchLayout as View, "search")
                 val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
+                val options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
 
 
 
@@ -73,7 +93,12 @@ class ExploreFragment : BaseFragment() {
 
             } else {
                 // Swap without transition
-                activity?.let { startActivityForResult(SearchActivity.newInstance(it), SearchActivity.ResultCode) }
+                activity?.let {
+                    startActivityForResult(
+                        SearchActivity.newInstance(it),
+                        SearchActivity.ResultCode
+                    )
+                }
             }
 
 
@@ -152,7 +177,7 @@ class ExploreFragment : BaseFragment() {
             if (data != null) {
                 var searchValue = data.getStringExtra(SearchActivity.Search_KEY)
 
-                if (searchValue==null || searchValue.isEmpty())
+                if (searchValue == null || searchValue.isEmpty())
                     clearSearchValue()
                 else
 
@@ -181,6 +206,18 @@ class ExploreFragment : BaseFragment() {
 
 
     }
+
+    override fun onDetach() {
+        try {
+
+            binding.recycler.getViewTreeObserver()
+                .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
+        } catch (e: Exception) {
+
+        }
+        super.onDetach()
+    }
+
 
     fun clearSearchValue() {
 

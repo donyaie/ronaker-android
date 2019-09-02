@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -46,24 +47,15 @@ class ManageProductFragment : BaseFragment() {
         binding.toolbar.cancelClickListener = View.OnClickListener { (activity as DashboardActivity).backFragment() }
 
         productViewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage != null) {
+            if (errorMessage != null)
                 Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-//                binding.loading.showRetry()
-            } else {
-//                binding.loading.hideRetry()
-            }
+
         })
-
-
-
-
-
-
 
 
         binding.imageLayout.setOnClickListener {
             startActivityMakeScene(context?.let { it1 ->
-                getSuid()?.let { it2 ->
+                productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.image
@@ -74,7 +66,7 @@ class ManageProductFragment : BaseFragment() {
 
         binding.locationLayout.setOnClickListener {
             startActivityMakeScene(context?.let { it1 ->
-                getSuid()?.let { it2 ->
+                productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.location
@@ -85,7 +77,7 @@ class ManageProductFragment : BaseFragment() {
 
         binding.nameLayout.setOnClickListener {
             startActivityMakeScene(context?.let { it1 ->
-                getSuid()?.let { it2 ->
+                productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.info
@@ -96,7 +88,7 @@ class ManageProductFragment : BaseFragment() {
 
         binding.priceLayout.setOnClickListener {
             startActivityMakeScene(context?.let { it1 ->
-                getSuid()?.let { it2 ->
+                productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
                         it2, AddProductViewModel.StateEnum.price
@@ -114,18 +106,13 @@ class ManageProductFragment : BaseFragment() {
 
                     binding.toolbar.isTransparent = true
                     binding.toolbar.isBottomLine = false
-                    context?.let {
-                        binding.statusBar.setBackgroundColor(
-                            ContextCompat.getColor(it,R.color.transparent)
-                        )
-                    }
+
 
                 } else {
 
                     binding.toolbar.isTransparent = false
                     binding.toolbar.isBottomLine = true
 
-                    context?.let {    binding.statusBar.setBackgroundColor(ContextCompat.getColor(it,R.color.white)) }
                 }
 
             } catch (ex: Exception ){
@@ -146,26 +133,39 @@ class ManageProductFragment : BaseFragment() {
 
     fun fill() {
 
-
-
-
            getSuid()?.let { productViewModel.loadProduct(it) }
 
+           getProduct()?.let { productViewModel.loadProduct(it) }
 
     }
 
     fun getSuid():String?{
        return  this.arguments!!.getString(SUID_KEY)
     }
+    fun getProduct():Product?{
+        return  this.arguments!!.getParcelable(PRODUCT_KEY)
+    }
+
+
 
 
     companion object {
 
         private var SUID_KEY = "suid"
+        private var PRODUCT_KEY = "product"
 
         fun newInstance(suid: String?): ManageProductFragment {
             val bundle = Bundle()
             bundle.putString(SUID_KEY, suid)
+            val fragment = ManageProductFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+
+
+        fun newInstance(product: Product?): ManageProductFragment {
+            val bundle = Bundle()
+            bundle.putParcelable(PRODUCT_KEY, product)
             val fragment = ManageProductFragment()
             fragment.arguments = bundle
             return fragment
