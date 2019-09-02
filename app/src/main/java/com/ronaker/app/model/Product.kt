@@ -3,7 +3,9 @@ package com.ronaker.app.model
 import android.net.Uri
 import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
+import com.ronaker.app.data.network.response.LocationResponseModel
 import com.ronaker.app.data.network.response.ProductDetailResponceModel
 import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import com.ronaker.app.data.network.response.ProductItemResponceModel
@@ -29,13 +31,13 @@ data class Product(
     , var description: String?
     , var avatar: String?
     , var images: ArrayList<ProductImage>?
+    , var categories: ArrayList<Category>?
+    , var location: LatLng?
     , var avatar_suid: String? = null
     , var new_categories: ArrayList<String>? = null
-    , var categories: ArrayList<Category>?=null
 
-): Parcelable {
+) : Parcelable {
     constructor() : this(
-        null,
         null,
         null,
         null,
@@ -52,7 +54,7 @@ data class Product(
     data class ProductImage(
         var url: String?,
         var suid: String?, var uri: Uri? = null, var isLocal: Boolean = false
-    ): Parcelable  {
+    ) : Parcelable {
 
         constructor() : this(null, null)
 
@@ -84,20 +86,18 @@ fun List<ProductItemResponceModel>.toProductList(): List<Product> {
 fun ProductItemResponceModel.toProduct(): Product {
 
 
-
-        var product = Product(
-            this.suid,
-            this.name,
-            this.price_per_day,
-            this.price_per_week,
-            this.price_per_month,
-            this.description,
-            this.avatar,
-            null,
-            null,
-            null,
-            if(this.categories!=null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList()
-        )
+    var product = Product(
+        this.suid,
+        this.name,
+        this.price_per_day,
+        this.price_per_week,
+        this.price_per_month,
+        this.description,
+        this.avatar,
+        if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
+        if (this.categories != null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList(),
+        if (this.location != null) LatLng(location.lat, location.lng) else null
+    )
 
 
 
@@ -108,7 +108,6 @@ fun ProductItemResponceModel.toProduct(): Product {
 fun ProductDetailResponceModel.toProductDetail(): Product {
 
 
-
     var product = Product(
         this.suid,
         this.name,
@@ -117,7 +116,9 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         this.price_per_month,
         this.description,
         this.avatar,
-        null
+        if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
+        if (this.categories != null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList(),
+        if (this.location != null) LatLng(location.lat, location.lng) else null
     )
 
 
@@ -125,7 +126,6 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
     return product
 
 }
-
 
 
 fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductImage> {
@@ -170,7 +170,14 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
         this.description,
         this.avatar_suid,
         imageList,
-        this.new_categories
+        this.new_categories,
+        this.location?.let {
+            LocationResponseModel(
+                it.latitude,
+                it.longitude
+            )
+        }
+
     )
 
 

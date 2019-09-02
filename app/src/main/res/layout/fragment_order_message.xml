@@ -50,6 +50,7 @@
                         android:inputType="textMultiLine"
                         app:input_transparent="false"
                         android:imeOptions="actionNext"
+                        app:inputMutableText="@{viewModel.getOrderMessage()}"
                         android:id="@+id/message_input"
                         app:input_title=""
                         app:input_hint="Send message to owner and ask about availability or …."

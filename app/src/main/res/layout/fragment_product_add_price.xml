@@ -51,7 +51,7 @@
                             android:id="@+id/day_input"
                             app:input_transparent="false"
                             app:input_title="Rent Fee (€)"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             app:input_hint="Daily"
                             app:inputMutableText="@{viewModel.getProductPriceDay()}"
 
@@ -66,6 +66,7 @@
 
                     <com.ronaker.app.utils.view.InputComponent
                             android:inputType="numberDecimal"
+                            android:visibility="gone"
                             android:imeOptions="actionNext"
                             app:inputMutableText="@{viewModel.getProductPriceWeek()}"
                             android:id="@+id/week_input"
@@ -74,6 +75,8 @@
                             android:layout_weight="1"
                             app:input_is_alert="false"
                             app:input_dot="false"
+                            app:input_text="0"
+
                             android:layout_marginRight="17dp"
                             app:input_hint="Weekly"
                             app:input_regex="^(\\d{1,8})(\\.\\d{1,2})?$"
@@ -85,6 +88,9 @@
                             android:inputType="numberDecimal"
                             android:imeOptions="actionNext"
                             android:id="@+id/month_input"
+                            android:visibility="gone"
+
+                            app:input_text="0"
                             app:input_is_alert="false"
                             app:inputMutableText="@{viewModel.getProductPriceMonth()}"
                             app:input_transparent="false"
