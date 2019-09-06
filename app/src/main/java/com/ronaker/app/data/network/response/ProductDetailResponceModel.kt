@@ -11,4 +11,12 @@ data class ProductDetailResponceModel(@SerializedName("suid") val suid: String,
                                       @SerializedName("avatar")   val avatar: String,
                                       @SerializedName("avatar_suid")   val avatar_suid:String,
                                       @SerializedName("owner")   val owner:ProductOwnerResponceModel,
-                                      @SerializedName("images")   val images: List<ProductItemImageResponceModel>?  )
+
+
+
+                                      @SerializedName("categories")  val categories: List<CategoriesResponseModel>?,
+
+                                      @SerializedName("images")   val images: List<ProductItemImageResponceModel>?,
+                                      @SerializedName("location")  val location: LocationResponseModel?,
+
+                                      @SerializedName("address")  val address: String?)

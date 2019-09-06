@@ -79,9 +79,9 @@ class PhoneNumberActivity : BaseActivity() {
         })
 
 
-
-
         loginState = PhoneNumberViewModel.StateEnum.number
+
+
     }
 
 
@@ -105,6 +105,8 @@ class PhoneNumberActivity : BaseActivity() {
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
+
+                binding.loading.visibility=View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -117,7 +119,10 @@ class PhoneNumberActivity : BaseActivity() {
         })
 
         initViewPagerRegister()
-        binding.loading.hideLoading()
+
+
+
+
 
 
     }

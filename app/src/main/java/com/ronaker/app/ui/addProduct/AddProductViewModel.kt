@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
@@ -53,6 +54,10 @@ class AddProductViewModel : BaseViewModel() {
 
     private var getproductSubscription: Disposable? = null
     private var updateproductSubscription: Disposable? = null
+
+
+
+    var moveLocation: MutableLiveData<LatLng> = MutableLiveData()
 
 
     private lateinit var updateState: StateEnum

@@ -32,9 +32,8 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
             binding.viewModel = viewModel
         }
 
-        var mnager = GridLayoutManager(context, 2)
 
-        binding.recycler.layoutManager = mnager
+        binding.recycler.layoutManager =  GridLayoutManager(context, 2)
 
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler,false)

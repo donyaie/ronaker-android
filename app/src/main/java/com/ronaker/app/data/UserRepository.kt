@@ -21,6 +21,8 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
 
     private val TokenKey = "tokenKey"
 
+    private val UserInfoKey = "userInfoKey"
+
     fun registerUser(user: User): Observable<Result<UserRegisterResponseModel>> {
         val info = UserRegisterRequestModel(user.email!!, user.password!!, user.first_name!!, user.last_name!!)
         return userApi.registerUser(info)
@@ -68,6 +70,12 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
 
     }
 
+    fun saveUserInfo(info:User?) {
+        preferencesProvider.putObject(UserInfoKey,info)
+    }
+    fun getUserInfo():User? {
+        return preferencesProvider.getObject<User?>(UserInfoKey, User::class.java)
+    }
 
     fun saveUserToken(token: String?) {
         preferencesProvider.putString(TokenKey, token)

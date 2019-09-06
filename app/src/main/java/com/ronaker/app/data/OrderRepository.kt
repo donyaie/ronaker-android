@@ -28,9 +28,9 @@ class OrderRepository(private val api: OrderApi, private val preferencesProvider
 
 
 
-    fun createOrder(token: String?, product_suid:String, stateDate: Date,endDate:Date,message:String? ): Observable<Result<FreeResponseModel>> {
+    fun createOrder(token: String?, product_suid:String, stateDate: Date,endDate:Date,message:String? ,price:Double ): Observable<Result<FreeResponseModel>> {
 
-        var request=OrderCreateRequestModel(product_suid,stateDate,endDate,message)
+        var request=OrderCreateRequestModel(product_suid,stateDate,endDate,message,price)
 
         return api.createOrder("Token $token",request)
             .subscribeOn(Schedulers.io())

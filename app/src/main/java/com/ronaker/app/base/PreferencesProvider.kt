@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.google.gson.Gson
 
 
 import java.lang.reflect.Type
@@ -89,28 +90,31 @@ class PreferencesProvider(context: Context) {
         return preferences.getString(key, defValue)
     }
 
-//    fun getObject(key: String, type: Type): Any {
-//
-//        val json = preferences!!.getString(key, "")
-//
-//
-//        return JsonHelper.fromJson(json, type)
-//
-//
-//    }
-//
-//
-//    fun <T> putObject(key: String, `object`: T): Boolean {
-//        try {
-//
-//            val json = JsonHelper.toJson(`object`)
-//            editor.putString(key, json)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//
-//        return editor.commit()
-//    }
+    fun <T> getObject(key: String, type: Type): T? {
+
+
+
+        val json = preferences.getString(key, null)
+        return if (json == null)
+            null
+        else
+            Gson().fromJson(json, type)
+    }
+
+
+    fun <T> putObject(key: String, obj: T?): Boolean {
+        try {
+
+            var json: String? = null
+            if (obj != null)
+                json = Gson().toJson(obj)
+            editor.putString(key, json)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return editor.commit()
+    }
 
 
     fun getInt(key: String, defValue: Int): Int {

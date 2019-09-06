@@ -50,7 +50,8 @@
         </RelativeLayout>
 
         <com.ronaker.app.utils.view.LoadingComponent
-                app:loading_transparent="false"
+                app:loading_transparent="true"
+                android:visibility="gone"
                 android:id="@+id/loading" android:layout_width="match_parent"
                                                      android:layout_height="match_parent"/>
 
