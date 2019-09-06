@@ -15,7 +15,7 @@ interface CategoryApi {
     /**
      * get categories
      */
-    @POST("/api/v1/categories/")
+    @GET("/api/v1/categories/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getCategories(@Header("Authorization") authToken: String): Observable<ListResponseModel<CategoriesResponseModel>>
 }

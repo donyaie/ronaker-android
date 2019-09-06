@@ -2,6 +2,7 @@ package com.ronaker.app.injection.component
 
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
+import com.ronaker.app.ui.addProduct.AddProductLocationViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
@@ -42,6 +43,7 @@ interface ViewModelInjector {
     fun inject(viewModel: InboxViewModel)
     fun inject(viewModel: SearchViewModel)
     fun inject(viewModel: OrderPreviewViewModel)
+    fun inject(viewModel: AddProductLocationViewModel)
 
 
     @Component.Builder

@@ -33,11 +33,13 @@ data class Product(
     , var images: ArrayList<ProductImage>?
     , var categories: ArrayList<Category>?
     , var location: LatLng?
+    , var address: String?
     , var avatar_suid: String? = null
     , var new_categories: ArrayList<String>? = null
 
 ) : Parcelable {
     constructor() : this(
+        null,
         null,
         null,
         null,
@@ -96,7 +98,8 @@ fun ProductItemResponceModel.toProduct(): Product {
         this.avatar,
         if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
         if (this.categories != null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList(),
-        if (this.location != null) LatLng(location.lat, location.lng) else null
+        if (this.location != null) LatLng(location.lat, location.lng) else null,
+        this.address
     )
 
 
@@ -118,7 +121,8 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         this.avatar,
         if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
         if (this.categories != null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList(),
-        if (this.location != null) LatLng(location.lat, location.lng) else null
+        if (this.location != null) LatLng(location.lat, location.lng) else null,
+        this.address
     )
 
 
@@ -176,7 +180,8 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
                 it.latitude,
                 it.longitude
             )
-        }
+        },
+        this.address
 
     )
 
