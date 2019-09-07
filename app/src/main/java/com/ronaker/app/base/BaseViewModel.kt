@@ -5,6 +5,7 @@ import com.ronaker.app.injection.component.DaggerViewModelInjector
 import com.ronaker.app.injection.component.ViewModelInjector
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
+import com.ronaker.app.ui.addProduct.AddProductLocationSearchViewModel
 import com.ronaker.app.ui.addProduct.AddProductLocationViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
@@ -60,6 +61,7 @@ abstract class BaseViewModel : ViewModel() {
 
 
             is AddProductLocationViewModel->injector.inject(this)
+            is AddProductLocationSearchViewModel->injector.inject(this)
         }
 
     }

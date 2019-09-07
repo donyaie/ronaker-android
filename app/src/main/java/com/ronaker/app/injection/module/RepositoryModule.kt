@@ -8,6 +8,7 @@ import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.data.*
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.GOOGLE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -96,6 +97,29 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
+    internal fun provideGoogleMapApi(): GoogleMapApi {
+        val client = OkHttpClient().newBuilder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            })
+            .build()
+
+
+        var retrofit= Retrofit.Builder()
+            .baseUrl(GOOGLE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .build()
+
+
+
+        return retrofit.create(GoogleMapApi::class.java)
+    }
+
+    @Provides
+    @Reusable
+    @JvmStatic
     internal fun provideUserRepository(userApi: UserApi, preferencesProvider: PreferencesProvider): UserRepository {
         return UserRepository(userApi,preferencesProvider)
     }
@@ -131,6 +155,15 @@ object RepositoryModule {
     internal fun provideOrderRepository(api: OrderApi,preferencesProvider: PreferencesProvider): OrderRepository {
         return OrderRepository(api,preferencesProvider)
     }
+
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideGoogleMapRepository(api: GoogleMapApi): GoogleMapRepository {
+        return GoogleMapRepository(api)
+    }
+
 
     /**
      * Provides the Retrofit object.

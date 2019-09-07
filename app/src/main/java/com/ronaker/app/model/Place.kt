@@ -1,13 +1,16 @@
 package com.ronaker.app.model
 
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
+import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
 
 
 data class Place(
-    var placeId: String,
-    var description: String,
-    var mainText: String,
-    var secondaryText: String
+    var placeId: String?,
+    var description: String?,
+    var mainText: String?,
+    var secondaryText: String?,
+    var lat:Double?=null,
+    var lng:Double?=null
 ) {
 
 }
@@ -26,6 +29,23 @@ fun List<GoogleAutocompleteResponseModel.GoogleAutocompletePredcationResponseMod
     }
 
     return list
+
+}
+
+
+fun GooglePlaceDetailResponseModel.GooglePlaceResultResponseModel.toPlace(): Place {
+
+        var product = Place(
+            this.place_id,
+            this.name,
+            this.formatted_address,
+            null,
+            this.geometry.location.lat,
+            this.geometry.location.lng
+        )
+
+
+    return product
 
 }
 

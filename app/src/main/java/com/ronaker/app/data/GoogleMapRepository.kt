@@ -1,9 +1,11 @@
 package com.ronaker.app.data
 
+import android.location.Location
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.GoogleMapApi
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
+import com.ronaker.app.data.network.response.MapGeoCodeResponceModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -34,6 +36,23 @@ class GoogleMapRepository(private val api: GoogleMapApi) {
 
 
         return api.getPlaceDetails(placeId, language, key)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+    }
+
+
+
+
+    fun getGeocode(location: LatLng): Observable<MapGeoCodeResponceModel> {
+
+        val language: String? = null// "en";
+
+
+        val latlng = String.format("%s,%s", location.latitude, location.longitude)
+
+
+        return api.getGeocode(null, latlng, null, null, language, null, key)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

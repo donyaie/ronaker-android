@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,10 +23,13 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.model.Place
 import com.ronaker.app.utils.view.IPagerFragment
 
 
-class AddProductLocationFragment : BaseFragment(), IPagerFragment {
+class AddProductLocationFragment : BaseFragment(), IPagerFragment,
+    AddProductLocationSearchDialog.OnDialogResultListener {
+
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProductAddLocationBinding
@@ -72,6 +76,14 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
         (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             mGoogleMap = it
 
+            mGoogleMap.setOnCameraIdleListener {
+
+
+              viewModel.updateLocation( mGoogleMap.cameraPosition.target)
+
+
+            }
+
             chech()
         }
 
@@ -81,11 +93,44 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
 
         }
 
+        viewModel.loading.observe(this, Observer { value ->
+
+                baseViewModel.loading.value=value
+        })
+
+
+        viewModel.newLocation.observe(this, Observer { value ->
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                value,
+                17f
+            )
+            mGoogleMap.animateCamera(cameraUpdate)
+        })
+
+
+
+        binding.searchLayout.setOnClickListener {
+
+
+            fragmentManager?.let { it1 -> AddProductLocationSearchDialog.DialogBuilder(it1).setListener(this@AddProductLocationFragment).show() }
+        }
+
 
 
         return binding.root
     }
 
+
+    override fun onDialogResult(
+        result: AddProductLocationSearchDialog.DialogResultEnum,
+        location: Place?
+    ) {
+
+
+        if(result==AddProductLocationSearchDialog.DialogResultEnum.OK)
+            location?.let { viewModel.selectPlace(it) }
+
+    }
 
     override fun onStart() {
         super.onStart()
@@ -100,8 +145,8 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
 
 
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                LatLng(location.longitude, location.longitude),
-                10f
+                LatLng(location.latitude, location.longitude),
+                17f
             )
             mGoogleMap.animateCamera(cameraUpdate)
 

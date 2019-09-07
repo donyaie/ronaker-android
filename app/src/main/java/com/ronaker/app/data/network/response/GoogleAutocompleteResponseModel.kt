@@ -3,7 +3,7 @@ package com.ronaker.app.data.network.response
 import com.google.gson.annotations.SerializedName
 
 data class GoogleAutocompleteResponseModel(
-    @SerializedName("predictions")  var predictions: List<GoogleAutocompletePredcationResponseModel>,
+    @SerializedName("predictions")  var predictions: List<GoogleAutocompletePredcationResponseModel>?,
     @SerializedName("status")  var status: String
 ) {
 
