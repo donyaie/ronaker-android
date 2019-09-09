@@ -60,9 +60,7 @@
 
                         android:textAppearance="@style/TextAppearance.Medium.SB"
                         android:textColor="@color/colorTextDark"
-                        android:textColorHint="@color/colorTextGreyLight" >
-                    <requestFocus/>
-                </EditText>
+                        android:textColorHint="@color/colorTextGreyLight" />
 
                 <ImageView
                         android:layout_width="20dp"

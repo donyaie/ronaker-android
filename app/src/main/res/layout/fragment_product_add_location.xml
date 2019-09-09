@@ -161,7 +161,7 @@
                 android:layout_width="160dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="16dp"
-                android:onClick="@{()->parentViewModel.onClickLocationNext()}"
+                android:onClick="@{()->parentViewModel.onClickLocationNext(viewModel.getPlace())}"
 
                 android:text="@string/title_button_set_location"
                 app:layout_constraintBottom_toBottomOf="parent"

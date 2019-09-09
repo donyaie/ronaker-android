@@ -33,16 +33,12 @@ class AddProductLocationSearchViewModel : BaseViewModel() {
     val selectedPlace: MutableLiveData<Place> = MutableLiveData()
 
 
-    var dataList: ArrayList<Place>
+    var dataList: ArrayList<Place> = ArrayList()
     var listAdapter: LocationSearchAdapter
-
-
-
 
 
     init {
 
-        dataList = ArrayList()
         listAdapter = LocationSearchAdapter(dataList, this)
 
     }
@@ -63,23 +59,27 @@ class AddProductLocationSearchViewModel : BaseViewModel() {
         )
             .doOnSubscribe { }
             .doOnTerminate { }
-            .subscribe { result ->
-                if (result.predictions != null) {
+            .subscribe(
+                { result ->
+                    if (result.predictions != null) {
 
-                    dataList.clear()
-                    dataList.addAll(result.predictions!!.toPlaceList())
-                    listAdapter.notifyDataSetChanged()
+                        dataList.clear()
+                        dataList.addAll(result.predictions!!.toPlaceList())
+                        listAdapter.notifyDataSetChanged()
 
-                } else {
+                    } else {
 
-                }
-            }
+                    }
+                },
+                { error -> error.message }
+            )
+
 
 
     }
 
     fun selectPlace(data: Place) {
-        selectedPlace.value=data
+        selectedPlace.value = data
 
     }
 

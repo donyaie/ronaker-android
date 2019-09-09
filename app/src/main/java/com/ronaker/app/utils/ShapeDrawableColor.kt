@@ -29,7 +29,6 @@ class ShapeDrawableHelper {
                 DrawableCompat.setTint(view.drawable, ContextCompat.getColor(context, colorRes));
             }catch (e:Exception)
             {
-                Debug.Log(TAG,e)
             }
         }
 

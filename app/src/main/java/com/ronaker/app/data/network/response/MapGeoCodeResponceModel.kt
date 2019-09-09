@@ -8,8 +8,10 @@ data class MapGeoCodeResponceModel(
 ) {
 
     data class MapGeoCodeResultModel(
-        @SerializedName("address_components") val address_components: List<MapGeoCodeAddressModel>,
-        @SerializedName("formatted_address") val formatted_address: String
+//        @SerializedName("address_components") val address_components: List<MapGeoCodeAddressModel>,
+        @SerializedName("formatted_address") val formatted_address: String,
+        @SerializedName("place_id") val place_id: String,
+        @SerializedName("types")  val types: List<String>
     )
 
     data class MapGeoCodeAddressModel(

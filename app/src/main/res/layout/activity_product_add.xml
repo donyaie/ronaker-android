@@ -25,7 +25,7 @@
                 app:toolbar_component_transparent="false"
                 app:toolbar_component_action_text="Cancel"
                 app:toolbar_component_bottom_line="false"
-                app:toolbar_component_dot_count="4"
+                app:toolbar_component_dot_count="5"
                 app:toolbar_component_center_container="DOTS"
                 app:toolbar_component_action_container="TEXT"
                 app:toolbar_component_cancel_container="BACK"

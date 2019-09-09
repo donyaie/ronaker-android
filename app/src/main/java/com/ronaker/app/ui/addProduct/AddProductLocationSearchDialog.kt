@@ -40,7 +40,6 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
     private var dialogResult = DialogResultEnum.NONE
 
-    internal var context: Context? = null
 
     var location: Place? = null
 
@@ -75,34 +74,17 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
         rootView = binding.getRoot()
         binding.dialog = this
-        context = rootView.context
+
+
+
 
         binding.containerLayout.setOnClickListener { dismiss() }
 
         initilizeAdapter()
-
-//        RxTextView.textChanges(binding.searchEdit)
-//            .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-//            .subscribe(object : Action1<CharSequence>() {
-//                fun call(value: CharSequence) {
-//
-//
-//                    searchLocation(value.toString())
-//
-//
-//                }
-//            })
-
-
-
         viewModel.selectedPlace.observe(this, Observer { value ->
-
-
             location=value
             dialogResult=DialogResultEnum.OK
             stop()
-
-
         })
 
 
@@ -112,6 +94,10 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
                 searchLocation(it.toString())
             }
+
+
+
+
 
 
         return rootView
@@ -178,11 +164,14 @@ class AddProductLocationSearchDialog : BaseDialog() {
         }
 
 
+
     }
 
 
     fun stop() {
         val dialog = dialog
+
+
         dialog?.dismiss()
     }
 
@@ -196,7 +185,9 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
         dialogResultListener?.onDialogResult(dialogResult, location)
 
-        context?.let { KeyboardManager.hideSoftKeyboard(it, binding.searchEdit) }
+
+
+
         super.onDismiss(dialog)
 
     }

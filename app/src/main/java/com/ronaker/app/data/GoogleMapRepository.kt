@@ -2,6 +2,7 @@ package com.ronaker.app.data
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.GoogleMapApi
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
