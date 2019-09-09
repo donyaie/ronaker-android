@@ -3,24 +3,19 @@ package com.ronaker.app.ui.addProduct
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.NetworkError
 import com.ronaker.app.base.NetworkError.Companion.error_unverified_phone_number
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.data.network.response.ContentImageResponceModel
+import com.ronaker.app.model.Place
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.User
 import com.ronaker.app.model.toProductImage
 import com.ronaker.app.utils.Debug
 import io.reactivex.disposables.Disposable
-import java.lang.Exception
-import java.text.DecimalFormat
 import javax.inject.Inject
 
 class AddProductViewModel : BaseViewModel() {
@@ -56,15 +51,15 @@ class AddProductViewModel : BaseViewModel() {
     private var updateproductSubscription: Disposable? = null
 
 
-
     var moveLocation: MutableLiveData<LatLng> = MutableLiveData()
 
 
     private lateinit var updateState: StateEnum
-    private  var updateSuid: String?=null
+    private var updateSuid: String? = null
 
 
     val productTitle: MutableLiveData<String> = MutableLiveData()
+    val productLocation: MutableLiveData<LatLng> = MutableLiveData()
     val productDescription: MutableLiveData<String> = MutableLiveData()
     val productPriceDay: MutableLiveData<String> = MutableLiveData()
     val productPriceMonth: MutableLiveData<String> = MutableLiveData()
@@ -96,25 +91,22 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-    fun stateChange(state:StateEnum){
+    fun stateChange(state: StateEnum) {
 
-        if(state==StateEnum.category){
+        if (state == StateEnum.category) {
             updateCategoryList()
         }
 
     }
 
-    fun updateCategoryList(){
+    fun updateCategoryList() {
 
-
+        getCategorySubscription?.dispose()
         getCategorySubscription =
-            categoryRepository.getCategories(userRepository.getUserToken()).doOnSubscribe { loading.value = true }
-                .doOnTerminate {
-                    loading.value = false
-                }
+            categoryRepository.getCategories(userRepository.getUserToken())
+                .doOnSubscribe { loading.value = true }
+                .doOnTerminate { loading.value = false }
                 .subscribe { result ->
-
-
 
 
                 }
@@ -150,7 +142,6 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-
     fun onClickImageNext() {
 
 
@@ -171,7 +162,12 @@ class AddProductViewModel : BaseViewModel() {
 
     }
 
-    fun onClickInfoNext(title: String, titleValid: Boolean, description: String, descriptionValid: Boolean) {
+    fun onClickInfoNext(
+        title: String,
+        titleValid: Boolean,
+        description: String,
+        descriptionValid: Boolean
+    ) {
         if (titleValid && descriptionValid) {
             product.description = description
             product.name = title
@@ -185,8 +181,15 @@ class AddProductViewModel : BaseViewModel() {
     }
 
 
-    fun  onClickCategoryNext(){
+    fun onClickCategoryNext() {
+
+
+        product.new_categories=ArrayList()
         viewState.value = StateEnum.price
+
+
+
+
     }
 
     fun onClickPriceNext(
@@ -232,12 +235,32 @@ class AddProductViewModel : BaseViewModel() {
 
     }
 
-    fun onClickLocationNext() {
-        createProduct()
+    fun onClickLocationNext(place: Place?) {
+
+        if (place != null) {
+
+            product.address = place.mainText
+            product.location = LatLng(place.lat!!, place.lng!!)
+
+
+            if (!updateSuid.isNullOrEmpty()) {
+
+                updateProduct(product)
+            } else
+                createProduct()
+        }
+        else
+            errorMessage.value = context.getString(R.string.error_set_location)
+
+
+
+
     }
 
 
     fun createProduct() {
+
+        createPostSubscription?.dispose()
 
         createPostSubscription = productRepository.productCreate(
             userRepository.getUserToken(),
@@ -269,8 +292,6 @@ class AddProductViewModel : BaseViewModel() {
     fun onClickAddImage() {
         showPickerNext.value = true
     }
-
-
 
 
     fun selectImage(uri: Uri?) {
@@ -351,7 +372,7 @@ class AddProductViewModel : BaseViewModel() {
     }
 
     fun updateProduct(product: Product) {
-
+        updateproductSubscription?.dispose()
         updateproductSubscription =
             updateSuid?.let {
                 productRepository.productUpdate(userRepository.getUserToken(), it, product)
@@ -377,8 +398,10 @@ class AddProductViewModel : BaseViewModel() {
         updateState = state
         updateSuid = suid
 
+        getproductSubscription?.dispose()
         getproductSubscription =
-            productRepository.getProduct(userRepository.getUserToken(), suid).doOnSubscribe { loading.value = true }
+            productRepository.getProduct(userRepository.getUserToken(), suid)
+                .doOnSubscribe { loading.value = true }
                 .doOnTerminate { loading.value = false }
                 .subscribe { result ->
                     if (result.isSuccess()) {
@@ -386,7 +409,8 @@ class AddProductViewModel : BaseViewModel() {
                             StateEnum.image -> {
 
 
-                                result.data?.images?.toProductImage()?.let { adapter.addRemoteImage(it) }
+                                result.data?.images?.toProductImage()
+                                    ?.let { adapter.addRemoteImage(it) }
 
                             }
                             StateEnum.price -> {
@@ -408,13 +432,40 @@ class AddProductViewModel : BaseViewModel() {
                                         result.data.price_per_month.toString()
                                     } else ""
 
+
+
+
+
                             }
                             StateEnum.info -> {
 
                                 productTitle.value = result.data?.name
                                 productDescription.value = result.data?.description
                             }
+
+                            StateEnum.category->{
+
+                            }
                             StateEnum.location -> {
+
+
+
+
+
+                                result.data?.location?.let {
+
+
+                                    productLocation.value=LatLng(
+                                        result.data.location.lat,
+                                        result.data.location.lng)
+
+
+
+                                }
+
+
+
+
 
                             }
                         }

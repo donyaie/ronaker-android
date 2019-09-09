@@ -2,7 +2,6 @@ package com.ronaker.app.ui.addProduct
 
 import android.Manifest
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,10 +21,25 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.model.Place
+import com.ronaker.app.utils.DEFULT_LOCATION
+import com.ronaker.app.utils.KeyboardManager
+import com.ronaker.app.utils.MAP_ZOOM
 import com.ronaker.app.utils.view.IPagerFragment
 
 
-class AddProductLocationFragment : BaseFragment(), IPagerFragment {
+class AddProductLocationFragment : BaseFragment(), IPagerFragment,
+    AddProductLocationSearchDialog.OnDialogResultListener, GoogleMap.OnCameraIdleListener {
+
+    var isFirstIdle=false
+
+    override fun onCameraIdle() {
+        if (isFirstSelected && isFirstIdle) {
+            viewModel.updateLocation(mGoogleMap.cameraPosition.target)
+        }else if(isFirstSelected){
+            isFirstIdle=true
+        }
+    }
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProductAddLocationBinding
@@ -36,7 +50,12 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
     lateinit var mGoogleMap: GoogleMap
 
 
-    var lastLocation: Location? = null
+    var lastLocation: LatLng? = null
+
+
+    fun getSuid(): String? {
+        return activity?.intent?.getStringExtra(AddProductActivity.SUID_KEY)
+    }
 
 
     override fun onCreateView(
@@ -57,7 +76,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
         }
 
         viewModel = ViewModelProviders.of(this).get(AddProductLocationViewModel::class.java)
-        binding.viewModel=viewModel
+        binding.viewModel = viewModel
 
 
 
@@ -72,13 +91,56 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
         (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             mGoogleMap = it
 
-            chech()
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                DEFULT_LOCATION,
+                10f
+            )
+            mGoogleMap.moveCamera(cameraUpdate)
+
+            baseViewModel.productLocation.value?.let {it3->
+
+                moveCamera(it3) }
+
+
+            chech(false)
+            mGoogleMap.setOnCameraIdleListener(this@AddProductLocationFragment)
+
+
+
         }
 
         binding.currentButton.setOnClickListener {
             lastLocation = null
-            chech()
+            chech(true)
 
+        }
+
+//        viewModel.loading.observe(this, Observer { value ->
+//
+//            baseViewModel.loading.value = value
+//        })
+
+
+
+        baseViewModel.productLocation.observe(this, Observer { value ->
+            moveCamera(value)
+
+        })
+
+
+        viewModel.newLocation.observe(this, Observer { value ->
+            moveCamera(value)
+        })
+
+
+
+        binding.searchLayout.setOnClickListener {
+
+
+            fragmentManager?.let { it1 ->
+                AddProductLocationSearchDialog.DialogBuilder(it1)
+                    .setListener(this@AddProductLocationFragment).show()
+            }
         }
 
 
@@ -87,21 +149,39 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
     }
 
 
+    override fun onDialogResult(
+        result: AddProductLocationSearchDialog.DialogResultEnum,
+        location: Place?
+    ) {
+
+
+        if (result == AddProductLocationSearchDialog.DialogResultEnum.OK)
+            location?.let { viewModel.selectPlace(it) }
+
+    }
+
     override fun onStart() {
         super.onStart()
+
+        activity?.let { KeyboardManager.hideSoftKeyboard(it) }
+
 
     }
 
 
-    fun moveCamera(location: Location) {
 
 
-        if (mGoogleMap != null) {
+
+
+    fun moveCamera(location: LatLng) {
+
+
+        if (::mGoogleMap.isInitialized) {
 
 
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                LatLng(location.longitude, location.longitude),
-                10f
+                location,
+                MAP_ZOOM
             )
             mGoogleMap.animateCamera(cameraUpdate)
 
@@ -112,7 +192,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
     }
 
 
-    fun chech() {
+    fun chech(move: Boolean) {
         Dexter.withActivity(activity)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -129,17 +209,26 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
 
-                        if (mGoogleMap != null)
+                        if (::mGoogleMap.isInitialized) {
                             mGoogleMap.isMyLocationEnabled = true
+                            mGoogleMap.uiSettings.isMyLocationButtonEnabled = false
+                        }
 
                         mFusedLocationClient.lastLocation.addOnSuccessListener {
 
                                 location ->
-                            if (location != null)
+                            if (location != null) {
+
+
+                                var newLocation = LatLng(location.latitude, location.longitude)
+
 
                                 if (lastLocation == null)
-                                    moveCamera(location)
-                            lastLocation = location
+                                    if (move)
+                                        moveCamera(newLocation)
+
+                                lastLocation = newLocation
+                            }
 
 
                         }
@@ -164,7 +253,11 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment {
         }
     }
 
+    var isFirstSelected = false
+
     override fun onSelect() {
+        isFirstSelected = true
+
 
     }
 

@@ -7,15 +7,25 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.DEFULT_LOCATION
+import com.google.android.gms.maps.model.MarkerOptions
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 
 class ExploreProductActivity : BaseActivity() {
@@ -24,6 +34,8 @@ class ExploreProductActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
+
+    lateinit var googleMap: GoogleMap
 
     companion object {
         var SUID_KEY = "suid"
@@ -68,7 +80,7 @@ class ExploreProductActivity : BaseActivity() {
 
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() !=null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
             val imageTransitionName = getImageTransition()
             binding.avatarImage.setTransitionName(imageTransitionName)
         }
@@ -120,8 +132,6 @@ class ExploreProductActivity : BaseActivity() {
                     binding.toolbar.isBottomLine = false
 
 
-
-
                 } else {
 
                     binding.toolbar.isTransparent = false
@@ -135,6 +145,34 @@ class ExploreProductActivity : BaseActivity() {
         };
 
 
+
+        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
+            googleMap = it
+
+
+            googleMap.uiSettings.setAllGesturesEnabled(false)
+
+            viewModel.productLocation.value?.let {
+                addMarker(it)
+
+            } ?: run {
+                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                    DEFULT_LOCATION,
+                    10f
+                )
+                googleMap.moveCamera(cameraUpdate)
+            }
+
+
+        }
+
+
+        viewModel.productLocation.observe(this, Observer { suid ->
+
+            addMarker(suid)
+
+
+        })
 
         viewModel.checkout.observe(this, Observer { suid ->
 
@@ -158,12 +196,32 @@ class ExploreProductActivity : BaseActivity() {
 
 
             Handler().postDelayed({
-                binding.scrollView.smoothScrollTo(0,0)
+                binding.scrollView.smoothScrollTo(0, 0)
                 binding.toolbar.isTransparent = true
                 binding.toolbar.isBottomLine = false
-            },500)
+            }, 500)
 
         }
+
+
+    }
+
+
+    fun addMarker(latLng: LatLng) {
+        if(::googleMap.isInitialized) {
+            googleMap.clear()
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                latLng,
+                17f
+            )
+            googleMap.moveCamera(cameraUpdate)
+
+            googleMap.addMarker(
+                MarkerOptions().position(latLng)
+            )
+
+        }
+
 
 
     }

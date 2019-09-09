@@ -95,7 +95,11 @@ class AddProductActivity : BaseActivity() {
             return Intent(context, AddProductActivity::class.java)
         }
 
-        fun newInstance(context: Context, suid: String, state: AddProductViewModel.StateEnum): Intent {
+        fun newInstance(
+            context: Context,
+            suid: String,
+            state: AddProductViewModel.StateEnum
+        ): Intent {
             var intent = Intent(context, AddProductActivity::class.java)
             var boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
@@ -111,7 +115,7 @@ class AddProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setSlideTransition(this)
+//        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
@@ -149,14 +153,11 @@ class AddProductActivity : BaseActivity() {
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
-                binding.loading.showLoading()
+//                binding.loading.showLoading()
             } else
-                binding.loading.hideLoading()
+//                binding.loading.hideLoading()
+                binding.loading.visibility = View.GONE
         })
-
-
-
-
 
 
     }
@@ -282,7 +283,11 @@ class AddProductActivity : BaseActivity() {
         binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
 
             }
 
@@ -297,6 +302,10 @@ class AddProductActivity : BaseActivity() {
 
 
                 if (actionState == AddProductViewModel.StateEnum.image)
+                    KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
+
+
+                if (actionState == AddProductViewModel.StateEnum.category)
                     KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
 
                 if (actionState == AddProductViewModel.StateEnum.location)
@@ -369,20 +378,25 @@ class AddProductActivity : BaseActivity() {
 
 
     private fun showImagePickerOptions() {
-        ImagePickerActivity.showImagePickerOptions(this, object : ImagePickerActivity.PickerOptionListener {
-            override fun onTakeCameraSelected() {
-                launchCameraIntent()
-            }
+        ImagePickerActivity.showImagePickerOptions(
+            this,
+            object : ImagePickerActivity.PickerOptionListener {
+                override fun onTakeCameraSelected() {
+                    launchCameraIntent()
+                }
 
-            override fun onChooseGallerySelected() {
-                launchGalleryIntent()
-            }
-        })
+                override fun onChooseGallerySelected() {
+                    launchGalleryIntent()
+                }
+            })
     }
 
     private fun launchCameraIntent() {
         val intent = Intent(this, ImagePickerActivity::class.java)
-        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE)
+        intent.putExtra(
+            ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+            ImagePickerActivity.REQUEST_IMAGE_CAPTURE
+        )
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
@@ -399,7 +413,10 @@ class AddProductActivity : BaseActivity() {
 
     private fun launchGalleryIntent() {
         val intent = Intent(this, ImagePickerActivity::class.java)
-        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE)
+        intent.putExtra(
+            ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+            ImagePickerActivity.REQUEST_GALLERY_IMAGE
+        )
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
@@ -453,7 +470,8 @@ class AddProductActivity : BaseActivity() {
     }
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
+    internal inner class ViewPagerAdapter(manager: FragmentManager) :
+        FragmentStatePagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
 
         override fun getCount(): Int {

@@ -3,7 +3,7 @@ package com.ronaker.app.data.network.response
 import com.google.gson.annotations.SerializedName
 
 data class GooglePlaceDetailResponseModel(
-    @SerializedName("result")  var result: GooglePlaceResultResponseModel,
+    @SerializedName("result")  var result: GooglePlaceResultResponseModel?,
     @SerializedName("status")  var status: String
 ) {
 

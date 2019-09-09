@@ -207,7 +207,7 @@
                 app:toolbar_component_dot_count="3"
                 app:toolbar_component_center_container="NONE"
                 app:toolbar_component_action_container="TWO_BUTTON"
-                app:toolbar_component_cancel_container="CLOSE"
+                app:toolbar_component_cancel_container="BACK"
         />
 
         <com.ronaker.app.utils.view.LoadingComponent android:layout_width="match_parent"

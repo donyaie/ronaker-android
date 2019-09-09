@@ -3,6 +3,7 @@ package com.ronaker.app.ui.exploreProduct
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
@@ -40,6 +41,7 @@ class ExploreProductViewModel : BaseViewModel() {
 
     val productPrice: MutableLiveData<String> = MutableLiveData()
     val productPriceTitle: MutableLiveData<String> = MutableLiveData()
+    val productLocation: MutableLiveData<LatLng> = MutableLiveData()
     val productAddress: MutableLiveData<String> = MutableLiveData()
 
     lateinit  var mProduct:Product
@@ -131,6 +133,12 @@ class ExploreProductViewModel : BaseViewModel() {
         productImage.value = BASE_URL + product.avatar
         productDescription.value = product.description
         productTitle.value = product.name
+
+        productAddress.value=product.address
+
+        productLocation.value=product.location
+
+
         if (product.price_per_day != 0.0) {
 
             productPrice.value = String.format(
@@ -154,6 +162,10 @@ class ExploreProductViewModel : BaseViewModel() {
             )
             productPriceTitle.value = context.getString(R.string.title_per_month)
         }
+
+
+
+
 
     }
 
