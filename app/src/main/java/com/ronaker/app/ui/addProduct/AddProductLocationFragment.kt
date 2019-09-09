@@ -91,7 +91,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             mGoogleMap = it
 
-
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                 DEFULT_LOCATION,
                 10f
@@ -168,6 +167,10 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
     }
+
+
+
+
 
 
     fun moveCamera(location: LatLng) {
