@@ -45,6 +45,13 @@
         <activity
                 android:theme="@style/PopTheme"
                 android:screenOrientation="portrait"
+                android:name=".ui.profileEdit.ProfileEditActivity">
+
+        </activity>
+
+        <activity
+                android:theme="@style/PopTheme"
+                android:screenOrientation="portrait"
                 android:name=".ui.orderPreview.OrderPreviewActivity">
 
         </activity>

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.profile.ProfileViewModel"/>
+                type="com.ronaker.app.ui.profile.ProfileViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/white"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
 
         <com.ronaker.app.utils.view.StatusBarSizeView
@@ -17,83 +20,121 @@
 
                 android:id="@+id/statusBar"
 
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
-        <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/statusBar"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                                               android:layout_height="0dp">
+                app:layout_constraintTop_toBottomOf="@id/statusBar">
 
 
-            <LinearLayout android:paddingTop="50dp" android:orientation="vertical"
-                          app:layout_constraintTop_toTopOf="parent" android:layout_width="match_parent"
-                          android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="50dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
 
-                <LinearLayout android:gravity="center" android:orientation="horizontal"
-                              android:layout_width="match_parent" android:minHeight="112dp"
-                              android:layout_height="wrap_content">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="112dp"
+                        android:orientation="horizontal">
 
 
-                    <com.makeramen.roundedimageview.RoundedImageView android:layout_marginLeft="24dp"
-                                                                     app:riv_corner_radius="36dp"
-                                                                     android:src="@color/colorPlatinGrey"
-                                                                     android:layout_width="72dp"
-                                                                     android:layout_height="72dp"/>
+                    <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="72dp"
 
 
-                    <LinearLayout android:layout_marginRight="22dp" android:orientation="vertical"
-                                  android:layout_marginLeft="16dp" android:layout_width="0dp"
-                                  android:layout_weight=".95" android:layout_height="wrap_content">
+                            android:layout_height="72dp"
+                            android:layout_marginLeft="24dp"
+                            android:src="@color/colorPlatinGrey"
+                            app:mutableImage="@{viewModel.getUserAvatar()}"
+                            app:riv_corner_radius="36dp" />
+
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="22dp"
+                            android:layout_weight=".95"
+                            android:orientation="vertical">
 
 
                         <TextView
+
+                                android:layout_width="match_parent"
+
+
+                                android:layout_height="wrap_content"
 
                                 android:text="name"
-                                android:textColor="@color/colorTextDark"
                                 android:textAppearance="@style/TextAppearance.Heading.2"
-                                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                                android:textColor="@color/colorTextDark"
+                                app:mutableText="@{viewModel.getUserName()}" />
 
 
                         <TextView
 
-                                android:text="Edit Profile"
-                                android:textColor="@color/colorTextDark"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
+                                app:mutableVisibility="@{viewModel.getEditVisibility()}"
+                                android:text="Edit Profile"
                                 android:textAppearance="@style/TextAppearance.Medium.Regular"
-                                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                                android:textColor="@color/colorTextDark" />
 
 
-                        <ProgressBar android:layout_width="match_parent" android:layout_marginTop="12dp"
-                                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                                     android:progress="20"
-                                     android:max="100"
-                                     android:layout_height="wrap_content"/>
+                        <ProgressBar
+
+                                app:mutableProgress="@{viewModel.getCompleteProgress()}"
+                                app:mutableVisibility="@{viewModel.getCompleteProgressVisibility()}"
+                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:max="100"
+                                android:progress="20" />
 
 
-                        <LinearLayout android:layout_width="match_parent"
-                                      android:layout_marginTop="8dp"
-                                      android:orientation="horizontal"
-                                      android:layout_height="wrap_content">
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:id="@+id/complete_layout"
+                                android:layout_height="wrap_content"
+                                app:mutableVisibility="@{viewModel.getCompleteVisibility()}"
+                                android:layout_marginTop="8dp"
+                                android:orientation="horizontal">
 
 
                             <TextView
 
-                                    android:text="Complete Profile"
-                                    android:textColor="@color/colorTextDark"
+                                    android:id="@+id/complete_text"
+
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight=".95"
+                                    android:text="Complete Profile"
                                     android:textAppearance="@style/TextAppearance.Medium.Regular"
-                                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+                                    android:textColor="@color/colorTextDark" />
 
                             <TextView
 
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="3 fo 5"
-                                    android:textColor="@color/colorTextDark"
-                                    android:textAppearance="@style/TextAppearance.Medium.Regular"
-                                    android:layout_width="wrap_content" android:layout_height="wrap_content"
 
-                            />
+                                    app:mutableText="@{viewModel.getUserStep()}"
+
+                                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                                    android:textColor="@color/colorTextDark"
+
+                                    />
 
                         </LinearLayout>
 
@@ -104,112 +145,139 @@
                 </LinearLayout>
 
                 <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp" android:gravity="center" android:layout_width="match_parent"
-                        android:layout_height="64dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
 
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp"
-                               android:layout_marginRight="16dp"
-                               android:padding="6dp"
-                               app:srcCompat="@drawable/ic_settings"
-                               android:layout_marginLeft="24dp"/>
+                    <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="16dp"
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_settings" />
 
-                    <TextView android:layout_width="0dp"
+                    <TextView
+                            android:layout_width="0dp"
 
-                              android:layout_weight=".95"
-                              android:layout_height="wrap_content"
-                              android:textAppearance="@style/TextAppearance.Large.SB"
-                              android:textColor="@color/colorTextDark"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="Setting"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
 
-                              android:text="Setting"/>
+                            android:textColor="@color/colorTextDark" />
 
                 </LinearLayout>
 
-                <RelativeLayout android:layout_width="match_parent" android:layout_marginLeft="24dp"
-                                android:layout_marginRight="24dp" android:layout_height="1dp"
-                                android:background="@color/colorPlatinGrey"/>
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
 
 
                 <LinearLayout
-                        android:orientation="horizontal"
                         android:id="@+id/payment_layout"
+                        android:layout_width="match_parent"
 
 
-                        android:gravity="center" android:layout_width="match_parent"
-                        android:layout_height="64dp">
+                        android:layout_height="64dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
 
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp"
-                               android:layout_marginRight="16dp"
-                               app:srcCompat="@drawable/ic_credit"
-                               android:padding="6dp"
-                               android:layout_marginLeft="24dp"/>
+                    <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="16dp"
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_credit" />
 
-                    <TextView android:layout_width="0dp"
+                    <TextView
+                            android:layout_width="0dp"
 
-                              android:layout_weight=".95"
-                              android:layout_height="wrap_content"
-                              android:textAppearance="@style/TextAppearance.Large.SB"
-                              android:textColor="@color/colorTextDark"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="Payment"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
 
-                              android:text="Payment"/>
-
-                </LinearLayout>
-
-                <RelativeLayout android:layout_width="match_parent" android:layout_marginLeft="24dp"
-                                android:layout_marginRight="24dp" android:layout_height="1dp"
-                                android:background="@color/colorPlatinGrey"/>
-
-
-                <LinearLayout
-                        android:onClick="@{()->viewModel.onClickLogout()}" android:orientation="horizontal"
-                        android:gravity="center" android:layout_width="match_parent"
-                        android:layout_height="64dp">
-
-
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp"
-                               android:layout_marginRight="16dp"
-                               android:layout_marginLeft="24dp"/>
-
-                    <TextView android:layout_width="0dp"
-
-                              android:layout_weight=".95"
-                              android:layout_height="wrap_content"
-                              android:textAppearance="@style/TextAppearance.Large.SB"
-                              android:textColor="@color/colorTextDark"
-
-                              android:text="@string/title_logout"/>
+                            android:textColor="@color/colorTextDark" />
 
                 </LinearLayout>
 
-
-                <RelativeLayout android:layout_width="match_parent" android:layout_marginLeft="24dp"
-                                android:layout_marginRight="24dp" android:layout_height="1dp"
-                                android:background="@color/colorPlatinGrey"/>
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
 
 
                 <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center" android:layout_width="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center"
+                        android:onClick="@{()->viewModel.onClickLogout()}"
+                        android:orientation="horizontal">
 
 
+                    <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="16dp" />
+
+                    <TextView
+                            android:layout_width="0dp"
+
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="@string/title_logout"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
                         android:id="@+id/language"
-                        android:layout_height="64dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
 
 
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp"
-                               android:layout_marginRight="16dp"
-                               android:layout_marginLeft="24dp"/>
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <TextView android:layout_width="0dp"
 
-                              android:layout_weight=".95"
-                              android:layout_height="wrap_content"
-                              android:textAppearance="@style/TextAppearance.Large.SB"
-                              android:textColor="@color/colorTextDark"
+                    <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="16dp" />
 
-                              android:text="Change Language"/>
+                    <TextView
+                            android:layout_width="0dp"
+
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="Change Language"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
 
                 </LinearLayout>
 
@@ -219,11 +287,12 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.ronaker.app.utils.view.LoadingComponent android:layout_width="match_parent"
-                                                     android:id="@+id/loading"
-                                                     android:visibility="gone"
-                                                     app:loading_transparent="false"
-                                                     android:layout_height="match_parent"/>
+        <com.ronaker.app.utils.view.LoadingComponent
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:loading_transparent="false" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
