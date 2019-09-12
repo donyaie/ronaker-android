@@ -60,10 +60,10 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="Lend | Canceled Order"
+                    orderStatus.value="Rent | Canceled Order"
                 }else{
 
-                    orderStatus.value="Rent | Canceled Order"
+                    orderStatus.value="Lend | Canceled Order"
                 }
 
 
@@ -76,10 +76,10 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="Lend | Completed Order"
+                    orderStatus.value="Rent | Completed Order"
                 }else{
 
-                    orderStatus.value="Rent | Completed Order"
+                    orderStatus.value="Lend | Completed Order"
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -93,6 +93,21 @@ class OrderItemViewModel : BaseViewModel() {
                 }else{
 
                     orderStatus.value="Pending to accept from $ownerName"
+                }
+
+            }
+
+            Order.OrderStatusEnum.Rejected -> {
+
+                orderStatusImage.value=R.drawable.ic_remove_red
+
+
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+
+                    orderStatus.value="Rent | Rejected Order"
+                }else{
+
+                    orderStatus.value="Lend | Completed Order"
                 }
 
             }

@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.ronaker.app.injection.component.DaggerViewModelInjector
 import com.ronaker.app.injection.component.ViewModelInjector
 import com.ronaker.app.injection.module.RepositoryModule
-import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
-import com.ronaker.app.ui.addProduct.AddProductLocationSearchViewModel
-import com.ronaker.app.ui.addProduct.AddProductLocationViewModel
-import com.ronaker.app.ui.addProduct.AddProductViewModel
+import com.ronaker.app.ui.addProduct.*
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
@@ -62,6 +59,7 @@ abstract class BaseViewModel : ViewModel() {
 
             is AddProductLocationViewModel->injector.inject(this)
             is AddProductLocationSearchViewModel->injector.inject(this)
+            is AddProductCategorySelectViewModel->injector.inject(this)
         }
 
     }

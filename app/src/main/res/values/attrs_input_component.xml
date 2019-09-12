@@ -9,6 +9,7 @@
         <attr name="input_text" format="reference|string"/>
 
         <attr name="input_is_alert" format="boolean"/>
+        <attr name="input_is_editable" format="boolean"/>
 
 
         <attr name="input_transparent" format="boolean"/>

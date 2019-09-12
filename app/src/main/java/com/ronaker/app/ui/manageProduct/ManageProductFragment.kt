@@ -97,6 +97,21 @@ class ManageProductFragment : BaseFragment() {
             })
         }
 
+
+        binding.categoryLayout.setOnClickListener {
+            startActivityMakeScene(context?.let { it1 ->
+                productViewModel.mProduct.suid?.let { it2 ->
+                    AddProductActivity.newInstance(
+                        it1,
+                        it2, AddProductViewModel.StateEnum.category
+                    )
+                }
+            })
+        }
+
+
+
+
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
             try {

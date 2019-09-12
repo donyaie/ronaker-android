@@ -20,14 +20,14 @@ data class Category(
     var suid: String
     , var title: String
     , var avatar: String
-    , var sub_categories: List<Category>?
+    , var sub_categories: ArrayList<Category>?
 ): Parcelable {
 
 
 }
 
 
-fun List<CategoriesResponseModel>.toCategoryList(): List<Category> {
+fun List<CategoriesResponseModel>.toCategoryList(): ArrayList<Category> {
 
 
     var list: ArrayList<Category> = ArrayList()

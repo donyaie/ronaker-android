@@ -91,30 +91,55 @@
                                     android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
 
                     <LinearLayout android:layout_width="match_parent"
-                                  android:gravity="center_vertical"
-                                  android:paddingLeft="24dp"
-                                  android:id="@+id/name_layout"
-                                  android:paddingRight="24dp"
-                                  android:orientation="horizontal"
-                                  android:layout_height="56dp">
+                            android:gravity="center_vertical"
+                            android:paddingLeft="24dp"
+                            android:id="@+id/name_layout"
+                            android:paddingRight="24dp"
+                            android:orientation="horizontal"
+                            android:layout_height="56dp">
 
                         <TextView android:layout_width="0dp"
-                                  android:textColor="@color/colorTextDark"
-                                  android:layout_weight=".95" android:text="@string/title_name_and_description"
-                                  android:textAppearance="@style/TextAppearance.Large.Light"
-                                  android:layout_height="wrap_content"/>
+                                android:textColor="@color/colorTextDark"
+                                android:layout_weight=".95" android:text="@string/title_name_and_description"
+                                android:textAppearance="@style/TextAppearance.Large.Light"
+                                android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp" app:srcCompat="@drawable/ic_chevron_right"
 
-                                   android:padding="3dp"
-                                   android:layout_height="20dp"/>
+                                android:padding="3dp"
+                                android:layout_height="20dp"/>
 
 
                     </LinearLayout>
 
                     <RelativeLayout android:layout_width="match_parent"
-                                    android:layout_marginLeft="24dp"
-                                    android:layout_marginRight="24dp"
-                                    android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+                    <LinearLayout android:layout_width="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="24dp"
+                            android:id="@+id/category_layout"
+                            android:paddingRight="24dp"
+                            android:orientation="horizontal"
+                            android:layout_height="56dp">
+
+                        <TextView android:layout_width="0dp"
+                                android:textColor="@color/colorTextDark"
+                                android:layout_weight=".95" android:text="Categories"
+                                android:textAppearance="@style/TextAppearance.Large.Light"
+                                android:layout_height="wrap_content"/>
+                        <ImageView android:layout_width="20dp" app:srcCompat="@drawable/ic_chevron_right"
+
+                                android:padding="3dp"
+                                android:layout_height="20dp"/>
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout android:layout_width="match_parent"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
                     <LinearLayout android:layout_width="match_parent"
                                   android:gravity="center_vertical"
                                   android:paddingLeft="24dp"

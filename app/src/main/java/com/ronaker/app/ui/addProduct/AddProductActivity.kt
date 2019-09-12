@@ -24,6 +24,8 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.Category
+import com.ronaker.app.model.Product
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.utils.AnimationHelper
@@ -35,7 +37,23 @@ import com.ronaker.app.utils.view.ToolbarComponent
 import java.io.IOException
 
 
-class AddProductActivity : BaseActivity() {
+class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDialogResultListener {
+    override fun onDialogResult(
+        result: AddProductCategorySelectDialog.DialogResultEnum,
+        parent: Category?,
+        selectedCategory: Category?
+    ) {
+
+
+        if(parent==null){
+            selectedCategory?.let { viewModel.selectCategory(it) }
+        }else{
+
+            selectedCategory?.let { viewModel.selectSubCategory(it) }
+        }
+    }
+
+
 
     private val TAG = AddProductActivity::class.java.simpleName
 
@@ -88,6 +106,7 @@ class AddProductActivity : BaseActivity() {
 
     companion object {
         var SUID_KEY = "suid"
+        var PRODUCT_KEY = "product"
         var STATE_KEY = "state"
 
 
@@ -103,6 +122,25 @@ class AddProductActivity : BaseActivity() {
             var intent = Intent(context, AddProductActivity::class.java)
             var boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
+            boundle.putInt(STATE_KEY, state.position)
+            intent.putExtras(boundle)
+
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+
+
+            return intent
+        }
+
+
+        fun newInstance(
+            context: Context,
+            product: Product,
+            state: AddProductViewModel.StateEnum
+        ): Intent {
+            var intent = Intent(context, AddProductActivity::class.java)
+            var boundle = Bundle()
+            boundle.putParcelable(PRODUCT_KEY, product)
             boundle.putInt(STATE_KEY, state.position)
             intent.putExtras(boundle)
 
@@ -131,6 +169,15 @@ class AddProductActivity : BaseActivity() {
         viewModel.viewState.observe(this, Observer { state ->
             viewModel.stateChange(state)
             actionState = state
+
+        })
+
+
+
+
+        viewModel.parentCategory.observe(this, Observer { category ->
+
+            AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this).setParent(category).show()
 
         })
 
@@ -193,6 +240,11 @@ class AddProductActivity : BaseActivity() {
 
     fun getSuid(): String? {
         return intent.getStringExtra(SUID_KEY)
+    }
+
+
+    fun getProduct(): Product? {
+        return intent.getParcelableExtra(PRODUCT_KEY)
     }
 
 

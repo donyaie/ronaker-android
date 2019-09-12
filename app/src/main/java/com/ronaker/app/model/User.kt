@@ -23,6 +23,7 @@ data class User(
     , var last_name: String?
     , var phone_number: String?
     , var is_phone_number_verified: Boolean?
+    , var avatar: String?
     , var password: String? = null
 ): Parcelable {
     constructor() : this(
@@ -51,7 +52,9 @@ fun UserInfoResponceModel.toUser(): User {
             this.first_name,
             this.last_name,
             this.phone_number,
-            this.is_phone_number_verified
+            this.is_phone_number_verified,
+            this.avatar,
+            null
 
         )
 

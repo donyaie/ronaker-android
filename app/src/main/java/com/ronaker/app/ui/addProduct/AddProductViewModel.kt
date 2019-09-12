@@ -2,6 +2,7 @@ package com.ronaker.app.ui.addProduct
 
 import android.content.Context
 import android.net.Uri
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
@@ -11,9 +12,7 @@ import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.model.Place
-import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductImage
+import com.ronaker.app.model.*
 import com.ronaker.app.utils.Debug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -66,18 +65,31 @@ class AddProductViewModel : BaseViewModel() {
     val productPriceWeek: MutableLiveData<String> = MutableLiveData()
 
 
+    val productCategoryTitle: MutableLiveData<String> = MutableLiveData()
+    val productSubCategoryTitle: MutableLiveData<String> = MutableLiveData()
+    val productSubCategoryVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+
+
     private var uploadSubscriptionList: ArrayList<Disposable?> = ArrayList()
 
-    var adapter: AddProductImageAdapter
+    var adapter: AddProductImageAdapter = AddProductImageAdapter(this)
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
+
+    val parentCategory: MutableLiveData<Category> = MutableLiveData()
+
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val showPickerNext: MutableLiveData<Boolean> = MutableLiveData()
+
+
+    var categories: ArrayList<Category> = ArrayList()
 
     var product: Product = Product()
 
@@ -85,31 +97,8 @@ class AddProductViewModel : BaseViewModel() {
 
     lateinit var imagesTemp: ArrayList<Product.ProductImage>
 
-    init {
-        adapter = AddProductImageAdapter(this)
-
-    }
-
 
     fun stateChange(state: StateEnum) {
-
-        if (state == StateEnum.category) {
-            updateCategoryList()
-        }
-
-    }
-
-    fun updateCategoryList() {
-
-        getCategorySubscription?.dispose()
-        getCategorySubscription =
-            categoryRepository.getCategories(userRepository.getUserToken())
-                .doOnSubscribe { loading.value = true }
-                .doOnTerminate { loading.value = false }
-                .subscribe { result ->
-
-
-                }
 
 
     }
@@ -184,13 +173,62 @@ class AddProductViewModel : BaseViewModel() {
     fun onClickCategoryNext() {
 
 
-        product.new_categories=ArrayList()
-        viewState.value = StateEnum.price
+        if(categories.isEmpty() ){
+            errorMessage.value="Please Select Category"
+        }else if (categories[0]?.sub_categories.isNullOrEmpty()){
 
+            errorMessage.value="Please Select Sub-Category"
+        }else{
+            product.new_categories = ArrayList()
+            product.new_categories!!.add(categories[0].suid)
+            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories!!.add(it) }
+
+
+            if (!updateSuid.isNullOrEmpty()) {
+
+                updateProduct(product)
+            } else
+                viewState.value = StateEnum.price
+
+
+        }
 
 
 
     }
+
+    fun selectCategory(category: Category) {
+
+        productCategoryTitle.value=category.title
+        categories.clear()
+        category.sub_categories = null
+        categories.add(category)
+
+        productSubCategoryVisibility.value= View.VISIBLE
+        productSubCategoryTitle.value=""
+
+
+    }
+
+    fun selectSubCategory(category: Category) {
+
+        if (categories.isNotEmpty()) {
+
+            productSubCategoryTitle.value=category.title
+            categories[0].sub_categories = ArrayList()
+            categories[0].sub_categories?.add(category)
+        }
+    }
+
+    fun onClickSelectCategory() {
+        parentCategory.value = null
+    }
+
+    fun onClickSelectSubCategory() {
+        if (categories.isNotEmpty())
+            parentCategory.value = categories[0]
+    }
+
 
     fun onClickPriceNext(
         dayPrice: String,
@@ -248,11 +286,8 @@ class AddProductViewModel : BaseViewModel() {
                 updateProduct(product)
             } else
                 createProduct()
-        }
-        else
+        } else
             errorMessage.value = context.getString(R.string.error_set_location)
-
-
 
 
     }
@@ -433,9 +468,6 @@ class AddProductViewModel : BaseViewModel() {
                                     } else ""
 
 
-
-
-
                             }
                             StateEnum.info -> {
 
@@ -443,28 +475,52 @@ class AddProductViewModel : BaseViewModel() {
                                 productDescription.value = result.data?.description
                             }
 
-                            StateEnum.category->{
+                            StateEnum.category -> {
+
+                                result.data?.categories?.let {
+
+                                    categories = it.toCategoryList() as ArrayList<Category>
+
+                                }
+
+
+                                productSubCategoryVisibility.value= View.GONE
+                                productSubCategoryTitle.value=""
+
+
+                                if (result.data?.categories != null && result.data.categories.isNotEmpty()) {
+                                    productCategoryTitle.value = result.data.categories.get(0).title
+
+
+                                    productSubCategoryVisibility.value= View.VISIBLE
+
+                                    if (result.data.categories[0].sub_categories != null && result.data.categories[0].sub_categories!!.isNotEmpty()) {
+                                        productSubCategoryTitle.value =
+                                            result.data.categories[0].sub_categories?.get(0)
+                                                ?.sub_categories?.get(0)
+                                                ?.title
+
+                                        productSubCategoryVisibility.value= View.VISIBLE
+
+                                    }
+
+                                }
+
 
                             }
                             StateEnum.location -> {
 
 
-
-
-
                                 result.data?.location?.let {
 
 
-                                    productLocation.value=LatLng(
+                                    productLocation.value = LatLng(
                                         result.data.location.lat,
-                                        result.data.location.lng)
-
+                                        result.data.location.lng
+                                    )
 
 
                                 }
-
-
-
 
 
                             }
