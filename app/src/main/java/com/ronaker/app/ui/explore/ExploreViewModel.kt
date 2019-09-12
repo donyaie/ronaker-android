@@ -67,7 +67,7 @@ class ExploreViewModel : BaseViewModel() {
             page++
 
             subscription = productRepository
-                .productSearch(userRepository.getUserToken(),query, page)
+                .productSearch(userRepository.getUserToken(),query, page,null,null)
 
                 .doOnSubscribe { onRetrieveProductListStart() }
                 .doOnTerminate { onRetrieveProductListFinish() }

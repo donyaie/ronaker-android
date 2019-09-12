@@ -1,6 +1,7 @@
 package com.ronaker.app.data
 
 
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
@@ -18,13 +19,17 @@ class ProductRepository(private val productApi: ProductApi, private val preferen
 
 
 
-    fun productSearch(token: String?,query:String?, page:Int): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
+    fun productSearch(token: String?,query:String?, page:Int,location:LatLng?,radius:Int?): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
 
 
-      var request:ProductSearchRequestModel?=null
+        var loc: LocationResponseModel?=null
 
-//          if(query!=null)
-              request= ProductSearchRequestModel(query)
+        location?.let {  loc=  LocationResponseModel(it.latitude,it.longitude) }
+
+
+
+      var request= ProductSearchRequestModel(query,loc,radius)
+
 
 
         return productApi.productSearch("Token $token",page, request)

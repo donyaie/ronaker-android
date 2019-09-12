@@ -38,7 +38,8 @@ fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
 }
 
 
-class InputComponent constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs),
+class InputComponent constructor(context: Context, attrs: AttributeSet) :
+    LinearLayout(context, attrs),
     View.OnFocusChangeListener {
 
     enum class AlertType {
@@ -77,6 +78,23 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
 
         }
 
+    var isEditable: Boolean = true
+        set(value) {
+            field = value
+
+            if(field){
+
+                input_edit.visibility=View.VISIBLE
+                input_view.visibility=View.GONE
+
+            }else{
+
+                input_edit.visibility=View.GONE
+                input_view.visibility=View.VISIBLE
+            }
+
+        }
+
     var isTransparent: Boolean = true
         set(value) {
             field = value
@@ -86,14 +104,31 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             title_text.setTextColor(
 
 
-                if (isTransparent) ContextCompat.getColor(context, R.color.colorTextLight) else ContextCompat.getColor(
+                if (isTransparent) ContextCompat.getColor(
+                    context,
+                    R.color.colorTextLight
+                ) else ContextCompat.getColor(
                     context,
                     R.color.colorTextDark
                 )
 
             )
             input_edit.setTextColor(
-                if (isTransparent) ContextCompat.getColor(context, R.color.colorTextLight) else ContextCompat.getColor(
+                if (isTransparent) ContextCompat.getColor(
+                    context,
+                    R.color.colorTextLight
+                ) else ContextCompat.getColor(
+                    context,
+                    R.color.colorTextDark
+                )
+
+            )
+
+            input_view.setTextColor(
+                if (isTransparent) ContextCompat.getColor(
+                    context,
+                    R.color.colorTextLight
+                ) else ContextCompat.getColor(
                     context,
                     R.color.colorTextDark
                 )
@@ -101,7 +136,10 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             )
 
             alert_text.setTextColor(
-                if (isTransparent) ContextCompat.getColor(context, R.color.colorTextLight) else ContextCompat.getColor(
+                if (isTransparent) ContextCompat.getColor(
+                    context,
+                    R.color.colorTextLight
+                ) else ContextCompat.getColor(
                     context,
                     R.color.colorTextDark
                 )
@@ -153,6 +191,8 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
     var alert_image: ImageView
     var alert_text: TextView
 
+    var input_view: TextView
+
     lateinit var counter_text: TextView
 
 
@@ -169,6 +209,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             field = value
 
             input_edit.setText(value)
+            input_view.setText(value)
         }
         get() {
             return input_edit.text.toString()
@@ -179,6 +220,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             field = value
 
             input_edit.setHint(value)
+            input_view.setHint(value)
         }
     var is_alert: Boolean = true
         set(value) {
@@ -187,7 +229,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             alert_layer.visibility = if (value) View.VISIBLE else View.GONE
         }
 
-    var regex: Regex?=null
+    var regex: Regex? = null
 
 
     var imeOptions: Int = 0
@@ -231,7 +273,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             hideAlert()
         } else if (input_edit.isFocused)
             showInputIcon(InputAlertType.Clear)
-        else if (regex?.matches(editable)==true) {
+        else if (regex?.matches(editable) == true) {
             showInputIcon(InputAlertType.Filled)
             hideAlert()
         } else {
@@ -259,6 +301,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
         alert_image = findViewById(R.id.alert_image)
         alert_text = findViewById(R.id.alert_text)
         counter_text = findViewById(R.id.counter_text)
+        input_view = findViewById(R.id.input_view)
 
 
         input_edit.onFocusChangeListener = this
@@ -303,10 +346,22 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
                     true
                 )
 
-            isTransparent = typedArray.getBoolean(R.styleable.input_component_attributes_input_transparent, true)
+
+            isEditable = typedArray
+                .getBoolean(
+                    R.styleable
+                        .input_component_attributes_input_is_editable,
+                    true
+                )
+
+            isTransparent = typedArray.getBoolean(
+                R.styleable.input_component_attributes_input_transparent,
+                true
+            )
 
 
-            hasInputDotValidator = typedArray.getBoolean(R.styleable.input_component_attributes_input_dot, true)
+            hasInputDotValidator =
+                typedArray.getBoolean(R.styleable.input_component_attributes_input_dot, true)
 
             counter = typedArray.getInteger(R.styleable.input_component_attributes_input_counter, 0)
 
@@ -328,7 +383,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
             )
 
 
-            regex = regexString?. toRegex()
+            regex = regexString?.toRegex()
 
 
             inputState_image.setOnClickListener {
@@ -350,6 +405,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) : Linear
 
 
             input_edit.typeface = Typeface.DEFAULT
+            input_view.typeface = Typeface.DEFAULT
             typedArray.recycle()
         }
     }
