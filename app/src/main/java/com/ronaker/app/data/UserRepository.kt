@@ -41,7 +41,7 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
     }
 
 
-    fun getUserInfo(user_token: String): Observable<Result<UserInfoResponceModel>> {
+    fun getUserInfo(user_token: String?): Observable<Result<UserInfoResponceModel>> {
         return userApi.getUserInfo("Token $user_token")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()

@@ -17,6 +17,7 @@ import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
+import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
@@ -60,6 +61,7 @@ abstract class BaseViewModel : ViewModel() {
             is AddProductLocationViewModel->injector.inject(this)
             is AddProductLocationSearchViewModel->injector.inject(this)
             is AddProductCategorySelectViewModel->injector.inject(this)
+            is ProfileEditViewModel->injector.inject(this)
         }
 
     }

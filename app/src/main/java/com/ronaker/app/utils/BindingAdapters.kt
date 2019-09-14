@@ -2,6 +2,7 @@ package com.ronaker.app.utils
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -28,7 +29,14 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
     }
 }
 
+@BindingAdapter("mutableProgress")
+fun setMutableText(view: ProgressBar, text: MutableLiveData<Int>?) {
 
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value -> view.progress = value?:0})
+    }
+}
 
 @BindingAdapter("mutableImage")
 fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
