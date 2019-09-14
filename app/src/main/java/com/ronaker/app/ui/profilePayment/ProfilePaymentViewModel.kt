@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.profileEdit
+package com.ronaker.app.ui.profilePayment
 
 
 import android.content.Context
@@ -8,7 +8,7 @@ import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEditViewModel : BaseViewModel() {
+class ProfilePaymentViewModel : BaseViewModel() {
 
 
     @Inject
@@ -24,11 +24,6 @@ class ProfileEditViewModel : BaseViewModel() {
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    val phoneComplete: MutableLiveData<Boolean> = MutableLiveData()
-    val imageComplete: MutableLiveData<Boolean> = MutableLiveData()
-    val signComplete: MutableLiveData<Boolean> = MutableLiveData()
-    val peymentComplete: MutableLiveData<Boolean> = MutableLiveData()
-    val identityComplete: MutableLiveData<Boolean> = MutableLiveData()
 
 
 
@@ -55,11 +50,6 @@ class ProfileEditViewModel : BaseViewModel() {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                    signComplete.value = result.data?.is_email_verified!!
-
-                    phoneComplete.value = result.data?.is_phone_number_verified!!
-
-                    imageComplete.value = result.data?.avatar != null
 
 
                 } else {

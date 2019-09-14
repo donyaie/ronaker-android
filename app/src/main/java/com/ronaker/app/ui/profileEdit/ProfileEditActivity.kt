@@ -36,7 +36,7 @@ class ProfileEditActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
 
         viewModel = ViewModelProviders.of(this).get(ProfileEditViewModel::class.java)
 

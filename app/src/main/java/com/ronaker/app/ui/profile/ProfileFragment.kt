@@ -18,6 +18,7 @@ import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 import com.ronaker.app.utils.view.LoadingComponent
 import android.content.Intent.getIntent
 import com.braintreepayments.api.dropin.DropInRequest
+import com.ronaker.app.ui.profileEdit.ProfileEditActivity
 
 
 class ProfileFragment : BaseFragment() {
@@ -46,8 +47,19 @@ class ProfileFragment : BaseFragment() {
         })
 
         viewModel.logOutAction.observe(this, Observer {
-            startActivityMakeScene(activity?.let { SplashActivity.newInstance(it) })
+            activity?.let {   startActivityMakeScene(SplashActivity.newInstance(it) )}
         })
+
+
+
+        binding.completeLayout.setOnClickListener {
+            activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
+        }
+
+
+        binding.editText.setOnClickListener {
+            activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
+        }
 
         binding.viewModel = viewModel
 
@@ -65,6 +77,11 @@ class ProfileFragment : BaseFragment() {
 
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.updateUser()
     }
 
 
