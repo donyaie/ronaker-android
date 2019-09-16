@@ -31,7 +31,7 @@ class General : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         context = this;
-        General=initDagger(this)
+        General=initDagger()
 
         ViewPump.init(
             ViewPump.builder()
@@ -59,7 +59,7 @@ class General : MultiDexApplication() {
 
 
 
-    private fun initDagger(app: General): AppComponent =
+    private fun initDagger(): AppComponent =
         DaggerAppComponent.builder()
 //            .appModule(AppModule(app))app
 

@@ -68,7 +68,7 @@ class SearchActivity : BaseActivity() {
             finishSafe()
         }
 
-        binding.searchEdit.setOnEditorActionListener { v, actionId, event ->
+        binding.searchEdit.setOnEditorActionListener { _, actionId, _ ->
 
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
 

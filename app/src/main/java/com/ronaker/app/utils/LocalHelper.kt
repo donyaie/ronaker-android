@@ -3,7 +3,7 @@ package com.ronaker.app.utils
 import android.os.Build
 import android.annotation.TargetApi
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import java.util.*
 
 
@@ -85,4 +85,10 @@ object LocaleHelper {
 
         return context
     }
+
+
+
+
+
+
 }

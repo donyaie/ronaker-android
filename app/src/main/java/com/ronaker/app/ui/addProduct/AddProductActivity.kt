@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.addProduct
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -515,15 +516,17 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
     // navigating user to app settings
     private fun openSettings() {
-        var intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         var uri: Uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
 
 
+
+
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentStatePagerAdapter(manager) {
+        FragmentStatePagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
 
         override fun getCount(): Int {

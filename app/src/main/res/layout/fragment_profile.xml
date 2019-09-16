@@ -53,7 +53,7 @@
 
                             android:layout_height="72dp"
                             android:layout_marginLeft="24dp"
-                            android:src="@color/colorPlatinGrey"
+                            android:src="@drawable/ic_user_default"
                             app:mutableImage="@{viewModel.getUserAvatar()}"
                             app:riv_corner_radius="36dp" />
 
@@ -178,11 +178,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="24dp"
+                        android:visibility="gone"
                         android:layout_marginRight="24dp"
                         android:background="@color/colorPlatinGrey" />
 
 
                 <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/payment_layout"
                         android:layout_width="match_parent"
 
@@ -232,6 +234,9 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginLeft="24dp"
+
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_settings"
                             android:layout_marginRight="16dp" />
 
                     <TextView
@@ -268,6 +273,9 @@
                     <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
+
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_settings"
                             android:layout_marginLeft="24dp"
                             android:layout_marginRight="16dp" />
 

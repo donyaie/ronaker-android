@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import io.reactivex.annotations.Nullable
 
+@Suppress("DEPRECATION")
 internal class FileResolver(private val contentResolver: ContentResolver) {
 
     @Nullable

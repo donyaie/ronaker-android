@@ -69,10 +69,10 @@ class OrdersViewModel : BaseViewModel() {
                     if (result.data?.results?.size!! > 0) {
 
 
-                        dataList.addAll(result.data?.results?.toOrderList())
+                        dataList.addAll(result.data.results.toOrderList())
                         productListAdapter.updateproductList()
 
-                        if (result.data?.next == null)
+                        if (result.data.next == null)
                             hasNextPage = false
 
                     } else {

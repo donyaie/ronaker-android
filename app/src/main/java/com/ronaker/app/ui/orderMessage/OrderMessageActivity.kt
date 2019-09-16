@@ -69,7 +69,7 @@ class OrderMessageActivity : BaseActivity() {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
-        viewModel.next.observe(this, Observer { value ->
+        viewModel.next.observe(this, Observer { _ ->
            finishSafe()
         })
 

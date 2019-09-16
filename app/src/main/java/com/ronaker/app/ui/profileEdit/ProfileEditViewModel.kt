@@ -55,9 +55,9 @@ class ProfileEditViewModel : BaseViewModel() {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                    signComplete.value = result.data?.is_email_verified!!
+                    signComplete.value = result.data?.is_email_verified
 
-                    phoneComplete.value = result.data?.is_phone_number_verified!!
+                    phoneComplete.value = result.data?.is_phone_number_verified
 
                     imageComplete.value = result.data?.avatar != null
 

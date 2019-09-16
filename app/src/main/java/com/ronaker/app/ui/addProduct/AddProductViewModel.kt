@@ -50,7 +50,6 @@ class AddProductViewModel : BaseViewModel() {
     private var updateproductSubscription: Disposable? = null
 
 
-    var moveLocation: MutableLiveData<LatLng> = MutableLiveData()
 
 
     private lateinit var updateState: StateEnum
@@ -175,7 +174,7 @@ class AddProductViewModel : BaseViewModel() {
 
         if(categories.isEmpty() ){
             errorMessage.value="Please Select Category"
-        }else if (categories[0]?.sub_categories.isNullOrEmpty()){
+        }else if (categories[0].sub_categories.isNullOrEmpty()){
 
             errorMessage.value="Please Select Sub-Category"
         }else{
@@ -479,7 +478,7 @@ class AddProductViewModel : BaseViewModel() {
 
                                 result.data?.categories?.let {
 
-                                    categories = it.toCategoryList() as ArrayList<Category>
+                                    categories = it.toCategoryList()
 
                                 }
 
@@ -489,7 +488,7 @@ class AddProductViewModel : BaseViewModel() {
 
 
                                 if (result.data?.categories != null && result.data.categories.isNotEmpty()) {
-                                    productCategoryTitle.value = result.data.categories.get(0).title
+                                    productCategoryTitle.value = result.data.categories[0].title
 
 
                                     productSubCategoryVisibility.value= View.VISIBLE
