@@ -107,7 +107,7 @@ class OrderPreviewViewModel : BaseViewModel() {
         dayNumber.value = String.format("%s%.02f for %d days", context.getString(R.string.title_curency_symbol), order.product.price_per_day!! * days,days)
 
 
-        when(Order.OrderTypeEnum.get( order.orderType)){
+        when(Order.OrderTypeEnum[order.orderType]){
 
             Order.OrderTypeEnum.Lending->{
 
@@ -118,6 +118,9 @@ class OrderPreviewViewModel : BaseViewModel() {
 
                 userName.value= order.orderUser?.first_name +" "+order.orderUser?.last_name
 
+
+            }
+            else->{
 
             }
 

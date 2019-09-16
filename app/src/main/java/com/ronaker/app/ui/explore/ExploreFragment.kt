@@ -66,7 +66,7 @@ class ExploreFragment : BaseFragment() {
         }
 
 
-        viewModel.searchValue.observe(this, Observer { value ->
+        viewModel.searchValue.observe(this, Observer { _ ->
 
             // Check if we're running on Android 5.0 or higher
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -177,9 +177,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
     }
 
     override fun onDestroyView() {
-        if (dialog != null) {
-            dialog.setDismissMessage(null)
-        }
+        dialog?.setDismissMessage(null)
         super.onDestroyView()
     }
 

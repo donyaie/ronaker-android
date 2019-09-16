@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
+import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 
 
 class ProfileEditActivity : BaseActivity() {
@@ -138,6 +139,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.paymentLayout.setOnClickListener {
 
+            startActivity(ProfilePaymentActivity.newInstance(this))
 
         }
 

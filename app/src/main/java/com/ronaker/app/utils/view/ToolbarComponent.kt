@@ -18,7 +18,7 @@ import com.ronaker.app.utils.ShapeDrawableHelper
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 
-class ToolbarComponent @JvmOverloads constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
 
     enum class CenterContainer {

@@ -26,7 +26,7 @@ fun textBind(input: InputComponent, value: String?) {
     input.text = value
 }
 
-@BindingAdapter("inputMutableText")
+@BindingAdapter("app:inputMutableText")
 fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()

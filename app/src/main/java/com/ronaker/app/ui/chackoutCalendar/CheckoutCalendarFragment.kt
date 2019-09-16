@@ -36,7 +36,7 @@ class CheckoutCalendarFragment : BaseFragment() {
 
 
 
-        viewModel.nextStep.observe(this, Observer { value ->
+        viewModel.nextStep.observe(this, Observer { _ ->
 
 
             activity?.let {

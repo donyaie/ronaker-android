@@ -54,9 +54,11 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
 
+
+    implementation "androidx.preference:preference-ktx:1.1.0"
     implementation 'com.google.android.material:material:1.0.0'
 
     // RecyclerView
@@ -66,7 +68,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // LiveData & ViewModel
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     // Data binding
     kapt "com.android.databinding:compiler:3.1.4"
@@ -151,11 +153,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
     //payment
-    implementation 'com.braintreepayments.api:braintree:3.4.2'
-
-
-    implementation 'com.braintreepayments.api:drop-in:4.2.0'
+    implementation 'io.card:android-sdk:5.5.1'
 
     //memory lake
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'

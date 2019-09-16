@@ -97,7 +97,7 @@ fun ProductItemResponceModel.toProduct(): Product {
         this.description,
         this.avatar,
         if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
-        if (this.categories != null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList(),
+        if (this.categories != null) this.categories.toCategoryList() else ArrayList(),
         if (this.location != null) LatLng(location.lat, location.lng) else null,
         this.address
     )
@@ -120,7 +120,7 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         this.description,
         this.avatar,
         if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
-        if (this.categories != null) this.categories.toCategoryList() as ArrayList<Category> else ArrayList(),
+        if (this.categories != null) this.categories.toCategoryList() else ArrayList(),
         if (this.location != null) LatLng(location.lat, location.lng) else null,
         this.address
     )

@@ -251,11 +251,15 @@ class ImagePickerActivity : BaseActivity() {
          * useful to clear some memory
          */
         fun clearCache(context: Context) {
-            val path = File(context.getExternalCacheDir(), "camera")
-            if (path.exists() && path.isDirectory()) {
-                for (child in path.listFiles()) {
-                    child.delete()
+            val path = File(context.externalCacheDir, "camera")
+            if (path.exists() && path.isDirectory) {
+                path.listFiles()?.let {
+
+                    for (child:File? in it) {
+                        child?.delete()
+                    }
                 }
+
             }
         }
     }
