@@ -480,6 +480,15 @@ class AddProductViewModel : BaseViewModel() {
 
                                     categories = it.toCategoryList()
 
+
+                                    if(categories.size>1){
+                                        categories[0].sub_categories= ArrayList()
+                                        categories[0].sub_categories?.add(categories[1])
+                                        categories.removeAt(1)
+                                    }
+
+
+
                                 }
 
 
@@ -487,17 +496,14 @@ class AddProductViewModel : BaseViewModel() {
                                 productSubCategoryTitle.value=""
 
 
-                                if (result.data?.categories != null && result.data.categories.isNotEmpty()) {
-                                    productCategoryTitle.value = result.data.categories[0].title
+                                if (categories.isNotEmpty()) {
+                                    productCategoryTitle.value = categories[0].title
 
 
                                     productSubCategoryVisibility.value= View.VISIBLE
 
-                                    if (result.data.categories[0].sub_categories != null && result.data.categories[0].sub_categories!!.isNotEmpty()) {
-                                        productSubCategoryTitle.value =
-                                            result.data.categories[0].sub_categories?.get(0)
-                                                ?.sub_categories?.get(0)
-                                                ?.title
+                                    if (! categories[0].sub_categories.isNullOrEmpty()) {
+                                        productSubCategoryTitle.value = categories[0].sub_categories?.get(0)?.title
 
                                         productSubCategoryVisibility.value= View.VISIBLE
 

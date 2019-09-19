@@ -53,7 +53,7 @@
 
                             android:layout_height="72dp"
                             android:layout_marginLeft="24dp"
-                            android:src="@drawable/ic_user_default"
+                            app:srcCompat="@drawable/ic_user_default"
                             app:mutableImage="@{viewModel.getUserAvatar()}"
                             app:riv_corner_radius="36dp" />
 

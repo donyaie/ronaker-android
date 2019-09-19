@@ -19,6 +19,7 @@ import com.ronaker.app.databinding.DialogAddProductLocationSearchBinding
 import com.ronaker.app.model.Place
 import com.ronaker.app.utils.KeyboardManager
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
 class AddProductLocationSearchDialog : BaseDialog() {
@@ -55,6 +56,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.NormalDialog)
     }
 
+    var disposable:Disposable?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,7 +90,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
         })
 
 
-        RxTextView.textChanges(binding.searchEdit)
+      disposable=   RxTextView.textChanges(binding.searchEdit)
             .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .subscribe {
 
@@ -173,6 +175,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
 
         dialog?.dismiss()
+        disposable?.dispose()
     }
 
 

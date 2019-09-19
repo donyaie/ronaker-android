@@ -90,4 +90,6 @@
     <string name="title_your_inbox">Jūsų gautieji</string>
     <string name="title_your_listings">Jūsų skelbimai</string>
     <string name="toast_image_intent_null">Trūksta vaizdo parinkiklio parinkties!</string>
+    <string name="error_set_location">Pasirinkite vietą</string>
+    <string name="title_select_category">Pasirinkite kategoriją</string>
 </resources>

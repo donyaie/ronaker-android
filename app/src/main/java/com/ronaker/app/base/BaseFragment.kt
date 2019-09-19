@@ -18,7 +18,12 @@ public abstract class  BaseFragment :Fragment(){
 
 
     fun startActivityMakeScene(intent: Intent?) {
-        activity?.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity?.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+        }else{
+
+            activity?.startActivity(intent)
+        }
 
     }
 

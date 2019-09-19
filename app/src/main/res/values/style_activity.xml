@@ -44,7 +44,6 @@
     </style>
 
     <style name="SearchTheme" parent="DashboardTheme">
-        <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/white</item>

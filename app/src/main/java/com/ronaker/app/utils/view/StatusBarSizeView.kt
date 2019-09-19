@@ -2,6 +2,7 @@ package com.ronaker.app.utils.view
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -43,13 +44,15 @@ class StatusBarSizeView : RelativeLayout {
 
 
         // listen to get the height
-        (context as? Activity)?.window?.decorView?.setOnApplyWindowInsetsListener { _, windowInsets ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            (context as? Activity)?.window?.decorView?.setOnApplyWindowInsetsListener { _, windowInsets ->
 
-            // get the size
-            heightSize = windowInsets.systemWindowInsetTop
+                // get the size
+                heightSize = windowInsets.systemWindowInsetTop
 
-            // return insets
-            windowInsets
+                // return insets
+                windowInsets
+            }
         }
 
     }

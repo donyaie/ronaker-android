@@ -76,7 +76,7 @@ class ExploreFragment : BaseFragment() {
 //                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
 
                 val p1 =
-                    androidx.core.util.Pair<View, String>(binding.searchLayout as View, "search")
+                    androidx.core.util.Pair<View, String>(binding.searchLayout , "search")
                 val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
                 val options =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)

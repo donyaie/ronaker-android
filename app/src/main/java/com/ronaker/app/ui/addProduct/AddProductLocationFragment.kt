@@ -91,15 +91,27 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             mGoogleMap = it
 
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                DEFULT_LOCATION,
-                10f
-            )
-            mGoogleMap.moveCamera(cameraUpdate)
+
 
             baseViewModel.productLocation.value?.let {it3->
 
-                moveCamera(it3) }
+                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                    it3,
+                    17f
+                )
+                mGoogleMap.moveCamera(cameraUpdate)
+
+
+
+            }?:run {
+
+                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                    DEFULT_LOCATION,
+                    10f
+                )
+                mGoogleMap.moveCamera(cameraUpdate)
+
+            }
 
 
             chech(false)

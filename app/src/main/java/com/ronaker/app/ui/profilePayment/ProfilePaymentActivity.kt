@@ -27,6 +27,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
 
@@ -37,6 +38,7 @@ class ProfilePaymentActivity : BaseActivity() {
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfilePaymentBinding
     private lateinit var viewModel: ProfilePaymentViewModel
 
+    var disposable:Disposable?=null
 
     companion object {
 
@@ -138,7 +140,7 @@ class ProfilePaymentActivity : BaseActivity() {
 
 
 
-        RxTextView.textChanges(binding.cardEdit)
+        disposable=  RxTextView.textChanges(binding.cardEdit)
             .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .subscribe {
 
@@ -157,6 +159,10 @@ class ProfilePaymentActivity : BaseActivity() {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        disposable?.dispose()
+    }
 
 
 

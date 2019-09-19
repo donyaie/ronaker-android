@@ -76,7 +76,7 @@ class OrderMessageViewModel : BaseViewModel() {
 
 
         orderMessage.value="Hi I'm ${user?.first_name} ${user?.last_name}\n" +
-                "I need your ${product.name} for $days day${if(days==1L)"" else "s" }\n" +
+                "I to rent your ${product.name} for $days day${if(days==1L)"" else "s" }\n" +
                 "thank you."
 
 

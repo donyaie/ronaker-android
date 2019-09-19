@@ -1,5 +1,6 @@
 package com.ronaker.app
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.multidex.MultiDex
@@ -21,6 +22,7 @@ class General : MultiDexApplication() {
     lateinit var General: AppComponent
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
         fun newInstance(context: Context): Intent {
