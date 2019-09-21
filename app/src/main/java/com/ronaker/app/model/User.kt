@@ -23,10 +23,14 @@ data class User(
     , var last_name: String?
     , var phone_number: String?
     , var is_phone_number_verified: Boolean?
+    , var is_payment_info_verified: Boolean?
+    , var is_identity_info_verified: Boolean?
     , var avatar: String?
     , var password: String? = null
-): Parcelable {
+) : Parcelable {
     constructor() : this(
+        null,
+        null,
         null,
         null,
         null,
@@ -38,25 +42,26 @@ data class User(
     )
 
 
-
 }
 
 
 fun UserInfoResponceModel.toUser(): User {
 
 
-        var value = User(
-            this.suid,
-            this.email,
-            this.is_email_verified,
-            this.first_name,
-            this.last_name,
-            this.phone_number,
-            this.is_phone_number_verified,
-            this.avatar,
-            null
+    var value = User(
+        this.suid,
+        this.email,
+        this.is_email_verified,
+        this.first_name,
+        this.last_name,
+        this.phone_number,
+        this.is_phone_number_verified,
+        this.is_payment_info_verified,
+        this.is_identity_info_verified,
+        this.avatar,
+        null
 
-        )
+    )
 
 
     return value

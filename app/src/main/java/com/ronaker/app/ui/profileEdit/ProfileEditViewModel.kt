@@ -59,6 +59,9 @@ class ProfileEditViewModel : BaseViewModel() {
 
                     phoneComplete.value = result.data?.is_phone_number_verified
 
+                    peymentComplete.value = result.data?.is_payment_info_verified
+                    identityComplete.value = result.data?.is_identity_info_verified
+
                     imageComplete.value = result.data?.avatar != null
 
 
