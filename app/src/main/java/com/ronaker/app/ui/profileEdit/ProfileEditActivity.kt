@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
+import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 
 
@@ -117,6 +118,9 @@ class ProfileEditActivity : BaseActivity() {
         binding.identityLayout.setOnClickListener {
 
 
+            startActivity(ProfileIdentifyActivity.newInstance(this))
+
+
         }
 
 
@@ -148,6 +152,9 @@ class ProfileEditActivity : BaseActivity() {
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
+
+
+
 
 
     }

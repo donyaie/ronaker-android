@@ -85,7 +85,8 @@ class ProfileViewModel: BaseViewModel(){
 
         userName.value="${user.first_name} ${user.last_name}"
 
-        user.avatar?.let { userAvatar.value= BASE_URL+it
+        user.avatar?.let {
+            userAvatar.value= BASE_URL+it
             complete++
         }
 
