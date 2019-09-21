@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import com.ronaker.app.injection.component.AppComponent
 import com.ronaker.app.injection.component.DaggerAppComponent
 import com.ronaker.app.injection.module.AppModule
@@ -32,6 +33,8 @@ class General : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        Stetho.initializeWithDefaults(this)
         context = this;
         General=initDagger()
 

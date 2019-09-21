@@ -12,7 +12,7 @@
             <RelativeLayout android:layout_width="match_parent" android:background="@color/colorTextGreyLight"
             android:alpha="0.2" android:layout_height="1dp"/>
             <LinearLayout android:baselineAligned="false" android:layout_width="match_parent" android:orientation="horizontal"
-                          android:weightSum="5" android:layout_height="match_parent">
+                          android:weightSum="4" android:layout_height="match_parent">
 
 
                 <LinearLayout android:id="@+id/explore_layout" android:layout_width="0dp"
@@ -77,7 +77,7 @@
                 </LinearLayout>
 
 
-                <LinearLayout android:layout_width="0dp" android:id="@+id/inbox_layout"
+                <LinearLayout android:visibility="gone" android:layout_width="0dp" android:id="@+id/inbox_layout"
                               android:gravity="center_horizontal"
                               android:layout_weight="1"
                               android:orientation="vertical" android:layout_height="match_parent">

@@ -5,6 +5,10 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat.getSystemService
+
+
 
 
 object KeyboardManager {
@@ -45,6 +49,20 @@ object KeyboardManager {
                 activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager;
             if (imm.isActive)
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); // hide
+        }
+
+        Debug.Log(TAG, "hideSoftKeyboard")
+
+    }
+
+    fun hideSoftKeyboard(activity: Fragment) {
+
+
+        val view = activity.view?.rootView?.windowToken
+        if (view != null) {
+
+            val imm = activity.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view, 0)
         }
 
         Debug.Log(TAG, "hideSoftKeyboard")

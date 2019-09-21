@@ -208,6 +208,37 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
+
+        screenLibrary = ScreenCalcute(this)
+
+        showBack(false)
+
+
+        if (UpdateMode)
+            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.NONE
+        else
+            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
+
+
+        binding.toolbar.showNavigator(false, 0)
+
+
+        binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
+        binding.toolbar.actionTextClickListener = View.OnClickListener { finishSafe() }
+
+
+
+        viewModel.goNext.observe(this, Observer { value ->
+            if (value)
+                startActivityMakeScene(PhoneNumberActivity.newInstance(this@AddProductActivity))
+            else
+                finishSafe()
+        })
+
+
+        binding.viewpager.setScrollDurationFactor(2.0)
+
+
     }
 
 
@@ -251,31 +282,8 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
     private fun init() {
 
-
-        screenLibrary = ScreenCalcute(this)
-
-        showBack(false)
         initViewPager()
-        if (UpdateMode)
-            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.NONE
-        else
-            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
 
-
-        binding.toolbar.showNavigator(false, 0)
-
-
-        binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
-        binding.toolbar.actionTextClickListener = View.OnClickListener { finishSafe() }
-
-
-
-        viewModel.goNext.observe(this, Observer { value ->
-            if (value)
-                startActivityMakeScene(PhoneNumberActivity.newInstance(this@AddProductActivity))
-            else
-                finishSafe()
-        })
 
         initViewPagerRegister()
 
@@ -322,7 +330,6 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
     internal fun initViewPager() {
 
-        binding.viewpager.setScrollDurationFactor(2.0)
         adapter = ViewPagerAdapter(supportFragmentManager)
 
         infoFragment = AddProductInfoFragment()

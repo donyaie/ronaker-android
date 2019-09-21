@@ -26,7 +26,7 @@ class CountingRequestBody(private val delegate: RequestBody, private val listene
     @Throws(IOException::class)
     override fun writeTo(@NonNull sink: BufferedSink) {
         val countingSink = CountingSink(sink)
-        val bufferedSink = Okio.buffer(countingSink)// countingSink.buffer()//
+        val bufferedSink =Okio.buffer(countingSink)//countingSink.buffer()//
 
         delegate.writeTo(bufferedSink)
 

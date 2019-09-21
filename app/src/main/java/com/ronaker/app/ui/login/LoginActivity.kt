@@ -101,15 +101,16 @@ class LoginActivity : BaseActivity() {
         AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
 
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
+        screenLibrary = ScreenCalcute(this)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         binding.viewModel = viewModel
 
 
-
-        init()
 
         viewModel.actionState.observe(this, Observer { action ->
             loginAction = action
@@ -121,19 +122,6 @@ class LoginActivity : BaseActivity() {
 
         })
 
-        loginAction = LoginViewModel.LoginActionEnum.register
-        loginState = LoginViewModel.LoginStateEnum.home
-    }
-
-
-    private fun init() {
-
-
-        screenLibrary = ScreenCalcute(this)
-
-        overlayShow(false)
-        showBack(false)
-        initViewPager()
         binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
         binding.toolbar.showNavigator(false, 0)
 
@@ -141,9 +129,10 @@ class LoginActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
 
 
-        binding.background.getLayoutParams().width = (screenLibrary.screenWidthPixel * 1.2).toInt()
+        binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.2).toInt()
 
         binding.scrollView.setOnTouchListener { _, _ -> true }
+
 
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage-> Toast.makeText(this,errorMessage,Toast.LENGTH_LONG).show()
@@ -151,17 +140,41 @@ class LoginActivity : BaseActivity() {
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value == true) {
-                    startActivityMakeScene(DashboardActivity.newInstance(this@LoginActivity))
-                    finishSafe()
+                startActivityMakeScene(DashboardActivity.newInstance(this@LoginActivity))
+                finishSafe()
             }
         })
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
-               binding.loading.showLoading()
+                binding.loading.showLoading()
             }else
                 binding.loading.hideLoading()
         })
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+
+        if(isFistStart()){
+
+            init()
+            loginAction = LoginViewModel.LoginActionEnum.register
+            loginState = LoginViewModel.LoginStateEnum.home
+        }
+    }
+
+
+    private fun init() {
+
+
+
+        overlayShow(false)
+        showBack(false)
+        initViewPager()
 
 
         binding.loading.hideLoading()
@@ -171,7 +184,7 @@ class LoginActivity : BaseActivity() {
     }
 
 
-    internal fun prePage() {
+    private fun prePage() {
 
         if (binding.viewpager.currentItem - 1 == LoginViewModel.LoginStateEnum.home.position)
             KeyboardManager.hideSoftKeyboard(this)
@@ -187,7 +200,7 @@ class LoginActivity : BaseActivity() {
     }
 
 
-    fun initViewPagerLogin() {
+   private fun initViewPagerLogin() {
         adapter.clear()
 
         adapter.addFragment(homeFragment)
@@ -196,7 +209,7 @@ class LoginActivity : BaseActivity() {
         binding.viewpager.adapter?.notifyDataSetChanged()
     }
 
-    fun initViewPagerRegister() {
+   private fun initViewPagerRegister() {
         adapter.clear()
         adapter.addFragment(homeFragment)
         adapter.addFragment(emailFragment)
@@ -211,10 +224,10 @@ class LoginActivity : BaseActivity() {
     }
 
 
-    internal fun initViewPager() {
+    private fun initViewPager() {
 
         binding.viewpager.setScrollDurationFactor(2.0)
-        adapter = ViewPagerAdapter(getSupportFragmentManager())
+        adapter = ViewPagerAdapter(supportFragmentManager)
 
         homeFragment = LoginHomeFragment()
         passwordFragment = LoginPasswordFragment()
@@ -224,33 +237,29 @@ class LoginActivity : BaseActivity() {
 
 
 
-        binding.viewpager.setAdapter(adapter)
+        binding.viewpager.adapter = adapter
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                val x = ((binding.viewpager.getWidth() * position + positionOffsetPixels) * computeFactor()).toInt()
+                val x = ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
                 binding.scrollView.scrollTo(x, 0)
             }
 
             override fun onPageSelected(position: Int) {
 
-                if (position == 1) {
-                    loginState =
-                        if (loginAction == LoginViewModel.LoginActionEnum.login) LoginViewModel.LoginStateEnum.login else LoginViewModel.LoginStateEnum.email
+                loginState = if (position == 1) {
+                    if (loginAction == LoginViewModel.LoginActionEnum.login) LoginViewModel.LoginStateEnum.login else LoginViewModel.LoginStateEnum.email
                 } else
-                    loginState = LoginViewModel.LoginStateEnum.get(position)
+                    LoginViewModel.LoginStateEnum.get(position)
 
 
                 Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 
-                if (loginState == LoginViewModel.LoginStateEnum.home)
-                    KeyboardManager.hideSoftKeyboard(this@LoginActivity)
-
 
                 if (loginState == LoginViewModel.LoginStateEnum.home) {
                     overlayShow(false)
-
+                    KeyboardManager.hideSoftKeyboard(this@LoginActivity)
                     showBack(false)
                 } else {
                     overlayShow(true)
@@ -258,13 +267,10 @@ class LoginActivity : BaseActivity() {
                 }
 
 
-                if (loginState == LoginViewModel.LoginStateEnum.home) {
-                    binding.toolbar.showNavigator(false, 0)
-                } else if (loginAction == LoginViewModel.LoginActionEnum.register) {
-
-                    binding.toolbar.showNavigator(true, position - 1)
-                } else if (loginAction == LoginViewModel.LoginActionEnum.login) {
-                    binding.toolbar.showNavigator(false, 0)
+                when {
+                    loginState == LoginViewModel.LoginStateEnum.home -> binding.toolbar.showNavigator(false, 0)
+                    loginAction == LoginViewModel.LoginActionEnum.register -> binding.toolbar.showNavigator(true, position - 1)
+                    loginAction == LoginViewModel.LoginActionEnum.login -> binding.toolbar.showNavigator(false, 0)
                 }
 
 
@@ -275,31 +281,29 @@ class LoginActivity : BaseActivity() {
             }
 
             private fun computeFactor(): Float {
-                return (binding.background.getWidth() - binding.viewpager.getWidth()) / (binding.viewpager.getWidth() * (binding.viewpager.getAdapter()?.getCount()!! * 1.0f - 1))
+                return (binding.background.width - binding.viewpager.width) / (binding.viewpager.width * (binding.viewpager.adapter?.count!! * 1.0f - 1))
             }
         })
 
         KeyboardManager.hideSoftKeyboard(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
-    internal fun showBack(visiable: Boolean) {
+
+    private fun showBack(visiable: Boolean) {
         if (visiable) {
-
-//            binding.backButton.animate().scaleX(1f).scaleY(1f).setDuration(200).start()
-//            binding.backButton.setClickable(true)
-//
             binding.toolbar.cancelContainer = ToolbarComponent.CancelContainer.BACK
         } else {
 
             binding.toolbar.cancelContainer = ToolbarComponent.CancelContainer.NONE
-//            binding.backButton.animate().scaleX(0f).scaleY(0f).setDuration(100).start()
-//            binding.backButton.setClickable(false)
         }
     }
 
 
-    internal fun overlayShow(visiable: Boolean) {
+    private fun overlayShow(visiable: Boolean) {
         if (visiable) {
             binding.overlayLayout.animate().alpha(0.8f).setDuration(500).start()
 
@@ -309,7 +313,7 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
+    private inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
         BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
 

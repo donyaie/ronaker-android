@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.utils.Debug
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.InputComponent
 import io.reactivex.Observable
@@ -33,6 +34,8 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
 
 
 
+
+
         return binding.root
     }
 
@@ -45,6 +48,8 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
     }
 
     override fun onSelect() {
+
+
     }
 
 
