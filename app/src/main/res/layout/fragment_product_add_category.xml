@@ -51,7 +51,7 @@
                         app:inputMutableText="@{viewModel.getProductCategoryTitle()}"
 
                         android:onClick="@{()->viewModel.onClickSelectCategory()}"
-                        app:input_is_editable="false"
+                        app:input_mode="NoneEditable"
                         app:input_title="Category"
                         app:input_transparent="false"
                         app:layout_constraintTop_toBottomOf="@id/title" />
@@ -72,7 +72,7 @@
                         app:input_hint="Select item Sub-Category"
 
                         android:onClick="@{()->viewModel.onClickSelectSubCategory()}"
-                        app:input_is_editable="false"
+                        app:input_mode="NoneEditable"
                         app:input_title="Sub-Category"
                         app:input_transparent="false"
                         app:layout_constraintTop_toBottomOf="@id/category" />

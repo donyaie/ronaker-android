@@ -36,6 +36,8 @@
                         android:inputType="textEmailAddress"
                         android:imeOptions="actionNext"
                         app:input_transparent="true"
+
+                        android:autofillHints="emailAddress"
                         android:id="@+id/email_input"
                         app:input_validation_mode="AUTO"
                         app:input_title="@string/email"

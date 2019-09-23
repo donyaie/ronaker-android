@@ -346,6 +346,7 @@ class AddProductViewModel : BaseViewModel() {
 
     fun checkNextSelectImage(): Boolean {
         var resault = true
+
         imagesTemp.forEach {
             if (it.progress.value == true || it.isLocal)
                 resault = false
@@ -396,6 +397,7 @@ class AddProductViewModel : BaseViewModel() {
                     model.url = result.data?.content
                     model.suid = result.data?.suid
                     model.isLocal = false
+                    model.progress.value = false
                     checkNextSelectImage()
                 } else
                     errorMessage.value = result.error?.detail

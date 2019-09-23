@@ -42,7 +42,7 @@
     <string name="title_button_create_account">Create Account</string>
     <string name="titile_button_login">Login</string>
     <string name="title_and_what_s_your_name">And what’s your name?</string>
-    <string name="title_done_njust_choice_a_password">Done! Just choose a password.</string>
+    <string name="title_done_njust_choice_a_password">Done!\nJust choose a password.</string>
     <string name="title_button_done">Done!</string>
     <string name="title_welcome_back">Welcome back.</string>
     <string name="titile_button_login_to_your_account">Login to your account</string>
