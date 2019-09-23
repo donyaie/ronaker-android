@@ -63,7 +63,7 @@
                         android:layout_marginLeft="24dp"
 
                         android:layout_marginTop="24dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginRight="24dp"
                         android:text="Please Upload one of your Identity document to Authentication."
                         android:textAppearance="@style/TextAppearance.Large.Regular"
                         android:textColor="@color/colorTextDark"
@@ -72,17 +72,56 @@
                         app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_gravity="center"
 
-                <LinearLayout
-                        android:id="@+id/sign_layout"
+                        app:mutableVisibility="@{viewModel.getEmptyImageVisibility()}"
+                        android:onClick="@{()->viewModel.onClickAddImage()}"
+
                         android:layout_width="match_parent"
-                        android:layout_height="66dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp">
 
-                </LinearLayout>
+                        android:background="@drawable/border_dash_dark"
+                        android:layout_margin="24dp"
+                        android:layout_height="160dp">
+
+                    <ImageView android:layout_width="24dp"
+                            android:id="@+id/sampleimage"
+                            android:layout_marginTop="50dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_camera"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/title_add_new_image"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.Large.Regular"
+                            app:layout_constraintTop_toBottomOf="@id/sampleimage"
+                            />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView android:layout_width="match_parent"
+                        android:id="@+id/image"
+                        android:layout_margin="24dp"
+                        android:minHeight="400dp"
+                        android:visibility="gone"
+                        android:scaleType="fitStart"
+
+                        app:mutableVisibility="@{viewModel.getImageVisibility()}"
+
+                        android:onClick="@{()->viewModel.onClickAddImage()}"
+
+
+                        app:mutableImage="@{viewModel.getIdentifyImage()}"
+
+                        android:layout_height="wrap_content"
+                       />
+
+
+
+
 
 
 
@@ -91,7 +130,25 @@
         </androidx.core.widget.NestedScrollView>
 
 
+        <Button
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:id="@+id/next_button"
+
+android:layout_width="160dp"
+                app:mutableVisibility="@{viewModel.getUploadVisibility()}"
+                android:onClick="@{()->viewModel.onClickUpload()}"
+
+                android:text="Done"
+                style="@style/Button.accent"/>
+
+
         <com.ronaker.app.utils.view.LoadingComponent
+
 
 
                 android:id="@+id/loading"
@@ -99,8 +156,12 @@
                 android:layout_width="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_height="0dp"
+
                 android:visibility="visible"
                 app:loading_transparent="true" />
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,6 +111,11 @@ class ProfilePaymentActivity : BaseActivity() {
                 }
 
                 editable?.let { addSpans(it) }
+
+
+                   editable?.let { if(it.length>=16)
+                       binding.expireInput.requestFocus() }
+
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

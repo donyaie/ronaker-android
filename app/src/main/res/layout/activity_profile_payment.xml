@@ -102,6 +102,7 @@
                             android:layout_weight=".95"
                             android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:maxLength="16"
                             app:mutableText="@{viewModel.getCardNumberText()}"
                             android:background="@null"
                             android:hint="0000 0000 0000 0000"

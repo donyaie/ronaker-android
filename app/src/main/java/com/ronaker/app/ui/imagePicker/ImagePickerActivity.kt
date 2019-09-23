@@ -40,6 +40,9 @@ class ImagePickerActivity : BaseActivity() {
         fun onChooseGallerySelected()
     }
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setSlideTransition(this)
@@ -211,6 +214,26 @@ class ImagePickerActivity : BaseActivity() {
         val REQUEST_IMAGE_CAPTURE = 0
         val REQUEST_GALLERY_IMAGE = 1
         lateinit var fileName: String
+
+
+
+        fun launchGalleryIntent(activity:Activity, requestCode: Int){
+
+            val intent = Intent(activity, ImagePickerActivity::class.java)
+            intent.putExtra(
+                ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+                ImagePickerActivity.REQUEST_GALLERY_IMAGE
+            )
+
+            // setting aspect ratio
+            intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
+            intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
+            intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
+            activity.startActivityForResult(intent, requestCode)
+
+        }
+
+
 
         fun showImagePickerOptions(context: Context, listener: PickerOptionListener) {
             // setup the alert builder

@@ -1,9 +1,7 @@
 package com.ronaker.app.data.network
 
-import com.ronaker.app.data.network.request.UserActivePhoneRequestModel
-import com.ronaker.app.data.network.request.UserAddPhoneRequestModel
-import com.ronaker.app.data.network.request.UserLoginRequestModel
-import com.ronaker.app.data.network.request.UserRegisterRequestModel
+import com.ronaker.app.data.network.request.*
+import com.ronaker.app.data.network.response.FreeResponseModel
 import com.ronaker.app.data.network.response.UserAddPhoneResponceModel
 import com.ronaker.app.data.network.response.UserInfoResponceModel
 import com.ronaker.app.data.network.response.UserRegisterResponseModel
@@ -49,4 +47,17 @@ interface UserApi {
     @POST("/api/v1/users/phone_number/activation/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun activeUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserActivePhoneRequestModel): Observable<UserRegisterResponseModel>
+
+
+
+    /**
+     * add user identify
+     */
+    @POST("/api/v1/documents/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun addDocument(@Header("Authorization") authToken: String,@Body request: UserIdentifyRequestModel): Observable<FreeResponseModel>
+
+
+
+
 }

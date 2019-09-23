@@ -29,10 +29,7 @@ import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.Debug
-import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
 import java.io.IOException
@@ -483,6 +480,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
         startActivityForResult(intent, REQUEST_IMAGE)
+
     }
 
 
@@ -514,22 +512,12 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         ) { dialog, _ ->
             dialog?.cancel()
-            openSettings()
+            IntentManeger.openSettings(this,101)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }
         builder.show()
     }
-
-    // navigating user to app settings
-    private fun openSettings() {
-        var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        var uri: Uri = Uri.fromParts("package", getPackageName(), null);
-        intent.setData(uri);
-        startActivityForResult(intent, 101);
-    }
-
-
 
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
