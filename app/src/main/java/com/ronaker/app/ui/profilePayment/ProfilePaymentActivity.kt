@@ -233,7 +233,6 @@ class ProfilePaymentActivity : BaseActivity() {
 
         }
 
-
     }
 
 

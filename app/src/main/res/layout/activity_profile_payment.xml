@@ -101,6 +101,7 @@
                             android:id="@+id/card_edit"
                             android:layout_weight=".95"
                             android:imeOptions="actionNext"
+
                             android:inputType="number"
                             android:maxLength="16"
                             app:mutableText="@{viewModel.getCardNumberText()}"
@@ -156,7 +157,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="16dp"
-                            android:imeOptions="actionNext"
+
+                            android:imeOptions="actionDone"
+                            android:maxLength="4"
                             android:inputType="date"
 
                             app:inputMutableText="@{viewModel.getCardCVVText()}"

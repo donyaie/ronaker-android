@@ -3,6 +3,7 @@ package com.ronaker.app.utils.view
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.ronaker.app.R
 import com.ronaker.app.utils.extension.getParentActivity
+
 
 @BindingAdapter("app:input_text")
 fun textBind(input: InputComponent, value: String?) {
@@ -82,15 +84,15 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         set(value) {
             field = value
 
-            if(field){
+            if (field) {
 
-                input_edit.visibility=View.VISIBLE
-                input_view.visibility=View.GONE
+                input_edit.visibility = View.VISIBLE
+                input_view.visibility = View.GONE
 
-            }else{
+            } else {
 
-                input_edit.visibility=View.GONE
-                input_view.visibility=View.VISIBLE
+                input_edit.visibility = View.GONE
+                input_view.visibility = View.VISIBLE
             }
 
         }
@@ -201,6 +203,35 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
             field = value
 
             title_text.setText(value)
+        }
+
+
+    var maxLength: Int = 0
+        set(value) {
+            field = value
+
+            if (value == 0) {
+                input_edit.filters.toMutableList().apply {
+
+                    removeAll {
+                        it.javaClass == InputFilter.LengthFilter::class.java
+                    }
+                }
+
+            } else if (input_edit.filters.isNullOrEmpty()) {
+                input_edit.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(value))
+
+            } else {
+                input_edit.filters.toMutableList().apply {
+
+                    removeAll {
+
+                        it.javaClass == InputFilter.LengthFilter::class.java
+                    }
+                    this.add(InputFilter.LengthFilter(value))
+                }
+            }
+
         }
 
 
@@ -336,7 +367,6 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
 
 
-            text = typedArray.getString(R.styleable.input_component_attributes_input_text)
 
 
             is_alert = typedArray
@@ -374,6 +404,11 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
             imeOptions = typedArray.getInt(
                 R.styleable.input_component_attributes_android_imeOptions,
+                0
+            )
+
+            maxLength = typedArray.getInt(
+                R.styleable.input_component_attributes_android_maxLength,
                 0
             )
 
