@@ -1,13 +1,11 @@
 package com.ronaker.app.ui.addProduct
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -43,14 +41,13 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     ) {
 
 
-        if(parent==null){
+        if (parent == null) {
             selectedCategory?.let { viewModel.selectCategory(it) }
-        }else{
+        } else {
 
             selectedCategory?.let { viewModel.selectSubCategory(it) }
         }
     }
-
 
 
     private val TAG = AddProductActivity::class.java.simpleName
@@ -76,30 +73,40 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     internal var actionState = AddProductViewModel.StateEnum.image
         set(value) {
             field = value
+            if (UpdateMode)
+                binding.viewpager.currentItem = 0
+            else
+                when (actionState) {
 
+                    AddProductViewModel.StateEnum.image -> {
+                        binding.viewpager.currentItem = AddProductViewModel.StateEnum.image.position
+                    }
 
-            when (actionState) {
+                    AddProductViewModel.StateEnum.info -> {
+                        binding.viewpager.currentItem = AddProductViewModel.StateEnum.info.position
+                    }
+                    AddProductViewModel.StateEnum.price -> {
+                        binding.viewpager.currentItem = AddProductViewModel.StateEnum.price.position
+                    }
+                    AddProductViewModel.StateEnum.location -> {
 
-                AddProductViewModel.StateEnum.image -> {
-                    binding.viewpager.currentItem = AddProductViewModel.StateEnum.image.position
+                        binding.viewpager.currentItem =
+                            AddProductViewModel.StateEnum.location.position
+                    }
+                    AddProductViewModel.StateEnum.category -> {
+
+                        binding.viewpager.currentItem =
+                            AddProductViewModel.StateEnum.category.position
+                    }
                 }
 
-                AddProductViewModel.StateEnum.info -> {
-                    binding.viewpager.currentItem = AddProductViewModel.StateEnum.info.position
-                }
-                AddProductViewModel.StateEnum.price -> {
-                    binding.viewpager.currentItem = AddProductViewModel.StateEnum.price.position
-                }
-                AddProductViewModel.StateEnum.location -> {
+        }
+        get() {
 
-                    binding.viewpager.currentItem = AddProductViewModel.StateEnum.location.position
-                }
-                AddProductViewModel.StateEnum.category -> {
+            if (UpdateMode)
+                return getState() ?: field
 
-                    binding.viewpager.currentItem = AddProductViewModel.StateEnum.category.position
-                }
-            }
-
+            return field
         }
 
     companion object {
@@ -151,7 +158,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        AnimationHelper.setSlideTransition(this)
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
@@ -161,6 +168,9 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         binding.viewModel = viewModel
 
 
+        screenLibrary = ScreenCalcute(this)
+
+        UpdateMode = getSuid() != null
 
 
 
@@ -175,7 +185,8 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         viewModel.parentCategory.observe(this, Observer { category ->
 
-            AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this).setParent(category).show()
+            AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
+                .setParent(category).show()
 
         })
 
@@ -206,20 +217,6 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        screenLibrary = ScreenCalcute(this)
-
-        showBack(false)
-
-
-        if (UpdateMode)
-            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.NONE
-        else
-            binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
-
-
-        binding.toolbar.showNavigator(false, 0)
-
-
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
         binding.toolbar.actionTextClickListener = View.OnClickListener { finishSafe() }
 
@@ -243,22 +240,33 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         super.onStart()
 
         if (isFistStart()) {
-            if (getSuid() != null) {
 
-                var state = AddProductViewModel.StateEnum.get(intent.getIntExtra(STATE_KEY, 0))
-                UpdateMode = true
-
-                init()
-                getSuid()?.let { viewModel.getInfo(it, state) }
+            showBack(false)
 
 
-                actionState = state
+            if (UpdateMode)
+                binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.NONE
+            else
+                binding.toolbar.centerContainer = ToolbarComponent.CenterContainer.DOTS
+
+            binding.toolbar.showNavigator(false, 0)
+            if (UpdateMode) {
+
+                var state = getState()
+
+
+                getSuid()?.let { state?.let { it1 -> viewModel.getInfo(it, it1) } }
+
+                init(state)
+//                if (state != null) {
+//                    actionState = state
+//                }
+
+                binding.viewpager.currentItem = 0
 
             } else {
                 binding.loading.visibility = View.GONE
-                UpdateMode = false
-
-                init()
+                init(null)
                 actionState = AddProductViewModel.StateEnum.image
             }
 
@@ -271,18 +279,25 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         return intent.getStringExtra(SUID_KEY)
     }
 
+    fun getState(): AddProductViewModel.StateEnum? {
+
+        if (intent.hasExtra(STATE_KEY))
+            return AddProductViewModel.StateEnum.get(intent.getIntExtra(STATE_KEY, 0))
+        else
+            return null
+    }
 
     fun getProduct(): Product? {
         return intent.getParcelableExtra(PRODUCT_KEY)
     }
 
 
-    private fun init() {
+    private fun init(state: AddProductViewModel.StateEnum?) {
 
-        initViewPager()
+        initViewPager(state)
 
 
-        initViewPagerRegister()
+        initViewPagerRegister(state)
 
 
     }
@@ -309,13 +324,44 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    fun initViewPagerRegister() {
+    fun initViewPagerRegister(state: AddProductViewModel.StateEnum?) {
         adapter.clear()
-        adapter.addFragment(imageFragment)
-        adapter.addFragment(infoFragment)
-        adapter.addFragment(categoryFragment)
-        adapter.addFragment(priceFragment)
-        adapter.addFragment(locationFragment)
+
+
+
+        if (state != null)
+            when (state) {
+                AddProductViewModel.StateEnum.image -> {
+
+                    adapter.addFragment(imageFragment)
+                }
+                AddProductViewModel.StateEnum.info -> {
+
+                    adapter.addFragment(infoFragment)
+                }
+                AddProductViewModel.StateEnum.category -> {
+
+                    adapter.addFragment(categoryFragment)
+                }
+                AddProductViewModel.StateEnum.location -> {
+
+                    adapter.addFragment(locationFragment)
+                }
+                AddProductViewModel.StateEnum.price -> {
+
+                    adapter.addFragment(priceFragment)
+                }
+            }
+
+
+        else{
+            adapter.addFragment(imageFragment)
+            adapter.addFragment(infoFragment)
+            adapter.addFragment(categoryFragment)
+            adapter.addFragment(priceFragment)
+            adapter.addFragment(locationFragment)
+        }
+
         binding.viewpager.adapter?.notifyDataSetChanged()
 
     }
@@ -325,15 +371,43 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    internal fun initViewPager() {
+    internal fun initViewPager(state: AddProductViewModel.StateEnum?) {
 
         adapter = ViewPagerAdapter(supportFragmentManager)
 
-        infoFragment = AddProductInfoFragment()
-        categoryFragment = AddProductCategoryFragment()
-        locationFragment = AddProductLocationFragment()
-        priceFragment = AddProductPriceFragment()
-        imageFragment = AddProductImageFragment()
+
+
+        if (state != null) {
+
+            when (state) {
+                AddProductViewModel.StateEnum.image -> {
+
+                    imageFragment = AddProductImageFragment()
+                }
+                AddProductViewModel.StateEnum.info -> {
+
+                    infoFragment = AddProductInfoFragment()
+                }
+                AddProductViewModel.StateEnum.category -> {
+
+                    categoryFragment = AddProductCategoryFragment()
+                }
+                AddProductViewModel.StateEnum.location -> {
+
+                    locationFragment = AddProductLocationFragment()
+                }
+                AddProductViewModel.StateEnum.price -> {
+
+                    priceFragment = AddProductPriceFragment()
+                }
+            }
+        } else {
+            infoFragment = AddProductInfoFragment()
+            categoryFragment = AddProductCategoryFragment()
+            locationFragment = AddProductLocationFragment()
+            priceFragment = AddProductPriceFragment()
+            imageFragment = AddProductImageFragment()
+        }
 
 
 
@@ -352,6 +426,8 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
                 actionState = AddProductViewModel.StateEnum.get(position)
+
+
 
 
                 Debug.Log(TAG, String.format("onSelect:%s", actionState.name))
@@ -512,7 +588,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         ) { dialog, _ ->
             dialog?.cancel()
-            IntentManeger.openSettings(this,101)
+            IntentManeger.openSettings(this, 101)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }

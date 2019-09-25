@@ -76,10 +76,17 @@ class AddProductLocationViewModel : BaseViewModel() {
             .subscribe(
                 { result ->
                     if (result.result != null) {
+                        result.result?.let {result->
 
-                        mPlace = result.result!!.toPlace()
-                        newLocation.value = LatLng(mPlace!!.lat!!, mPlace!!.lng!!)
-                        placeName.value = mPlace!!.mainText
+                            mPlace = result.toPlace()
+                            mPlace?.let {place->
+
+
+                                newLocation.value = place.latLng
+                                placeName.value = place.mainText
+                            }
+                        }
+
                     } else {
 
                     }
@@ -103,16 +110,16 @@ class AddProductLocationViewModel : BaseViewModel() {
                     if (result.results != null) {
 
                         mPlace = result.converGeoToPlace()
+                        mPlace?.let {place->
+                            place.latLng = target
+                            placeName.value = place.mainText
 
-                        if (mPlace != null) {
-                            mPlace?.lat = target.latitude
-                            mPlace?.lng = target.longitude
-
-                            placeName.value = mPlace!!.mainText
-                        } else {
+                        }?:run {
                             mPlace = null
                             placeName.value = context.getString(R.string.title_search_your_location)
+
                         }
+
                     } else {
 
 

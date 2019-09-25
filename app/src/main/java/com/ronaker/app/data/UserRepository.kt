@@ -49,7 +49,7 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
     private val UserInfoKey = "userInfoKey"
 
     fun registerUser(user: User): Observable<Result<UserRegisterResponseModel>> {
-        val info = UserRegisterRequestModel(user.email!!, user.password!!, user.first_name!!, user.last_name!!)
+        val info = UserRegisterRequestModel(user.email, user.password, user.first_name, user.last_name)
         return userApi.registerUser(info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
@@ -58,7 +58,7 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
 
 
     fun loginUser(user: User): Observable<Result<UserRegisterResponseModel>> {
-        val info = UserLoginRequestModel(user.email!!, user.password!!)
+        val info = UserLoginRequestModel(user.email, user.password)
         return userApi.loginUser(info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()

@@ -32,6 +32,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     AddProductLocationSearchDialog.OnDialogResultListener, GoogleMap.OnCameraIdleListener {
 
     var isFirstIdle=false
+    var isFirstSelected = false
 
     override fun onCameraIdle() {
         if (isFirstSelected && isFirstIdle) {
@@ -90,11 +91,10 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
         (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             mGoogleMap = it
-
-
-
             baseViewModel.productLocation.value?.let {it3->
 
+                isFirstIdle=true
+                isFirstSelected = true
                 val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     it3,
                     17f
@@ -265,7 +265,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         }
     }
 
-    var isFirstSelected = false
 
     override fun onSelect() {
         isFirstSelected = true

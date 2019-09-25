@@ -58,7 +58,7 @@ class PreferencesProvider(context: Context) {
 
     fun putLong(key: String, value: Long?): Boolean {
         try {
-            editor.putLong(key, value!!)
+            value?.let { editor.putLong(key, it) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -78,7 +78,7 @@ class PreferencesProvider(context: Context) {
 
     fun putFloat(key: String, value: Float?): Boolean {
         try {
-            editor.putFloat(key, value!!)
+            value?.let { editor.putFloat(key, it) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -126,11 +126,11 @@ class PreferencesProvider(context: Context) {
     }
 
     fun getBoolean(key: String, defValue: Boolean?): Boolean? {
-        return preferences.getBoolean(key, defValue!!)
+        return defValue?.let { preferences.getBoolean(key, it) }
     }
 
     fun getFloat(key: String, defValue: Float?): Float? {
-        return preferences.getFloat(key, defValue!!)
+        return defValue?.let { preferences.getFloat(key, it) }
     }
 
     fun clearAll() {

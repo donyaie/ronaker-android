@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <style name="SplashTheme" parent="AppTheme">
 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -40,6 +39,7 @@
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
+
 
     </style>
 

@@ -13,6 +13,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
+import com.ronaker.app.utils.AnimationHelper
 
 
 class ProfileEditActivity : BaseActivity() {
@@ -36,6 +37,8 @@ class ProfileEditActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
@@ -118,7 +121,7 @@ class ProfileEditActivity : BaseActivity() {
         binding.identityLayout.setOnClickListener {
 
 
-            startActivity(ProfileIdentifyActivity.newInstance(this))
+            startActivityMakeScene(ProfileIdentifyActivity.newInstance(this))
 
 
         }
@@ -137,13 +140,13 @@ class ProfileEditActivity : BaseActivity() {
         binding.phoneLayout.setOnClickListener {
 
 
-            startActivity(PhoneNumberActivity.newInstance(this))
+            startActivityMakeScene(PhoneNumberActivity.newInstance(this))
 
         }
 
         binding.paymentLayout.setOnClickListener {
 
-            startActivity(ProfilePaymentActivity.newInstance(this))
+            startActivityMakeScene(ProfilePaymentActivity.newInstance(this))
 
         }
 

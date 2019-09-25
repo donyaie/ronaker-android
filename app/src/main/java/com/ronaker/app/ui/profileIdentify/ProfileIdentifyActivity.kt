@@ -22,6 +22,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
+import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
 import kotlinx.android.synthetic.main.activity_login.view.*
 import java.io.IOException
@@ -49,6 +50,8 @@ class ProfileIdentifyActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_indentify)

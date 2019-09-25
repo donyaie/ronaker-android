@@ -157,7 +157,7 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
 
 
     if (this.images != null) {
-        this.images?.forEach { if (it.suid != null) imageList?.add(it.suid!!) }
+        this.images?.forEach { it.suid?.let {suid->   imageList?.add(suid)} }
 
     }
 
