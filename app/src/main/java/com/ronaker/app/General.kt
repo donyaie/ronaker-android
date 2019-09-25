@@ -3,6 +3,7 @@ package com.ronaker.app
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
@@ -29,9 +30,18 @@ class General : MultiDexApplication() {
         fun newInstance(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }
+
+
+
     }
 
+
+
+
+
     override fun onCreate() {
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         super.onCreate()
 
         Stetho.initializeWithDefaults(this)

@@ -2,6 +2,7 @@ package com.ronaker.app.ui.imagePicker
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipData
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -22,6 +23,10 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.yalantis.ucrop.UCrop
 import java.io.File
+import android.os.Build
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.appcompat.app.AppCompatDelegate
 
 
 class ImagePickerActivity : BaseActivity() {
@@ -41,10 +46,13 @@ class ImagePickerActivity : BaseActivity() {
     }
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_image_picker)
 
         val intent = intent
@@ -92,6 +100,11 @@ class ImagePickerActivity : BaseActivity() {
                             MediaStore.EXTRA_OUTPUT,
                             getCacheImagePath(fileName)
                         )
+
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                            takePictureIntent.clipData = ClipData.newRawUri("", getCacheImagePath(fileName))
+                            takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
                         if (takePictureIntent.resolveActivity(packageManager) != null) {
                             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                         }

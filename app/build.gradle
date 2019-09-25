@@ -25,6 +25,7 @@ android {
         experimental = true
     }
 
+
     defaultConfig {
         applicationId "com.ronaker.app"
         minSdkVersion 19
@@ -121,7 +122,7 @@ dependencies {
     implementation "com.karumi:dexter:5.0.0"
 
     // crop
-    implementation 'com.github.yalantis:ucrop:2.2.3'
+    implementation 'com.github.yalantis:ucrop:2.2.4'
 
 
     // rounded image view
