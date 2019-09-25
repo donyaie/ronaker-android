@@ -155,10 +155,10 @@ class ManageProductFragment : BaseFragment() {
     }
 
     fun getSuid():String?{
-       return  this.arguments!!.getString(SUID_KEY)
+       return  this.arguments?.getString(SUID_KEY)
     }
     fun getProduct():Product?{
-        return  this.arguments!!.getParcelable(PRODUCT_KEY)
+        return  this.arguments?.getParcelable(PRODUCT_KEY)
     }
 
 

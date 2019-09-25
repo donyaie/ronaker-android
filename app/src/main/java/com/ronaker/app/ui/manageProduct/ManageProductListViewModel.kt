@@ -70,16 +70,16 @@ class ManageProductListViewModel : BaseViewModel() {
                 .doOnTerminate { onRetrieveProductListFinish() }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        if (result.data?.results?.size!! > 0) {
+                        if (result.data?.results?.size?:0 > 0) {
 
 
                             addNewView.value = true
                             emptyView.value = false
                             onRetrieveProductListSuccess(
-                                result.data.results.toProductList()
+                                result.data?.results?.toProductList()
                             )
 
-                            if (result.data.next == null) {
+                            if (result.data?.next == null) {
                                 hasNextPage = false
                             }
 

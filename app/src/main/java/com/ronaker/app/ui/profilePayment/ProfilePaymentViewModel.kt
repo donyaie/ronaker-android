@@ -62,10 +62,11 @@ class ProfilePaymentViewModel : BaseViewModel() {
         companion object {
 
             fun detect(cardNumber: String): CardType {
-
                 for (cardType in CardType.values()) {
-                    if (null == cardType.pattern) continue
-                    if (cardType.pattern!!.matcher(cardNumber).matches()) return cardType
+                    cardType.pattern?.let {
+                        if (it.matcher(cardNumber).matches())
+                            return cardType
+                    }
                 }
 
                 return UNKNOWN
@@ -76,14 +77,25 @@ class ProfilePaymentViewModel : BaseViewModel() {
 
                 if (cardNumber.length >= 2)
                     for (cardType in CardType.values()) {
-                        if (null == cardType.shortPattern) continue
-                        if (cardType.shortPattern!!.matcher(cardNumber.substring(0,2)).matches()) return cardType
+
+                        cardType.shortPattern?.let {
+                            if (it.matcher(
+                                    cardNumber.substring(
+                                        0,
+                                        2
+                                    )
+                                ).matches()
+                            )
+                                return cardType
+                        }
                     }
 
 
                 for (cardType in CardType.values()) {
-                    if (null == cardType.pattern) continue
-                    if (cardType.pattern!!.matcher(cardNumber).matches()) return cardType
+                    cardType.pattern?.let {
+                        if (it.matcher(cardNumber).matches())
+                            return cardType
+                    }
                 }
 
                 return UNKNOWN

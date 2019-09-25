@@ -43,7 +43,7 @@ class ProfileIdentifyViewModel : BaseViewModel() {
 
 
     lateinit var mUri: Uri
-     var mImageSuid: String?=null
+    var mImageSuid: String? = null
 
 
     private var uploadSubscription: Disposable? = null
@@ -81,10 +81,12 @@ class ProfileIdentifyViewModel : BaseViewModel() {
 
         uploadSubscription?.dispose()
 
-        if(mImageSuid!=null){
-            addIdentity(mImageSuid!!)
+        mImageSuid?.let {
+            addIdentity(it)
             return
         }
+
+
 
 
         uploadSubscription = contentRepository
@@ -104,16 +106,14 @@ class ProfileIdentifyViewModel : BaseViewModel() {
                 if (result.isSuccess()) {
 
 
-                    result.data?.suid?.let { mImageSuid=it }
+                    result.data?.suid?.let { mImageSuid = it }
 
                     result.data?.suid?.let { addIdentity(it) }
 
-                }else{
-                    errorMessage.value=result.error?.detail
+                } else {
+                    errorMessage.value = result.error?.detail
                 }
             }
-
-
 
 
     }
@@ -140,9 +140,9 @@ class ProfileIdentifyViewModel : BaseViewModel() {
 
             .subscribe { result ->
                 if (result.isAcceptable()) {
-                    finish.value=true
-                }else{
-                    errorMessage.value=result.error?.detail
+                    finish.value = true
+                } else {
+                    errorMessage.value = result.error?.detail
                 }
             }
 

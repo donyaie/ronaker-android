@@ -80,10 +80,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
     var isValid: Boolean = false
         get() {
-            if (regex != null)
-                return regex!!.matches(input_edit.text)
-            else
-                return true
+            return regex?.matches(input_edit.text) ?: true
 
         }
 

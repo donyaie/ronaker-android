@@ -59,8 +59,10 @@ class ManageProductViewModel : BaseViewModel() {
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    mProduct = result.data?.toProductDetail()!!
-                    fillProduct(mProduct)
+                    result.data?.toProductDetail()?.let {
+                        mProduct = it
+                        fillProduct(it)
+                    }
 
 
                 } else {

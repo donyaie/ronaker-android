@@ -93,23 +93,21 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
     }
 
     internal fun getNumber(): String? {
-        return if (validNumber != null) {
-            validNumber!!.getNationalNumber().toString() + ""
-        } else
-            null
+           return validNumber?.let {it.nationalNumber.toString() + ""  }
+
     }
 
     private fun validateNumber(phNumber: String?): Boolean {
         try {
 
 
-            if (phNumber == null || phNumber.length == 0) {
+            if (phNumber == null || phNumber.isEmpty()) {
                 showValidate(false)
                 return false
             }
 
 
-            val isoCode = binding.ccp.getSelectedCountryNameCode()
+            val isoCode = binding.ccp.selectedCountryNameCode
             var phoneNumber: Phonenumber.PhoneNumber? = null
 
             try {

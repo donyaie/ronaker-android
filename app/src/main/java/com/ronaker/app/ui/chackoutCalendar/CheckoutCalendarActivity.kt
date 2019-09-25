@@ -22,7 +22,7 @@ class CheckoutCalendarActivity : BaseActivity() {
     companion object {
         var PRODUCT_KEY = "mProduct"
 
-        fun newInstance(context: Context, product:Product): Intent {
+        fun newInstance(context: Context, product: Product): Intent {
             var intent = Intent(context, CheckoutCalendarActivity::class.java)
             var boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
@@ -62,18 +62,10 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
 
-        if ( intent.hasExtra(PRODUCT_KEY)) {
-
-            getProduct()?.let {
+        if (intent.hasExtra(PRODUCT_KEY)) {
 
 
-
-                viewModel.loadProduct(it.suid!!)
-
-
-
-            }
-
+            viewModel.loadProduct()
 
 
         } else {
@@ -84,21 +76,14 @@ class CheckoutCalendarActivity : BaseActivity() {
     }
 
 
-
-
-    fun getProduct():Product?{
-      return  intent.getParcelableExtra(PRODUCT_KEY)
+    fun getProduct(): Product? {
+        return intent.getParcelableExtra(PRODUCT_KEY)
     }
-
-
 
 
     override fun onBackPressed() {
         super.onBackPressed()
     }
-
-
-
 
 
 }

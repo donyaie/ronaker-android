@@ -175,7 +175,11 @@ class ExploreProductActivity : BaseActivity() {
 
         viewModel.checkout.observe(this, Observer { _ ->
 
-            startActivityMakeScene(CheckoutCalendarActivity.newInstance(this, viewModel.mProduct))
+            startActivityMakeScene(viewModel.mProduct?.let {
+                CheckoutCalendarActivity.newInstance(this,
+                    it
+                )
+            })
 
         })
 

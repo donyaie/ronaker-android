@@ -44,9 +44,9 @@ class ExploreProductViewModel : BaseViewModel() {
     val productLocation: MutableLiveData<LatLng> = MutableLiveData()
     val productAddress: MutableLiveData<String> = MutableLiveData()
 
-    lateinit  var mProduct:Product
+      var mProduct:Product?=null
 
-    lateinit var suid: String
+     var suid: String?=null
 
 
     private var subscription: Disposable? = null
@@ -60,7 +60,7 @@ class ExploreProductViewModel : BaseViewModel() {
     fun loadProduct(product: Product) {
 
         loading.value = false
-        this.suid = product.suid!!
+        this.suid = product.suid
         mProduct=product
         fillProduct(product)
 
@@ -83,10 +83,10 @@ class ExploreProductViewModel : BaseViewModel() {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                   mProduct= result.data?.toProductDetail()!!
+                   mProduct= result.data?.toProductDetail()
 
 
-                    fillProduct(mProduct)
+                    mProduct?.let { fillProduct(it) }
 
 //                    productImage.value = BASE_URL + result.data?.avatar
 //                    productDescription.value = result.data?.description
@@ -177,7 +177,7 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
     fun onRetry(){
-        loadProduct(suid)
+        suid?.let { loadProduct(it) }
     }
 
 
