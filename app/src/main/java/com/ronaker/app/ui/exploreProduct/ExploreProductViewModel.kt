@@ -35,6 +35,10 @@ class ExploreProductViewModel : BaseViewModel() {
     val checkout: MutableLiveData<String> = MutableLiveData()
 
 
+
+    val imageList: MutableLiveData<ArrayList<String>> = MutableLiveData()
+
+
     val productImage: MutableLiveData<String> = MutableLiveData()
     val productTitle: MutableLiveData<String> = MutableLiveData()
     val productDescription: MutableLiveData<String> = MutableLiveData()
@@ -130,6 +134,13 @@ class ExploreProductViewModel : BaseViewModel() {
 
     fun fillProduct(product:Product){
 
+
+        var images=ArrayList<String>()
+        product.images?.forEach {
+            images.add( BASE_URL+it.url)
+        }
+        imageList.value=images
+
         productImage.value = BASE_URL + product.avatar
         productDescription.value = product.description
         productTitle.value = product.name
@@ -162,6 +173,9 @@ class ExploreProductViewModel : BaseViewModel() {
             )
             productPriceTitle.value = context.getString(R.string.title_per_month)
         }
+
+
+
 
 
 
