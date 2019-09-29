@@ -175,7 +175,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
         viewModel.viewState.observe(this, Observer { state ->
-            viewModel.stateChange(state)
+
             actionState = state
 
         })

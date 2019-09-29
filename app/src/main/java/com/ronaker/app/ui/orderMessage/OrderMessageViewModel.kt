@@ -76,9 +76,10 @@ class OrderMessageViewModel : BaseViewModel() {
         var user = userRepository.getUserInfo()
 
 
-        orderMessage.value = "Hi I'm ${user?.first_name} ${user?.last_name}\n" +
-                "I to rent your ${product.name} for $days day${if (days == 1L) "" else "s"}\n" +
-                "thank you."
+//        orderMessage.value = "Hi I'm ${user?.first_name} ${user?.last_name}\n" +
+//                "I to rent your ${product.name} for $days day${if (days == 1L) "" else "s"}\n" +
+//                "thank you."
+        orderMessage.value=context.getString(R.string.text_order_message,user?.first_name,user?.last_name,product.name,days.toString())
 
 
     }

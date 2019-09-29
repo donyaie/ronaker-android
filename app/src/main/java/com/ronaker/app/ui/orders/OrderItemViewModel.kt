@@ -46,10 +46,11 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="You accepted $userName request"
+
+                    orderStatus.value=  activity.getString(R.string.text_rent_request_accepted,userName)
                 }else{
 
-                    orderStatus.value="Your request accepted by $ownerName"
+                    orderStatus.value=  activity.getString(R.string.text_lend_request_accepted,ownerName)
                 }
 
 
@@ -60,10 +61,10 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="Rent | Canceled Order"
+                    orderStatus.value=activity.getString(R.string.text_rent_canceled)
                 }else{
 
-                    orderStatus.value="Lend | Canceled Order"
+                    orderStatus.value=activity.getString(R.string.text_lend_canceled)
                 }
 
 
@@ -76,10 +77,10 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="Rent | Completed Order"
+                    orderStatus.value=activity.getString(R.string.text_rent_complete)
                 }else{
 
-                    orderStatus.value="Lend | Completed Order"
+                    orderStatus.value=activity.getString(R.string.text_lend_complete)
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -89,10 +90,9 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="$userName requested to rent your item"
+                    orderStatus.value=activity.getString(R.string.text_rent_request_pending,userName)
                 }else{
-
-                    orderStatus.value="Pending to accept from $ownerName"
+                    orderStatus.value=activity.getString(R.string.text_lend_request_pending,ownerName)
                 }
 
             }
@@ -104,10 +104,10 @@ class OrderItemViewModel : BaseViewModel() {
 
                 if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value="Rent | Rejected Order"
+                    orderStatus.value=activity.getString(R.string.text_rent_rejected)
                 }else{
 
-                    orderStatus.value="Lend | Completed Order"
+                    orderStatus.value=activity.getString(R.string.text_lend_rejected)
                 }
 
             }
