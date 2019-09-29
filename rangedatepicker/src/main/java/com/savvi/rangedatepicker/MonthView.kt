@@ -21,7 +21,7 @@ class MonthView(context: Context, attrs: AttributeSet) : LinearLayout(context, a
     private var listener: Listener? = null
     var decorators: List<CalendarCellDecorator>? = null
     private var isRtl: Boolean = false
-    private var locale: Locale? = null
+    private lateinit var  locale: Locale
 
     internal var deactivatedDates: ArrayList<Int>? = null
 

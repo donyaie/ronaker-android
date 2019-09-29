@@ -1,8 +1,8 @@
 package com.ronaker.app.utils
 
-import android.os.Build
 import android.annotation.TargetApi
 import android.content.Context
+import android.os.Build
 import androidx.preference.PreferenceManager
 import java.util.*
 
@@ -22,12 +22,12 @@ object LocaleHelper {
     private val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
     fun onAttach(context: Context): Context {
-        val lang = getPersistedData(context, Locale.getDefault().getLanguage())
+        val lang = getPersistedData(context, Locale.getDefault().getLanguage()) ?: "en"
         return setLocale(context, lang)
     }
 
     fun onAttach(context: Context, defaultLanguage: String): Context {
-        val lang = getPersistedData(context, defaultLanguage)
+        val lang = getPersistedData(context, defaultLanguage) ?: defaultLanguage
         return setLocale(context, lang)
     }
 
@@ -35,7 +35,7 @@ object LocaleHelper {
         return getPersistedData(context, Locale.getDefault().getLanguage())
     }
 
-    fun setLocale(context: Context, language: String?): Context {
+    fun setLocale(context: Context, language: String): Context {
         persist(context, language)
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -58,7 +58,7 @@ object LocaleHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private fun updateResources(context: Context, language: String?): Context {
+    private fun updateResources(context: Context, language: String): Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
@@ -69,7 +69,7 @@ object LocaleHelper {
         return context.createConfigurationContext(configuration)
     }
 
-    private fun updateResourcesLegacy(context: Context, language: String?): Context {
+    private fun updateResourcesLegacy(context: Context, language: String): Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
@@ -77,18 +77,11 @@ object LocaleHelper {
 
         val configuration = resources.configuration
         configuration.locale = locale
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLayoutDirection(locale)
-        }
-
+        configuration.setLayoutDirection(locale)
         resources.updateConfiguration(configuration, resources.displayMetrics)
 
         return context
     }
-
-
-
-
 
 
 }

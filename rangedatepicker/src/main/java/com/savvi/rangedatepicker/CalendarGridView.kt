@@ -138,9 +138,8 @@ class CalendarGridView(context: Context, attrs: AttributeSet) : ViewGroup(contex
     override fun onLayout(changed: Boolean, left: Int, mtop: Int, right: Int, bottom: Int) {
 
         var top=0
-        top=mtop
         val start = System.currentTimeMillis()
-        top = 0
+
         var c = 0
         val numChildren = childCount
         while (c < numChildren) {

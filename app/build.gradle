@@ -25,6 +25,16 @@ android {
         experimental = true
     }
 
+    signingConfigs {
+
+        release {
+            keyAlias 'bizfer'
+            keyPassword 'bizfer-bizfer'
+            storeFile file('/workspace/ronaker-customer-android/sign_key')
+            storePassword 'bizfer-bizfer'
+        }
+    }
+
 
     defaultConfig {
         applicationId "com.ronaker.app"
@@ -39,6 +49,8 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -154,9 +166,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-
-    //payment
-    implementation 'io.card:android-sdk:5.5.1'
+//
+//    //payment
+//    implementation 'io.card:android-sdk:5.5.1'
 
     //memory lake
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'

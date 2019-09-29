@@ -76,9 +76,9 @@ class AddProductLocationViewModel : BaseViewModel() {
             .subscribe(
                 { result ->
                     if (result.result != null) {
-                        result.result?.let {result->
+                        result.result?.let {res->
 
-                            mPlace = result.toPlace()
+                            mPlace = res.toPlace()
                             mPlace?.let {place->
 
 

@@ -386,22 +386,24 @@ class AddProductViewModel : BaseViewModel() {
     fun upload(model: Product.ProductImage) {
 //
 //
-        uploadSubscriptionList.add(contentRepository.uploadImageWithoutProgress(
-            userRepository.getUserToken(),
-            model.uri
-        )
-            .doOnSubscribe { model.progress.value = true }
-            .doOnTerminate { model.progress.value = false }
-            .subscribe { result ->
-                if (result.isSuccess()) {
-                    model.url = result.data?.content
-                    model.suid = result.data?.suid
-                    model.isLocal = false
-                    model.progress.value = false
-                    checkNextSelectImage()
-                } else
-                    errorMessage.value = result.error?.detail
-            }
+        uploadSubscriptionList.add(model.uri?.let {
+            contentRepository.uploadImageWithoutProgress(
+                userRepository.getUserToken(),
+                it
+            )
+                .doOnSubscribe { model.progress.value = true }
+                .doOnTerminate { model.progress.value = false }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        model.url = result.data?.content
+                        model.suid = result.data?.suid
+                        model.isLocal = false
+                        model.progress.value = false
+                        checkNextSelectImage()
+                    } else
+                        errorMessage.value = result.error?.detail
+                }
+        }
         )
 
 

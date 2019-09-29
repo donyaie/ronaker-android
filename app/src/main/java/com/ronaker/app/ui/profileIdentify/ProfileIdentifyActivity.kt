@@ -78,10 +78,10 @@ class ProfileIdentifyActivity : BaseActivity() {
 
 
 
-        viewModel.pickImage.observe(this, Observer { value ->
+        viewModel.pickImage.observe(this, Observer { _ ->
             onProfileImageClick()
         })
-        viewModel.finish.observe(this, Observer { value ->
+        viewModel.finish.observe(this, Observer { _ ->
            finishSafe()
         })
 

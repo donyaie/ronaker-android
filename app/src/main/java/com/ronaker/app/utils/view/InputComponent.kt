@@ -24,18 +24,12 @@ import com.ronaker.app.R
 import com.ronaker.app.utils.extension.getParentActivity
 
 
-@BindingAdapter("app:input_text")
-fun textBind(input: InputComponent, value: String?) {
-    input.text = value
-}
-
-@BindingAdapter("app:inputMutableText")
+@BindingAdapter("inputMutableText")
 fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
+
     if (parentActivity != null && text != null) {
-
-
         text.observe(parentActivity, Observer { value -> view.text = value ?: "" })
     }
 }
@@ -180,7 +174,6 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 input_edit.setAutofillHints(value)
             }
 
-            View.AUTOFILL_TYPE_NONE
         }
 
 
