@@ -23,9 +23,7 @@
     <string name="titile_button_login">Prisijungti</string>
     <string name="titile_button_login_to_your_account">Prisijunkite prie savo paskyros</string>
     <string name="title_active">Aktyvus</string>
-    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Pridėkite keletą
-        nuotraukų iš savo\n elementą. prašome naudoti aiškų vaizdą iš tinkamo kampo …
-    </string>
+    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Pridėkite keletą nuotraukų iš savo elementą. prašome naudoti aiškų vaizdą iš tinkamo kampo …</string>
     <string name="title_add_images_of_item">Pridėti paveikslėlio elementą</string>
     <string name="title_add_item">+ Pridėti elementą</string>
     <string name="title_add_new_image">Pridėti naują vaizdą</string>
@@ -48,8 +46,7 @@
     <string name="title_is_item_available">Ar elementas galimas?</string>
     <string name="title_lending">Skolinimas</string>
     <string name="title_location">Vieta</string>
-    <string name="title_login_home">Nuomokite daiktus, kuriuos jums reikia tik trumpą laiką, iš savo artimiausio.
-    </string>
+    <string name="title_login_home">Nuomokite daiktus, kuriuos jums reikia tik trumpą laiką, iš savo artimiausio.</string>
     <string name="title_logout">Atsijungti</string>
     <string name="title_menu_explore">Naršyti</string>
     <string name="title_menu_inbox">Pašto dėžutę</string>
@@ -63,8 +60,7 @@
     <string name="title_phone_number">Telefono numeris</string>
     <string name="title_please_enter_the_code_we_texted_to_your_number">Įveskite kodą, kurį gavome savo numeriu</string>
     <string name="title_please_enter_your_phone">Įveskite savo telefoną</string>
-    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Prašome įvesti kainą, kurią prašote
-        išsinuomoti.
+    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Prašome įvesti kainą, kurią prašote išsinuomoti.
     </string>
     <string name="title_profile">Profilis</string>
     <string name="title_renting">Nuoma</string>
@@ -81,8 +77,7 @@
     <string name="title_verify_your_phone">Patikrinkite savo telefoną</string>
     <string name="title_we_will_not_show_your_exact_address_to_users">Mes nerodysime jūsų tikslaus adreso naudotojams.
     </string>
-    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">Mes patvirtinsime 5 skaitmenų kodą,
-        kad patvirtintume jūsų telefono numerį
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">Mes patvirtinsime 5 skaitmenų kodą, kad patvirtintume jūsų telefono numerį
     </string>
     <string name="title_welcome_back">Sveikas sugrįžęs.</string>
     <string name="title_what_s_your_email_address">Kas yra jūsų el. Pašto adresas?</string>
@@ -92,4 +87,28 @@
     <string name="toast_image_intent_null">Trūksta vaizdo parinkiklio parinkties!</string>
     <string name="error_set_location">Pasirinkite vietą</string>
     <string name="title_select_category">Pasirinkite kategoriją</string>
+    <string name="button_accept">Priimti</string>
+    <string name="button_cancel">Atšaukti</string>
+    <string name="button_decline">Atsisakyti</string>
+    <string name="button_finish">Baigti</string>
+    <string name="text_complete_your_profile">Užpildykite savo profilį</string>
+    <string name="text_per_day">Per dieną</string>
+    <string name="titile_sign_up">Registruotis</string>
+    <string name="title_add_a_identity_document">Pridėkite asmens dokumentą</string>
+    <string name="title_add_a_payment_method">Pridėkite mokėjimo metodą</string>
+    <string name="title_add_and_verify_phone_number">Pridėkite ir patikrinkite telefono numerį</string>
+    <string name="title_add_profile_image">Pridėti profilio vaizdą</string>
+    <string name="title_cancel">Atšaukti</string>
+    <string name="title_card_number">Kortelės numeris</string>
+    <string name="title_complete_profile">Visas profilis</string>
+    <string name="title_done">padaryta</string>
+    <string name="title_edit_profile">Redaguoti profilį</string>
+    <string name="title_enter_your_card_details">Įveskite savo kortelės duomenis</string>
+    <string name="title_payment">Mokėjimas</string>
+    <string name="title_please_upload_one_of_your_identity_document_to_authentication">Įkelkite vieną iš asmens tapatybės dokumentų į autentifikavimą.</string>
+    <string name="title_positive_rate">teigiama norma</string>
+    <string name="title_select_item_category">Pasirinkite elemento kategoriją</string>
+    <string name="title_setting">Nustatymas</string>
+    <string name="title_verify_your_identity">Patvirtinkite savo tapatybę</string>
+    <string name="title_we_need_few_details_for_renting_or_lending_out">Norint išsinuomoti ar išnuomoti, mums reikia kelių detalių.</string>
 </resources>

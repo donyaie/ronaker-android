@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
@@ -113,7 +114,8 @@
                           app:mutableText="@{viewModel.getOrderStatus()}"
                           android:text="Lend | Canceled order"
                           android:textAppearance="@style/TextAppearance.Small.Regular"
-                          android:lines="1"/>
+                          android:lines="1"
+                        tools:ignore="HardcodedText" />
 
                 <ImageView android:layout_width="24dp" android:padding="4dp" app:srcCompat="@drawable/ic_chevron_right"
 

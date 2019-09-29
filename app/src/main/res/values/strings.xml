@@ -13,6 +13,7 @@
 
     <string name="title_curency_symbol" translatable="false">€</string>
 
+    <string name="hint_0000_0000_0000_0000" translatable="false">0000 0000 0000 0000</string>
 
     <string name="retry">Retry</string>
     <string name="post_error">An error occurred while loading the posts</string>
@@ -68,17 +69,12 @@
     <string name="title_did_not_get_the_code_yet">Did not get the code yet?</string>
     <string name="title_resend">Resend</string>
     <string name="title_please_enter_your_phone">Please Enter Your Phone</string>
-    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to
-        verify your phone number
-    </string>
-    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your
-        item. please use clear image from proper angle…
-    </string>
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to verify your phone number</string>
+    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your item. please use clear image from proper angle…</string>
     <string name="title_button_next">Next</string>
     <string name="title_tell_about_your_item">Tell about your item</string>
     <string name="title_button_set_your_location">Set your Location</string>
-    <string name="title_we_will_not_show_your_exact_address_to_users">We will not show your exact address to users.
-    </string>
+    <string name="title_we_will_not_show_your_exact_address_to_users">We will not show your exact address to users.</string>
     <string name="title_search_your_location">Search your Location</string>
     <string name="title_button_set_location">Set Location</string>
     <string name="title_set_your_asking_price">Set your asking price.</string>
@@ -94,10 +90,35 @@
     <string name="title_add_images_of_item">Add Images of item</string>
     <string name="title_add_new_image">Add new image</string>
     <string name="title_phone_number">Phone Number</string>
-    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Please input the price you ask for
-        renting out the item.
-    </string>
+    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Please input the price you ask for renting out the item.</string>
     <string name="title_you_have_not_any_item_yet">You have not any item yet.</string>
     <string name="title_select_category">Select Category</string>
     <string name="error_set_location">Select Location</string>
+
+    <string name="title_positive_rate">positive rate</string>
+    <string name="button_decline">Decline</string>
+    <string name="button_accept">Accept</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_finish">Finish</string>
+    <string name="text_per_day">Per Day</string>
+    <string name="text_complete_your_profile">Complete your profile</string>
+    <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or Lending out.</string>
+    <string name="titile_sign_up">Sign Up</string>
+    <string name="title_add_profile_image">Add Profile Image</string>
+    <string name="title_add_and_verify_phone_number">Add and verify phone number</string>
+    <string name="title_add_a_payment_method">Add a payment method</string>
+    <string name="title_verify_your_identity">Verify your Identity</string>
+    <string name="title_add_a_identity_document">Add a identity document</string>
+    <string name="title_please_upload_one_of_your_identity_document_to_authentication">Please Upload one of your Identity document to Authentication.</string>
+    <string name="title_done">Done</string>
+    <string name="title_enter_your_card_details">Enter your Card details</string>
+    <string name="title_card_number">Card Number</string>
+    <string name="title_cancel">Cancel</string>
+    <string name="title_select_item_category">Select Item Category</string>
+    <string name="title_edit_profile">Edit Profile</string>
+    <string name="title_complete_profile">Complete Profile</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_payment">Payment</string>
+
+
 </resources>

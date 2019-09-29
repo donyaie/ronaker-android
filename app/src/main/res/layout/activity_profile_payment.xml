@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:text="Enter your Card details"
+                        android:text="@string/title_enter_your_card_details"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        android:text="Card Number"
+                        android:text="@string/title_card_number"
                         android:textAppearance="@style/TextAppearance.Medium.SB"
 
                         android:textColor="@color/colorTextDark"
@@ -107,7 +107,7 @@
                             android:maxLength="16"
                             app:mutableText="@{viewModel.getCardNumberText()}"
                             android:background="@null"
-                            android:hint="0000 0000 0000 0000"
+                            android:hint="@string/hint_0000_0000_0000_0000"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark"
 
