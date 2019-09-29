@@ -12,6 +12,11 @@
 
             android:gravity="center"
             android:layoutDirection="ltr">
+        <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
 
 
         <HorizontalScrollView

@@ -6,18 +6,25 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
-
-
 import java.lang.reflect.Type
 
 class PreferencesProvider(context: Context) {
 
-   lateinit var context: Context
+    lateinit var context: Context
 
 
     private lateinit var preferences: SharedPreferences
 
-    lateinit  var editor: SharedPreferences.Editor
+    private var editor: SharedPreferences.Editor? = null
+
+
+    @SuppressLint("CommitPrefEdits")
+    fun edit(): SharedPreferences.Editor? {
+        if (editor == null)
+            editor = preferences.edit()
+        return editor
+    }
+
 
     init {
 
@@ -25,7 +32,6 @@ class PreferencesProvider(context: Context) {
             this.context = context
             preferences = PreferenceManager
                 .getDefaultSharedPreferences(context)
-            editor = preferences.edit()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -36,54 +42,54 @@ class PreferencesProvider(context: Context) {
         return preferences.contains(key)
     }
 
-    fun putString(key: String, value: String?): Boolean {
+    fun putString(key: String, value: String?) {
         try {
-            editor.putString(key, value)
+            edit()?.putString(key, value)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return editor.commit()
+        edit()?.commit()
     }
 
-    fun putInt(key: String, value: Int): Boolean {
+    fun putInt(key: String, value: Int) {
         try {
-            editor.putInt(key, value)
+            edit()?.putInt(key, value)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return editor.commit()
+        edit()?.commit()
     }
 
-    fun putLong(key: String, value: Long?): Boolean {
+    fun putLong(key: String, value: Long) {
         try {
-            value?.let { editor.putLong(key, it) }
+            edit()?.putLong(key, value)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return editor.commit()
+        edit()?.commit()
     }
 
-    fun putBoolean(key: String, value: Boolean): Boolean {
+    fun putBoolean(key: String, value: Boolean) {
         try {
-            editor.putBoolean(key, value)
+            edit()?.putBoolean(key, value)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return editor.commit()
+        edit()?.commit()
     }
 
-    fun putFloat(key: String, value: Float?): Boolean {
+    fun putFloat(key: String, value: Float) {
         try {
-            value?.let { editor.putFloat(key, it) }
+            edit()?.putFloat(key, value)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return editor.commit()
+        edit()?.commit()
     }
 
     fun getString(key: String, defValue: String?): String? {
@@ -91,7 +97,6 @@ class PreferencesProvider(context: Context) {
     }
 
     fun <T> getObject(key: String, type: Type): T? {
-
 
 
         val json = preferences.getString(key, null)
@@ -102,18 +107,18 @@ class PreferencesProvider(context: Context) {
     }
 
 
-    fun <T> putObject(key: String, obj: T?): Boolean {
+    fun <T> putObject(key: String, obj: T?) {
         try {
 
             var json: String? = null
             if (obj != null)
                 json = Gson().toJson(obj)
-            editor.putString(key, json)
+            edit()?.putString(key, json)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return editor.commit()
+        edit()?.commit()
     }
 
 
@@ -135,14 +140,12 @@ class PreferencesProvider(context: Context) {
 
     fun clearAll() {
         try {
-            editor.clear().commit()
+            edit()?.clear()?.commit()
         } catch (ex: Exception) {
 
         }
 
     }
-
-
 
 
 }
