@@ -9,6 +9,7 @@ import com.ronaker.app.data.network.response.LocationResponseModel
 import com.ronaker.app.data.network.response.ProductDetailResponceModel
 import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import com.ronaker.app.data.network.response.ProductItemResponceModel
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -55,12 +56,15 @@ data class Product(
     @Parcelize
     data class ProductImage(
         var url: String?,
-        var suid: String?, var uri: Uri? = null, var isLocal: Boolean = false
+        var suid: String?,
+        var uri: Uri? = null,
+        var isLocal: Boolean = false
     ) : Parcelable {
 
         constructor() : this(null, null)
 
 
+        @IgnoredOnParcel
         val progress: MutableLiveData<Boolean> = MutableLiveData()
 
     }
@@ -157,7 +161,7 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
 
 
     if (this.images != null) {
-        this.images?.forEach { if (it.suid != null) imageList?.add(it.suid!!) }
+        this.images?.forEach { it.suid?.let { suid -> imageList?.add(suid) } }
 
     }
 

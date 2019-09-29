@@ -64,7 +64,7 @@ class AddProductLocationSearchViewModel : BaseViewModel() {
                     if (result.predictions != null) {
 
                         dataList.clear()
-                        dataList.addAll(result.predictions!!.toPlaceList())
+                        result.predictions?.let {  dataList.addAll(it.toPlaceList())  }
                         listAdapter.notifyDataSetChanged()
 
                     } else {

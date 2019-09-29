@@ -43,7 +43,7 @@ class OrderMessageViewModel : BaseViewModel() {
     lateinit var mStartDate: Date
     lateinit var mEndDate: Date
 
-     var mPrice=0.0
+    var mPrice = 0.0
 
 
     private var subscription: Disposable? = null
@@ -66,38 +66,50 @@ class OrderMessageViewModel : BaseViewModel() {
             TimeUnit.MILLISECONDS
         )
 
-        mPrice=product.price_per_day!! * days
+        mPrice = product.price_per_day?:0.toDouble() * days
 
         productPriceTitle.value = "for $days days"
-        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), mPrice)
+        productPrice.value =
+            String.format("%s%.02f", context.getString(R.string.title_curency_symbol), mPrice)
 
 
-       var user= userRepository.getUserInfo()
+        var user = userRepository.getUserInfo()
 
 
-        orderMessage.value="Hi I'm ${user?.first_name} ${user?.last_name}\n" +
-                "I need your ${product.name} for $days day${if(days==1L)"" else "s" }\n" +
+        orderMessage.value = "Hi I'm ${user?.first_name} ${user?.last_name}\n" +
+                "I to rent your ${product.name} for $days day${if (days == 1L) "" else "s"}\n" +
                 "thank you."
 
 
     }
 
     fun checkOut(message: String) {
+        subscription?.dispose()
+        mProduct.suid?.let {
+            subscription =
+                orderRepository.createOrder(
+                    userRepository.getUserToken(),
+                    it,
+                    mStartDate,
+                    mEndDate,
+                    message,
+                    mPrice
+                )
+                    .doOnSubscribe { loading.value = true }
+                    .doOnTerminate { loading.value = false }
+                    .subscribe { result ->
+                        if (result.isSuccess() || result.isAcceptable()) {
 
-        subscription =
-            orderRepository.createOrder(userRepository.getUserToken(), mProduct.suid!!, mStartDate, mEndDate, message,mPrice)
-                .doOnSubscribe { loading.value = true }
-                .doOnTerminate { loading.value = false }
-                .subscribe { result ->
-                    if (result.isSuccess() || result.isAcceptable()) {
+                            next.value = true
 
-                        next.value = true
+                        } else {
 
-                    } else {
-
-                        errorMessage.value = result.error?.detail
+                            errorMessage.value = result.error?.detail
+                        }
                     }
-                }
+
+
+        }
 
 
     }

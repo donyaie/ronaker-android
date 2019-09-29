@@ -43,7 +43,7 @@
     <string name="title_button_set_location">Nustatyti vietą</string>
     <string name="title_button_set_your_location">Nustatykite savo vietą</string>
     <string name="title_did_not_get_the_code_yet">Dar negavote kodo?</string>
-    <string name="title_done_njust_choice_a_password">Padaryta! Tiesiog pasirinkite slaptažodį.</string>
+    <string name="title_done_njust_choice_a_password">Padaryta!\nTiesiog pasirinkite slaptažodį.</string>
     <string name="title_images_gallery">Nuotraukų galerija</string>
     <string name="title_is_item_available">Ar elementas galimas?</string>
     <string name="title_lending">Skolinimas</string>
@@ -90,4 +90,6 @@
     <string name="title_your_inbox">Jūsų gautieji</string>
     <string name="title_your_listings">Jūsų skelbimai</string>
     <string name="toast_image_intent_null">Trūksta vaizdo parinkiklio parinkties!</string>
+    <string name="error_set_location">Pasirinkite vietą</string>
+    <string name="title_select_category">Pasirinkite kategoriją</string>
 </resources>

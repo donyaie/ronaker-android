@@ -25,9 +25,20 @@ android {
         experimental = true
     }
 
+    signingConfigs {
+
+        release {
+            keyAlias 'bizfer'
+            keyPassword 'bizfer-bizfer'
+            storeFile file('/workspace/ronaker-customer-android/sign_key')
+            storePassword 'bizfer-bizfer'
+        }
+    }
+
+
     defaultConfig {
         applicationId "com.ronaker.app"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 29
         multiDexEnabled true
         versionCode 1
@@ -38,6 +49,8 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -121,7 +134,7 @@ dependencies {
     implementation "com.karumi:dexter:5.0.0"
 
     // crop
-    implementation 'com.github.yalantis:ucrop:2.2.3'
+    implementation 'com.github.yalantis:ucrop:2.2.4'
 
 
     // rounded image view
@@ -153,12 +166,18 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-
-    //payment
-    implementation 'io.card:android-sdk:5.5.1'
+//
+//    //payment
+//    implementation 'io.card:android-sdk:5.5.1'
 
     //memory lake
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+
+
+
+    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
 
 }
 

@@ -52,7 +52,6 @@ class CheckoutCalendarViewModel : BaseViewModel() {
 
 
 
-    lateinit var suid: String
 
 
     private var subscription: Disposable? = null
@@ -63,18 +62,15 @@ class CheckoutCalendarViewModel : BaseViewModel() {
     }
 
 
-    fun loadProduct(suid: String) {
+    fun loadProduct() {
 
-        this.suid = suid
 
 
     }
 
     fun onClickSetDays() {
 
-
-
-        nextStep.value=suid
+        nextStep.value=""
     }
 
     fun unSelectFirstDate() {

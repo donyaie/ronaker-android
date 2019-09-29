@@ -33,7 +33,7 @@ class SplashActivity : BaseActivity() {
             if (value == true) {
 
 
-                Timer("login", false).schedule(1000) {
+                Timer("startLogin", false).schedule(1000) {
                     startActivity(LoginActivity.newInstance(this@SplashActivity))
 
                     finish()
@@ -45,7 +45,7 @@ class SplashActivity : BaseActivity() {
         viewModel.goDashboard.observe(this, Observer { value ->
             if (value == true) {
 
-                Timer("login", false).schedule(1000) {
+                Timer("startDashboard", false).schedule(1000) {
                     startActivity(DashboardActivity.newInstance(this@SplashActivity))
                     finish()
                 }

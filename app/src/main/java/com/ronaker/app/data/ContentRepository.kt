@@ -23,7 +23,7 @@ import retrofit2.Response
 class ContentRepository(val contentApi: ContentApi) {
 
 
-    fun uploadImageWithoutProgress(token: String?, filePath: Uri?): Observable<Result<ContentImageResponceModel>> {
+    fun uploadImageWithoutProgress(token: String?, filePath: Uri): Observable<Result<ContentImageResponceModel>> {
         return contentApi.uploadImageWithoutProgress("Token $token", createMultipartBody(filePath))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
@@ -38,14 +38,14 @@ class ContentRepository(val contentApi: ContentApi) {
 
 
 
-    private fun createMultipartBody(filePath: Uri?): MultipartBody.Part {
-        val file = filePath?.toFile()
+    private fun createMultipartBody(filePath: Uri): MultipartBody.Part {
+        val file = filePath.toFile()
         val requestBody = createRequestBody(file)
-        return MultipartBody.Part.createFormData("content", file?.name, requestBody)
+        return requestBody.let {MultipartBody.Part.createFormData("content", file.name, it)  }
     }
 
-    private fun createRequestBody(file: File?): RequestBody {
-        return RequestBody.create(MediaType.parse("image/*"), file!!)
+    private fun createRequestBody(file: File): RequestBody {
+        return file .let {  RequestBody.create(MediaType.parse("image/*"), it)}
     }
 
     fun uploadImage(token: String?, filePath: String): Flowable<Double> {
@@ -67,13 +67,15 @@ class ContentRepository(val contentApi: ContentApi) {
 
     private fun createCountingRequestBody(file: File, emitter: FlowableEmitter<Double>): RequestBody {
         val requestBody = createRequestBody(file)
-        return CountingRequestBody(requestBody, object : CountingRequestBody.Listener {
-            override fun onRequestProgress(bytesWritten: Long, contentLength: Long) {
-                val progress = 1.0 * bytesWritten / contentLength
-                emitter.onNext(progress)
-            }
+        return requestBody.let {
+            CountingRequestBody(it, object : CountingRequestBody.Listener {
+                override fun onRequestProgress(bytesWritten: Long, contentLength: Long) {
+                    val progress = 1.0 * bytesWritten / contentLength
+                    emitter.onNext(progress)
+                }
 
-        })
+            })
+        }
     }
 
 

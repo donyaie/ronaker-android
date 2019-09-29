@@ -35,7 +35,9 @@
                         android:imeOptions="actionNext"
                         android:id="@+id/name_input"
 
+                        android:autofillHints="given-name"
                         app:input_transparent="true"
+
                         app:input_title="@string/first_name_title"
                         app:input_hint="@string/first_name_hint"
                         app:input_regex="^.{2,}$"
@@ -50,6 +52,7 @@
                         android:imeOptions="actionNext"
                         android:id="@+id/lastName_input"
 
+                        android:autofillHints="family-name"
                         app:input_transparent="true"
                         app:input_title="@string/last_name_title"
                         app:input_hint="@string/last_name_hint"

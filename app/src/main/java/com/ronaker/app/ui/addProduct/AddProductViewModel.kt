@@ -179,8 +179,8 @@ class AddProductViewModel : BaseViewModel() {
             errorMessage.value="Please Select Sub-Category"
         }else{
             product.new_categories = ArrayList()
-            product.new_categories!!.add(categories[0].suid)
-            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories!!.add(it) }
+            product.new_categories?.apply { add(categories[0].suid) }
+            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories?.add(it) }
 
 
             if (!updateSuid.isNullOrEmpty()) {
@@ -265,7 +265,7 @@ class AddProductViewModel : BaseViewModel() {
         if (!updateSuid.isNullOrEmpty()) {
 
             updateProduct(product)
-        } else if (product.price_per_day!! > 0 || product.price_per_week!! > 0 || product.price_per_month!! > 0)
+        } else if (product.price_per_day?:0.toDouble() > 0 || product.price_per_week?:0.toDouble() > 0 || product.price_per_month?:0.toDouble() > 0)
             viewState.value = StateEnum.location
         else
             errorMessage.value = context.getString(R.string.error_set_price)
@@ -277,7 +277,7 @@ class AddProductViewModel : BaseViewModel() {
         if (place != null) {
 
             product.address = place.mainText
-            product.location = LatLng(place.lat!!, place.lng!!)
+            product.location =place.latLng
 
 
             if (!updateSuid.isNullOrEmpty()) {
@@ -346,6 +346,7 @@ class AddProductViewModel : BaseViewModel() {
 
     fun checkNextSelectImage(): Boolean {
         var resault = true
+
         imagesTemp.forEach {
             if (it.progress.value == true || it.isLocal)
                 resault = false
@@ -385,21 +386,24 @@ class AddProductViewModel : BaseViewModel() {
     fun upload(model: Product.ProductImage) {
 //
 //
-        uploadSubscriptionList.add(contentRepository.uploadImageWithoutProgress(
-            userRepository.getUserToken(),
-            model.uri
-        )
-            .doOnSubscribe { model.progress.value = true }
-            .doOnTerminate { model.progress.value = false }
-            .subscribe { result ->
-                if (result.isSuccess()) {
-                    model.url = result.data?.content
-                    model.suid = result.data?.suid
-                    model.isLocal = false
-                    checkNextSelectImage()
-                } else
-                    errorMessage.value = result.error?.detail
-            }
+        uploadSubscriptionList.add(model.uri?.let {
+            contentRepository.uploadImageWithoutProgress(
+                userRepository.getUserToken(),
+                it
+            )
+                .doOnSubscribe { model.progress.value = true }
+                .doOnTerminate { model.progress.value = false }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        model.url = result.data?.content
+                        model.suid = result.data?.suid
+                        model.isLocal = false
+                        model.progress.value = false
+                        checkNextSelectImage()
+                    } else
+                        errorMessage.value = result.error?.detail
+                }
+        }
         )
 
 
@@ -480,6 +484,15 @@ class AddProductViewModel : BaseViewModel() {
 
                                     categories = it.toCategoryList()
 
+
+                                    if(categories.size>1){
+                                        categories[0].sub_categories= ArrayList()
+                                        categories[0].sub_categories?.add(categories[1])
+                                        categories.removeAt(1)
+                                    }
+
+
+
                                 }
 
 
@@ -487,17 +500,14 @@ class AddProductViewModel : BaseViewModel() {
                                 productSubCategoryTitle.value=""
 
 
-                                if (result.data?.categories != null && result.data.categories.isNotEmpty()) {
-                                    productCategoryTitle.value = result.data.categories[0].title
+                                if (categories.isNotEmpty()) {
+                                    productCategoryTitle.value = categories[0].title
 
 
                                     productSubCategoryVisibility.value= View.VISIBLE
 
-                                    if (result.data.categories[0].sub_categories != null && result.data.categories[0].sub_categories!!.isNotEmpty()) {
-                                        productSubCategoryTitle.value =
-                                            result.data.categories[0].sub_categories?.get(0)
-                                                ?.sub_categories?.get(0)
-                                                ?.title
+                                    if (! categories[0].sub_categories.isNullOrEmpty()) {
+                                        productSubCategoryTitle.value = categories[0].sub_categories?.get(0)?.title
 
                                         productSubCategoryVisibility.value= View.VISIBLE
 

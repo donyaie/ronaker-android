@@ -406,7 +406,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
             countDots.removeAllViewsInLayout()
             for (i in 0 until dotCount) {
                 dots[i] = ImageView(context)
-                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
+                dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
 
                 val params = LinearLayout.LayoutParams(
                     screenLibrary.DP2Pixel(9),
@@ -415,12 +415,12 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
                 params.setMargins(21, 0, 21, 0)
 
-                dots[i]!!.scaleType = ImageView.ScaleType.FIT_CENTER
+                dots[i]?.scaleType = ImageView.ScaleType.FIT_CENTER
 
                 countDots.addView(dots[i], params)
             }
 
-            dots[0]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_select))
+            dots[0]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_select))
         }
     }
 
@@ -433,23 +433,23 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                 if (i == position) {
 
 
-                    dots[position]!!.animate().scaleX(0f).scaleY(0f).setDuration(100)
-                        .setListener(object : Animator.AnimatorListener {
+                    dots[position]?.animate()?.scaleX(0f)?.scaleY(0f)?.setDuration(100)
+                        ?.setListener(object : Animator.AnimatorListener {
                             override fun onAnimationStart(animation: Animator) {
 
                             }
 
                             override fun onAnimationEnd(animation: Animator) {
 
-                                dots[position]!!.setImageDrawable(
+                                dots[position]?.setImageDrawable(
                                     ContextCompat.getDrawable(
                                         context,
                                         R.drawable.navigate_dot_select
                                     )
                                 )
-                                dots[position]!!.setPadding(0, 0, 0, 0)
-                                dots[position]!!.animate().scaleX(1f).scaleY(1f).setDuration(200).setListener(null)
-                                    .start()
+                                dots[position]?.setPadding(0, 0, 0, 0)
+                                dots[position]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.setListener(null)
+                                    ?.start()
                             }
 
                             override fun onAnimationCancel(animation: Animator) {
@@ -459,11 +459,11 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                             override fun onAnimationRepeat(animation: Animator) {
 
                             }
-                        }).start()
+                        })?.start()
                 } else {
-                    dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
-                    dots[i]!!.setPadding(3, 3, 3, 3)
-                    dots[i]!!.animate().scaleX(1f).scaleY(1f).setDuration(200).setListener(null).start()
+                    dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
+                    dots[i]?.setPadding(3, 3, 3, 3)
+                    dots[i]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.setListener(null)?.start()
 
                 }
 
@@ -474,9 +474,9 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         } else {
 
             for (i in 0 until dotCount) {
-                dots[i]!!.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
-                dots[i]!!.setPadding(3, 3, 3, 3)
-                dots[i]!!.animate().scaleX(0f).scaleY(0f).setDuration(100).setListener(null).start()
+                dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
+                dots[i]?.setPadding(3, 3, 3, 3)
+                dots[i]?.animate()?.scaleX(0f)?.scaleY(0f)?.setDuration(100)?.setListener(null)?.start()
 
             }
 

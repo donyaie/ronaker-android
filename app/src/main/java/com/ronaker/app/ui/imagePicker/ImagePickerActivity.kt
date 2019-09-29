@@ -2,6 +2,7 @@ package com.ronaker.app.ui.imagePicker
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipData
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -22,6 +23,10 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.yalantis.ucrop.UCrop
 import java.io.File
+import android.os.Build
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.appcompat.app.AppCompatDelegate
 
 
 class ImagePickerActivity : BaseActivity() {
@@ -40,15 +45,23 @@ class ImagePickerActivity : BaseActivity() {
         fun onChooseGallerySelected()
     }
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_image_picker)
 
         val intent = intent
         if (intent == null) {
-            Toast.makeText(applicationContext, getString(R.string.toast_image_intent_null), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.toast_image_intent_null),
+                Toast.LENGTH_LONG
+            ).show()
             return
         }
 
@@ -83,7 +96,15 @@ class ImagePickerActivity : BaseActivity() {
                     if (report.areAllPermissionsGranted()) {
                         fileName = System.currentTimeMillis().toString() + ".jpg"
                         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName))
+                        takePictureIntent.putExtra(
+                            MediaStore.EXTRA_OUTPUT,
+                            getCacheImagePath(fileName)
+                        )
+
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                            takePictureIntent.clipData = ClipData.newRawUri("", getCacheImagePath(fileName))
+                            takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
                         if (takePictureIntent.resolveActivity(packageManager) != null) {
                             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                         }
@@ -128,8 +149,8 @@ class ImagePickerActivity : BaseActivity() {
                 setResultCancelled()
             }
             REQUEST_GALLERY_IMAGE -> if (resultCode == Activity.RESULT_OK) {
-                val imageUri = data!!.data
-                cropImage(imageUri)
+                val imageUri = data?.data
+                imageUri?.let { cropImage(it) }
             } else {
                 setResultCancelled()
             }
@@ -139,16 +160,18 @@ class ImagePickerActivity : BaseActivity() {
                 setResultCancelled()
             }
             UCrop.RESULT_ERROR -> {
-                val cropError = UCrop.getError(data!!)
-                com.ronaker.app.utils.Debug.Log(TAG, "Crop error: " + cropError!!)
-                setResultCancelled()
+                data?.let {
+                    val cropError = UCrop.getError(it)
+                    com.ronaker.app.utils.Debug.Log(TAG, "Crop error: " + cropError)
+                    setResultCancelled()
+                }
             }
             else -> setResultCancelled()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun cropImage(sourceUri: Uri?) {
+    private fun cropImage(sourceUri: Uri) {
         val destinationUri = Uri.fromFile(File(cacheDir, queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
@@ -162,7 +185,7 @@ class ImagePickerActivity : BaseActivity() {
         if (setBitmapMaxWidthHeight)
             options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight)
 
-        UCrop.of(sourceUri!!, destinationUri)
+        UCrop.of(sourceUri, destinationUri)
             .withOptions(options)
             .start(this)
     }
@@ -212,6 +235,24 @@ class ImagePickerActivity : BaseActivity() {
         val REQUEST_GALLERY_IMAGE = 1
         lateinit var fileName: String
 
+
+        fun launchGalleryIntent(activity: Activity, requestCode: Int) {
+
+            val intent = Intent(activity, ImagePickerActivity::class.java)
+            intent.putExtra(
+                ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+                ImagePickerActivity.REQUEST_GALLERY_IMAGE
+            )
+
+            // setting aspect ratio
+            intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
+            intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
+            intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
+            activity.startActivityForResult(intent, requestCode)
+
+        }
+
+
         fun showImagePickerOptions(context: Context, listener: PickerOptionListener) {
             // setup the alert builder
             val builder = AlertDialog.Builder(context)
@@ -234,10 +275,10 @@ class ImagePickerActivity : BaseActivity() {
             dialog.show()
         }
 
-        private fun queryName(resolver: ContentResolver, uri: Uri?): String {
+        private fun queryName(resolver: ContentResolver, uri: Uri): String {
             var name = ""
 
-            val returnCursor = resolver.query(uri!!, null, null, null, null)
+            val returnCursor = resolver.query(uri, null, null, null, null)
             val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             returnCursor?.moveToFirst()
             if (nameIndex != null)
@@ -255,7 +296,7 @@ class ImagePickerActivity : BaseActivity() {
             if (path.exists() && path.isDirectory) {
                 path.listFiles()?.let {
 
-                    for (child:File? in it) {
+                    for (child: File? in it) {
                         child?.delete()
                     }
                 }

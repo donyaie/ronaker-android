@@ -96,7 +96,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
                 }
             }
-            defaultTransactionOptions = FragNavTransactionOptions.newBuilder().customAnimations(android.R.anim.fade_in, R.anim.abc_fade_out,android.R.anim.fade_in, R.anim.abc_fade_out).build()
+            defaultTransactionOptions = FragNavTransactionOptions.newBuilder().customAnimations(android.R.anim.fade_in, android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out).build()
             fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
 
             navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {

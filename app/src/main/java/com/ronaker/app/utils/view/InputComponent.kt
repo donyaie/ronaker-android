@@ -2,7 +2,9 @@ package com.ronaker.app.utils.view
 
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -21,18 +23,13 @@ import androidx.lifecycle.Observer
 import com.ronaker.app.R
 import com.ronaker.app.utils.extension.getParentActivity
 
-@BindingAdapter("app:input_text")
-fun textBind(input: InputComponent, value: String?) {
-    input.text = value
-}
 
-@BindingAdapter("app:inputMutableText")
+@BindingAdapter("inputMutableText")
 fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
+
     if (parentActivity != null && text != null) {
-
-
         text.observe(parentActivity, Observer { value -> view.text = value ?: "" })
     }
 }
@@ -46,6 +43,12 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         Info,
         Error,
         Success
+    }
+
+    enum class InputMode {
+        Editable,
+        NoneEditable,
+        DropDown
     }
 
     enum class InputAlertType {
@@ -71,29 +74,10 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
     var isValid: Boolean = false
         get() {
-            if (regex != null)
-                return regex!!.matches(input_edit.text)
-            else
-                return true
+            return regex?.matches(input_edit.text) ?: true
 
         }
 
-    var isEditable: Boolean = true
-        set(value) {
-            field = value
-
-            if(field){
-
-                input_edit.visibility=View.VISIBLE
-                input_view.visibility=View.GONE
-
-            }else{
-
-                input_edit.visibility=View.GONE
-                input_view.visibility=View.VISIBLE
-            }
-
-        }
 
     var isTransparent: Boolean = true
         set(value) {
@@ -182,6 +166,43 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         }
 
 
+    var autofillHints: String? = null
+        set(value) {
+            field = value
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                input_edit.setAutofillHints(value)
+            }
+
+        }
+
+
+    var inputMode: InputMode = InputMode.Editable
+        set(value) {
+            field = value
+
+
+            when (field) {
+                InputMode.Editable -> {
+
+                    input_edit.visibility = View.VISIBLE
+                    input_view.visibility = View.GONE
+                }
+                InputMode.NoneEditable -> {
+
+                    input_edit.visibility = View.GONE
+                    input_view.visibility = View.VISIBLE
+                }
+
+                InputMode.DropDown -> {
+
+                }
+            }
+
+
+        }
+
+
     var container_layout: ConstraintLayout
     var title_text: TextView
     var input_edit: EditText
@@ -189,18 +210,55 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
     var input_line: LinearLayout
     var alert_layer: LinearLayout
     var alert_image: ImageView
+    var pass_image: ImageView
     var alert_text: TextView
 
     var input_view: TextView
 
     lateinit var counter_text: TextView
 
+    fun addTextChangedListener(watcher: TextWatcher) {
+        input_edit.addTextChangedListener(watcher)
+    }
+
+    fun inputRequestFocus() {
+        input_edit.requestFocus()
+    }
 
     var title: String? = null
         set(value) {
             field = value
 
             title_text.setText(value)
+        }
+
+
+    var maxLength: Int = 0
+        set(value) {
+            field = value
+
+            if (value == 0) {
+                input_edit.filters.toMutableList().apply {
+
+                    removeAll {
+                        it.javaClass == InputFilter.LengthFilter::class.java
+                    }
+                }
+
+            } else if (input_edit.filters.isNullOrEmpty()) {
+                input_edit.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(value))
+
+            } else {
+                input_edit.filters.toMutableList().apply {
+
+                    removeAll {
+
+                        it.javaClass == InputFilter.LengthFilter::class.java
+                    }
+                    this.add(InputFilter.LengthFilter(value))
+                }
+            }
+
         }
 
 
@@ -244,7 +302,23 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         set(value) {
             field = value
             input_edit.inputType = value
+
+            if (input_edit.inputType == (EditorInfo.TYPE_TEXT_VARIATION_PASSWORD or EditorInfo.TYPE_CLASS_TEXT)) {
+
+                inputState_image.visibility = View.GONE
+                pass_image.visibility = View.VISIBLE
+                pass_image.setImageResource(R.drawable.ic_pass_hide)
+            } else if (input_edit.inputType == EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD or EditorInfo.TYPE_CLASS_TEXT) {
+
+
+                inputState_image.visibility = View.GONE
+                pass_image.visibility = View.VISIBLE
+
+                pass_image.setImageResource(R.drawable.ic_pass_show)
+            }
+
         }
+
 
     private val watcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
@@ -303,10 +377,23 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         counter_text = findViewById(R.id.counter_text)
         input_view = findViewById(R.id.input_view)
 
+        pass_image = findViewById(R.id.inputPassword_image)
+
 
         input_edit.onFocusChangeListener = this
 
         input_edit.addTextChangedListener(this.watcher)
+
+        pass_image.setOnClickListener {
+
+            if (input_edit.inputType == EditorInfo.TYPE_TEXT_VARIATION_PASSWORD or EditorInfo.TYPE_CLASS_TEXT) {
+                inputType =
+                    EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD or EditorInfo.TYPE_CLASS_TEXT
+            } else if (input_edit.inputType == EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD or EditorInfo.TYPE_CLASS_TEXT) {
+
+                inputType = EditorInfo.TYPE_TEXT_VARIATION_PASSWORD or EditorInfo.TYPE_CLASS_TEXT
+            }
+        }
 
         orientation = VERTICAL
 
@@ -336,7 +423,6 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
 
 
-            text = typedArray.getString(R.styleable.input_component_attributes_input_text)
 
 
             is_alert = typedArray
@@ -347,12 +433,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 )
 
 
-            isEditable = typedArray
-                .getBoolean(
-                    R.styleable
-                        .input_component_attributes_input_is_editable,
-                    true
-                )
+
 
             isTransparent = typedArray.getBoolean(
                 R.styleable.input_component_attributes_input_transparent,
@@ -377,6 +458,15 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 0
             )
 
+            maxLength = typedArray.getInt(
+                R.styleable.input_component_attributes_android_maxLength,
+                0
+            )
+
+            autofillHints = typedArray.getString(
+                R.styleable.input_component_attributes_android_autofillHints
+            )
+
             var regexString = typedArray.getString(
                 R.styleable
                     .input_component_attributes_input_regex
@@ -398,6 +488,14 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                     R.styleable
                         .input_component_attributes_input_validation_mode,
                     1
+                )];
+
+
+            inputMode = InputMode.values()[typedArray
+                .getInt(
+                    R.styleable
+                        .input_component_attributes_input_mode,
+                    0
                 )];
 
 

@@ -111,9 +111,9 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
         // request a window without the title
 
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.setCanceledOnTouchOutside(true)
-        dialog.window!!.setLayout(
+        dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
@@ -134,11 +134,11 @@ class AddProductCategorySelectDialog : BaseDialog() {
         val dialog = dialog
         if (dialog != null) {
 
-            dialog.window!!.setLayout(
+            dialog.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-            dialog.window!!.setGravity(Gravity.TOP)
+            dialog.window?.setGravity(Gravity.TOP)
 
 
         }

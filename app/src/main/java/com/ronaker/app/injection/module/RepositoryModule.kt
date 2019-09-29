@@ -28,7 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RepositoryModule {
 
 
-
     /**
      * Provides the User service implementation.
      * @param retrofit the Retrofit object used to instantiate the service
@@ -42,8 +41,7 @@ object RepositoryModule {
     }
 
 
-
-       /**
+    /**
      * Provides the category service implementation.
      * @param retrofit the Retrofit object used to instantiate the service
      * @return the User service implementation.
@@ -100,12 +98,13 @@ object RepositoryModule {
     internal fun provideGoogleMapApi(): GoogleMapApi {
         val client = OkHttpClient().newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                level =
+                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
             .build()
 
 
-        var retrofit= Retrofit.Builder()
+        var retrofit = Retrofit.Builder()
             .baseUrl(GOOGLE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
@@ -120,8 +119,11 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideUserRepository(userApi: UserApi, preferencesProvider: PreferencesProvider): UserRepository {
-        return UserRepository(userApi,preferencesProvider)
+    internal fun provideUserRepository(
+        userApi: UserApi,
+        preferencesProvider: PreferencesProvider
+    ): UserRepository {
+        return UserRepository(userApi, preferencesProvider)
     }
 
 
@@ -136,24 +138,32 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideProductRepository(productApi: ProductApi,preferencesProvider: PreferencesProvider): ProductRepository {
-        return ProductRepository(productApi,preferencesProvider)
+    internal fun provideProductRepository(
+        productApi: ProductApi,
+        preferencesProvider: PreferencesProvider
+    ): ProductRepository {
+        return ProductRepository(productApi, preferencesProvider)
     }
 
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideCategoryRepository(api: CategoryApi,preferencesProvider: PreferencesProvider): CategoryRepository {
-        return CategoryRepository(api,preferencesProvider)
+    internal fun provideCategoryRepository(
+        api: CategoryApi,
+        preferencesProvider: PreferencesProvider
+    ): CategoryRepository {
+        return CategoryRepository(api, preferencesProvider)
     }
-
 
 
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideOrderRepository(api: OrderApi,preferencesProvider: PreferencesProvider): OrderRepository {
-        return OrderRepository(api,preferencesProvider)
+    internal fun provideOrderRepository(
+        api: OrderApi,
+        preferencesProvider: PreferencesProvider
+    ): OrderRepository {
+        return OrderRepository(api, preferencesProvider)
     }
 
 
@@ -181,11 +191,16 @@ object RepositoryModule {
             .create()
 
 
-        val client = OkHttpClient().newBuilder()
+        val clientBuilder = OkHttpClient().newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                level =
+                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
-            .build();
+
+//        if (BuildConfig.DEBUG)
+//            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
+
+        val client = clientBuilder.build();
 
 
         return Retrofit.Builder()
@@ -204,7 +219,7 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun providePreferencesInterface(context:Context): PreferencesProvider {
+    internal fun providePreferencesInterface(context: Context): PreferencesProvider {
 
         return PreferencesProvider(context)
     }

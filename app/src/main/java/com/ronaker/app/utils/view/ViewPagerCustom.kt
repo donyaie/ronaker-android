@@ -70,7 +70,7 @@ class ViewPagerCustom : ViewPager {
      * Set the factor by which the duration will change
      */
     fun setScrollDurationFactor(scrollFactor: Double) {
-        mScroller!!.setScrollDurationFactor(scrollFactor)
+        mScroller?.setScrollDurationFactor(scrollFactor)
     }
 
 

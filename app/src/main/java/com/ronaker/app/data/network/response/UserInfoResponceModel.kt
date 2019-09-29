@@ -12,6 +12,8 @@ data class UserInfoResponceModel(
     ,@SerializedName("phone_number") val phone_number: String?
     ,@SerializedName("is_phone_number_verified") val is_phone_number_verified: Boolean?
     ,@SerializedName("avatar") val avatar: String?
+    ,@SerializedName("is_payment_info_verified") val is_payment_info_verified: Boolean?
+    ,@SerializedName("is_identity_info_verified") val is_identity_info_verified: Boolean?
 
 ){
 

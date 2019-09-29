@@ -1,5 +1,6 @@
 package com.ronaker.app.model
 
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
 import com.ronaker.app.data.network.response.MapGeoCodeResponceModel
@@ -10,8 +11,9 @@ data class Place(
     var description: String?,
     var mainText: String?,
     var secondaryText: String?,
-    var lat: Double? = null,
-    var lng: Double? = null
+    var latLng: LatLng? = null
+
+
 ) {
 
 }
@@ -41,8 +43,9 @@ fun GooglePlaceDetailResponseModel.GooglePlaceResultResponseModel.toPlace(): Pla
         this.name,
         this.formatted_address,
         null,
-        this.geometry.location.lat,
-        this.geometry.location.lng
+        LatLng(this.geometry.location.lat, this.geometry.location.lng)
+
+
     )
 
 
@@ -153,7 +156,6 @@ fun MapGeoCodeResponceModel.converGeoToPlace(): Place? {
             it[0].formatted_address,
             it[0].formatted_address,
             it[0].formatted_address,
-            null,
             null
         )
 

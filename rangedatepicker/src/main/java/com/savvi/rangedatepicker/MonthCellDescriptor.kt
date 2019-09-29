@@ -1,6 +1,6 @@
 package com.savvi.rangedatepicker
 
-import java.util.Date
+import java.util.*
 
 /**
  * Describes the state of a particular date cell in a [MonthView].
@@ -9,6 +9,14 @@ class MonthCellDescriptor(val date: Date, val isCurrentMonth: Boolean, val isSel
                                    val isToday: Boolean, var isHighlighted: Boolean, val value: Int, var rangeState: RangeState?) {
 
     var isDeactivated: Boolean = false
+
+    fun getDay():Int{
+       var time= Calendar.getInstance()
+        time .time=date
+
+        return time.get(Calendar.DAY_OF_MONTH)
+
+    }
 
 
     var isUnavailable: Boolean = false

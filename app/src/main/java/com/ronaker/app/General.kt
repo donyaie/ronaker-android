@@ -1,7 +1,9 @@
 package com.ronaker.app
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.ronaker.app.injection.component.AppComponent
@@ -21,15 +23,32 @@ class General : MultiDexApplication() {
     lateinit var General: AppComponent
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
         fun newInstance(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }
+
+
+
     }
 
+
+
+
+
     override fun onCreate() {
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         super.onCreate()
+
+
+
+
+//
+//        if (BuildConfig.DEBUG)
+//            com.facebook.stetho.Stetho.initializeWithDefaults(this)
         context = this;
         General=initDagger()
 

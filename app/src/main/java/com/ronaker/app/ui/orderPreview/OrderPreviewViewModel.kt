@@ -104,7 +104,7 @@ class OrderPreviewViewModel : BaseViewModel() {
             TimeUnit.MILLISECONDS
         )
 
-        dayNumber.value = String.format("%s%.02f for %d days", context.getString(R.string.title_curency_symbol), order.product.price_per_day!! * days,days)
+        dayNumber.value = String.format("%s%.02f for %d days", context.getString(R.string.title_curency_symbol), order.product.price_per_day?:0 * days,days)
 
 
         when(Order.OrderTypeEnum[order.orderType]){

@@ -38,31 +38,64 @@ class ProfilePaymentViewModel : BaseViewModel() {
     enum class CardType {
 
         UNKNOWN,
-        VISA("^4[0-9]{12}(?:[0-9]{3}){0,2}$"),
-        MASTERCARD("^(?:5[1-5]|2(?!2([01]|20)|7(2[1-9]|3))[2-7])\\d{14}$"),
-        AMERICAN_EXPRESS("^3[47][0-9]{13}$"),
-        DINERS_CLUB("^3(?:0[0-5]\\d|095|6\\d{0,2}|[89]\\d{2})\\d{12,15}$"),
-        DISCOVER("^6(?:011|[45][0-9]{2})[0-9]{12}$"),
-        JCB("^(?:2131|1800|35\\d{3})\\d{11}$"),
-        CHINA_UNION_PAY("^62[0-9]{14,17}$");
+        VISA("^4[0-9]{12}(?:[0-9]{3}){0,2}$", "^4[0-9]$"),
+        MASTERCARD("^(?:5[1-5]|2(?!2([01]|20)|7(2[1-9]|3))[2-7])\\d{14}$", "^5[1-5]$"),
+        AMERICAN_EXPRESS("^3[47][0-9]{13}$", "^3[47]$"),
+        DINERS_CLUB("^3(?:0[0-5]\\d|095|6\\d{0,2}|[89]\\d{2})\\d{12,15}$", null),
+        DISCOVER("^6(?:011|[45][0-9]{2})[0-9]{12}$", "^6(?:011|5[0-9]{2})$"),
+        JCB("^(?:2131|1800|35\\d{3})\\d{11}$", null),
+        CHINA_UNION_PAY("^62[0-9]{14,17}$", null);
 
         private var pattern: Pattern? = null
+        private var shortPattern: Pattern? = null
 
         private constructor() {
             this.pattern = null
         }
 
-        private constructor(pattern: String) {
-            this.pattern = Pattern.compile(pattern)
+        private constructor(pattern: String?, shortPattern: String?) {
+            pattern?.let { this.pattern = Pattern.compile(it) }
+
+            shortPattern?.let { this.shortPattern = Pattern.compile(it) }
         }
 
         companion object {
 
             fun detect(cardNumber: String): CardType {
+                for (cardType in CardType.values()) {
+                    cardType.pattern?.let {
+                        if (it.matcher(cardNumber).matches())
+                            return cardType
+                    }
+                }
+
+                return UNKNOWN
+            }
+
+            fun detectFast(cardNumber: String): CardType {
+
+
+                if (cardNumber.length >= 2)
+                    for (cardType in CardType.values()) {
+
+                        cardType.shortPattern?.let {
+                            if (it.matcher(
+                                    cardNumber.substring(
+                                        0,
+                                        2
+                                    )
+                                ).matches()
+                            )
+                                return cardType
+                        }
+                    }
+
 
                 for (cardType in CardType.values()) {
-                    if (null == cardType.pattern) continue
-                    if (cardType.pattern!!.matcher(cardNumber).matches()) return cardType
+                    cardType.pattern?.let {
+                        if (it.matcher(cardNumber).matches())
+                            return cardType
+                    }
                 }
 
                 return UNKNOWN
@@ -117,30 +150,30 @@ class ProfilePaymentViewModel : BaseViewModel() {
     fun changeCardNumber(cardNumber: String) {
 
 
-        when (CardType.detect(cardNumber)) {
+        when (CardType.detectFast(cardNumber)) {
             CardType.MASTERCARD -> {
 
-                cardTypeImage.value= R.drawable.ic_card_master
+                cardTypeImage.value = R.drawable.ic_card_master
             }
             CardType.DINERS_CLUB -> {
 
-                cardTypeImage.value= R.drawable.ic_card_diners
+                cardTypeImage.value = R.drawable.ic_card_diners
             }
             CardType.JCB -> {
 
-                cardTypeImage.value= R.drawable.ic_card_amex
+                cardTypeImage.value = R.drawable.ic_card_amex
             }
             CardType.DISCOVER -> {
 
-                cardTypeImage.value= R.drawable.ic_card_discover
+                cardTypeImage.value = R.drawable.ic_card_discover
             }
             CardType.VISA -> {
 
-                cardTypeImage.value= R.drawable.ic_card_visa
+                cardTypeImage.value = R.drawable.ic_card_visa
             }
-            else->{
+            else -> {
 
-                cardTypeImage.value= R.drawable.ic_card_empty
+                cardTypeImage.value = R.drawable.ic_card_empty
             }
 
 

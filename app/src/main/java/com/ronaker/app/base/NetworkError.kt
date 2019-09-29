@@ -71,7 +71,7 @@ class NetworkError(error: Throwable) {
             }
             this.responseCode = error.code();
 
-            http_error = getHttpError(responseCode!!)
+            responseCode?.let {http_error = getHttpError(it)  }
 
         }else if(error is EOFException) {
 

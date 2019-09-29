@@ -1,7 +1,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data >
+    <data>
+
         <variable
                 name="viewModel"
                 type="com.ronaker.app.ui.addProduct.AddProductLocationSearchViewModel" />
@@ -12,20 +13,21 @@
     </data>
 
     <LinearLayout
+            android:id="@+id/container_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/container_layout"
             android:clickable="true"
-            >
+            android:orientation="vertical"
+            android:focusable="true">
+
         <com.ronaker.app.utils.view.StatusBarSizeView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"/>
-<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginBottom="76dp"
-        android:layout_height="@dimen/toolbar_size" />
+                android:layout_height="0dp" />
 
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_size"
+                android:layout_marginBottom="76dp" />
 
 
         <androidx.cardview.widget.CardView
@@ -40,7 +42,6 @@
                 app:cardElevation="16dp">
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/search_layout"
 
@@ -49,14 +50,16 @@
                     android:layout_height="48dp">
 
                 <EditText
+                        android:id="@+id/search_edit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
 
-                        android:paddingLeft="16dp"
                         android:background="@null"
-                        android:id="@+id/search_edit"
+                        android:gravity="start|center_vertical"
+                        android:inputType="text"
                         android:hint="@string/title_search_your_location"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
 
                         android:textAppearance="@style/TextAppearance.Medium.SB"
                         android:textColor="@color/colorTextDark"
@@ -65,7 +68,7 @@
                 <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginEnd="12dp"
                         android:tint="@color/colorTextGreyLight"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -80,24 +83,24 @@
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:clickable="true"
                 android:layout_marginLeft="23dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="23dp"
 
-                android:layout_marginTop="5dp"
+                android:clickable="true"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="0dp"
 
-                app:cardElevation="1dp">
+                app:cardElevation="1dp"
+                android:focusable="true">
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
 
-                    app:adapter="@{viewModel.getListAdapter()}"
+                    android:layout_height="wrap_content"
 
-                    android:layout_height="wrap_content">
+                    app:adapter="@{viewModel.getListAdapter()}">
 
             </androidx.recyclerview.widget.RecyclerView>
 

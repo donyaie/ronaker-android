@@ -72,7 +72,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="10dp"
-                        android:src="@drawable/ic_camera"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_camera"
                         app:layout_constraintBottom_toTopOf="@id/card_layout"
                         android:id="@+id/cardScan"
                         app:layout_constraintRight_toRightOf="parent"
@@ -93,7 +94,7 @@
                             mutableImageSrc="@{viewModel.getCardTypeImage()}"
 
                             android:layout_marginRight="8dp"
-                            android:src="@drawable/ic_card_empty" />
+                            app:srcCompat="@drawable/ic_card_empty" />
 
                     <EditText
                             android:layout_width="0dp"
@@ -101,7 +102,9 @@
                             android:id="@+id/card_edit"
                             android:layout_weight=".95"
                             android:imeOptions="actionNext"
+
                             android:inputType="number"
+                            android:maxLength="16"
                             app:mutableText="@{viewModel.getCardNumberText()}"
                             android:background="@null"
                             android:hint="0000 0000 0000 0000"
@@ -155,7 +158,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="16dp"
-                            android:imeOptions="actionNext"
+
+                            android:imeOptions="actionDone"
+                            android:maxLength="4"
                             android:inputType="date"
 
                             app:inputMutableText="@{viewModel.getCardCVVText()}"

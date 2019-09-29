@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.login
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,8 +25,15 @@ class LoginSignInFragment : BaseFragment(), IPagerFragment {
             viewModel = ViewModelProviders.of(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel
         }
+
+
+
+
+
+
         return binding.root
     }
+
 
 
     companion object {
@@ -38,4 +46,7 @@ class LoginSignInFragment : BaseFragment(), IPagerFragment {
     override fun onSelect() {
 
     }
+
+
+
 }

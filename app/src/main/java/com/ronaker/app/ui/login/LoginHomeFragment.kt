@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.language.LanguageDialog
+import com.ronaker.app.utils.Debug
+import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
 import kotlinx.android.synthetic.main.fragment_login_home.*
 
@@ -33,6 +35,8 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
           activity?.let { it1 -> LanguageDialog.showDialog(it1) }
       }
 
+        Debug.Log("capture","LoginEmailFragment : CreateView")
+
         return binding.root
     }
 
@@ -45,5 +49,6 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
     }
     override fun onSelect() {
 
+        activity?.let { KeyboardManager.hideSoftKeyboard(it) }
     }
 }

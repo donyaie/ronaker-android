@@ -66,13 +66,13 @@ class OrdersViewModel : BaseViewModel() {
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    if (result.data?.results?.size!! > 0) {
+                    if (result.data?.results?.size?:0 > 0) {
 
 
-                        dataList.addAll(result.data.results.toOrderList())
+                        result.data?.results?.toOrderList()?.let { dataList.addAll(it) }
                         productListAdapter.updateproductList()
 
-                        if (result.data.next == null)
+                        if (result.data?.next == null)
                             hasNextPage = false
 
                     } else {

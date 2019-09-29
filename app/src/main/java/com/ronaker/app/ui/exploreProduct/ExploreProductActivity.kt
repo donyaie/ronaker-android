@@ -14,18 +14,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.DEFULT_LOCATION
-import com.google.android.gms.maps.model.MarkerOptions
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 
 
 class ExploreProductActivity : BaseActivity() {
@@ -66,8 +61,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (getImageTransition() == null)
-            AnimationHelper.setSlideTransition(this)
+        AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
@@ -82,7 +76,7 @@ class ExploreProductActivity : BaseActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
             val imageTransitionName = getImageTransition()
-            binding.avatarImage.setTransitionName(imageTransitionName)
+            binding.avatarSlide.setTransitionName(imageTransitionName)
         }
 
 
@@ -92,6 +86,13 @@ class ExploreProductActivity : BaseActivity() {
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+        })
+
+
+        viewModel.imageList.observe(this, Observer { images ->
+
+            binding.avatarSlide.clearImage()
+            binding.avatarSlide.addImagesUrl(images)
         })
 
         viewModel.loading.observe(this, Observer { value ->
@@ -126,7 +127,7 @@ class ExploreProductActivity : BaseActivity() {
             try {
                 val scrollY = binding.scrollView.scrollY
 
-                if (scrollY <= binding.avatarImage.height / 2 - binding.toolbar.bottom) {
+                if (scrollY <= binding.avatarSlide.height / 2 - binding.toolbar.bottom) {
 
                     binding.toolbar.isTransparent = true
                     binding.toolbar.isBottomLine = false
@@ -176,7 +177,12 @@ class ExploreProductActivity : BaseActivity() {
 
         viewModel.checkout.observe(this, Observer { _ ->
 
-            startActivityMakeScene(CheckoutCalendarActivity.newInstance(this, viewModel.mProduct))
+            startActivityMakeScene(viewModel.mProduct?.let {
+                CheckoutCalendarActivity.newInstance(
+                    this,
+                    it
+                )
+            })
 
         })
 
@@ -208,7 +214,7 @@ class ExploreProductActivity : BaseActivity() {
 
 
     fun addMarker(latLng: LatLng) {
-        if(::googleMap.isInitialized) {
+        if (::googleMap.isInitialized) {
             googleMap.clear()
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                 latLng,
@@ -221,7 +227,6 @@ class ExploreProductActivity : BaseActivity() {
             )
 
         }
-
 
 
     }

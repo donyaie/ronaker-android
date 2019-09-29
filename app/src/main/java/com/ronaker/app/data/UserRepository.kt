@@ -4,10 +4,8 @@ import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.UserApi
-import com.ronaker.app.data.network.request.UserActivePhoneRequestModel
-import com.ronaker.app.data.network.request.UserAddPhoneRequestModel
-import com.ronaker.app.data.network.request.UserLoginRequestModel
-import com.ronaker.app.data.network.request.UserRegisterRequestModel
+import com.ronaker.app.data.network.request.*
+import com.ronaker.app.data.network.response.FreeResponseModel
 import com.ronaker.app.data.network.response.UserAddPhoneResponceModel
 import com.ronaker.app.data.network.response.UserInfoResponceModel
 import com.ronaker.app.data.network.response.UserRegisterResponseModel
@@ -19,12 +17,39 @@ import io.reactivex.schedulers.Schedulers
 class UserRepository(private val userApi: UserApi, private val preferencesProvider: PreferencesProvider) {
 
 
+    enum class DocumentTypeEnum constructor(key: String) {
+        IdCard("id_card"),
+        Passport("passport"),
+        DrivingLicense("driving_license"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String): DocumentTypeEnum {
+                var state = None
+                for (stateEnum in DocumentTypeEnum.values()) {
+                    if (position.compareTo(stateEnum.key) == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
+
     private val TokenKey = "tokenKey"
 
     private val UserInfoKey = "userInfoKey"
 
     fun registerUser(user: User): Observable<Result<UserRegisterResponseModel>> {
-        val info = UserRegisterRequestModel(user.email!!, user.password!!, user.first_name!!, user.last_name!!)
+        val info = UserRegisterRequestModel(user.email, user.password, user.first_name, user.last_name)
         return userApi.registerUser(info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
@@ -33,7 +58,7 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
 
 
     fun loginUser(user: User): Observable<Result<UserRegisterResponseModel>> {
-        val info = UserLoginRequestModel(user.email!!, user.password!!)
+        val info = UserLoginRequestModel(user.email, user.password)
         return userApi.loginUser(info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()
@@ -69,6 +94,21 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
             .observeOn(AndroidSchedulers.mainThread()).toResult()
 
     }
+
+
+    fun addDocument(
+        userToken: String?,
+        imageSuid: String,
+        documentType: DocumentTypeEnum
+    ): Observable<Result<FreeResponseModel>> {
+
+        var phone = UserIdentifyRequestModel(imageSuid, documentType.key)
+        return userApi.addDocument("Token $userToken",phone)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).toResult()
+
+    }
+
 
     fun saveUserInfo(info:User?) {
         preferencesProvider.putObject(UserInfoKey,info)

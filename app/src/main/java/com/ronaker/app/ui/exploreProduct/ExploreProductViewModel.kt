@@ -35,6 +35,10 @@ class ExploreProductViewModel : BaseViewModel() {
     val checkout: MutableLiveData<String> = MutableLiveData()
 
 
+
+    val imageList: MutableLiveData<ArrayList<String>> = MutableLiveData()
+
+
     val productImage: MutableLiveData<String> = MutableLiveData()
     val productTitle: MutableLiveData<String> = MutableLiveData()
     val productDescription: MutableLiveData<String> = MutableLiveData()
@@ -44,9 +48,9 @@ class ExploreProductViewModel : BaseViewModel() {
     val productLocation: MutableLiveData<LatLng> = MutableLiveData()
     val productAddress: MutableLiveData<String> = MutableLiveData()
 
-    lateinit  var mProduct:Product
+      var mProduct:Product?=null
 
-    lateinit var suid: String
+     var suid: String?=null
 
 
     private var subscription: Disposable? = null
@@ -60,7 +64,7 @@ class ExploreProductViewModel : BaseViewModel() {
     fun loadProduct(product: Product) {
 
         loading.value = false
-        this.suid = product.suid!!
+        this.suid = product.suid
         mProduct=product
         fillProduct(product)
 
@@ -83,10 +87,10 @@ class ExploreProductViewModel : BaseViewModel() {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                   mProduct= result.data?.toProductDetail()!!
+                   mProduct= result.data?.toProductDetail()
 
 
-                    fillProduct(mProduct)
+                    mProduct?.let { fillProduct(it) }
 
 //                    productImage.value = BASE_URL + result.data?.avatar
 //                    productDescription.value = result.data?.description
@@ -130,6 +134,13 @@ class ExploreProductViewModel : BaseViewModel() {
 
     fun fillProduct(product:Product){
 
+
+        var images=ArrayList<String>()
+        product.images?.forEach {
+            images.add( BASE_URL+it.url)
+        }
+        imageList.value=images
+
         productImage.value = BASE_URL + product.avatar
         productDescription.value = product.description
         productTitle.value = product.name
@@ -167,6 +178,9 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
 
+
+
+
     }
 
 
@@ -177,7 +191,7 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
     fun onRetry(){
-        loadProduct(suid)
+        suid?.let { loadProduct(it) }
     }
 
 

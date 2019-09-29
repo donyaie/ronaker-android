@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ronaker.app.utils.extension.getParentActivity
 
+
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
@@ -49,7 +50,6 @@ fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
 
 @BindingAdapter("mutableImageSrc")
 fun setMutableImageSrc(view: ImageView, src: MutableLiveData<Int>?) {
-
     val parentActivity:AppCompatActivity? = view.getParentActivity()
     if(parentActivity != null && src != null) {
         src.observe(parentActivity, Observer {value ->   view.setImageResource(value)})

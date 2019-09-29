@@ -108,24 +108,6 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
 
         select(0)
 
-
-//        attrs?.let {
-//            val typedArray = context.obtainStyledAttributes(
-//                it,
-//                R.styleable.input_component_attributes, 0, 0
-//            )
-//
-//            message =
-//                typedArray
-//                    .getString(
-//                        R.styleable
-//                            .input_component_attributes_input_title
-//                    )
-//
-//
-//
-//            typedArray.recycle()
-//        }
     }
 
 
