@@ -13,7 +13,7 @@ import retrofit2.http.*
 interface GoogleMapApi {
 
 
-    @GET("/maps/api/place/autocomplete/json?")
+    @GET("/maps/api/place/queryautocomplete/json?")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getQueryAutocomplete(
         @Query("input") input: String,

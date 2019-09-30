@@ -1,8 +1,6 @@
 package com.ronaker.app.data
 
-import android.location.Location
 import com.google.android.gms.maps.model.LatLng
-import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.GoogleMapApi
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
@@ -14,6 +12,8 @@ import io.reactivex.schedulers.Schedulers
 class GoogleMapRepository(private val api: GoogleMapApi) {
 
    var key="AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo"
+
+    //AIzaSyBOHDmKRPh9-fFXJ6zUO-d3AGfViYmxkQY
     fun getQueryAutocomplete(Query: String ,latLng: LatLng?): Observable<GoogleAutocompleteResponseModel> {
 
         val language: String? = null// "en";

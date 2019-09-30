@@ -23,7 +23,7 @@ class UnsafeOkHttpGlideModule : AppGlideModule(){
         val client = UnsafeOkHttpClient.getUnsafeOkHttpClient1()
         registry.replace(
             GlideUrl::class.java, InputStream::class.java,
-            OkHttpUrlLoader.Factory(client)
+            OkHttpUrlLoader.Factory(client.build())
         )
     }
 }

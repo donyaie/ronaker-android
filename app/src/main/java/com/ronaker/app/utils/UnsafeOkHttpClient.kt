@@ -14,7 +14,7 @@ class UnsafeOkHttpClient {
         // Create a trust manager that does not validate certificate chains
         // Install the all-trusting trust manager
         // Create an ssl socket factory with our all-trusting manager
-        fun getUnsafeOkHttpClient1(): OkHttpClient {
+        fun getUnsafeOkHttpClient1(): OkHttpClient.Builder {
             try {
 
                 val builder = OkHttpClient.Builder()
@@ -35,7 +35,7 @@ class UnsafeOkHttpClient {
 
 
 
-                return builder.build()
+                return builder
             } catch (e: Exception) {
                 throw RuntimeException(e)
             }

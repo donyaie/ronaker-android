@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.General
-import com.ronaker.app.General.Companion.context
 import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.data.*
 import com.ronaker.app.data.network.*
@@ -12,6 +11,7 @@ import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
 import com.ronaker.app.utils.SslUtils.getSslContextForCertificateFile
 import com.ronaker.app.utils.SslUtils.getTrustAllHostsSSLSocketFactory
+import com.ronaker.app.utils.UnsafeOkHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -180,11 +180,16 @@ object RepositoryModule {
     private fun createOkHttpClient(context: Context): OkHttpClient {
         var client = OkHttpClient.Builder()
 
-            getTrustAllHostsSSLSocketFactory()?.let {
-                client.sslSocketFactory(it)
-            }
+        getTrustAllHostsSSLSocketFactory()?.let {
+            client.sslSocketFactory(it)
+        }
 
-        client.sslSocketFactory(getSslContextForCertificateFile(context, "my_certificate.pem").socketFactory)
+        client.sslSocketFactory(
+            getSslContextForCertificateFile(
+                context,
+                "my_certificate.pem"
+            ).socketFactory
+        )
 
         return client.build()
     }
@@ -205,24 +210,14 @@ object RepositoryModule {
             .create()
 
 
-        val clientBuilder = OkHttpClient().newBuilder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level =
-                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-            })
+        val clientBuilder = UnsafeOkHttpClient.getUnsafeOkHttpClient1()
+        clientBuilder.addInterceptor(HttpLoggingInterceptor().apply {
+            level =
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        })
 
 //        if (BuildConfig.DEBUG)
 //            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
-
-
-
-        getTrustAllHostsSSLSocketFactory()?.let {
-            clientBuilder.sslSocketFactory(it)
-        }
-
-        clientBuilder.sslSocketFactory(getSslContextForCertificateFile(context, "my_certificate.pem").socketFactory)
-
-
 
 
         val client = clientBuilder.build();
