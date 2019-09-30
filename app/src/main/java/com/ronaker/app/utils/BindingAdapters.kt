@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ronaker.app.injection.module.GlideApp
 import com.ronaker.app.utils.extension.getParentActivity
 
 
@@ -44,7 +45,8 @@ fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
 
     val parentActivity:AppCompatActivity? = view.getParentActivity()
     if(parentActivity != null && url != null) {
-        url.observe(parentActivity, Observer {value ->  Glide.with(parentActivity).load(value).into(view)})
+        url.observe(parentActivity, Observer {value ->  GlideApp.with(parentActivity).load(value).into(view)})
+
     }
 }
 

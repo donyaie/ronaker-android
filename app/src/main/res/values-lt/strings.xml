@@ -87,7 +87,7 @@
     <string name="button_decline">Atsisakyti</string>
     <string name="button_finish">Baigti</string>
     <string name="text_complete_your_profile">Užpildykite savo profilį</string>
-    <string name="text_per_day"> Aš nenoriu išsinuomoti jūsų 3 4 dienoms</string>
+    <string name="text_per_day">Per dieną</string>
     <string name="titile_sign_up">Registruotis</string>
     <string name="title_add_a_identity_document">Pridėkite asmens dokumentą</string>
     <string name="title_add_a_payment_method">Pridėkite mokėjimo metodą</string>
@@ -111,10 +111,11 @@
     <string name="text_lend_rejected">Skolinti | Atmestas įsakymas</string>
     <string name="text_lend_request_accepted">Jūsų prašymą priėmė %1$s</string>
     <string name="text_lend_request_pending">Laukiama priėmimo iš %1$s</string>
-    <string name="text_rent_canceled">Ačiū.</string>
+    <string name="text_rent_canceled">Nuoma | Atšauktas įsakymas</string>
     <string name="text_rent_complete">Nuoma | Įvykdytas užsakymas</string>
     <string name="text_rent_rejected">Nuoma | Atmestas įsakymas</string>
     <string name="text_rent_request_accepted">Jūs priėmėte %1$s prašymą</string>
     <string name="text_rent_request_pending">%1$s paprašė išsinuomoti tavo daiktą</string>
     <string name="text_order_message">Sveiki, esu %1$s %2$s\nAš nenoriu išsinuomoti jūsų %3$s %4$s\n dienomsAčiū.</string>
+    <string name="title_categories">Kategorijos</string>
 </resources>

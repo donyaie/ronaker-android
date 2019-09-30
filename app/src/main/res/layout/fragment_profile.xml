@@ -290,7 +290,8 @@
                             android:text="Change Language"
                             android:textAppearance="@style/TextAppearance.Large.SB"
 
-                            android:textColor="@color/colorTextDark" />
+                            android:textColor="@color/colorTextDark"
+                            tools:ignore="HardcodedText" />
 
                 </LinearLayout>
 

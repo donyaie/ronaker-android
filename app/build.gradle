@@ -126,6 +126,12 @@ dependencies {
     //Image Loader
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+//    implementation "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation ("com.github.bumptech.glide:okhttp3-integration:$glideVersion"){
+        exclude group: 'glide-parent'
+    }
+
     implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
 
     implementation "com.google.android.gms:play-services-location:$playServicesVersion"
@@ -165,13 +171,6 @@ dependencies {
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
-
-//
-//    //payment
-//    implementation "io.card:android-sdk:5.5.1"
-
-    //memory lake
-//    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.0-beta-2"
 
 
 

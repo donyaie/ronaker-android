@@ -148,7 +148,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
             counter_text.visibility = if (field > 0) View.VISIBLE else View.GONE
 
 
-            counter_text.text = "0/$value"
+            counter_text.text = String.format("0/%d",value)
 
 
         }
@@ -333,7 +333,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
             textChangeValid(editable)
 
-            if (counter > 0) counter_text.text = "${editable.length}/$counter"
+            if (counter > 0) counter_text.text = String.format("%d/%d",editable.length,counter)
 
         }
     }

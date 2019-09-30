@@ -14,7 +14,9 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
@@ -71,7 +73,8 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
                 validateNumber(it.toString())
             }
         }
-
+//
+        //  .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
 
         binding.phoneValidate.setOnClickListener { binding.phoneEditText.setText("") }
 
