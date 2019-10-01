@@ -66,7 +66,7 @@ class OrdersViewModel : BaseViewModel() {
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    if (result.data?.results?.size?:0 > 0) {
+                    if ((result.data?.results?.size?:0) > 0) {
 
 
                         result.data?.results?.toOrderList()?.let { dataList.addAll(it) }

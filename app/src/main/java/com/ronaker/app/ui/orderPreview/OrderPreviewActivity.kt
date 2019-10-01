@@ -65,6 +65,13 @@ class OrderPreviewActivity : BaseActivity() {
         })
 
 
+
+
+        viewModel.finish.observe(this, Observer { value ->
+           finishSafe()
+        })
+
+
         binding.toolbar.cancelClickListener= View.OnClickListener {
 
             finishSafe()

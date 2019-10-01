@@ -2,11 +2,11 @@ package com.ronaker.app.ui.orderPreview
 
 
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
-import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.BASE_URL
@@ -35,6 +35,9 @@ class OrderPreviewViewModel : BaseViewModel() {
 
 
 
+    val finish: MutableLiveData<Boolean> = MutableLiveData()
+
+
     val productTitle: MutableLiveData<String> = MutableLiveData()
     val dayNumber: MutableLiveData<String> = MutableLiveData()
     val productImage: MutableLiveData<String> = MutableLiveData()
@@ -47,11 +50,13 @@ class OrderPreviewViewModel : BaseViewModel() {
     val orderDescription: MutableLiveData<String> = MutableLiveData()
 
 
+    val actionVisibility: MutableLiveData<Int> = MutableLiveData()
+    val userInfoVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+
     val acceptVisibility: MutableLiveData<Int> = MutableLiveData()
     val declineVisibility: MutableLiveData<Int> = MutableLiveData()
-    val actionVisibility: MutableLiveData<Int> = MutableLiveData()
-
-
     val finishVisibility: MutableLiveData<Int> = MutableLiveData()
     val cancelVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -63,6 +68,8 @@ class OrderPreviewViewModel : BaseViewModel() {
     private var acceptSubscription: Disposable? = null
 
     private var declineSubscription: Disposable? = null
+    private var cancelSubscription: Disposable? = null
+    private var finishSubscription: Disposable? = null
 
 
     init {
@@ -70,58 +77,160 @@ class OrderPreviewViewModel : BaseViewModel() {
     }
 
 
-
-
-
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
         acceptSubscription?.dispose()
         declineSubscription?.dispose()
+        cancelSubscription?.dispose()
+        finishSubscription?.dispose()
     }
 
+
+
     fun load(order: Order) {
-        mOrder=order
+        mOrder = order
 
 
-        productTitle.value=order.product.name
+        productTitle.value = order.product.name
 
-        productImage.value= BASE_URL+ order.product.avatar
+        productImage.value = BASE_URL + order.product.avatar
 
-        orderDescription.value=order.message
+        orderDescription.value = order.message
 
         startDayName.value = SimpleDateFormat("EEEE", Locale.getDefault()).format(order.fromDate)
-        firstDayMonth.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(order.fromDate)
+        firstDayMonth.value =
+            SimpleDateFormat("dd MMMM", Locale.getDefault()).format(order.fromDate)
 
 
         endDayName.value = SimpleDateFormat("EEEE", Locale.getDefault()).format(order.toDate)
         endDayMonth.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(order.toDate)
 
 
-
         val days = TimeUnit.DAYS.convert(
-            order.toDate.time  - order.fromDate.time ,
+            order.toDate.time - order.fromDate.time,
             TimeUnit.MILLISECONDS
         )
 
-        dayNumber.value = String.format("%s%.02f for %d days", context.getString(R.string.title_curency_symbol), order.product.price_per_day?:0 * days,days)
+        dayNumber.value = String.format(
+            "%s%.02f for %d days",
+            context.getString(R.string.title_curency_symbol),
+            (order.product.price_per_day?:0.toDouble())  * days,
+            days
+        )
 
 
-        when(Order.OrderTypeEnum[order.orderType]){
+        when (Order.OrderTypeEnum[order.orderType]) {
 
-            Order.OrderTypeEnum.Lending->{
+            Order.OrderTypeEnum.Renting -> {
 
-                userName.value= order.productOwner?.first_name +" "+order.productOwner?.last_name
+                order.productOwner?.let {
+
+                    userName.value = it.first_name+ " " + it.last_name
+
+                    userInfoVisibility.value=View.VISIBLE
+                }?:run{
+                    userInfoVisibility.value=View.GONE
+
+                }
+
+                when (Order.OrderStatusEnum[order.status]) {
+                    Order.OrderStatusEnum.Accepted -> {
+
+                        actionVisibility.value=View.VISIBLE
+
+                        acceptVisibility.value = View.GONE
+                        declineVisibility.value = View.GONE
+                        finishVisibility.value = View.VISIBLE
+                        cancelVisibility.value = View.VISIBLE
+
+                    }
+                    Order.OrderStatusEnum.Canceled -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                    Order.OrderStatusEnum.Finished -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                    Order.OrderStatusEnum.Rejected -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                    Order.OrderStatusEnum.Pending -> {
+
+
+
+
+                        actionVisibility.value=View.VISIBLE
+
+                        acceptVisibility.value = View.GONE
+                        declineVisibility.value = View.GONE
+                        finishVisibility.value = View.GONE
+                        cancelVisibility.value = View.VISIBLE
+                    }
+                    Order.OrderStatusEnum.None -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                }
+
             }
-            Order.OrderTypeEnum.Renting->{
+            Order.OrderTypeEnum.Lending -> {
+                order.orderUser?.let {
+
+                    userName.value = it.first_name+ " " + it.last_name
+
+                    userInfoVisibility.value=View.VISIBLE
+                }?:run{
+                    userInfoVisibility.value=View.GONE
+
+                }
 
 
-                userName.value= order.orderUser?.first_name +" "+order.orderUser?.last_name
 
+
+
+                when (Order.OrderStatusEnum[order.status]) {
+                    Order.OrderStatusEnum.Accepted -> {
+
+                        actionVisibility.value=View.VISIBLE
+
+                        acceptVisibility.value = View.GONE
+                        declineVisibility.value = View.GONE
+                        finishVisibility.value = View.VISIBLE
+                        cancelVisibility.value = View.VISIBLE
+                    }
+                    Order.OrderStatusEnum.Canceled -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                    Order.OrderStatusEnum.Finished -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                    Order.OrderStatusEnum.Rejected -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                    Order.OrderStatusEnum.Pending -> {
+
+                        actionVisibility.value=View.VISIBLE
+
+                        acceptVisibility.value = View.VISIBLE
+                        declineVisibility.value = View.VISIBLE
+                        finishVisibility.value = View.GONE
+                        cancelVisibility.value = View.GONE
+                    }
+                    Order.OrderStatusEnum.None -> {
+
+                        actionVisibility.value=View.GONE
+                    }
+                }
 
             }
-            else->{
-
+            else -> {
+                actionVisibility.value=View.GONE
             }
 
 
@@ -131,14 +240,18 @@ class OrderPreviewViewModel : BaseViewModel() {
     }
 
 
-    fun onClickAccept(){
-
-        acceptSubscription=orderRepository.updateOrderStatus(userRepository.getUserToken(),mOrder.suid,"accepted")
+    fun onClickAccept() {
+        acceptSubscription?.dispose()
+        acceptSubscription = orderRepository.updateOrderStatus(
+            userRepository.getUserToken(),
+            mOrder.suid,
+            "accepted"
+        )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
-                if (result.isSuccess()||result.isAcceptable()) {
-                    errorMessage.value = "accepted"
+                if (result.isSuccess() || result.isAcceptable()) {
+                    finish.value=true
 
                 } else {
 
@@ -147,35 +260,21 @@ class OrderPreviewViewModel : BaseViewModel() {
             }
 
 
-
     }
 
 
-
-    fun onClickDecline(){
-        acceptSubscription=orderRepository.updateOrderStatus(userRepository.getUserToken(),mOrder.suid,"rejected")
+    fun onClickDecline() {
+        declineSubscription?.dispose()
+        declineSubscription = orderRepository.updateOrderStatus(
+            userRepository.getUserToken(),
+            mOrder.suid,
+            "rejected"
+        )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
-                if (result.isSuccess()||result.isAcceptable()) {
-                    errorMessage.value = "rejected"
-
-                } else {
-
-                    errorMessage.value = result.error?.detail
-                }
-            }
-
-    }
-
-
-    fun onClickCanceled(){
-        acceptSubscription=orderRepository.updateOrderStatus(userRepository.getUserToken(),mOrder.suid,"canceled")
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
-            .subscribe { result ->
-                if (result.isSuccess()||result.isAcceptable()) {
-                    errorMessage.value = "canceled"
+                if (result.isSuccess() || result.isAcceptable()) {
+                    finish.value=true
 
                 } else {
 
@@ -186,13 +285,18 @@ class OrderPreviewViewModel : BaseViewModel() {
     }
 
 
-    fun onClickFinished(){
-        acceptSubscription=orderRepository.updateOrderStatus(userRepository.getUserToken(),mOrder.suid,"finished")
+    fun onClickCanceled() {
+        cancelSubscription?.dispose()
+        cancelSubscription = orderRepository.updateOrderStatus(
+            userRepository.getUserToken(),
+            mOrder.suid,
+            "canceled"
+        )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
-                if (result.isSuccess()||result.isAcceptable()) {
-                    errorMessage.value = "finished"
+                if (result.isSuccess() || result.isAcceptable()) {
+                    finish.value=true
 
                 } else {
 
@@ -203,6 +307,27 @@ class OrderPreviewViewModel : BaseViewModel() {
     }
 
 
+    fun onClickFinished() {
+        finishSubscription?.dispose()
+        finishSubscription = orderRepository.updateOrderStatus(
+            userRepository.getUserToken(),
+            mOrder.suid,
+            "finished"
+        )
+            .doOnSubscribe { loading.value = true }
+            .doOnTerminate { loading.value = false }
+            .subscribe { result ->
+                if (result.isSuccess() || result.isAcceptable()) {
+                    finish.value=true
+
+
+                } else {
+
+                    errorMessage.value = result.error?.detail
+                }
+            }
+
+    }
 
 
 }

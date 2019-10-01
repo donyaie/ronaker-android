@@ -115,7 +115,7 @@
     <string name="text_rent_complete">Nuoma | Įvykdytas užsakymas</string>
     <string name="text_rent_rejected">Nuoma | Atmestas įsakymas</string>
     <string name="text_rent_request_accepted">Jūs priėmėte %1$s prašymą</string>
-    <string name="text_rent_request_pending">%1$s paprašė išsinuomoti tavo daiktą</string>
+    <string name="text_rent_request_pending">Kažkas paprašė išsinuomoti jūsų daiktą</string>
     <string name="text_order_message">Sveiki, esu %1$s %2$s\nAš nenoriu išsinuomoti jūsų %3$s %4$s\n dienomsAčiū.</string>
     <string name="title_categories">Kategorijos</string>
 </resources>

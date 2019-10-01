@@ -10,7 +10,7 @@
     <string name="text_rent_request_accepted" formatted="true">You accepted %1$s request</string>
 
     <string name="text_lend_request_pending" formatted="true">Pending to accept from %1$s</string>
-    <string name="text_rent_request_pending" formatted="true">%1$s requested to rent your item</string>
+    <string name="text_rent_request_pending" >Someone requested to rent your item</string>
 
     <string name="text_order_message" formatted="true">Hi I\'m %1$s %2$s\n I wont to rent your %3$s for %4$s day\'s\nthank you.</string>
 

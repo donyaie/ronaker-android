@@ -66,7 +66,7 @@ class OrderMessageViewModel : BaseViewModel() {
             TimeUnit.MILLISECONDS
         )
 
-        mPrice = product.price_per_day?:0.toDouble() * days
+        mPrice = (product.price_per_day?:0.toDouble()) * days
 
         productPriceTitle.value = "for $days days"
         productPrice.value =

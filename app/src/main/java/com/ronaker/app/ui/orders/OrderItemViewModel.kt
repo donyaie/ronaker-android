@@ -34,9 +34,9 @@ class OrderItemViewModel : BaseViewModel() {
             ).format(item.toDate)
 
 
-        val ownerName=item.productOwner?.first_name+" "+item.productOwner?.last_name
+        val ownerName=(item.productOwner?.first_name?:"")+" "+(item.productOwner?.last_name?:"")
 
-        val userName=item.orderUser?.first_name+" "+item.orderUser?.last_name
+        val userName=(item.orderUser?.first_name?:"")+" "+(item.orderUser?.last_name?:"")
 
 
         when (Order.OrderStatusEnum.get(item.status)) {
@@ -44,7 +44,7 @@ class OrderItemViewModel : BaseViewModel() {
 
                 orderStatusImage.value=R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
 
 
                     orderStatus.value=  activity.getString(R.string.text_rent_request_accepted,userName)
@@ -59,7 +59,7 @@ class OrderItemViewModel : BaseViewModel() {
 
                 orderStatusImage.value=R.drawable.ic_remove_red
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
 
                     orderStatus.value=activity.getString(R.string.text_rent_canceled)
                 }else{
@@ -75,7 +75,7 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_guide_success
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
 
                     orderStatus.value=activity.getString(R.string.text_rent_complete)
                 }else{
@@ -88,9 +88,9 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_pending
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
 
-                    orderStatus.value=activity.getString(R.string.text_rent_request_pending,userName)
+                    orderStatus.value=activity.getString(R.string.text_rent_request_pending)
                 }else{
                     orderStatus.value=activity.getString(R.string.text_lend_request_pending,ownerName)
                 }
@@ -102,7 +102,7 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_remove_red
 
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Lending){
 
                     orderStatus.value=activity.getString(R.string.text_rent_rejected)
                 }else{

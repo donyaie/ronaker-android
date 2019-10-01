@@ -30,7 +30,7 @@ fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
 
     if (parentActivity != null && text != null) {
-        text.observe(parentActivity, Observer { value -> view.text = value ?: "" })
+        text.observe(parentActivity, Observer { value -> view.text = (value ?: "") })
     }
 }
 

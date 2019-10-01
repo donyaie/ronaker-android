@@ -70,7 +70,7 @@ class ManageProductListViewModel : BaseViewModel() {
                 .doOnTerminate { onRetrieveProductListFinish() }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        if (result.data?.results?.size?:0 > 0) {
+                        if ((result.data?.results?.size?:0) > 0) {
 
 
                             addNewView.value = true
