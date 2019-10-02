@@ -118,4 +118,6 @@
     <string name="text_rent_request_pending">Kažkas paprašė išsinuomoti jūsų daiktą</string>
     <string name="text_order_message">Sveiki, esu %1$s %2$s\nAš nenoriu išsinuomoti jūsų %3$s %4$s\n dienomsAčiū.</string>
     <string name="title_categories">Kategorijos</string>
+    <string name="text_you_have_not_any_order_hear">Čia neturite jokio užsakymo</string>
+    <string name="title_order">Įsakymai</string>
 </resources>

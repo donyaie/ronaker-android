@@ -82,11 +82,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     fun initNavigation(savedInstanceState: Bundle?) {
 
-
-
-
-
-
         fragNavController.apply {
             transactionListener = this@DashboardActivity
             rootFragmentListener = this@DashboardActivity
@@ -133,12 +128,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                 }
             }
         }
-
-
-
-
-
-
 
     }
 
