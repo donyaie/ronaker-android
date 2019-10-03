@@ -135,6 +135,7 @@
     <string name="title_categories">Categories</string>
     <string name="text_you_have_not_any_order_hear">You have not any order here</string>
     <string name="title_order">Orders</string>
+    <string name="text_not_found_item">Nothing found any item</string>
 
 
 </resources>

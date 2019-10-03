@@ -37,6 +37,9 @@ class ExploreViewModel : BaseViewModel() {
     val retry: MutableLiveData<String> = MutableLiveData()
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
+    val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
 
     val searchValue: MutableLiveData<String> = MutableLiveData()
 
@@ -73,6 +76,7 @@ class ExploreViewModel : BaseViewModel() {
                     if (result.isSuccess()) {
                         if ((result.data?.results?.size ?: 0) > 0) {
 
+                            emptyVisibility.value = View.GONE
                             onRetrieveProductListSuccess(
                                 result.data?.results?.toProductList()
                             )
@@ -81,6 +85,9 @@ class ExploreViewModel : BaseViewModel() {
                                 hasNextPage = false
 
                         } else {
+
+                            emptyVisibility.value = View.VISIBLE
+
                             hasNextPage = false
                         }
                     } else {
@@ -96,6 +103,8 @@ class ExploreViewModel : BaseViewModel() {
         retry.value = null
         if (page <= 1) {
             loading.value = true
+
+            emptyVisibility.value = View.GONE
 
         }
         errorMessage.value = null
