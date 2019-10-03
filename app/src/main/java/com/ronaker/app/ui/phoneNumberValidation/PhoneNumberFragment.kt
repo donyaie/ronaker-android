@@ -91,7 +91,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
     internal fun getPreCode(): String {
 
-        return binding.ccp.getSelectedCountryCode()
+        return binding.ccp.selectedCountryCodeWithPlus
 
     }
 

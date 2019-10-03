@@ -28,7 +28,7 @@ class ExploreViewModel : BaseViewModel() {
     internal var hasNextPage = true
 
 
-    var dataList: ArrayList<Product>
+    var dataList: ArrayList<Product> = ArrayList()
 
 
     var productListAdapter: ItemExploreAdapter
@@ -55,7 +55,6 @@ class ExploreViewModel : BaseViewModel() {
     private lateinit var subscription: Disposable
 
     init {
-        dataList = ArrayList()
         productListAdapter = ItemExploreAdapter(dataList)
         reset()
 

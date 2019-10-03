@@ -10,7 +10,6 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
 import io.reactivex.disposables.Disposable
-import java.util.logging.Filter
 import javax.inject.Inject
 
 class OrderListViewModel : BaseViewModel() {
@@ -34,7 +33,7 @@ class OrderListViewModel : BaseViewModel() {
     internal var hasNextPage = true
 
 
-    var dataList: ArrayList<Order>
+    var dataList: ArrayList<Order> = ArrayList()
 
 
     var productListAdapter: OrderItemAdapter
@@ -46,51 +45,69 @@ class OrderListViewModel : BaseViewModel() {
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-
+    var mFilter: String? = null
     private var subscription: Disposable? = null
 
     init {
-        dataList = ArrayList()
         productListAdapter = OrderItemAdapter(dataList)
 
 
     }
-    var mFilter:String?=null
+
 
     fun loadData(filter: String?) {
 
-        mFilter=filter
+        mFilter = filter
 
         dataList.clear()
         subscription?.dispose()
         subscription = orderRepository
             .getOrders(userRepository.getUserToken(), filter)
 
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe {
+                retry.value = false
+                loading.value = true
+
+            }
+            .doOnTerminate {
+
+                loading.value = false
+
+
+            }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    if ((result.data?.results?.size?:0) > 0) {
+                    if ((result.data?.results?.size ?: 0) > 0) {
 
-                        emptyVisibility.value= View.GONE
+                        emptyVisibility.value = View.GONE
 
-                        result.data?.results?.toOrderList()?.let { dataList.addAll(it) }
-                        productListAdapter.updateproductList()
+
+                        result.data?.results?.toOrderList()?.let {
+
+                            dataList.addAll(it)
+
+                            productListAdapter.notifyDataSetChanged()
+
+                        }
+
+
+
 
                         if (result.data?.next == null)
                             hasNextPage = false
 
                     } else {
 
-                        if(page==0){
+                        if (page == 0) {
 
-                            emptyVisibility.value= View.VISIBLE
+                            emptyVisibility.value = View.VISIBLE
                         }
 
                         hasNextPage = false
                     }
                 } else {
 
+                    retry.value = true
                     errorMessage.value = result.error?.detail
                 }
             }
@@ -103,7 +120,6 @@ class OrderListViewModel : BaseViewModel() {
         super.onCleared()
         subscription?.dispose()
     }
-
 
 
     fun retry() {
