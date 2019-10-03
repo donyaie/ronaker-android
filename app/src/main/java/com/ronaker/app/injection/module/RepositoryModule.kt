@@ -173,26 +173,10 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideGoogleMapRepository(api: GoogleMapApi): GoogleMapRepository {
-        return GoogleMapRepository(api)
+    internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
+        return GoogleMapRepository(api,context)
     }
 
-    private fun createOkHttpClient(context: Context): OkHttpClient {
-        var client = OkHttpClient.Builder()
-
-        getTrustAllHostsSSLSocketFactory()?.let {
-            client.sslSocketFactory(it)
-        }
-
-        client.sslSocketFactory(
-            getSslContextForCertificateFile(
-                context,
-                "my_certificate.pem"
-            ).socketFactory
-        )
-
-        return client.build()
-    }
 
     /**
      * Provides the Retrofit object.

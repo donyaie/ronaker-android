@@ -1,6 +1,8 @@
 package com.ronaker.app.data
 
+import android.content.Context
 import com.google.android.gms.maps.model.LatLng
+import com.ronaker.app.R
 import com.ronaker.app.data.network.GoogleMapApi
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
@@ -9,11 +11,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class GoogleMapRepository(private val api: GoogleMapApi) {
+class GoogleMapRepository(private val api: GoogleMapApi,private val context: Context) {
 
-   var key="AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo"
-
-    //AIzaSyBOHDmKRPh9-fFXJ6zUO-d3AGfViYmxkQY
     fun getQueryAutocomplete(Query: String ,latLng: LatLng?): Observable<GoogleAutocompleteResponseModel> {
 
         val language: String? = null// "en";
@@ -24,7 +23,8 @@ class GoogleMapRepository(private val api: GoogleMapApi) {
 
         val location = if (latLng == null) null else String.format("%s,%s", latLng.latitude, latLng.longitude)
 
-        return api.getQueryAutocomplete(Query, location, radius, language, components, types, key)
+        return api.getQueryAutocomplete(Query, location, radius, language, components, types, context.getString(
+            R.string.google_api_key_me))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -36,7 +36,8 @@ class GoogleMapRepository(private val api: GoogleMapApi) {
         val language: String? = null// "en";
 
 
-        return api.getPlaceDetails(placeId, language, key)
+        return api.getPlaceDetails(placeId, language, context.getString(
+            R.string.google_api_key_me))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -53,7 +54,8 @@ class GoogleMapRepository(private val api: GoogleMapApi) {
         val latlng = String.format("%s,%s", location.latitude, location.longitude)
 
 
-        return api.getGeocode(null, latlng, null, null, language, null, key)
+        return api.getGeocode(null, latlng, null, null, language, null, context.getString(
+            R.string.google_api_key_me))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

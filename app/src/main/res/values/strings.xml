@@ -4,6 +4,7 @@
     <string name="caption_title" translatable="false">Text</string>
 
     <string name="title_defult_price" translatable="false">€0</string>
+    <string name="google_api_key_me" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
 
 
     <string name="text_lend_request_accepted" formatted="true">Your request accepted by %1$s</string>
