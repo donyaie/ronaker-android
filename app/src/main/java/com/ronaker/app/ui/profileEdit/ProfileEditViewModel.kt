@@ -20,7 +20,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -45,7 +45,7 @@ class ProfileEditViewModel : BaseViewModel() {
             .getUserInfo(userRepository.getUserToken())
 
             .doOnSubscribe {
-                retry.value = false
+                retry.value = null
                 loading.value = true
             }
             .doOnTerminate {
@@ -66,8 +66,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
 
                 } else {
-                    retry.value = true
-                    errorMessage.value = result.error?.detail
+                    retry.value = result.error?.detail
                 }
             }
 

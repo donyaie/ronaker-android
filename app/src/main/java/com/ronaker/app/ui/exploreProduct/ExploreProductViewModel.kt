@@ -30,7 +30,7 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val checkout: MutableLiveData<String> = MutableLiveData()
 
@@ -77,7 +77,7 @@ class ExploreProductViewModel : BaseViewModel() {
             .getProduct(userRepository.getUserToken(), suid)
 
             .doOnSubscribe {
-                retry.value = false
+                retry.value = null
                 loading.value = true
             }
             .doOnTerminate {
@@ -94,8 +94,8 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
                 } else {
-                    retry.value = true
-                    errorMessage.value = result.error?.detail
+                    retry.value =  result.error?.detail
+//                    errorMessage.value = result.error?.detail
                 }
             }
 

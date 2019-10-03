@@ -51,8 +51,7 @@ class ExploreFragment : BaseFragment() {
 
         })
         viewModel.retry.observe(this, Observer { loading ->
-            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
-
+            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
 
         })
 

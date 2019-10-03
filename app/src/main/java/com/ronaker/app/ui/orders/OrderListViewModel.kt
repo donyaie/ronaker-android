@@ -39,7 +39,7 @@ class OrderListViewModel : BaseViewModel() {
     var productListAdapter: OrderItemAdapter
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -65,7 +65,7 @@ class OrderListViewModel : BaseViewModel() {
             .getOrders(userRepository.getUserToken(), filter)
 
             .doOnSubscribe {
-                retry.value = false
+                retry.value = null
                 loading.value = true
 
             }
@@ -107,8 +107,7 @@ class OrderListViewModel : BaseViewModel() {
                     }
                 } else {
 
-                    retry.value = true
-                    errorMessage.value = result.error?.detail
+                    retry.value = result.error?.detail
                 }
             }
 

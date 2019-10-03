@@ -38,16 +38,16 @@ class OrderListFragment : BaseFragment() {
 
 
         viewModel.loading.observe(this, Observer { loading ->
-            if (loading) binding.refreshLayout.setRefreshing(true) else binding.refreshLayout.setRefreshing(
-                false
-            )
+            binding.refreshLayout.isRefreshing = loading
         })
         viewModel.retry.observe(this, Observer { loading ->
-            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+
+            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
         })
 
 
 
+        binding.loading.hideLoading()
 
         viewModel.resetList.observe(this, Observer {
             scrollListener.resetState()
