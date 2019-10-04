@@ -88,6 +88,7 @@
 
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="24dp"
+                            android:minHeight="96dp"
                             android:layout_marginRight="24dp"
                             android:layout_marginBottom="24dp"
                             android:text="@string/caption_title"
