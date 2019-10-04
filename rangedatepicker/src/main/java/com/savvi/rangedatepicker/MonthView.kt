@@ -203,7 +203,6 @@ class MonthView(context: Context, attrs: AttributeSet) : LinearLayout(context, a
         }
 
         private fun isRtl(locale: Locale): Boolean {
-            // TODO convert the build to gradle and use getLayoutDirection instead of this (on 17+)?
             val directionality = Character.getDirectionality(locale.getDisplayName(locale)[0]).toInt()
             return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT.toInt() || directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC.toInt()
         }

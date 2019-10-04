@@ -9,6 +9,9 @@ import com.ronaker.app.data.*
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
+import com.ronaker.app.utils.SslUtils.getSslContextForCertificateFile
+import com.ronaker.app.utils.SslUtils.getTrustAllHostsSSLSocketFactory
+import com.ronaker.app.utils.UnsafeOkHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -170,8 +173,8 @@ object RepositoryModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideGoogleMapRepository(api: GoogleMapApi): GoogleMapRepository {
-        return GoogleMapRepository(api)
+    internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
+        return GoogleMapRepository(api,context)
     }
 
 
@@ -191,16 +194,20 @@ object RepositoryModule {
             .create()
 
 
-        val clientBuilder = OkHttpClient().newBuilder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level =
-                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-            })
+        val clientBuilder = UnsafeOkHttpClient.getUnsafeOkHttpClient1()
+        clientBuilder.addInterceptor(HttpLoggingInterceptor().apply {
+            level =
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        })
 
 //        if (BuildConfig.DEBUG)
 //            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
 
+
         val client = clientBuilder.build();
+
+
+
 
 
         return Retrofit.Builder()

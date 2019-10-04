@@ -3,7 +3,7 @@ package com.ronaker.app.utils
 import com.google.android.gms.maps.model.LatLng
 
 /** The base URL  */
-const val BASE_URL: String = "http://172.98.197.76"
+const val BASE_URL: String = "https://api.ronaker.com"
 const val FONT_PATH: String = "fonts/regular.otf"
 
 /** The Google URL  */

@@ -94,7 +94,7 @@
                       app:layout_constraintLeft_toLeftOf="parent"
                       android:textAppearance="@style/TextAppearance.Small.Regular"
                       android:layout_marginLeft="26dp"
-                      android:text="Per Day"
+                      android:text="@string/title_per_day"
 
             />
 

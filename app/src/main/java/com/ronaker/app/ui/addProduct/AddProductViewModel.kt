@@ -97,10 +97,6 @@ class AddProductViewModel : BaseViewModel() {
     lateinit var imagesTemp: ArrayList<Product.ProductImage>
 
 
-    fun stateChange(state: StateEnum) {
-
-
-    }
 
 
     enum class StateEnum constructor(position: Int) {
@@ -231,11 +227,8 @@ class AddProductViewModel : BaseViewModel() {
 
     fun onClickPriceNext(
         dayPrice: String,
-        dayValid: Boolean,
         weekPrice: String,
-        weekValid: Boolean,
-        monthPrice: String,
-        monthValid: Boolean
+        monthPrice: String
     ) {
 
 

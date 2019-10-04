@@ -148,7 +148,8 @@
                     android:text="0/0"
                     android:textAppearance="@style/TextAppearance.Small.Regular"
                     android:textColor="@color/colorTextLight"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

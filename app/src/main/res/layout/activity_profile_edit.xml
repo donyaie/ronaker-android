@@ -51,7 +51,7 @@
 
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="24dp"
-                        android:text="Complete your profile"
+                        android:text="@string/text_complete_your_profile"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
                         app:layout_constraintTop_toBottomOf="@id/avatar_image" />
@@ -64,7 +64,7 @@
 
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="16dp"
-                        android:text="We need few details for renting or Lending out."
+                        android:text="@string/title_we_need_few_details_for_renting_or_lending_out"
                         android:textAppearance="@style/TextAppearance.Large.Regular"
                         android:textColor="@color/colorTextDark"
 
@@ -86,7 +86,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Sign Up"
+                            android:text="@string/titile_sign_up"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -122,7 +122,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Add Profile Image"
+                            android:text="@string/title_add_profile_image"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -158,7 +158,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Add and verify phone number"
+                            android:text="@string/title_add_and_verify_phone_number"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -195,7 +195,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Add a payment method"
+                            android:text="@string/title_add_a_payment_method"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -231,7 +231,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Verify your Identity"
+                            android:text="@string/title_verify_your_identity"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 

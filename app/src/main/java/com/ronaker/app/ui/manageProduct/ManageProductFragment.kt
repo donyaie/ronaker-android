@@ -35,7 +35,8 @@ class ManageProductFragment : BaseFragment() {
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
         productViewModel.retry.observe(this, Observer { loading ->
-            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+
+            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
         })
 
         binding.loading.oClickRetryListener=View.OnClickListener {

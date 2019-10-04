@@ -55,6 +55,9 @@ android {
         }
 
         debug{
+
+//            applicationIdSuffix '.debug'
+//            versionNameSuffix '-DEBUG'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -63,120 +66,119 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.multidex:multidex:2.0.1'
-
+    implementation "androidx.multidex:multidex:$multidexVersion"
     implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation "androidx.core:core-ktx:$androidxVersion"
 
 
-    implementation "androidx.preference:preference-ktx:1.1.0"
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation "androidx.preference:preference-ktx:$androidxVersion"
+    implementation "com.google.android.material:material:$materialVersion"
 
     // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation "androidx.recyclerview:recyclerview:$recyclerviewVersion"
 
     // Constraint Layout
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
 
     // LiveData & ViewModel
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
 
     // Data binding
-    kapt "com.android.databinding:compiler:3.1.4"
+    kapt "com.android.databinding:compiler:$databindingVersion"
 
     // Retrofit
-    implementation('com.squareup.retrofit2:retrofit:2.6.1')
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
             {
                 // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
                 exclude module: 'okhttp'
             }
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
-
-
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    // Dagger 2
-    implementation 'com.google.dagger:dagger:2.24'
-    kapt 'com.google.dagger:dagger-compiler:2.24'
-    compileOnly "org.glassfish:javax.annotation:3.1.1"
+    //noinspection GradleDependency
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    //noinspection GradleDependency
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
-    implementation 'com.wang.avi:library:2.1.3'
+
+    // Dagger 2
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    compileOnly "org.glassfish:javax.annotation:$annotationVersion"
+
+    implementation "com.wang.avi:library:$aviVersion"
 
     //calligraphy3 font library
-    implementation 'io.github.inflationx:calligraphy3:3.1.1'
-    implementation 'io.github.inflationx:viewpump:2.0.3'
+    implementation "io.github.inflationx:calligraphy3:$calligraphyVersion"
+    implementation "io.github.inflationx:viewpump:$viewpumpVersion"
 
     //Rx
-    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
 
     // RxBindig
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
-    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0'
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rxbindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbindingVersion"
 
 
     //fragment stack manager
-    implementation 'com.ncapdevi:frag-nav:3.3.0'
+    implementation "com.ncapdevi:frag-nav:$fragNavVersion"
 
     //Image Loader
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
 
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+//    implementation "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation ("com.github.bumptech.glide:okhttp3-integration:$glideVersion"){
+        exclude group: 'glide-parent'
+    }
 
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
+
+    implementation "com.google.android.gms:play-services-location:$playServicesVersion"
 
     //dexter permissions
-    implementation "com.karumi:dexter:5.0.0"
+    implementation "com.karumi:dexter:$dexterVersion"
 
     // crop
-    implementation 'com.github.yalantis:ucrop:2.2.4'
+    implementation "com.github.yalantis:ucrop:$ucropVersion"
 
 
     // rounded image view
-    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation "com.makeramen:roundedimageview:$roundedImageVersion"
 
     //number
 
-    implementation 'com.hbb20:ccp:2.2.9'
-    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.10.17'
-    implementation('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
+    implementation "com.hbb20:ccp:$ccpVersion"
+    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libPhoneNumberVersion"
+    implementation("com.alimuzaffar.lib:pinentryedittext:$pinentryEditTextVersion") {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.
-        exclude group: 'androidx.appcompat', module: 'appcompat'
+        exclude group: "androidx.appcompat", module: "appcompat"
     }
 
 
     //firebace
-    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation "com.google.firebase:firebase-core:17.2.0"
 
     // Add dependency
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
 
     //picker
-    implementation project(path: ':rangedatepicker')
+    implementation project(path: ":rangedatepicker")
 
     //implementation
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-//
-//    //payment
-//    implementation 'io.card:android-sdk:5.5.1'
-
-    //memory lake
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 
 
 
-    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
-    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+    debugImplementation "com.facebook.stetho:stetho:1.5.1"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:1.5.1"
 
 
 }

@@ -34,13 +34,13 @@ class ManageProductListViewModel : BaseViewModel() {
     var productListAdapter: ManageProductAdapter
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val emptyView: MutableLiveData<Boolean> = MutableLiveData()
     val addNewView: MutableLiveData<Boolean> = MutableLiveData()
 
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
-    private lateinit var subscription: Disposable
+    private  var subscription: Disposable?=null
 
     init {
         productListAdapter = ManageProductAdapter(dataList)
@@ -63,6 +63,7 @@ class ManageProductListViewModel : BaseViewModel() {
 
         if (hasNextPage) {
             page++
+            subscription?.dispose()
             subscription = productRepository
                 .getMyProduct(userRepository.getUserToken(), page)
 
@@ -70,7 +71,7 @@ class ManageProductListViewModel : BaseViewModel() {
                 .doOnTerminate { onRetrieveProductListFinish() }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        if (result.data?.results?.size?:0 > 0) {
+                        if ((result.data?.results?.size?:0) > 0) {
 
 
                             addNewView.value = true
@@ -97,7 +98,7 @@ class ManageProductListViewModel : BaseViewModel() {
 
 
     private fun onRetrieveProductListStart() {
-        retry.value = false
+        retry.value = null
         if (page <=1 ) {
             loading.value = true
 
@@ -137,16 +138,17 @@ class ManageProductListViewModel : BaseViewModel() {
 
     private fun onRetrieveProductListError(error: NetworkError?) {
 
-        errorMessage.value = error?.detail
         if(page<=1)
-            retry.value = true
+            retry.value = error?.detail
+        else
+            errorMessage.value = error?.detail
 
     }
 
 
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+        subscription?.dispose()
     }
 
     fun loadMore() {

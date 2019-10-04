@@ -91,7 +91,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
 
       disposable=   RxTextView.textChanges(binding.searchEdit)
-            .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .debounce(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .subscribe {
 
                 searchLocation(it.toString())

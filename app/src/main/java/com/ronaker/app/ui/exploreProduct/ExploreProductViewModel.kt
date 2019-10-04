@@ -30,7 +30,7 @@ class ExploreProductViewModel : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val checkout: MutableLiveData<String> = MutableLiveData()
 
@@ -77,7 +77,7 @@ class ExploreProductViewModel : BaseViewModel() {
             .getProduct(userRepository.getUserToken(), suid)
 
             .doOnSubscribe {
-                retry.value = false
+                retry.value = null
                 loading.value = true
             }
             .doOnTerminate {
@@ -92,38 +92,10 @@ class ExploreProductViewModel : BaseViewModel() {
 
                     mProduct?.let { fillProduct(it) }
 
-//                    productImage.value = BASE_URL + result.data?.avatar
-//                    productDescription.value = result.data?.description
-//                    productTitle.value = result.data?.name
-//                    if (result.data?.price_per_day != 0.0) {
-//
-//                        productPrice.value = String.format(
-//                            "%s%.02f",
-//                            context.getString(R.string.title_curency_symbol),
-//                            result.data?.price_per_day
-//                        )
-//                        productPriceTitle.value = context.getString(R.string.title_per_day)
-//                    } else if (result.data.price_per_week != 0.0) {
-//
-//                        productPrice.value = String.format(
-//                            "%s%.02f", context.getString(R.string.title_curency_symbol),
-//                            result.data.price_per_week
-//                        )
-//                        productPriceTitle.value = context.getString(R.string.title_per_week)
-//                    } else if (result.data.price_per_month != 0.0) {
-//
-//                        productPrice.value = String.format(
-//                            "%s%.02f", context.getString(R.string.title_curency_symbol),
-//                            result.data.price_per_month
-//                        )
-//                        productPriceTitle.value = context.getString(R.string.title_per_month)
-//                    }
-//
-////                    productAddress.value=result.data?
 
                 } else {
-                    retry.value = true
-                    errorMessage.value = result.error?.detail
+                    retry.value =  result.error?.detail
+//                    errorMessage.value = result.error?.detail
                 }
             }
 

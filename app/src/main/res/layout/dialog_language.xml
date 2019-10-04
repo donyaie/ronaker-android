@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
               android:layout_width="match_parent"
               android:padding="16dp"
               android:layout_height="match_parent">
@@ -10,7 +11,8 @@
 
         <ImageView  android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_united_kingdom"  android:layout_width="30dp" android:layout_height="30dp"/>
 
-        <TextView android:text="English" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"/>
+        <TextView android:text="English" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
 
     </LinearLayout>
     <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
@@ -19,7 +21,8 @@
 
         <ImageView android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_lithuania" android:layout_width="30dp" android:layout_height="30dp"/>
 
-        <TextView android:text="Lithuanian" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"/>
+        <TextView android:text="Lithuanian" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

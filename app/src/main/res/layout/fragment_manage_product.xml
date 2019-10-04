@@ -125,7 +125,7 @@
 
                         <TextView android:layout_width="0dp"
                                 android:textColor="@color/colorTextDark"
-                                android:layout_weight=".95" android:text="Categories"
+                                android:layout_weight=".95" android:text="@string/title_categories"
                                 android:textAppearance="@style/TextAppearance.Large.Light"
                                 android:layout_height="wrap_content"/>
                         <ImageView android:layout_width="20dp" app:srcCompat="@drawable/ic_chevron_right"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.ronaker.app.R
@@ -17,6 +18,8 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
      var loadinLayout: ConstraintLayout
 
     var retry_layout: ConstraintLayout
+    var message_title: TextView
+    var retryAction_layout: ConstraintLayout
     var retry: ImageView
     var progress:AVLoadingIndicatorView
 
@@ -46,7 +49,7 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         set(value){
 
             field = value
-            retry.setOnClickListener(value)
+            retryAction_layout.setOnClickListener(value)
         }
 
     init {
@@ -58,7 +61,9 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
         loadinLayout = findViewById(R.id.loading_layout)
         retry_layout = findViewById(R.id.retry_layout)
+        retryAction_layout = findViewById(R.id.retryAction_layout)
         retry = findViewById(R.id.retry)
+        message_title=findViewById(R.id.message_title)
         progress=findViewById(R.id.progress)
 
         orientation = VERTICAL
@@ -102,8 +107,9 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
     }
 
-    fun showRetry() {
+    fun showRetry(message:String) {
         retry.isClickable = true
+        message_title.text=message
 //        retry_layout.animate().cancel()
         retry_layout.visibility = View.VISIBLE
         retry_layout.isClickable=true
@@ -113,8 +119,22 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         retry_layout.animate().alpha(1f).setDuration(50).start()
     }
 
+
+//    fun showRetry() {
+//        retry.isClickable = true
+//        message_title.text=""
+////        retry_layout.animate().cancel()
+//        retry_layout.visibility = View.VISIBLE
+//        retry_layout.isClickable=true
+//        retry_layout.isFocusable=true
+//        retry_layout.isEnabled=true
+//
+//        retry_layout.animate().alpha(1f).setDuration(50).start()
+//    }
+
     fun hideRetry() {
 //        retry_layout.animate().cancel()
+        message_title.text=""
         retry_layout.animate().alpha(0f).setDuration(200).start()
         retry_layout.isClickable=false
         retry_layout.isFocusable=false

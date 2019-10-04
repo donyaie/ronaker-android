@@ -14,6 +14,7 @@ import android.widget.ImageView
 import java.util.ArrayList
 import com.bumptech.glide.Glide
 import com.ronaker.app.R
+import com.ronaker.app.injection.module.GlideApp
 
 
 class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -97,7 +98,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view = LayoutInflater.from(context).inflate(R.layout.component_image_slide_item, null)
             val imageView = view.findViewById(R.id.image) as ImageView
-            Glide.with(context).load(dataList[position]).into(imageView)
+            GlideApp.with(context).load(dataList[position]).into(imageView)
             container.addView(view)
             return view
         }

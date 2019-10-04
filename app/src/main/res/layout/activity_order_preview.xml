@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
 >
     <data>
         <variable
@@ -56,7 +57,8 @@
 
                                   android:text="sample product"
                                   android:textColor="@color/colorTextDark"
-                                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                                  android:layout_width="match_parent" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
 
                         <TextView android:textAppearance="@style/TextAppearance.Large.Regular"
@@ -65,7 +67,8 @@
                                   android:text="$124 for 2 day"
                                   android:layout_marginTop="16dp"
                                   android:textColor="@color/colorTextDark"
-                                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                                  android:layout_width="match_parent" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
 
                     </LinearLayout>
@@ -104,12 +107,14 @@ android:src="@color/colorPlatinGrey"
                         <TextView android:layout_marginBottom="4dp"
                                   app:mutableText="@{viewModel.getStartDayName()}"
                                   android:textAppearance="@style/TextAppearance.Small.Regular" android:text="Monday"
-                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
                         <TextView android:textAppearance="@style/TextAppearance.Large.Regular" android:text="21 May"
 
                                   app:mutableText="@{viewModel.getFirstDayMonth()}"
-                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
 
                     </LinearLayout>
@@ -126,12 +131,14 @@ android:src="@color/colorPlatinGrey"
 
                                   app:mutableText="@{viewModel.getEndDayName()}"
                                   android:textAppearance="@style/TextAppearance.Small.Regular" android:text="Friday"
-                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
                         <TextView android:textAppearance="@style/TextAppearance.Large.Regular" android:text="23 May"
 
                                   app:mutableText="@{viewModel.getEndDayMonth()}"
-                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
 
                     </LinearLayout>
@@ -144,7 +151,8 @@ android:src="@color/colorPlatinGrey"
                                 android:layout_marginRight="24dp" android:background="@color/colorPlatinGrey"/>
 
 
-                <LinearLayout android:layout_width="match_parent" android:paddingRight="24dp" android:paddingLeft="24dp"
+                <LinearLayout android:layout_width="match_parent"  app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" android:paddingRight="24dp" android:paddingLeft="24dp"
+
                               android:minHeight="112dp" android:gravity="center" android:layout_height="wrap_content"
                               android:orientation="horizontal">
 
@@ -159,7 +167,8 @@ android:src="@color/colorPlatinGrey"
                         <TextView android:textAppearance="@style/TextAppearance.Heading.2" android:text="David"
 
                                   app:mutableText="@{viewModel.getUserName()}"
-                                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                tools:ignore="HardcodedText" />
 
 
                         <LinearLayout android:layout_marginTop="11dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -172,9 +181,10 @@ android:src="@color/colorPlatinGrey"
                             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:orientation="vertical">
                                 <TextView android:textAppearance="@style/TextAppearance.Large.SB" android:text="87%"
-                                          android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                        tools:ignore="HardcodedText" />
 
-                                <TextView android:textAppearance="@style/TextAppearance.Medium.Light" android:text="positive rate"
+                                <TextView android:textAppearance="@style/TextAppearance.Medium.Light" android:text="@string/title_positive_rate"
                                           android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 
@@ -199,6 +209,7 @@ android:src="@color/colorPlatinGrey"
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp"
                                 android:layout_marginLeft="24dp"
+                        app:mutableVisibility="@{viewModel.getUserInfoVisibility()}"
                                 android:layout_marginRight="24dp" android:background="@color/colorPlatinGrey"/>
 
 
@@ -207,7 +218,8 @@ android:src="@color/colorPlatinGrey"
                 <TextView android:text="Description"
 
                           app:mutableText="@{viewModel.getOrderDescription()}"
-                          android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                          android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        tools:ignore="HardcodedText" />
 
 
 
@@ -232,7 +244,7 @@ android:src="@color/colorPlatinGrey"
 
 
 
-                <Button style="@style/Button.transparent" android:text="Decline"
+                <Button style="@style/Button.transparent" android:text="@string/button_decline"
 
 android:layout_weight="1"
                         app:mutableVisibility="@{viewModel.getDeclineVisibility()}"
@@ -245,7 +257,7 @@ android:layout_weight="1"
                 />
 
 
-                <Button style="@style/Button.accent" android:text="Accept"
+                <Button style="@style/Button.accent" android:text="@string/button_accept"
 
                         android:layout_weight="1"
                         app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
@@ -259,7 +271,7 @@ android:layout_weight="1"
                 />
 
 
-                <Button style="@style/Button.transparent" android:text="Cancel"
+                <Button style="@style/Button.transparent" android:text="@string/button_cancel"
 
                         android:layout_weight="1"
                         app:mutableVisibility="@{viewModel.getCancelVisibility()}"
@@ -272,10 +284,10 @@ android:layout_weight="1"
                 />
 
 
-                <Button style="@style/Button.accent" android:text="Finish"
+                <Button style="@style/Button.accent" android:text="@string/button_finish"
 
                         android:layout_weight="1"
-                        app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
+                        app:mutableVisibility="@{viewModel.getFinishVisibility()}"
 
                         android:onClick="@{()->viewModel.onClickFinished()}"
 

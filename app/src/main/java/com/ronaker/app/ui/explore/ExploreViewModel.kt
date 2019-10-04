@@ -28,15 +28,17 @@ class ExploreViewModel : BaseViewModel() {
     internal var hasNextPage = true
 
 
-    var dataList: ArrayList<Product>
+    var dataList: ArrayList<Product> = ArrayList()
 
 
     var productListAdapter: ItemExploreAdapter
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loadProduct() }
+
+    val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
+
 
 
     val searchValue: MutableLiveData<String> = MutableLiveData()
@@ -52,10 +54,9 @@ class ExploreViewModel : BaseViewModel() {
 //        view.getScrollListener().resetState()
     }
 
-    private lateinit var subscription: Disposable
+    private  var subscription: Disposable?=null
 
     init {
-        dataList = ArrayList()
         productListAdapter = ItemExploreAdapter(dataList)
         reset()
 
@@ -65,25 +66,28 @@ class ExploreViewModel : BaseViewModel() {
     fun loadProduct() {
         if (hasNextPage) {
             page++
-
+            subscription?.dispose()
             subscription = productRepository
-                .productSearch(userRepository.getUserToken(),query, page,null,null)
+                .productSearch(userRepository.getUserToken(), query, page, null, null)
 
                 .doOnSubscribe { onRetrieveProductListStart() }
                 .doOnTerminate { onRetrieveProductListFinish() }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        if (result.data?.results?.size?:0 > 0) {
+                        if ((result.data?.results?.size ?: 0) > 0) {
 
+                            emptyVisibility.value = View.GONE
                             onRetrieveProductListSuccess(
                                 result.data?.results?.toProductList()
                             )
 
-                            if(result.data?.next==null)
-
+                            if (result.data?.next == null)
                                 hasNextPage = false
 
                         } else {
+
+                            emptyVisibility.value = View.VISIBLE
+
                             hasNextPage = false
                         }
                     } else {
@@ -96,9 +100,11 @@ class ExploreViewModel : BaseViewModel() {
 
 
     private fun onRetrieveProductListStart() {
-        retry.value = false
-        if (page <=1 ) {
+        retry.value = null
+        if (page <= 1) {
             loading.value = true
+
+            emptyVisibility.value = View.GONE
 
         }
         errorMessage.value = null
@@ -112,34 +118,35 @@ class ExploreViewModel : BaseViewModel() {
 
         if (productList != null) {
 
-            var insertIndex=0
-            if(dataList.size>0)
-                insertIndex=dataList.size
+            var insertIndex = 0
+            if (dataList.size > 0)
+                insertIndex = dataList.size
 
             dataList.addAll(productList)
-            productListAdapter.notifyItemRangeInserted(insertIndex,productList.size )
+            productListAdapter.notifyItemRangeInserted(insertIndex, productList.size)
         }
 
     }
 
     private fun onRetrieveProductListError(error: NetworkError?) {
+        if (page <= 1)
+            retry.value =  error?.detail
+        else
+            errorMessage.value = error?.detail
 
-        errorMessage.value = error?.detail
-        if(page<=1)
-        retry.value = true
 
     }
 
-    fun onClickSearch(){
+    fun onClickSearch() {
 
-        searchValue.value=""
+        searchValue.value = ""
 
     }
 
 
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+        subscription?.dispose()
     }
 
     fun loadMore() {
@@ -147,19 +154,19 @@ class ExploreViewModel : BaseViewModel() {
 
     }
 
-    fun retry(){
+    fun retry() {
         reset()
         loadProduct()
 
     }
 
 
-    var query:String?=null
+    var query: String? = null
 
     fun search(search: String?) {
 
         reset()
-        query=search
+        query = search
         loadProduct()
 
     }

@@ -48,11 +48,7 @@ class ManageProductListFragment : BaseFragment() {
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
         viewModel.loading.observe(this, Observer { loading ->
-            //            if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
-
-            if (loading) binding.refreshLayout.setRefreshing(true) else binding.refreshLayout.setRefreshing(
-                false
-            )
+            binding.refreshLayout.isRefreshing = loading
         })
 
 
@@ -65,7 +61,9 @@ class ManageProductListFragment : BaseFragment() {
 
 
         viewModel.retry.observe(this, Observer { loading ->
-            if (loading) binding.loading.showRetry() else binding.loading.hideRetry()
+            loading?.let { binding.loading.showRetry(loading)  }?:run{binding.loading.hideRetry()}
+
+
         })
 
         viewModel.emptyView.observe(this, Observer { loading ->

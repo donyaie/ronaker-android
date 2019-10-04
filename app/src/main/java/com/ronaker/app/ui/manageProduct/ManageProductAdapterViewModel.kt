@@ -19,20 +19,20 @@ class ManageProductAdapterViewModel : BaseViewModel() {
         data = post
         productTitle.value = post.name
         activity = context
-        if (!(post.price_per_day?.equals(0) ?: (false))) {
+        if (post.price_per_day?.equals(0) != true) {
             productPrice.value = String.format(
                 "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_day, context.getString(
                     R.string.title_per_day
                 )
             )
-        } else if (!(post.price_per_week?.equals(0) ?: (false))) {
+        } else if (post.price_per_week?.equals(0) != true) {
 
             productPrice.value = String.format(
                 "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_week, context.getString(
                     R.string.title_per_week
                 )
             )
-        } else if (!(post.price_per_month?.equals(0) ?: (false))) {
+        } else if (post.price_per_month?.equals(0) != true) {
 
             productPrice.value = String.format(
                 "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_month, context.getString(

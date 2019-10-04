@@ -8,6 +8,7 @@
         <item name="android:typeface">sans</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:dialogTheme">@style/TransparentDialog</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
 
         <item name="android:textViewStyle">@style/Widget.Ronaker.TextView</item>
@@ -25,7 +26,7 @@
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <!--<item name="android:windowFullscreen">true</item>-->
+        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:typeface">serif</item>
         <item name="android:dialogTheme">@style/TransparentDialog</item>

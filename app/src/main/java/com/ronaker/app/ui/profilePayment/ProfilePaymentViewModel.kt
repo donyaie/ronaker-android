@@ -22,7 +22,7 @@ class ProfilePaymentViewModel : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val retry: MutableLiveData<Boolean> = MutableLiveData()
+    val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
 

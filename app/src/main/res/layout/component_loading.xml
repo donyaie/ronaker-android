@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_layout"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                           android:visibility="gone"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
 
 
-                                                           app:layout_constraintTop_toTopOf="parent"
-                                                           android:background="@color/colorRed"
-                                                           android:layout_height="80dp">
+                android:background="@color/colorRed"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent">
 
             <TextView
 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/caption_title"
                     android:textAppearance="@style/TextAppearance.Medium.SB"
-                    android:gravity="center"
-                    android:textColor="@color/colorTextLight"
-                    android:layout_width="match_parent" android:layout_height="match_parent"/>
+                    android:textColor="@color/colorTextLight" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout android:visibility="visible"
-                                                           android:layout_width="match_parent"
-                                                           android:id="@+id/loading_layout"
-                                                           android:background="@color/colorLoading"
-                                                           android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loading_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorLoading"
+                android:visibility="visible">
 
 
             <com.wang.avi.AVLoadingIndicatorView
@@ -47,38 +49,82 @@
                     style="@style/AVLoadingIndicatorView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="visible"
+                    app:indicatorColor="@color/colorNavy"
+
+                    app:indicatorName="BallSpinFadeLoaderIndicator"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
 
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="visible"
-
-                    app:indicatorColor="@color/colorNavy"
-                    app:indicatorName="BallSpinFadeLoaderIndicator"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                           android:id="@+id/retry_layout"
-                                                           android:visibility="visible"
-                                                           android:alpha="0"
-                                                           android:background="@color/colorLoading"
-                                                           android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/retry_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0"
+                android:background="@color/colorLoading"
+                android:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/retryAction_layout"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+
+                    app:layout_constraintTop_toTopOf="parent">
 
 
-            <ImageView android:layout_width="40dp" android:layout_height="40dp"
-                       android:id="@+id/retry"
-                       android:visibility="visible"
-                       app:srcCompat="@drawable/ic_retry_black"
-                       android:tint="@color/colorNavy"
-                       app:layout_constraintTop_toTopOf="parent"
-                       app:layout_constraintBottom_toBottomOf="parent"
+                <TextView
 
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintEnd_toEndOf="parent"
-            />
+                        android:id="@+id/message_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:maxWidth="200dp"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                        android:id="@+id/message_try"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="Try Again"
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/message_title" />
+
+
+                <ImageView
+                        android:id="@+id/retry"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:tint="@color/colorNavy"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        app:layout_constraintTop_toBottomOf="@id/message_try"
+                        app:srcCompat="@drawable/ic_retry_black" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

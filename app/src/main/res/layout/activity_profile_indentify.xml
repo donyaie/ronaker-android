@@ -51,7 +51,7 @@
 
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="24dp"
-                        android:text="Add a identity document"
+                        android:text="@string/title_add_a_identity_document"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
                         app:layout_constraintTop_toBottomOf="@id/avatar_image" />
@@ -64,7 +64,7 @@
 
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="24dp"
-                        android:text="Please Upload one of your Identity document to Authentication."
+                        android:text="@string/title_please_upload_one_of_your_identity_document_to_authentication"
                         android:textAppearance="@style/TextAppearance.Large.Regular"
                         android:textColor="@color/colorTextDark"
 
@@ -143,7 +143,7 @@ android:layout_width="160dp"
                 app:mutableVisibility="@{viewModel.getUploadVisibility()}"
                 android:onClick="@{()->viewModel.onClickUpload()}"
 
-                android:text="Done"
+                android:text="@string/title_done"
                 style="@style/Button.accent"/>
 
 

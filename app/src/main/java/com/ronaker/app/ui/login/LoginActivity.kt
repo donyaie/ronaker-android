@@ -281,7 +281,7 @@ class LoginActivity : BaseActivity() {
             }
 
             private fun computeFactor(): Float {
-                return (binding.background.width - binding.viewpager.width) / ((binding.viewpager.width * (binding.viewpager.adapter?.count?:0 - 1))*1.0f)
+                return (binding.background.width - binding.viewpager.width) / ((binding.viewpager.width * ((binding.viewpager.adapter?.count?:0) - 1))*1.0f)
             }
         })
 
