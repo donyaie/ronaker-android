@@ -61,7 +61,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setFadeTransition(this)
+        AnimationHelper.setAnimateTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)

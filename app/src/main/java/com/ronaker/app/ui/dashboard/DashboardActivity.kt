@@ -134,7 +134,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     companion object {
         fun newInstance(context: Context): Intent {
             var intent = Intent(context, DashboardActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and  Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }
     }

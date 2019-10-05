@@ -38,7 +38,7 @@ class SearchActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
-        AnimationHelper.setFadeTransition(this)
+        AnimationHelper.setAnimateTransition(this)
 
         super.onCreate(savedInstanceState)
 

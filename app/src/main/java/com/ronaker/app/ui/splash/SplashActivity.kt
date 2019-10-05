@@ -3,6 +3,7 @@ package com.ronaker.app.ui.splash
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -33,22 +34,35 @@ class SplashActivity : BaseActivity() {
             if (value == true) {
 
 
-                Timer("startLogin", false).schedule(1000) {
-                    startActivity(LoginActivity.newInstance(this@SplashActivity))
+//                Timer("startLogin", false).schedule(1000) {
+//
+//
+//                }
 
+                Handler().postDelayed({
+
+
+                    startActivity(LoginActivity.newInstance(this@SplashActivity))
                     finish()
 
-                }
+
+                },1000)
             }
         })
 
         viewModel.goDashboard.observe(this, Observer { value ->
             if (value == true) {
 
-                Timer("startDashboard", false).schedule(1000) {
-                    startActivity(DashboardActivity.newInstance(this@SplashActivity))
-                    finish()
-                }
+                Handler().postDelayed({
+
+                        startActivity(DashboardActivity.newInstance(this@SplashActivity))
+                        finish()
+
+                },1000)
+//                Timer("startDashboard", false).schedule(1000) {
+//                    startActivityMakeScene(DashboardActivity.newInstance(this@SplashActivity))
+//                    finishSafe()
+//                }
             }
         })
 
