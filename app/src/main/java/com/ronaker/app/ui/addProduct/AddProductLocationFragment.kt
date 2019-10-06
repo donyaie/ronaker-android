@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -91,6 +92,10 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
         (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             mGoogleMap = it
+            mGoogleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    context, R.raw.style_json));
+
             baseViewModel.productLocation.value?.let {it3->
 
                 isFirstIdle=true
