@@ -108,7 +108,7 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
     }
 
     fun showRetry(message:String) {
-        retry.isClickable = true
+        retryAction_layout.isClickable = true
         message_title.text=message
 //        retry_layout.animate().cancel()
         retry_layout.visibility = View.VISIBLE
@@ -140,7 +140,7 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         retry_layout.isFocusable=false
         retry_layout.isEnabled=false
 
-        retry.isClickable = false
+        retryAction_layout.isClickable = false
     }
 
 
