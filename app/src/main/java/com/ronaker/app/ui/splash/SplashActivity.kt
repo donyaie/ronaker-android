@@ -33,12 +33,6 @@ class SplashActivity : BaseActivity() {
         viewModel.goLogin.observe(this, Observer { value ->
             if (value == true) {
 
-
-//                Timer("startLogin", false).schedule(1000) {
-//
-//
-//                }
-
                 Handler().postDelayed({
 
 
@@ -59,16 +53,16 @@ class SplashActivity : BaseActivity() {
                         finish()
 
                 },1000)
-//                Timer("startDashboard", false).schedule(1000) {
-//                    startActivityMakeScene(DashboardActivity.newInstance(this@SplashActivity))
-//                    finishSafe()
-//                }
             }
         })
 
         binding.viewModel = viewModel
 
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     companion object {

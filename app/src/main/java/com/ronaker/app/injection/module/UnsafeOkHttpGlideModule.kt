@@ -9,7 +9,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import java.io.InputStream
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.module.AppGlideModule
-import com.ronaker.app.utils.UnsafeOkHttpClient
+import com.ronaker.app.utils.SslUtils
 
 
 @GlideModule
@@ -20,7 +20,7 @@ class UnsafeOkHttpGlideModule : AppGlideModule(){
 
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        val client = UnsafeOkHttpClient.getUnsafeOkHttpClient1()
+        val client = SslUtils.getUnsafeOkHttpClient()
         registry.replace(
             GlideUrl::class.java, InputStream::class.java,
             OkHttpUrlLoader.Factory(client.build())

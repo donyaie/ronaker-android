@@ -67,7 +67,7 @@ class OrderPreviewActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer { value ->
+        viewModel.finish.observe(this, Observer { _ ->
            finishSafe()
         })
 

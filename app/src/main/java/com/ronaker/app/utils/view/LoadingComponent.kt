@@ -1,6 +1,5 @@
 package com.ronaker.app.utils.view
 
-import android.animation.Animator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -15,13 +14,13 @@ import com.wang.avi.AVLoadingIndicatorView
 
 class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
-     var loadinLayout: ConstraintLayout
+     private var loadinLayout: ConstraintLayout
 
-    var retry_layout: ConstraintLayout
-    var message_title: TextView
-    var retryAction_layout: ConstraintLayout
-    var retry: ImageView
-    var progress:AVLoadingIndicatorView
+    private var retry_layout: ConstraintLayout
+    private var message_title: TextView
+    private var retryAction_layout: ConstraintLayout
+    private var retry: ImageView
+    private  var progress:AVLoadingIndicatorView
 
     var isTransparent: Boolean = true
         set(value) {

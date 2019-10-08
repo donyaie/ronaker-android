@@ -43,31 +43,29 @@ abstract class BaseViewModel : ViewModel() {
             is SplashViewModel -> injector.inject(this)
             is ExploreViewModel -> injector.inject(this)
             is AddProductViewModel -> injector.inject(this)
-            is AddProductImageAdapterViewModel->injector.inject(this)
-            is PhoneNumberViewModel->injector.inject(this)
-            is ExploreProductViewModel ->injector.inject(this)
-            is ManageProductListViewModel ->injector.inject(this)
-            is ManageProductViewModel->injector.inject(this)
-is OrderListViewModel ->injector.inject(this)
+            is AddProductImageAdapterViewModel -> injector.inject(this)
+            is PhoneNumberViewModel -> injector.inject(this)
+            is ExploreProductViewModel -> injector.inject(this)
+            is ManageProductListViewModel -> injector.inject(this)
+            is ManageProductViewModel -> injector.inject(this)
+            is OrderListViewModel -> injector.inject(this)
+            is CheckoutCalendarViewModel -> injector.inject(this)
+            is OrdersViewModel -> injector.inject(this)
+            is OrderMessageViewModel -> injector.inject(this)
+            is ProfileViewModel -> injector.inject(this)
+            is InboxViewModel -> injector.inject(this)
+            is SearchViewModel -> injector.inject(this)
+
+            is OrderPreviewViewModel -> injector.inject(this)
 
 
-            is CheckoutCalendarViewModel->injector.inject(this)
-            is OrdersViewModel ->injector.inject(this)
-            is OrderMessageViewModel->injector.inject(this)
-            is ProfileViewModel->injector.inject(this)
-            is InboxViewModel ->injector.inject(this)
-            is SearchViewModel ->injector.inject(this)
+            is AddProductLocationViewModel -> injector.inject(this)
+            is AddProductLocationSearchViewModel -> injector.inject(this)
+            is AddProductCategorySelectViewModel -> injector.inject(this)
+            is ProfileEditViewModel -> injector.inject(this)
 
-            is OrderPreviewViewModel->injector.inject(this)
-
-
-            is AddProductLocationViewModel->injector.inject(this)
-            is AddProductLocationSearchViewModel->injector.inject(this)
-            is AddProductCategorySelectViewModel->injector.inject(this)
-            is ProfileEditViewModel->injector.inject(this)
-
-            is ProfilePaymentViewModel ->injector.inject(this)
-            is ProfileIdentifyViewModel ->injector.inject(this)
+            is ProfilePaymentViewModel -> injector.inject(this)
+            is ProfileIdentifyViewModel -> injector.inject(this)
         }
 
     }

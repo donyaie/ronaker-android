@@ -9,9 +9,7 @@ import com.ronaker.app.data.*
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
-import com.ronaker.app.utils.SslUtils.getSslContextForCertificateFile
-import com.ronaker.app.utils.SslUtils.getTrustAllHostsSSLSocketFactory
-import com.ronaker.app.utils.UnsafeOkHttpClient
+import com.ronaker.app.utils.SslUtils
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -194,7 +192,7 @@ object RepositoryModule {
             .create()
 
 
-        val clientBuilder = UnsafeOkHttpClient.getUnsafeOkHttpClient1()
+        val clientBuilder = SslUtils.getUnsafeOkHttpClient()
         clientBuilder.addInterceptor(HttpLoggingInterceptor().apply {
             level =
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
