@@ -32,27 +32,21 @@ class SplashActivity : BaseActivity() {
 
         viewModel.goLogin.observe(this, Observer { value ->
             if (value == true) {
-
-                Handler().postDelayed({
-
-
                     startActivity(LoginActivity.newInstance(this@SplashActivity))
-                    finish()
+//                    finishSafe()
 
-
-                },1000)
             }
         })
 
         viewModel.goDashboard.observe(this, Observer { value ->
             if (value == true) {
-
-                Handler().postDelayed({
+//
+//                Handler().postDelayed({
 
                         startActivity(DashboardActivity.newInstance(this@SplashActivity))
-                        finish()
-
-                },1000)
+//                        finishSafe()
+//
+//                },1000)
             }
         })
 

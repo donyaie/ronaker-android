@@ -3,6 +3,7 @@ package com.ronaker.app.injection.component
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.*
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
+import com.ronaker.app.ui.dashboard.DashboardViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.inbox.InboxViewModel
@@ -54,6 +55,8 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfilePaymentViewModel)
 
     fun inject(viewModel: ProfileIdentifyViewModel)
+
+    fun inject(viewModel: DashboardViewModel)
 
 
 

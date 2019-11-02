@@ -90,7 +90,14 @@
                 android:name=".ui.dashboard.DashboardActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/DashboardTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
+                android:windowSoftInputMode="stateAlwaysHidden" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
                 android:name=".ui.exploreProduct.ExploreProductActivity"
                 android:screenOrientation="portrait"
@@ -137,10 +144,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/SplashTheme"
                 android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
 
         </activity>

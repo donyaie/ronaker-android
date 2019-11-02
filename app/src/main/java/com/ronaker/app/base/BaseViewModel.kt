@@ -6,6 +6,7 @@ import com.ronaker.app.injection.component.ViewModelInjector
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.*
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
+import com.ronaker.app.ui.dashboard.DashboardViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.inbox.InboxViewModel
@@ -66,6 +67,8 @@ abstract class BaseViewModel : ViewModel() {
 
             is ProfilePaymentViewModel -> injector.inject(this)
             is ProfileIdentifyViewModel -> injector.inject(this)
+
+            is DashboardViewModel -> injector.inject(this)
         }
 
     }
