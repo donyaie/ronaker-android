@@ -83,7 +83,7 @@
         <activity
                 android:name=".ui.search.SearchActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/DashboardTheme"
+                android:theme="@style/SearchTheme"
                 android:windowSoftInputMode="stateAlwaysVisible" />
 
         <activity

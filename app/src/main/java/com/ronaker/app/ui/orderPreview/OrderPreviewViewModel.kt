@@ -122,7 +122,7 @@ class OrderPreviewViewModel : BaseViewModel() {
 
         when (Order.OrderTypeEnum[order.orderType]) {
 
-            Order.OrderTypeEnum.Renting -> {
+            Order.OrderTypeEnum.Lending -> {
 
                 order.productOwner?.let {
 
@@ -176,7 +176,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                 }
 
             }
-            Order.OrderTypeEnum.Lending -> {
+            Order.OrderTypeEnum.Renting -> {
                 order.orderUser?.let {
 
                     userName.value = it.first_name+ " " + it.last_name

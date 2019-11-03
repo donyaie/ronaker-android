@@ -44,7 +44,7 @@ class OrderItemViewModel : BaseViewModel() {
 
                 orderStatusImage.value=R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
 
                     orderStatus.value=  activity.getString(R.string.text_rent_request_accepted,userName)
@@ -59,7 +59,7 @@ class OrderItemViewModel : BaseViewModel() {
 
                 orderStatusImage.value=R.drawable.ic_remove_red
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value=activity.getString(R.string.text_rent_canceled)
                 }else{
@@ -75,7 +75,7 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_guide_success
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value=activity.getString(R.string.text_rent_complete)
                 }else{
@@ -88,7 +88,7 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_pending
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value=activity.getString(R.string.text_rent_request_pending)
                 }else{
@@ -102,7 +102,7 @@ class OrderItemViewModel : BaseViewModel() {
                 orderStatusImage.value=R.drawable.ic_remove_red
 
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Lending){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value=activity.getString(R.string.text_rent_rejected)
                 }else{

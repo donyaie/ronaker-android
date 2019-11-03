@@ -76,7 +76,6 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                     if (isTransparent)
                         ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
                     else
-
                         ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
 
                 }

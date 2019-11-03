@@ -27,7 +27,7 @@
 
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimary">@color/white</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@drawable/launch_screen</item>
 
         <item name="colorAccent">@color/colorAccent</item>
 
@@ -43,10 +43,11 @@
 
     </style>
 
-    <style name="SearchTheme" parent="DashboardTheme">
+    <style name="SearchTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
