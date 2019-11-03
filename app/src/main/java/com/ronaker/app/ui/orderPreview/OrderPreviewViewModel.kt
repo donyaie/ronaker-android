@@ -9,6 +9,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
+import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
@@ -37,6 +38,7 @@ class OrderPreviewViewModel : BaseViewModel() {
 
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
+    val showProduct:MutableLiveData<Product> = MutableLiveData()
 
     val productTitle: MutableLiveData<String> = MutableLiveData()
     val dayNumber: MutableLiveData<String> = MutableLiveData()
@@ -284,6 +286,11 @@ class OrderPreviewViewModel : BaseViewModel() {
 
     }
 
+
+
+    fun onClickItem() {
+        showProduct.value=mOrder.product
+    }
 
     fun onClickCanceled() {
         cancelSubscription?.dispose()

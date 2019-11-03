@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.AnimationHelper
 
 class OrderPreviewActivity : BaseActivity() {
@@ -55,6 +56,11 @@ class OrderPreviewActivity : BaseActivity() {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
+
+
+        viewModel.showProduct.observe(this, Observer { product ->
+            startActivityMakeScene(ExploreProductActivity.newInstance(this,product,"ds"))
+        })
 
 
         viewModel.loading.observe(this, Observer { value ->

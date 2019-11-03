@@ -40,7 +40,11 @@
                           android:layout_height="wrap_content">
 
 
-                <LinearLayout android:orientation="horizontal" android:minHeight="112dp" android:gravity="center"
+                <LinearLayout android:orientation="horizontal"
+
+
+                        android:onClick="@{()->viewModel.onClickItem()}"
+                        android:minHeight="112dp" android:gravity="center"
                               android:layout_width="match_parent" android:layout_height="wrap_content">
 
 
