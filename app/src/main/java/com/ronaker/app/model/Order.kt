@@ -23,6 +23,7 @@ data class Order(
     enum class OrderStatusEnum constructor(key: String) {
         Pending("pending"),
         Accepted("accepted"),
+        Started("started"),
         Finished("finished"),
         Canceled("canceled"),
         Rejected("rejected"),

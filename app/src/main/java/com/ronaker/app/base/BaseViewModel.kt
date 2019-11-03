@@ -13,8 +13,12 @@ import com.ronaker.app.ui.inbox.InboxViewModel
 import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
+import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptViewModel
+import com.ronaker.app.ui.orderDecline.OrderDeclineViewModel
+import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
 import com.ronaker.app.ui.orderMessage.OrderMessageViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
+import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
@@ -69,6 +73,12 @@ abstract class BaseViewModel : ViewModel() {
             is ProfileIdentifyViewModel -> injector.inject(this)
 
             is DashboardViewModel -> injector.inject(this)
+
+            is OrderAcceptViewModel ->injector.inject(this)
+
+            is OrderDeclineViewModel->injector.inject(this)
+            is OrderStartRentingViewModel->injector.inject(this)
+            is OrderFinishViewModel->injector.inject(this)
         }
 
     }

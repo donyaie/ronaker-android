@@ -55,6 +55,21 @@ class OrderItemViewModel : BaseViewModel() {
 
 
             }
+            Order.OrderStatusEnum.Started -> {
+
+                orderStatusImage.value=R.drawable.ic_guide_success
+
+                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+
+
+                    orderStatus.value=  activity.getString(R.string.text_rent_request_started,userName)
+                }else{
+
+                    orderStatus.value=  activity.getString(R.string.text_lend_request_started,ownerName)
+                }
+
+
+            }
             Order.OrderStatusEnum.Canceled -> {
 
                 orderStatusImage.value=R.drawable.ic_remove_red

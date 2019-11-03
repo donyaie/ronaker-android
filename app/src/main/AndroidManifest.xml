@@ -106,6 +106,35 @@
                 android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
+                android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+
+        <activity
+                android:name=".ui.orderStartRenting.OrderStartRentingActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+                android:name=".ui.orderFinish.OrderFinishActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+                android:name=".ui.orderDecline.OrderDeclineActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
                 android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
                 android:screenOrientation="portrait"
 

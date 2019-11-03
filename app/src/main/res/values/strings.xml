@@ -8,7 +8,9 @@
 
 
     <string name="text_lend_request_accepted" formatted="true">Your request accepted by %1$s</string>
+    <string name="text_lend_request_started" formatted="true">You start renting %1$s item</string>
     <string name="text_rent_request_accepted" formatted="true">You accepted %1$s request</string>
+    <string name="text_rent_request_started" formatted="true">%1$s started progress</string>
 
     <string name="text_lend_request_pending" formatted="true">Pending to accept from %1$s</string>
     <string name="text_rent_request_pending" >Someone requested to rent your item</string>
@@ -136,6 +138,7 @@
     <string name="text_you_have_not_any_order_hear">You have not any order here</string>
     <string name="title_order">Orders</string>
     <string name="text_not_found_item">Nothing found any item</string>
+    <string name="button_start_renting">Start Renting</string>
 
 
 </resources>

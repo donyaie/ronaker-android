@@ -121,4 +121,7 @@
     <string name="text_you_have_not_any_order_hear">Čia neturite jokio užsakymo</string>
     <string name="title_order">Įsakymai</string>
     <string name="text_not_found_item">Nieko nerado</string>
+    <string name="button_start_renting">Pradėkite nuomoti</string>
+    <string name="text_lend_request_started">Pradedate nuomoti %1$s daiktą</string>
+    <string name="text_rent_request_started">%1$s pradėjo progresą</string>
 </resources>
