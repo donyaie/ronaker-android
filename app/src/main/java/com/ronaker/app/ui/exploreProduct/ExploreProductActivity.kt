@@ -221,14 +221,14 @@ class ExploreProductActivity : BaseActivity() {
             googleMap.clear()
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                 latLng,
-                17f
+                12f
             )
             googleMap.moveCamera(cameraUpdate)
 
-            googleMap.addMarker(
-                MarkerOptions().position(latLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_map))
-            )
+//            googleMap.addMarker(
+//                MarkerOptions().position(latLng)
+//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_map))
+//            )
 
         }
 

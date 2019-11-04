@@ -35,6 +35,10 @@ class ExploreProductViewModel : BaseViewModel() {
     val checkout: MutableLiveData<String> = MutableLiveData()
 
 
+    val userName: MutableLiveData<String> = MutableLiveData()
+    val userImage: MutableLiveData<String> = MutableLiveData()
+
+
 
     val imageList: MutableLiveData<ArrayList<String>> = MutableLiveData()
 
