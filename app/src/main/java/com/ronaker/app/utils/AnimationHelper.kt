@@ -41,6 +41,20 @@ class AnimationHelper {
         fun setFadeTransition(activity: AppCompatActivity) {
 
 
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+////                activity.window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+//                val slide = Fade()
+//                slide.excludeTarget(android.R.id.statusBarBackground, true);
+//                slide.excludeTarget(android.R.id.navigationBarBackground, true);
+//                activity.window.enterTransition = slide
+//                activity.window.enterTransition = slide
+//            } else
+                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
+        fun setAnimateTransition(activity: AppCompatActivity) {
+
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                activity.window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
                 val slide = Fade()
@@ -49,7 +63,7 @@ class AnimationHelper {
                 activity.window.enterTransition = slide
                 activity.window.enterTransition = slide
             } else
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
 

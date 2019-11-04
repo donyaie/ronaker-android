@@ -7,21 +7,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.Debug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalcute
-import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
-import java.util.*
 
 
 class LoginActivity : BaseActivity() {
@@ -30,37 +26,29 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
+    var Max_size = 5
 
-    private lateinit var emailFragment: LoginEmailFragment
-    private lateinit var homeFragment: LoginHomeFragment
-    private lateinit var nameFragment: LoginNameFragment
-    private lateinit var passwordFragment: LoginPasswordFragment
-    private lateinit var signInFragment: LoginSignInFragment
-
-    private lateinit var adapter: ViewPagerAdapter
     private lateinit var screenLibrary: ScreenCalcute
 
 
-
-    internal var loginAction = LoginViewModel.LoginActionEnum.register
+    private var loginAction = LoginViewModel.LoginActionEnum.register
         set(value) {
 
             field = value
             when (loginAction) {
                 LoginViewModel.LoginActionEnum.login -> {
-                    initViewPagerLogin()
+
 
                 }
                 LoginViewModel.LoginActionEnum.register -> {
-                    initViewPagerRegister()
+
                 }
             }
         }
 
-    internal var loginState = LoginViewModel.LoginStateEnum.home
+    private var loginState = LoginViewModel.LoginStateEnum.home
         set(value) {
             field = value
-
 
             when (loginState) {
 
@@ -68,24 +56,24 @@ class LoginActivity : BaseActivity() {
 
 
 //                    loginAction = LoginViewModel.LoginActionEnum.register
-                    binding.viewpager.currentItem = LoginViewModel.LoginStateEnum.email.position
+                    currentPosition = LoginViewModel.LoginStateEnum.email.position
                 }
 
                 LoginViewModel.LoginStateEnum.login -> {
 
 //                    loginAction = LoginViewModel.LoginActionEnum.login
-                    binding.viewpager.currentItem = 1
+                    currentPosition = LoginViewModel.LoginStateEnum.login.position
                 }
                 LoginViewModel.LoginStateEnum.home -> {
-                    binding.viewpager.currentItem = LoginViewModel.LoginStateEnum.home.position
+                    currentPosition = LoginViewModel.LoginStateEnum.home.position
                 }
                 LoginViewModel.LoginStateEnum.info -> {
 
-                    binding.viewpager.currentItem = LoginViewModel.LoginStateEnum.info.position
+                    currentPosition = LoginViewModel.LoginStateEnum.info.position
                 }
                 LoginViewModel.LoginStateEnum.password -> {
 
-                    binding.viewpager.currentItem = LoginViewModel.LoginStateEnum.password.position
+                    currentPosition = LoginViewModel.LoginStateEnum.password.position
                 }
             }
 
@@ -93,7 +81,9 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         fun newInstance(context: Context): Intent {
-            return Intent(context, LoginActivity::class.java)
+            var intent = Intent(context, LoginActivity::class.java)
+            intent.flags =Intent.FLAG_ACTIVITY_SINGLE_TOP
+            return intent
         }
     }
 
@@ -134,42 +124,34 @@ class LoginActivity : BaseActivity() {
         binding.scrollView.setOnTouchListener { _, _ -> true }
 
 
-        viewModel.errorMessage.observe(this, Observer {
-                errorMessage-> Toast.makeText(this,errorMessage,Toast.LENGTH_LONG).show()
+        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value == true) {
-                startActivityMakeScene(DashboardActivity.newInstance(this@LoginActivity))
-                finishSafe()
+                startActivity(DashboardActivity.newInstance(this@LoginActivity))
+                finish()
             }
         })
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
+                binding.loading.visibility=View.VISIBLE
                 binding.loading.showLoading()
-            }else
+            } else
                 binding.loading.hideLoading()
         })
 
 
+        init()
+        loginAction = LoginViewModel.LoginActionEnum.register
+        loginState = LoginViewModel.LoginStateEnum.home
     }
 
-    override fun onStart() {
-        super.onStart()
-
-
-        if(isFistStart()){
-
-            init()
-            loginAction = LoginViewModel.LoginActionEnum.register
-            loginState = LoginViewModel.LoginStateEnum.home
-        }
-    }
 
 
     private fun init() {
-
 
 
         overlayShow(false)
@@ -180,112 +162,205 @@ class LoginActivity : BaseActivity() {
         binding.loading.hideLoading()
 
 
-
     }
 
 
     private fun prePage() {
 
-        if (binding.viewpager.currentItem - 1 == LoginViewModel.LoginStateEnum.home.position)
+        if (currentPosition - 1 == LoginViewModel.LoginStateEnum.home.position)
             KeyboardManager.hideSoftKeyboard(this)
 
-        if (binding.viewpager.currentItem == 0)
+
+        if (currentPosition == 0)
             finishSafe()
-
-
-        if (binding.viewpager.currentItem > LoginViewModel.LoginStateEnum.home.position) {
-            binding.viewpager.setCurrentItem(binding.viewpager.currentItem - 1, true)
+        else if (currentPosition == LoginViewModel.LoginStateEnum.login.position) {
+            currentPosition = 0
+        } else if (currentPosition > LoginViewModel.LoginStateEnum.home.position) {
+            currentPosition -= 1
         }
 
     }
 
 
-   private fun initViewPagerLogin() {
-        adapter.clear()
-
-        adapter.addFragment(homeFragment)
-        adapter.addFragment(signInFragment)
-
-        binding.viewpager.adapter?.notifyDataSetChanged()
+   private fun getFragment(state: LoginViewModel.LoginStateEnum): Fragment {
+        return when (state) {
+            LoginViewModel.LoginStateEnum.home -> LoginHomeFragment()
+            LoginViewModel.LoginStateEnum.email -> LoginEmailFragment()
+            LoginViewModel.LoginStateEnum.password -> LoginPasswordFragment()
+            LoginViewModel.LoginStateEnum.info -> LoginNameFragment()
+            LoginViewModel.LoginStateEnum.login -> LoginSignInFragment()
+        }
     }
 
-   private fun initViewPagerRegister() {
-        adapter.clear()
-        adapter.addFragment(homeFragment)
-        adapter.addFragment(emailFragment)
-        adapter.addFragment(nameFragment)
-        adapter.addFragment(passwordFragment)
-        binding.viewpager.adapter?.notifyDataSetChanged()
+   private var currentPosition: Int = 0
+        get() = field
+        set(value) {
 
+            try {
+
+                val state = LoginViewModel.LoginStateEnum[value]
+                val fm = supportFragmentManager
+                val ft = fm.beginTransaction()
+
+                when {
+                    value > field -> {//next
+                        ft.setCustomAnimations(
+                            R.anim.fragment_right_enter,
+                            R.anim.fragment_right_exit,
+                            R.anim.fragment_right_pop_enter,
+                            R.anim.fragment_right_pop_exit
+                        );
+                        ft.replace(R.id.frame_container, getFragment(state), state.name)
+                            .addToBackStack(state.name)
+                        ft.commit()
+                    }
+                    value < field -> //back
+                        fm.popBackStack(state.name, 0)
+                    else -> {
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        ft.replace(R.id.frame_container, getFragment(state), state.name)
+                            .addToBackStack(state.name)
+                        ft.commit()
+                    }
+                }
+
+//                val x = ((binding.frameContainer.width*value) * computeFactor()).toInt()
+
+//                    ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
+
+//                binding.scrollView.scrollTo(x, 0)
+
+                when (loginAction) {
+                    LoginViewModel.LoginActionEnum.register -> {
+                        binding.toolbar.showNavigator(
+                            true,
+                            value - 1
+                        )
+                    }
+                    LoginViewModel.LoginActionEnum.login -> {
+                        binding.toolbar.showNavigator(
+                            false,
+                            0
+                        )
+
+                    }
+                }
+
+
+
+                if (state == LoginViewModel.LoginStateEnum.home) {
+                    overlayShow(false)
+                    KeyboardManager.hideSoftKeyboard(this@LoginActivity)
+                    showBack(false)
+                    binding.toolbar.showNavigator(
+                        false,
+                        0
+                    )
+                } else {
+                    overlayShow(true)
+                    showBack(true)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+
+            field = value
+        }
+
+
+    private fun computeFactor(): Float {
+        return (binding.background.width - binding.frameContainer.width) / ((binding.frameContainer.width * (Max_size - 1)) * 1.0f)
     }
+
 
     override fun onBackPressed() {
-       prePage()
+        prePage()
     }
 
 
     private fun initViewPager() {
 
-        binding.viewpager.setScrollDurationFactor(2.0)
-        adapter = ViewPagerAdapter(supportFragmentManager)
-
-        homeFragment = LoginHomeFragment()
-        passwordFragment = LoginPasswordFragment()
-        signInFragment = LoginSignInFragment()
-        nameFragment = LoginNameFragment()
-        emailFragment = LoginEmailFragment()
-
-
-
-        binding.viewpager.adapter = adapter
-        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                val x = ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
-                binding.scrollView.scrollTo(x, 0)
-            }
-
-            override fun onPageSelected(position: Int) {
-
-                loginState = if (position == 1) {
-                    if (loginAction == LoginViewModel.LoginActionEnum.login) LoginViewModel.LoginStateEnum.login else LoginViewModel.LoginStateEnum.email
-                } else
-                    LoginViewModel.LoginStateEnum.get(position)
+//
+//        homeFragment = LoginHomeFragment()
+//        passwordFragment = LoginPasswordFragment()
+//        signInFragment = LoginSignInFragment()
+//        nameFragment = LoginNameFragment()
+//        emailFragment = LoginEmailFragment()
+//
+//        fragmentList = ArrayList()
+//
+//        fragmentList.add(homeFragment)
+//        fragmentList.add(emailFragment)
+//        fragmentList.add(nameFragment)
+//        fragmentList.add(passwordFragment)
+//        fragmentList.add(signInFragment)
 
 
-                Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
-                (adapter.getItem(position) as IPagerFragment).onSelect()
+//
+//        binding.viewpager.adapter = adapter
+//        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//            override fun onPageScrolled(
+//                position: Int,
+//                positionOffset: Float,
+//                positionOffsetPixels: Int
+//            ) {
+//                val x =
+//                    ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
+//                binding.scrollView.scrollTo(x, 0)
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//
+//                loginState = if (position == 1) {
+//                    if (loginAction == LoginViewModel.LoginActionEnum.login) LoginViewModel.LoginStateEnum.login else LoginViewModel.LoginStateEnum.email
+//                } else
+//                    LoginViewModel.LoginStateEnum.get(position)
+//
+//
+//                Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
+//                (adapter.getItem(position) as IPagerFragment).onSelect()
+//
+//
+//
+//                if (loginState == LoginViewModel.LoginStateEnum.home) {
+//                    overlayShow(false)
+//                    KeyboardManager.hideSoftKeyboard(this@LoginActivity)
+//                    showBack(false)
+//                } else {
+//                    overlayShow(true)
+//                    showBack(true)
+//                }
+//
+//
+//                when {
+//                    loginState == LoginViewModel.LoginStateEnum.home -> binding.toolbar.showNavigator(
+//                        false,
+//                        0
+//                    )
+//                    loginAction == LoginViewModel.LoginActionEnum.register -> binding.toolbar.showNavigator(
+//                        true,
+//                        position - 1
+//                    )
+//                    loginAction == LoginViewModel.LoginActionEnum.login -> binding.toolbar.showNavigator(
+//                        false,
+//                        0
+//                    )
+//                }
+//
+//
+//            }
+//
+//            override fun onPageScrollStateChanged(state: Int) {
+//
+//            }
+//
+//            private fun computeFactor(): Float {
+//                return (binding.background.width - binding.frameContainer.width) / ((binding.frameContainer.width * ((binding.viewpager.adapter?.count
+//                    ?: 0) - 1)) * 1.0f)
+//            }
+//        })
 
-
-
-                if (loginState == LoginViewModel.LoginStateEnum.home) {
-                    overlayShow(false)
-                    KeyboardManager.hideSoftKeyboard(this@LoginActivity)
-                    showBack(false)
-                } else {
-                    overlayShow(true)
-                    showBack(true)
-                }
-
-
-                when {
-                    loginState == LoginViewModel.LoginStateEnum.home -> binding.toolbar.showNavigator(false, 0)
-                    loginAction == LoginViewModel.LoginActionEnum.register -> binding.toolbar.showNavigator(true, position - 1)
-                    loginAction == LoginViewModel.LoginActionEnum.login -> binding.toolbar.showNavigator(false, 0)
-                }
-
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            private fun computeFactor(): Float {
-                return (binding.background.width - binding.viewpager.width) / ((binding.viewpager.width * ((binding.viewpager.adapter?.count?:0) - 1))*1.0f)
-            }
-        })
-
-        KeyboardManager.hideSoftKeyboard(this)
+//        KeyboardManager.hideSoftKeyboard(this)
     }
 
     override fun onDestroy() {
@@ -310,38 +385,6 @@ class LoginActivity : BaseActivity() {
         } else {
             binding.overlayLayout.animate().alpha(0.2f).setDuration(500).start()
 
-        }
-    }
-
-    private inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
-        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        private val mFragmentList = ArrayList<Fragment>()
-
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-
-        override fun getItemPosition(`object`: Any): Int {
-
-            return POSITION_NONE
-        }
-
-
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        fun addFragment(fragment: Fragment) {
-            mFragmentList.add(fragment)
-        }
-
-
-        fun clear() {
-            mFragmentList.clear()
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return ""
         }
     }
 

@@ -2,20 +2,16 @@ package com.ronaker.app.utils
 
 import android.content.Context
 import android.util.Log
+import com.ronaker.app.General
+import okhttp3.OkHttpClient
 import java.security.KeyManagementException
 import java.security.KeyStore
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
-import java.security.cert.CertificateFactory
-import javax.net.ssl.*
 import java.security.cert.Certificate
-import java.security.cert.CertificateException
+import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesUtil
-import com.google.android.gms.common.GooglePlayServicesRepairableException
-import com.google.android.gms.security.ProviderInstaller
-
+import javax.net.ssl.*
 
 
 object SslUtils {
@@ -23,33 +19,98 @@ object SslUtils {
     //download pem
     //openssl s_client -showcerts -connect myserver.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > app/main/assets/my_service_certifcate.pem
 
-    fun installServiceProviderIfNeeded(context: Context) {
+
+    fun getUnsafeOkHttpClientAll(): OkHttpClient {
         try {
-            ProviderInstaller.installIfNeeded(context)
-        } catch (e: GooglePlayServicesRepairableException) {
-            e.printStackTrace()
+            // Create a trust manager that does not validate certificate chains
+            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
 
-            // Prompt the user to install/update/enable Google Play services.
-            GooglePlayServicesUtil.showErrorNotification(e.connectionStatusCode, context)
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
 
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            e.printStackTrace()
+                    return arrayOf()
+                }
+
+
+                override fun checkClientTrusted(p0: Array<out X509Certificate>?, p1: String?) {
+                }
+
+                override fun checkServerTrusted(p0: Array<out X509Certificate>?, p1: String?) {
+
+                }
+
+            })
+
+            // Install the all-trusting trust manager
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+
+            // Create an ssl socket factory with our all-trusting manager
+            val sslSocketFactory = sslContext.getSocketFactory()
+
+            val builder = OkHttpClient.Builder()
+            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            builder.hostnameVerifier { _, _ -> true }
+
+            return builder.build()
+        } catch (e: Exception) {
+            throw RuntimeException(e)
         }
 
     }
 
-    fun getSslContextForCertificateFile(context: Context, fileName: String): SSLContext {
+
+    // Create a trust manager that does not validate certificate chains
+    // Install the all-trusting trust manager
+    // Create an ssl socket factory with our all-trusting manager
+    fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
+        try {
+
+            val builder = OkHttpClient.Builder()
+
+            getTrustAllHostsSSLSocketFactory()?.let {
+                builder.sslSocketFactory(it.first, it.second)
+            }
+
+            getSslContextForCertificateFile(
+                General.context,
+                "my_certificate.pem"
+            )?.let {
+
+                builder.sslSocketFactory(it.first.socketFactory, it.second)
+
+            }
+
+
+
+
+
+            return builder
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+
+    }
+
+    fun getSslContextForCertificateFile(
+        context: Context,
+        fileName: String
+    ): Pair<SSLContext, X509TrustManager>? {
         try {
             val keyStore = SslUtils.getKeyStore(context, fileName)
             val sslContext = SSLContext.getInstance("SSL")
-            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+            val trustManagerFactory =
+                TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
             trustManagerFactory.init(keyStore)
             sslContext.init(null, trustManagerFactory.trustManagers, SecureRandom())
-            return sslContext
+
+
+            var manager = trustManagerFactory.trustManagers[0] as X509TrustManager
+            return Pair(sslContext, manager)
         } catch (e: Exception) {
             val msg = "Error during creating SslContext for certificate from assets"
             e.printStackTrace()
-            throw RuntimeException(msg)
+
+            return null
         }
     }
 
@@ -78,7 +139,7 @@ object SslUtils {
         return keyStore
     }
 
-    fun getTrustAllHostsSSLSocketFactory(): SSLSocketFactory? {
+    fun getTrustAllHostsSSLSocketFactory(): Pair<SSLSocketFactory, X509TrustManager>? {
         try {
             // Create a trust manager that does not validate certificate chains
             val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
@@ -87,12 +148,16 @@ object SslUtils {
                     return arrayOf()
                 }
 
-                @Throws(CertificateException::class)
-                override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+                override fun checkClientTrusted(
+                    chain: Array<java.security.cert.X509Certificate>,
+                    authType: String
+                ) {
                 }
 
-                @Throws(CertificateException::class)
-                override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+                override fun checkServerTrusted(
+                    chain: Array<java.security.cert.X509Certificate>,
+                    authType: String
+                ) {
                 }
             })
 
@@ -101,7 +166,7 @@ object SslUtils {
             sslContext.init(null, trustAllCerts, java.security.SecureRandom())
             // Create an ssl socket factory with our all-trusting manager
 
-            return sslContext.socketFactory
+            return Pair(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
         } catch (e: KeyManagementException) {
             e.printStackTrace()
             return null

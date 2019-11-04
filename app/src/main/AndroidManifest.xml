@@ -78,39 +78,75 @@
                 android:name=".ui.login.LoginActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/LoginTheme"
-                android:windowSoftInputMode="adjustResize"></activity>
+                android:windowSoftInputMode="adjustResize" />
 
         <activity
                 android:name=".ui.search.SearchActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/DashboardTheme"
-                android:windowSoftInputMode="stateAlwaysVisible"></activity>
+                android:theme="@style/SearchTheme"
+                android:windowSoftInputMode="stateAlwaysVisible" />
 
         <activity
                 android:name=".ui.dashboard.DashboardActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/DashboardTheme"
-                android:windowSoftInputMode="stateAlwaysHidden"></activity>
+                android:windowSoftInputMode="stateAlwaysHidden" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
                 android:name=".ui.exploreProduct.ExploreProductActivity"
                 android:screenOrientation="portrait"
 
                 android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden"></activity>
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+                android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+
+        <activity
+                android:name=".ui.orderStartRenting.OrderStartRentingActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+                android:name=".ui.orderFinish.OrderFinishActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+                android:name=".ui.orderDecline.OrderDeclineActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
                 android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
                 android:screenOrientation="portrait"
 
                 android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden"></activity>
+                android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
                 android:name=".ui.addProduct.AddProductActivity"
                 android:screenOrientation="portrait"
 
                 android:theme="@style/PopTheme"
-                android:windowSoftInputMode="adjustResize"></activity>
+                android:windowSoftInputMode="adjustResize" />
 
 
         <activity
@@ -118,18 +154,18 @@
                 android:screenOrientation="portrait"
 
                 android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden"></activity>
+                android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
                 android:name=".ui.phoneNumberValidation.PhoneNumberActivity"
                 android:screenOrientation="portrait"
 
                 android:theme="@style/phoneNumberTheme"
-                android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
+                android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <activity
                 android:name=".ui.imagePicker.ImagePickerActivity"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
 
 
         <activity
@@ -137,10 +173,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/SplashTheme"
                 android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
 
         </activity>

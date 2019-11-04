@@ -101,18 +101,24 @@
                 android:layout_below="@id/toolbar">
 
 
-            <com.ronaker.app.utils.view.ViewPagerCustom
-                    android:id="@+id/viewpager"
+
+            <FrameLayout
+                    android:id="@+id/frame_container"
                     android:fitsSystemWindows="true"
                     android:layout_marginTop="@dimen/statusBarSizeMargin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
 
+
+
+
         </RelativeLayout>
 
         <com.ronaker.app.utils.view.LoadingComponent
+                android:visibility="gone"
                 android:id="@+id/loading" android:layout_width="match_parent"
+
                                                      android:layout_height="match_parent"/>
 
 

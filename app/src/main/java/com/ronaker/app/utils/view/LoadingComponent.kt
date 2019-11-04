@@ -1,6 +1,5 @@
 package com.ronaker.app.utils.view
 
-import android.animation.Animator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -15,13 +14,13 @@ import com.wang.avi.AVLoadingIndicatorView
 
 class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
-     var loadinLayout: ConstraintLayout
+     private var loadinLayout: ConstraintLayout
 
-    var retry_layout: ConstraintLayout
-    var message_title: TextView
-    var retryAction_layout: ConstraintLayout
-    var retry: ImageView
-    var progress:AVLoadingIndicatorView
+    private var retry_layout: ConstraintLayout
+    private var message_title: TextView
+    private var retryAction_layout: ConstraintLayout
+    private var retry: ImageView
+    private  var progress:AVLoadingIndicatorView
 
     var isTransparent: Boolean = true
         set(value) {
@@ -108,7 +107,7 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
     }
 
     fun showRetry(message:String) {
-        retry.isClickable = true
+        retryAction_layout.isClickable = true
         message_title.text=message
 //        retry_layout.animate().cancel()
         retry_layout.visibility = View.VISIBLE
@@ -140,7 +139,7 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         retry_layout.isFocusable=false
         retry_layout.isEnabled=false
 
-        retry.isClickable = false
+        retryAction_layout.isClickable = false
     }
 
 

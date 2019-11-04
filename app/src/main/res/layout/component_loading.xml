@@ -43,7 +43,7 @@
                 android:background="@color/colorLoading"
                 android:visibility="visible">
 
-
+<!-- BallPulseIndicator -->
             <com.wang.avi.AVLoadingIndicatorView
                     android:id="@+id/progress"
                     style="@style/AVLoadingIndicatorView"
@@ -52,7 +52,7 @@
                     android:visibility="visible"
                     app:indicatorColor="@color/colorNavy"
 
-                    app:indicatorName="BallSpinFadeLoaderIndicator"
+                    app:indicatorName="BallPulseIndicator"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
 

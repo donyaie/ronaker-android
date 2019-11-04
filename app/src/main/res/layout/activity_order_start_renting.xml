@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/toolbar"
+                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:toolbar_component_title="@string/app_name"
+                app:toolbar_component_transparent="false"
+                app:toolbar_component_action_text="Cancel"
+                app:toolbar_component_bottom_line="false"
+                app:toolbar_component_dot_count="4"
+                app:toolbar_component_center_container="NONE"
+                app:toolbar_component_action_container="NONE"
+                app:toolbar_component_cancel_container="BACK"
+        />
+
+        <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                               app:layout_constraintTop_toBottomOf="@id/toolbar"
+                                               app:layout_constraintBottom_toTopOf="@id/footer"
+                                               android:layout_height="0dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:paddingBottom="80dp"
+                    android:layout_height="wrap_content">
+                <TextView android:layout_width="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:text="Start Renting instruction"
+                        android:textAppearance="@style/TextAppearance.Heading.1"
+                        android:gravity="left"
+                        android:id="@+id/title"
+                        android:textColor="@color/colorTextDark"
+                        android:layout_height="wrap_content"/>
+                <TextView android:layout_width="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/title"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:text="Be careful"
+                        android:textAppearance="@style/TextAppearance.Medium.Regular"
+                        android:gravity="left"
+                        android:id="@+id/description"
+                        android:textColor="@color/colorTextDark"
+                        android:layout_height="wrap_content"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/footer" android:layout_width="match_parent"
+                                                           android:background="@color/white"
+
+                                                           app:layout_constraintBottom_toBottomOf="parent"
+                                                           android:layout_height="80dp">
+            <RelativeLayout android:layout_width="match_parent" app:layout_constraintTop_toTopOf="parent"
+                            android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+
+
+            <LinearLayout android:layout_width="match_parent" android:weightSum="4" android:orientation="horizontal" android:gravity="center" android:layout_height="match_parent">
+
+
+
+
+
+
+
+
+
+
+                <Button style="@style/Button.accent" android:text="Charging and Start renting"
+
+                        android:layout_weight="1"
+
+                        android:onClick="@{()->viewModel.onClickAccept()}"
+
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+
+                />
+
+
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.ronaker.app.utils.view.LoadingComponent
+                android:visibility="gone"
+                app:loading_transparent="false"
+                android:id="@+id/loading" android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

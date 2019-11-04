@@ -45,10 +45,10 @@ object KeyboardManager {
             val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         } else {
-            var imm =
-                activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager;
-            if (imm.isActive)
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); // hide
+//            var imm =
+//                activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager;
+//            if (imm.isActive)
+//                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); // hide
         }
 
         Debug.Log(TAG, "hideSoftKeyboard")

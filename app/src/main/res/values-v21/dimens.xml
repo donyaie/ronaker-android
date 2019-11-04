@@ -2,6 +2,6 @@
    <!--  -->
 
     <dimen name="statusBarSize">24dp</dimen>
-    <dimen name="statusBarSizeMargin">-26dp</dimen>
+    <dimen name="statusBarSizeMargin">-25dp</dimen>
 
 </resources>

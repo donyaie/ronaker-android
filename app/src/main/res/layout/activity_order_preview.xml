@@ -40,7 +40,11 @@
                           android:layout_height="wrap_content">
 
 
-                <LinearLayout android:orientation="horizontal" android:minHeight="112dp" android:gravity="center"
+                <LinearLayout android:orientation="horizontal"
+
+
+                        android:onClick="@{()->viewModel.onClickItem()}"
+                        android:minHeight="112dp" android:gravity="center"
                               android:layout_width="match_parent" android:layout_height="wrap_content">
 
 
@@ -171,11 +175,11 @@ android:src="@color/colorPlatinGrey"
                                 tools:ignore="HardcodedText" />
 
 
-                        <LinearLayout android:layout_marginTop="11dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        <LinearLayout android:visibility="gone" android:layout_marginTop="11dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:orientation="horizontal">
 
 
-                            <ImageView android:layout_marginRight="8dp" android:layout_width="32dp" app:srcCompat="@drawable/ic_rating" android:layout_height="32dp"/>
+                            <ImageView android:layout_marginRight="8dp"  android:layout_width="32dp" app:srcCompat="@drawable/ic_rating" android:layout_height="32dp"/>
 
 
                             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -240,7 +244,7 @@ android:src="@color/colorPlatinGrey"
                             android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
 
 
-            <LinearLayout android:layout_width="match_parent" android:weightSum="4" android:orientation="horizontal" android:gravity="center" android:layout_height="match_parent">
+            <LinearLayout android:layout_width="match_parent" android:weightSum="5" android:orientation="horizontal" android:gravity="center" android:layout_height="match_parent">
 
 
 
@@ -296,6 +300,21 @@ android:layout_weight="1"
                         android:layout_width="wrap_content"
 
                 />
+
+
+                <Button style="@style/Button.accent" android:text="@string/button_start_renting"
+
+                        android:layout_weight="1"
+                        app:mutableVisibility="@{viewModel.getStartRentingVisibility()}"
+
+                        android:onClick="@{()->viewModel.onClickStartRenting()}"
+
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+
+                        />
+
 
 
 

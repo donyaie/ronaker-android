@@ -5,13 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
+import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
+import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
+import com.ronaker.app.ui.orderFinish.OrderFinishActivity
+import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
+import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.IntentManeger
 
 class OrderPreviewActivity : BaseActivity() {
 
@@ -57,6 +65,11 @@ class OrderPreviewActivity : BaseActivity() {
 
 
 
+        viewModel.showProduct.observe(this, Observer { product ->
+            startActivityMakeScene(ExploreProductActivity.newInstance(this,product,"ds"))
+        })
+
+
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.showLoading()
@@ -66,8 +79,29 @@ class OrderPreviewActivity : BaseActivity() {
 
 
 
+        viewModel.acceptIntro.observe(this, Observer { _ ->
+           startActivityMakeScene(OrderAcceptActivity.newInstance(this,getOrder()))
+        })
 
-        viewModel.finish.observe(this, Observer { value ->
+        viewModel.declineIntro.observe(this, Observer { _ ->
+            startActivityMakeScene(OrderDeclineActivity.newInstance(this,getOrder()))
+        })
+
+        viewModel.cancelDialog.observe(this, Observer { _ ->
+            showCancel()
+        })
+        viewModel.startRenting.observe(this, Observer { _ ->
+            startActivityMakeScene(OrderStartRentingActivity.newInstance(this,getOrder()))
+        })
+
+
+        viewModel.finishIntro.observe(this, Observer { _ ->
+            startActivityMakeScene(OrderFinishActivity.newInstance(this,getOrder()))
+        })
+
+
+
+        viewModel.finish.observe(this, Observer { _ ->
            finishSafe()
         })
 
@@ -85,6 +119,24 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
 
+
+    private fun showCancel() {
+        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Alert")
+        builder.setMessage("Are you sure you want to cancel this order?")
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.cancel()
+
+            viewModel.canceled()
+        }
+        builder.setNegativeButton(getString(android.R.string.cancel))
+        { dialog, _ -> dialog?.cancel()
+        }
+        builder.show()
+    }
 
 
     fun getOrder():Order?

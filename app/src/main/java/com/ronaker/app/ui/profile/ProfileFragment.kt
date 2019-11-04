@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
@@ -34,14 +35,11 @@ class ProfileFragment : BaseFragment() {
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) {
                 Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-//                binding.loading.showRetry()
-            } else {
-//                binding.loading.hideRetry()
             }
         })
 
         viewModel.logOutAction.observe(this, Observer {
-            activity?.let {   startActivityMakeScene(SplashActivity.newInstance(it) )}
+            activity?.let {   startActivityMakeScene(DashboardActivity.newInstance(it) )}
         })
 
 

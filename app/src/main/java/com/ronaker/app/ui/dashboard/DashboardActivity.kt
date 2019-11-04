@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
@@ -15,11 +16,15 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.explore.ExploreFragment
 import com.ronaker.app.ui.inbox.InboxFragment
+import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.view.TabNavigationComponent
+import android.view.WindowManager
+import android.os.Build
+import android.graphics.Color
 
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -57,9 +62,23 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
     private lateinit var viewModel: DashboardViewModel
 
+   var savedInstanceState: Bundle?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setFadeTransition(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
+//            window.navigationBarColor=Color.BLACK
+//
+//            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+//            window.statusBarColor = Color.TRANSPARENT
+        }
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, com.ronaker.app.R.layout.activity_dashboard)
@@ -68,8 +87,24 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         binding.viewModel = viewModel
 
-        initNavigation(savedInstanceState)
+        viewModel.goLogin.observe(this, Observer { value ->
+            if (value == true) {
 
+                startActivity(LoginActivity.newInstance(this@DashboardActivity))
+                finish()
+
+            }
+        })
+//       this.savedInstanceState=savedInstanceState
+
+        initNavigation(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(isFistStart()){
+
+        }
     }
 
 

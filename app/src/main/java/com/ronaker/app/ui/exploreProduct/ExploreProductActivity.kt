@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -61,7 +63,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setFadeTransition(this)
+        AnimationHelper.setAnimateTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
@@ -148,7 +150,9 @@ class ExploreProductActivity : BaseActivity() {
 
         (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
             googleMap = it
-
+            googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this, R.raw.style_json));
 
             googleMap.uiSettings.setAllGesturesEnabled(false)
 
@@ -217,13 +221,14 @@ class ExploreProductActivity : BaseActivity() {
             googleMap.clear()
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                 latLng,
-                17f
+                12f
             )
             googleMap.moveCamera(cameraUpdate)
 
-            googleMap.addMarker(
-                MarkerOptions().position(latLng)
-            )
+//            googleMap.addMarker(
+//                MarkerOptions().position(latLng)
+//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_map))
+//            )
 
         }
 

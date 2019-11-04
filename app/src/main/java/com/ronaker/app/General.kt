@@ -80,7 +80,5 @@ class General : MultiDexApplication() {
 
     private fun initDagger(): AppComponent =
         DaggerAppComponent.builder()
-//            .appModule(AppModule(app))app
-
             .build()
 }
