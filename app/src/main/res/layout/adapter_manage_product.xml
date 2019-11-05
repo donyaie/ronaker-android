@@ -36,6 +36,7 @@
                   android:layout_gravity="left"
                   android:minHeight="20dp"
                   android:gravity="center"
+                app:mutableVisibility="@{viewModel.getActiveVisibility()}"
                   app:layout_constraintLeft_toLeftOf="parent"
                   android:clickable="false"
                   android:background="@drawable/background_accent"
@@ -43,6 +44,25 @@
                   android:textColor="@color/colorTextLight"
                   android:textAppearance="@style/TextAppearance.Small.Regular"
         />
+
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                android:layout_marginTop="8dp"
+                android:text="@string/title_deactive"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:layout_gravity="left"
+                android:minHeight="20dp"
+                android:gravity="center"
+                app:mutableVisibility="@{viewModel.getDeactiveVisibility()}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:clickable="false"
+                android:background="@drawable/background_grey"
+                android:id="@+id/deactive"
+                android:textColor="@color/colorTextGreyLight"
+                android:textAppearance="@style/TextAppearance.Small.Regular"
+                />
 
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   app:layout_constraintTop_toBottomOf="@id/active"

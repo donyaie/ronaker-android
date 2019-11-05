@@ -25,11 +25,17 @@ class ManageProductFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
 
-        binding = DataBindingUtil.inflate(inflater, com.ronaker.app.R.layout.fragment_manage_product, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false)
         productViewModel = ViewModelProviders.of(this).get(ManageProductViewModel::class.java)
 
         binding.viewModel = productViewModel
+        productViewModel.activeState.observe(this, Observer { active ->
 
+            unregisterActiveListener()
+            binding.activeSwitch.isChecked=active
+            registerActiveListener()
+
+        })
 
         productViewModel.loading.observe(this, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
@@ -43,6 +49,9 @@ class ManageProductFragment : BaseFragment() {
 
             fill()
         }
+
+
+
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { (activity as DashboardActivity).backFragment() }
@@ -112,7 +121,6 @@ class ManageProductFragment : BaseFragment() {
 
 
 
-
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
             try {
@@ -135,9 +143,24 @@ class ManageProductFragment : BaseFragment() {
 
             }
         };
-
+        registerActiveListener()
 
         return binding.root
+    }
+
+
+
+    fun registerActiveListener(){
+        binding.activeSwitch.setOnCheckedChangeListener{ _,active->
+
+            productViewModel.updateActiveState(active)
+
+        }
+
+    }
+
+    fun unregisterActiveListener(){
+        binding.activeSwitch.setOnCheckedChangeListener(null)
     }
 
     override fun onStart() {
