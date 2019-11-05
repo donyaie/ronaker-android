@@ -139,6 +139,7 @@
     <string name="title_order">Orders</string>
     <string name="text_not_found_item">Nothing found any item</string>
     <string name="button_start_renting">Start Renting</string>
+    <string name="title_deactive">Deactive</string>
 
 
 </resources>

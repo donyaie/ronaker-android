@@ -37,6 +37,8 @@ data class Product(
     , var address: String?
     , var avatar_suid: String? = null
     , var new_categories: ArrayList<String>? = null
+    , var review_status: String? = null
+    , var user_status: String? = null
 
 ) : Parcelable {
     constructor() : this(
@@ -52,6 +54,61 @@ data class Product(
         null,
         null
     )
+
+
+    enum class ReviewStatusEnum constructor(key: String) {
+        Pending("pending"),
+        Accepted("accepted"),
+        Rejected("rejected"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String): ReviewStatusEnum {
+                var state = None
+                for (stateEnum in values()) {
+                    if (position.compareTo(stateEnum.key) == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
+
+    enum class ActiveStatusEnum constructor(key: String) {
+        Active("active"),
+        Deactive("deactive"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String): ActiveStatusEnum {
+                var state = None
+                for (stateEnum in values()) {
+                    if (position.compareTo(stateEnum.key) == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
+
 
     @Parcelize
     data class ProductImage(
@@ -103,7 +160,11 @@ fun ProductItemResponceModel.toProduct(): Product {
         if (this.images != null) this.images.toProductImage() as ArrayList<Product.ProductImage> else ArrayList(),
         if (this.categories != null) this.categories.toCategoryList() else ArrayList(),
         if (this.location != null) LatLng(location.lat, location.lng) else null,
-        this.address
+        this.address,
+        null,
+        null,
+        this.review_status,
+        this.user_status
     )
 
 
@@ -185,7 +246,8 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
                 it.longitude
             )
         },
-        this.address
+        this.address,
+        this.user_status
 
     )
 

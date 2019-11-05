@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.manageProduct
 
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
@@ -29,18 +30,17 @@ class ManageProductViewModel : BaseViewModel() {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
-
+    val activeState: MutableLiveData<Boolean> = MutableLiveData()
 
     val productImage: MutableLiveData<String> = MutableLiveData()
     val productTitle: MutableLiveData<String> = MutableLiveData()
     val productDescription: MutableLiveData<String> = MutableLiveData()
 
+    val regectedVisibility: MutableLiveData<Int> = MutableLiveData()
+    val pendingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     private var subscription: Disposable? = null
-
-    init {
-
-    }
+    private var updateActivesubscription: Disposable? = null
 
 
     fun loadProduct(product: Product) {
@@ -67,7 +67,7 @@ class ManageProductViewModel : BaseViewModel() {
 
                 } else {
                     retry.value = result.error?.detail;
-                   // errorMessage.value = result.error?.detail
+                    // errorMessage.value = result.error?.detail
                 }
             }
 
@@ -79,12 +79,65 @@ class ManageProductViewModel : BaseViewModel() {
         productImage.value = BASE_URL + product.avatar
         productDescription.value = product.description
         productTitle.value = product.name
+
+
+
+        activeState.value =
+            Product.ActiveStatusEnum[product.user_status ?: ""] == Product.ActiveStatusEnum.Active
+
+
+        when {
+            Product.ReviewStatusEnum[product.review_status
+                ?: ""] == Product.ReviewStatusEnum.Pending -> {
+                pendingVisibility.value = View.VISIBLE
+                regectedVisibility.value = View.GONE
+            }
+            Product.ReviewStatusEnum[product.review_status
+                ?: ""] == Product.ReviewStatusEnum.Rejected -> {
+                pendingVisibility.value = View.GONE
+                regectedVisibility.value = View.VISIBLE
+            }
+            else -> {
+                pendingVisibility.value = View.GONE
+                regectedVisibility.value = View.GONE
+            }
+        }
+
+
     }
 
 
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
+        updateActivesubscription?.dispose()
+    }
+
+    fun updateActiveState(active: Boolean) {
+
+        updateActivesubscription?.dispose()
+        var product = Product()
+        product.user_status =
+            if (active) Product.ActiveStatusEnum.Active.key else Product.ActiveStatusEnum.Deactive.key
+
+        updateActivesubscription = productRepository
+            .productUpdate(userRepository.getUserToken(), mProduct.suid ?: "", product)
+
+            .doOnSubscribe { loading.value = true }
+            .doOnTerminate { loading.value = false }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+                    activeState.value = active
+
+
+                } else {
+                    activeState.value = !active
+                    errorMessage.value = result.error?.detail;
+                }
+            }
+
+
     }
 
 

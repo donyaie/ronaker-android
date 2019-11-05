@@ -13,7 +13,9 @@ data class ProductItemResponceModel(
     @SerializedName("images")   val images: List<ProductItemImageResponceModel>?,
     @SerializedName("categories")  val categories: List<CategoriesResponseModel>?,
     @SerializedName("location")  val location: LocationResponseModel?,
-    @SerializedName("address")  val address: String?
+    @SerializedName("address")  val address: String?,
+    @SerializedName("review_status")  val review_status: String?,
+    @SerializedName("user_status")  val user_status: String?
 
 
 

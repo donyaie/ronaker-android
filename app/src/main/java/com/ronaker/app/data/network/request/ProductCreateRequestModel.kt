@@ -12,6 +12,7 @@ data class ProductCreateRequestModel(@SerializedName("name") val name: String?,
                                      @SerializedName("new_images")   val new_images: ArrayList<String>?,
                                      @SerializedName("new_categories")   val new_categories: ArrayList<String>?,
                                      @SerializedName("new_location")  val location: LocationResponseModel?,
-                                     @SerializedName("address")  val address: String?)
+                                     @SerializedName("address")  val address: String?,
+                                     @SerializedName("user_status")  val user_status: String?)
 
 
