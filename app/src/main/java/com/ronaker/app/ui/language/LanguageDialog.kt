@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.ronaker.app.R
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.LocaleHelper
 import kotlinx.android.synthetic.main.dialog_language.view.*
 
@@ -26,12 +27,13 @@ class LanguageDialog {
             mDialogView.englishLan.setOnClickListener {
                 LocaleHelper.setLocale(context, "en")
                 mAlertDialog.dismiss()
-                context.recreate()
+
+                context.startActivity(DashboardActivity.newInstance(context))
             }
             mDialogView.lithuaniaLan.setOnClickListener {
                 LocaleHelper.setLocale(context, "lt")
                 mAlertDialog.dismiss()
-                context.recreate()
+                context.startActivity(DashboardActivity.newInstance(context))
             }
 
 

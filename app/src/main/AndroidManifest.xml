@@ -113,6 +113,20 @@
                 android:windowSoftInputMode="stateAlwaysHidden" />
 
 
+
+        <activity
+                android:name=".ui.profileSetting.ProfileSettingActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+                android:name=".ui.profileImage.ProfileImageActivity"
+                android:screenOrientation="portrait"
+
+                android:theme="@style/PopTheme"
+                android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity
                 android:name=".ui.orderStartRenting.OrderStartRentingActivity"
                 android:screenOrientation="portrait"

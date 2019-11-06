@@ -94,7 +94,7 @@
     <string name="title_button_set_location">Set Location</string>
     <string name="title_set_your_asking_price">Set your asking price.</string>
     <string name="title_profile">Profile</string>
-    <string name="title_logout">Logout</string>
+    <string name="title_logout">Log out</string>
     <string name="error_set_price">please set price</string>
     <string name="error_add_image">add images</string>
     <string name="title_borrow_day">Borrow Day</string>
@@ -139,7 +139,9 @@
     <string name="title_order">Orders</string>
     <string name="text_not_found_item">Nothing found any item</string>
     <string name="button_start_renting">Start Renting</string>
-    <string name="title_deactive">Deactive</string>
+    <string name="title_deactive">Deactivate</string>
+    <string name="text_rejected">Rejected</string>
+    <string name="text_pending">Pending</string>
 
 
 </resources>

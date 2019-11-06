@@ -12,6 +12,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
+import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
 
@@ -135,6 +136,7 @@ class ProfileEditActivity : BaseActivity() {
         binding.imageLayout.setOnClickListener {
 
 
+            startActivityMakeScene(ProfileImageActivity.newInstance(this,viewModel.getAvatar()))
         }
 
         binding.phoneLayout.setOnClickListener {
@@ -165,13 +167,13 @@ class ProfileEditActivity : BaseActivity() {
     override fun onStart() {
 
         super.onStart()
-
-        if (isFistStart()) {
+//
+//        if (isFistStart()) {
 
            viewModel.loadData()
 
 
-        }
+//        }
 
 
     }

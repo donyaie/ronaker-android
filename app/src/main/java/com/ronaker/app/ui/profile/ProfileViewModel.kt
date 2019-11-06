@@ -36,6 +36,8 @@ class ProfileViewModel: BaseViewModel(){
 
     val logOutAction:MutableLiveData<Boolean> = MutableLiveData()
 
+    val settingAction:MutableLiveData<Boolean> = MutableLiveData()
+
 
 
 
@@ -115,6 +117,7 @@ class ProfileViewModel: BaseViewModel(){
 
 
     }
+
 
 
    fun onClickLogout(){

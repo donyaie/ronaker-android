@@ -132,7 +132,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                 order.productOwner?.let {
 
                     userName.value = it.first_name + " " + it.last_name
-
+                    userImage.value= BASE_URL+it.avatar
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
                     userInfoVisibility.value = View.GONE
@@ -192,6 +192,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                 order.orderUser?.let {
 
                     userName.value = it.first_name + " " + it.last_name
+                    userImage.value= BASE_URL+it.avatar
 
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {

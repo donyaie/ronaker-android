@@ -124,4 +124,7 @@
     <string name="button_start_renting">Pradėkite nuomoti</string>
     <string name="text_lend_request_started">Pradedate nuomoti %1$s daiktą</string>
     <string name="text_rent_request_started">%1$s pradėjo progresą</string>
+    <string name="title_deactive">Išjungti</string>
+    <string name="text_pending">Kol</string>
+    <string name="text_rejected">Atstumtas</string>
 </resources>
