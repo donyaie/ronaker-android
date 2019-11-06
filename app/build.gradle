@@ -66,8 +66,8 @@ android {
 }
 
 dependencies {
-    implementation "androidx.multidex:multidex:$multidexVersion"
     implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation "androidx.multidex:multidex:$multidexVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$androidxVersion"
     implementation "androidx.core:core-ktx:$androidxVersion"

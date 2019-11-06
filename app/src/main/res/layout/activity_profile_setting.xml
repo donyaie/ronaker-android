@@ -52,7 +52,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="24dp"
                         android:layout_marginBottom="40dp"
-                        android:text="Setting"
+                        android:text="@string/title_setting"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
                         app:layout_constraintTop_toBottomOf="@id/avatar_image" />
@@ -73,7 +73,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Notification"
+                            android:text="@string/title_notification"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -107,7 +107,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Download user Data"
+                            android:text="@string/title_download_user_data"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -142,7 +142,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Terms And Conditions"
+                            android:text="@string/title_terms_and_conditions"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 
@@ -179,7 +179,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="Change Language"
+                            android:text="@string/title_change_language"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 

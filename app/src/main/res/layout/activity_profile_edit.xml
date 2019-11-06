@@ -86,7 +86,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".95"
-                            android:text="@string/titile_sign_up"
+                            android:text="@string/title_email_verification"
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark" />
 

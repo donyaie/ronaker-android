@@ -127,4 +127,11 @@
     <string name="title_deactive">Išjungti</string>
     <string name="text_pending">Kol</string>
     <string name="text_rejected">Atstumtas</string>
+    <string name="title_change_language">Change Language</string>
+    <string name="title_download_user_data">Atsisiųskite vartotojo duomenis</string>
+    <string name="title_email_verification">El. pašto patvirtinimas</string>
+    <string name="title_favorites">Mėgstamiausi</string>
+    <string name="title_notification">Pranešimas</string>
+    <string name="title_support">Palaikymas</string>
+    <string name="title_terms_and_conditions">Taisyklės ir sąlygos</string>
 </resources>

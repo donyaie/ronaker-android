@@ -142,6 +142,13 @@
     <string name="title_deactive">Deactivate</string>
     <string name="text_rejected">Rejected</string>
     <string name="text_pending">Pending</string>
+    <string name="title_email_verification">Email Verification</string>
+    <string name="title_notification">Notification</string>
+    <string name="title_download_user_data">Download user Data</string>
+    <string name="title_terms_and_conditions">Terms And Conditions</string>
+    <string name="title_change_language">Change Language</string>
+    <string name="title_support">Support</string>
+    <string name="title_favorites">Favorites</string>
 
 
 </resources>
