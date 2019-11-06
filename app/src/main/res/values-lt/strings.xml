@@ -134,4 +134,7 @@
     <string name="title_notification">Pranešimas</string>
     <string name="title_support">Palaikymas</string>
     <string name="title_terms_and_conditions">Taisyklės ir sąlygos</string>
+    <string name="title_add_a_payment_method_edit">Pakeiskite mokėjimo metodą</string>
+    <string name="title_add_and_verify_phone_number_edit">Pakeiskite ir patvirtinkite naują telefono numerį</string>
+    <string name="title_add_profile_image_edit">Keisti profilio vaizdą</string>
 </resources>

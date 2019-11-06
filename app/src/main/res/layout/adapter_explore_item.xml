@@ -14,7 +14,7 @@
             android:onClick="@{()->viewModel.onClickProduct()}"
 
             android:layout_gravity="center"
-            android:layout_height="216dp">
+            android:layout_height="wrap_content">
         <com.makeramen.roundedimageview.RoundedImageView
                 app:riv_corner_radius="3dp"
                 android:layout_width="match_parent"
@@ -36,8 +36,9 @@
                   app:mutableText="@{viewModel.getProductTitle()}"
                   android:id="@+id/title"
                   android:textColor="@color/colorTextDark"
+            android:maxLines="2"
                   android:textAppearance="@style/TextAppearance.Medium.SB"
-                  android:lines="2"/>
+                  />
 
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   app:layout_constraintTop_toBottomOf="@id/title"

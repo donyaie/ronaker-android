@@ -120,8 +120,11 @@
     <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or Lending out.</string>
     <string name="titile_sign_up">Sign Up</string>
     <string name="title_add_profile_image">Add Profile Image</string>
+    <string name="title_add_profile_image_edit">Change Profile Image</string>
     <string name="title_add_and_verify_phone_number">Add and verify phone number</string>
+    <string name="title_add_and_verify_phone_number_edit">Change and verify new phone number</string>
     <string name="title_add_a_payment_method">Add a payment method</string>
+    <string name="title_add_a_payment_method_edit">Change your payment method</string>
     <string name="title_verify_your_identity">Verify your Identity</string>
     <string name="title_add_a_identity_document">Add a identity document</string>
     <string name="title_please_upload_one_of_your_identity_document_to_authentication">Please Upload one of your Identity document to Authentication.</string>
@@ -142,7 +145,7 @@
     <string name="title_deactive">Deactivate</string>
     <string name="text_rejected">Rejected</string>
     <string name="text_pending">Pending</string>
-    <string name="title_email_verification">Email Verification</string>
+    <string name="title_email_verification">Verify your email</string>
     <string name="title_notification">Notification</string>
     <string name="title_download_user_data">Download user Data</string>
     <string name="title_terms_and_conditions">Terms And Conditions</string>

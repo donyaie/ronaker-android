@@ -47,14 +47,11 @@ class ProfileFragment : BaseFragment() {
 
 
 
-        binding.completeLayout.setOnClickListener {
+        binding.profileLayout.setOnClickListener {
             activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
         }
 
 
-        binding.editText.setOnClickListener {
-            activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
-        }
 
         binding.viewModel = viewModel
 

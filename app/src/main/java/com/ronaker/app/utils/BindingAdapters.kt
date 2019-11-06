@@ -31,6 +31,16 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
     }
 }
 
+
+@BindingAdapter("mutableTextRes")
+fun setMutableTextRes(view: TextView, text: MutableLiveData<Int>?) {
+
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value -> view.text = parentActivity.getString(value)})
+    }
+}
+
 @BindingAdapter("mutableProgress")
 fun setMutableText(view: ProgressBar, text: MutableLiveData<Int>?) {
 
