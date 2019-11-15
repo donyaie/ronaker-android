@@ -134,8 +134,8 @@
     <string name="title_cancel">Cancel</string>
     <string name="title_select_item_category">Select Item Category</string>
     <string name="title_edit_profile">Edit Profile</string>
-    <string name="title_complete_profile">Complete Profile</string>
-    <string name="title_setting">Setting</string>
+    <string name="title_complete_profile">Complete Your Profile</string>
+    <string name="title_setting">Settings</string>
     <string name="title_payment">Payment</string>
     <string name="title_categories">Categories</string>
     <string name="text_you_have_not_any_order_hear">You have not any order here</string>
@@ -146,8 +146,8 @@
     <string name="text_rejected">Rejected</string>
     <string name="text_pending">Pending</string>
     <string name="title_email_verification">Verify your email</string>
-    <string name="title_notification">Notification</string>
-    <string name="title_download_user_data">Download user Data</string>
+    <string name="title_notification">Notifications</string>
+    <string name="title_download_user_data">Download User Data</string>
     <string name="title_terms_and_conditions">Terms And Conditions</string>
     <string name="title_change_language">Change Language</string>
     <string name="title_support">Support</string>

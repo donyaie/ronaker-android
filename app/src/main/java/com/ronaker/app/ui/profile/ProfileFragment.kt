@@ -79,7 +79,7 @@ class ProfileFragment : BaseFragment() {
         binding.paymentLayout.setOnClickListener {
 
 
-            activity?.let { it1 -> IntentManeger.openUrl(it1,"https://ronaker.com/wp-content/uploads/2019/09/Ronaker_License_Agreement.pdf") }
+//            activity?.let { it1 -> IntentManeger.openUrl(it1,"https://ronaker.com/?page_id=7678") }
 
         }
 

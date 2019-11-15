@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.addProduct.AddProductCategorySelectDialog
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.IntentManeger
 import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
@@ -74,6 +77,11 @@ class OrderMessageActivity : BaseActivity() {
         })
 
 
+        viewModel.successMessage.observe(this, Observer { _ ->
+           succeccSend()
+        })
+
+
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.showLoading()
@@ -111,6 +119,21 @@ class OrderMessageActivity : BaseActivity() {
 
     fun getEndDate(): Date {
         return Date(intent.getLongExtra( ENDDATE_KEY,-1))
+    }
+
+
+    fun succeccSend(){
+        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage("Your Request Has Been Sent.")
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.cancel()
+        }
+
+        builder.show()
     }
 
 

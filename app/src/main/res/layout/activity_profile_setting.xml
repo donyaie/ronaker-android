@@ -237,9 +237,22 @@
 
 
 
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/version_text"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Small.SB"
+            android:text="Version"
+            />
 
         <com.ronaker.app.utils.view.LoadingComponent
 

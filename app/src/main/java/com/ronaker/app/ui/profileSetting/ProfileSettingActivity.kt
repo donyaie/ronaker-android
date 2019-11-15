@@ -2,12 +2,14 @@ package com.ronaker.app.ui.profileSetting
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -98,7 +100,7 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding.termsLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this,"https://ronaker.com/wp-content/uploads/2019/09/Ronaker_License_Agreement.pdf")
+            IntentManeger.openUrl(this,"https://ronaker.com/?page_id=7678")
         }
 
 
@@ -106,6 +108,8 @@ class ProfileSettingActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
 
 
+
+        binding.versionText.text="--Version V${BuildConfig.VERSION_NAME}--"
 
 
 
