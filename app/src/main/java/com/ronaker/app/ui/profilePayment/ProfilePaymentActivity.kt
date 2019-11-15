@@ -17,7 +17,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 //import io.card.payment.CardIOActivity
 //import io.card.payment.CreditCard
-import com.ronaker.app.utils.Debug
 import android.text.style.ReplacementSpan
 import androidx.annotation.NonNull
 import android.text.Spanned
@@ -312,7 +311,7 @@ class ProfilePaymentActivity : BaseActivity() {
 //            // resultTextView.setText(resultDisplayStr);
 //
 //
-//            Debug.Log("Card",resultDisplayStr)
+//            AppDebug.Log("Card",resultDisplayStr)
 //        }
     }
 

@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.dashboard
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -25,6 +26,11 @@ import com.ronaker.app.utils.view.TabNavigationComponent
 import android.view.WindowManager
 import android.os.Build
 import android.graphics.Color
+import android.os.Handler
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
+import com.ronaker.app.ui.orderMessage.OrderMessageActivity
+import java.util.*
 
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -68,19 +74,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         AnimationHelper.setFadeTransition(this)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-
-//            window.navigationBarColor=Color.BLACK
-//
-//            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-//            window.statusBarColor = Color.TRANSPARENT
-        }
-
         super.onCreate(savedInstanceState)
-
+        setSwipeCloseDisable()
         binding = DataBindingUtil.setContentView(this, com.ronaker.app.R.layout.activity_dashboard)
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
@@ -190,6 +185,21 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         super.onSaveInstanceState(outState)
         fragNavController.onSaveInstanceState(outState)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
+        when(requestCode){
+            ExploreProductActivity.REQUEST_CODE->{
+                if(resultCode== Activity.RESULT_OK) {
+                    binding.navigation.select(1)
+                }
+            }
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 

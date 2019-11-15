@@ -13,7 +13,7 @@ import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.*
-import com.ronaker.app.utils.Debug
+import com.ronaker.app.utils.AppDebug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -41,6 +41,7 @@ class AddProductViewModel : BaseViewModel() {
 
 
     private var createPostSubscription: Disposable? = null
+    private var deleteImageSubscription: Disposable? = null
 
 
     private var getCategorySubscription: Disposable? = null
@@ -48,8 +49,6 @@ class AddProductViewModel : BaseViewModel() {
 
     private var getproductSubscription: Disposable? = null
     private var updateproductSubscription: Disposable? = null
-
-
 
 
     private lateinit var updateState: StateEnum
@@ -67,8 +66,6 @@ class AddProductViewModel : BaseViewModel() {
     val productCategoryTitle: MutableLiveData<String> = MutableLiveData()
     val productSubCategoryTitle: MutableLiveData<String> = MutableLiveData()
     val productSubCategoryVisibility: MutableLiveData<Int> = MutableLiveData()
-
-
 
 
     private var uploadSubscriptionList: ArrayList<Disposable?> = ArrayList()
@@ -95,8 +92,6 @@ class AddProductViewModel : BaseViewModel() {
     val viewState: MutableLiveData<StateEnum> = MutableLiveData()
 
     lateinit var imagesTemp: ArrayList<Product.ProductImage>
-
-
 
 
     enum class StateEnum constructor(position: Int) {
@@ -168,12 +163,12 @@ class AddProductViewModel : BaseViewModel() {
     fun onClickCategoryNext() {
 
 
-        if(categories.isEmpty() ){
-            errorMessage.value="Please Select Category"
-        }else if (categories[0].sub_categories.isNullOrEmpty()){
+        if (categories.isEmpty()) {
+            errorMessage.value = "Please Select Category"
+        } else if (categories[0].sub_categories.isNullOrEmpty()) {
 
-            errorMessage.value="Please Select Sub-Category"
-        }else{
+            errorMessage.value = "Please Select Sub-Category"
+        } else {
             product.new_categories = ArrayList()
             product.new_categories?.apply { add(categories[0].suid) }
             categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories?.add(it) }
@@ -189,18 +184,17 @@ class AddProductViewModel : BaseViewModel() {
         }
 
 
-
     }
 
     fun selectCategory(category: Category) {
 
-        productCategoryTitle.value=category.title
+        productCategoryTitle.value = category.title
         categories.clear()
         category.sub_categories = null
         categories.add(category)
 
-        productSubCategoryVisibility.value= View.VISIBLE
-        productSubCategoryTitle.value=""
+        productSubCategoryVisibility.value = View.VISIBLE
+        productSubCategoryTitle.value = ""
 
 
     }
@@ -209,7 +203,7 @@ class AddProductViewModel : BaseViewModel() {
 
         if (categories.isNotEmpty()) {
 
-            productSubCategoryTitle.value=category.title
+            productSubCategoryTitle.value = category.title
             categories[0].sub_categories = ArrayList()
             categories[0].sub_categories?.add(category)
         }
@@ -237,7 +231,7 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_day = dayPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_day = 0.0
-            Debug.Log(TAG, e)
+            AppDebug.Log(TAG, e)
         }
 
 
@@ -246,19 +240,19 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_week = weekPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_week = 0.0
-            Debug.Log(TAG, e)
+            AppDebug.Log(TAG, e)
         }
 
         try {
             product.price_per_month = monthPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_month = 0.0
-            Debug.Log(TAG, e)
+            AppDebug.Log(TAG, e)
         }
         if (!updateSuid.isNullOrEmpty()) {
 
             updateProduct(product)
-        } else if (product.price_per_day?:0.toDouble() > 0 || product.price_per_week?:0.toDouble() > 0 || product.price_per_month?:0.toDouble() > 0)
+        } else if (product.price_per_day ?: 0.toDouble() > 0 || product.price_per_week ?: 0.toDouble() > 0 || product.price_per_month ?: 0.toDouble() > 0)
             viewState.value = StateEnum.location
         else
             errorMessage.value = context.getString(R.string.error_set_price)
@@ -270,7 +264,7 @@ class AddProductViewModel : BaseViewModel() {
         if (place != null) {
 
             product.address = place.mainText
-            product.location =place.latLng
+            product.location = place.latLng
 
 
             if (!updateSuid.isNullOrEmpty()) {
@@ -309,11 +303,49 @@ class AddProductViewModel : BaseViewModel() {
 
     }
 
+
+    fun deleteImage(image: Product.ProductImage) {
+        deleteImageSubscription?.dispose()
+
+            deleteImageSubscription=
+                contentRepository.deleteImage(
+                    userRepository.getUserToken(),
+                    image.suid!!
+                )
+                    .doOnSubscribe {
+                        loading.value = true
+
+                    }
+                    .doOnTerminate {
+
+                        loading.value = false
+
+                    }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
+                            adapter.removeItem(image)
+                        } else {
+                            adapter.removeItem(image)
+                            errorMessage.value = result.error?.detail
+                        }
+                    }
+
+
+
+
+    }
+
     fun onClickRemoveImage(image: Product.ProductImage?) {
 
 
         if (image?.isLocal == true)
             adapter.removeItem(image)
+        else if (updateState == StateEnum.image) {
+
+            image?.let { deleteImage(it) }
+        }
+
+
     }
 
     fun onClickAddImage() {
@@ -478,31 +510,31 @@ class AddProductViewModel : BaseViewModel() {
                                     categories = it.toCategoryList()
 
 
-                                    if(categories.size>1){
-                                        categories[0].sub_categories= ArrayList()
+                                    if (categories.size > 1) {
+                                        categories[0].sub_categories = ArrayList()
                                         categories[0].sub_categories?.add(categories[1])
                                         categories.removeAt(1)
                                     }
 
 
-
                                 }
 
 
-                                productSubCategoryVisibility.value= View.GONE
-                                productSubCategoryTitle.value=""
+                                productSubCategoryVisibility.value = View.GONE
+                                productSubCategoryTitle.value = ""
 
 
                                 if (categories.isNotEmpty()) {
                                     productCategoryTitle.value = categories[0].title
 
 
-                                    productSubCategoryVisibility.value= View.VISIBLE
+                                    productSubCategoryVisibility.value = View.VISIBLE
 
-                                    if (! categories[0].sub_categories.isNullOrEmpty()) {
-                                        productSubCategoryTitle.value = categories[0].sub_categories?.get(0)?.title
+                                    if (!categories[0].sub_categories.isNullOrEmpty()) {
+                                        productSubCategoryTitle.value =
+                                            categories[0].sub_categories?.get(0)?.title
 
-                                        productSubCategoryVisibility.value= View.VISIBLE
+                                        productSubCategoryVisibility.value = View.VISIBLE
 
                                     }
 
@@ -539,6 +571,7 @@ class AddProductViewModel : BaseViewModel() {
     override fun onCleared() {
         super.onCleared()
         createPostSubscription?.dispose()
+        deleteImageSubscription?.dispose()
         uploadSubscriptionList.forEach { it?.dispose() }
         getproductSubscription?.dispose()
         updateproductSubscription?.dispose()

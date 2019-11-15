@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.Debug
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.view.IPagerFragment
@@ -178,7 +178,7 @@ class PhoneNumberActivity : BaseActivity() {
                 loginState = PhoneNumberViewModel.StateEnum.get(position)
 
 
-                Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
+                AppDebug.Log(TAG, String.format("onSelect:%s", loginState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 

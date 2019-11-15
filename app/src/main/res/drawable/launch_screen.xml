@@ -12,12 +12,12 @@
 
 
     <!-- Your product logo - 144dp color version of your app icon -->
-    <item android:top="71dp" android:gravity="top|center_vertical"
+    <item  android:gravity="center"
             >
 
         <bitmap
 
-                android:src="@drawable/ic_logo_text"
+                android:src="@drawable/logo_ronaker_white"
                 android:gravity="top|center_vertical"/>
 
     </item>

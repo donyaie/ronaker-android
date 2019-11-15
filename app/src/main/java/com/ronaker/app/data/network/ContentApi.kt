@@ -1,6 +1,7 @@
 package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.response.ContentImageResponceModel
+import com.ronaker.app.data.network.response.FreeResponseModel
 import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -26,9 +27,8 @@ interface ContentApi {
     /**
      * delete image
      */
-    @POST("/api/v1/contents/images/{suid}/")
-    @Multipart
-    fun deleteImage(@Header("Authorization") authToken: String?, @Path("suid") suid:String ): Observable<ProductCreateResponseModel>
+    @DELETE("/api/v1/contents/images/{suid}/?")
+    fun deleteImage(@Header("Authorization") authToken: String?, @Path("suid") suid:String ): Observable<FreeResponseModel>
 
 
     /**

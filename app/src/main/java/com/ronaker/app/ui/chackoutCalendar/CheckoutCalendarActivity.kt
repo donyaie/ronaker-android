@@ -22,6 +22,11 @@ class CheckoutCalendarActivity : BaseActivity() {
     companion object {
         var PRODUCT_KEY = "mProduct"
 
+        var STARTDATE_KEY = "start_date"
+        var ENDDATE_KEY = "end_date"
+
+        var REQUEST_CODE = 346
+
         fun newInstance(context: Context, product: Product): Intent {
             var intent = Intent(context, CheckoutCalendarActivity::class.java)
             var boundle = Bundle()

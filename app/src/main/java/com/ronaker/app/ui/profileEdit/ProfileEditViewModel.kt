@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.User
+import com.ronaker.app.model.toUser
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -38,6 +40,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
     }
 
+    var mUser: User?=null
 
     fun loadData() {
 
@@ -54,7 +57,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-
+                   mUser= result.data?.toUser()
                     signComplete.value = result.data?.is_email_verified
 
                     phoneComplete.value = result.data?.is_phone_number_verified
@@ -82,6 +85,11 @@ class ProfileEditViewModel : BaseViewModel() {
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
+    }
+
+    fun getAvatar(): String? {
+       return mUser?.avatar
+
     }
 
 

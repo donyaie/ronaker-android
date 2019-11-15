@@ -124,4 +124,23 @@
     <string name="button_start_renting">Pradėkite nuomoti</string>
     <string name="text_lend_request_started">Pradedate nuomoti %1$s daiktą</string>
     <string name="text_rent_request_started">%1$s pradėjo progresą</string>
+    <string name="title_deactive">Išjungti</string>
+    <string name="text_pending">Kol</string>
+    <string name="text_rejected">Atstumtas</string>
+    <string name="title_change_language">Change Language</string>
+    <string name="title_download_user_data">Atsisiųskite vartotojo duomenis</string>
+    <string name="title_email_verification">El. pašto patvirtinimas</string>
+    <string name="title_favorites">Mėgstamiausi</string>
+    <string name="title_notification">Pranešimas</string>
+    <string name="title_support">Palaikymas</string>
+    <string name="title_terms_and_conditions">Taisyklės ir sąlygos</string>
+    <string name="title_add_a_payment_method_edit">Pakeiskite mokėjimo metodą</string>
+    <string name="title_add_and_verify_phone_number_edit">Pakeiskite ir patvirtinkite naują telefono numerį</string>
+    <string name="title_add_profile_image_edit">Keisti profilio vaizdą</string>
+    <string name="text_clear">Aišku</string>
+    <string name="text_add_a_image">Pridėkite vaizdą</string>
+    <string name="text_add_a_profile_image">Pridėkite profilio vaizdą</string>
+    <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo atvaizdą, kad galėtumėte jus atpažinti</string>
+    <string name="text_your_request_sent">Jūsų prašymas išsiųstas.</string>
+    <string name="text_are_you_sure">Ar tu tuo tikras?</string>
 </resources>

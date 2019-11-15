@@ -14,6 +14,8 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
+import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
+import com.ronaker.app.utils.IntentManeger
 
 
 class ProfileFragment : BaseFragment() {
@@ -39,19 +41,17 @@ class ProfileFragment : BaseFragment() {
         })
 
         viewModel.logOutAction.observe(this, Observer {
+
             activity?.let {   startActivityMakeScene(DashboardActivity.newInstance(it) )}
         })
 
 
 
-        binding.completeLayout.setOnClickListener {
+        binding.profileLayout.setOnClickListener {
             activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
         }
 
 
-        binding.editText.setOnClickListener {
-            activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
-        }
 
         binding.viewModel = viewModel
 
@@ -60,9 +60,26 @@ class ProfileFragment : BaseFragment() {
 
         }
 
+        binding.supportLayout.setOnClickListener {
+            activity?.let { it1 -> IntentManeger.sendMail(it1,"support@ronaker.com")}
+        }
+
+
+        binding.faveLayout.setOnClickListener{
+
+
+        }
+
+        binding.settingLayout.setOnClickListener{
+
+            activity?.let {   startActivityMakeScene(ProfileSettingActivity.newInstance(it) )}
+        }
+
 
         binding.paymentLayout.setOnClickListener {
 
+
+//            activity?.let { it1 -> IntentManeger.openUrl(it1,"https://ronaker.com/?page_id=7678") }
 
         }
 

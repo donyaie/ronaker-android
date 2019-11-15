@@ -1,7 +1,7 @@
 package com.ronaker.app.base
 
 import com.google.gson.JsonParser
-import com.ronaker.app.utils.Debug
+import com.ronaker.app.utils.AppDebug
 import retrofit2.HttpException
 import java.io.EOFException
 import java.io.IOException
@@ -60,14 +60,14 @@ class NetworkError(error: Throwable) {
                     .asJsonObject["detail"]
                     .asString
             } catch (e: Exception) {
-                Debug.Log(TAG, e)
+                AppDebug.Log(TAG, e)
             }
             try {
                 this.detail_code = JsonParser().parse(errorJsonString)
                     .asJsonObject["detail_code"]
                     .asString
             } catch (e: Exception) {
-                Debug.Log(TAG, e)
+                AppDebug.Log(TAG, e)
             }
             this.responseCode = error.code();
 

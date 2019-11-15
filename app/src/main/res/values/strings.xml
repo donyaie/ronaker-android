@@ -58,7 +58,7 @@
     <string name="title_button_create_account">Create Account</string>
     <string name="titile_button_login">Login</string>
     <string name="title_and_what_s_your_name">And what’s your name?</string>
-    <string name="title_done_njust_choice_a_password">Done!\nJust choose a password.</string>
+    <string name="title_done_njust_choice_a_password">Done! Just choose a password.</string>
     <string name="title_button_done">Done!</string>
     <string name="title_welcome_back">Welcome back.</string>
     <string name="titile_button_login_to_your_account">Login to your account</string>
@@ -94,7 +94,7 @@
     <string name="title_button_set_location">Set Location</string>
     <string name="title_set_your_asking_price">Set your asking price.</string>
     <string name="title_profile">Profile</string>
-    <string name="title_logout">Logout</string>
+    <string name="title_logout">Log out</string>
     <string name="error_set_price">please set price</string>
     <string name="error_add_image">add images</string>
     <string name="title_borrow_day">Borrow Day</string>
@@ -120,8 +120,11 @@
     <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or Lending out.</string>
     <string name="titile_sign_up">Sign Up</string>
     <string name="title_add_profile_image">Add Profile Image</string>
+    <string name="title_add_profile_image_edit">Change Profile Image</string>
     <string name="title_add_and_verify_phone_number">Add and verify phone number</string>
+    <string name="title_add_and_verify_phone_number_edit">Change and verify new phone number</string>
     <string name="title_add_a_payment_method">Add a payment method</string>
+    <string name="title_add_a_payment_method_edit">Change your payment method</string>
     <string name="title_verify_your_identity">Verify your Identity</string>
     <string name="title_add_a_identity_document">Add a identity document</string>
     <string name="title_please_upload_one_of_your_identity_document_to_authentication">Please Upload one of your Identity document to Authentication.</string>
@@ -131,15 +134,30 @@
     <string name="title_cancel">Cancel</string>
     <string name="title_select_item_category">Select Item Category</string>
     <string name="title_edit_profile">Edit Profile</string>
-    <string name="title_complete_profile">Complete Profile</string>
-    <string name="title_setting">Setting</string>
+    <string name="title_complete_profile">Complete Your Profile</string>
+    <string name="title_setting">Settings</string>
     <string name="title_payment">Payment</string>
     <string name="title_categories">Categories</string>
     <string name="text_you_have_not_any_order_hear">You have not any order here</string>
     <string name="title_order">Orders</string>
     <string name="text_not_found_item">Nothing found any item</string>
     <string name="button_start_renting">Start Renting</string>
-    <string name="title_deactive">Deactive</string>
+    <string name="title_deactive">Deactivate</string>
+    <string name="text_rejected">Rejected</string>
+    <string name="text_pending">Pending</string>
+    <string name="title_email_verification">Verify your email</string>
+    <string name="title_notification">Notifications</string>
+    <string name="title_download_user_data">Download User Data</string>
+    <string name="title_terms_and_conditions">Terms And Conditions</string>
+    <string name="title_change_language">Change Language</string>
+    <string name="title_support">Support</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="text_clear">Clear</string>
+    <string name="text_add_a_profile_image">Add a Profile Image</string>
+    <string name="text_please_upload_a_image_of_you_for_identify_you">Please upload a image of you for identify you</string>
+    <string name="text_add_a_image">Add a image</string>
+    <string name="text_your_request_sent">Your Request Has Been Sent.</string>
+    <string name="text_are_you_sure">Are you Sure?</string>
 
 
 </resources>

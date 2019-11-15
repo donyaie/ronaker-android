@@ -41,6 +41,16 @@ interface UserApi {
     fun addUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserAddPhoneRequestModel): Observable<UserAddPhoneResponceModel>
 
 
+
+    /**
+     * update user info
+     */
+    @PUT("/api/v1/users/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun updateUserInfo(@Header("Authorization") authToken: String,@Body user: UserUpdateRequestModel): Observable<UserInfoResponceModel>
+
+
+
     /**
      * valid phone number of user with otp
      */

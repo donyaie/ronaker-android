@@ -2,7 +2,6 @@ package com.ronaker.app.model
 
 import android.os.Parcelable
 import com.ronaker.app.data.network.response.OrderResponseModel
-import com.ronaker.app.utils.Debug
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 

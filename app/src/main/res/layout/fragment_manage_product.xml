@@ -28,15 +28,15 @@
 
                 <RelativeLayout
                         android:id="@+id/avatar_layout"
+                    android:layout_height="320dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent">
 
 
                     <ImageView
                             android:id="@+id/avatar_image"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp"
+                            android:layout_height="match_parent"
                             android:background="@color/colorPlatinGrey"
                             android:scaleType="centerCrop"
                             app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +66,7 @@
                                 android:minHeight="20dp"
                                 android:paddingLeft="4dp"
                                 android:paddingRight="4dp"
-                                android:text="Rejected"
+                                android:text="@string/text_rejected"
                                 android:textAppearance="@style/TextAppearance.Small.Regular"
                                 android:textColor="@color/colorTextLight"
                                 app:layout_constraintLeft_toLeftOf="parent"
@@ -86,7 +86,7 @@
                                 android:minHeight="20dp"
                                 android:paddingLeft="4dp"
                                 android:paddingRight="4dp"
-                                android:text="Pending"
+                                android:text="@string/text_pending"
                                 android:textAppearance="@style/TextAppearance.Small.Regular"
                                 android:textColor="@color/colorTextLight"
                                 app:layout_constraintLeft_toLeftOf="parent"
@@ -359,7 +359,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:toolbar_component_action_container="TWO_BUTTON"
+                app:toolbar_component_action_container="NONE"
                 app:toolbar_component_bottom_line="false"
                 app:toolbar_component_cancel_container="BACK"
                 app:toolbar_component_center_container="NONE"

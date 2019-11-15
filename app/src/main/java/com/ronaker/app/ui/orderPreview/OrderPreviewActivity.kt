@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderPreview
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,10 +17,9 @@ import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
-import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
+import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.IntentManeger
 
 class OrderPreviewActivity : BaseActivity() {
 
@@ -29,11 +29,10 @@ class OrderPreviewActivity : BaseActivity() {
     private lateinit var viewModel: OrderPreviewViewModel
 
 
-
     companion object {
         var Order_KEY = "order"
 
-        fun newInstance(context: Context,order: Order?): Intent {
+        fun newInstance(context: Context, order: Order?): Intent {
             var intent = Intent(context, OrderPreviewActivity::class.java)
             var boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
@@ -66,7 +65,10 @@ class OrderPreviewActivity : BaseActivity() {
 
 
         viewModel.showProduct.observe(this, Observer { product ->
-            startActivityMakeScene(ExploreProductActivity.newInstance(this,product,"ds"))
+            startActivityMakeSceneForResult(
+                ExploreProductActivity.newInstance(this, product, "ds"),
+                ExploreProductActivity.REQUEST_CODE
+            )
         })
 
 
@@ -80,33 +82,45 @@ class OrderPreviewActivity : BaseActivity() {
 
 
         viewModel.acceptIntro.observe(this, Observer { _ ->
-           startActivityMakeScene(OrderAcceptActivity.newInstance(this,getOrder()))
+            startActivityMakeSceneForResult(
+                OrderAcceptActivity.newInstance(this, getOrder()),
+                OrderAcceptActivity.REQUEST_CODE
+            )
         })
 
         viewModel.declineIntro.observe(this, Observer { _ ->
-            startActivityMakeScene(OrderDeclineActivity.newInstance(this,getOrder()))
+            startActivityMakeSceneForResult(
+                OrderDeclineActivity.newInstance(this, getOrder()),
+                OrderDeclineActivity.REQUEST_CODE
+            )
         })
 
         viewModel.cancelDialog.observe(this, Observer { _ ->
             showCancel()
         })
         viewModel.startRenting.observe(this, Observer { _ ->
-            startActivityMakeScene(OrderStartRentingActivity.newInstance(this,getOrder()))
+            startActivityMakeSceneForResult(
+                OrderStartRentingActivity.newInstance(this, getOrder()),
+                OrderStartRentingActivity.REQUEST_CODE
+            )
         })
 
 
         viewModel.finishIntro.observe(this, Observer { _ ->
-            startActivityMakeScene(OrderFinishActivity.newInstance(this,getOrder()))
+            startActivityMakeSceneForResult(
+                OrderFinishActivity.newInstance(this, getOrder()),
+                OrderFinishActivity.REQUEST_CODE
+            )
         })
 
 
 
         viewModel.finish.observe(this, Observer { _ ->
-           finishSafe()
+            finishSafe()
         })
 
 
-        binding.toolbar.cancelClickListener= View.OnClickListener {
+        binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finishSafe()
         }
@@ -115,14 +129,11 @@ class OrderPreviewActivity : BaseActivity() {
         getOrder()?.let { viewModel.load(it) }
 
 
-
     }
-
 
 
     private fun showCancel() {
         var builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Alert")
         builder.setMessage("Are you sure you want to cancel this order?")
         builder.setPositiveButton(
             getString(android.R.string.ok)
@@ -133,15 +144,15 @@ class OrderPreviewActivity : BaseActivity() {
             viewModel.canceled()
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
-        { dialog, _ -> dialog?.cancel()
+        { dialog, _ ->
+            dialog?.cancel()
         }
         builder.show()
     }
 
 
-    fun getOrder():Order?
-    {
-        if ( intent.hasExtra(Order_KEY)) {
+    fun getOrder(): Order? {
+        if (intent.hasExtra(Order_KEY)) {
             var value = intent.getParcelableExtra<Order?>(Order_KEY)
 
             return value
@@ -151,9 +162,43 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
+        when (requestCode) {
 
+            OrderAcceptActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    finishSafe()
+                }
+            }
+
+
+            OrderDeclineActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    finishSafe()
+                }
+            }
+
+
+            OrderStartRentingActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    finishSafe()
+                }
+            }
+
+
+            OrderFinishActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    finishSafe()
+                }
+            }
+
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
 
 }

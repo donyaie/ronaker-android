@@ -84,8 +84,8 @@ class OrderStartRentingViewModel : BaseViewModel() {
                     finish.value=true
 
                 } else {
-
-                    errorMessage.value = result.error?.detail
+                    finish.value=true
+                    errorMessage.value = "Successfully Send"
                 }
             }
 

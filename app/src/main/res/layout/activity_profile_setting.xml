@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+                name="viewModel"
+                type="com.ronaker.app.ui.profileSetting.ProfileSettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/white"
+            android:gravity="center"
+            android:layoutDirection="ltr">
+
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:toolbar_component_action_container="NONE"
+                app:toolbar_component_bottom_line="false"
+                app:toolbar_component_cancel_container="BACK"
+                app:toolbar_component_center_container="NONE"
+                app:toolbar_component_dot_count="3"
+                app:toolbar_component_transparent="false" />
+
+        <androidx.core.widget.NestedScrollView
+
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                <TextView
+                        android:id="@+id/title_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginBottom="40dp"
+                        android:text="@string/title_setting"
+                        android:textAppearance="@style/TextAppearance.Heading.1"
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintTop_toBottomOf="@id/avatar_image" />
+
+
+                <LinearLayout
+                        android:id="@+id/sign_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp">
+
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="@string/title_notification"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark" />
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/notification_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+
+                <LinearLayout
+
+                        android:id="@+id/download_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="@string/title_download_user_data"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+
+                            android:padding="3dp"
+                            app:srcCompat="@drawable/ic_chevron_right" />
+
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+                <LinearLayout
+
+                        android:id="@+id/terms_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="@string/title_terms_and_conditions"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+
+                            android:padding="3dp"
+                            app:srcCompat="@drawable/ic_chevron_right" />
+
+
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+                <LinearLayout
+
+                        android:id="@+id/language_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="@string/title_change_language"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+
+
+                            android:padding="3dp"
+                            app:srcCompat="@drawable/ic_chevron_right" />
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+                <LinearLayout
+
+                        android:id="@+id/logout_layout"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".95"
+                            android:text="@string/title_logout"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark" />
+
+
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+
+
+
+
+
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/version_text"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Small.SB"
+            android:text="Version"
+            />
+
+        <com.ronaker.app.utils.view.LoadingComponent
+
+
+                android:id="@+id/loading"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:layout_width="match_parent"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:loading_transparent="false" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

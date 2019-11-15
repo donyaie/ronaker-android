@@ -22,7 +22,9 @@ import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
+import com.ronaker.app.ui.profileImage.ProfileImageViewModel
 import com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel
+import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 import dagger.Component
@@ -67,6 +69,8 @@ interface ViewModelInjector {
     fun inject(viewModel: OrderStartRentingViewModel)
     fun inject(viewModel: OrderFinishViewModel)
 
+    fun inject(viewModel: ProfileImageViewModel)
+    fun inject(viewModel: ProfileSettingViewModel)
 
     @Component.Builder
     interface Builder {

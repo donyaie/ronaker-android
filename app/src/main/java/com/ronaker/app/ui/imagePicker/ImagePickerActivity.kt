@@ -24,9 +24,6 @@ import com.ronaker.app.utils.AnimationHelper
 import com.yalantis.ucrop.UCrop
 import java.io.File
 import android.os.Build
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import androidx.appcompat.app.AppCompatDelegate
 
 
 class ImagePickerActivity : BaseActivity() {
@@ -162,7 +159,7 @@ class ImagePickerActivity : BaseActivity() {
             UCrop.RESULT_ERROR -> {
                 data?.let {
                     val cropError = UCrop.getError(it)
-                    com.ronaker.app.utils.Debug.Log(TAG, "Crop error: " + cropError)
+                    com.ronaker.app.utils.AppDebug.Log(TAG, "Crop error: " + cropError)
                     setResultCancelled()
                 }
             }

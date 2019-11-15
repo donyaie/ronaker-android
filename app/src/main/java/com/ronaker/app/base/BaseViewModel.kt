@@ -25,7 +25,9 @@ import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
+import com.ronaker.app.ui.profileImage.ProfileImageViewModel
 import com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel
+import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
@@ -79,6 +81,8 @@ abstract class BaseViewModel : ViewModel() {
             is OrderDeclineViewModel->injector.inject(this)
             is OrderStartRentingViewModel->injector.inject(this)
             is OrderFinishViewModel->injector.inject(this)
+            is ProfileImageViewModel->injector.inject(this)
+            is ProfileSettingViewModel->injector.inject(this)
         }
 
     }

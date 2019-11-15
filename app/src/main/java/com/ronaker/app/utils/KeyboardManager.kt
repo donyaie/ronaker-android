@@ -6,9 +6,6 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat.getSystemService
-
-
 
 
 object KeyboardManager {
@@ -24,7 +21,7 @@ object KeyboardManager {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 
 
-        Debug.Log(TAG, "hideSoftKeyboardView")
+        AppDebug.Log(TAG, "hideSoftKeyboardView")
 
     }
 
@@ -33,7 +30,7 @@ object KeyboardManager {
             context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         view.requestFocus()
         inputMethodManager.showSoftInput(view, 0)
-        Debug.Log(TAG, "showSoftKeyboardView")
+        AppDebug.Log(TAG, "showSoftKeyboardView")
     }
 
 
@@ -51,7 +48,7 @@ object KeyboardManager {
 //                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); // hide
         }
 
-        Debug.Log(TAG, "hideSoftKeyboard")
+        AppDebug.Log(TAG, "hideSoftKeyboard")
 
     }
 
@@ -65,7 +62,7 @@ object KeyboardManager {
             imm.hideSoftInputFromWindow(view, 0)
         }
 
-        Debug.Log(TAG, "hideSoftKeyboard")
+        AppDebug.Log(TAG, "hideSoftKeyboard")
 
     }
 
@@ -77,6 +74,6 @@ object KeyboardManager {
             InputMethodManager.HIDE_IMPLICIT_ONLY
         ) // show
 
-        Debug.Log(TAG, "showSoftKeyboard")
+        AppDebug.Log(TAG, "showSoftKeyboard")
     }
 }

@@ -1,16 +1,21 @@
 package com.ronaker.app.ui.orderMessage
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.addProduct.AddProductCategorySelectDialog
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.IntentManeger
 import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
@@ -24,6 +29,9 @@ class OrderMessageActivity : BaseActivity() {
         var PRODUCT_KEY = "mProduct"
         var STARTDATE_KEY = "start_date"
         var ENDDATE_KEY = "end_date"
+
+
+        var REQUEST_CODE = 347
 
         fun newInstance(
             context: Context,
@@ -74,6 +82,11 @@ class OrderMessageActivity : BaseActivity() {
         })
 
 
+        viewModel.successMessage.observe(this, Observer { _ ->
+           succeccSend()
+        })
+
+
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.showLoading()
@@ -111,6 +124,27 @@ class OrderMessageActivity : BaseActivity() {
 
     fun getEndDate(): Date {
         return Date(intent.getLongExtra( ENDDATE_KEY,-1))
+    }
+
+
+    fun succeccSend(){
+        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage(getString(R.string.text_your_request_sent))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.cancel()
+            setResult(Activity.RESULT_OK)
+            finishSafe()
+
+//            startActivity(DashboardActivity.newInstance(this))
+
+        }
+        builder.setCancelable(false)
+
+        builder.show()
     }
 
 

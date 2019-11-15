@@ -41,7 +41,7 @@
                     android:layout_gravity="top"
                     app:layout_constraintTop_toTopOf="parent"
                     app:toolbar_component_action_container="NONE"
-                    app:toolbar_component_action_text="Cancel"
+                    app:toolbar_component_action_text="@string/title_cancel"
                     app:toolbar_component_bottom_line="false"
                     app:toolbar_component_cancel_container="NONE"
                     app:toolbar_component_center_container="TITLE"

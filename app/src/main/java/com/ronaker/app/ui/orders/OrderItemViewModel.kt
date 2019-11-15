@@ -9,6 +9,7 @@ import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.BASE_URL
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class OrderItemViewModel : BaseViewModel() {
     private val productTitle = MutableLiveData<String>()
@@ -25,7 +26,19 @@ class OrderItemViewModel : BaseViewModel() {
         data = item
         activity = context
         productTitle.value = item.product.name
-        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.price)
+
+
+
+        val days = TimeUnit.DAYS.convert(
+            data.toDate.time - data.fromDate.time,
+            TimeUnit.MILLISECONDS
+        )
+
+
+
+
+        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), (data.product.price_per_day ?: 0.toDouble()) * days)
+//        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.price)
         productImage.value = BASE_URL + item.product.avatar
         productDate.value =
             SimpleDateFormat("dd MMM", Locale.getDefault()).format(item.fromDate) + "-" + SimpleDateFormat(

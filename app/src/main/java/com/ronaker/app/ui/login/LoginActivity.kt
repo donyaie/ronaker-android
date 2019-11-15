@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +16,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.view.ToolbarComponent
@@ -90,7 +92,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
-
+        setSwipeCloseDisable()
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -163,6 +165,8 @@ class LoginActivity : BaseActivity() {
 
 
     }
+
+
 
 
     private fun prePage() {
@@ -317,7 +321,7 @@ class LoginActivity : BaseActivity() {
 //                    LoginViewModel.LoginStateEnum.get(position)
 //
 //
-//                Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
+//                AppDebug.Log(TAG, String.format("onSelect:%s", loginState.name))
 //                (adapter.getItem(position) as IPagerFragment).onSelect()
 //
 //

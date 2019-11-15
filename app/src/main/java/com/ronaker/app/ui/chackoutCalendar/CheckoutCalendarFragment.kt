@@ -1,5 +1,7 @@
 package com.ronaker.app.ui.chackoutCalendar
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.ENDDATE_KEY
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.PRODUCT_KEY
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.STARTDATE_KEY
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
@@ -38,15 +43,25 @@ class CheckoutCalendarFragment : BaseFragment() {
 
         viewModel.nextStep.observe(this, Observer { _ ->
 
+//
 
-            activity?.let {
+            if (viewModel.startDate != null && viewModel.endDate != null) {
 
-                startActivityMakeScene(OrderMessageActivity.newInstance(it,
-                   getProduct(),viewModel.startDate,viewModel.endDate) )}
+                var intent = Intent()
+
+                intent.putExtra(STARTDATE_KEY, viewModel.startDate!!.time)
+
+                intent.putExtra(ENDDATE_KEY, viewModel.endDate!!.time)
+
+                activity?.setResult(Activity.RESULT_OK,intent)
+
+                finishSafe()
+            }
 
 
 
-            finishSafe()
+
+
 
         })
 

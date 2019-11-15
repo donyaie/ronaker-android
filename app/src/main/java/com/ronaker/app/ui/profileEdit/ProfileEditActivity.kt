@@ -12,6 +12,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
+import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
 
@@ -68,8 +69,7 @@ class ProfileEditActivity : BaseActivity() {
         viewModel.retry.observe(this, Observer { value ->
 
 
-
-            value?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
         binding.loading.oClickRetryListener = View.OnClickListener {
@@ -81,24 +81,32 @@ class ProfileEditActivity : BaseActivity() {
 
         viewModel.imageComplete.observe(this, Observer { value ->
             if (value == true) {
+                binding.imageText.setText(R.string.title_add_profile_image_edit)
                 binding.imageImage.setImageResource(R.drawable.ic_complete)
-            } else
+            } else {
+
+                binding.imageText.setText(R.string.title_add_profile_image)
                 binding.imageImage.setImageResource(R.drawable.ic_chevron_right)
+            }
         })
 
         viewModel.signComplete.observe(this, Observer { value ->
             if (value == true) {
                 binding.signImage.setImageResource(R.drawable.ic_complete)
-            } else
+            } else {
                 binding.signImage.setImageResource(R.drawable.ic_chevron_right)
+            }
         })
 
 
         viewModel.phoneComplete.observe(this, Observer { value ->
             if (value == true) {
+                binding.phoneText.setText(R.string.title_add_and_verify_phone_number_edit)
                 binding.phoneImage.setImageResource(R.drawable.ic_complete)
-            } else
+            } else {
+                binding.phoneText.setText(R.string.title_add_and_verify_phone_number)
                 binding.phoneImage.setImageResource(R.drawable.ic_chevron_right)
+            }
         })
 
 
@@ -112,8 +120,13 @@ class ProfileEditActivity : BaseActivity() {
         viewModel.peymentComplete.observe(this, Observer { value ->
             if (value == true) {
                 binding.paymentImage.setImageResource(R.drawable.ic_complete)
-            } else
+
+                binding.paymentText.setText(R.string.title_add_a_payment_method_edit)
+            } else {
                 binding.paymentImage.setImageResource(R.drawable.ic_chevron_right)
+
+                binding.paymentText.setText(R.string.title_add_a_payment_method)
+            }
         })
 
 
@@ -135,6 +148,7 @@ class ProfileEditActivity : BaseActivity() {
         binding.imageLayout.setOnClickListener {
 
 
+            startActivityMakeScene(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
         }
 
         binding.phoneLayout.setOnClickListener {
@@ -157,25 +171,21 @@ class ProfileEditActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
 
 
-
-
-
     }
 
     override fun onStart() {
 
         super.onStart()
+//
+//        if (isFistStart()) {
 
-        if (isFistStart()) {
-
-           viewModel.loadData()
+        viewModel.loadData()
 
 
-        }
+//        }
 
 
     }
-
 
 
     override fun onBackPressed() {

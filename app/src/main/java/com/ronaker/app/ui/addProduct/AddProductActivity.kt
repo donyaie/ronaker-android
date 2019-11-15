@@ -430,7 +430,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-                Debug.Log(TAG, String.format("onSelect:%s", actionState.name))
+                AppDebug.Log(TAG, String.format("onSelect:%s", actionState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 
