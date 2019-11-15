@@ -66,7 +66,7 @@ class OrderPreviewActivity : BaseActivity() {
 
 
         viewModel.showProduct.observe(this, Observer { product ->
-            startActivityMakeScene(ExploreProductActivity.newInstance(this,product,"ds"))
+            startActivityMakeSceneForResult(ExploreProductActivity.newInstance(this,product,"ds"),ExploreProductActivity.REQUEST_CODE)
         })
 
 

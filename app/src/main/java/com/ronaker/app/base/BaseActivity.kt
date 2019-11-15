@@ -1,22 +1,15 @@
 package com.ronaker.app.base
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import com.ronaker.app.model.Product
-import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.LocaleHelper
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
-import java.lang.reflect.Type
 
 
 abstract class BaseActivity: SwipeBackActivity() {
@@ -28,15 +21,10 @@ abstract class BaseActivity: SwipeBackActivity() {
        swipeBackLayout.setEnableGesture(false)
    }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-//        overridePendingTransition(0, 0);
         super.onCreate(savedInstanceState)
         addActivityStack(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
-
-
-
 
     }
 
@@ -45,11 +33,9 @@ abstract class BaseActivity: SwipeBackActivity() {
 
     companion object {
 
-
         fun addActivityStack(activity:Activity){
             if(!activityList.contains(activity))
                 activityList.add(activity)
-
             refreshActivityStack()
         }
 
@@ -90,27 +76,9 @@ abstract class BaseActivity: SwipeBackActivity() {
 
             }
 
-//
-//            AppDebug.Log("BaseActivity","start_activityStack--------------------")
-//            activityList.forEach {
-//
-//                AppDebug.Log("BaseActivity","class :"+it.localClassName +" tag :"+(it as BaseActivity).activityTag)
-//            }
-//
-//            AppDebug.Log("BaseActivity","end_activityStack--------------------")
-
         }
 
-
-
-
-
-
-
        private var activityList: ArrayList<Activity> = ArrayList()
-
-
-
 
 
     }
@@ -157,7 +125,18 @@ abstract class BaseActivity: SwipeBackActivity() {
 
     }
 
-     fun finishSafe() {
+
+    fun startActivityMakeSceneForResult(intent: Intent?,requestCode:Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.startActivityForResult(intent,requestCode, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }else{
+            super.startActivityForResult(intent,requestCode)
+        }
+
+    }
+
+
+    fun finishSafe() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.finishAfterTransition();

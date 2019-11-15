@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.dashboard
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -25,6 +26,11 @@ import com.ronaker.app.utils.view.TabNavigationComponent
 import android.view.WindowManager
 import android.os.Build
 import android.graphics.Color
+import android.os.Handler
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
+import com.ronaker.app.ui.orderMessage.OrderMessageActivity
+import java.util.*
 
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -179,6 +185,21 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         super.onSaveInstanceState(outState)
         fragNavController.onSaveInstanceState(outState)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
+        when(requestCode){
+            ExploreProductActivity.REQUEST_CODE->{
+                if(resultCode== Activity.RESULT_OK) {
+                    binding.navigation.select(1)
+                }
+            }
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 

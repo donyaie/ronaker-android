@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.exploreProduct
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -19,9 +20,10 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
+import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.DEFULT_LOCATION
+import java.util.*
 
 
 class ExploreProductActivity : BaseActivity() {
@@ -33,19 +35,17 @@ class ExploreProductActivity : BaseActivity() {
     lateinit var googleMap: GoogleMap
 
     companion object {
+
+
+        var REQUEST_CODE = 345
+
         var SUID_KEY = "suid"
         var PRODUCT_KEY = "product"
-
         var IMAGE_TRANSITION_KEY = "image_transition"
-
-
         private val TAG = ExploreProductActivity::class.java.simpleName
 
         fun isHavePending(product: Product): Boolean {
-
              product.suid?.let { return isTAGInStack(TAG+it) }?:run { return false }
-
-
         }
 
         fun newInstance(context: Context, suid: String): Intent {
@@ -53,7 +53,6 @@ class ExploreProductActivity : BaseActivity() {
             var boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
             intent.putExtras(boundle)
-
             return intent
         }
 
@@ -62,9 +61,7 @@ class ExploreProductActivity : BaseActivity() {
             var boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
             boundle.putString(IMAGE_TRANSITION_KEY, transitionName)
-
             intent.putExtras(boundle)
-
             return intent
         }
     }
@@ -75,33 +72,20 @@ class ExploreProductActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         activityTag = TAG+getCurrentSUID()
 
-
-
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
         viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
 
         binding.viewModel = viewModel
 
-
-
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
             val imageTransitionName = getImageTransition()
             binding.avatarSlide.setTransitionName(imageTransitionName)
         }
 
-
-
-
-
-
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
-
 
         viewModel.imageList.observe(this, Observer { images ->
 
@@ -116,8 +100,6 @@ class ExploreProductActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
-
-
         viewModel.retry.observe(this, Observer { value ->
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
@@ -129,11 +111,7 @@ class ExploreProductActivity : BaseActivity() {
             viewModel.onRetry()
         }
 
-
-
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
-
-
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
@@ -181,25 +159,23 @@ class ExploreProductActivity : BaseActivity() {
                 googleMap.moveCamera(cameraUpdate)
             }
 
-
         }
-
 
         viewModel.productLocation.observe(this, Observer { suid ->
 
             addMarker(suid)
-
-
         })
 
         viewModel.checkout.observe(this, Observer { _ ->
-
-            startActivityMakeScene(viewModel.mProduct?.let {
-                CheckoutCalendarActivity.newInstance(
-                    this,
-                    it
+            viewModel.mProduct?.let {
+                startActivityMakeSceneForResult(
+                    CheckoutCalendarActivity.newInstance(
+                        this,
+                        it
+                    ),CheckoutCalendarActivity.REQUEST_CODE
                 )
-            })
+
+            }
 
         })
 
@@ -207,10 +183,6 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onStart() {
-
-        AppDebug.Log("isHavePending", "clear " + getCurrentSUID())
-
-//        AnimationHelper.setFadeTransition(this)
         super.onStart()
 
         if (isFistStart()) {
@@ -294,5 +266,54 @@ class ExploreProductActivity : BaseActivity() {
         super.onBackPressed();
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
+        when(requestCode){
+
+            CheckoutCalendarActivity.REQUEST_CODE->{
+                data?.let {
+
+                    if(resultCode== Activity.RESULT_OK){
+
+                        var start=  Date(data.getLongExtra( CheckoutCalendarActivity.STARTDATE_KEY,-1))
+                        var end=  Date(data.getLongExtra( CheckoutCalendarActivity.ENDDATE_KEY,-1))
+
+
+                        Handler().postDelayed({
+                            startActivityMakeSceneForResult(OrderMessageActivity.newInstance(this,getProduct(),start,end),OrderMessageActivity.REQUEST_CODE)
+                        },100)
+                    }
+                }
+            }
+
+
+
+            OrderMessageActivity.REQUEST_CODE->{
+                if(resultCode== Activity.RESULT_OK) {
+
+                    setResult(Activity.RESULT_OK)
+                    finishSafe()
+                }
+
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+
+
+    }
 
 }

@@ -84,12 +84,12 @@ class ItemExploreViewModel : BaseViewModel() {
                     it
                 )
             }
-            activity.startActivity(
+            activity.startActivityForResult(
                 ExploreProductActivity.newInstance(
                     activity,
                     data,
                     ViewCompat.getTransitionName(mBinder.image)
-                ), options?.toBundle()
+                ),ExploreProductActivity.REQUEST_CODE, options?.toBundle()
             )
         }
     }

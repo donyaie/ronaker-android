@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderMessage
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,6 +29,9 @@ class OrderMessageActivity : BaseActivity() {
         var PRODUCT_KEY = "mProduct"
         var STARTDATE_KEY = "start_date"
         var ENDDATE_KEY = "end_date"
+
+
+        var REQUEST_CODE = 347
 
         fun newInstance(
             context: Context,
@@ -132,6 +136,7 @@ class OrderMessageActivity : BaseActivity() {
 
         ) { dialog, _ ->
             dialog?.cancel()
+            setResult(Activity.RESULT_OK)
             finishSafe()
 
 //            startActivity(DashboardActivity.newInstance(this))
