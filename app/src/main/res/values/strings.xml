@@ -157,6 +157,7 @@
     <string name="text_please_upload_a_image_of_you_for_identify_you">Please upload a image of you for identify you</string>
     <string name="text_add_a_image">Add a image</string>
     <string name="text_your_request_sent">Your Request Has Been Sent.</string>
+    <string name="text_are_you_sure">Are you Sure?</string>
 
 
 </resources>

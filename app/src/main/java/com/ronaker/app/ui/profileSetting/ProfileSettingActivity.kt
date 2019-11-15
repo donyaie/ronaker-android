@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -84,8 +85,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
         binding.logoutLayout.setOnClickListener{
-            viewModel.logout()
-            startActivityMakeScene(DashboardActivity.newInstance(this) )
+         showLogoutDialog()
 
         }
         binding.downloadLayout.setOnClickListener{
@@ -129,6 +129,23 @@ class ProfileSettingActivity : BaseActivity() {
 
     }
 
+
+
+
+    private fun showLogoutDialog() {
+        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage(getString(R.string.text_are_you_sure))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog?.cancel()
+            viewModel.logout()
+            startActivityMakeScene(DashboardActivity.newInstance(this) )
+        }
+        builder.setNegativeButton(getString(android.R.string.cancel))
+        { dialog, _ -> dialog?.cancel() }
+        builder.show()
+    }
 
 
     override fun onBackPressed() {

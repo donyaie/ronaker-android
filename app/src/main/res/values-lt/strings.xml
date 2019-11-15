@@ -142,4 +142,5 @@
     <string name="text_add_a_profile_image">Pridėkite profilio vaizdą</string>
     <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo atvaizdą, kad galėtumėte jus atpažinti</string>
     <string name="text_your_request_sent">Jūsų prašymas išsiųstas.</string>
+    <string name="text_are_you_sure">Ar tu tuo tikras?</string>
 </resources>

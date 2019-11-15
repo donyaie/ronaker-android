@@ -142,4 +142,5 @@
     <string name="text_add_a_profile_image">Voeg een profielafbeelding toe</string>
     <string name="text_please_upload_a_image_of_you_for_identify_you">Upload een afbeelding van u om u te identificeren</string>
     <string name="text_your_request_sent">Uw verzoek is verstuurd.</string>
+    <string name="text_are_you_sure">Weet je zeker dat?</string>
 </resources>
