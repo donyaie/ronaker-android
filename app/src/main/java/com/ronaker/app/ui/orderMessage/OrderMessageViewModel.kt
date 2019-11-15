@@ -108,7 +108,7 @@ class OrderMessageViewModel : BaseViewModel() {
                     .subscribe { result ->
                         if (result.isSuccess() || result.isAcceptable()) {
                             successMessage.value = true
-                            next.value = true
+
 
                         } else {
 

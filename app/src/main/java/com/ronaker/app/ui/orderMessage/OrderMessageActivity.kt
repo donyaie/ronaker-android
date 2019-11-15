@@ -12,6 +12,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductCategorySelectDialog
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
 import java.util.*
@@ -131,7 +132,12 @@ class OrderMessageActivity : BaseActivity() {
 
         ) { dialog, _ ->
             dialog?.cancel()
+            finishSafe()
+
+//            startActivity(DashboardActivity.newInstance(this))
+
         }
+        builder.setCancelable(false)
 
         builder.show()
     }
