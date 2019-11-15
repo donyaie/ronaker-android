@@ -137,4 +137,9 @@
     <string name="title_add_a_payment_method_edit">Pakeiskite mokėjimo metodą</string>
     <string name="title_add_and_verify_phone_number_edit">Pakeiskite ir patvirtinkite naują telefono numerį</string>
     <string name="title_add_profile_image_edit">Keisti profilio vaizdą</string>
+    <string name="text_clear">Aišku</string>
+    <string name="text_add_a_image">Pridėkite vaizdą</string>
+    <string name="text_add_a_profile_image">Pridėkite profilio vaizdą</string>
+    <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo atvaizdą, kad galėtumėte jus atpažinti</string>
+    <string name="text_your_request_sent">Jūsų prašymas išsiųstas.</string>
 </resources>

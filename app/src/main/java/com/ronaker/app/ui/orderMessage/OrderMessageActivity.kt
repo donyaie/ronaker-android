@@ -126,7 +126,7 @@ class OrderMessageActivity : BaseActivity() {
     fun succeccSend(){
         var builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
-        builder.setMessage("Your Request Has Been Sent.")
+        builder.setMessage(getString(R.string.text_your_request_sent))
         builder.setPositiveButton(
             getString(android.R.string.ok)
 
