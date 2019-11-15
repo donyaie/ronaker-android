@@ -8,6 +8,7 @@ import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.ContentApi
 import com.ronaker.app.data.network.response.ContentImageResponceModel
+import com.ronaker.app.data.network.response.FreeResponseModel
 import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,7 +31,7 @@ class ContentRepository(val contentApi: ContentApi) {
     }
 
 
-    fun deleteImage(token: String?, suid: String): Observable<Result<ProductCreateResponseModel>> {
+    fun deleteImage(token: String?, suid: String): Observable<Result<FreeResponseModel>> {
         return contentApi.deleteImage("Token $token", suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).toResult()

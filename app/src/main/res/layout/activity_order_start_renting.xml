@@ -57,7 +57,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
-                        android:text="Be careful"
+                        android:text="Please ensure that the rented goods are functioning properly"
                         android:textAppearance="@style/TextAppearance.Medium.Regular"
                         android:gravity="left"
                         android:id="@+id/description"
@@ -91,7 +91,7 @@
 
 
 
-                <Button style="@style/Button.accent" android:text="Charging and Start renting"
+                <Button style="@style/Button.accent" android:text="Accept and Start renting"
 
                         android:layout_weight="1"
 

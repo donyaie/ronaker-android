@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderAcceptIntro
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +25,9 @@ class OrderAcceptActivity : BaseActivity() {
 
 
     companion object {
+
+
+        var REQUEST_CODE = 350
         var Order_KEY = "order"
 
         fun newInstance(context: Context,order: Order?): Intent {
@@ -70,6 +74,7 @@ class OrderAcceptActivity : BaseActivity() {
 
 
         viewModel.finish.observe(this, Observer { _ ->
+            setResult(Activity.RESULT_OK)
            finishSafe()
         })
 

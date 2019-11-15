@@ -53,6 +53,12 @@ class OrderPreviewViewModel : BaseViewModel() {
     val userName: MutableLiveData<String> = MutableLiveData()
     val userImage: MutableLiveData<String> = MutableLiveData()
     val orderDescription: MutableLiveData<String> = MutableLiveData()
+    val orderIntroduction: MutableLiveData<String> = MutableLiveData()
+
+
+
+    val orderDescriptionVisibility: MutableLiveData<Int> = MutableLiveData()
+    val orderIntroductionVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
     val actionVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -139,7 +145,19 @@ class OrderPreviewViewModel : BaseViewModel() {
 
                 }
 
+
+
+                orderDescriptionVisibility.value=View.GONE
+                orderIntroductionVisibility.value=View.VISIBLE
+
+
                 when (Order.OrderStatusEnum[order.status]) {
+
+
+
+
+
+
                     Order.OrderStatusEnum.Accepted -> {
 
                         actionVisibility.value = View.VISIBLE
@@ -200,6 +218,10 @@ class OrderPreviewViewModel : BaseViewModel() {
 
                 }
 
+
+                orderDescriptionVisibility.value=View.VISIBLE
+                orderIntroductionVisibility.value=View.GONE
+
                 when (Order.OrderStatusEnum[order.status]) {
                     Order.OrderStatusEnum.Accepted -> {
 
@@ -208,7 +230,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                         startRentingVisibility.value = View.GONE
                         acceptVisibility.value = View.GONE
                         declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
+                        finishVisibility.value = View.VISIBLE
                         cancelVisibility.value = View.VISIBLE
                     }
                     Order.OrderStatusEnum.Started -> {

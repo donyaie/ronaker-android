@@ -304,16 +304,7 @@ class ExploreProductActivity : BaseActivity() {
 
         }
 
-
-
-
-
-
         super.onActivityResult(requestCode, resultCode, data)
-
-
-
-
     }
 
 }

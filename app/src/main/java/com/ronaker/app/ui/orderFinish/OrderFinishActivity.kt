@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderFinish
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +25,8 @@ class OrderFinishActivity : BaseActivity() {
 
     companion object {
         var Order_KEY = "order"
+
+        var REQUEST_CODE = 353
 
         fun newInstance(context: Context,order: Order?): Intent {
             var intent = Intent(context, OrderFinishActivity::class.java)
@@ -69,6 +72,7 @@ class OrderFinishActivity : BaseActivity() {
 
 
         viewModel.finish.observe(this, Observer { _ ->
+            setResult(Activity.RESULT_OK)
            finishSafe()
         })
 

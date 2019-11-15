@@ -57,7 +57,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
-                        android:text="Be careful"
+                        android:text="Please make sure your product is functioning properly and delivered to you without damage"
                         android:textAppearance="@style/TextAppearance.Medium.Regular"
                         android:gravity="left"
                         android:id="@+id/description"

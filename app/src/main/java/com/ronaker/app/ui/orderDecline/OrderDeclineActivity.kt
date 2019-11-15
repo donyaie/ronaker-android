@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderDecline
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,11 +22,11 @@ class OrderDeclineActivity : BaseActivity() {
     private lateinit var viewModel: OrderDeclineViewModel
 
 
-
     companion object {
         var Order_KEY = "order"
 
-        fun newInstance(context: Context,order: Order?): Intent {
+        var REQUEST_CODE = 351
+        fun newInstance(context: Context, order: Order?): Intent {
             var intent = Intent(context, OrderDeclineActivity::class.java)
             var boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
@@ -69,11 +70,12 @@ class OrderDeclineActivity : BaseActivity() {
 
 
         viewModel.finish.observe(this, Observer { _ ->
-           finishSafe()
+            setResult(Activity.RESULT_OK)
+            finishSafe()
         })
 
 
-        binding.toolbar.cancelClickListener= View.OnClickListener {
+        binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finishSafe()
         }
@@ -82,15 +84,11 @@ class OrderDeclineActivity : BaseActivity() {
         getOrder()?.let { viewModel.load(it) }
 
 
-
     }
 
 
-
-
-    fun getOrder():Order?
-    {
-        if ( intent.hasExtra(Order_KEY)) {
+    fun getOrder(): Order? {
+        if (intent.hasExtra(Order_KEY)) {
             var value = intent.getParcelableExtra<Order?>(Order_KEY)
 
             return value
@@ -98,11 +96,6 @@ class OrderDeclineActivity : BaseActivity() {
         }
         return null
     }
-
-
-
-
-
 
 
 }

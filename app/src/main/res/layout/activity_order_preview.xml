@@ -221,10 +221,19 @@ android:src="@color/colorPlatinGrey"
 
                 <TextView android:text="Description"
 
+                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
                           app:mutableText="@{viewModel.getOrderDescription()}"
                           android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"
                         tools:ignore="HardcodedText" />
 
+
+
+                <TextView android:text="Introduction"
+
+                    app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}"
+                    app:mutableText="@{viewModel.getOrderIntroduction()}"
+                    android:layout_margin="24dp" android:textAppearance="@style/TextAppearance.Large.Light" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
 
 
 
