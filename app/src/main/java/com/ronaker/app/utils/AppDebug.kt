@@ -2,7 +2,7 @@ package com.ronaker.app.utils;
 
 import android.util.Log
 
-object Debug {
+object AppDebug {
 
     fun Log(TAG: String, Message: String?) {
         if (Message != null)

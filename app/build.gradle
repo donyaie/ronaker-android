@@ -30,7 +30,7 @@ android {
         release {
             keyAlias 'bizfer'
             keyPassword 'bizfer-bizfer'
-            storeFile file('/workspace/ronaker-customer-android/sign_key')
+            storeFile file('../sign_key')
             storePassword 'bizfer-bizfer'
         }
     }
@@ -169,6 +169,8 @@ dependencies {
 
     //picker
     implementation project(path: ":rangedatepicker")
+
+    implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
 
     //implementation
     testImplementation "junit:junit:4.12"

@@ -68,19 +68,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         AnimationHelper.setFadeTransition(this)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-
-//            window.navigationBarColor=Color.BLACK
-//
-//            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-//            window.statusBarColor = Color.TRANSPARENT
-        }
-
         super.onCreate(savedInstanceState)
-
+        setSwipeCloseDisable()
         binding = DataBindingUtil.setContentView(this, com.ronaker.app.R.layout.activity_dashboard)
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)

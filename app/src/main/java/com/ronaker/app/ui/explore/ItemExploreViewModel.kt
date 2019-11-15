@@ -36,21 +36,30 @@ class ItemExploreViewModel : BaseViewModel() {
 
         if (post.price_per_day?.equals(0) != true) {
             productPrice.value = String.format(
-                "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_day, context.getString(
+                "%s%.02f %s",
+                context.getString(R.string.title_curency_symbol),
+                post.price_per_day,
+                context.getString(
                     R.string.title_per_day
                 )
             )
         } else if (post.price_per_week?.equals(0) != true) {
 
             productPrice.value = String.format(
-                "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_week, context.getString(
+                "%s%.02f %s",
+                context.getString(R.string.title_curency_symbol),
+                post.price_per_week,
+                context.getString(
                     R.string.title_per_week
                 )
             )
         } else if (post.price_per_month?.equals(0) != true) {
 
             productPrice.value = String.format(
-                "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_month, context.getString(
+                "%s%.02f %s",
+                context.getString(R.string.title_curency_symbol),
+                post.price_per_month,
+                context.getString(
                     R.string.title_per_month
                 )
             )
@@ -67,15 +76,22 @@ class ItemExploreViewModel : BaseViewModel() {
     fun onClickProduct() {
 
 
-        val options = ViewCompat.getTransitionName( mBinder.image)?.let {
-            ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity,
-                mBinder.image,
-                it
+        if (!ExploreProductActivity.isHavePending(data)) {
+            val options = ViewCompat.getTransitionName(mBinder.image)?.let {
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    activity,
+                    mBinder.image,
+                    it
+                )
+            }
+            activity.startActivity(
+                ExploreProductActivity.newInstance(
+                    activity,
+                    data,
+                    ViewCompat.getTransitionName(mBinder.image)
+                ), options?.toBundle()
             )
         }
-
-        activity.startActivity(ExploreProductActivity.newInstance(activity, data,ViewCompat.getTransitionName( mBinder.image)),options?.toBundle())
     }
 
     fun getProductTitle(): MutableLiveData<String> {

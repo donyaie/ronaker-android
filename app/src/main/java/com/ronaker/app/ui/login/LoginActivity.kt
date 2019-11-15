@@ -90,7 +90,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
-
+        setSwipeCloseDisable()
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -317,7 +317,7 @@ class LoginActivity : BaseActivity() {
 //                    LoginViewModel.LoginStateEnum.get(position)
 //
 //
-//                Debug.Log(TAG, String.format("onSelect:%s", loginState.name))
+//                AppDebug.Log(TAG, String.format("onSelect:%s", loginState.name))
 //                (adapter.getItem(position) as IPagerFragment).onSelect()
 //
 //

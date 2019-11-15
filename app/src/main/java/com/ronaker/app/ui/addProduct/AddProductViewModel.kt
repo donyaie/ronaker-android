@@ -13,7 +13,7 @@ import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.*
-import com.ronaker.app.utils.Debug
+import com.ronaker.app.utils.AppDebug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -237,7 +237,7 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_day = dayPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_day = 0.0
-            Debug.Log(TAG, e)
+            AppDebug.Log(TAG, e)
         }
 
 
@@ -246,14 +246,14 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_week = weekPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_week = 0.0
-            Debug.Log(TAG, e)
+            AppDebug.Log(TAG, e)
         }
 
         try {
             product.price_per_month = monthPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_month = 0.0
-            Debug.Log(TAG, e)
+            AppDebug.Log(TAG, e)
         }
         if (!updateSuid.isNullOrEmpty()) {
 

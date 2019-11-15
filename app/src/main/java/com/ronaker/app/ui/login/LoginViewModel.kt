@@ -6,7 +6,6 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUser
-import com.ronaker.app.utils.Debug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 

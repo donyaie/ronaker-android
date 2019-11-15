@@ -28,15 +28,15 @@
 
                 <RelativeLayout
                         android:id="@+id/avatar_layout"
+                    android:layout_height="320dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent">
 
 
                     <ImageView
                             android:id="@+id/avatar_image"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp"
+                            android:layout_height="match_parent"
                             android:background="@color/colorPlatinGrey"
                             android:scaleType="centerCrop"
                             app:layout_constraintTop_toTopOf="parent"

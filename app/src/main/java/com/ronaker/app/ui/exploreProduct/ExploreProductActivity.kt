@@ -13,21 +13,19 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.DEFULT_LOCATION
 
 
 class ExploreProductActivity : BaseActivity() {
 
-    private val TAG = ExploreProductActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
@@ -39,6 +37,16 @@ class ExploreProductActivity : BaseActivity() {
         var PRODUCT_KEY = "product"
 
         var IMAGE_TRANSITION_KEY = "image_transition"
+
+
+        private val TAG = ExploreProductActivity::class.java.simpleName
+
+        fun isHavePending(product: Product): Boolean {
+
+             product.suid?.let { return isTAGInStack(TAG+it) }?:run { return false }
+
+
+        }
 
         fun newInstance(context: Context, suid: String): Intent {
             var intent = Intent(context, ExploreProductActivity::class.java)
@@ -55,16 +63,20 @@ class ExploreProductActivity : BaseActivity() {
             boundle.putParcelable(PRODUCT_KEY, product)
             boundle.putString(IMAGE_TRANSITION_KEY, transitionName)
 
-
             intent.putExtras(boundle)
 
             return intent
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AnimationHelper.setAnimateTransition(this)
         super.onCreate(savedInstanceState)
+        activityTag = TAG+getCurrentSUID()
+
+
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
@@ -108,7 +120,7 @@ class ExploreProductActivity : BaseActivity() {
 
         viewModel.retry.observe(this, Observer { value ->
 
-            value?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
 
         })
 
@@ -152,7 +164,9 @@ class ExploreProductActivity : BaseActivity() {
             googleMap = it
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    this, R.raw.style_json));
+                    this, R.raw.style_json
+                )
+            );
 
             googleMap.uiSettings.setAllGesturesEnabled(false)
 
@@ -193,6 +207,8 @@ class ExploreProductActivity : BaseActivity() {
     }
 
     override fun onStart() {
+
+        AppDebug.Log("isHavePending", "clear " + getCurrentSUID())
 
 //        AnimationHelper.setFadeTransition(this)
         super.onStart()
@@ -239,6 +255,18 @@ class ExploreProductActivity : BaseActivity() {
     fun getSUID(): String? {
         return if (intent.hasExtra(SUID_KEY)) {
             intent.getStringExtra(SUID_KEY)
+        } else {
+            null
+        }
+    }
+
+
+    fun getCurrentSUID(): String? {
+        return if (intent.hasExtra(SUID_KEY)) {
+            intent.getStringExtra(SUID_KEY)
+        } else if (intent.hasExtra(PRODUCT_KEY)) {
+            var p = intent.getParcelableExtra(PRODUCT_KEY) as Product?
+            return p?.suid
         } else {
             null
         }

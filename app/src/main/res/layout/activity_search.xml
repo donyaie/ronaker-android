@@ -59,7 +59,9 @@
                               android:imeOptions="actionSearch"
                               android:id="@+id/search_edit"
                               android:textColor="@color/colorTextGreyLight"
-                              android:layout_height="match_parent"/>
+                              android:layout_height="match_parent">
+                        <requestFocus/>
+                    </EditText>
 
                     <ImageView android:layout_width="20dp" android:layout_height="20dp"
                                app:srcCompat="@drawable/ic_field_clear"
