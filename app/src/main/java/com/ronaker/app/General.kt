@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.onesignal.OneSignal
 import com.ronaker.app.injection.component.AppComponent
 import com.ronaker.app.injection.component.DaggerAppComponent
 import com.ronaker.app.injection.module.AppModule
@@ -44,7 +45,11 @@ class General : MultiDexApplication() {
         super.onCreate()
 
 
-
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+            .unsubscribeWhenNotificationsAreDisabled(true)
+            .init();
 
 //
 //        if (BuildConfig.DEBUG)

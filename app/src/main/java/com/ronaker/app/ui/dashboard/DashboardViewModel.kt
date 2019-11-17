@@ -3,6 +3,7 @@ package com.ronaker.app.ui.dashboard
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.utils.AnalyticsManager
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -18,8 +19,12 @@ class DashboardViewModel: BaseViewModel(){
     val goLogin: MutableLiveData<Boolean> = MutableLiveData()
 
     init{
-        if (!userRepository.isLogin())
+        if (!userRepository.isLogin()) {
             goLogin.value = true
+        }
+        else{
+            userRepository.getUserInfo()?.suid?.let { AnalyticsManager.setUserIdTag(it) }
+        }
 
 
     }

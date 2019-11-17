@@ -92,13 +92,13 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         })
 //       this.savedInstanceState=savedInstanceState
 
-        initNavigation(savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
         if(isFistStart()){
 
+            initNavigation(savedInstanceState)
         }
     }
 

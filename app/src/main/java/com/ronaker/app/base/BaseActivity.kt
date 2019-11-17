@@ -10,10 +10,15 @@ import com.ronaker.app.utils.LocaleHelper
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
+import com.google.firebase.analytics.FirebaseAnalytics
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 
 abstract class BaseActivity: SwipeBackActivity() {
-
+    private lateinit var  analytics: FirebaseAnalytics
 
     var activityTag:String?=null
 
@@ -24,8 +29,8 @@ abstract class BaseActivity: SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addActivityStack(this)
+        analytics = FirebaseAnalytics.getInstance(this);
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
-
     }
 
     var startCount=0
