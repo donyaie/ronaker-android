@@ -205,8 +205,7 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
         if (categories.isNotEmpty()) {
 
             productSubCategoryTitle.value = category.title
-            categories[0].sub_categories = ArrayList()
-            categories[0].sub_categories?.add(category)
+            categories[0].sub_categories = listOf(category)
         }
     }
 
@@ -508,12 +507,12 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
 
                                 result.data?.categories?.let {
 
-                                    categories = it.toCategoryList()
+                                    categories.clear()
+                                    categories.addAll(it.toCategoryList())
 
 
                                     if (categories.size > 1) {
-                                        categories[0].sub_categories = ArrayList()
-                                        categories[0].sub_categories?.add(categories[1])
+                                        categories[0].sub_categories = listOf(categories[1])
                                         categories.removeAt(1)
                                     }
 

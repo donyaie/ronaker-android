@@ -41,7 +41,7 @@ interface  UserRepository {
         user_token: String?,
         phone_number: String,
         code: String
-    ): Observable<Result<User>>
+    ): Observable<Result<String>>
 
     fun addDocument(
         userToken: String?,

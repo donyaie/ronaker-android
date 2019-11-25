@@ -56,7 +56,7 @@ interface UserApi {
      */
     @POST("/api/v1/users/phone_number/activation/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun activeUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserActivePhoneRequestModel): Observable<UserRegisterResponseModel>
+    fun activeUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserActivePhoneRequestModel): Observable<UserAddPhoneResponceModel>
 
 
 

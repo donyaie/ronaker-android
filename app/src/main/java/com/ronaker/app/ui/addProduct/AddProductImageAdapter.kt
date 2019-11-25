@@ -1,15 +1,17 @@
 package com.ronaker.app.ui.addProduct
 
-import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
+import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.databinding.AdapterProductAddImageBinding
 import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.extension.getParentActivity
+
 class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private  var productList: ArrayList<Product.ProductImage> = ArrayList()
@@ -127,7 +129,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
         fun bind(product: Product.ProductImage) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
-            viewModel.bind(product)
+            viewModel.bind(product,binding.root.getParentActivity() as BaseActivity)
 
 
         }

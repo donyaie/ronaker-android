@@ -5,12 +5,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
-import com.ronaker.app.data.GoogleMapRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Category
-import com.ronaker.app.model.Place
-import com.ronaker.app.model.toCategoryList
-import com.ronaker.app.model.toPlaceList
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -70,7 +66,7 @@ class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
                     dataList.clear()
                     parent?.let {category->
 
-                        result.data?.results?.toCategoryList()?.forEach{
+                        result.data?.forEach{
                             if(category.suid.compareTo(it.suid)==0){
 
                                 it.sub_categories?.let {it1->
@@ -81,7 +77,7 @@ class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
                         }
 
 
-                    }?:run{result.data?.results?.toCategoryList()?.let { dataList.addAll(it) }}
+                    }?:run{result.data?.let { dataList.addAll(it) }}
 
 
                     listAdapter.notifyDataSetChanged()

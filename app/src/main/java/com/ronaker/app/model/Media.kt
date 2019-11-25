@@ -6,16 +6,14 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Media(
-    var url: String,
     var suid: String,
+    var url: String,
     var created_at: String
 ): Parcelable {
 
 }
 
 fun ContentImageResponceModel.toMediaModel(): Media {
-
-
     return Media(
         suid,
         content,

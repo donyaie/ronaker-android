@@ -116,7 +116,7 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
         user_token: String?,
         phone_number: String,
         code: String
-    ): Observable<Result<User>> {
+    ): Observable<Result<String>> {
 
         val phone =
             UserActivePhoneRequestModel(
@@ -127,9 +127,7 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-                it.user.toUserModel().apply {
-                    accessToken = it.token
-                }
+                it.phone_number
             }
 
             .toResult()
