@@ -139,6 +139,7 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
 
     override fun onStart() {
         super.onStart()
+        selectTabUpdateView( selectedTab)
 
     }
 
