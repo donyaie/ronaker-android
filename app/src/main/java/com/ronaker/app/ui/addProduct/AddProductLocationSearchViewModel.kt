@@ -62,13 +62,12 @@ class AddProductLocationSearchViewModel (app: Application): BaseViewModel(app) {
             .doOnTerminate { }
             .subscribe(
                 { result ->
-                    if (result.predictions != null) {
-
+                    result?.let {
                         dataList.clear()
-                        result.predictions?.let {  dataList.addAll(it.toPlaceList())  }
+                        dataList.addAll(it)
                         listAdapter.notifyDataSetChanged()
-
                     }
+
                 },
                 { error -> error.message }
             )

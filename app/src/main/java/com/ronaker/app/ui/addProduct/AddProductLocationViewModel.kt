@@ -10,8 +10,6 @@ import com.ronaker.app.data.GoogleMapRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Place
-import com.ronaker.app.model.converGeoToPlace
-import com.ronaker.app.model.toPlace
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -76,19 +74,15 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
 
             .subscribe(
                 { result ->
-                    if (result.result != null) {
-                        result.result?.let {res->
 
-                            mPlace = res.toPlace()
-                            mPlace?.let {place->
+                    result?.let {
 
-
-                                newLocation.value = place.latLng
-                                placeName.value = place.mainText
-                            }
-                        }
-
+                        mPlace=it
+                        newLocation.value = it.latLng
+                        placeName.value = it.mainText
                     }
+
+
                 },
                 {error-> error.message}
             )
@@ -106,25 +100,17 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
             .subscribe(
                 { result ->
 
-                    if (result.results != null) {
 
-                        mPlace = result.converGeoToPlace()
-                        mPlace?.let {place->
-                            place.latLng = target
-                            placeName.value = place.mainText
+                    result?.let {
+                        mPlace = it
+                        mPlace?.latLng = target
+                        placeName.value = it.mainText
 
-                        }?:run {
-                            mPlace = null
-                            placeName.value = context.getString(R.string.title_search_your_location)
 
-                        }
-
-                    } else {
-
+                    }?: run{
 
                         mPlace = null
                         placeName.value = context.getString(R.string.title_search_your_location)
-
                     }
 
 

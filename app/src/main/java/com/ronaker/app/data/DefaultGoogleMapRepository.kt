@@ -2,9 +2,10 @@ package com.ronaker.app.data
 
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.GoogleMapApi
-import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
-import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
-import com.ronaker.app.data.network.response.MapGeoCodeResponceModel
+import com.ronaker.app.model.Place
+import com.ronaker.app.model.converGeoToPlace
+import com.ronaker.app.model.toPlace
+import com.ronaker.app.model.toPlaceList
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiKey: String) :
     GoogleMapRepository {
 
-    override fun getQueryAutocomplete(Query: String, latLng: LatLng?): Observable<GoogleAutocompleteResponseModel> {
+    override fun getQueryAutocomplete(Query: String, latLng: LatLng?): Observable<List<Place>?> {
 
         val language: String? = null// "en";
 
@@ -25,11 +26,14 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         return api.getQueryAutocomplete(Query, location, radius, language, components, types, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.predictions?.toPlaceList()
+            }
 
     }
 
 
-    override fun getPlaceDetails(placeId: String): Observable<GooglePlaceDetailResponseModel> {
+    override fun getPlaceDetails(placeId: String): Observable<Place?> {
 
         val language: String? = null// "en";
 
@@ -37,13 +41,17 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         return api.getPlaceDetails(placeId, language,apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map {
+
+                it.result?.toPlace()
+            }
 
     }
 
 
 
 
-    override fun getGeocode(location: LatLng): Observable<MapGeoCodeResponceModel> {
+    override fun getGeocode(location: LatLng): Observable<Place?> {
 
         val language: String? = null// "en";
 
@@ -54,6 +62,9 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         return api.getGeocode(null, latlng, null, null, language, null, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map{
+                it.converGeoToPlace()
+            }
 
     }
 
