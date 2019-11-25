@@ -86,24 +86,26 @@
                         android:id="@+id/info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="24dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
                         android:visibility="visible"
-                        app:layout_constraintTop_toBottomOf="@id/title_text"
-                        android:baselineAligned="false">
+                        app:layout_constraintTop_toBottomOf="@id/title_text">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="24dp"
-                            android:layout_marginRight="24dp"
                             android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
 
                             <ImageView
                                 android:layout_width="32dp"
-                                android:contentDescription="@string/text_content"
                                 android:layout_height="32dp"
                                 android:layout_marginEnd="8dp"
+                                android:contentDescription="@string/text_content"
                                 app:srcCompat="@drawable/ic_rating" />
 
 
@@ -135,8 +137,6 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="24dp"
-                            android:layout_marginRight="24dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight=".95"
                             android:gravity="end|center_vertical"
@@ -144,22 +144,26 @@
 
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginEnd="12dp"
+                                android:layout_weight=".95"
+                                android:gravity="end"
+                                android:singleLine="true"
                                 android:text="Owner Name"
                                 android:textAppearance="@style/TextAppearance.Large.Regular"
                                 app:mutableText="@{viewModel.getUserName()}"
-                                tools:ignore="HardcodedText" />
+                                tools:ignore="HardcodedText,NestedWeights" />
 
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:layout_width="42dp"
                                 android:layout_height="42dp"
 
-                                android:src="@color/colorPlatinGrey"
+                                android:src="@drawable/ic_user_default"
                                 app:mutableImage="@{viewModel.getUserImage()}"
-                                app:riv_corner_radius="21dp" />
+                                app:riv_corner_radius="21dp"
+                                tools:ignore="VectorDrawableCompat" />
 
 
                         </LinearLayout>
@@ -174,10 +178,10 @@
                         android:layout_height="wrap_content"
 
                         android:layout_marginLeft="24dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginRight="24dp"
-                        android:layout_marginBottom="24dp"
-                        android:minHeight="96dp"
+                        android:layout_marginBottom="16dp"
+                        android:minLines="4"
                         android:text="@string/caption_title"
                         android:textAppearance="@style/TextAppearance.Medium.Light"
                         app:layout_constraintTop_toBottomOf="@id/info"
@@ -187,7 +191,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="16dp"
                         app:layout_constraintTop_toBottomOf="@id/description_text">
 
 

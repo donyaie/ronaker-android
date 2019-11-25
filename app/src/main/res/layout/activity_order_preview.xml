@@ -69,7 +69,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            android:minLines="2"
 
                             android:text="sample product"
                             android:textAppearance="@style/TextAppearance.Medium.SB"
@@ -278,14 +277,12 @@
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-
-                        android:src="@color/colorPlatinGrey"
+                        android:src="@drawable/ic_user_default"
                         app:mutableImage="@{viewModel.getUserImage()}"
-                        app:riv_corner_radius="32dp" />
-
+                        app:riv_corner_radius="32dp"
+                        tools:ignore="VectorDrawableCompat" />
 
                 </LinearLayout>
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -347,6 +344,20 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="5">
+                <Button
+                    style="@style/Button.transparent"
+                    android:layout_width="wrap_content"
+
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.onClickDecline()}"
+                    android:text="@string/button_decline"
+                    app:mutableVisibility="@{viewModel.getDeclineVisibility()}"
+
+                    />
+
 
                 <Button
                     style="@style/Button.transparent"
@@ -363,7 +374,6 @@
                     />
 
 
-
                 <Button
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
@@ -378,23 +388,6 @@
                     app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
 
                     />
-
-                <Button
-                    style="@style/Button.transparent"
-                    android:layout_width="wrap_content"
-
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-
-                    android:layout_weight="1"
-                    android:onClick="@{()->viewModel.onClickDecline()}"
-                    android:text="@string/button_decline"
-                    app:mutableVisibility="@{viewModel.getDeclineVisibility()}"
-
-                    />
-
-
-
 
 
 

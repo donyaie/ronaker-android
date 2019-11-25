@@ -37,7 +37,6 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
 
     val logOutAction:MutableLiveData<Boolean> = MutableLiveData()
 
-    val settingAction:MutableLiveData<Boolean> = MutableLiveData()
 
 
 
@@ -99,9 +98,6 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
         user.is_phone_number_verified?.let { if(it) complete++ }
 
 
-
-
-
         if(complete==5){
             completeProgressVisibility.value= View.GONE
             completeVisibility.value=View.GONE
@@ -111,7 +107,7 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
 
             completeProgressVisibility.value= View.VISIBLE
             completeProgress.value=complete
-            userStep.value= "$complete of 5"
+            userStep.value= complete.toString()
 
             completeVisibility.value=View.VISIBLE
             editVisibility.value=View.GONE
@@ -125,7 +121,6 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
    fun onClickLogout(){
        userRepository.clearLogin()
        logOutAction.value=true
-
    }
 
 

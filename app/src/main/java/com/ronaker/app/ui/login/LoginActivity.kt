@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.login
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -83,12 +84,13 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, LoginActivity::class.java)
+            val intent = Intent(context, LoginActivity::class.java)
             intent.flags =Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
@@ -213,7 +215,7 @@ class LoginActivity : BaseActivity() {
                             R.anim.fragment_right_exit,
                             R.anim.fragment_right_pop_enter,
                             R.anim.fragment_right_pop_exit
-                        );
+                        )
                         ft.replace(R.id.frame_container, getFragment(state), state.name)
                             .addToBackStack(state.name)
                         ft.commit()

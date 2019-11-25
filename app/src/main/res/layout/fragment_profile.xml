@@ -41,6 +41,7 @@
 
 
                 <LinearLayout
+
                     android:id="@+id/profile_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,9 +57,10 @@
                         android:layout_height="72dp"
                         android:layout_marginStart="24dp"
                         android:scaleType="fitCenter"
-                        android:src="@color/colorPlatinGrey"
+                        android:src="@drawable/ic_user_default"
                         app:mutableImage="@{viewModel.getUserAvatar()}"
-                        app:riv_corner_radius="36dp" />
+                        app:riv_corner_radius="36dp"
+                        tools:ignore="VectorDrawableCompat" />
 
 
                     <LinearLayout
@@ -101,7 +103,7 @@
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
                             android:max="5"
                             android:progress="0"
                             app:mutableProgress="@{viewModel.getCompleteProgress()}"
@@ -113,7 +115,7 @@
                             android:id="@+id/complete_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="6dp"
                             android:orientation="horizontal"
                             app:mutableVisibility="@{viewModel.getCompleteVisibility()}">
 
@@ -129,16 +131,32 @@
                                 android:textAppearance="@style/TextAppearance.Medium.Regular"
                                 android:textColor="@color/colorTextDark" />
 
+
                             <TextView
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="3 fo 5"
+                                android:background="@drawable/background_oval_green"
+                                android:minWidth="16dp"
+                                android:gravity="center"
+                                android:text="3"
 
-                                android:textAppearance="@style/TextAppearance.Medium.Regular"
+                                android:textAppearance="@style/TextAppearance.Small.SB"
+
+                                android:textColor="@color/colorTextLight"
+                                app:mutableText="@{viewModel.getUserStep()}"
+
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" for 5"
+
+                                android:textAppearance="@style/TextAppearance.Small.SB"
 
                                 android:textColor="@color/colorTextDark"
-                                app:mutableText="@{viewModel.getUserStep()}"
 
                                 tools:ignore="HardcodedText" />
 
@@ -153,8 +171,9 @@
                 <LinearLayout
                     android:id="@+id/settingLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="66dp"
                     android:layout_marginTop="20dp"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -163,8 +182,8 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
-                        android:contentDescription="@string/title_setting"
                         android:layout_marginEnd="24dp"
+                        android:contentDescription="@string/title_setting"
                         android:padding="6dp"
                         app:srcCompat="@drawable/ic_settings" />
 
@@ -174,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".95"
                         android:text="@string/title_setting"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
 
                         android:textColor="@color/colorTextDark" />
 
@@ -183,18 +202,13 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
-                        android:contentDescription="@string/title_button_next"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
                         app:srcCompat="@drawable/ic_chevron_right" />
 
                 </LinearLayout>
-
-
-
-
-
 
 
                 <RelativeLayout
@@ -208,8 +222,9 @@
                 <LinearLayout
 
                     android:id="@+id/fave_Layout"
+                    android:background="?attr/selectableItemBackground"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="66dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -219,8 +234,8 @@
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
 
-                        android:contentDescription="@string/title_favorites"
                         android:layout_marginEnd="24dp"
+                        android:contentDescription="@string/title_favorites"
                         android:padding="6dp"
                         android:tint="@color/colorTextDark"
                         app:srcCompat="@drawable/ic_fave_white" />
@@ -231,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".95"
                         android:text="@string/title_favorites"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
 
                         android:textColor="@color/colorTextDark" />
 
@@ -239,9 +254,9 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
-                        android:contentDescription="@string/title_button_next"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
                         app:srcCompat="@drawable/ic_chevron_right" />
 
@@ -259,7 +274,8 @@
 
                     android:id="@+id/support_Layout"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
 
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -270,8 +286,8 @@
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
 
-                        android:contentDescription="@string/title_support"
                         android:layout_marginEnd="24dp"
+                        android:contentDescription="@string/title_support"
                         android:padding="6dp"
                         android:tint="@color/colorTextDark"
                         app:srcCompat="@drawable/ic_tab_inbox" />
@@ -282,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".95"
                         android:text="@string/title_support"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
 
                         android:textColor="@color/colorTextDark" />
 
@@ -290,9 +306,9 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
-                        android:contentDescription="@string/title_button_next"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
                         app:srcCompat="@drawable/ic_chevron_right" />
 
@@ -305,8 +321,6 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
-
-
 
 
             </LinearLayout>

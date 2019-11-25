@@ -54,6 +54,7 @@ class ViewPagerCustom : ViewPager {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return this.isPagingEnabled && super.onTouchEvent(event)
     }
