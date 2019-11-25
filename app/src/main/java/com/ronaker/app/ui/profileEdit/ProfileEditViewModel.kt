@@ -69,7 +69,7 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
 
 
                 } else {
-                    retry.value = result.error?.detail
+                    retry.value = result.error?.message
                 }
             }
 

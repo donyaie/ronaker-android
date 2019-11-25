@@ -1,6 +1,5 @@
 package com.ronaker.app.base
 
-import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.ronaker.app.injection.component.DaggerViewModelInjector

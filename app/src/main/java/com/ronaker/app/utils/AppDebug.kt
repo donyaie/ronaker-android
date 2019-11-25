@@ -1,22 +1,21 @@
-package com.ronaker.app.utils;
+package com.ronaker.app.utils
 
 import android.util.Log
 
 object AppDebug {
 
-    fun Log(TAG: String, Message: String?) {
+    fun log(TAG: String, Message: String?) {
         if (Message != null)
             Log.d(TAG, Message)
-
     }
 
-    fun Log(TAG: String, ex: Exception?) {
+    fun log(TAG: String, ex: Exception?) {
         if (ex != null)
-            Log(TAG, "Exception ", ex)
+            log(TAG, "Exception ", ex)
 
     }
 
-    fun Log(TAG: String, Message: String?, ex: Exception?) {
+    fun log(TAG: String, Message: String?, ex: Exception?) {
 
         var message1 = Message?:""
         if (ex != null)

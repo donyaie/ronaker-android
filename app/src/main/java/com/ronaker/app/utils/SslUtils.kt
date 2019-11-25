@@ -110,7 +110,7 @@ object SslUtils {
             val manager = trustManagerFactory.trustManagers[0] as X509TrustManager
             return Pair(sslContext, manager)
         } catch (e: Exception) {
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
 
             return null
         }

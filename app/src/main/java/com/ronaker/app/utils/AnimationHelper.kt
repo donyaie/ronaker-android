@@ -17,7 +17,7 @@ import android.view.animation.DecelerateInterpolator
  * Created by donyaie on 15/07/2016.
  */
 class AnimationHelper {
-    internal val TAG = AnimationHelper::class.java.name
+    private val TAG = AnimationHelper::class.java.name
 
 
     companion object {

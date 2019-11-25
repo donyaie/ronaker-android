@@ -178,7 +178,7 @@ class PhoneNumberActivity : BaseActivity() {
                 loginState = PhoneNumberViewModel.StateEnum.get(position)
 
 
-                AppDebug.Log(TAG, String.format("onSelect:%s", loginState.name))
+                AppDebug.log(TAG, String.format("onSelect:%s", loginState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 

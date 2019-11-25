@@ -9,7 +9,6 @@ import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
-import com.ronaker.app.model.toOrderList
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -100,7 +99,7 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
                     }
                 } else {
 
-                    retry.value = result.error?.detail
+                    retry.value = result.error?.message
                 }
             }
 

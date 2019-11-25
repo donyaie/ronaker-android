@@ -66,7 +66,7 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
                     }
 
                 }   else{
-                    errorMessage.value=result.error?.detail
+                    errorMessage.value=result.error?.message
                 }
 
             }

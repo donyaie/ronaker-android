@@ -11,7 +11,7 @@ import java.net.SocketTimeoutException
 
 class NetworkError(error: Throwable) {
 
-    internal val TAG = NetworkError::class.java.name
+    private val TAG = NetworkError::class.java.name
 
     enum class HttpError {
         HttpResponseSuccessOK,
@@ -37,12 +37,12 @@ class NetworkError(error: Throwable) {
         HttpResponseClientErrorTooMuchTry
     }
 
-    var detail = "An error occurred"
-    var responseCode: Int? = null;
-    var detail_code: String? = null;
-    var http_error: HttpError? = null;
+    var message = "An error occurred"
+    var responseCode: Int? = null
+    var code: String? = null
+    var httpError: HttpError? = null
 
-    var exception_error: Throwable? = null
+    var exceptionError: Throwable? = null
 
     companion object {
 
@@ -51,63 +51,70 @@ class NetworkError(error: Throwable) {
 
     init {
 
-        exception_error = error
-        if (error is HttpException) {
-            val errorJsonString = error.response()
-                ?.errorBody()?.string()
-            try {
-                this.detail = JsonParser().parse(errorJsonString)
-                    .asJsonObject["detail"]
-                    .asString
-            } catch (e: Exception) {
-                AppDebug.Log(TAG, e)
+        exceptionError = error
+        when (error) {
+            is HttpException -> {
+                val errorJsonString = error.response()
+                    ?.errorBody()?.string()
+                try {
+                    this.message = JsonParser().parse(errorJsonString)
+                        .asJsonObject["detail"]
+                        .asString
+                } catch (e: Exception) {
+                    AppDebug.log(TAG, e)
+                }
+                try {
+                    this.code = JsonParser().parse(errorJsonString)
+                        .asJsonObject["detail_code"]
+                        .asString
+                } catch (e: Exception) {
+                    AppDebug.log(TAG, e)
+                }
+                this.responseCode = error.code()
+
+                responseCode?.let {httpError = getHttpError(it)  }
+
             }
-            try {
-                this.detail_code = JsonParser().parse(errorJsonString)
-                    .asJsonObject["detail_code"]
-                    .asString
-            } catch (e: Exception) {
-                AppDebug.Log(TAG, e)
+            is EOFException -> {
+
+                message = "Empty Exception"
+                responseCode = 200
+                code = "Empty"
+                httpError = HttpError.HttpResponseSuccessOK
+
+
             }
-            this.responseCode = error.code();
+            is SocketTimeoutException -> {
 
-            responseCode?.let {http_error = getHttpError(it)  }
+                message = "Network Timeout"
+                responseCode = null
+                code = "HttpResponseNetworkTimeout"
+                httpError = HttpError.HttpResponseNetworkTimeout
 
-        }else if(error is EOFException) {
+            }
+            is ConnectException -> {
 
-            detail = "Empty Exception"
-            responseCode = 200
-            detail_code = "Empty"
-            http_error = HttpError.HttpResponseSuccessOK
+                message = "Connection Failure"
+                responseCode = null
+                code = "HttpResponseConnectionFailure"
+                httpError = HttpError.HttpResponseConnectionFailure
 
+            }
+            is IOException -> {
 
-        }else  if (error is SocketTimeoutException) {
+                message = "Network Error"
+                responseCode = null
+                code = "HttpResponseNetworkError"
+                httpError = HttpError.HttpResponseNetworkError
 
-            detail = "Network Timeout"
-            responseCode = null
-            detail_code = "HttpResponseNetworkTimeout"
-            http_error = HttpError.HttpResponseNetworkTimeout
+            }
+            else -> {
 
-        } else if (error is ConnectException) {
-
-            detail = "Connection Failure"
-            responseCode = null
-            detail_code = "HttpResponseConnectionFailure"
-            http_error = HttpError.HttpResponseConnectionFailure
-
-        } else if (error is IOException) {
-
-            detail = "Network Error"
-            responseCode = null
-            detail_code = "HttpResponseNetworkError"
-            http_error = HttpError.HttpResponseNetworkError
-
-        } else {
-
-            detail = "Failure"
-            responseCode = null
-            detail_code = "HttpResponseFailure"
-            http_error = HttpError.HttpResponseFailure
+                message = "Failure"
+                responseCode = null
+                code = "HttpResponseFailure"
+                httpError = HttpError.HttpResponseFailure
+            }
         }
 
 
@@ -117,36 +124,52 @@ class NetworkError(error: Throwable) {
     private fun getHttpError(code: Int): HttpError {
 
 
-        return if (code == 200) {
-            HttpError.HttpResponseSuccessOK
-        } else if (code == 301) {
-            HttpError.HttpResponseRedirectionMovedPermanently
-        } else if (code == 304) {
-            HttpError.HttpResponseRedirectionNotModified
-        } else if (code == 400) {
-            HttpError.HttpResponseClientErrorBadRequest
-        } else if (code == 401) {
-            HttpError.HttpResponseClientErrorUnauthorized
-        } else if (code == 403) {
-            HttpError.HttpResponseClientErrorForbidden
-        } else if (code == 404) {
-            HttpError.HttpResponseClientErrorNotFound
-        } else if (code == 405) {
-            HttpError.HttpResponseClientErrorMethodNotAllowed
-        } else if (code == 429) {
-            HttpError.HttpResponseClientErrorTooMuchTry
-        } else if (code == 502) {
-            HttpError.HttpResponseNGINXError
-        } else if (code >= 200 && code < 300) {
-            HttpError.HttpResponseSuccess
-        } else if (code >= 300 && code < 400) {
-            HttpError.HttpResponseRedirection
-        } else if (code >= 400 && code < 500) {
-            HttpError.HttpResponseClientError
-        } else if (code >= 500 && code < 600) {
-            HttpError.HttpResponseServerError
-        } else {
-            HttpError.HttpResponseUnexpectedError
+        return when (code) {
+            200 -> {
+                HttpError.HttpResponseSuccessOK
+            }
+            301 -> {
+                HttpError.HttpResponseRedirectionMovedPermanently
+            }
+            304 -> {
+                HttpError.HttpResponseRedirectionNotModified
+            }
+            400 -> {
+                HttpError.HttpResponseClientErrorBadRequest
+            }
+            401 -> {
+                HttpError.HttpResponseClientErrorUnauthorized
+            }
+            403 -> {
+                HttpError.HttpResponseClientErrorForbidden
+            }
+            404 -> {
+                HttpError.HttpResponseClientErrorNotFound
+            }
+            405 -> {
+                HttpError.HttpResponseClientErrorMethodNotAllowed
+            }
+            429 -> {
+                HttpError.HttpResponseClientErrorTooMuchTry
+            }
+            502 -> {
+                HttpError.HttpResponseNGINXError
+            }
+            in 200..299 -> {
+                HttpError.HttpResponseSuccess
+            }
+            in 300..399 -> {
+                HttpError.HttpResponseRedirection
+            }
+            in 400..499 -> {
+                HttpError.HttpResponseClientError
+            }
+            in 500..599 -> {
+                HttpError.HttpResponseServerError
+            }
+            else -> {
+                HttpError.HttpResponseUnexpectedError
+            }
         }
     }
 

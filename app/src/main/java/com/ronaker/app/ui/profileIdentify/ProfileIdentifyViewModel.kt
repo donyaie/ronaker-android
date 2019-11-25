@@ -112,7 +112,7 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
                     result.data?.suid?.let { addIdentity(it) }
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -143,7 +143,7 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
                 if (result.isAcceptable()) {
                     finish.value = true
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUserModel
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -113,7 +112,7 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
                     goNext.value=true
 
                 } else {
-                    errorMessage.value= result.error?.detail
+                    errorMessage.value= result.error?.message
                 }
             }
 
@@ -129,7 +128,7 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
                 if (result.isSuccess()) {
                     goNext.value=true
                 } else {
-                   errorMessage.value= result.error?.detail
+                   errorMessage.value= result.error?.message
                 }
             }
     }

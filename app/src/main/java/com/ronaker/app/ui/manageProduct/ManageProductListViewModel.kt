@@ -8,8 +8,6 @@ import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductList
-import com.ronaker.app.ui.explore.ItemExploreAdapter
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -140,9 +138,9 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
     private fun onRetrieveProductListError(error: NetworkError?) {
 
         if(page<=1)
-            retry.value = error?.detail
+            retry.value = error?.message
         else
-            errorMessage.value = error?.detail
+            errorMessage.value = error?.message
 
     }
 

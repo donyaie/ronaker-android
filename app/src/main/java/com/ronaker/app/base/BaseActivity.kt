@@ -11,9 +11,6 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 
@@ -38,13 +35,13 @@ abstract class BaseActivity: SwipeBackActivity() {
 
     companion object {
 
-        fun addActivityStack(activity:Activity){
+      private  fun addActivityStack(activity:Activity){
             if(!activityList.contains(activity))
                 activityList.add(activity)
             refreshActivityStack()
         }
 
-        fun removeActivityStack(activity:Activity){
+       private fun removeActivityStack(activity:Activity){
             if(activityList.contains(activity))
                 activityList.remove(activity)
 
@@ -64,7 +61,7 @@ abstract class BaseActivity: SwipeBackActivity() {
             return find
         }
 
-        fun refreshActivityStack(){
+        private fun refreshActivityStack(){
             val temp=ArrayList<Activity>()
 
             activityList.forEach {

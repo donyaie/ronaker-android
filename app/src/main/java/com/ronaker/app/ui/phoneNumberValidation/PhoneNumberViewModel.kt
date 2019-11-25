@@ -79,7 +79,7 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
                     startTimer()
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -94,7 +94,7 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
                     startTimer()
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
     }
@@ -130,7 +130,7 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
                 if (result.isSuccess()) {
                     goNext.value = false
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 

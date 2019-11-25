@@ -67,7 +67,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
     val REQUEST_IMAGE = 1233
 
-    var UpdateMode = false;
+    var UpdateMode = false
 
 
     internal var actionState = AddProductViewModel.StateEnum.image
@@ -430,7 +430,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-                AppDebug.Log(TAG, String.format("onSelect:%s", actionState.name))
+                AppDebug.log(TAG, String.format("onSelect:%s", actionState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 

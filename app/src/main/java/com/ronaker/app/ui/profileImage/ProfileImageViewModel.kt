@@ -131,7 +131,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
                     result.data?.suid?.let { addIdentity(it) }
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -163,7 +163,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
                 if (result.isSuccess()) {
                     finish.value = true
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 

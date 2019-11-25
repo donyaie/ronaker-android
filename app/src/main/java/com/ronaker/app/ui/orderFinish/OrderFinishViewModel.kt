@@ -3,19 +3,12 @@ package com.ronaker.app.ui.orderFinish
 
 import android.app.Application
 import android.content.Context
-import android.view.View
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
-import com.ronaker.app.model.Product
-import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class OrderFinishViewModel (app: Application): BaseViewModel(app) {
@@ -86,7 +79,7 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
 
                 } else {
 
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 

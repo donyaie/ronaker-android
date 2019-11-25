@@ -233,7 +233,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             product.price_per_day = dayPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_day = 0.0
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
         }
 
 
@@ -242,14 +242,14 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             product.price_per_week = weekPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_week = 0.0
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
         }
 
         try {
             product.price_per_month = monthPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_month = 0.0
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
         }
         if (!updateSuid.isNullOrEmpty()) {
 
@@ -295,11 +295,11 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                 if (result.isSuccess()) {
                     goNext.value = false
                 } else {
-                    if (result.error?.detail_code == error_unverified_phone_number)
+                    if (result.error?.code == error_unverified_phone_number)
                         goNext.value = true
                     else
 
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                 }
             }
 
@@ -328,7 +328,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                         adapter.removeItem(image)
                     } else {
                         adapter.removeItem(image)
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                     }
                 }
 
@@ -426,7 +426,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                         model.progress.value = false
                         checkNextSelectImage()
                     } else
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                 }
         }
         )
@@ -446,7 +446,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
                             goNext.value = false
                         } else {
-                            errorMessage.value = result.error?.detail
+                            errorMessage.value = result.error?.message
 
                         }
                     }
@@ -554,7 +554,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                             }
                         }
                     } else {
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                         goNext.value = false
                     }
                 }

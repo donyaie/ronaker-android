@@ -10,7 +10,6 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductDetail
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -99,7 +98,7 @@ class ExploreProductViewModel (app: Application): BaseViewModel(app) {
 
 
                 } else {
-                    retry.value =  result.error?.detail
+                    retry.value =  result.error?.message
 //                    errorMessage.value = result.error?.detail
                 }
             }

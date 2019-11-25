@@ -129,9 +129,9 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
 
     private fun onRetrieveProductListError(error: NetworkError?) {
         if (page <= 1)
-            retry.value = error?.detail
+            retry.value = error?.message
         else
-            errorMessage.value = error?.detail
+            errorMessage.value = error?.message
 
 
     }
