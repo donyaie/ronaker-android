@@ -3,7 +3,6 @@ package com.ronaker.app.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import com.ronaker.app.General
 import okhttp3.OkHttpClient
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -19,7 +18,7 @@ object SslUtils {
 
     //download pem
     //openssl s_client -showcerts -connect myserver.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > app/main/assets/my_service_certifcate.pem
-  private  val TAG=SslUtils::class.java.name
+    private val TAG = SslUtils::class.java.name
 
     fun getUnsafeOkHttpClientAll(): OkHttpClient {
         try {
@@ -49,7 +48,7 @@ object SslUtils {
             sslContext.init(null, trustAllCerts, SecureRandom())
 
             // Create an ssl socket factory with our all-trusting manager
-            val sslSocketFactory = sslContext.getSocketFactory()
+            val sslSocketFactory = sslContext.socketFactory
 
             val builder = OkHttpClient.Builder()
             builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
@@ -76,7 +75,7 @@ object SslUtils {
             }
 
             getSslContextForCertificateFile(
-               context,
+                context,
                 "my_certificate.pem"
             )?.let {
 
@@ -95,7 +94,7 @@ object SslUtils {
 
     }
 
-    fun getSslContextForCertificateFile(
+    private fun getSslContextForCertificateFile(
         context: Context,
         fileName: String
     ): Pair<SSLContext, X509TrustManager>? {
@@ -111,7 +110,7 @@ object SslUtils {
             val manager = trustManagerFactory.trustManagers[0] as X509TrustManager
             return Pair(sslContext, manager)
         } catch (e: Exception) {
-            AppDebug.Log(TAG,e)
+            AppDebug.Log(TAG, e)
 
             return null
         }
@@ -142,7 +141,7 @@ object SslUtils {
         return keyStore
     }
 
-    fun getTrustAllHostsSSLSocketFactory(): Pair<SSLSocketFactory, X509TrustManager>? {
+    private fun getTrustAllHostsSSLSocketFactory(): Pair<SSLSocketFactory, X509TrustManager>? {
         try {
             // Create a trust manager that does not validate certificate chains
             val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {

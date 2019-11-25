@@ -39,7 +39,7 @@ data class Order(
         companion object {
             operator fun get(position: String): OrderStatusEnum {
                 var state = None
-                for (stateEnum in OrderStatusEnum.values()) {
+                for (stateEnum in values()) {
                     if (position.compareTo(stateEnum.key) == 0)
                         state = stateEnum
                 }
@@ -66,7 +66,7 @@ data class Order(
         companion object {
             operator fun get(position: String): OrderTypeEnum {
                 var state = None
-                for (stateEnum in OrderTypeEnum.values()) {
+                for (stateEnum in values()) {
                     if (position.compareTo(stateEnum.key) == 0)
                         state = stateEnum
                 }
@@ -82,11 +82,11 @@ data class Order(
 fun List<OrderResponseModel>.toOrderList(): List<Order> {
 
 
-    var list: ArrayList<Order> = ArrayList()
+    val list: ArrayList<Order> = ArrayList()
 
     this.forEach {
 
-            var product = Order(
+            val product = Order(
                 it.suid,
                 it.message,
                 it.start_date,

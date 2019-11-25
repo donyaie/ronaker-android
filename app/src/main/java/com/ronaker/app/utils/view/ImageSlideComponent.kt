@@ -1,5 +1,6 @@
 package com.ronaker.app.utils.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -40,7 +41,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
             .inflate(R.layout.component_image_slide, this, true)
 
         containerLayout = findViewById(R.id.container_layout)
-        viewPager = findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager)
         adapter=ImagePagerAdapter(context,dataList)
         orientation = VERTICAL
 
@@ -51,7 +52,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
         attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
-                R.styleable.image_slide_attributes, 0, 0
+                R.styleable.ImageSlideComponent, 0, 0
             )
 
             typedArray.recycle()
@@ -95,6 +96,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
             return view === Object
         }
 
+        @SuppressLint("InflateParams")
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view = LayoutInflater.from(context).inflate(R.layout.component_image_slide_item, null)
             val imageView = view.findViewById(R.id.image) as ImageView

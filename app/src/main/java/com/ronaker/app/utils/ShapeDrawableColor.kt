@@ -6,7 +6,6 @@ import android.os.Build
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import kotlinx.android.synthetic.main.fragment_product_add_price.view.*
 
 
 class ShapeDrawableHelper {

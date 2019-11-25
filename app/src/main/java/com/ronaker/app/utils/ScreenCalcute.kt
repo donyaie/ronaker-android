@@ -5,60 +5,58 @@ import android.util.DisplayMetrics
 import android.view.Display
 import android.view.Surface
 import android.view.WindowManager
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
-class ScreenCalcute
+class ScreenCalcute(context: Context) {
 
+    private val TAG = ScreenCalcute::class.java.name
 
-    (context: Context) {
-
-    val TAG = ScreenCalcute::class.java.name
-
-    internal var display: Display
-    internal var displayMetrics: DisplayMetrics
+    private var display: Display
+    private var displayMetrics: DisplayMetrics
 
     // ====== Inner Methods ====== //
 
-    val screenDensity: Float
+     val screenDensity: Float
         get() = displayMetrics.density
 
-    val screenDPI: Int
+     val screenDPI: Int
         get() = displayMetrics.densityDpi
 
-    val screenHeightPixel: Float
+     val screenHeightPixel: Float
         get() {
             display.getMetrics(displayMetrics)
             return displayMetrics.heightPixels.toFloat()
         }
 
-    val screenWidthPixel: Float
+     val screenWidthPixel: Float
         get() {
             display.getMetrics(displayMetrics)
             return displayMetrics.widthPixels.toFloat()
         }
 
-    val screenHeightDP: Float
+     val screenHeightDP: Float
         get() = screenHeightPixel / screenDensity
 
-    val screenWidthDP: Float
+     val screenWidthDP: Float
         get() = screenWidthPixel / screenDensity
 
-    val screenInch: Float
+     val screenInch: Float
         get() =
-            Math.sqrt(
-                Math.pow((screenWidthDP / 160).toDouble(), 2.0) + Math.pow(
-                    (screenHeightDP / 160).toDouble(),
+            sqrt(
+                (screenWidthDP / 160).toDouble().pow(2.0) + (screenHeightDP / 160).toDouble().pow(
                     2.0
                 )
             ).toFloat()
 
-    val aspectRation: Float
+     val aspectRation: Float
         get() = screenHeightDP / screenWidthDP
 
-    val rotation: Int
+     val rotation: Int
         get() = display.rotation
 
-    val isLandScape: Boolean
+     val isLandScape: Boolean
         get() {
             val rotation = rotation
             return rotation != Surface.ROTATION_0 && rotation != Surface.ROTATION_180

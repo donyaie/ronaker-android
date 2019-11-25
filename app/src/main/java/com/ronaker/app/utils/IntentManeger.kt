@@ -13,10 +13,10 @@ object IntentManeger{
 
     fun openSettings(activity:Activity,requestCode:Int) {
 
-        var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        var uri: Uri = Uri.fromParts("package", activity.getPackageName(), null);
-        intent.setData(uri);
-        activity.startActivityForResult(intent, requestCode);
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts("package", activity.packageName, null)
+        intent.data = uri
+        activity.startActivityForResult(intent, requestCode)
     }
 
 
@@ -30,7 +30,7 @@ object IntentManeger{
     }
 
     fun sendMail(context: Context, email:String){
-        val intent = Intent(Intent.ACTION_SENDTO);
+        val intent = Intent(Intent.ACTION_SENDTO)
         intent.type = "text/plain"
         intent.data = Uri.parse("mailto:$email}")
         context.startActivity(Intent.createChooser(intent, "Send Email"))

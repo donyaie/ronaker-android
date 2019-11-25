@@ -5,7 +5,8 @@ import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.ProductApi
 import com.ronaker.app.data.network.request.ProductSearchRequestModel
-import com.ronaker.app.data.network.response.*
+import com.ronaker.app.data.network.response.ListResponseModel
+import com.ronaker.app.data.network.response.LocationResponseModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.model.toProductCreateModel
 import com.ronaker.app.model.toProductDetail
@@ -26,34 +27,27 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         radius: Int?
     ): Observable<Result<ListResponseModel<Product>>> {
 
-
-        var loc: LocationResponseModel? = null
-
-        location?.let {
-            loc =
-                LocationResponseModel(
-                    it.latitude,
-                    it.longitude
-                )
+        val loc = location?.let {
+            LocationResponseModel(
+                it.latitude,
+                it.longitude
+            )
         }
 
 
-        val request =
-            ProductSearchRequestModel(
-                query,
-                loc,
-                radius
-            )
+        val request = ProductSearchRequestModel(
+            query,
+            loc,
+            radius
+        )
 
 
 
         return productApi.productSearch("Token $token", page, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
             .map {
-
-                ListResponseModel(it.count,it.next,it.previous,it.results?.toProductList())
+                ListResponseModel(it.count, it.next, it.previous, it.results?.toProductList())
             }
             .toResult()
 
@@ -64,14 +58,11 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         page: Int
     ): Observable<Result<ListResponseModel<Product>>> {
 
-
         return productApi.getMyProduct("Token $token", page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
             .map {
-
-                ListResponseModel(it.count,it.next,it.previous,it.results?.toProductList())
+                ListResponseModel(it.count, it.next, it.previous, it.results?.toProductList())
             }
             .toResult()
 
@@ -110,11 +101,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         return productApi.getProduct("Token $token", suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
             .map { it.toProductDetail() }
-
             .toResult()
-
     }
 
 

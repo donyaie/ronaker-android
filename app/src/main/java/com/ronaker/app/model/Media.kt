@@ -9,9 +9,7 @@ data class Media(
     var suid: String,
     var url: String,
     var created_at: String
-): Parcelable {
-
-}
+): Parcelable
 
 fun ContentImageResponceModel.toMediaModel(): Media {
     return Media(

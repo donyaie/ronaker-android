@@ -12,10 +12,7 @@ data class Category(
     , var title: String
     , var avatar: String
     , var sub_categories: List<Category>?
-): Parcelable {
-
-
-}
+): Parcelable
 
 
 fun List<CategoriesResponseModel>.toCategoryList(): List<Category> {
