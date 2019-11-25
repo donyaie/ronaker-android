@@ -78,7 +78,7 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
                             addNewView.value = true
                             emptyView.value = false
                             onRetrieveProductListSuccess(
-                                result.data?.results?.toProductList()
+                                result.data?.results
                             )
 
                             if (result.data?.next == null) {

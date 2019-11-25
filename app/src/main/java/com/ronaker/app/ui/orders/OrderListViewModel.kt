@@ -79,20 +79,12 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
             .subscribe { result ->
                 if (result.isSuccess()) {
                     if ((result.data?.results?.size ?: 0) > 0) {
-
                         emptyVisibility.value = View.GONE
 
-
-                        result.data?.results?.toOrderList()?.let {
-
+                        result.data?.results?.let {
                             dataList.addAll(it)
-
                             productListAdapter.notifyDataSetChanged()
-
                         }
-
-
-
 
                         if (result.data?.next == null)
                             hasNextPage = false

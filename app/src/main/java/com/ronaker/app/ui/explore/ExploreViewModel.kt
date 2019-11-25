@@ -9,11 +9,10 @@ import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductList
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ExploreViewModel (app: Application): BaseViewModel(app) {
+class ExploreViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -41,7 +40,6 @@ class ExploreViewModel (app: Application): BaseViewModel(app) {
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-
     val searchValue: MutableLiveData<String> = MutableLiveData()
 
 
@@ -55,10 +53,10 @@ class ExploreViewModel (app: Application): BaseViewModel(app) {
 //        view.getScrollListener().resetState()
     }
 
-    private  var subscription: Disposable?=null
+    private var subscription: Disposable? = null
 
     init {
-        productListAdapter = ItemExploreAdapter(dataList,this)
+        productListAdapter = ItemExploreAdapter(dataList, this)
         reset()
 
         loadProduct()
@@ -79,7 +77,7 @@ class ExploreViewModel (app: Application): BaseViewModel(app) {
 
                             emptyVisibility.value = View.GONE
                             onRetrieveProductListSuccess(
-                                result.data?.results?.toProductList()
+                                result.data?.results
                             )
 
                             if (result.data?.next == null)
@@ -131,7 +129,7 @@ class ExploreViewModel (app: Application): BaseViewModel(app) {
 
     private fun onRetrieveProductListError(error: NetworkError?) {
         if (page <= 1)
-            retry.value =  error?.detail
+            retry.value = error?.detail
         else
             errorMessage.value = error?.detail
 

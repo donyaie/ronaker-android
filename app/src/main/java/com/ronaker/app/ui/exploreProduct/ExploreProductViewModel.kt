@@ -92,7 +92,7 @@ class ExploreProductViewModel (app: Application): BaseViewModel(app) {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                   mProduct= result.data?.toProductDetail()
+                   mProduct= result.data
 
 
                     mProduct?.let { fillProduct(it) }

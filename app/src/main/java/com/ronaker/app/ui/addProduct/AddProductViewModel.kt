@@ -13,12 +13,14 @@ import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.model.*
+import com.ronaker.app.model.Category
+import com.ronaker.app.model.Place
+import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AppDebug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AddProductViewModel (app: Application): BaseViewModel(app) {
+class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductViewModel::class.java.name
 
@@ -307,30 +309,28 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
     fun deleteImage(image: Product.ProductImage) {
         deleteImageSubscription?.dispose()
 
-            deleteImageSubscription=
-                contentRepository.deleteImage(
-                    userRepository.getUserToken(),
-                    image.suid!!
-                )
-                    .doOnSubscribe {
-                        loading.value = true
+        deleteImageSubscription =
+            contentRepository.deleteImage(
+                userRepository.getUserToken(),
+                image.suid!!
+            )
+                .doOnSubscribe {
+                    loading.value = true
 
+                }
+                .doOnTerminate {
+
+                    loading.value = false
+
+                }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        adapter.removeItem(image)
+                    } else {
+                        adapter.removeItem(image)
+                        errorMessage.value = result.error?.detail
                     }
-                    .doOnTerminate {
-
-                        loading.value = false
-
-                    }
-                    .subscribe { result ->
-                        if (result.isSuccess()) {
-                            adapter.removeItem(image)
-                        } else {
-                            adapter.removeItem(image)
-                            errorMessage.value = result.error?.detail
-                        }
-                    }
-
-
+                }
 
 
     }
@@ -470,29 +470,26 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
                     if (result.isSuccess()) {
                         when (state) {
                             StateEnum.image -> {
-
-
-                                result.data?.images?.toProductImage()
-                                    ?.let { adapter.addRemoteImage(it) }
+                                result.data?.images?.let { adapter.addRemoteImage(it) }
 
                             }
                             StateEnum.price -> {
 
 
                                 productPriceDay.value =
-                                    if (result.data?.price_per_day != null && result.data.price_per_day.toInt() != 0) {
-                                        result.data.price_per_day.toString()
+                                    if (result.data?.price_per_day ?: 0 != 0) {
+                                        result.data?.price_per_day.toString()
                                     } else ""
 
                                 productPriceWeek.value =
-                                    if (result.data?.price_per_week != null && result.data.price_per_week.toInt() != 0) {
-                                        result.data.price_per_week.toString()
+                                    if (result.data?.price_per_week ?: 0 != 0) {
+                                        result.data?.price_per_week.toString()
                                     } else ""
 
 
                                 productPriceMonth.value =
-                                    if (result.data?.price_per_month != null && result.data.price_per_month.toInt() != 0) {
-                                        result.data.price_per_month.toString()
+                                    if (result.data?.price_per_month ?: 0 != 0) {
+                                        result.data?.price_per_month.toString()
                                     } else ""
 
 
@@ -508,7 +505,7 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
                                 result.data?.categories?.let {
 
                                     categories.clear()
-                                    categories.addAll(it.toCategoryList())
+                                    categories.addAll(it)
 
 
                                     if (categories.size > 1) {
@@ -548,10 +545,7 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
                                 result.data?.location?.let {
 
 
-                                    productLocation.value = LatLng(
-                                        result.data.location.lat,
-                                        result.data.location.lng
-                                    )
+                                    productLocation.value = result.data.location
 
 
                                 }

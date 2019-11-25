@@ -8,6 +8,8 @@ import com.ronaker.app.data.network.request.ProductSearchRequestModel
 import com.ronaker.app.data.network.response.*
 import com.ronaker.app.model.Product
 import com.ronaker.app.model.toProductCreateModel
+import com.ronaker.app.model.toProductDetail
+import com.ronaker.app.model.toProductList
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,68 +18,104 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     ProductRepository {
 
 
+    override fun productSearch(
+        token: String?,
+        query: String?,
+        page: Int,
+        location: LatLng?,
+        radius: Int?
+    ): Observable<Result<ListResponseModel<Product>>> {
 
-    override fun productSearch(token: String?, query:String?, page:Int, location: LatLng?, radius:Int?): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
 
+        var loc: LocationResponseModel? = null
 
-        var loc: LocationResponseModel?=null
-
-        location?.let {  loc=
-            LocationResponseModel(
-                it.latitude,
-                it.longitude
-            )
+        location?.let {
+            loc =
+                LocationResponseModel(
+                    it.latitude,
+                    it.longitude
+                )
         }
 
 
-
-      var request=
-          ProductSearchRequestModel(
-              query,
-              loc,
-              radius
-          )
-
+        val request =
+            ProductSearchRequestModel(
+                query,
+                loc,
+                radius
+            )
 
 
-        return productApi.productSearch("Token $token",page, request)
+
+        return productApi.productSearch("Token $token", page, request)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map {
+
+                ListResponseModel(it.count,it.next,it.previous,it.results?.toProductList())
+            }
+            .toResult()
 
     }
 
-    override fun getMyProduct(token: String?, page:Int): Observable<Result<ListResponseModel<ProductItemResponceModel>>> {
+    override fun getMyProduct(
+        token: String?,
+        page: Int
+    ): Observable<Result<ListResponseModel<Product>>> {
 
 
-        return productApi.getMyProduct("Token $token",page )
+        return productApi.getMyProduct("Token $token", page)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map {
+
+                ListResponseModel(it.count,it.next,it.previous,it.results?.toProductList())
+            }
+            .toResult()
 
     }
 
-    override fun productCreate(token: String?, product: Product): Observable<Result<ProductCreateResponseModel>> {
-        return productApi.productCreate("Token $token",product.toProductCreateModel() )
+    override fun productCreate(
+        token: String?,
+        product: Product
+    ): Observable<Result<String?>> {
+        return productApi.productCreate("Token $token", product.toProductCreateModel())
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { it.suid }
+            .toResult()
 
     }
 
-    override fun productUpdate(token: String?, suid:String, product: Product): Observable<Result<ProductCreateResponseModel>> {
+    override fun productUpdate(
+        token: String?,
+        suid: String,
+        product: Product
+    ): Observable<Result<String?>> {
 
-        return productApi.productUpdate("Token $token",suid,product.toProductCreateModel() )
+        return productApi.productUpdate("Token $token", suid, product.toProductCreateModel())
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { it.suid }
+            .toResult()
 
     }
 
-    override fun getProduct(token: String?, suid:String): Observable<Result<ProductDetailResponceModel>> {
-        return productApi.getProduct("Token $token",suid)
+    override fun getProduct(
+        token: String?,
+        suid: String
+    ): Observable<Result<Product>> {
+        return productApi.getProduct("Token $token", suid)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map { it.toProductDetail() }
+
+            .toResult()
 
     }
-
-
 
 
 }
