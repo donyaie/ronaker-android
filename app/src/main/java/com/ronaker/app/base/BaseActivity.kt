@@ -29,11 +29,11 @@ abstract class BaseActivity: SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addActivityStack(this)
-        analytics = FirebaseAnalytics.getInstance(this);
+        analytics = FirebaseAnalytics.getInstance(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
     }
 
-    var startCount=0
+   private var startCount=0
 
 
     companion object {
@@ -65,7 +65,7 @@ abstract class BaseActivity: SwipeBackActivity() {
         }
 
         fun refreshActivityStack(){
-            var temp=ArrayList<Activity>()
+            val temp=ArrayList<Activity>()
 
             activityList.forEach {
 
@@ -106,19 +106,9 @@ abstract class BaseActivity: SwipeBackActivity() {
     }
 
 
-    protected override fun attachBaseContext(newBase: Context) {
-
-
-
+     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(LocaleHelper.onAttach(newBase)))
     }
-
-
-    override fun startActivity(intent: Intent?) {
-        super.startActivity(intent)
-    }
-
-
 
 
     fun startActivityMakeScene(intent: Intent?) {
@@ -144,11 +134,11 @@ abstract class BaseActivity: SwipeBackActivity() {
     fun finishSafe() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.finishAfterTransition();
+            super.finishAfterTransition()
         }
 
         else
-         super.finish();
+         super.finish()
     }
 
 
