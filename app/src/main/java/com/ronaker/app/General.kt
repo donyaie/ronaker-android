@@ -12,11 +12,7 @@ import io.github.inflationx.viewpump.ViewPump
 import com.ronaker.app.utils.LocaleHelper
 
 
-
-
 class General : MultiDexApplication() {
-
-
 
     override fun onCreate() {
 

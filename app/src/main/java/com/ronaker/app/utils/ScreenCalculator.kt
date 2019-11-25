@@ -9,9 +9,9 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 
-class ScreenCalcute(context: Context) {
+class ScreenCalculator(context: Context) {
 
-    private val TAG = ScreenCalcute::class.java.name
+    private val TAG = ScreenCalculator::class.java.name
 
     private var display: Display
     private var displayMetrics: DisplayMetrics

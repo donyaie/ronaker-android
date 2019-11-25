@@ -62,7 +62,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     private lateinit var categoryFragment: AddProductCategoryFragment
 
     private lateinit var adapter: ViewPagerAdapter
-    private lateinit var screenLibrary: ScreenCalcute
+    private lateinit var screenLibrary: ScreenCalculator
 
 
     val REQUEST_IMAGE = 1233
@@ -124,8 +124,8 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             suid: String,
             state: AddProductViewModel.StateEnum
         ): Intent {
-            var intent = Intent(context, AddProductActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, AddProductActivity::class.java)
+            val boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
             boundle.putInt(STATE_KEY, state.position)
             intent.putExtras(boundle)
@@ -143,8 +143,8 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             product: Product,
             state: AddProductViewModel.StateEnum
         ): Intent {
-            var intent = Intent(context, AddProductActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, AddProductActivity::class.java)
+            val boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
             boundle.putInt(STATE_KEY, state.position)
             intent.putExtras(boundle)
@@ -168,7 +168,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         binding.viewModel = viewModel
 
 
-        screenLibrary = ScreenCalcute(this)
+        screenLibrary = ScreenCalculator(this)
 
         UpdateMode = getSuid() != null
 
@@ -252,7 +252,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             binding.toolbar.showNavigator(false, 0)
             if (UpdateMode) {
 
-                var state = getState()
+                val state = getState()
 
 
                 getSuid()?.let { state?.let { it1 -> viewModel.getInfo(it, it1) } }
@@ -580,7 +580,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
     private fun showSettingsDialog() {
-        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_permission_title))
         builder.setMessage(getString(R.string.dialog_permission_message))
         builder.setPositiveButton(

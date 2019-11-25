@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -15,11 +14,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.ToolbarComponent
 
 
@@ -29,9 +26,9 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
-    var Max_size = 5
+    val Max_size = 5
 
-    private lateinit var screenLibrary: ScreenCalcute
+    private lateinit var screenLibrary: ScreenCalculator
 
 
     private var loginAction = LoginViewModel.LoginActionEnum.register
@@ -99,7 +96,7 @@ class LoginActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        screenLibrary = ScreenCalcute(this)
+        screenLibrary = ScreenCalculator(this)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         binding.viewModel = viewModel

@@ -17,7 +17,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.IPagerFragment
 
 
@@ -32,7 +32,7 @@ class PhoneNumberActivity : BaseActivity() {
     private lateinit var verifyFragment: PhoneNumberVerifyFragment
 
     private lateinit var adapter: ViewPagerAdapter
-    private lateinit var screenLibrary: ScreenCalcute
+    private lateinit var screenLibrary: ScreenCalculator
 
 
 
@@ -88,7 +88,7 @@ class PhoneNumberActivity : BaseActivity() {
     private fun init() {
 
 
-        screenLibrary = ScreenCalcute(this)
+        screenLibrary = ScreenCalculator(this)
 
         initViewPager()
         binding.toolbar.showNavigator(false, 0)
