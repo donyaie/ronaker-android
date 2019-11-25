@@ -202,6 +202,10 @@ dependencies {
     testImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
 
 
+    def mockito_version = '2.7.1' // For local unit tests on your development machine
+    testImplementation "org.mockito:mockito-core:$mockito_version" // For instrumentation tests on Android devices and emulators
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.

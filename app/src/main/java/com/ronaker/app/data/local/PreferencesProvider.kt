@@ -1,4 +1,4 @@
-package com.ronaker.app.base
+package com.ronaker.app.data.local
 
 
 import android.annotation.SuppressLint
@@ -8,7 +8,7 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import java.lang.reflect.Type
 
-class PreferencesProvider(context: Context) {
+class PreferencesProvider(context: Context):PreferencesDataSource {
 
     lateinit var context: Context
 
@@ -38,11 +38,11 @@ class PreferencesProvider(context: Context) {
 
     }
 
-    operator fun contains(key: String): Boolean {
+    override operator fun contains(key: String): Boolean {
         return preferences.contains(key)
     }
 
-    fun putString(key: String, value: String?) {
+    override fun putString(key: String, value: String?) {
         try {
             edit()?.putString(key, value)
         } catch (e: Exception) {
@@ -52,7 +52,7 @@ class PreferencesProvider(context: Context) {
         edit()?.commit()
     }
 
-    fun putInt(key: String, value: Int) {
+    override fun putInt(key: String, value: Int) {
         try {
             edit()?.putInt(key, value)
         } catch (e: Exception) {
@@ -62,7 +62,7 @@ class PreferencesProvider(context: Context) {
         edit()?.commit()
     }
 
-    fun putLong(key: String, value: Long) {
+    override  fun putLong(key: String, value: Long) {
         try {
             edit()?.putLong(key, value)
         } catch (e: Exception) {
@@ -72,7 +72,7 @@ class PreferencesProvider(context: Context) {
         edit()?.commit()
     }
 
-    fun putBoolean(key: String, value: Boolean) {
+    override fun putBoolean(key: String, value: Boolean) {
         try {
             edit()?.putBoolean(key, value)
         } catch (e: Exception) {
@@ -82,7 +82,7 @@ class PreferencesProvider(context: Context) {
         edit()?.commit()
     }
 
-    fun putFloat(key: String, value: Float) {
+    override fun putFloat(key: String, value: Float) {
         try {
             edit()?.putFloat(key, value)
         } catch (e: Exception) {
@@ -92,11 +92,11 @@ class PreferencesProvider(context: Context) {
         edit()?.commit()
     }
 
-    fun getString(key: String, defValue: String?): String? {
+    override fun getString(key: String, defValue: String?): String? {
         return preferences.getString(key, defValue)
     }
 
-    fun <T> getObject(key: String, type: Type): T? {
+    override fun <T> getObject(key: String, type: Type): T? {
 
 
         val json = preferences.getString(key, null)
@@ -107,7 +107,7 @@ class PreferencesProvider(context: Context) {
     }
 
 
-    fun <T> putObject(key: String, obj: T?) {
+    override fun <T> putObject(key: String, obj: T?) {
         try {
 
             var json: String? = null
@@ -122,23 +122,23 @@ class PreferencesProvider(context: Context) {
     }
 
 
-    fun getInt(key: String, defValue: Int): Int {
+    override fun getInt(key: String, defValue: Int): Int {
         return preferences.getInt(key, defValue)
     }
 
-    fun getLong(key: String, defValue: Long): Long {
+    override  fun getLong(key: String, defValue: Long): Long {
         return preferences.getLong(key, defValue)
     }
 
-    fun getBoolean(key: String, defValue: Boolean?): Boolean? {
+    override  fun getBoolean(key: String, defValue: Boolean?): Boolean? {
         return defValue?.let { preferences.getBoolean(key, it) }
     }
 
-    fun getFloat(key: String, defValue: Float?): Float? {
+    override fun getFloat(key: String, defValue: Float?): Float? {
         return defValue?.let { preferences.getFloat(key, it) }
     }
 
-    fun clearAll() {
+    override fun clearAll() {
         try {
             edit()?.clear()?.commit()
         } catch (ex: Exception) {

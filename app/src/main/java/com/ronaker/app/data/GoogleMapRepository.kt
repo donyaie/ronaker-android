@@ -11,7 +11,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class GoogleMapRepository(private val api: GoogleMapApi,private val context: Context) {
+class GoogleMapRepository(private val api: GoogleMapApi,private val apiKey: String) {
 
     fun getQueryAutocomplete(Query: String ,latLng: LatLng?): Observable<GoogleAutocompleteResponseModel> {
 
@@ -23,8 +23,7 @@ class GoogleMapRepository(private val api: GoogleMapApi,private val context: Con
 
         val location = if (latLng == null) null else String.format("%s,%s", latLng.latitude, latLng.longitude)
 
-        return api.getQueryAutocomplete(Query, location, radius, language, components, types, context.getString(
-            R.string.google_api_key_me))
+        return api.getQueryAutocomplete(Query, location, radius, language, components, types, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -36,8 +35,7 @@ class GoogleMapRepository(private val api: GoogleMapApi,private val context: Con
         val language: String? = null// "en";
 
 
-        return api.getPlaceDetails(placeId, language, context.getString(
-            R.string.google_api_key_me))
+        return api.getPlaceDetails(placeId, language,apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -54,8 +52,7 @@ class GoogleMapRepository(private val api: GoogleMapApi,private val context: Con
         val latlng = String.format("%s,%s", location.latitude, location.longitude)
 
 
-        return api.getGeocode(null, latlng, null, null, language, null, context.getString(
-            R.string.google_api_key_me))
+        return api.getGeocode(null, latlng, null, null, language, null, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

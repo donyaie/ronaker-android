@@ -1,8 +1,9 @@
 package com.ronaker.app.data
 
-import com.ronaker.app.base.PreferencesProvider
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
+import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.network.request.*
 import com.ronaker.app.data.network.response.FreeResponseModel
@@ -14,7 +15,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class UserRepository(private val userApi: UserApi, private val preferencesProvider: PreferencesProvider) {
+class UserRepository(private val userApi: UserApi, private val preferencesProvider: PreferencesDataSource) {
 
 
     enum class DocumentTypeEnum constructor(key: String) {
@@ -52,7 +53,15 @@ class UserRepository(private val userApi: UserApi, private val preferencesProvid
         val info = UserRegisterRequestModel(user.email, user.password, user.first_name, user.last_name)
         return userApi.registerUser(info)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+
+//            .map {
+//                it.results.map {
+//                    Movie(it.title, it.overview, it.backdrop_path)
+//                }
+//            }
+
+            .toResult()
 
     }
 

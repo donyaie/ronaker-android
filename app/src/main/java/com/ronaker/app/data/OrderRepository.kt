@@ -1,10 +1,10 @@
 package com.ronaker.app.data
 
 
-import com.ronaker.app.base.PreferencesProvider
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
-import com.ronaker.app.data.network.CategoryApi
+import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.OrderApi
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
@@ -14,7 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class OrderRepository(private val api: OrderApi, private val preferencesProvider: PreferencesProvider) {
+class OrderRepository(private val api: OrderApi) {
 
 
 

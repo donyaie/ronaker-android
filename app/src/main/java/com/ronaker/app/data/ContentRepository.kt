@@ -9,7 +9,6 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.ContentApi
 import com.ronaker.app.data.network.response.ContentImageResponceModel
 import com.ronaker.app.data.network.response.FreeResponseModel
-import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

@@ -4,16 +4,16 @@ import android.app.Application
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
-import com.ronaker.app.General
-import com.ronaker.app.base.PreferencesProvider
+import com.ronaker.app.R
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.*
+import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
 import com.ronaker.app.utils.SslUtils
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -133,36 +133,33 @@ class RepositoryModule(private val app: Application) {
     @Provides
     @Singleton
     internal fun provideProductRepository(
-        productApi: ProductApi,
-        preferencesProvider: PreferencesProvider
+        productApi: ProductApi
     ): ProductRepository {
-        return ProductRepository(productApi, preferencesProvider)
+        return ProductRepository(productApi)
     }
 
     @Provides
     @Singleton
     internal fun provideCategoryRepository(
-        api: CategoryApi,
-        preferencesProvider: PreferencesProvider
+        api: CategoryApi
     ): CategoryRepository {
-        return CategoryRepository(api, preferencesProvider)
+        return CategoryRepository(api)
     }
 
 
     @Provides
     @Singleton
     internal fun provideOrderRepository(
-        api: OrderApi,
-        preferencesProvider: PreferencesProvider
+        api: OrderApi
     ): OrderRepository {
-        return OrderRepository(api, preferencesProvider)
+        return OrderRepository(api)
     }
 
 
     @Provides
     @Singleton
     internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
-        return GoogleMapRepository(api,context)
+        return GoogleMapRepository(api, context.getString(R.string.google_api_key_me))
     }
 
 

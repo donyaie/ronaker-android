@@ -2,11 +2,11 @@ package com.ronaker.app.data
 
 
 import com.google.android.gms.maps.model.LatLng
-import com.ronaker.app.base.PreferencesProvider
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
+import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.ProductApi
-import com.ronaker.app.data.network.request.ProductCreateRequestModel
 import com.ronaker.app.data.network.request.ProductSearchRequestModel
 import com.ronaker.app.data.network.response.*
 import com.ronaker.app.model.Product
@@ -15,7 +15,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ProductRepository(private val productApi: ProductApi, private val preferencesProvider: PreferencesProvider) {
+class ProductRepository(private val productApi: ProductApi) {
 
 
 

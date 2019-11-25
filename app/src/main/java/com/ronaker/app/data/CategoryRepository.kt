@@ -1,7 +1,6 @@
 package com.ronaker.app.data
 
 
-import com.ronaker.app.base.PreferencesProvider
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.CategoryApi
@@ -10,7 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class CategoryRepository(private val api: CategoryApi, private val preferencesProvider: PreferencesProvider) {
+class CategoryRepository(private val api: CategoryApi) {
 
 
 
