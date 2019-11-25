@@ -55,10 +55,6 @@ class ProfileFragment : BaseFragment() {
 
         binding.viewModel = viewModel
 
-        binding.language.setOnClickListener{
-            activity?.let { it1 -> LanguageDialog.showDialog(it1) }
-
-        }
 
         binding.supportLayout.setOnClickListener {
             activity?.let { it1 -> IntentManeger.sendMail(it1,"support@ronaker.com")}
@@ -75,13 +71,6 @@ class ProfileFragment : BaseFragment() {
             activity?.let {   startActivityMakeScene(ProfileSettingActivity.newInstance(it) )}
         }
 
-
-        binding.paymentLayout.setOnClickListener {
-
-
-//            activity?.let { it1 -> IntentManeger.openUrl(it1,"https://ronaker.com/?page_id=7678") }
-
-        }
 
 
         return binding.root

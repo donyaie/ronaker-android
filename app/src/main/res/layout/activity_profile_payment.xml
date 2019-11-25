@@ -1,175 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel" />
+            name="viewModel"
+            type="com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-            android:background="@color/white"
-            android:gravity="center"
-            android:layoutDirection="ltr">
+        android:background="@color/white"
+        android:gravity="center"
+        android:layoutDirection="ltr">
 
 
         <com.ronaker.app.utils.view.ToolbarComponent
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:toolbar_component_action_container="NONE"
-                app:toolbar_component_bottom_line="false"
-                app:toolbar_component_cancel_container="BACK"
-                app:toolbar_component_center_container="NONE"
-                app:toolbar_component_dot_count="3"
-                app:toolbar_component_transparent="false" />
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_bottom_line="false"
+            app:toolbar_component_cancel_container="BACK"
+            app:toolbar_component_center_container="NONE"
+            app:toolbar_component_dot_count="3"
+            app:toolbar_component_transparent="false" />
 
         <androidx.core.widget.NestedScrollView
 
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp">
+
+
+                <TextView
+                    android:id="@+id/title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp">
+                    android:layout_marginTop="24dp"
+                    android:text="@string/title_enter_your_card_details"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
-                        android:id="@+id/title_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:text="@string/title_enter_your_card_details"
-                        android:textAppearance="@style/TextAppearance.Heading.1"
-                        android:textColor="@color/colorTextDark"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/card_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/title_card_number"
+                    android:textAppearance="@style/TextAppearance.Medium.SB"
 
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintLeft_toLeftOf="parent"
 
-                <TextView
-                        android:id="@+id/card_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:text="@string/title_card_number"
-                        android:textAppearance="@style/TextAppearance.Medium.SB"
-
-                        android:textColor="@color/colorTextDark"
-                        app:layout_constraintLeft_toLeftOf="parent"
-
-                        app:layout_constraintTop_toBottomOf="@id/title_text" />
+                    app:layout_constraintTop_toBottomOf="@id/title_text" />
 
                 <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:padding="10dp"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/ic_camera"
-                        app:layout_constraintBottom_toTopOf="@id/card_layout"
-                        android:id="@+id/cardScan"
-                        app:layout_constraintRight_toRightOf="parent"
-                    />
+                    android:id="@+id/cardScan"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/text_content"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/card_layout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:srcCompat="@drawable/ic_camera" />
 
                 <LinearLayout
-                        android:id="@+id/card_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="9dp"
-                        android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/card_text">
+                    android:id="@+id/card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="9dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/card_text">
 
                     <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:id="@+id/card_image"
-                            mutableImageSrc="@{viewModel.getCardTypeImage()}"
+                        android:id="@+id/card_image"
+                        mutableImageSrc="@{viewModel.getCardTypeImage()}"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
 
-                            android:layout_marginRight="8dp"
-                            app:srcCompat="@drawable/ic_card_empty" />
+                        android:contentDescription="@string/text_content"
+                        app:srcCompat="@drawable/ic_card_empty" />
 
                     <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:id="@+id/card_edit"
-                            android:layout_weight=".95"
-                            android:imeOptions="actionNext"
+                        android:id="@+id/card_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".95"
 
-                            android:inputType="number"
-                            android:maxLength="16"
-                            app:mutableText="@{viewModel.getCardNumberText()}"
-                            android:background="@null"
-                            android:hint="@string/hint_0000_0000_0000_0000"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark"
+                        android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_NUMBER"
+                        android:background="@null"
+                        android:hint="@string/hint_0000_0000_0000_0000"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="16"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+                        android:textColor="@color/colorTextDark"
+                        android:textColorHint="@color/colorTextGreyLight"
 
-                            android:textColorHint="@color/colorTextGreyLight"
-
-                            />
+                        app:mutableText="@{viewModel.getCardNumberText()}"
+                        tools:ignore="UnusedAttribute" />
 
 
                 </LinearLayout>
+
                 <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorPlatinGrey"
-                        app:layout_constraintTop_toBottomOf="@id/card_layout"
-                        />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPlatinGrey"
+                    app:layout_constraintTop_toBottomOf="@id/card_layout" />
 
 
                 <LinearLayout
 
-                        android:layout_width="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+
+                    android:weightSum="3"
+                    app:layout_constraintTop_toBottomOf="@id/card_layout">
+
+
+                    <com.ronaker.app.utils.view.InputComponent
+                        android:id="@+id/expire_input"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:imeOptions="actionNext"
+                        android:inputType="date"
 
-                        android:weightSum="3"
-                        app:layout_constraintTop_toBottomOf="@id/card_layout">
-
-
-                    <com.ronaker.app.utils.view.InputComponent
-                            android:id="@+id/expire_input"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:imeOptions="actionNext"
-                            android:inputType="date"
-
-                            app:inputMutableText="@{viewModel.getCardExpireText()}"
-                            app:input_hint="MM/YY"
-                            app:input_regex="^\\d{2}\\/\\d{2}$"
-                            app:input_title="Expiry"
-                            app:input_transparent="false"
-                            app:input_validation_mode="AUTO" />
+                        android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DAY"
+                        app:inputMutableText="@{viewModel.getCardExpireText()}"
+                        app:input_hint="MM/YY"
+                        app:input_regex="^\\d{2}\\/\\d{2}$"
+                        app:input_title="Expiry"
+                        app:input_transparent="false"
+                        app:input_validation_mode="AUTO"
+                        tools:ignore="UnusedAttribute" />
 
 
                     <com.ronaker.app.utils.view.InputComponent
-                            android:id="@+id/cvv_input"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="16dp"
+                        android:id="@+id/cvv_input"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
 
-                            android:imeOptions="actionDone"
-                            android:maxLength="4"
-                            android:inputType="date"
+                        android:imeOptions="actionDone"
+                        android:inputType="date"
+                        android:maxLength="4"
+                        android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE"
 
-                            app:inputMutableText="@{viewModel.getCardCVVText()}"
-                            app:input_hint="123"
-                            app:input_regex="^[0-9]{3,4}$"
-                            app:input_title="CVV"
+                        app:inputMutableText="@{viewModel.getCardCVVText()}"
+                        app:input_hint="123"
+                        app:input_regex="^[0-9]{3,4}$"
+                        app:input_title="CVV"
 
-                            app:input_transparent="false"
-                            app:input_validation_mode="AUTO" />
+                        app:input_transparent="false"
+                        app:input_validation_mode="AUTO"
+                        tools:ignore="UnusedAttribute" />
 
 
                 </LinearLayout>
@@ -182,13 +188,13 @@
 
 
         <com.ronaker.app.utils.view.LoadingComponent
-                android:id="@+id/loading"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:loading_transparent="false" />
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:loading_transparent="false" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

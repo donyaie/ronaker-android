@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orders
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -12,7 +13,7 @@ import com.ronaker.app.model.toOrderList
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderListViewModel : BaseViewModel() {
+class OrderListViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -49,7 +50,7 @@ class OrderListViewModel : BaseViewModel() {
     private var subscription: Disposable? = null
 
     init {
-        productListAdapter = OrderItemAdapter(dataList)
+        productListAdapter = OrderItemAdapter(dataList,this)
 
 
     }

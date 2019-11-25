@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Ronaker</string>
 
     <string name="caption_title" translatable="false">Text</string>
+    <string name="text_content" translatable="false">content</string>
 
     <string name="title_defult_price" translatable="false">€0</string>
     <string name="google_api_key_me" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
@@ -85,7 +86,7 @@
     <string name="title_resend">Resend</string>
     <string name="title_please_enter_your_phone">Please Enter Your Phone</string>
     <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to verify your phone number</string>
-    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your item. please use clear image from proper angle…</string>
+    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your item. please use clear image from proper angle&#8230;</string>
     <string name="title_button_next">Next</string>
     <string name="title_tell_about_your_item">Tell about your item</string>
     <string name="title_button_set_your_location">Set your Location</string>
@@ -158,6 +159,15 @@
     <string name="text_add_a_image">Add a image</string>
     <string name="text_your_request_sent">Your Request Has Been Sent.</string>
     <string name="text_are_you_sure">Are you Sure?</string>
+    <string name="text_send_a_instruction_to_who_rent_your_item">Send a Instruction to who rent your item</string>
+    <string name="text_why_decline_this_order">Why decline this order?</string>
+    <string name="text_finish_order">Finish Order</string>
+    <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please make sure your product is functioning properly and delivered to you without damage</string>
+    <string name="text_start_renting_instruction">Start Renting instruction</string>
+    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please ensure that the rented goods are functioning properly</string>
+    <string name="text_accept_and_start_renting">Accept and Start renting</string>
+    <string name="text_version" translatable="false">Version</string>
+    <string name="text_try_again">Try Again</string>
 
 
 </resources>

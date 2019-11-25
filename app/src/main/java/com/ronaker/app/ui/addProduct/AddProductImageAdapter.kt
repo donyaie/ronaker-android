@@ -15,8 +15,8 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     private  var productList: ArrayList<Product.ProductImage> = ArrayList()
 
 
-    val EmptyType = 0;
-    val FullType = 1;
+    val EmptyType = 0
+    val FullType = 1
 
 
     init {
@@ -34,7 +34,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
                     parent,
                     false
                 )
-            return ViewHolder(binding, baseViewModel,parent.context)
+            return ViewHolder(binding, baseViewModel)
         } else {
             val binding: AdapterProductAddImageEmptyBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -68,11 +68,11 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        var item = productList.get(position)
-        if (item.url == null && item.uri == null)
-            return EmptyType
+        val item = productList[position]
+        return if (item.url == null && item.uri == null)
+            EmptyType
         else
-            return FullType
+            FullType
     }
 
     fun addLocalImage(uri: Uri?) {
@@ -104,7 +104,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     fun getimages(): ArrayList<Product.ProductImage> {
 
-        var list= ArrayList<Product.ProductImage>()
+        val list= ArrayList<Product.ProductImage>()
 
         if (productList.size <= 1)
             return list
@@ -119,15 +119,15 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     class ViewHolder(
         private val binding: AdapterProductAddImageBinding,
-        val baseViewModel: AddProductViewModel ,var context: Context
+        val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = AddProductImageAdapterViewModel()
+        private val viewModel = AddProductImageAdapterViewModel(baseViewModel.getApplication())
 
         fun bind(product: Product.ProductImage) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
-            viewModel.bind(product, context)
+            viewModel.bind(product)
 
 
         }

@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.exploreProduct
 
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
@@ -14,7 +15,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ExploreProductViewModel : BaseViewModel() {
+class ExploreProductViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -111,7 +112,7 @@ class ExploreProductViewModel : BaseViewModel() {
     fun fillProduct(product:Product){
 
 
-        var images=ArrayList<String>()
+        val images=ArrayList<String>()
         product.images?.forEach {
             images.add( BASE_URL+it.url)
         }

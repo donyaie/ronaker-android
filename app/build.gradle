@@ -24,6 +24,10 @@ android {
         enabled = true
     }
 
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+
     // Add for using latest experimental build of Android Extensions
     androidExtensions {
         experimental = true
@@ -45,9 +49,9 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 2
+        versionCode 12
         vectorDrawables.useSupportLibrary = true
-        versionName "0.2"
+        versionName "0.12-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [
@@ -56,6 +60,7 @@ android {
                 onesignal_google_project_number: 'REMOTE'
         ]
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -162,7 +167,7 @@ dependencies {
     //number
 
     implementation "com.hbb20:ccp:$ccpVersion"
-    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libPhoneNumberVersion"
+    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libphonenumberVersion"
     implementation("com.alimuzaffar.lib:pinentryedittext:$pinentryEditTextVersion") {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.
@@ -170,29 +175,47 @@ dependencies {
     }
 
 
-    //firebace
-    implementation "com.google.firebase:firebase-core:17.2.1"
 
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    //firebace
+    implementation "com.google.firebase:firebase-core:$firebaseVersion"
+
+    implementation "com.google.firebase:firebase-analytics:$firebaseVersion"
 
     // Add dependency
-    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion"
 
 
     //picker
     implementation project(path: ":rangedatepicker")
 
-    implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
+    implementation "me.imid.swipebacklayout.lib:library:$swipebackVersion"
 
     //implementation
-    testImplementation "junit:junit:4.12"
-    androidTestImplementation "androidx.test:runner:1.2.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
 
-    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+    testImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
 
-    debugImplementation "com.facebook.stetho:stetho:1.5.1"
-    debugImplementation "com.facebook.stetho:stetho-okhttp3:1.5.1"
+
+
+    // Testing code should not be included in the main code.
+    // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
+    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    implementation "androidx.test:core:$androidXTestCoreVersion"
+
+
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+
+    implementation "com.onesignal:OneSignal:$oneSignalVersion"
+
+    debugImplementation "com.facebook.stetho:stetho:$stethoVersion"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 
 
 }

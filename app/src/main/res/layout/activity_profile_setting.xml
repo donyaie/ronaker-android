@@ -93,70 +93,14 @@
                         android:layout_marginRight="24dp"
                         android:background="@color/colorPlatinGrey" />
 
-                <LinearLayout
-
-                        android:id="@+id/download_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="66dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp">
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".95"
-                            android:text="@string/title_download_user_data"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-
-                            android:padding="3dp"
-                            app:srcCompat="@drawable/ic_chevron_right" />
 
 
-
-                </LinearLayout>
-
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
-                        android:background="@color/colorPlatinGrey" />
-                <LinearLayout
-
-                        android:id="@+id/terms_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="66dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp">
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".95"
-                            android:text="@string/title_terms_and_conditions"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-
-                            android:padding="3dp"
-                            app:srcCompat="@drawable/ic_chevron_right" />
-
-
-
-                </LinearLayout>
-
+                <Button
+                    android:id="@+id/download_layout"
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_download_user_data"
+                    android:textColor="@color/colorTextDark" />
 
 
                 <RelativeLayout
@@ -165,34 +109,14 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:background="@color/colorPlatinGrey" />
-                <LinearLayout
-
-                        android:id="@+id/language_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="66dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp">
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".95"
-                            android:text="@string/title_change_language"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
 
 
-                            android:padding="3dp"
-                            app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                </LinearLayout>
+                <Button
+                    android:id="@+id/terms_layout"
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_terms_and_conditions"
+                    android:textColor="@color/colorTextDark" />
 
 
                 <RelativeLayout
@@ -201,30 +125,31 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:background="@color/colorPlatinGrey" />
-                <LinearLayout
 
-                        android:id="@+id/logout_layout"
 
+
+                <Button
+                    android:id="@+id/language_layout"
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_change_language"
+                    android:textColor="@color/colorTextDark" />
+
+
+                <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="66dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp">
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".95"
-                            android:text="@string/title_logout"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark" />
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
 
 
 
-
-                </LinearLayout>
-
+                <Button
+                    android:id="@+id/logout_layout"
+                    style="@style/Button.transparent.width"
+                    android:text="@string/title_logout"
+                    android:textColor="@color/colorTextDark" />
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -251,7 +176,7 @@
             android:layout_marginBottom="40dp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.Small.SB"
-            android:text="Version"
+            android:text="@string/text_version"
             />
 
         <com.ronaker.app.utils.view.LoadingComponent

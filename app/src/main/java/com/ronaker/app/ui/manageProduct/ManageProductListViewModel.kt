@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.manageProduct
 
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
@@ -12,7 +13,7 @@ import com.ronaker.app.ui.explore.ItemExploreAdapter
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ManageProductListViewModel : BaseViewModel() {
+class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -43,7 +44,7 @@ class ManageProductListViewModel : BaseViewModel() {
     private  var subscription: Disposable?=null
 
     init {
-        productListAdapter = ManageProductAdapter(dataList)
+        productListAdapter = ManageProductAdapter(dataList,this)
         reset()
     }
 

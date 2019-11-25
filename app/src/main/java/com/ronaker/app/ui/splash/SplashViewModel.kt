@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.splash
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
@@ -8,7 +9,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
 
-class SplashViewModel : BaseViewModel() {
+class SplashViewModel (app: Application): BaseViewModel(app) {
 
     private lateinit var subscription: Disposable
 

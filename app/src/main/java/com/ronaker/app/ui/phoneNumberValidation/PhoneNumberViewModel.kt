@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.phoneNumberValidation
 
+import android.app.Application
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +11,7 @@ import javax.inject.Inject
 
 
 
-class PhoneNumberViewModel : BaseViewModel() {
+class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
 
     internal val TAG = PhoneNumberViewModel::class.java.name
 
@@ -53,7 +54,7 @@ class PhoneNumberViewModel : BaseViewModel() {
         companion object {
             operator fun get(position: Int): StateEnum {
                 var state = number
-                for (stateEnum in StateEnum.values()) {
+                for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
                 }

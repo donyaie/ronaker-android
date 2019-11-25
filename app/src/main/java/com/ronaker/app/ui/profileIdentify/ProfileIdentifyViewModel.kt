@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.profileIdentify
 
 
+import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -11,7 +12,7 @@ import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileIdentifyViewModel : BaseViewModel() {
+class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
@@ -55,7 +56,7 @@ class ProfileIdentifyViewModel : BaseViewModel() {
 
     fun selectImage(uri: Uri) {
 
-        if (!uri.toString().isNullOrEmpty()) {
+        if (uri.toString().isNotEmpty()) {
             emptyImageVisibility.value = View.GONE
             imageVisibility.value = View.VISIBLE
             uploadVisibility.value = View.VISIBLE

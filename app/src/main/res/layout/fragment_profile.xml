@@ -54,7 +54,7 @@
 
 
                         android:layout_height="72dp"
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginStart="24dp"
                         android:scaleType="fitCenter"
                         android:src="@color/colorPlatinGrey"
                         app:mutableImage="@{viewModel.getUserAvatar()}"
@@ -64,8 +64,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="22dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="22dp"
                         android:layout_weight=".95"
                         android:orientation="vertical">
 
@@ -163,6 +163,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
+                        android:contentDescription="@string/title_setting"
                         android:layout_marginEnd="24dp"
                         android:padding="6dp"
                         app:srcCompat="@drawable/ic_settings" />
@@ -182,6 +183,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
+                        android:contentDescription="@string/title_button_next"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:padding="3dp"
@@ -189,45 +191,11 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                    android:visibility="gone" />
 
 
-                <LinearLayout
-                    android:id="@+id/payment_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
 
 
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
 
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        android:padding="6dp"
-                        app:srcCompat="@drawable/ic_credit" />
-
-                    <TextView
-                        android:layout_width="0dp"
-
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="@string/title_payment"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
-
-                        android:textColor="@color/colorTextDark" />
-
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -251,6 +219,7 @@
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
 
+                        android:contentDescription="@string/title_favorites"
                         android:layout_marginEnd="24dp"
                         android:padding="6dp"
                         android:tint="@color/colorTextDark"
@@ -270,6 +239,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
+                        android:contentDescription="@string/title_button_next"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:padding="3dp"
@@ -299,6 +269,8 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
+
+                        android:contentDescription="@string/title_support"
                         android:layout_marginEnd="24dp"
                         android:padding="6dp"
                         android:tint="@color/colorTextDark"
@@ -318,6 +290,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
+                        android:contentDescription="@string/title_button_next"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:padding="3dp"
@@ -333,79 +306,7 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
 
-                    android:layout_height="64dp"
-                    android:gravity="center"
-                    android:onClick="@{()->viewModel.onClickLogout()}"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginLeft="24dp"
-
-                        android:layout_marginRight="16dp"
-                        android:padding="6dp"
-                        app:srcCompat="@drawable/ic_settings" />
-
-                    <TextView
-                        android:layout_width="0dp"
-
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="@string/title_logout"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
-
-                        android:textColor="@color/colorTextDark" />
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                    android:visibility="gone" />
-
-
-                <LinearLayout
-                    android:id="@+id/language"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:gravity="center"
-
-
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="16dp"
-                        android:padding="6dp"
-                        app:srcCompat="@drawable/ic_settings" />
-
-                    <TextView
-                        android:layout_width="0dp"
-
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="Change Language"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
-
-                        android:textColor="@color/colorTextDark"
-                        tools:ignore="HardcodedText" />
-
-                </LinearLayout>
 
 
             </LinearLayout>

@@ -1,6 +1,8 @@
 package com.ronaker.app.base
 
-import androidx.lifecycle.ViewModel
+import android.annotation.SuppressLint
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import com.ronaker.app.injection.component.DaggerViewModelInjector
 import com.ronaker.app.injection.component.ViewModelInjector
 import com.ronaker.app.injection.module.RepositoryModule
@@ -31,10 +33,11 @@ import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(  app:Application) : AndroidViewModel(app) {
+
     private val injector: ViewModelInjector = DaggerViewModelInjector
         .builder()
-        .repositoryModule(RepositoryModule)
+        .repositoryModule(RepositoryModule(app))
         .build()
 
     init {

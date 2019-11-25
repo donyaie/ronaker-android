@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterCategorySelectBinding
@@ -8,7 +9,7 @@ import com.ronaker.app.model.Category
 import com.ronaker.app.model.Place
 
 
-class CategorySelectViewModel : BaseViewModel() {
+class CategorySelectViewModel (app: Application): BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
 
     lateinit var data: Category

@@ -52,7 +52,7 @@
     <string name="title_add_a_payment_method_edit">Wijzig uw betaalmethode</string>
     <string name="title_add_and_verify_phone_number">Telefoonnummer toevoegen en verifiëren</string>
     <string name="title_add_and_verify_phone_number_edit">Wijzig en verifieer nieuw telefoonnummer</string>
-    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Voeg enkele afbeeldingen van uw item toe. gebruik een duidelijk beeld vanuit de juiste hoek ...</string>
+    <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Voeg enkele afbeeldingen van uw item toe. gebruik een duidelijk beeld vanuit de juiste hoek …</string>
     <string name="title_add_images_of_item">Afbeeldingen van item toevoegen</string>
     <string name="title_add_item">+ Item toevoegen</string>
     <string name="title_add_new_image">Nieuwe afbeelding toevoegen</string>
@@ -143,4 +143,12 @@
     <string name="text_please_upload_a_image_of_you_for_identify_you">Upload een afbeelding van u om u te identificeren</string>
     <string name="text_your_request_sent">Uw verzoek is verstuurd.</string>
     <string name="text_are_you_sure">Weet je zeker dat?</string>
+    <string name="text_accept_and_start_renting">Accepteer en start verhuur</string>
+    <string name="text_finish_order">Bestelling voltooien</string>
+    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Zorg ervoor dat het gehuurde goed functioneert</string>
+    <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Zorg ervoor dat uw product naar behoren functioneert en zonder schade aan u wordt geleverd</string>
+    <string name="text_send_a_instruction_to_who_rent_your_item">Stuur een instructie naar wie uw item huurt</string>
+    <string name="text_start_renting_instruction">Start huurinstructie</string>
+    <string name="text_try_again">Probeer opnieuw</string>
+    <string name="text_why_decline_this_order">Waarom deze bestelling weigeren?</string>
 </resources>

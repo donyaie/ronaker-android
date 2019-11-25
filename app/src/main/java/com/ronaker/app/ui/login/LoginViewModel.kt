@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.login
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -9,7 +10,7 @@ import com.ronaker.app.model.toUser
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel (app: Application): BaseViewModel(app) {
 
     internal val TAG = LoginViewModel::class.java.name
 
@@ -32,7 +33,7 @@ class LoginViewModel : BaseViewModel() {
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    public var userInfo: User = User()
+    var userInfo: User = User()
 
 
     var emailError = MutableLiveData<Boolean?>()
@@ -54,7 +55,7 @@ class LoginViewModel : BaseViewModel() {
         companion object {
             operator fun get(position: Int): LoginStateEnum {
                 var state = home
-                for (stateEnum in LoginStateEnum.values()) {
+                for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
                 }

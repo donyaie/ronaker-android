@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -17,7 +18,7 @@ import com.ronaker.app.utils.AppDebug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AddProductViewModel : BaseViewModel() {
+class AddProductViewModel (app: Application): BaseViewModel(app) {
 
     internal val TAG = AddProductViewModel::class.java.name
 
@@ -111,7 +112,7 @@ class AddProductViewModel : BaseViewModel() {
         companion object {
             operator fun get(position: Int): StateEnum {
                 var state = image
-                for (stateEnum in StateEnum.values()) {
+                for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
                 }

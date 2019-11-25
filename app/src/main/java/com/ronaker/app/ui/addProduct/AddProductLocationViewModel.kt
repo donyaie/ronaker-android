@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
@@ -14,7 +15,7 @@ import com.ronaker.app.model.toPlace
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AddProductLocationViewModel : BaseViewModel() {
+class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
 
     internal val TAG = AddProductLocationViewModel::class.java.name
 
@@ -86,8 +87,6 @@ class AddProductLocationViewModel : BaseViewModel() {
                                 placeName.value = place.mainText
                             }
                         }
-
-                    } else {
 
                     }
                 },

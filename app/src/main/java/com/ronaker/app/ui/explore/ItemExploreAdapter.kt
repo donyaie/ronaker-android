@@ -10,14 +10,17 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.extension.getParentActivity
 
-class ItemExploreAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
+class ItemExploreAdapter(
+    dataList: ArrayList<Product>,
+   val viewModel: ExploreViewModel
+) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
     private  var productList:List<Product> = dataList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: AdapterExploreItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_explore_item, parent, false)
 
 
-        return ViewHolder(binding,parent.getParentActivity()as DashboardActivity)
+        return ViewHolder(binding,parent.getParentActivity()as DashboardActivity,viewModel)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,10 +37,11 @@ class ItemExploreAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<It
 
     class ViewHolder(
         private val binding: AdapterExploreItemBinding,
-       var context: DashboardActivity
+        var context: DashboardActivity,
+        parentViewModel: ExploreViewModel
     ):RecyclerView.ViewHolder(binding.root){
 
-        private val viewModel = ItemExploreViewModel()
+        private val viewModel = ItemExploreViewModel(parentViewModel.getApplication())
 
         fun bind(product:Product){
             viewModel.bind(product,binding,context)

@@ -32,6 +32,7 @@
                 android:padding="16dp"
                 android:tint="@color/white"
                 android:layout_marginLeft="8dp"
+            android:contentDescription="@string/text_content"
                 android:layout_marginRight="8dp"
                 app:srcCompat="@drawable/ic_back_white"/>
 
@@ -70,6 +71,7 @@
 
 
             <ImageView
+
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +80,8 @@
                     android:layout_height="48dp"
                     android:padding="15dp"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_share_white"/>
+                    app:srcCompat="@drawable/ic_share_white"
+                android:contentDescription="@string/text_content" />
             <ImageView
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -89,7 +92,8 @@
                     android:padding="15dp"
                     android:tint="@color/white"
                     android:layout_marginEnd="8dp"
-                    app:srcCompat="@drawable/ic_fave_white"/>
+                    app:srcCompat="@drawable/ic_fave_white"
+                android:contentDescription="@string/text_content" />
 
 
             <TextView android:id="@+id/action_text" android:layout_width="wrap_content"

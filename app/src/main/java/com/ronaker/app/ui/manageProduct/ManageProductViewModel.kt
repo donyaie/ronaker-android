@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.manageProduct
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -12,7 +13,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ManageProductViewModel : BaseViewModel() {
+class ManageProductViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -66,7 +67,7 @@ class ManageProductViewModel : BaseViewModel() {
 
 
                 } else {
-                    retry.value = result.error?.detail;
+                    retry.value = result.error?.detail
                     // errorMessage.value = result.error?.detail
                 }
             }
@@ -116,7 +117,7 @@ class ManageProductViewModel : BaseViewModel() {
     fun updateActiveState(active: Boolean) {
 
         updateActivesubscription?.dispose()
-        var product = Product()
+        val product = Product()
         product.user_status =
             if (active) Product.ActiveStatusEnum.Active.key else Product.ActiveStatusEnum.Deactive.key
 
@@ -133,7 +134,7 @@ class ManageProductViewModel : BaseViewModel() {
 
                 } else {
                     activeState.value = !active
-                    errorMessage.value = result.error?.detail;
+                    errorMessage.value = result.error?.detail
                 }
             }
 

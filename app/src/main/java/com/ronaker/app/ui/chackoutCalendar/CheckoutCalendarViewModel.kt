@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.chackoutCalendar
 
 
+import android.app.Application
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class CheckoutCalendarViewModel : BaseViewModel() {
+class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit

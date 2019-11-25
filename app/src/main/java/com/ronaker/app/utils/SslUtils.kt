@@ -1,5 +1,6 @@
 package com.ronaker.app.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import com.ronaker.app.General
@@ -18,7 +19,7 @@ object SslUtils {
 
     //download pem
     //openssl s_client -showcerts -connect myserver.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > app/main/assets/my_service_certifcate.pem
-
+  private  val TAG=SslUtils::class.java.name
 
     fun getUnsafeOkHttpClientAll(): OkHttpClient {
         try {
@@ -31,9 +32,12 @@ object SslUtils {
                 }
 
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkClientTrusted(p0: Array<out X509Certificate>?, p1: String?) {
+
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkServerTrusted(p0: Array<out X509Certificate>?, p1: String?) {
 
                 }
@@ -42,7 +46,7 @@ object SslUtils {
 
             // Install the all-trusting trust manager
             val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+            sslContext.init(null, trustAllCerts, SecureRandom())
 
             // Create an ssl socket factory with our all-trusting manager
             val sslSocketFactory = sslContext.getSocketFactory()
@@ -62,7 +66,7 @@ object SslUtils {
     // Create a trust manager that does not validate certificate chains
     // Install the all-trusting trust manager
     // Create an ssl socket factory with our all-trusting manager
-    fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
+    fun getUnsafeOkHttpClient(context: Context): OkHttpClient.Builder {
         try {
 
             val builder = OkHttpClient.Builder()
@@ -72,7 +76,7 @@ object SslUtils {
             }
 
             getSslContextForCertificateFile(
-                General.context,
+               context,
                 "my_certificate.pem"
             )?.let {
 
@@ -96,7 +100,7 @@ object SslUtils {
         fileName: String
     ): Pair<SSLContext, X509TrustManager>? {
         try {
-            val keyStore = SslUtils.getKeyStore(context, fileName)
+            val keyStore = getKeyStore(context, fileName)
             val sslContext = SSLContext.getInstance("SSL")
             val trustManagerFactory =
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
@@ -104,11 +108,10 @@ object SslUtils {
             sslContext.init(null, trustManagerFactory.trustManagers, SecureRandom())
 
 
-            var manager = trustManagerFactory.trustManagers[0] as X509TrustManager
+            val manager = trustManagerFactory.trustManagers[0] as X509TrustManager
             return Pair(sslContext, manager)
         } catch (e: Exception) {
-            val msg = "Error during creating SslContext for certificate from assets"
-            e.printStackTrace()
+            AppDebug.Log(TAG,e)
 
             return null
         }
@@ -148,14 +151,16 @@ object SslUtils {
                     return arrayOf()
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkClientTrusted(
-                    chain: Array<java.security.cert.X509Certificate>,
+                    chain: Array<X509Certificate>,
                     authType: String
                 ) {
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkServerTrusted(
-                    chain: Array<java.security.cert.X509Certificate>,
+                    chain: Array<X509Certificate>,
                     authType: String
                 ) {
                 }
@@ -163,7 +168,7 @@ object SslUtils {
 
             // Install the all-trusting trust manager
             val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+            sslContext.init(null, trustAllCerts, SecureRandom())
             // Create an ssl socket factory with our all-trusting manager
 
             return Pair(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)

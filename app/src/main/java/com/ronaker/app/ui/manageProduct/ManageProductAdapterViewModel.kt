@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.manageProduct
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
@@ -8,7 +9,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.BASE_URL
 
-class ManageProductAdapterViewModel : BaseViewModel() {
+class ManageProductAdapterViewModel (app: Application): BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()

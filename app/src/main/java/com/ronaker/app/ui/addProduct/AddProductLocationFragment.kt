@@ -86,7 +86,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
         activity?.let {
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
-        };
+        }
 
 
 
@@ -94,7 +94,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
             mGoogleMap = it
             mGoogleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    context, R.raw.style_json));
+                    context, R.raw.style_json))
 
             baseViewModel.productLocation.value?.let {it3->
 
@@ -154,7 +154,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         binding.searchLayout.setOnClickListener {
 
 
-            fragmentManager?.let { it1 ->
+            childFragmentManager.let { it1 ->
                 AddProductLocationSearchDialog.DialogBuilder(it1)
                     .setListener(this@AddProductLocationFragment).show()
             }
@@ -237,7 +237,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
                             if (location != null) {
 
 
-                                var newLocation = LatLng(location.latitude, location.longitude)
+                                val newLocation = LatLng(location.latitude, location.longitude)
 
 
                                 if (lastLocation == null)
@@ -253,9 +253,9 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
                     }
 
-                    if (report.isAnyPermissionPermanentlyDenied) {
-
-                    }
+//                    if (report.isAnyPermissionPermanentlyDenied) {
+//
+//                    }
                 }
 
 

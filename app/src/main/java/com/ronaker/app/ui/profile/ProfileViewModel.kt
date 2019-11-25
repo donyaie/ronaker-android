@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.profile
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -11,7 +12,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileViewModel: BaseViewModel(){
+class ProfileViewModel(app: Application): BaseViewModel(app){
 
 
     @Inject
@@ -72,9 +73,10 @@ class ProfileViewModel: BaseViewModel(){
 
 
 
-                } else {
-
+                }   else{
+                    errorMessage.value=result.error?.detail
                 }
+
             }
 
 

@@ -1,16 +1,10 @@
 package com.ronaker.app
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.onesignal.OneSignal
-import com.ronaker.app.injection.component.AppComponent
-import com.ronaker.app.injection.component.DaggerAppComponent
-import com.ronaker.app.injection.module.AppModule
-import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.utils.FONT_PATH
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -21,27 +15,12 @@ import com.ronaker.app.utils.LocaleHelper
 
 
 class General : MultiDexApplication() {
-    lateinit var General: AppComponent
-
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        lateinit var context: Context
-
-        fun newInstance(context: Context): Intent {
-            return Intent(context, LoginActivity::class.java)
-        }
-
-
-
-    }
-
-
 
 
 
     override fun onCreate() {
 
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate()
 
 
@@ -49,13 +28,12 @@ class General : MultiDexApplication() {
         OneSignal.startInit(this)
             .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
             .unsubscribeWhenNotificationsAreDisabled(true)
-            .init();
+            .init()
 
 //
 //        if (BuildConfig.DEBUG)
 //            com.facebook.stetho.Stetho.initializeWithDefaults(this)
-        context = this;
-        General=initDagger()
+
 
         ViewPump.init(
             ViewPump.builder()
@@ -78,12 +56,7 @@ class General : MultiDexApplication() {
         super.attachBaseContext(base?.let { LocaleHelper.onAttach(it, "en") })
         MultiDex.install(this)
 
-        base?.let { context= base}
     }
 
 
-
-    private fun initDagger(): AppComponent =
-        DaggerAppComponent.builder()
-            .build()
 }

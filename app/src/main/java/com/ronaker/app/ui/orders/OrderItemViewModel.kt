@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orders
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -11,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class OrderItemViewModel : BaseViewModel() {
+class OrderItemViewModel (app: Application): BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()

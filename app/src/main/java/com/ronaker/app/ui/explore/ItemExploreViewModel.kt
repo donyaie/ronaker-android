@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.explore
 
+import android.app.Application
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,7 @@ import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
 
 
-class ItemExploreViewModel : BaseViewModel() {
+class ItemExploreViewModel (app: Application): BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
@@ -34,7 +35,7 @@ class ItemExploreViewModel : BaseViewModel() {
         activity = context
         productTitle.value = post.name
 
-        if (post.price_per_day?.equals(0) != true) {
+        if (post.price_per_day?:0!=0 ) {
             productPrice.value = String.format(
                 "%s%.02f %s",
                 context.getString(R.string.title_curency_symbol),
@@ -43,7 +44,7 @@ class ItemExploreViewModel : BaseViewModel() {
                     R.string.title_per_day
                 )
             )
-        } else if (post.price_per_week?.equals(0) != true) {
+        } else if (post.price_per_week?:0!=0) {
 
             productPrice.value = String.format(
                 "%s%.02f %s",
@@ -53,7 +54,7 @@ class ItemExploreViewModel : BaseViewModel() {
                     R.string.title_per_week
                 )
             )
-        } else if (post.price_per_month?.equals(0) != true) {
+        } else if (post.price_per_month?:0!=0) {
 
             productPrice.value = String.format(
                 "%s%.02f %s",
@@ -69,7 +70,7 @@ class ItemExploreViewModel : BaseViewModel() {
 
         productImage.value = BASE_URL + post.avatar
 
-        ViewCompat.setTransitionName(binder.image, post.avatar);
+        ViewCompat.setTransitionName(binder.image, post.avatar)
 
     }
 

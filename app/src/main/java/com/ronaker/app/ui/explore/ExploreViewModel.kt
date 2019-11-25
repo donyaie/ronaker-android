@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.explore
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -12,7 +13,7 @@ import com.ronaker.app.model.toProductList
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ExploreViewModel : BaseViewModel() {
+class ExploreViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -57,7 +58,7 @@ class ExploreViewModel : BaseViewModel() {
     private  var subscription: Disposable?=null
 
     init {
-        productListAdapter = ItemExploreAdapter(dataList)
+        productListAdapter = ItemExploreAdapter(dataList,this)
         reset()
 
         loadProduct()

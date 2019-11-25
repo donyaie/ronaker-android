@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -14,7 +15,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class AddProductCategorySelectViewModel : BaseViewModel() {
+class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductCategorySelectViewModel::class.java.name
 
@@ -84,8 +85,6 @@ class AddProductCategorySelectViewModel : BaseViewModel() {
 
 
                     listAdapter.notifyDataSetChanged()
-
-                } else {
 
                 }
             }

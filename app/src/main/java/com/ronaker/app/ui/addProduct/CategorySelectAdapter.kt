@@ -40,7 +40,7 @@ class CategorySelectAdapter(dataList: ArrayList<Category>, viewModel:AddProductC
        var parentViewModel: AddProductCategorySelectViewModel
     ):RecyclerView.ViewHolder(binding.root){
 
-        private val viewModel = CategorySelectViewModel()
+        private val viewModel = CategorySelectViewModel(parentViewModel.getApplication())
 
         fun bind(product:Category){
             viewModel.bind(product,binding,parentViewModel)

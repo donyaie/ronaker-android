@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orderFinish
 
 
+import android.app.Application
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +18,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderFinishViewModel : BaseViewModel() {
+class OrderFinishViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit

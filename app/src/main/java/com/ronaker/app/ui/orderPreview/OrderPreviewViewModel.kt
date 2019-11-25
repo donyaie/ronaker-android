@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orderPreview
 
 
+import android.app.Application
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +18,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel : BaseViewModel() {
+class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit

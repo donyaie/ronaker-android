@@ -33,8 +33,8 @@ class ProfileSettingActivity : BaseActivity() {
 
     companion object {
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, ProfileSettingActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ProfileSettingActivity::class.java)
+            val boundle = Bundle()
             intent.putExtras(boundle)
 
             return intent
@@ -109,7 +109,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        binding.versionText.text="--Version V${BuildConfig.VERSION_NAME}--"
+        binding.versionText.text = "--Version V${BuildConfig.VERSION_NAME}--"
 
 
 
@@ -133,7 +133,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
     private fun showLogoutDialog() {
-        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage(getString(R.string.text_are_you_sure))
         builder.setPositiveButton(
             getString(android.R.string.ok)
@@ -149,7 +149,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
-        super.onBackPressed();
+        super.onBackPressed()
     }
 
 

@@ -34,6 +34,7 @@
 
 
                     <ImageView
+                        android:contentDescription="@string/text_content"
                             android:id="@+id/avatar_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -58,7 +59,7 @@
                                 android:id="@+id/rejected"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/background_accent"
                                 android:clickable="false"
@@ -78,7 +79,7 @@
                                 android:id="@+id/pending"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/background_yellow"
                                 android:clickable="false"
@@ -178,32 +179,15 @@
                             android:layout_marginRight="24dp"
                             android:background="@color/colorPlatinGrey" />
 
-                    <LinearLayout
-                            android:id="@+id/name_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="24dp"
-                            android:paddingRight="24dp">
-
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".95"
-                                android:text="@string/title_name_and_description"
-                                android:textAppearance="@style/TextAppearance.Large.Light"
-                                android:textColor="@color/colorTextDark" />
-
-                        <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-
-                                android:padding="3dp"
-                                app:srcCompat="@drawable/ic_chevron_right" />
 
 
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/name_layout"
+                        style="@style/Button.transparent.width"
+                        app:drawableEndCompat="@drawable/ic_chevron_right"
+                        android:text="@string/title_name_and_description"
+                        android:textColor="@color/colorTextDark" />
+
 
                     <RelativeLayout
                             android:layout_width="match_parent"
@@ -212,32 +196,13 @@
                             android:layout_marginRight="24dp"
                             android:background="@color/colorPlatinGrey" />
 
-                    <LinearLayout
-                            android:id="@+id/category_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="24dp"
-                            android:paddingRight="24dp">
 
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".95"
-                                android:text="@string/title_categories"
-                                android:textAppearance="@style/TextAppearance.Large.Light"
-                                android:textColor="@color/colorTextDark" />
-
-                        <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-
-                                android:padding="3dp"
-                                app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/category_layout"
+                        style="@style/Button.transparent.width"
+                        app:drawableEndCompat="@drawable/ic_chevron_right"
+                        android:text="@string/title_categories"
+                        android:textColor="@color/colorTextDark" />
 
                     <RelativeLayout
                             android:layout_width="match_parent"
@@ -246,31 +211,14 @@
                             android:layout_marginRight="24dp"
                             android:background="@color/colorPlatinGrey" />
 
-                    <LinearLayout
-                            android:id="@+id/image_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="24dp"
-                            android:paddingRight="24dp">
-
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".95"
-                                android:text="@string/title_images_gallery"
-                                android:textAppearance="@style/TextAppearance.Large.Light"
-                                android:textColor="@color/colorTextDark" />
-
-                        <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:padding="3dp"
-                                app:srcCompat="@drawable/ic_chevron_right" />
 
 
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/image_layout"
+                        style="@style/Button.transparent.width"
+                        app:drawableEndCompat="@drawable/ic_chevron_right"
+                        android:text="@string/title_images_gallery"
+                        android:textColor="@color/colorTextDark" />
 
                     <RelativeLayout
                             android:layout_width="match_parent"
@@ -279,31 +227,13 @@
                             android:layout_marginRight="24dp"
                             android:background="@color/colorPlatinGrey" />
 
-                    <LinearLayout
-                            android:id="@+id/price_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="24dp"
-                            android:paddingRight="24dp">
 
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".95"
-                                android:text="@string/title_asking_price"
-                                android:textAppearance="@style/TextAppearance.Large.Light"
-                                android:textColor="@color/colorTextDark" />
-
-                        <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:padding="3dp"
-                                app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/price_layout"
+                        style="@style/Button.transparent.width"
+                        app:drawableEndCompat="@drawable/ic_chevron_right"
+                        android:text="@string/title_asking_price"
+                        android:textColor="@color/colorTextDark" />
 
                     <RelativeLayout
                             android:layout_width="match_parent"
@@ -312,31 +242,14 @@
                             android:layout_marginRight="24dp"
                             android:background="@color/colorPlatinGrey" />
 
-                    <LinearLayout
-                            android:id="@+id/location_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="24dp"
-                            android:paddingRight="24dp">
 
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".95"
-                                android:text="@string/title_location"
-                                android:textAppearance="@style/TextAppearance.Large.Light"
-                                android:textColor="@color/colorTextDark" />
+                    <Button
+                        android:id="@+id/location_layout"
+                        style="@style/Button.transparent.width"
+                        app:drawableEndCompat="@drawable/ic_chevron_right"
+                        android:text="@string/title_location"
+                        android:textColor="@color/colorTextDark" />
 
-                        <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:padding="3dp"
-                                app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                    </LinearLayout>
 
                     <RelativeLayout
                             android:layout_width="match_parent"
