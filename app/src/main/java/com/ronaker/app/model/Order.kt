@@ -95,8 +95,8 @@ fun List<OrderResponseModel>.toOrderList(): List<Order> {
                 it.order_type,
                 it.status,
                 it.product.toProduct(),
-                it.product_owner?.toUser(),
-                it.order_user?.toUser()
+                it.product_owner?.toUserModel(),
+                it.order_user?.toUserModel()
             )
 
             list.add(product)

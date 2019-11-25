@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUser
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -58,7 +57,7 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                   mUser= result.data?.toUser()
+                   mUser= result.data
                     signComplete.value = result.data?.is_email_verified
 
                     phoneComplete.value = result.data?.is_phone_number_verified

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUser
+import com.ronaker.app.model.toUserModel
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -110,10 +110,6 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
                 loading.value=false
                 if (result.isSuccess()) {
 
-                    userRepository.saveUserToken(result.data?.token)
-                    result.data?.user?.let { userRepository.saveUserInfo(it.toUser()) }
-
-
                     goNext.value=true
 
                 } else {
@@ -131,9 +127,6 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
             .subscribe { result ->
                 loading.value=false
                 if (result.isSuccess()) {
-
-                    userRepository.saveUserToken(result.data?.token)
-                    result.data?.user?.let { userRepository.saveUserInfo(it.toUser()) }
                     goNext.value=true
                 } else {
                    errorMessage.value= result.error?.detail

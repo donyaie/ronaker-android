@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUser
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -61,16 +60,10 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    result.data?.toUser()?.let {
-
-
+                    result.data?.let {
                         userRepository.saveUserInfo(it)
                         fillUser(it)
-
-
                     }
-
-
 
                 }   else{
                     errorMessage.value=result.error?.detail

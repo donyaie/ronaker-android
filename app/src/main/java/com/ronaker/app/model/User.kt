@@ -40,12 +40,13 @@ data class User(
         null,
         null
     )
+    var accessToken:String?=null
 
 
 }
 
 
-fun UserInfoResponceModel.toUser(): User {
+fun UserInfoResponceModel.toUserModel(): User {
 
 
     var value = User(

@@ -10,6 +10,7 @@ import com.ronaker.app.data.network.response.UserAddPhoneResponceModel
 import com.ronaker.app.data.network.response.UserInfoResponceModel
 import com.ronaker.app.data.network.response.UserRegisterResponseModel
 import com.ronaker.app.model.User
+import com.ronaker.app.model.toUserModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,7 +23,7 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
 
     private val UserInfoKey = "userInfoKey"
 
-    override fun registerUser(user: User): Observable<Result<UserRegisterResponseModel>> {
+    override fun registerUser(user: User): Observable<Result<User>> {
         val info = UserRegisterRequestModel(
             user.email,
             user.password,
@@ -32,32 +33,41 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
         return userApi.registerUser(info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
-//            .map {
-//                it.results.map {
-//                    Movie(it.title, it.overview, it.backdrop_path)
-//                }
-//            }
-
+            .map {
+                it.user.toUserModel().apply {
+                    accessToken = it.token
+                    saveUserInfo(this)
+                    saveUserToken(it.token)
+                }
+            }
             .toResult()
 
     }
 
 
-    override fun loginUser(user: User): Observable<Result<UserRegisterResponseModel>> {
+    override fun loginUser(user: User): Observable<Result<User>> {
         val info = UserLoginRequestModel(
             user.email,
             user.password
         )
         return userApi.loginUser(info)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.user.toUserModel().apply {
+                    accessToken = it.token
+                    saveUserInfo(this)
+                    saveUserToken(it.token)
+                }
+            }
+
+            .toResult()
 
     }
 
 
-    override fun updateUserInfo(user_token: String?, user: User): Observable<Result<UserInfoResponceModel>> {
-        var info= UserUpdateRequestModel(
+    override fun updateUserInfo(user_token: String?, user: User): Observable<Result<User>> {
+        val info= UserUpdateRequestModel(
             user.first_name,
             user.last_name,
             user.email,
@@ -66,27 +76,43 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
 
         return userApi.updateUserInfo("Token $user_token",info)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+
+                it.toUserModel()
+            }
+            .toResult()
 
     }
 
 
-    override fun getUserInfo(user_token: String?): Observable<Result<UserInfoResponceModel>> {
+    override fun getUserInfo(user_token: String?): Observable<Result<User>> {
         return userApi.getUserInfo("Token $user_token")
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map {
+
+                it.toUserModel()
+            }
+
+            .toResult()
 
     }
 
-    override fun addUserPhoneNumber(user_token: String?, phone_number: String): Observable<Result<UserAddPhoneResponceModel>> {
+    override fun addUserPhoneNumber(user_token: String?, phone_number: String): Observable<Result<String>> {
 
-        var phone =
+        val phone =
             UserAddPhoneRequestModel(
                 phone_number
             )
         return userApi.addUserPhoneNumber("Token $user_token", phone)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.phone_number
+            }
+            .toResult()
 
     }
 
@@ -94,16 +120,23 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
         user_token: String?,
         phone_number: String,
         code: String
-    ): Observable<Result<UserRegisterResponseModel>> {
+    ): Observable<Result<User>> {
 
-        var phone =
+        val phone =
             UserActivePhoneRequestModel(
                 phone_number,
                 code
             )
         return userApi.activeUserPhoneNumber("Token $user_token", phone)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.user.toUserModel().apply {
+                    accessToken = it.token
+                }
+            }
+
+            .toResult()
 
     }
 
@@ -112,16 +145,20 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
         userToken: String?,
         imageSuid: String,
         documentType: UserRepository.DocumentTypeEnum
-    ): Observable<Result<FreeResponseModel>> {
+    ): Observable<Result<Boolean>> {
 
-        var phone =
+        val phone =
             UserIdentifyRequestModel(
                 imageSuid,
                 documentType.key
             )
         return userApi.addDocument("Token $userToken",phone)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+               true
+            }
+            .toResult()
 
     }
 
@@ -130,7 +167,7 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
         preferencesProvider.putObject(UserInfoKey,info)
     }
     override fun getUserInfo(): User? {
-        return preferencesProvider.getObject<User?>(UserInfoKey, User::class.java)
+        return preferencesProvider.getObject(UserInfoKey, User::class.java)
     }
 
     override fun saveUserToken(token: String?) {
