@@ -7,7 +7,6 @@ import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.*
-import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
