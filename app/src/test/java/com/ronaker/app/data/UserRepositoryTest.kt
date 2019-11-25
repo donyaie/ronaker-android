@@ -50,7 +50,7 @@ class UserRepositoryTest {
     fun createRepository() {
         preferences = FakePreferencesProvider()
 
-        userRepository = UserRepository(userApi, preferences)
+        userRepository = DefaultUserRepository(userApi, preferences)
     }
 
 

@@ -119,7 +119,8 @@ class RepositoryModule(private val app: Application) {
         userApi: UserApi,
         preferencesProvider: PreferencesProvider
     ): UserRepository {
-        return UserRepository(userApi, preferencesProvider)
+
+        return DefaultUserRepository(userApi, preferencesProvider)
     }
 
 
@@ -127,7 +128,7 @@ class RepositoryModule(private val app: Application) {
     @Singleton
     internal fun provideContentRepository(api: ContentApi): ContentRepository {
 
-        return ContentRepository(api)
+        return DefaultContentRepository(api)
     }
 
     @Provides
@@ -135,7 +136,7 @@ class RepositoryModule(private val app: Application) {
     internal fun provideProductRepository(
         productApi: ProductApi
     ): ProductRepository {
-        return ProductRepository(productApi)
+        return DefaultProductRepository(productApi)
     }
 
     @Provides
@@ -143,7 +144,7 @@ class RepositoryModule(private val app: Application) {
     internal fun provideCategoryRepository(
         api: CategoryApi
     ): CategoryRepository {
-        return CategoryRepository(api)
+        return DefaultCategoryRepository(api)
     }
 
 
@@ -152,14 +153,14 @@ class RepositoryModule(private val app: Application) {
     internal fun provideOrderRepository(
         api: OrderApi
     ): OrderRepository {
-        return OrderRepository(api)
+        return DefaultOrderRepository(api)
     }
 
 
     @Provides
     @Singleton
     internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
-        return GoogleMapRepository(api, context.getString(R.string.google_api_key_me))
+        return DefaultGoogleMapRepository(api, context.getString(R.string.google_api_key_me))
     }
 
 
