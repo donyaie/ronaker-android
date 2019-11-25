@@ -5,10 +5,6 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.network.request.*
-import com.ronaker.app.data.network.response.FreeResponseModel
-import com.ronaker.app.data.network.response.UserAddPhoneResponceModel
-import com.ronaker.app.data.network.response.UserInfoResponceModel
-import com.ronaker.app.data.network.response.UserRegisterResponseModel
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUserModel
 import io.reactivex.Observable

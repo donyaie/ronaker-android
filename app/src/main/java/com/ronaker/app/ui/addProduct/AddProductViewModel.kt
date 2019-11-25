@@ -421,7 +421,7 @@ class AddProductViewModel (app: Application): BaseViewModel(app) {
                 .doOnTerminate { model.progress.value = false }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        model.url = result.data?.content
+                        model.url = result.data?.url
                         model.suid = result.data?.suid
                         model.isLocal = false
                         model.progress.value = false
