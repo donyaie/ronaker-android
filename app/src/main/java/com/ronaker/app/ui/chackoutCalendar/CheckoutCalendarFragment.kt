@@ -59,10 +59,6 @@ class CheckoutCalendarFragment : BaseFragment() {
             }
 
 
-
-
-
-
         })
 
 
@@ -123,13 +119,13 @@ class CheckoutCalendarFragment : BaseFragment() {
         binding.calendarView.setOnDateSelectedListener(object:CalendarPickerView.OnDateSelectedListener{
             override fun onDateSelected(date: Date) {
 
-                viewModel.UpdateDate( binding.calendarView.selectedDates)
+                viewModel.updateDate( binding.calendarView.selectedDates)
 
             }
 
             override fun onDateUnselected(date: Date) {
 
-                viewModel.UpdateDate( binding.calendarView.selectedDates)
+                viewModel.updateDate( binding.calendarView.selectedDates)
             }
 
         })

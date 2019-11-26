@@ -19,7 +19,7 @@ class OrderListFragment : BaseFragment() {
     private lateinit var viewModel: OrderListViewModel
 
 
-    lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
 
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class OrderListFragment : BaseFragment() {
 
 //
         binding.viewModel = viewModel
-        var mnager = LinearLayoutManager(context)
+        val mnager = LinearLayoutManager(context)
         binding.recycler.layoutManager = mnager
 
 
@@ -88,7 +88,7 @@ class OrderListFragment : BaseFragment() {
     }
 
 
-    fun getFilter(): String? {
+    private fun getFilter(): String? {
         return this.arguments?.getString(FILTER_KEY)
     }
 

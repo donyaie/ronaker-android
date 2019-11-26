@@ -36,11 +36,7 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
 
     private var subscription: Disposable? = null
 
-    init {
-
-    }
-
-    var mUser: User?=null
+    private var mUser: User?=null
 
     fun loadData() {
 

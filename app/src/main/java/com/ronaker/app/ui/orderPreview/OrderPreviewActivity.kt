@@ -24,7 +24,6 @@ import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 
 class OrderPreviewActivity : BaseActivity() {
 
-    private val TAG = OrderPreviewActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderPreviewBinding
     private lateinit var viewModel: OrderPreviewViewModel

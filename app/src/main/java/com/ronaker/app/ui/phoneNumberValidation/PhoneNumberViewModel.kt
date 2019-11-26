@@ -13,8 +13,6 @@ import javax.inject.Inject
 
 class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
 
-    internal val TAG = PhoneNumberViewModel::class.java.name
-
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -25,6 +23,8 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     private var resendSubscription: Disposable? = null
 
     private var verifyPhoneSubscription: Disposable? = null
+    val viewState: MutableLiveData<StateEnum> = MutableLiveData()
+
 
 
     val timerVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -32,6 +32,8 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     val timerValue: MutableLiveData<String> = MutableLiveData()
 
 
+    private var  countDounTimer: CountDownTimer?=null
+    private var mNumber = ""
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -63,7 +65,6 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
         }
     }
 
-    var mNumber = ""
 
 
     fun onClickPhoneNext(phone: String) {
@@ -99,9 +100,8 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
             }
     }
 
-    var  countDounTimer: CountDownTimer?=null
 
-    fun startTimer(){
+    private fun startTimer(){
         timerValue.value="00"
         timerVisibility.value= View.VISIBLE
         resendVisibility.value= View.GONE
@@ -137,12 +137,6 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    val viewState: MutableLiveData<StateEnum> = MutableLiveData()
-
-
-    init {
-
-    }
 
 
     override fun onCleared() {

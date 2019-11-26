@@ -10,7 +10,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
 
@@ -24,7 +23,7 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
     var activity: AppCompatActivity?=null
 
 
-    lateinit var mBinder: AdapterExploreItemBinding
+    private lateinit var mBinder: AdapterExploreItemBinding
 
     fun bind(
         post: Product,
@@ -37,37 +36,42 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
         activity = context
         productTitle.value = post.name
 
-        if (post.price_per_day?:0!=0 ) {
-            productPrice.value = String.format(
-                "%s%.02f %s",
-                app.getString(R.string.title_curency_symbol),
-                post.price_per_day,
-                app.getString(
-                    R.string.title_per_day
+        when {
+            post.price_per_day?:0!=0 -> {
+                productPrice.value = String.format(
+                    "%s%.02f %s",
+                    app.getString(R.string.title_curency_symbol),
+                    post.price_per_day,
+                    app.getString(
+                        R.string.title_per_day
+                    )
                 )
-            )
-        } else if (post.price_per_week?:0!=0) {
+            }
+            post.price_per_week?:0!=0 -> {
 
-            productPrice.value = String.format(
-                "%s%.02f %s",
-                app.getString(R.string.title_curency_symbol),
-                post.price_per_week,
-                app.getString(
-                    R.string.title_per_week
+                productPrice.value = String.format(
+                    "%s%.02f %s",
+                    app.getString(R.string.title_curency_symbol),
+                    post.price_per_week,
+                    app.getString(
+                        R.string.title_per_week
+                    )
                 )
-            )
-        } else if (post.price_per_month?:0!=0) {
+            }
+            post.price_per_month?:0!=0 -> {
 
-            productPrice.value = String.format(
-                "%s%.02f %s",
-                app.getString(R.string.title_curency_symbol),
-                post.price_per_month,
-                app.getString(
-                    R.string.title_per_month
+                productPrice.value = String.format(
+                    "%s%.02f %s",
+                    app.getString(R.string.title_curency_symbol),
+                    post.price_per_month,
+                    app.getString(
+                        R.string.title_per_month
+                    )
                 )
-            )
-        } else {
-            productPrice.value = ""
+            }
+            else -> {
+                productPrice.value = ""
+            }
         }
 
         productImage.value = BASE_URL + post.avatar

@@ -4,14 +4,10 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
-import io.reactivex.disposables.Disposable
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 class SplashViewModel (app: Application): BaseViewModel(app) {
 
-    private lateinit var subscription: Disposable
 
     val goLogin: MutableLiveData<Boolean> = MutableLiveData()
     val goDashboard: MutableLiveData<Boolean> = MutableLiveData()
@@ -27,10 +23,5 @@ class SplashViewModel (app: Application): BaseViewModel(app) {
             goLogin.value = true
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
-//        subscription?.dispose()
-    }
 
 }

@@ -15,24 +15,9 @@ class InboxViewModel(app: Application): BaseViewModel(app){
     lateinit
     var userRepository: UserRepository
 
-
-
     val errorMessage:MutableLiveData<String> = MutableLiveData()
     val loading:MutableLiveData<Boolean> = MutableLiveData()
-
-
-
     private  var subscription: Disposable?=null
-
-    init{
-
-
-
-
-    }
-
-
-
 
     override fun onCleared() {
         super.onCleared()

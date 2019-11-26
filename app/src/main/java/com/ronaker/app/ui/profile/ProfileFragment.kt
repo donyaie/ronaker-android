@@ -11,8 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.language.LanguageDialog
-import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.utils.IntentManeger

@@ -9,11 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.extension.finishSafe
-import com.savvi.rangedatepicker.CalendarPickerView
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class OrderMessageFragment : BaseFragment() {

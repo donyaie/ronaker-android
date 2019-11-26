@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.orders
 
-import android.app.Activity
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -55,12 +54,12 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
         val userName=(item.orderUser?.first_name?:"")+" "+(item.orderUser?.last_name?:"")
 
 
-        when (Order.OrderStatusEnum.get(item.status)) {
+        when (Order.OrderStatusEnum[item.status]) {
             Order.OrderStatusEnum.Accepted -> {
 
                 orderStatusImage.value=R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
 
                     orderStatus.value=  app.getString(R.string.text_rent_request_accepted,userName)
@@ -75,7 +74,7 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
 
                 orderStatusImage.value=R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
 
                     orderStatus.value=  app.getString(R.string.text_rent_request_started,userName)
@@ -90,7 +89,7 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
 
                 orderStatusImage.value=R.drawable.ic_remove_red
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value=app.getString(R.string.text_rent_canceled)
                 }else{
@@ -106,7 +105,7 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
                 orderStatusImage.value=R.drawable.ic_guide_success
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
                     orderStatus.value=app.getString(R.string.text_rent_complete)
                 }else{

@@ -105,10 +105,6 @@ class ProfilePaymentViewModel (app: Application): BaseViewModel(app) {
 
     }
 
-    init {
-
-    }
-
 
     fun loadData() {
 

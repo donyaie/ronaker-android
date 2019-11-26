@@ -38,16 +38,15 @@ class ExploreProductActivity : BaseActivity() {
 
     companion object {
 
+        const val REQUEST_CODE = 345
+        const val SUID_KEY = "suid"
+        const val PRODUCT_KEY = "product"
+        const val IMAGE_TRANSITION_KEY = "image_transition"
 
-        var REQUEST_CODE = 345
-
-        var SUID_KEY = "suid"
-        var PRODUCT_KEY = "product"
-        var IMAGE_TRANSITION_KEY = "image_transition"
         private val TAG = ExploreProductActivity::class.java.simpleName
 
         fun isHavePending(product: Product): Boolean {
-             product.suid?.let { return isTAGInStack(TAG+it) }?:run { return false }
+            product.suid?.let { return isTAGInStack(TAG + it) } ?: run { return false }
         }
 
         fun newInstance(context: Context, suid: String): Intent {
@@ -72,7 +71,7 @@ class ExploreProductActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AnimationHelper.setAnimateTransition(this)
         super.onCreate(savedInstanceState)
-        activityTag = TAG+getCurrentSUID()
+        activityTag = TAG + getCurrentSUID()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
@@ -174,7 +173,7 @@ class ExploreProductActivity : BaseActivity() {
                     CheckoutCalendarActivity.newInstance(
                         this,
                         it
-                    ),CheckoutCalendarActivity.REQUEST_CODE
+                    ), CheckoutCalendarActivity.REQUEST_CODE
                 )
 
             }
@@ -271,28 +270,35 @@ class ExploreProductActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
-        when(requestCode){
+        when (requestCode) {
 
-            CheckoutCalendarActivity.REQUEST_CODE->{
+            CheckoutCalendarActivity.REQUEST_CODE -> {
                 data?.let {
 
-                    if(resultCode== Activity.RESULT_OK){
+                    if (resultCode == Activity.RESULT_OK) {
 
-                        val start=  Date(data.getLongExtra( CheckoutCalendarActivity.STARTDATE_KEY,-1))
-                        val end=  Date(data.getLongExtra( CheckoutCalendarActivity.ENDDATE_KEY,-1))
+                        val start =
+                            Date(data.getLongExtra(CheckoutCalendarActivity.STARTDATE_KEY, -1))
+                        val end = Date(data.getLongExtra(CheckoutCalendarActivity.ENDDATE_KEY, -1))
 
 
                         Handler().postDelayed({
-                           startActivityMakeSceneForResult(OrderMessageActivity.newInstance(this,getProduct(),start,end),OrderMessageActivity.REQUEST_CODE)
-                        },100)
+                            startActivityMakeSceneForResult(
+                                OrderMessageActivity.newInstance(
+                                    this,
+                                    getProduct(),
+                                    start,
+                                    end
+                                ), OrderMessageActivity.REQUEST_CODE
+                            )
+                        }, 100)
                     }
                 }
             }
 
 
-
-            OrderMessageActivity.REQUEST_CODE->{
-                if(resultCode== Activity.RESULT_OK) {
+            OrderMessageActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
 
                     setResult(Activity.RESULT_OK)
                     finishSafe()
@@ -300,7 +306,6 @@ class ExploreProductActivity : BaseActivity() {
 
 
             }
-
 
 
         }

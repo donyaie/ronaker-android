@@ -2,11 +2,9 @@ package com.ronaker.app.ui.orders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterOrdreItemBinding
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.extension.getApplication

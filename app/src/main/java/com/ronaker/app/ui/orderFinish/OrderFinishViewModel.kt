@@ -35,7 +35,7 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
 
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
-    lateinit var mOrder: Order
+    private lateinit var mOrder: Order
 
 
     private var subscription: Disposable? = null
@@ -43,9 +43,6 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
-    init {
-
-    }
 
 
     override fun onCleared() {

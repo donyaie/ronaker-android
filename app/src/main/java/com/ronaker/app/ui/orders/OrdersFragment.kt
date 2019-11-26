@@ -1,22 +1,14 @@
 package com.ronaker.app.ui.orders
 
-import android.os.Binder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.app.CoreComponentFactory
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -25,9 +17,6 @@ import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
-import com.ronaker.app.utils.view.LoadingComponent
-import com.ronaker.app.utils.view.TabNavigationComponent
 
 class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
     FragNavController.RootFragmentListener {
@@ -65,11 +54,11 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
     }
 
 
-    val tabList :ArrayList< TextView> =ArrayList()
+    private val tabList :ArrayList< TextView> =ArrayList()
 
 
 
-    var selectedTab=0
+    private var selectedTab=0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -103,7 +92,7 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
 
 
 
-    fun initNavigation(savedInstanceState: Bundle?) {
+    private fun initNavigation(savedInstanceState: Bundle?) {
 
         fragNavController.apply {
             transactionListener = this@OrdersFragment
@@ -158,13 +147,13 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
         }
         context?.let { it1 ->
 
-            tabList.get(index).setTextColor(ContextCompat.getColor(it1, R.color.colorTextLight))
-            tabList.get(index).setBackgroundResource(R.drawable.background_prinery_corner)
+            tabList[index].setTextColor(ContextCompat.getColor(it1, R.color.colorTextLight))
+            tabList[index].setBackgroundResource(R.drawable.background_prinery_corner)
 
         }
     }
 
-    fun selectTab(index:Int){
+    private fun selectTab(index:Int){
 
         selectTabUpdateView(index)
 

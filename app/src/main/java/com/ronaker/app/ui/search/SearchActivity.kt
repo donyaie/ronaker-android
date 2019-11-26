@@ -97,13 +97,9 @@ class SearchActivity : BaseActivity() {
     }
 
 
-    fun getSearchValue(): String? {
+   private fun getSearchValue(): String? {
         if (intent.hasExtra(Search_KEY)) {
-            val value = intent.getStringExtra(Search_KEY)
-
-            return value
-
-
+            return intent.getStringExtra(Search_KEY)
         }
         return null
     }

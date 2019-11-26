@@ -17,7 +17,6 @@ import com.ronaker.app.utils.extension.finishSafe
 
 class OrderFinishActivity : BaseActivity() {
 
-    private val TAG = OrderFinishActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderFinishBinding
     private lateinit var viewModel: OrderFinishViewModel
@@ -72,7 +71,7 @@ class OrderFinishActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer { _ ->
+        viewModel.finish.observe(this, Observer {
             setResult(Activity.RESULT_OK)
            finishSafe()
         })
@@ -93,7 +92,7 @@ class OrderFinishActivity : BaseActivity() {
 
 
 
-    fun getOrder():Order?
+    private fun getOrder():Order?
     {
         if ( intent.hasExtra(Order_KEY)) {
 

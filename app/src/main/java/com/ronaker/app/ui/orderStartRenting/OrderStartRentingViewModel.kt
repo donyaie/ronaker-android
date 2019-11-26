@@ -3,19 +3,12 @@ package com.ronaker.app.ui.orderStartRenting
 
 import android.app.Application
 import android.content.Context
-import android.view.View
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
-import com.ronaker.app.model.Product
-import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
@@ -42,7 +35,7 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
 
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
-    lateinit var mOrder: Order
+    private lateinit var mOrder: Order
 
 
     private var subscription: Disposable? = null
@@ -50,9 +43,6 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
-    init {
-
-    }
 
 
     override fun onCleared() {

@@ -73,7 +73,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
     val startRentingVisibility: MutableLiveData<Int> = MutableLiveData()
 
-    lateinit var mOrder: Order
+    private lateinit var mOrder: Order
 
 
     private var subscription: Disposable? = null
@@ -85,9 +85,6 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     private var finishSubscription: Disposable? = null
 
 
-    init {
-
-    }
 
 
     override fun onCleared() {

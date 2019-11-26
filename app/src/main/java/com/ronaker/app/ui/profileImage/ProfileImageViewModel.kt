@@ -50,16 +50,12 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
     val uploadVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-    lateinit var mUri: Uri
-    var mImageSuid: String? = null
+    private lateinit var mUri: Uri
+    private var mImageSuid: String? = null
 
 
     private var uploadSubscription: Disposable? = null
     private var identitySubscription: Disposable? = null
-
-    init {
-
-    }
 
     fun selectImage(uri: Uri) {
 
@@ -139,7 +135,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    fun addIdentity(imageSuid: String) {
+    private fun addIdentity(imageSuid: String) {
 
         identitySubscription?.dispose()
 

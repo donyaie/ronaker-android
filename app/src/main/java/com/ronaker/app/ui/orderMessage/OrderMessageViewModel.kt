@@ -41,18 +41,15 @@ class OrderMessageViewModel (app: Application): BaseViewModel(app) {
     lateinit
     var context: Context
 
-    lateinit var mProduct: Product
-    lateinit var mStartDate: Date
-    lateinit var mEndDate: Date
+    private lateinit var mProduct: Product
+    private lateinit var mStartDate: Date
+    private lateinit var mEndDate: Date
 
-    var mPrice = 0.0
+    private var mPrice = 0.0
 
 
     private var subscription: Disposable? = null
 
-    init {
-
-    }
 
 
     fun loadProduct(product: Product, startDate: Date, endDAte: Date) {

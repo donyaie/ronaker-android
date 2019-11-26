@@ -24,11 +24,14 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     var userRepository: UserRepository
 
 
-    internal var page = 0
-    internal var hasNextPage = true
+    private var page = 0
+    private var hasNextPage = true
 
 
     var dataList: ArrayList<Product> = ArrayList()
+
+
+    private var query: String? = null
 
 
     var productListAdapter: ItemExploreAdapter
@@ -43,7 +46,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     val searchValue: MutableLiveData<String> = MutableLiveData()
 
 
-    internal fun reset() {
+    private fun reset() {
 
         page = 0
         hasNextPage = true
@@ -158,9 +161,6 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
         loadProduct()
 
     }
-
-
-    var query: String? = null
 
     fun search(search: String?) {
 

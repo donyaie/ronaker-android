@@ -59,11 +59,6 @@ class ExploreProductViewModel (app: Application): BaseViewModel(app) {
 
     private var subscription: Disposable? = null
 
-    init {
-
-    }
-
-
 
     fun loadProduct(product: Product) {
 
@@ -108,7 +103,7 @@ class ExploreProductViewModel (app: Application): BaseViewModel(app) {
 
 
 
-    fun fillProduct(product:Product){
+    private fun fillProduct(product:Product){
 
 
         val images=ArrayList<String>()
@@ -126,28 +121,32 @@ class ExploreProductViewModel (app: Application): BaseViewModel(app) {
         productLocation.value=product.location
 
 
-        if (product.price_per_day != 0.0) {
+        when {
+            product.price_per_day != 0.0 -> {
 
-            productPrice.value = String.format(
-                "%s%.02f",
-                context.getString(R.string.title_curency_symbol),
-                product.price_per_day
-            )
-            productPriceTitle.value = context.getString(R.string.title_per_day)
-        } else if (product.price_per_week != 0.0) {
+                productPrice.value = String.format(
+                    "%s%.02f",
+                    context.getString(R.string.title_curency_symbol),
+                    product.price_per_day
+                )
+                productPriceTitle.value = context.getString(R.string.title_per_day)
+            }
+            product.price_per_week != 0.0 -> {
 
-            productPrice.value = String.format(
-                "%s%.02f", context.getString(R.string.title_curency_symbol),
-                product.price_per_week
-            )
-            productPriceTitle.value = context.getString(R.string.title_per_week)
-        } else if (product.price_per_month != 0.0) {
+                productPrice.value = String.format(
+                    "%s%.02f", context.getString(R.string.title_curency_symbol),
+                    product.price_per_week
+                )
+                productPriceTitle.value = context.getString(R.string.title_per_week)
+            }
+            product.price_per_month != 0.0 -> {
 
-            productPrice.value = String.format(
-                "%s%.02f", context.getString(R.string.title_curency_symbol),
-                product.price_per_month
-            )
-            productPriceTitle.value = context.getString(R.string.title_per_month)
+                productPrice.value = String.format(
+                    "%s%.02f", context.getString(R.string.title_curency_symbol),
+                    product.price_per_month
+                )
+                productPriceTitle.value = context.getString(R.string.title_per_month)
+            }
         }
 
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -22,7 +21,6 @@ import com.ronaker.app.utils.extension.startActivityMakeScene
 
 class ProfileEditActivity : BaseActivity() {
 
-    private val TAG = ProfileEditActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileEditBinding
     private lateinit var viewModel: ProfileEditViewModel
@@ -181,21 +179,12 @@ class ProfileEditActivity : BaseActivity() {
     override fun onStart() {
 
         super.onStart()
-//
-//        if (isFistStart()) {
-
         viewModel.loadData()
 
 
-//        }
-
-
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 
 
 }

@@ -75,7 +75,7 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
     }
 
 
-    fun fillUser(user: User){
+    private fun fillUser(user: User){
 
         var complete=0
 
@@ -109,12 +109,6 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
 
     }
 
-
-
-   fun onClickLogout(){
-       userRepository.clearLogin()
-       logOutAction.value=true
-   }
 
 
     override fun onCleared() {

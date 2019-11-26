@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class LoginViewModel (app: Application): BaseViewModel(app) {
 
-    internal val TAG = LoginViewModel::class.java.name
+    private val TAG = LoginViewModel::class.java.name
 
 
     @Inject
@@ -32,7 +32,7 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    var userInfo: User = User()
+    private var userInfo: User = User()
 
 
     var emailError = MutableLiveData<Boolean?>()
@@ -102,7 +102,7 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    fun signin() {
+    private fun signin() {
         signinSubscription = userRepository.loginUser(userInfo).doOnSubscribe { loading.value=true}
             .doOnTerminate {loading.value=false}
             .subscribe { result ->
@@ -120,7 +120,7 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
 
 
 
-    fun signUp() {
+    private fun signUp() {
         signUpSubscription = userRepository.registerUser(userInfo).doOnSubscribe {loading.value=true }
             .doOnTerminate {loading.value=false}
             .subscribe { result ->
@@ -148,11 +148,6 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
 
         actionState.value = LoginActionEnum.register
         viewState.value = LoginStateEnum.email
-    }
-
-
-    init {
-
     }
 
 

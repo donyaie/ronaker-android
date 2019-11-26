@@ -28,16 +28,15 @@ import java.io.IOException
 
 class ProfileImageActivity : BaseActivity() {
 
-    private val TAG = ProfileImageActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileImageBinding
     private lateinit var viewModel: ProfileImageViewModel
 
 
-   private val REQUEST_IMAGE = 1233
 
     companion object {
 
+        const val REQUEST_IMAGE = 1233
         const val IMAGE_KEY = "image"
         fun newInstance(context: Context, imageurl: String?): Intent {
             val intent = Intent(context, ProfileImageActivity::class.java)

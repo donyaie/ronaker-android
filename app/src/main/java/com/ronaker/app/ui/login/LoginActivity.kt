@@ -27,7 +27,7 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
-    val Max_size = 5
+    private val Max_size = 5
 
     private lateinit var screenLibrary: ScreenCalculator
 
@@ -158,11 +158,7 @@ class LoginActivity : BaseActivity() {
 
         overlayShow(false)
         showBack(false)
-        initViewPager()
-
-
         binding.loading.hideLoading()
-
 
     }
 
@@ -175,12 +171,14 @@ class LoginActivity : BaseActivity() {
             KeyboardManager.hideSoftKeyboard(this)
 
 
-        if (currentPosition == 0)
-            finishSafe()
-        else if (currentPosition == LoginViewModel.LoginStateEnum.login.position) {
-            currentPosition = 0
-        } else if (currentPosition > LoginViewModel.LoginStateEnum.home.position) {
-            currentPosition -= 1
+        when {
+            currentPosition == 0 -> finishSafe()
+            currentPosition == LoginViewModel.LoginStateEnum.login.position -> {
+                currentPosition = 0
+            }
+            currentPosition > LoginViewModel.LoginStateEnum.home.position -> {
+                currentPosition -= 1
+            }
         }
 
     }
@@ -197,8 +195,7 @@ class LoginActivity : BaseActivity() {
     }
 
    private var currentPosition: Int = 0
-        get() = field
-        set(value) {
+       set(value) {
 
             try {
 
@@ -279,96 +276,6 @@ class LoginActivity : BaseActivity() {
 
     override fun onBackPressed() {
         prePage()
-    }
-
-
-    private fun initViewPager() {
-
-//
-//        homeFragment = LoginHomeFragment()
-//        passwordFragment = LoginPasswordFragment()
-//        signInFragment = LoginSignInFragment()
-//        nameFragment = LoginNameFragment()
-//        emailFragment = LoginEmailFragment()
-//
-//        fragmentList = ArrayList()
-//
-//        fragmentList.add(homeFragment)
-//        fragmentList.add(emailFragment)
-//        fragmentList.add(nameFragment)
-//        fragmentList.add(passwordFragment)
-//        fragmentList.add(signInFragment)
-
-
-//
-//        binding.viewpager.adapter = adapter
-//        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-//            override fun onPageScrolled(
-//                position: Int,
-//                positionOffset: Float,
-//                positionOffsetPixels: Int
-//            ) {
-//                val x =
-//                    ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
-//                binding.scrollView.scrollTo(x, 0)
-//            }
-//
-//            override fun onPageSelected(position: Int) {
-//
-//                loginState = if (position == 1) {
-//                    if (loginAction == LoginViewModel.LoginActionEnum.login) LoginViewModel.LoginStateEnum.login else LoginViewModel.LoginStateEnum.email
-//                } else
-//                    LoginViewModel.LoginStateEnum.get(position)
-//
-//
-//                AppDebug.Log(TAG, String.format("onSelect:%s", loginState.name))
-//                (adapter.getItem(position) as IPagerFragment).onSelect()
-//
-//
-//
-//                if (loginState == LoginViewModel.LoginStateEnum.home) {
-//                    overlayShow(false)
-//                    KeyboardManager.hideSoftKeyboard(this@LoginActivity)
-//                    showBack(false)
-//                } else {
-//                    overlayShow(true)
-//                    showBack(true)
-//                }
-//
-//
-//                when {
-//                    loginState == LoginViewModel.LoginStateEnum.home -> binding.toolbar.showNavigator(
-//                        false,
-//                        0
-//                    )
-//                    loginAction == LoginViewModel.LoginActionEnum.register -> binding.toolbar.showNavigator(
-//                        true,
-//                        position - 1
-//                    )
-//                    loginAction == LoginViewModel.LoginActionEnum.login -> binding.toolbar.showNavigator(
-//                        false,
-//                        0
-//                    )
-//                }
-//
-//
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//
-//            }
-//
-//            private fun computeFactor(): Float {
-//                return (binding.background.width - binding.frameContainer.width) / ((binding.frameContainer.width * ((binding.viewpager.adapter?.count
-//                    ?: 0) - 1)) * 1.0f)
-//            }
-//        })
-
-//        KeyboardManager.hideSoftKeyboard(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
 

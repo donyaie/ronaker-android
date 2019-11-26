@@ -37,7 +37,7 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
         return binding.root
     }
 
-    fun validateCode(value: String) {
+    private fun validateCode(value: String) {
 
 
         if (value.length == 4) {
@@ -50,7 +50,7 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
 
     }
 
-    internal fun activeNext(active: Boolean) {
+    private fun activeNext(active: Boolean) {
         if (active) {
 
             binding.nextButton.isEnabled = active

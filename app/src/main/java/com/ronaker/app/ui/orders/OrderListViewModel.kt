@@ -29,8 +29,8 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
     var orderRepository: OrderRepository
 
 
-    internal var page = 0
-    internal var hasNextPage = true
+    private var page = 0
+    private var hasNextPage = true
 
 
     var dataList: ArrayList<Order> = ArrayList()
@@ -45,7 +45,7 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-    var mFilter: String? = null
+    private var mFilter: String? = null
     private var subscription: Disposable? = null
 
     init {

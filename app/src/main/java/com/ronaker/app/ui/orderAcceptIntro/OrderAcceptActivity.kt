@@ -17,8 +17,6 @@ import com.ronaker.app.utils.extension.finishSafe
 
 class OrderAcceptActivity : BaseActivity() {
 
-    private val TAG = OrderAcceptActivity::class.java.simpleName
-
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderAcceptIntroBinding
     private lateinit var viewModel: OrderAcceptViewModel
 
@@ -73,7 +71,7 @@ class OrderAcceptActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer { _ ->
+        viewModel.finish.observe(this, Observer {
             setResult(Activity.RESULT_OK)
            finishSafe()
         })

@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit
 
 class ProfilePaymentActivity : BaseActivity() {
 
-    private val TAG = ProfilePaymentActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfilePaymentBinding
     private lateinit var viewModel: ProfilePaymentViewModel
@@ -42,10 +41,10 @@ class ProfilePaymentActivity : BaseActivity() {
 
     companion object {
 
-        var MY_SCAN_REQUEST_CODE=769
+        const val MY_SCAN_REQUEST_CODE=769
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, ProfilePaymentActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ProfilePaymentActivity::class.java)
+            val boundle = Bundle()
             intent.putExtras(boundle)
 
             return intent
@@ -238,7 +237,7 @@ class ProfilePaymentActivity : BaseActivity() {
     }
 
 
-    fun onScanCard() {
+    private fun onScanCard() {
         Dexter.withActivity(this)
             .withPermissions(Manifest.permission.CAMERA)
             .withListener(object : MultiplePermissionsListener {
@@ -250,24 +249,24 @@ class ProfilePaymentActivity : BaseActivity() {
                 }
 
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                    if (report.areAllPermissionsGranted()) {
-//                        scanCard()
-                    }
-
-                    if (report.isAnyPermissionPermanentlyDenied) {
-
-                    }
+//                    if (report.areAllPermissionsGranted()) {
+//////                        scanCard()
+////                    }
+////
+////                    if (report.isAnyPermissionPermanentlyDenied) {
+////
+////                    }
                 }
 
 
             }).check()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-
-
-        super.onActivityResult(requestCode, resultCode, data)
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//
+//
+//
+//        super.onActivityResult(requestCode, resultCode, data)
 
 //
 //        if (requestCode == MY_SCAN_REQUEST_CODE) {
@@ -313,13 +312,8 @@ class ProfilePaymentActivity : BaseActivity() {
 //
 //            AppDebug.Log("Card",resultDisplayStr)
 //        }
-    }
+//    }
 
-
-
-    override fun onBackPressed() {
-        super.onBackPressed();
-    }
 
 
 }

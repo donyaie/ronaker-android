@@ -17,7 +17,6 @@ import com.ronaker.app.utils.extension.finishSafe
 
 class OrderStartRentingActivity : BaseActivity() {
 
-    private val TAG = OrderStartRentingActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderStartRentingBinding
     private lateinit var viewModel: OrderStartRentingViewModel

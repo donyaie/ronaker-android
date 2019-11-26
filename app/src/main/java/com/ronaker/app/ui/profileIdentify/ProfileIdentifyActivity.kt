@@ -28,14 +28,14 @@ import java.io.IOException
 
 class ProfileIdentifyActivity : BaseActivity() {
 
-    private val TAG = ProfileIdentifyActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileIndentifyBinding
     private lateinit var viewModel: ProfileIdentifyViewModel
 
 
-    val REQUEST_IMAGE = 1233
     companion object {
+
+         const val REQUEST_IMAGE = 1233
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, ProfileIdentifyActivity::class.java)
             val boundle = Bundle()
@@ -80,7 +80,7 @@ class ProfileIdentifyActivity : BaseActivity() {
             onProfileImageClick()
         })
         viewModel.finish.observe(this, Observer {
-           finishSafe()
+            finishSafe()
         })
 
 
@@ -92,7 +92,6 @@ class ProfileIdentifyActivity : BaseActivity() {
 
 
     }
-
 
 
     private fun onProfileImageClick() {
@@ -179,7 +178,7 @@ class ProfileIdentifyActivity : BaseActivity() {
 
         ) { dialog, _ ->
             dialog?.cancel()
-            IntentManeger.openSettings(this,101)
+            IntentManeger.openSettings(this, 101)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }

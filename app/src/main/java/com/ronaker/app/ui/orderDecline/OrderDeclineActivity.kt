@@ -17,7 +17,6 @@ import com.ronaker.app.utils.extension.finishSafe
 
 class OrderDeclineActivity : BaseActivity() {
 
-    private val TAG = OrderDeclineActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderDeclineBinding
     private lateinit var viewModel: OrderDeclineViewModel
@@ -70,7 +69,7 @@ class OrderDeclineActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer { _ ->
+        viewModel.finish.observe(this, Observer {
             setResult(Activity.RESULT_OK)
             finishSafe()
         })

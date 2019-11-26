@@ -18,8 +18,6 @@ import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
 
-    private val TAG = OrderMessageActivity::class.java.simpleName
-
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderMessageBinding
     private lateinit var viewModel: OrderMessageViewModel
 

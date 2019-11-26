@@ -9,7 +9,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.utils.LocaleHelper
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -74,7 +73,7 @@ class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
         nextStep.value=""
     }
 
-    fun unSelectFirstDate() {
+    private fun unSelectFirstDate() {
 
         firstDayVisibility.value = View.GONE
 
@@ -82,7 +81,7 @@ class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
 
     }
 
-    fun unSelectLastDate() {
+    private fun unSelectLastDate() {
 
 
         lastDayVisibility.value = View.GONE
@@ -93,7 +92,7 @@ class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
 
     }
 
-    fun selectFirst(date: Date) {
+    private fun selectFirst(date: Date) {
 
         firstDayVisibility.value = View.VISIBLE
 
@@ -104,7 +103,7 @@ class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
 
     }
 
-    fun selectLast(date: Date) {
+    private fun selectLast(date: Date) {
 
         lastDayVisibility.value = View.VISIBLE
 
@@ -122,24 +121,28 @@ class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
         subscription?.dispose()
     }
 
-    fun UpdateDate(selectedDates: List<Date>) {
+    fun updateDate(selectedDates: List<Date>) {
 
-        if (selectedDates.isEmpty()) {
-            unSelectFirstDate()
-            unSelectLastDate()
-        } else if (selectedDates.size == 1) {
-            selectFirst(selectedDates[0])
-            unSelectLastDate()
-        } else {
-            selectFirst(selectedDates[0])
-            selectLast(selectedDates[selectedDates.size - 1])
+        when {
+            selectedDates.isEmpty() -> {
+                unSelectFirstDate()
+                unSelectLastDate()
+            }
+            selectedDates.size == 1 -> {
+                selectFirst(selectedDates[0])
+                unSelectLastDate()
+            }
+            else -> {
+                selectFirst(selectedDates[0])
+                selectLast(selectedDates[selectedDates.size - 1])
+            }
         }
 
 
     }
 
     fun clearDates() {
-        UpdateDate(ArrayList())
+        updateDate(ArrayList())
 
     }
 

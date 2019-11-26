@@ -136,14 +136,14 @@ class PhoneNumberActivity : BaseActivity() {
             finishSafe()
 
 
-        if (binding.viewpager.getCurrentItem() > PhoneNumberViewModel.StateEnum.number.position) {
-            binding.viewpager.setCurrentItem(binding.viewpager.getCurrentItem() - 1, true)
+        if (binding.viewpager.currentItem > PhoneNumberViewModel.StateEnum.number.position) {
+            binding.viewpager.setCurrentItem(binding.viewpager.currentItem - 1, true)
         }
 
     }
 
 
-    fun initViewPagerRegister() {
+    private fun initViewPagerRegister() {
         adapter.clear()
         adapter.addFragment(numberFragment)
         adapter.addFragment(verifyFragment)
@@ -151,22 +151,18 @@ class PhoneNumberActivity : BaseActivity() {
 
     }
 
-    override fun onBackPressed() {
-       super.onBackPressed()
-    }
 
-
-    internal fun initViewPager() {
+    private fun initViewPager() {
 
         binding.viewpager.setScrollDurationFactor(2.0)
-        adapter = ViewPagerAdapter(getSupportFragmentManager())
+        adapter = ViewPagerAdapter(supportFragmentManager)
 
         numberFragment = PhoneNumberFragment()
         verifyFragment = PhoneNumberVerifyFragment()
 
 
 
-        binding.viewpager.setAdapter(adapter)
+        binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -176,7 +172,7 @@ class PhoneNumberActivity : BaseActivity() {
             override fun onPageSelected(position: Int) {
 
 
-                loginState = PhoneNumberViewModel.StateEnum.get(position)
+                loginState = PhoneNumberViewModel.StateEnum[position]
 
 
                 AppDebug.log(TAG, String.format("onSelect:%s", loginState.name))
@@ -197,22 +193,6 @@ class PhoneNumberActivity : BaseActivity() {
 
         KeyboardManager.hideSoftKeyboard(this)
     }
-
-
-
-
-
-
-
-
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-
 
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,

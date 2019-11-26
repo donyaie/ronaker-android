@@ -36,10 +36,6 @@ class SearchViewModel (app: Application): BaseViewModel(app) {
 
     private var subscription: Disposable? = null
 
-    init {
-
-    }
-
 
     fun loadProduct(suid: String) {
 

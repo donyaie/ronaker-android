@@ -23,8 +23,8 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
     var userRepository: UserRepository
 
 
-    internal var page = 0
-    internal var hasNextPage = true
+    private var page = 0
+    private var hasNextPage = true
 
 
     var dataList: ArrayList<Product> = ArrayList()
@@ -48,7 +48,7 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
 
 
-    internal fun reset() {
+    private fun reset() {
 
         page = 0
         hasNextPage = true
