@@ -56,7 +56,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     private var subscription: Disposable? = null
 
     init {
-        productListAdapter = ItemExploreAdapter(dataList, this)
+        productListAdapter = ItemExploreAdapter(dataList)
         reset()
 
         loadProduct()

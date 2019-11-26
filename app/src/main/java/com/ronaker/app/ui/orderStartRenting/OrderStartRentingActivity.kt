@@ -13,6 +13,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 
 class OrderStartRentingActivity : BaseActivity() {
 
@@ -29,8 +30,8 @@ class OrderStartRentingActivity : BaseActivity() {
         var REQUEST_CODE = 352
 
         fun newInstance(context: Context,order: Order?): Intent {
-            var intent = Intent(context, OrderStartRentingActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, OrderStartRentingActivity::class.java)
+            val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
             intent.putExtras(boundle)
 
@@ -92,12 +93,11 @@ class OrderStartRentingActivity : BaseActivity() {
 
 
 
-    fun getOrder():Order?
+    private fun getOrder():Order?
     {
         if ( intent.hasExtra(Order_KEY)) {
-            var value = intent.getParcelableExtra<Order?>(Order_KEY)
 
-            return value
+            return intent.getParcelableExtra<Order?>(Order_KEY)
 
         }
         return null

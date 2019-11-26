@@ -22,6 +22,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.extension.finishSafe
 import java.io.IOException
 
 
@@ -33,14 +34,15 @@ class ProfileImageActivity : BaseActivity() {
     private lateinit var viewModel: ProfileImageViewModel
 
 
-    val REQUEST_IMAGE = 1233
+   private val REQUEST_IMAGE = 1233
+
     companion object {
 
-        val IMAGE_KEY="image"
-        fun newInstance(context: Context,imageurl:String?): Intent {
-            var intent = Intent(context, ProfileImageActivity::class.java)
-            var boundle = Bundle()
-            boundle.putString(IMAGE_KEY,imageurl)
+        const val IMAGE_KEY = "image"
+        fun newInstance(context: Context, imageurl: String?): Intent {
+            val intent = Intent(context, ProfileImageActivity::class.java)
+            val boundle = Bundle()
+            boundle.putString(IMAGE_KEY, imageurl)
             intent.putExtras(boundle)
 
             return intent
@@ -49,8 +51,8 @@ class ProfileImageActivity : BaseActivity() {
 
     }
 
-    fun getImage():String?{
-        return  intent?.getStringExtra(IMAGE_KEY)
+    private fun getImage(): String? {
+        return intent?.getStringExtra(IMAGE_KEY)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,11 +84,11 @@ class ProfileImageActivity : BaseActivity() {
 
 
 
-        viewModel.pickImage.observe(this, Observer { _ ->
+        viewModel.pickImage.observe(this, Observer {
             onProfileImageClick()
         })
-        viewModel.finish.observe(this, Observer { _ ->
-           finishSafe()
+        viewModel.finish.observe(this, Observer {
+            finishSafe()
         })
 
 
@@ -101,24 +103,8 @@ class ProfileImageActivity : BaseActivity() {
 
     }
 
-    override fun onStart() {
 
-        super.onStart()
-
-
-
-
-    }
-
-
-
-    override fun onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-
-    fun onProfileImageClick() {
+    private fun onProfileImageClick() {
         Dexter.withActivity(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
@@ -195,7 +181,7 @@ class ProfileImageActivity : BaseActivity() {
     }
 
     private fun showSettingsDialog() {
-        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_permission_title))
         builder.setMessage(getString(R.string.dialog_permission_message))
         builder.setPositiveButton(
@@ -203,7 +189,7 @@ class ProfileImageActivity : BaseActivity() {
 
         ) { dialog, _ ->
             dialog?.cancel()
-            IntentManeger.openSettings(this,101)
+            IntentManeger.openSettings(this, 101)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }

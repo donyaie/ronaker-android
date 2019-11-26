@@ -6,19 +6,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.databinding.AdapterProductAddImageBinding
 import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.extension.getParentActivity
 
-class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
+class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private  var productList: ArrayList<Product.ProductImage> = ArrayList()
 
 
-    val EmptyType = 0
-    val FullType = 1
+    private val EmptyType = 0
+    private val FullType = 1
 
 
     init {
@@ -121,7 +120,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     class ViewHolder(
         private val binding: AdapterProductAddImageBinding,
-        val baseViewModel: AddProductViewModel
+        private val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = AddProductImageAdapterViewModel(baseViewModel.getApplication())
@@ -129,7 +128,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
         fun bind(product: Product.ProductImage) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
-            viewModel.bind(product,binding.root.getParentActivity() as BaseActivity)
+            viewModel.bind(product,binding.root.getParentActivity() )
 
 
         }
@@ -139,7 +138,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     class EmptyViewHolder(
         private val binding: AdapterProductAddImageEmptyBinding,
-        val baseViewModel: AddProductViewModel
+        private  val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
 

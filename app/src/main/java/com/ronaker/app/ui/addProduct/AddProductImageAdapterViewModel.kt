@@ -1,11 +1,12 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Activity
 import android.app.Application
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.ronaker.app.base.BaseActivity
+import androidx.lifecycle.observe
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
@@ -21,7 +22,7 @@ class AddProductImageAdapterViewModel ( var app: Application): BaseViewModel(app
 
     fun bind(
         post: Product.ProductImage,
-        baseActivity: BaseActivity
+        baseActivity: AppCompatActivity?
     ) {
 
         imageModel = post
@@ -30,12 +31,14 @@ class AddProductImageAdapterViewModel ( var app: Application): BaseViewModel(app
         else if(!post.url.isNullOrEmpty())
             productImage.value = BASE_URL + post.url
 
-        imageModel.progress.observe(baseActivity, Observer { state ->
-            if (state) loadingVisibility.value = View.VISIBLE
-            else
-                loadingVisibility.value = View.GONE
+        baseActivity?.let {
+            imageModel.progress.observe(it, Observer { state ->
+                if (state) loadingVisibility.value = View.VISIBLE
+                else
+                    loadingVisibility.value = View.GONE
 
-        })
+            })
+        }
 
 
     }

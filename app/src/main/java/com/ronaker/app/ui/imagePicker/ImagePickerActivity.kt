@@ -22,6 +22,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 import com.yalantis.ucrop.UCrop
 import java.io.File
 

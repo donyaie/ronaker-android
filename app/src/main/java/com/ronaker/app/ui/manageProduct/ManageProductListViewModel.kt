@@ -42,7 +42,7 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
     private  var subscription: Disposable?=null
 
     init {
-        productListAdapter = ManageProductAdapter(dataList,this)
+        productListAdapter = ManageProductAdapter(dataList)
         reset()
     }
 

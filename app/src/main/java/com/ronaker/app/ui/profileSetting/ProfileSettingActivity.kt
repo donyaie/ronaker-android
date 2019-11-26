@@ -17,6 +17,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileSettingActivity : BaseActivity() {

@@ -1,10 +1,10 @@
 package com.ronaker.app.utils.extension
 
+import android.app.Application
 import android.content.ContextWrapper
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 
 fun View.getParentActivity(): AppCompatActivity?{
     var context = this.context
@@ -15,6 +15,12 @@ fun View.getParentActivity(): AppCompatActivity?{
         context = context.baseContext
     }
     return null
+}
+
+fun View.getApplication(): Application{
+    val context = this.context.applicationContext
+
+    return context as Application
 }
 
 fun Button.setEndDrawableRes(res:Int){

@@ -11,6 +11,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 
 class CheckoutCalendarActivity : BaseActivity() {
 
@@ -28,8 +29,8 @@ class CheckoutCalendarActivity : BaseActivity() {
         var REQUEST_CODE = 346
 
         fun newInstance(context: Context, product: Product): Intent {
-            var intent = Intent(context, CheckoutCalendarActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, CheckoutCalendarActivity::class.java)
+            val boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
             intent.putExtras(boundle)
 
@@ -83,11 +84,6 @@ class CheckoutCalendarActivity : BaseActivity() {
 
     fun getProduct(): Product? {
         return intent.getParcelableExtra(PRODUCT_KEY)
-    }
-
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 
 

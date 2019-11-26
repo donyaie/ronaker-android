@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +14,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ManageProductFragment : BaseFragment() {
@@ -64,7 +64,7 @@ class ManageProductFragment : BaseFragment() {
 
 
         binding.imageLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -75,7 +75,7 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.locationLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -86,7 +86,7 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.nameLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -97,7 +97,7 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.priceLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -109,7 +109,7 @@ class ManageProductFragment : BaseFragment() {
 
 
         binding.categoryLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -142,7 +142,7 @@ class ManageProductFragment : BaseFragment() {
             } catch (ex: Exception ){
 
             }
-        };
+        }
         registerActiveListener()
 
         return binding.root
@@ -150,7 +150,7 @@ class ManageProductFragment : BaseFragment() {
 
 
 
-    fun registerActiveListener(){
+    private fun registerActiveListener(){
         binding.activeSwitch.setOnCheckedChangeListener{ _,active->
 
             productViewModel.updateActiveState(active)
@@ -159,7 +159,7 @@ class ManageProductFragment : BaseFragment() {
 
     }
 
-    fun unregisterActiveListener(){
+    private fun unregisterActiveListener(){
         binding.activeSwitch.setOnCheckedChangeListener(null)
     }
 
@@ -170,7 +170,7 @@ class ManageProductFragment : BaseFragment() {
     }
 
 
-    fun fill() {
+    private fun fill() {
 
            getSuid()?.let { productViewModel.loadProduct(it) }
 
@@ -178,7 +178,7 @@ class ManageProductFragment : BaseFragment() {
 
     }
 
-    fun getSuid():String?{
+    private fun getSuid():String?{
        return  this.arguments?.getString(SUID_KEY)
     }
     fun getProduct():Product?{

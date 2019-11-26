@@ -1,6 +1,8 @@
 package com.ronaker.app.ui.explore
 
+import android.app.Activity
 import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.MutableLiveData
@@ -13,13 +15,13 @@ import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
 
 
-class ItemExploreViewModel (app: Application): BaseViewModel(app) {
+class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
 
     lateinit var data: Product
-    lateinit var activity: DashboardActivity
+    var activity: AppCompatActivity?=null
 
 
     lateinit var mBinder: AdapterExploreItemBinding
@@ -27,7 +29,7 @@ class ItemExploreViewModel (app: Application): BaseViewModel(app) {
     fun bind(
         post: Product,
         binder: AdapterExploreItemBinding,
-        context: DashboardActivity
+        context: AppCompatActivity?
     ) {
         data = post
 
@@ -38,9 +40,9 @@ class ItemExploreViewModel (app: Application): BaseViewModel(app) {
         if (post.price_per_day?:0!=0 ) {
             productPrice.value = String.format(
                 "%s%.02f %s",
-                context.getString(R.string.title_curency_symbol),
+                app.getString(R.string.title_curency_symbol),
                 post.price_per_day,
-                context.getString(
+                app.getString(
                     R.string.title_per_day
                 )
             )
@@ -48,9 +50,9 @@ class ItemExploreViewModel (app: Application): BaseViewModel(app) {
 
             productPrice.value = String.format(
                 "%s%.02f %s",
-                context.getString(R.string.title_curency_symbol),
+                app.getString(R.string.title_curency_symbol),
                 post.price_per_week,
-                context.getString(
+                app.getString(
                     R.string.title_per_week
                 )
             )
@@ -58,9 +60,9 @@ class ItemExploreViewModel (app: Application): BaseViewModel(app) {
 
             productPrice.value = String.format(
                 "%s%.02f %s",
-                context.getString(R.string.title_curency_symbol),
+                app.getString(R.string.title_curency_symbol),
                 post.price_per_month,
-                context.getString(
+                app.getString(
                     R.string.title_per_month
                 )
             )
@@ -78,20 +80,29 @@ class ItemExploreViewModel (app: Application): BaseViewModel(app) {
 
 
         if (!ExploreProductActivity.isHavePending(data)) {
-            val options = ViewCompat.getTransitionName(mBinder.image)?.let {
-                ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity,
-                    mBinder.image,
-                    it
+
+
+            activity?.let {activity->
+
+                val options = ViewCompat.getTransitionName(mBinder.image)?.let {
+                    val makeSceneTransitionAnimation =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            activity as Activity,
+                            mBinder.image,
+                            it
+                        )
+                    makeSceneTransitionAnimation
+                }
+                activity.startActivityForResult(
+                    ExploreProductActivity.newInstance(
+                        activity,
+                        data,
+                        ViewCompat.getTransitionName(mBinder.image)
+                    ),ExploreProductActivity.REQUEST_CODE, options?.toBundle()
                 )
+
             }
-            activity.startActivityForResult(
-                ExploreProductActivity.newInstance(
-                    activity,
-                    data,
-                    ViewCompat.getTransitionName(mBinder.image)
-                ),ExploreProductActivity.REQUEST_CODE, options?.toBundle()
-            )
+
         }
     }
 

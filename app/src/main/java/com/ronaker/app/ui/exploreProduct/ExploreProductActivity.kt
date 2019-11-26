@@ -23,6 +23,8 @@ import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.DEFULT_LOCATION
+import com.ronaker.app.utils.extension.finishSafe
+import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import java.util.*
 
 
@@ -32,7 +34,7 @@ class ExploreProductActivity : BaseActivity() {
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
 
-    lateinit var googleMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
 
     companion object {
 
@@ -49,16 +51,16 @@ class ExploreProductActivity : BaseActivity() {
         }
 
         fun newInstance(context: Context, suid: String): Intent {
-            var intent = Intent(context, ExploreProductActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
             intent.putExtras(boundle)
             return intent
         }
 
         fun newInstance(context: Context, product: Product, transitionName: String?): Intent {
-            var intent = Intent(context, ExploreProductActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
             boundle.putString(IMAGE_TRANSITION_KEY, transitionName)
             intent.putExtras(boundle)
@@ -80,7 +82,7 @@ class ExploreProductActivity : BaseActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
             val imageTransitionName = getImageTransition()
-            binding.avatarSlide.setTransitionName(imageTransitionName)
+            binding.avatarSlide.transitionName = imageTransitionName
         }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -134,17 +136,17 @@ class ExploreProductActivity : BaseActivity() {
             } catch (ex: Exception) {
 
             }
-        };
+        }
 
 
 
-        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
-            googleMap = it
+        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync { map ->
+            googleMap = map
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                     this, R.raw.style_json
                 )
-            );
+            )
 
             googleMap.uiSettings.setAllGesturesEnabled(false)
 
@@ -204,7 +206,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    fun addMarker(latLng: LatLng) {
+    private fun addMarker(latLng: LatLng) {
         if (::googleMap.isInitialized) {
             googleMap.clear()
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
@@ -224,7 +226,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    fun getSUID(): String? {
+    private fun getSUID(): String? {
         return if (intent.hasExtra(SUID_KEY)) {
             intent.getStringExtra(SUID_KEY)
         } else {
@@ -233,19 +235,23 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    fun getCurrentSUID(): String? {
-        return if (intent.hasExtra(SUID_KEY)) {
-            intent.getStringExtra(SUID_KEY)
-        } else if (intent.hasExtra(PRODUCT_KEY)) {
-            var p = intent.getParcelableExtra(PRODUCT_KEY) as Product?
-            return p?.suid
-        } else {
-            null
+    private fun getCurrentSUID(): String? {
+        return when {
+            intent.hasExtra(SUID_KEY) -> {
+                intent.getStringExtra(SUID_KEY)
+            }
+            intent.hasExtra(PRODUCT_KEY) -> {
+                val p = intent.getParcelableExtra(PRODUCT_KEY) as Product?
+                return p?.suid
+            }
+            else -> {
+                null
+            }
         }
     }
 
 
-    fun getImageTransition(): String? {
+    private fun getImageTransition(): String? {
         return if (intent.hasExtra(IMAGE_TRANSITION_KEY)) {
             intent.getStringExtra(IMAGE_TRANSITION_KEY)
         } else {
@@ -262,11 +268,6 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed();
-    }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
@@ -277,12 +278,12 @@ class ExploreProductActivity : BaseActivity() {
 
                     if(resultCode== Activity.RESULT_OK){
 
-                        var start=  Date(data.getLongExtra( CheckoutCalendarActivity.STARTDATE_KEY,-1))
-                        var end=  Date(data.getLongExtra( CheckoutCalendarActivity.ENDDATE_KEY,-1))
+                        val start=  Date(data.getLongExtra( CheckoutCalendarActivity.STARTDATE_KEY,-1))
+                        val end=  Date(data.getLongExtra( CheckoutCalendarActivity.ENDDATE_KEY,-1))
 
 
                         Handler().postDelayed({
-                            startActivityMakeSceneForResult(OrderMessageActivity.newInstance(this,getProduct(),start,end),OrderMessageActivity.REQUEST_CODE)
+                           startActivityMakeSceneForResult(OrderMessageActivity.newInstance(this,getProduct(),start,end),OrderMessageActivity.REQUEST_CODE)
                         },100)
                     }
                 }

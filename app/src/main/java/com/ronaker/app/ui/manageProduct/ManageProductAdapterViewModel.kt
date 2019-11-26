@@ -2,6 +2,7 @@ package com.ronaker.app.ui.manageProduct
 
 import android.app.Application
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -9,34 +10,43 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.BASE_URL
 
-class ManageProductAdapterViewModel (app: Application): BaseViewModel(app) {
+class ManageProductAdapterViewModel(var app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
 
-    private val   activeVisibility= MutableLiveData<Int>()
-    private val   deactiveVisibility= MutableLiveData<Int>()
+    private val activeVisibility = MutableLiveData<Int>()
+    private val deactiveVisibility = MutableLiveData<Int>()
 
     lateinit var data: Product
-    lateinit var activity: DashboardActivity
+    var activity: AppCompatActivity? = null
 
-    fun bind(post: Product, context: DashboardActivity) {
+    fun bind(post: Product, context: AppCompatActivity?) {
         data = post
         productTitle.value = post.name
         activity = context
         when {
-            post.price_per_day?:0!=0  -> productPrice.value = String.format(
-                "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_day, context.getString(
+            post.price_per_day ?: 0 != 0 -> productPrice.value = String.format(
+                "%s%.02f %s",
+                app.getString(R.string.title_curency_symbol),
+                post.price_per_day,
+                app.getString(
                     R.string.title_per_day
                 )
             )
-            post.price_per_week?:0!=0  -> productPrice.value = String.format(
-                "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_week, context.getString(
+            post.price_per_week ?: 0 != 0 -> productPrice.value = String.format(
+                "%s%.02f %s",
+                app.getString(R.string.title_curency_symbol),
+                post.price_per_week,
+                app.getString(
                     R.string.title_per_week
                 )
             )
-            post.price_per_month?:0!=0  -> productPrice.value = String.format(
-                "%s%.02f %s", context.getString(R.string.title_curency_symbol), post.price_per_month, context.getString(
+            post.price_per_month ?: 0 != 0 -> productPrice.value = String.format(
+                "%s%.02f %s",
+                app.getString(R.string.title_curency_symbol),
+                post.price_per_month,
+                app.getString(
                     R.string.title_per_month
                 )
             )
@@ -44,10 +54,10 @@ class ManageProductAdapterViewModel (app: Application): BaseViewModel(app) {
         }
 
 
-        if(Product.ActiveStatusEnum[data.user_status?:""] ==Product.ActiveStatusEnum.Active) {
+        if (Product.ActiveStatusEnum[data.user_status ?: ""] == Product.ActiveStatusEnum.Active) {
             activeVisibility.value = View.VISIBLE
             deactiveVisibility.value = View.GONE
-        }else{
+        } else {
             activeVisibility.value = View.GONE
             deactiveVisibility.value = View.VISIBLE
         }
@@ -60,7 +70,7 @@ class ManageProductAdapterViewModel (app: Application): BaseViewModel(app) {
 
     fun onClickProduct() {
 
-        activity.pushFragment(ManageProductFragment.newInstance(data))
+        activity?.let {(it as DashboardActivity).pushFragment(ManageProductFragment.newInstance(data))  }
     }
 
     fun getProductTitle(): MutableLiveData<String> {

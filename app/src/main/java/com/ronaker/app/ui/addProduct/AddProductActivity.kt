@@ -28,6 +28,8 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.utils.*
+import com.ronaker.app.utils.extension.finishSafe
+import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
 import java.io.IOException

@@ -1,10 +1,7 @@
 package com.ronaker.app.base
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import com.ronaker.app.utils.LocaleHelper
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -108,35 +105,10 @@ abstract class BaseActivity: SwipeBackActivity() {
     }
 
 
-    fun startActivityMakeScene(intent: Intent?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-        }else{
-            super.startActivity(intent)
-        }
 
-    }
-
-
-    fun startActivityMakeSceneForResult(intent: Intent?,requestCode:Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.startActivityForResult(intent,requestCode, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-        }else{
-            super.startActivityForResult(intent,requestCode)
-        }
-
-    }
-
-
-    fun finishSafe() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.finishAfterTransition()
-        }
-
-        else
-         super.finish()
-    }
 
 
 }
+
+
+

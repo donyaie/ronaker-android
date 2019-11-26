@@ -17,6 +17,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalculator
+import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.view.ToolbarComponent
 
 

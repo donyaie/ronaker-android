@@ -1,18 +1,20 @@
 package com.ronaker.app.ui.orders
 
+import android.app.Activity
 import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.extension.startActivityMakeScene
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class OrderItemViewModel (app: Application): BaseViewModel(app) {
+class OrderItemViewModel (var app: Application): BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
@@ -21,9 +23,9 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
     private val orderStatusImage = MutableLiveData<Int>()
 
     lateinit var data: Order
-    lateinit var activity: DashboardActivity
+    var activity: AppCompatActivity?=null
 
-    fun bind(item: Order, context: DashboardActivity) {
+    fun bind(item: Order, context: AppCompatActivity?) {
         data = item
         activity = context
         productTitle.value = item.product.name
@@ -38,7 +40,7 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
 
 
 
-        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), (data.product.price_per_day ?: 0.toDouble()) * days)
+        productPrice.value = String.format("%s%.02f", app.getString(R.string.title_curency_symbol), (data.product.price_per_day ?: 0.toDouble()) * days)
 //        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.price)
         productImage.value = BASE_URL + item.product.avatar
         productDate.value =
@@ -61,10 +63,10 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
 
-                    orderStatus.value=  activity.getString(R.string.text_rent_request_accepted,userName)
+                    orderStatus.value=  app.getString(R.string.text_rent_request_accepted,userName)
                 }else{
 
-                    orderStatus.value=  activity.getString(R.string.text_lend_request_accepted,ownerName)
+                    orderStatus.value=  app.getString(R.string.text_lend_request_accepted,ownerName)
                 }
 
 
@@ -76,10 +78,10 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
 
-                    orderStatus.value=  activity.getString(R.string.text_rent_request_started,userName)
+                    orderStatus.value=  app.getString(R.string.text_rent_request_started,userName)
                 }else{
 
-                    orderStatus.value=  activity.getString(R.string.text_lend_request_started,ownerName)
+                    orderStatus.value=  app.getString(R.string.text_lend_request_started,ownerName)
                 }
 
 
@@ -90,10 +92,10 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value=activity.getString(R.string.text_rent_canceled)
+                    orderStatus.value=app.getString(R.string.text_rent_canceled)
                 }else{
 
-                    orderStatus.value=activity.getString(R.string.text_lend_canceled)
+                    orderStatus.value=app.getString(R.string.text_lend_canceled)
                 }
 
 
@@ -106,10 +108,10 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
 
                 if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value=activity.getString(R.string.text_rent_complete)
+                    orderStatus.value=app.getString(R.string.text_rent_complete)
                 }else{
 
-                    orderStatus.value=activity.getString(R.string.text_lend_complete)
+                    orderStatus.value=app.getString(R.string.text_lend_complete)
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -117,11 +119,11 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
                 orderStatusImage.value=R.drawable.ic_pending
 
 
-                if(Order.OrderTypeEnum.get(item.orderType)==Order.OrderTypeEnum.Renting){
+                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value=activity.getString(R.string.text_rent_request_pending)
+                    orderStatus.value=app.getString(R.string.text_rent_request_pending)
                 }else{
-                    orderStatus.value=activity.getString(R.string.text_lend_request_pending,ownerName)
+                    orderStatus.value=app.getString(R.string.text_lend_request_pending,ownerName)
                 }
 
             }
@@ -133,10 +135,10 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
 
                 if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
 
-                    orderStatus.value=activity.getString(R.string.text_rent_rejected)
+                    orderStatus.value=app.getString(R.string.text_rent_rejected)
                 }else{
 
-                    orderStatus.value=activity.getString(R.string.text_lend_rejected)
+                    orderStatus.value=app.getString(R.string.text_lend_rejected)
                 }
 
             }
@@ -156,7 +158,7 @@ class OrderItemViewModel (app: Application): BaseViewModel(app) {
     fun onClickProduct() {
 
 
-        activity.startActivityMakeScene(OrderPreviewActivity.newInstance(activity, data) )
+        activity?.let {it.startActivityMakeScene(OrderPreviewActivity.newInstance(it, data) )  }
     }
 
     fun getProductTitle(): MutableLiveData<String> {

@@ -49,7 +49,7 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
     private var subscription: Disposable? = null
 
     init {
-        productListAdapter = OrderItemAdapter(dataList,this)
+        productListAdapter = OrderItemAdapter(dataList)
 
 
     }

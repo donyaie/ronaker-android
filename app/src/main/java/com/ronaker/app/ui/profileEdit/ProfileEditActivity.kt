@@ -17,6 +17,7 @@ import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.setEndDrawableRes
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileEditActivity : BaseActivity() {
