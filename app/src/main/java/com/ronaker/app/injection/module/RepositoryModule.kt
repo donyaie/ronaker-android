@@ -27,7 +27,7 @@ import javax.inject.Singleton
 @Module
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
-class RepositoryModule(private val app: Application) {
+ class RepositoryModule(private val app: Application) {
 
 
     /**

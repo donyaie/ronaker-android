@@ -26,7 +26,7 @@ class ExploreFragment : BaseFragment() {
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
     private lateinit var viewModel: ExploreViewModel
 
-    lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,14 +40,12 @@ class ExploreFragment : BaseFragment() {
 
         binding.viewModel = viewModel
 
-        var mnager = GridLayoutManager(context, 2)
+        val mnager = GridLayoutManager(context, 2)
         binding.recycler.layoutManager = mnager
         binding.loading.hideLoading()
 
         viewModel.loading.observe(this, Observer { loading ->
-            if (loading) binding.refreshLayout.setRefreshing(true) else binding.refreshLayout.setRefreshing(
-                false
-            )
+            binding.refreshLayout.isRefreshing = loading
 
         })
         viewModel.retry.observe(this, Observer { loading ->
@@ -109,9 +107,6 @@ class ExploreFragment : BaseFragment() {
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) {
                 Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-//                binding.loading.showRetry()
-            } else {
-//                binding.loading.hideRetry()
             }
         })
 
@@ -143,7 +138,7 @@ class ExploreFragment : BaseFragment() {
                 }
 
             }
-        };
+        }
         binding.recycler.addOnScrollListener(scrollListener)
 
 
@@ -172,7 +167,7 @@ class ExploreFragment : BaseFragment() {
         if (requestCode == SearchActivity.ResultCode && resultCode == 0) {
 
             if (data != null) {
-                var searchValue = data.getStringExtra(SearchActivity.Search_KEY)
+                val searchValue = data.getStringExtra(SearchActivity.Search_KEY)
 
                 if (searchValue == null || searchValue.isEmpty())
                     clearSearchValue()
@@ -190,7 +185,7 @@ class ExploreFragment : BaseFragment() {
     }
 
 
-    fun setSearchValue(search: String) {
+    private fun setSearchValue(search: String) {
 
 
         binding.searchText.text = search
@@ -207,7 +202,7 @@ class ExploreFragment : BaseFragment() {
     override fun onDetach() {
         try {
 
-            binding.recycler.getViewTreeObserver()
+            binding.recycler.viewTreeObserver
                 .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
         } catch (e: Exception) {
 
@@ -216,7 +211,7 @@ class ExploreFragment : BaseFragment() {
     }
 
 
-    fun clearSearchValue() {
+    private fun clearSearchValue() {
 
 
         binding.searchText.setText(R.string.title_search_here)

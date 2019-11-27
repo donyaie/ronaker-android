@@ -57,25 +57,19 @@ interface ViewModelInjector {
     fun inject(viewModel: AddProductCategorySelectViewModel)
     fun inject(viewModel: ProfileEditViewModel)
     fun inject(viewModel: OrderListViewModel)
-
     fun inject(viewModel: ProfilePaymentViewModel)
-
     fun inject(viewModel: ProfileIdentifyViewModel)
-
     fun inject(viewModel: DashboardViewModel)
-
     fun inject(viewModel: OrderAcceptViewModel)
     fun inject(viewModel: OrderDeclineViewModel)
     fun inject(viewModel: OrderStartRentingViewModel)
     fun inject(viewModel: OrderFinishViewModel)
-
     fun inject(viewModel: ProfileImageViewModel)
     fun inject(viewModel: ProfileSettingViewModel)
 
     @Component.Builder
     interface Builder {
         fun build(): ViewModelInjector
-
         fun repositoryModule(repositoryModule: RepositoryModule): Builder
     }
 }
