@@ -17,7 +17,6 @@ class OrderAcceptViewModel(app: Application) : BaseViewModel(app) {
     lateinit
     var orderRepository: OrderRepository
 
-
     @Inject
     lateinit
     var userRepository: UserRepository
