@@ -213,13 +213,20 @@ dependencies {
     implementation "androidx.test:core:$androidXTestCoreVersion"
 
 
-    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
 
     implementation "com.onesignal:OneSignal:$oneSignalVersion"
 
     debugImplementation "com.facebook.stetho:stetho:$stethoVersion"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
+
+
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$testRunnerVersion"
+    androidTestImplementation "androidx.test:core:$testRunnerVersion"
+    androidTestImplementation "androidx.test:monitor:$testRunnerVersion"
 
 
 }

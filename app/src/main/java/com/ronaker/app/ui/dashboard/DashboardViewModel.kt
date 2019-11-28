@@ -19,16 +19,21 @@ class DashboardViewModel(app: Application): BaseViewModel(app){
 
     val goLogin: MutableLiveData<Boolean> = MutableLiveData()
 
+    var islogin=false
+
     init{
         if (!userRepository.isLogin()) {
+            islogin=false
             goLogin.value = true
         }
         else{
+            islogin=true
             userRepository.getUserInfo()?.suid?.let { AnalyticsManager.setUserIdTag(it) }
         }
 
 
     }
+
 
 
 

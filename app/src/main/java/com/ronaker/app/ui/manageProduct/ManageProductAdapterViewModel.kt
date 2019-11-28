@@ -70,7 +70,11 @@ class ManageProductAdapterViewModel(var app: Application) : BaseViewModel(app) {
 
     fun onClickProduct() {
 
-        activity?.let {(it as DashboardActivity).pushFragment(ManageProductFragment.newInstance(data))  }
+
+        if(activity is DashboardActivity){
+            activity?.let {(it as DashboardActivity).pushFragment(ManageProductFragment.newInstance(data))  }
+        }
+
     }
 
     fun getProductTitle(): MutableLiveData<String> {

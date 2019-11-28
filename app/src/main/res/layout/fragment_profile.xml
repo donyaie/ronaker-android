@@ -57,10 +57,10 @@
                         android:layout_height="72dp"
                         android:layout_marginStart="24dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_user_default"
+                        android:src="@color/colorPlatinGrey"
+
                         app:mutableImage="@{viewModel.getUserAvatar()}"
-                        app:riv_corner_radius="36dp"
-                        tools:ignore="VectorDrawableCompat" />
+                        app:riv_corner_radius="36dp" />
 
 
                     <LinearLayout

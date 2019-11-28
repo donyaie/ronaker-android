@@ -78,7 +78,9 @@
                 android:name=".ui.login.LoginActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/LoginTheme"
-                android:windowSoftInputMode="adjustResize" />
+                android:windowSoftInputMode="adjustResize">
+
+        </activity>
 
         <activity
                 android:name=".ui.search.SearchActivity"
@@ -101,7 +103,6 @@
         <activity
                 android:name=".ui.exploreProduct.ExploreProductActivity"
                 android:screenOrientation="portrait"
-
                 android:theme="@style/PopTheme"
                 android:windowSoftInputMode="stateAlwaysHidden" />
 

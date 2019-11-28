@@ -23,15 +23,7 @@ import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.view.TabNavigationComponent
-import android.view.WindowManager
-import android.os.Build
-import android.graphics.Color
-import android.os.Handler
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
-import com.ronaker.app.ui.orderMessage.OrderMessageActivity
-import java.util.*
-
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     FragNavController.RootFragmentListener {
@@ -76,7 +68,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         super.onCreate(savedInstanceState)
         setSwipeCloseDisable()
-        binding = DataBindingUtil.setContentView(this, com.ronaker.app.R.layout.activity_dashboard)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
@@ -96,7 +88,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     override fun onStart() {
         super.onStart()
-        if(isFistStart()){
+        if(isFistStart() && viewModel.islogin){
 
             initNavigation(savedInstanceState)
         }
@@ -110,7 +102,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
 
-    fun initNavigation(savedInstanceState: Bundle?) {
+    private fun initNavigation(savedInstanceState: Bundle?) {
 
         fragNavController.apply {
             transactionListener = this@DashboardActivity
@@ -163,7 +155,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     companion object {
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, DashboardActivity::class.java)
+            val intent = Intent(context, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }

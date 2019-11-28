@@ -4,7 +4,7 @@
 <!--The background color, preferably the same as your normal theme-->
     <item android:drawable="@color/colorPrimaryDark"/>
 <!--Your product logo - 144dp color version of your app icon-->
-    <item android:gravity="center">
-        <bitmap android:src="@drawable/logo_ronaker_white" android:gravity="top|center_vertical"/>
+    <item android:gravity="center_vertical|center_horizontal">
+        <bitmap  android:src="@drawable/logo_ronaker_white" android:gravity="center_horizontal|center_vertical"/>
     </item>
 </layer-list>
