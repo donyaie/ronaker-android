@@ -8,7 +8,22 @@ import java.util.*
 
 interface OrderRepository {
     fun getOrders(token: String?, filter: String?): Observable<Result<ListResponseModel<Order>>>
-    fun createOrder(token: String?, product_suid: String, stateDate: Date, endDate: Date, message: String?, price: Double): Observable<Result<Boolean>>
-    fun updateOrderStatus(token: String?, suid: String, status: String): Observable<Result<Boolean>>
+    fun createOrder(
+        token: String?,
+        product_suid: String,
+        stateDate: Date,
+        endDate: Date,
+        message: String?,
+        price: Double
+    ): Observable<Result<Boolean>>
+
+    fun updateOrderStatus(
+        token: String?,
+        suid: String,
+        status: String,
+        address: String?=null,
+        instruction: String?=null,
+        reason: String?=null
+    ): Observable<Result<Boolean>>
 }
 

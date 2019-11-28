@@ -58,7 +58,7 @@
                         android:inputType="textMultiLine"
                         app:input_transparent="false"
                         android:imeOptions="actionNext"
-                        android:id="@+id/instruction_input"
+                        android:id="@+id/reason_input"
                         app:input_title=""
                         app:input_hint="Explain why decline"
                         app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
@@ -91,7 +91,7 @@
 
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
-                    android:onClick="@{()->viewModel.onClickAccept()}"
+                    android:onClick="@{()->viewModel.onClickAccept(reasonInput.getText().toString())}"
                     android:text="@string/button_decline"
 
                     app:layout_constraintBottom_toBottomOf="parent"

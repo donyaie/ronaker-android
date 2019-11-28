@@ -160,7 +160,7 @@
                                 android:layout_width="42dp"
                                 android:layout_height="42dp"
 
-                                android:src="@drawable/ic_user_default"
+                                android:src="@color/colorPlatinGrey"
                                 app:mutableImage="@{viewModel.getUserImage()}"
                                 app:riv_corner_radius="21dp"
                                 tools:ignore="VectorDrawableCompat" />

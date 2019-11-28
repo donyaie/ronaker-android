@@ -11,7 +11,7 @@ import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderAcceptViewModel (app: Application): BaseViewModel(app) {
+class OrderAcceptViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -32,7 +32,6 @@ class OrderAcceptViewModel (app: Application): BaseViewModel(app) {
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
 
-
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
     private lateinit var mOrder: Order
@@ -50,27 +49,38 @@ class OrderAcceptViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
     fun load(order: Order) {
         mOrder = order
-
 
 
     }
 
 
-    fun onClickAccept() {
+    fun onClickAccept(address: String, ins: String) {
+
+        if(ins.isBlank() ){
+            errorMessage.value="Please Write instruction"
+            return
+        }
+
+        if(address.isBlank() ){
+            errorMessage.value="Please Write Address"
+            return
+        }
+
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            userRepository.getUserToken(),
-            mOrder.suid,
-            "accepted"
+            token = userRepository.getUserToken(),
+            suid = mOrder.suid,
+            status = "accepted",
+            address = address,
+            instruction = ins
         )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
-                    finish.value=true
+                    finish.value = true
 
                 } else {
 
@@ -80,8 +90,6 @@ class OrderAcceptViewModel (app: Application): BaseViewModel(app) {
 
 
     }
-
-
 
 
 }

@@ -11,7 +11,7 @@ import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderDeclineViewModel (app: Application): BaseViewModel(app) {
+class OrderDeclineViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -32,7 +32,6 @@ class OrderDeclineViewModel (app: Application): BaseViewModel(app) {
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
 
-
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
     private lateinit var mOrder: Order
@@ -43,7 +42,6 @@ class OrderDeclineViewModel (app: Application): BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
-
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
@@ -51,27 +49,32 @@ class OrderDeclineViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
     fun load(order: Order) {
         mOrder = order
-
 
 
     }
 
 
-    fun onClickAccept() {
+    fun onClickAccept(reason: String) {
+
+        if(reason.isBlank()){
+            errorMessage.value="Please write reason"
+            return
+        }
+
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            userRepository.getUserToken(),
-            mOrder.suid,
-            "rejected"
+            token = userRepository.getUserToken(),
+            suid = mOrder.suid,
+            status = "rejected",
+            reason = reason
         )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
-                    finish.value=true
+                    finish.value = true
 
                 } else {
 
@@ -81,8 +84,6 @@ class OrderDeclineViewModel (app: Application): BaseViewModel(app) {
 
 
     }
-
-
 
 
 }

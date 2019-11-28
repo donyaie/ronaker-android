@@ -152,10 +152,6 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                 when (Order.OrderStatusEnum[order.status]) {
 
 
-
-
-
-
                     Order.OrderStatusEnum.Accepted -> {
 
                         actionVisibility.value = View.VISIBLE
@@ -228,7 +224,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         startRentingVisibility.value = View.GONE
                         acceptVisibility.value = View.GONE
                         declineVisibility.value = View.GONE
-                        finishVisibility.value = View.VISIBLE
+                        finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
                     }
                     Order.OrderStatusEnum.Started -> {

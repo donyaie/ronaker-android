@@ -118,7 +118,7 @@
 
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:onClick="@{()->viewModel.onClickAccept()}"
+                android:onClick="@{()->viewModel.onClickAccept(addressInput.getText().toString(),instructionInput.getText().toString())}"
 
                 android:text="@string/button_accept"
 
