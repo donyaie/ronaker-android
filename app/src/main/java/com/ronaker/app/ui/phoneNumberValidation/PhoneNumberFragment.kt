@@ -14,9 +14,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import java.util.concurrent.TimeUnit
 
 class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
@@ -25,11 +23,11 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: PhoneNumberViewModel
 
 
-    internal lateinit var phoneNumberUtil: PhoneNumberUtil
+    private lateinit var phoneNumberUtil: PhoneNumberUtil
 
-    internal var validNumber: Phonenumber.PhoneNumber? = null
+    private var validNumber: Phonenumber.PhoneNumber? = null
 
-    internal var inPhoneChange = false
+    private var inPhoneChange = false
 
     var disposable:Disposable?=null
 
@@ -89,13 +87,13 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         viewModel.onClickPhoneNext(getPreCode()+getNumber())
     }
 
-    internal fun getPreCode(): String {
+    private fun getPreCode(): String {
 
         return binding.ccp.selectedCountryCodeWithPlus
 
     }
 
-    internal fun getNumber(): String? {
+    private fun getNumber(): String? {
            return validNumber?.let {it.nationalNumber.toString() + ""  }
 
     }
@@ -170,7 +168,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
     }
 
-    internal fun showClear(show: Boolean) {
+    private fun showClear(show: Boolean) {
         if (show) {
             binding.phoneValidate.animate().alpha(1f).setDuration(300).start()
             binding.phoneValidate.isClickable = true
@@ -182,7 +180,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         }
     }
 
-    internal fun showValidate(valid: Boolean) {
+    private fun showValidate(valid: Boolean) {
         if (valid) {
             activeNext(true)
 
@@ -191,13 +189,13 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         }
     }
 
-    internal fun activeNext(active: Boolean) {
+    private fun activeNext(active: Boolean) {
         if (active) {
 
-            binding.nextButton.setEnabled(active)
+            binding.nextButton.isEnabled = active
         } else {
 
-            binding.nextButton.setEnabled(active)
+            binding.nextButton.isEnabled = active
         }
     }
 

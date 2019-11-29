@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orderMessage
 
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
@@ -13,7 +14,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderMessageViewModel : BaseViewModel() {
+class OrderMessageViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -40,18 +41,15 @@ class OrderMessageViewModel : BaseViewModel() {
     lateinit
     var context: Context
 
-    lateinit var mProduct: Product
-    lateinit var mStartDate: Date
-    lateinit var mEndDate: Date
+    private lateinit var mProduct: Product
+    private lateinit var mStartDate: Date
+    private lateinit var mEndDate: Date
 
-    var mPrice = 0.0
+    private var mPrice = 0.0
 
 
     private var subscription: Disposable? = null
 
-    init {
-
-    }
 
 
     fun loadProduct(product: Product, startDate: Date, endDAte: Date) {
@@ -74,7 +72,7 @@ class OrderMessageViewModel : BaseViewModel() {
             String.format("%s%.02f", context.getString(R.string.title_curency_symbol), mPrice)
 
 
-        var user = userRepository.getUserInfo()
+        val user = userRepository.getUserInfo()
 
 
 //        orderMessage.value = "Hi I'm ${user?.first_name} ${user?.last_name}\n" +
@@ -112,7 +110,7 @@ class OrderMessageViewModel : BaseViewModel() {
 
                         } else {
 
-                            errorMessage.value = result.error?.detail
+                            errorMessage.value = result.error?.message
                         }
                     }
 

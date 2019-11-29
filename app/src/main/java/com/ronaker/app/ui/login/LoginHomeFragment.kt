@@ -34,7 +34,7 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
           activity?.let { it1 -> LanguageDialog.showDialog(it1) }
       }
 
-        AppDebug.Log("capture","LoginEmailFragment : CreateView")
+        AppDebug.log("capture","LoginEmailFragment : CreateView")
 
         return binding.root
     }

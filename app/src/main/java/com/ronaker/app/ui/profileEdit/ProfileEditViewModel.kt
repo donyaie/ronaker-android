@@ -1,16 +1,16 @@
 package com.ronaker.app.ui.profileEdit
 
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUser
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEditViewModel : BaseViewModel() {
+class ProfileEditViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
@@ -36,11 +36,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
     private var subscription: Disposable? = null
 
-    init {
-
-    }
-
-    var mUser: User?=null
+    private var mUser: User?=null
 
     fun loadData() {
 
@@ -57,7 +53,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                   mUser= result.data?.toUser()
+                   mUser= result.data
                     signComplete.value = result.data?.is_email_verified
 
                     phoneComplete.value = result.data?.is_phone_number_verified
@@ -69,7 +65,7 @@ class ProfileEditViewModel : BaseViewModel() {
 
 
                 } else {
-                    retry.value = result.error?.detail
+                    retry.value = result.error?.message
                 }
             }
 

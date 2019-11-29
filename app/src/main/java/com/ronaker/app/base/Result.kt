@@ -26,7 +26,7 @@ open class Result<T>(val data: T? = null, val error: NetworkError? = null ) {
 
 
     fun isAcceptable(): Boolean {
-        return  error?.http_error==NetworkError.HttpError.HttpResponseSuccessOK
+        return  error?.httpError==NetworkError.HttpError.HttpResponseSuccessOK
     }
 
 

@@ -20,27 +20,25 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
-import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
-import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
-import kotlinx.android.synthetic.main.activity_login.view.*
+import com.ronaker.app.utils.extension.finishSafe
 import java.io.IOException
 
 
 class ProfileIdentifyActivity : BaseActivity() {
 
-    private val TAG = ProfileIdentifyActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileIndentifyBinding
     private lateinit var viewModel: ProfileIdentifyViewModel
 
 
-    val REQUEST_IMAGE = 1233
     companion object {
+
+         const val REQUEST_IMAGE = 1233
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, ProfileIdentifyActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ProfileIdentifyActivity::class.java)
+            val boundle = Bundle()
             intent.putExtras(boundle)
 
             return intent
@@ -78,11 +76,11 @@ class ProfileIdentifyActivity : BaseActivity() {
 
 
 
-        viewModel.pickImage.observe(this, Observer { _ ->
+        viewModel.pickImage.observe(this, Observer {
             onProfileImageClick()
         })
-        viewModel.finish.observe(this, Observer { _ ->
-           finishSafe()
+        viewModel.finish.observe(this, Observer {
+            finishSafe()
         })
 
 
@@ -95,24 +93,8 @@ class ProfileIdentifyActivity : BaseActivity() {
 
     }
 
-    override fun onStart() {
 
-        super.onStart()
-
-
-
-
-    }
-
-
-
-    override fun onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-
-    fun onProfileImageClick() {
+    private fun onProfileImageClick() {
         Dexter.withActivity(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
@@ -188,7 +170,7 @@ class ProfileIdentifyActivity : BaseActivity() {
     }
 
     private fun showSettingsDialog() {
-        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_permission_title))
         builder.setMessage(getString(R.string.dialog_permission_message))
         builder.setPositiveButton(
@@ -196,7 +178,7 @@ class ProfileIdentifyActivity : BaseActivity() {
 
         ) { dialog, _ ->
             dialog?.cancel()
-            IntentManeger.openSettings(this,101)
+            IntentManeger.openSettings(this, 101)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }

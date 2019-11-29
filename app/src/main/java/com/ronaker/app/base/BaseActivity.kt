@@ -1,18 +1,30 @@
 package com.ronaker.app.base
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import com.crashlytics.android.Crashlytics
 import com.ronaker.app.utils.LocaleHelper
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.ronaker.app.General
+import io.fabric.sdk.android.Fabric
 
 
 abstract class BaseActivity: SwipeBackActivity() {
+
+
+
+    fun getAnalytics(): FirebaseAnalytics? {
+
+        return if (applicationContext is General)
+            (applicationContext as General).analytics
+        else
+            null
+    }
+
 
 
     var activityTag:String?=null
@@ -25,21 +37,21 @@ abstract class BaseActivity: SwipeBackActivity() {
         super.onCreate(savedInstanceState)
         addActivityStack(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
-
+        Fabric.with(this, Crashlytics())
     }
 
-    var startCount=0
+   private var startCount=0
 
 
     companion object {
 
-        fun addActivityStack(activity:Activity){
+      private  fun addActivityStack(activity:Activity){
             if(!activityList.contains(activity))
                 activityList.add(activity)
             refreshActivityStack()
         }
 
-        fun removeActivityStack(activity:Activity){
+       private fun removeActivityStack(activity:Activity){
             if(activityList.contains(activity))
                 activityList.remove(activity)
 
@@ -59,8 +71,8 @@ abstract class BaseActivity: SwipeBackActivity() {
             return find
         }
 
-        fun refreshActivityStack(){
-            var temp=ArrayList<Activity>()
+        private fun refreshActivityStack(){
+            val temp=ArrayList<Activity>()
 
             activityList.forEach {
 
@@ -101,50 +113,15 @@ abstract class BaseActivity: SwipeBackActivity() {
     }
 
 
-    protected override fun attachBaseContext(newBase: Context) {
-
-
-
+     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(LocaleHelper.onAttach(newBase)))
     }
 
 
-    override fun startActivity(intent: Intent?) {
-        super.startActivity(intent)
-    }
 
-
-
-
-    fun startActivityMakeScene(intent: Intent?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-        }else{
-            super.startActivity(intent)
-        }
-
-    }
-
-
-    fun startActivityMakeSceneForResult(intent: Intent?,requestCode:Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.startActivityForResult(intent,requestCode, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-        }else{
-            super.startActivityForResult(intent,requestCode)
-        }
-
-    }
-
-
-    fun finishSafe() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.finishAfterTransition();
-        }
-
-        else
-         super.finish();
-    }
 
 
 }
+
+
+

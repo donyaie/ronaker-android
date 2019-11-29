@@ -6,7 +6,6 @@ import android.os.Build
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import kotlinx.android.synthetic.main.fragment_product_add_price.view.*
 
 
 class ShapeDrawableHelper {
@@ -21,7 +20,7 @@ class ShapeDrawableHelper {
                 if (Build.VERSION.SDK_INT < 21) {
                     view.setColorFilter(ContextCompat.getColor(context, colorRes), PorterDuff.Mode.SRC_IN)
                 }else
-                DrawableCompat.setTint(view.drawable, ContextCompat.getColor(context, colorRes))
+                    view.drawable?.let {  DrawableCompat.setTint(it, ContextCompat.getColor(context, colorRes)) }
 
             }catch (e:Exception)
             {

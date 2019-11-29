@@ -2,20 +2,15 @@ package com.ronaker.app.utils.view
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.ronaker.app.R
-import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.ShapeDrawableHelper
-import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 
 class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -161,7 +156,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
         }
 
-    private var screenLibrary: ScreenCalcute
+    private var screenLibrary: ScreenCalculator
 
 
 
@@ -238,12 +233,12 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
     private var titleText: TextView
 
     private var lineLayout: RelativeLayout
-    private var actionText: TextView
-    private var action1Button: ImageView
-    private var action2Button: ImageView
+    private var actionText: Button
+    private var action1Button: ImageButton
+    private var action2Button: ImageButton
     private var actionLayout: LinearLayout
 
-    private var cancelButton: ImageView
+    private var cancelButton: ImageButton
     private var statusBar: StatusBarSizeView
 
     private var countDots: LinearLayout
@@ -301,12 +296,12 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
         orientation = VERTICAL
 
-        screenLibrary = ScreenCalcute(context)
+        screenLibrary = ScreenCalculator(context)
 
         attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
-                R.styleable.toolbar_component_attributes, 0, 0
+                R.styleable.ToolbarComponent, 0, 0
             )
 
 
@@ -315,14 +310,14 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
             actionTitle = typedArray
                 .getString(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_action_text
+                        .ToolbarComponent_toolbar_component_action_text
                 )
 
 
             isBottomLine = typedArray
                 .getBoolean(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_bottom_line,
+                        .ToolbarComponent_toolbar_component_bottom_line,
                     false
                 )
 
@@ -331,7 +326,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
             isTransparent = typedArray
                 .getBoolean(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_transparent,
+                        .ToolbarComponent_toolbar_component_transparent,
                     false
                 )
 
@@ -339,17 +334,17 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
             centerContainer = CenterContainer.values()[typedArray
                 .getInt(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_center_container,
+                        .ToolbarComponent_toolbar_component_center_container,
                     0
-                )];
+                )]
 
 
             actionContainer = ActionContainer.values()[typedArray
                 .getInt(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_action_container,
+                        .ToolbarComponent_toolbar_component_action_container,
                     2
-                )];
+                )]
 
 
 
@@ -358,37 +353,37 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
             cancelContainer = CancelContainer.values()[typedArray
                 .getInt(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_cancel_container,
+                        .ToolbarComponent_toolbar_component_cancel_container,
                     1
-                )];
+                )]
 
 
 
             title = typedArray
                 .getString(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_title
+                        .ToolbarComponent_toolbar_component_title
                 )
 
 
             action1Src = typedArray
                 .getResourceId(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_action1src,
+                        .ToolbarComponent_toolbar_component_action1src,
                     R.drawable.ic_share_white
                 )
 
             action2Src = typedArray
                 .getResourceId(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_action2src,
+                        .ToolbarComponent_toolbar_component_action2src,
                     R.drawable.ic_fave_white
                 )
 
             dotCount = typedArray
                 .getInt(
                     R.styleable
-                        .toolbar_component_attributes_toolbar_component_dot_count,
+                        .ToolbarComponent_toolbar_component_dot_count,
                     3
                 )
 
@@ -407,7 +402,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                 dots[i] = ImageView(context)
                 dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
 
-                val params = LinearLayout.LayoutParams(
+                val params = LayoutParams(
                     screenLibrary.DP2Pixel(9),
                     screenLibrary.DP2Pixel(9)
                 )
@@ -424,7 +419,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
     }
 
 
-    public fun showNavigator(visiable: Boolean, position: Int) {
+     fun showNavigator(visiable: Boolean, position: Int) {
 
         if (visiable) {
 

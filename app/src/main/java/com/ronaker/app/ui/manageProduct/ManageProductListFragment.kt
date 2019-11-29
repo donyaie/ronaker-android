@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.addProduct.AddProductActivity
+import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 class ManageProductListFragment : BaseFragment() {
@@ -22,7 +23,7 @@ class ManageProductListFragment : BaseFragment() {
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductListBinding
     private lateinit var viewModel: ManageProductListViewModel
 
-    lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -91,10 +92,10 @@ class ManageProductListFragment : BaseFragment() {
 
 
         binding.addNewProductButton.setOnClickListener {
-            startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            activity?.startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
         binding.addProductButton.setOnClickListener {
-            startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            activity?.startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -124,12 +125,7 @@ class ManageProductListFragment : BaseFragment() {
 
             }
 
-            override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(view, dx, dy)
-
-
-            }
-        };
+        }
         binding.recycler.addOnScrollListener(scrollListener)
 
 
@@ -146,24 +142,12 @@ class ManageProductListFragment : BaseFragment() {
 
     override fun onDetach() {
         try {
-            binding.recycler.getViewTreeObserver()
+            binding.recycler.viewTreeObserver
                 .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
         } catch (e: Exception) {
 
         }
         super.onDetach()
-    }
-
-    override fun onDestroyView() {
-
-        super.onDestroyView()
-    }
-
-
-    override fun onDestroy() {
-
-
-        super.onDestroy()
     }
 
 

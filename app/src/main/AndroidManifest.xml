@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.ronaker.app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ronaker.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,202 +13,242 @@
 
     <uses-feature
 
-            android:glEsVersion="0x00020000"
+        android:glEsVersion="0x00020000"
 
-            android:required="true" />
+        android:required="true" />
 
-<!--    android:networkSecurityConfig="@xml/network_security_config"-->
+    <!--    android:networkSecurityConfig="@xml/network_security_config"-->
     <application
-            android:name=".General"
-            android:allowBackup="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
+        android:name=".General"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
 
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="false"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning"
-            tools:replace="android:allowBackup,android:supportsRtl">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup,android:supportsRtl">
+
+
+<!--        <meta-data-->
+<!--            android:name="firebase_crashlytics_collection_enabled"-->
+<!--            android:value="false" />-->
 
         <meta-data
-                android:name="com.ronaker.app.injection.module.UnsafeOkHttpGlideModule"
-                android:value="AppGlideModule" />
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
 
         <meta-data
-                android:name="com.google.android.maps.v2.API_KEY"
-                android:value="@string/google_api_key" />
+            android:name="com.ronaker.app.injection.module.UnsafeOkHttpGlideModule"
+            android:value="AppGlideModule" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_api_key" />
 
 
         <activity
-                android:name=".ui.orderMessage.OrderMessageActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.orderMessage.OrderMessageActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
         </activity>
         <activity
-                android:name=".ui.profilePayment.ProfilePaymentActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.profilePayment.ProfilePaymentActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-
-        </activity>
-
-        <activity
-                android:name=".ui.profileEdit.ProfileEditActivity"
-                android:screenOrientation="portrait"
-
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden">
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
         </activity>
 
         <activity
-                android:name=".ui.orderPreview.OrderPreviewActivity"
+            android:name=".ui.profileEdit.ProfileEditActivity"
+            android:screenOrientation="portrait"
 
-                android:screenOrientation="portrait"
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden">
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
 
         <activity
-                android:name=".ui.login.LoginActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/LoginTheme"
-                android:windowSoftInputMode="adjustResize" />
+            android:name=".ui.orderPreview.OrderPreviewActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
 
         <activity
-                android:name=".ui.search.SearchActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/SearchTheme"
-                android:windowSoftInputMode="stateAlwaysVisible" />
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
 
         <activity
-                android:name=".ui.dashboard.DashboardActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/DashboardTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" >
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SearchTheme"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="ronaker.com"
+                    android:pathPrefix="/product" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="www.ronaker.com"
+                    android:pathPrefix="/product" />
+            </intent-filter>
+
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "ronaker://product” -->
+                <data android:scheme="ronaker"
+                    android:host="product" />
+            </intent-filter>
+
         </activity>
         <activity
-                android:name=".ui.exploreProduct.ExploreProductActivity"
-                android:screenOrientation="portrait"
-
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
+            android:name=".ui.exploreProduct.ExploreProductActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-                android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
-
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
 
         <activity
-                android:name=".ui.profileSetting.ProfileSettingActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.profileSetting.ProfileSettingActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-                android:name=".ui.profileImage.ProfileImageActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.profileImage.ProfileImageActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-                android:name=".ui.orderStartRenting.OrderStartRentingActivity"
-                android:screenOrientation="portrait"
-
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-                android:name=".ui.orderFinish.OrderFinishActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.orderStartRenting.OrderStartRentingActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-                android:name=".ui.orderDecline.OrderDeclineActivity"
-                android:screenOrientation="portrait"
-
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-                android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.orderFinish.OrderFinishActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-                android:name=".ui.addProduct.AddProductActivity"
-                android:screenOrientation="portrait"
-
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="adjustResize" />
-
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-                android:name=".ui.profileIdentify.ProfileIdentifyActivity"
-                android:screenOrientation="portrait"
+            android:name=".ui.orderDecline.OrderDeclineActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/PopTheme"
-                android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-                android:name=".ui.phoneNumberValidation.PhoneNumberActivity"
-                android:screenOrientation="portrait"
-
-                android:theme="@style/phoneNumberTheme"
-                android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-                android:name=".ui.imagePicker.ImagePickerActivity"
-                android:screenOrientation="portrait" />
+            android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
+            android:screenOrientation="portrait"
+
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".ui.addProduct.AddProductActivity"
+            android:screenOrientation="portrait"
+
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustResize" />
 
 
         <activity
-                android:name=".ui.splash.SplashActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/SplashTheme"
-                android:windowSoftInputMode="stateAlwaysHidden">
+            android:name=".ui.profileIdentify.ProfileIdentifyActivity"
+            android:screenOrientation="portrait"
 
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".ui.phoneNumberValidation.PhoneNumberActivity"
+            android:screenOrientation="portrait"
+
+            android:theme="@style/phoneNumberTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
+        <activity
+            android:name=".ui.imagePicker.ImagePickerActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
 
 
         </activity>
 
         <!-- uCrop cropping activity -->
         <activity
-                android:name="com.yalantis.ucrop.UCropActivity"
-                android:screenOrientation="portrait"
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
 
-                android:theme="@style/AppTheme.UCrop" />
+            android:theme="@style/AppTheme.UCrop" />
 
 
         <!-- cache directory file provider paths -->
         <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="${applicationId}.provider"
-                android:exported="false"
-                android:grantUriPermissions="true">
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths" />
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
 
 

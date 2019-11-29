@@ -40,7 +40,7 @@
                           android:layout_marginRight="24dp"
                           android:text="@string/title_send_a_meesage_to_owner"
                           android:textAppearance="@style/TextAppearance.Heading.1"
-                          android:gravity="left"
+                          android:gravity="start"
                           android:id="@+id/title"
                           android:textColor="@color/colorTextDark"
                           android:layout_height="wrap_content"/>
@@ -76,7 +76,7 @@
                       android:id="@+id/price"
                       app:layout_constraintTop_toTopOf="parent"
                       app:layout_constraintLeft_toLeftOf="parent"
-                      android:layout_marginLeft="26dp"
+                      android:layout_marginStart="26dp"
                       android:layout_marginTop="16dp"
 
                       app:mutableText="@{viewModel.getProductPrice()}"
@@ -93,7 +93,7 @@
                       app:layout_constraintTop_toBottomOf="@id/price"
                       app:layout_constraintLeft_toLeftOf="parent"
                       android:textAppearance="@style/TextAppearance.Small.Regular"
-                      android:layout_marginLeft="26dp"
+                      android:layout_marginStart="26dp"
                       android:text="@string/title_per_day"
 
             />
@@ -110,7 +110,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:onClick="@{()->viewModel.checkOut(messageInput.getText().toString())}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_width="wrap_content"
 
             />

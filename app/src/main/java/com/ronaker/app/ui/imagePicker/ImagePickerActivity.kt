@@ -7,6 +7,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -21,9 +22,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 import com.yalantis.ucrop.UCrop
 import java.io.File
-import android.os.Build
 
 
 class ImagePickerActivity : BaseActivity() {
@@ -41,8 +42,6 @@ class ImagePickerActivity : BaseActivity() {
 
         fun onChooseGallerySelected()
     }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +98,8 @@ class ImagePickerActivity : BaseActivity() {
                         )
 
                         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-                            takePictureIntent.clipData = ClipData.newRawUri("", getCacheImagePath(fileName))
+                            takePictureIntent.clipData =
+                                ClipData.newRawUri("", getCacheImagePath(fileName))
                             takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         }
                         if (takePictureIntent.resolveActivity(packageManager) != null) {
@@ -127,7 +127,7 @@ class ImagePickerActivity : BaseActivity() {
                     if (report.areAllPermissionsGranted()) {
                         val pickPhoto = Intent(
                             Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                         )
                         startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE)
                     }
@@ -159,7 +159,7 @@ class ImagePickerActivity : BaseActivity() {
             UCrop.RESULT_ERROR -> {
                 data?.let {
                     val cropError = UCrop.getError(it)
-                    com.ronaker.app.utils.AppDebug.Log(TAG, "Crop error: " + cropError)
+                    com.ronaker.app.utils.AppDebug.log(TAG, "Crop error: $cropError")
                     setResultCancelled()
                 }
             }
@@ -218,18 +218,18 @@ class ImagePickerActivity : BaseActivity() {
 
     companion object {
         private val TAG = ImagePickerActivity::class.java.simpleName
-        val INTENT_IMAGE_PICKER_OPTION = "image_picker_option"
-        val INTENT_ASPECT_RATIO_X = "aspect_ratio_x"
-        val INTENT_ASPECT_RATIO_Y = "aspect_ratio_Y"
-        val INTENT_LOCK_ASPECT_RATIO = "lock_aspect_ratio"
-        val INTENT_IMAGE_COMPRESSION_QUALITY = "compression_quality"
-        val INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT = "set_bitmap_max_width_height"
-        val INTENT_BITMAP_MAX_WIDTH = "max_width"
-        val INTENT_BITMAP_MAX_HEIGHT = "max_height"
+        const val INTENT_IMAGE_PICKER_OPTION = "image_picker_option"
+        const val INTENT_ASPECT_RATIO_X = "aspect_ratio_x"
+        const val INTENT_ASPECT_RATIO_Y = "aspect_ratio_Y"
+        const val INTENT_LOCK_ASPECT_RATIO = "lock_aspect_ratio"
+        const val INTENT_IMAGE_COMPRESSION_QUALITY = "compression_quality"
+        const val INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT = "set_bitmap_max_width_height"
+        const val INTENT_BITMAP_MAX_WIDTH = "max_width"
+        const val INTENT_BITMAP_MAX_HEIGHT = "max_height"
 
 
-        val REQUEST_IMAGE_CAPTURE = 0
-        val REQUEST_GALLERY_IMAGE = 1
+        const val REQUEST_IMAGE_CAPTURE = 0
+        const val REQUEST_GALLERY_IMAGE = 1
         lateinit var fileName: String
 
 
@@ -237,14 +237,14 @@ class ImagePickerActivity : BaseActivity() {
 
             val intent = Intent(activity, ImagePickerActivity::class.java)
             intent.putExtra(
-                ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
-                ImagePickerActivity.REQUEST_GALLERY_IMAGE
+                INTENT_IMAGE_PICKER_OPTION,
+                REQUEST_GALLERY_IMAGE
             )
 
             // setting aspect ratio
-            intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
-            intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
-            intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
+            intent.putExtra(INTENT_LOCK_ASPECT_RATIO, true)
+            intent.putExtra(INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
+            intent.putExtra(INTENT_ASPECT_RATIO_Y, 1)
             activity.startActivityForResult(intent, requestCode)
 
         }

@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.explore
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -8,11 +9,11 @@ import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductList
+import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ExploreViewModel : BaseViewModel() {
+class ExploreViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -24,11 +25,14 @@ class ExploreViewModel : BaseViewModel() {
     var userRepository: UserRepository
 
 
-    internal var page = 0
-    internal var hasNextPage = true
+    private var page = 0
+    private var hasNextPage = true
 
 
     var dataList: ArrayList<Product> = ArrayList()
+
+
+    private var query: String? = null
 
 
     var productListAdapter: ItemExploreAdapter
@@ -40,11 +44,10 @@ class ExploreViewModel : BaseViewModel() {
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-
     val searchValue: MutableLiveData<String> = MutableLiveData()
 
 
-    internal fun reset() {
+    private fun reset() {
 
         page = 0
         hasNextPage = true
@@ -54,7 +57,7 @@ class ExploreViewModel : BaseViewModel() {
 //        view.getScrollListener().resetState()
     }
 
-    private  var subscription: Disposable?=null
+    private var subscription: Disposable? = null
 
     init {
         productListAdapter = ItemExploreAdapter(dataList)
@@ -78,7 +81,7 @@ class ExploreViewModel : BaseViewModel() {
 
                             emptyVisibility.value = View.GONE
                             onRetrieveProductListSuccess(
-                                result.data?.results?.toProductList()
+                                result.data?.results
                             )
 
                             if (result.data?.next == null)
@@ -130,9 +133,9 @@ class ExploreViewModel : BaseViewModel() {
 
     private fun onRetrieveProductListError(error: NetworkError?) {
         if (page <= 1)
-            retry.value =  error?.detail
+            retry.value = error?.message
         else
-            errorMessage.value = error?.detail
+            errorMessage.value = error?.message
 
 
     }
@@ -160,10 +163,9 @@ class ExploreViewModel : BaseViewModel() {
 
     }
 
-
-    var query: String? = null
-
     fun search(search: String?) {
+
+        search?.let { getAnalytics()?.actionSearch(it) }
 
         reset()
         query = search

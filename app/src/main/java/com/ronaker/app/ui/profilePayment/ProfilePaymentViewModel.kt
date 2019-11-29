@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.profilePayment
 
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
@@ -10,7 +11,7 @@ import io.reactivex.disposables.Disposable
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-class ProfilePaymentViewModel : BaseViewModel() {
+class ProfilePaymentViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
@@ -49,11 +50,11 @@ class ProfilePaymentViewModel : BaseViewModel() {
         private var pattern: Pattern? = null
         private var shortPattern: Pattern? = null
 
-        private constructor() {
+         constructor() {
             this.pattern = null
         }
 
-        private constructor(pattern: String?, shortPattern: String?) {
+         constructor(pattern: String?, shortPattern: String?) {
             pattern?.let { this.pattern = Pattern.compile(it) }
 
             shortPattern?.let { this.shortPattern = Pattern.compile(it) }
@@ -62,7 +63,7 @@ class ProfilePaymentViewModel : BaseViewModel() {
         companion object {
 
             fun detect(cardNumber: String): CardType {
-                for (cardType in CardType.values()) {
+                for (cardType in values()) {
                     cardType.pattern?.let {
                         if (it.matcher(cardNumber).matches())
                             return cardType
@@ -76,7 +77,7 @@ class ProfilePaymentViewModel : BaseViewModel() {
 
 
                 if (cardNumber.length >= 2)
-                    for (cardType in CardType.values()) {
+                    for (cardType in values()) {
 
                         cardType.shortPattern?.let {
                             if (it.matcher(
@@ -91,7 +92,7 @@ class ProfilePaymentViewModel : BaseViewModel() {
                     }
 
 
-                for (cardType in CardType.values()) {
+                for (cardType in values()) {
                     cardType.pattern?.let {
                         if (it.matcher(cardNumber).matches())
                             return cardType
@@ -101,10 +102,6 @@ class ProfilePaymentViewModel : BaseViewModel() {
                 return UNKNOWN
             }
         }
-
-    }
-
-    init {
 
     }
 

@@ -2,7 +2,7 @@
 <resources>
 
 
-    <declare-styleable name="input_component_attributes">
+    <declare-styleable name="InputComponent">
 
         <attr name="input_title" format="reference|string"/>
         <attr name="input_hint" format="reference|string"/>

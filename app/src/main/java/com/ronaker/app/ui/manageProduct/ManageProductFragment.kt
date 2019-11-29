@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +14,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ManageProductFragment : BaseFragment() {
@@ -22,17 +22,22 @@ class ManageProductFragment : BaseFragment() {
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductBinding
     private lateinit var productViewModel: ManageProductViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false)
         productViewModel = ViewModelProviders.of(this).get(ManageProductViewModel::class.java)
 
         binding.viewModel = productViewModel
         productViewModel.activeState.observe(this, Observer { active ->
 
             unregisterActiveListener()
-            binding.activeSwitch.isChecked=active
+            binding.activeSwitch.isChecked = active
             registerActiveListener()
 
         })
@@ -42,10 +47,10 @@ class ManageProductFragment : BaseFragment() {
         })
         productViewModel.retry.observe(this, Observer { loading ->
 
-            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+            loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
-        binding.loading.oClickRetryListener=View.OnClickListener {
+        binding.loading.oClickRetryListener = View.OnClickListener {
 
             fill()
         }
@@ -54,7 +59,10 @@ class ManageProductFragment : BaseFragment() {
 
 
 
-        binding.toolbar.cancelClickListener = View.OnClickListener { (activity as DashboardActivity).backFragment() }
+        binding.toolbar.cancelClickListener = View.OnClickListener {
+
+            if (activity is DashboardActivity) (activity as DashboardActivity).backFragment()
+        }
 
         productViewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null)
@@ -64,7 +72,7 @@ class ManageProductFragment : BaseFragment() {
 
 
         binding.imageLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -75,7 +83,7 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.locationLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -86,7 +94,7 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.nameLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -97,7 +105,7 @@ class ManageProductFragment : BaseFragment() {
         }
 
         binding.priceLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -109,7 +117,7 @@ class ManageProductFragment : BaseFragment() {
 
 
         binding.categoryLayout.setOnClickListener {
-            startActivityMakeScene(context?.let { it1 ->
+            activity?.startActivityMakeScene(context?.let { it1 ->
                 productViewModel.mProduct.suid?.let { it2 ->
                     AddProductActivity.newInstance(
                         it1,
@@ -126,7 +134,7 @@ class ManageProductFragment : BaseFragment() {
             try {
                 val scrollY = binding.scrollView.scrollY
 
-                if (scrollY <= binding.avatarImage.height/2 - binding.toolbar.bottom) {
+                if (scrollY <= binding.avatarImage.height / 2 - binding.toolbar.bottom) {
 
                     binding.toolbar.isTransparent = true
                     binding.toolbar.isBottomLine = false
@@ -139,19 +147,18 @@ class ManageProductFragment : BaseFragment() {
 
                 }
 
-            } catch (ex: Exception ){
+            } catch (ex: Exception) {
 
             }
-        };
+        }
         registerActiveListener()
 
         return binding.root
     }
 
 
-
-    fun registerActiveListener(){
-        binding.activeSwitch.setOnCheckedChangeListener{ _,active->
+    private fun registerActiveListener() {
+        binding.activeSwitch.setOnCheckedChangeListener { _, active ->
 
             productViewModel.updateActiveState(active)
 
@@ -159,7 +166,7 @@ class ManageProductFragment : BaseFragment() {
 
     }
 
-    fun unregisterActiveListener(){
+    private fun unregisterActiveListener() {
         binding.activeSwitch.setOnCheckedChangeListener(null)
     }
 
@@ -170,22 +177,21 @@ class ManageProductFragment : BaseFragment() {
     }
 
 
-    fun fill() {
+    private fun fill() {
 
-           getSuid()?.let { productViewModel.loadProduct(it) }
+        getSuid()?.let { productViewModel.loadProduct(it) }
 
-           getProduct()?.let { productViewModel.loadProduct(it) }
+        getProduct()?.let { productViewModel.loadProduct(it) }
 
     }
 
-    fun getSuid():String?{
-       return  this.arguments?.getString(SUID_KEY)
-    }
-    fun getProduct():Product?{
-        return  this.arguments?.getParcelable(PRODUCT_KEY)
+    private fun getSuid(): String? {
+        return this.arguments?.getString(SUID_KEY)
     }
 
-
+    fun getProduct(): Product? {
+        return this.arguments?.getParcelable(PRODUCT_KEY)
+    }
 
 
     companion object {

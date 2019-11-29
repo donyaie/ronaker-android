@@ -1,31 +1,20 @@
 package com.ronaker.app.base
 
-import android.app.ActivityOptions
-import android.content.Intent
-import android.os.Build
 import androidx.fragment.app.Fragment
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.ronaker.app.General
 
-public abstract class  BaseFragment :Fragment(){
+abstract class BaseFragment : Fragment() {
 
 
-    fun finishSafe(){
+    fun getAnalytics(): FirebaseAnalytics? {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity?.finishAfterTransition();
-        } else activity?.finish();
+        return if (requireActivity().applicationContext is General)
+            (requireActivity().applicationContext as General).analytics
+        else
+            null
     }
 
-
-
-    fun startActivityMakeScene(intent: Intent?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity?.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
-        }else{
-
-            activity?.startActivity(intent)
-        }
-
-    }
 
 
 }

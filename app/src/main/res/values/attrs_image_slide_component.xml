@@ -2,7 +2,7 @@
 <resources>
 
 
-    <declare-styleable name="image_slide_attributes">
+    <declare-styleable name="ImageSlideComponent">
 
 
     </declare-styleable>

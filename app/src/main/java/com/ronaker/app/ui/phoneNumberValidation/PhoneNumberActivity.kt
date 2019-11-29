@@ -17,7 +17,8 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ScreenCalculator
+import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.view.IPagerFragment
 
 
@@ -32,7 +33,7 @@ class PhoneNumberActivity : BaseActivity() {
     private lateinit var verifyFragment: PhoneNumberVerifyFragment
 
     private lateinit var adapter: ViewPagerAdapter
-    private lateinit var screenLibrary: ScreenCalcute
+    private lateinit var screenLibrary: ScreenCalculator
 
 
 
@@ -88,7 +89,7 @@ class PhoneNumberActivity : BaseActivity() {
     private fun init() {
 
 
-        screenLibrary = ScreenCalcute(this)
+        screenLibrary = ScreenCalculator(this)
 
         initViewPager()
         binding.toolbar.showNavigator(false, 0)
@@ -135,14 +136,14 @@ class PhoneNumberActivity : BaseActivity() {
             finishSafe()
 
 
-        if (binding.viewpager.getCurrentItem() > PhoneNumberViewModel.StateEnum.number.position) {
-            binding.viewpager.setCurrentItem(binding.viewpager.getCurrentItem() - 1, true)
+        if (binding.viewpager.currentItem > PhoneNumberViewModel.StateEnum.number.position) {
+            binding.viewpager.setCurrentItem(binding.viewpager.currentItem - 1, true)
         }
 
     }
 
 
-    fun initViewPagerRegister() {
+    private fun initViewPagerRegister() {
         adapter.clear()
         adapter.addFragment(numberFragment)
         adapter.addFragment(verifyFragment)
@@ -150,22 +151,18 @@ class PhoneNumberActivity : BaseActivity() {
 
     }
 
-    override fun onBackPressed() {
-       super.onBackPressed()
-    }
 
-
-    internal fun initViewPager() {
+    private fun initViewPager() {
 
         binding.viewpager.setScrollDurationFactor(2.0)
-        adapter = ViewPagerAdapter(getSupportFragmentManager())
+        adapter = ViewPagerAdapter(supportFragmentManager)
 
         numberFragment = PhoneNumberFragment()
         verifyFragment = PhoneNumberVerifyFragment()
 
 
 
-        binding.viewpager.setAdapter(adapter)
+        binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -175,10 +172,10 @@ class PhoneNumberActivity : BaseActivity() {
             override fun onPageSelected(position: Int) {
 
 
-                loginState = PhoneNumberViewModel.StateEnum.get(position)
+                loginState = PhoneNumberViewModel.StateEnum[position]
 
 
-                AppDebug.Log(TAG, String.format("onSelect:%s", loginState.name))
+                AppDebug.log(TAG, String.format("onSelect:%s", loginState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
 
@@ -196,22 +193,6 @@ class PhoneNumberActivity : BaseActivity() {
 
         KeyboardManager.hideSoftKeyboard(this)
     }
-
-
-
-
-
-
-
-
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-
 
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,

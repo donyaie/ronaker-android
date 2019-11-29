@@ -11,11 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.language.LanguageDialog
-import com.ronaker.app.ui.splash.SplashActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileFragment : BaseFragment() {
@@ -42,23 +41,19 @@ class ProfileFragment : BaseFragment() {
 
         viewModel.logOutAction.observe(this, Observer {
 
-            activity?.let {   startActivityMakeScene(DashboardActivity.newInstance(it) )}
+            activity?.let {   it.startActivityMakeScene(DashboardActivity.newInstance(it) )}
         })
 
 
 
         binding.profileLayout.setOnClickListener {
-            activity?.let {   startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
+            activity?.let {   it.startActivityMakeScene(ProfileEditActivity.newInstance(it) )}
         }
 
 
 
         binding.viewModel = viewModel
 
-        binding.language.setOnClickListener{
-            activity?.let { it1 -> LanguageDialog.showDialog(it1) }
-
-        }
 
         binding.supportLayout.setOnClickListener {
             activity?.let { it1 -> IntentManeger.sendMail(it1,"support@ronaker.com")}
@@ -72,16 +67,9 @@ class ProfileFragment : BaseFragment() {
 
         binding.settingLayout.setOnClickListener{
 
-            activity?.let {   startActivityMakeScene(ProfileSettingActivity.newInstance(it) )}
+            activity?.let {   it.startActivityMakeScene(ProfileSettingActivity.newInstance(it) )}
         }
 
-
-        binding.paymentLayout.setOnClickListener {
-
-
-//            activity?.let { it1 -> IntentManeger.openUrl(it1,"https://ronaker.com/?page_id=7678") }
-
-        }
 
 
         return binding.root

@@ -1,17 +1,20 @@
 package com.ronaker.app.ui.login
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUser
+import com.ronaker.app.utils.AnalyticsManager
+import com.ronaker.app.utils.actionLogin
+import com.ronaker.app.utils.actionSignUp
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel (app: Application): BaseViewModel(app) {
 
-    internal val TAG = LoginViewModel::class.java.name
+    private val TAG = LoginViewModel::class.java.name
 
 
     @Inject
@@ -32,7 +35,7 @@ class LoginViewModel : BaseViewModel() {
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    public var userInfo: User = User()
+    private var userInfo: User = User()
 
 
     var emailError = MutableLiveData<Boolean?>()
@@ -54,7 +57,7 @@ class LoginViewModel : BaseViewModel() {
         companion object {
             operator fun get(position: Int): LoginStateEnum {
                 var state = home
-                for (stateEnum in LoginStateEnum.values()) {
+                for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
                 }
@@ -102,21 +105,19 @@ class LoginViewModel : BaseViewModel() {
     }
 
 
-    fun signin() {
+    private fun signin() {
         signinSubscription = userRepository.loginUser(userInfo).doOnSubscribe { loading.value=true}
             .doOnTerminate {loading.value=false}
             .subscribe { result ->
                 loading.value=false
                 if (result.isSuccess()) {
 
-                    userRepository.saveUserToken(result.data?.token)
-                    result.data?.user?.let { userRepository.saveUserInfo(it.toUser()) }
 
-
+                    getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
                     goNext.value=true
 
                 } else {
-                    errorMessage.value= result.error?.detail
+                    errorMessage.value= result.error?.message
                 }
             }
 
@@ -124,18 +125,16 @@ class LoginViewModel : BaseViewModel() {
 
 
 
-    fun signUp() {
+    private fun signUp() {
         signUpSubscription = userRepository.registerUser(userInfo).doOnSubscribe {loading.value=true }
             .doOnTerminate {loading.value=false}
             .subscribe { result ->
                 loading.value=false
                 if (result.isSuccess()) {
-
-                    userRepository.saveUserToken(result.data?.token)
-                    result.data?.user?.let { userRepository.saveUserInfo(it.toUser()) }
+                    getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
                     goNext.value=true
                 } else {
-                   errorMessage.value= result.error?.detail
+                   errorMessage.value= result.error?.message
                 }
             }
     }
@@ -155,11 +154,6 @@ class LoginViewModel : BaseViewModel() {
 
         actionState.value = LoginActionEnum.register
         viewState.value = LoginStateEnum.email
-    }
-
-
-    init {
-
     }
 
 

@@ -3,7 +3,6 @@ package com.ronaker.app.ui.splash
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,9 +10,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.login.LoginActivity
-import com.ronaker.app.utils.AnimationHelper
-import java.util.*
-import kotlin.concurrent.schedule
 
 
 class SplashActivity : BaseActivity() {
@@ -55,13 +51,10 @@ class SplashActivity : BaseActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     companion object {
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, SplashActivity::class.java)
+            val intent = Intent(context, SplashActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }

@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -11,7 +12,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class AddProductLocationSearchViewModel : BaseViewModel() {
+class AddProductLocationSearchViewModel (app: Application): BaseViewModel(app) {
 
     internal val TAG = AddProductLocationSearchViewModel::class.java.name
 
@@ -61,15 +62,12 @@ class AddProductLocationSearchViewModel : BaseViewModel() {
             .doOnTerminate { }
             .subscribe(
                 { result ->
-                    if (result.predictions != null) {
-
+                    result?.let {
                         dataList.clear()
-                        result.predictions?.let {  dataList.addAll(it.toPlaceList())  }
+                        dataList.addAll(it)
                         listAdapter.notifyDataSetChanged()
-
-                    } else {
-
                     }
+
                 },
                 { error -> error.message }
             )

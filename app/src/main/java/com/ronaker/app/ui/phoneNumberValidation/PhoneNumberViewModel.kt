@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.phoneNumberValidation
 
+import android.app.Application
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -10,9 +11,7 @@ import javax.inject.Inject
 
 
 
-class PhoneNumberViewModel : BaseViewModel() {
-
-    internal val TAG = PhoneNumberViewModel::class.java.name
+class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
@@ -24,6 +23,8 @@ class PhoneNumberViewModel : BaseViewModel() {
     private var resendSubscription: Disposable? = null
 
     private var verifyPhoneSubscription: Disposable? = null
+    val viewState: MutableLiveData<StateEnum> = MutableLiveData()
+
 
 
     val timerVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -31,6 +32,8 @@ class PhoneNumberViewModel : BaseViewModel() {
     val timerValue: MutableLiveData<String> = MutableLiveData()
 
 
+    private var  countDounTimer: CountDownTimer?=null
+    private var mNumber = ""
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -53,7 +56,7 @@ class PhoneNumberViewModel : BaseViewModel() {
         companion object {
             operator fun get(position: Int): StateEnum {
                 var state = number
-                for (stateEnum in StateEnum.values()) {
+                for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
                 }
@@ -62,7 +65,6 @@ class PhoneNumberViewModel : BaseViewModel() {
         }
     }
 
-    var mNumber = ""
 
 
     fun onClickPhoneNext(phone: String) {
@@ -78,7 +80,7 @@ class PhoneNumberViewModel : BaseViewModel() {
                     startTimer()
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -93,14 +95,13 @@ class PhoneNumberViewModel : BaseViewModel() {
                     startTimer()
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
     }
 
-    var  countDounTimer: CountDownTimer?=null
 
-    fun startTimer(){
+    private fun startTimer(){
         timerValue.value="00"
         timerVisibility.value= View.VISIBLE
         resendVisibility.value= View.GONE
@@ -129,19 +130,13 @@ class PhoneNumberViewModel : BaseViewModel() {
                 if (result.isSuccess()) {
                     goNext.value = false
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
     }
 
 
-    val viewState: MutableLiveData<StateEnum> = MutableLiveData()
-
-
-    init {
-
-    }
 
 
     override fun onCleared() {

@@ -7,9 +7,11 @@
               android:padding="16dp"
               android:layout_height="match_parent">
 
-    <LinearLayout  android:minHeight="48dp" android:id="@+id/englishLan" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout  android:minHeight="48dp" android:id="@+id/englishLan" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+        tools:ignore="UseCompoundDrawables">
 
-        <ImageView  android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_united_kingdom"  android:layout_width="30dp" android:layout_height="30dp"/>
+        <ImageView  android:layout_marginEnd="16dp" app:srcCompat="@drawable/ic_united_kingdom"  android:layout_width="30dp" android:layout_height="30dp"
+            android:contentDescription="@string/text_content" />
 
         <TextView android:text="English" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
@@ -19,9 +21,11 @@
 
 
 
-    <LinearLayout android:id="@+id/DutchLan" android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/DutchLan" android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+        tools:ignore="UseCompoundDrawables">
 
-        <ImageView android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_netherlands" android:layout_width="30dp" android:layout_height="30dp"/>
+        <ImageView android:layout_marginEnd="16dp" app:srcCompat="@drawable/ic_netherlands" android:layout_width="30dp" android:layout_height="30dp"
+            android:contentDescription="@string/text_content" />
 
         <TextView android:text="Dutch" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
             tools:ignore="HardcodedText" />
@@ -31,9 +35,11 @@
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
 
-    <LinearLayout android:id="@+id/lithuaniaLan" android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/lithuaniaLan" android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+        tools:ignore="UseCompoundDrawables">
 
-        <ImageView android:layout_marginRight="16dp" app:srcCompat="@drawable/ic_lithuania" android:layout_width="30dp" android:layout_height="30dp"/>
+        <ImageView android:layout_marginEnd="16dp" app:srcCompat="@drawable/ic_lithuania" android:layout_width="30dp" android:layout_height="30dp"
+            android:contentDescription="@string/text_content" />
 
         <TextView android:text="Lithuanian" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
             tools:ignore="HardcodedText" />

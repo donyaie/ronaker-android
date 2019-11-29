@@ -13,10 +13,10 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 
 class OrderFinishActivity : BaseActivity() {
 
-    private val TAG = OrderFinishActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderFinishBinding
     private lateinit var viewModel: OrderFinishViewModel
@@ -29,8 +29,8 @@ class OrderFinishActivity : BaseActivity() {
         var REQUEST_CODE = 353
 
         fun newInstance(context: Context,order: Order?): Intent {
-            var intent = Intent(context, OrderFinishActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, OrderFinishActivity::class.java)
+            val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
             intent.putExtras(boundle)
 
@@ -71,7 +71,7 @@ class OrderFinishActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer { _ ->
+        viewModel.finish.observe(this, Observer {
             setResult(Activity.RESULT_OK)
            finishSafe()
         })
@@ -92,12 +92,11 @@ class OrderFinishActivity : BaseActivity() {
 
 
 
-    fun getOrder():Order?
+    private fun getOrder():Order?
     {
         if ( intent.hasExtra(Order_KEY)) {
-            var value = intent.getParcelableExtra<Order?>(Order_KEY)
 
-            return value
+            return intent.getParcelableExtra<Order?>(Order_KEY)
 
         }
         return null

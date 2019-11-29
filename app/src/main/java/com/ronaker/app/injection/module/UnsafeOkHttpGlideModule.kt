@@ -20,7 +20,7 @@ class UnsafeOkHttpGlideModule : AppGlideModule(){
 
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        val client = SslUtils.getUnsafeOkHttpClient()
+        val client = SslUtils.getUnsafeOkHttpClient(context)
         registry.replace(
             GlideUrl::class.java, InputStream::class.java,
             OkHttpUrlLoader.Factory(client.build())

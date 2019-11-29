@@ -14,15 +14,12 @@ data class Place(
     var latLng: LatLng? = null
 
 
-) {
-
-}
-
+)
 
 fun List<GoogleAutocompleteResponseModel.GoogleAutocompletePredcationResponseModel>.toPlaceList(): List<Place> {
-    var list: ArrayList<Place> = ArrayList()
+    val list: ArrayList<Place> = ArrayList()
     this.forEach {
-        var product = Place(
+        val product = Place(
             it.place_id,
             it.description,
             it.structured_formatting.main_text,
@@ -38,18 +35,16 @@ fun List<GoogleAutocompleteResponseModel.GoogleAutocompletePredcationResponseMod
 
 fun GooglePlaceDetailResponseModel.GooglePlaceResultResponseModel.toPlace(): Place {
 
-    var product = Place(
-        this.place_id,
-        this.name,
-        this.formatted_address,
+
+    return Place(
+        place_id,
+        name,
+        formatted_address,
         null,
-        LatLng(this.geometry.location.lat, this.geometry.location.lng)
+        LatLng(geometry.location.lat, geometry.location.lng)
 
 
     )
-
-
-    return product
 
 }
 
@@ -149,7 +144,7 @@ fun MapGeoCodeResponceModel.converGeoToPlace(): Place? {
 //
 //        }
 
-    this.results?.let {
+    return this.results?.let {
 
         return Place(
             it[0].place_id,
@@ -162,7 +157,6 @@ fun MapGeoCodeResponceModel.converGeoToPlace(): Place? {
     }
 
 
-    return null
 
 }
 

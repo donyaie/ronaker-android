@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 
 class SearchActivity : BaseActivity() {
 
@@ -21,13 +22,13 @@ class SearchActivity : BaseActivity() {
 
 
     companion object {
-        var SUID_KEY = "suid"
-        val ResultCode = 333
-        var Search_KEY = "searchValue"
+        const val SUID_KEY = "suid"
+        const val ResultCode = 333
+        const val Search_KEY = "searchValue"
 
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, SearchActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, SearchActivity::class.java)
+            val boundle = Bundle()
 //            boundle.putString(SUID_KEY, suid)
             intent.putExtras(boundle)
 
@@ -75,17 +76,10 @@ class SearchActivity : BaseActivity() {
 
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                var intent = Intent()
-
-
+                val intent = Intent()
                 val value = binding.searchEdit.text.toString()
-
-
-
                 intent.putExtra(Search_KEY, value)
-
                 setResult(0, intent)
-
                 finishSafe()
                 true
             } else {
@@ -103,20 +97,11 @@ class SearchActivity : BaseActivity() {
     }
 
 
-    fun getSearchValue(): String? {
+   private fun getSearchValue(): String? {
         if (intent.hasExtra(Search_KEY)) {
-            var value = intent.getStringExtra(Search_KEY)
-
-            return value
-
-
+            return intent.getStringExtra(Search_KEY)
         }
         return null
-    }
-
-
-    override fun onBackPressed() {
-       super.onBackPressed()
     }
 
 

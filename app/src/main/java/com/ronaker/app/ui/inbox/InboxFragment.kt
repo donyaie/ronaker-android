@@ -31,8 +31,6 @@ class InboxFragment : BaseFragment() {
             if (errorMessage != null) {
                 Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
 //                binding.loading.showRetry()
-            } else {
-//                binding.loading.hideRetry()
             }
         })
 

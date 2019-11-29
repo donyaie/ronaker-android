@@ -21,7 +21,7 @@ object KeyboardManager {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 
 
-        AppDebug.Log(TAG, "hideSoftKeyboardView")
+        AppDebug.log(TAG, "hideSoftKeyboardView")
 
     }
 
@@ -30,7 +30,7 @@ object KeyboardManager {
             context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         view.requestFocus()
         inputMethodManager.showSoftInput(view, 0)
-        AppDebug.Log(TAG, "showSoftKeyboardView")
+        AppDebug.log(TAG, "showSoftKeyboardView")
     }
 
 
@@ -41,14 +41,8 @@ object KeyboardManager {
         if (view != null) {
             val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
-        } else {
-//            var imm =
-//                activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager;
-//            if (imm.isActive)
-//                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); // hide
         }
-
-        AppDebug.Log(TAG, "hideSoftKeyboard")
+        AppDebug.log(TAG, "hideSoftKeyboard")
 
     }
 
@@ -62,7 +56,7 @@ object KeyboardManager {
             imm.hideSoftInputFromWindow(view, 0)
         }
 
-        AppDebug.Log(TAG, "hideSoftKeyboard")
+        AppDebug.log(TAG, "hideSoftKeyboard")
 
     }
 
@@ -74,6 +68,6 @@ object KeyboardManager {
             InputMethodManager.HIDE_IMPLICIT_ONLY
         ) // show
 
-        AppDebug.Log(TAG, "showSoftKeyboard")
+        AppDebug.log(TAG, "showSoftKeyboard")
     }
 }

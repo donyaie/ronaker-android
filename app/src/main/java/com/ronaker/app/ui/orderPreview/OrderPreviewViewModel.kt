@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orderPreview
 
 
+import android.app.Application
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +18,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel : BaseViewModel() {
+class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -72,7 +73,7 @@ class OrderPreviewViewModel : BaseViewModel() {
 
     val startRentingVisibility: MutableLiveData<Int> = MutableLiveData()
 
-    lateinit var mOrder: Order
+    private lateinit var mOrder: Order
 
 
     private var subscription: Disposable? = null
@@ -84,9 +85,6 @@ class OrderPreviewViewModel : BaseViewModel() {
     private var finishSubscription: Disposable? = null
 
 
-    init {
-
-    }
 
 
     override fun onCleared() {
@@ -138,7 +136,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                 order.productOwner?.let {
 
                     userName.value = it.first_name + " " + it.last_name
-                    userImage.value= BASE_URL+it.avatar
+                    it.avatar?.let {image-> userImage.value= BASE_URL+image }
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
                     userInfoVisibility.value = View.GONE
@@ -152,10 +150,6 @@ class OrderPreviewViewModel : BaseViewModel() {
 
 
                 when (Order.OrderStatusEnum[order.status]) {
-
-
-
-
 
 
                     Order.OrderStatusEnum.Accepted -> {
@@ -210,7 +204,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                 order.orderUser?.let {
 
                     userName.value = it.first_name + " " + it.last_name
-                    userImage.value= BASE_URL+it.avatar
+                    it.avatar?.let { image-> userImage.value= BASE_URL+image }
 
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
@@ -230,7 +224,7 @@ class OrderPreviewViewModel : BaseViewModel() {
                         startRentingVisibility.value = View.GONE
                         acceptVisibility.value = View.GONE
                         declineVisibility.value = View.GONE
-                        finishVisibility.value = View.VISIBLE
+                        finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
                     }
                     Order.OrderStatusEnum.Started -> {
@@ -359,7 +353,7 @@ class OrderPreviewViewModel : BaseViewModel() {
 
                 } else {
 
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
     }

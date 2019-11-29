@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.addProduct
 
-import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,13 +9,15 @@ import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterProductAddImageBinding
 import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
 import com.ronaker.app.model.Product
-class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
+import com.ronaker.app.utils.extension.getParentActivity
+
+class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private  var productList: ArrayList<Product.ProductImage> = ArrayList()
 
 
-    val EmptyType = 0;
-    val FullType = 1;
+    private val EmptyType = 0
+    private val FullType = 1
 
 
     init {
@@ -34,7 +35,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
                     parent,
                     false
                 )
-            return ViewHolder(binding, baseViewModel,parent.context)
+            return ViewHolder(binding, baseViewModel)
         } else {
             val binding: AdapterProductAddImageEmptyBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -68,11 +69,11 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        var item = productList.get(position)
-        if (item.url == null && item.uri == null)
-            return EmptyType
+        val item = productList[position]
+        return if (item.url == null && item.uri == null)
+            EmptyType
         else
-            return FullType
+            FullType
     }
 
     fun addLocalImage(uri: Uri?) {
@@ -104,7 +105,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     fun getimages(): ArrayList<Product.ProductImage> {
 
-        var list= ArrayList<Product.ProductImage>()
+        val list= ArrayList<Product.ProductImage>()
 
         if (productList.size <= 1)
             return list
@@ -119,15 +120,15 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     class ViewHolder(
         private val binding: AdapterProductAddImageBinding,
-        val baseViewModel: AddProductViewModel ,var context: Context
+        private val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = AddProductImageAdapterViewModel()
+        private val viewModel = AddProductImageAdapterViewModel(baseViewModel.getApplication())
 
         fun bind(product: Product.ProductImage) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
-            viewModel.bind(product, context)
+            viewModel.bind(product,binding.root.getParentActivity() )
 
 
         }
@@ -137,7 +138,7 @@ class AddProductImageAdapter(val baseViewModel: AddProductViewModel) :
 
     class EmptyViewHolder(
         private val binding: AdapterProductAddImageEmptyBinding,
-        val baseViewModel: AddProductViewModel
+        private  val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
 

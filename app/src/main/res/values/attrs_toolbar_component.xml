@@ -2,7 +2,7 @@
 <resources>
 
 
-    <declare-styleable name="toolbar_component_attributes">
+    <declare-styleable name="ToolbarComponent">
 
         <attr name="toolbar_component_title" format="reference|string"/>
         <attr name="toolbar_component_action_text" format="reference|string"/>

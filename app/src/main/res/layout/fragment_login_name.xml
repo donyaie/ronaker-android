@@ -1,83 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.login.LoginViewModel"/>
+            name="viewModel"
+            type="com.ronaker.app.ui.login.LoginViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/touch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
-                android:focusable="true"
-                app:layout_constraintTop_toTopOf="parent"
-                android:focusableInTouchMode="true"
-                android:layout_width="match_parent"
-                android:layout_height="1px"/>
-        <ScrollView android:fillViewport="true" android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            android:layout_height="1px"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UselessLeaf" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/touch"
+            app:layout_constraintBottom_toTopOf="@id/next_button"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               >
+
+                <TextView
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
-                    android:paddingBottom="80dp"
-                    android:layout_height="wrap_content">
-                <TextView android:layout_width="match_parent"
-                          app:layout_constraintTop_toTopOf="parent"
-                          android:layout_marginTop="24dp"
-                          android:layout_marginLeft="24dp"
-                          android:layout_marginRight="24dp"
-                          android:text="@string/title_and_what_s_your_name"
-                          android:textAppearance="@style/TextAppearance.Heading.1"
-                          android:gravity="left"
-                          android:id="@+id/title"
-                          android:textColor="@color/colorTextLight"
-                          android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="start"
+                    android:text="@string/title_and_what_s_your_name"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextLight"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.ronaker.app.utils.view.InputComponent
-                        android:layout_marginTop="40dp"
-                        android:layout_marginRight="24dp"
-                        android:inputType="textPersonName"
-                        android:imeOptions="actionNext"
-                        android:id="@+id/name_input"
+                    android:id="@+id/name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="40dp"
 
-                        android:autofillHints="given-name"
-                        app:input_transparent="true"
+                    android:layout_marginRight="24dp"
+                    android:autofillHints="given-name"
 
-                        app:input_title="@string/first_name_title"
-                        app:input_hint="@string/first_name_hint"
-                        app:input_regex="^.{2,}$"
-                        android:layout_marginLeft="24dp"
-                        app:layout_constraintTop_toBottomOf="@id/title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    app:input_hint="@string/first_name_hint"
+                    app:input_regex="^.{2,}$"
+                    app:input_title="@string/first_name_title"
+                    app:input_transparent="true"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:ignore="UnusedAttribute" />
 
                 <com.ronaker.app.utils.view.InputComponent
-                        android:layout_marginRight="24dp"
-                        android:inputType="textPersonName"
-                        android:imeOptions="actionNext"
-                        android:id="@+id/lastName_input"
+                    android:id="@+id/lastName_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
 
-                        android:autofillHints="family-name"
-                        app:input_transparent="true"
-                        app:input_title="@string/last_name_title"
-                        app:input_hint="@string/last_name_hint"
-                        app:input_regex="^.{2,}$"
-                        android:layout_marginLeft="24dp"
-                        app:layout_constraintTop_toBottomOf="@id/name_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:layout_marginRight="24dp"
+                    android:autofillHints="family-name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    app:input_hint="@string/last_name_hint"
+                    app:input_regex="^.{2,}$"
+                    app:input_title="@string/last_name_title"
+                    app:input_transparent="true"
+                    app:layout_constraintTop_toBottomOf="@id/name_input"
+                    tools:ignore="UnusedAttribute" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <ImageButton
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:id="@+id/next_button"
-                android:onClick="@{()->viewModel.onClickLoginName(nameInput.getText().toString(),nameInput.checkValid(),lastNameInput.getText().toString(),lastNameInput.checkValid())}"
+            android:id="@+id/next_button"
+            style="@style/Button.circle.accent"
+            android:contentDescription="@string/title_button_next"
+            android:onClick="@{()->viewModel.onClickLoginName(nameInput.getText().toString(),nameInput.checkValid(),lastNameInput.getText().toString(),lastNameInput.checkValid())}"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-                style="@style/Button.circle.accent"/>
+            app:layout_constraintRight_toRightOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

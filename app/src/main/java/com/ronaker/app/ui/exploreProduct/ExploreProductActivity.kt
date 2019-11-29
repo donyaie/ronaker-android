@@ -21,8 +21,9 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.DEFULT_LOCATION
+import com.ronaker.app.utils.*
+import com.ronaker.app.utils.extension.finishSafe
+import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import java.util.*
 
 
@@ -32,33 +33,32 @@ class ExploreProductActivity : BaseActivity() {
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
 
-    lateinit var googleMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
 
     companion object {
 
+        const val REQUEST_CODE = 345
+        const val SUID_KEY = "suid"
+        const val PRODUCT_KEY = "product"
+        const val IMAGE_TRANSITION_KEY = "image_transition"
 
-        var REQUEST_CODE = 345
-
-        var SUID_KEY = "suid"
-        var PRODUCT_KEY = "product"
-        var IMAGE_TRANSITION_KEY = "image_transition"
         private val TAG = ExploreProductActivity::class.java.simpleName
 
         fun isHavePending(product: Product): Boolean {
-             product.suid?.let { return isTAGInStack(TAG+it) }?:run { return false }
+            product.suid?.let { return isTAGInStack(TAG + it) } ?: run { return false }
         }
 
         fun newInstance(context: Context, suid: String): Intent {
-            var intent = Intent(context, ExploreProductActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
             intent.putExtras(boundle)
             return intent
         }
 
         fun newInstance(context: Context, product: Product, transitionName: String?): Intent {
-            var intent = Intent(context, ExploreProductActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
             boundle.putString(IMAGE_TRANSITION_KEY, transitionName)
             intent.putExtras(boundle)
@@ -70,7 +70,7 @@ class ExploreProductActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AnimationHelper.setAnimateTransition(this)
         super.onCreate(savedInstanceState)
-        activityTag = TAG+getCurrentSUID()
+        activityTag = TAG + getCurrentSUID()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
@@ -80,7 +80,7 @@ class ExploreProductActivity : BaseActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
             val imageTransitionName = getImageTransition()
-            binding.avatarSlide.setTransitionName(imageTransitionName)
+            binding.avatarSlide.transitionName = imageTransitionName
         }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -95,6 +95,7 @@ class ExploreProductActivity : BaseActivity() {
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -112,6 +113,19 @@ class ExploreProductActivity : BaseActivity() {
         }
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
+
+
+
+        binding.toolbar.action1BouttonClickListener = View.OnClickListener {
+
+            getCurrentSUID()?.let {
+                getAnalytics()?.actionShareProduct(it)
+                IntentManeger.shareTextUrl(this, "Share Product:", SHARE_URL + it)
+            }
+
+
+        }
+        binding.toolbar.action2BouttonClickListener = View.OnClickListener { }
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
@@ -134,17 +148,17 @@ class ExploreProductActivity : BaseActivity() {
             } catch (ex: Exception) {
 
             }
-        };
+        }
 
 
 
-        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
-            googleMap = it
+        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync { map ->
+            googleMap = map
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                     this, R.raw.style_json
                 )
-            );
+            )
 
             googleMap.uiSettings.setAllGesturesEnabled(false)
 
@@ -172,7 +186,7 @@ class ExploreProductActivity : BaseActivity() {
                     CheckoutCalendarActivity.newInstance(
                         this,
                         it
-                    ),CheckoutCalendarActivity.REQUEST_CODE
+                    ), CheckoutCalendarActivity.REQUEST_CODE
                 )
 
             }
@@ -187,9 +201,24 @@ class ExploreProductActivity : BaseActivity() {
 
         if (isFistStart()) {
 
-            getSUID()?.let { viewModel.loadProduct(it) }
 
-            getProduct()?.let { viewModel.loadProduct(it) }
+            getSUID()?.let {
+
+                binding.loading.visibility = View.VISIBLE
+                binding.loading.showLoading()
+                viewModel.loadProduct(it)
+
+            }
+
+            getProduct()?.let {
+
+                binding.loading.visibility = View.GONE
+                binding.loading.hideLoading()
+                viewModel.loadProduct(it)
+
+            }
+
+
 
 
             Handler().postDelayed({
@@ -204,7 +233,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    fun addMarker(latLng: LatLng) {
+    private fun addMarker(latLng: LatLng) {
         if (::googleMap.isInitialized) {
             googleMap.clear()
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
@@ -224,7 +253,7 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    fun getSUID(): String? {
+    private fun getSUID(): String? {
         return if (intent.hasExtra(SUID_KEY)) {
             intent.getStringExtra(SUID_KEY)
         } else {
@@ -233,19 +262,23 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    fun getCurrentSUID(): String? {
-        return if (intent.hasExtra(SUID_KEY)) {
-            intent.getStringExtra(SUID_KEY)
-        } else if (intent.hasExtra(PRODUCT_KEY)) {
-            var p = intent.getParcelableExtra(PRODUCT_KEY) as Product?
-            return p?.suid
-        } else {
-            null
+    private fun getCurrentSUID(): String? {
+        return when {
+            intent.hasExtra(SUID_KEY) -> {
+                intent.getStringExtra(SUID_KEY)
+            }
+            intent.hasExtra(PRODUCT_KEY) -> {
+                val p = intent.getParcelableExtra(PRODUCT_KEY) as Product?
+                return p?.suid
+            }
+            else -> {
+                null
+            }
         }
     }
 
 
-    fun getImageTransition(): String? {
+    private fun getImageTransition(): String? {
         return if (intent.hasExtra(IMAGE_TRANSITION_KEY)) {
             intent.getStringExtra(IMAGE_TRANSITION_KEY)
         } else {
@@ -262,36 +295,38 @@ class ExploreProductActivity : BaseActivity() {
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed();
-    }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
-        when(requestCode){
+        when (requestCode) {
 
-            CheckoutCalendarActivity.REQUEST_CODE->{
+            CheckoutCalendarActivity.REQUEST_CODE -> {
                 data?.let {
 
-                    if(resultCode== Activity.RESULT_OK){
+                    if (resultCode == Activity.RESULT_OK) {
 
-                        var start=  Date(data.getLongExtra( CheckoutCalendarActivity.STARTDATE_KEY,-1))
-                        var end=  Date(data.getLongExtra( CheckoutCalendarActivity.ENDDATE_KEY,-1))
+                        val start =
+                            Date(data.getLongExtra(CheckoutCalendarActivity.STARTDATE_KEY, -1))
+                        val end = Date(data.getLongExtra(CheckoutCalendarActivity.ENDDATE_KEY, -1))
 
 
                         Handler().postDelayed({
-                            startActivityMakeSceneForResult(OrderMessageActivity.newInstance(this,getProduct(),start,end),OrderMessageActivity.REQUEST_CODE)
-                        },100)
+                            startActivityMakeSceneForResult(
+                                OrderMessageActivity.newInstance(
+                                    this,
+                                    getProduct(),
+                                    start,
+                                    end
+                                ), OrderMessageActivity.REQUEST_CODE
+                            )
+                        }, 100)
                     }
                 }
             }
 
 
-
-            OrderMessageActivity.REQUEST_CODE->{
-                if(resultCode== Activity.RESULT_OK) {
+            OrderMessageActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
 
                     setResult(Activity.RESULT_OK)
                     finishSafe()
@@ -299,7 +334,6 @@ class ExploreProductActivity : BaseActivity() {
 
 
             }
-
 
 
         }

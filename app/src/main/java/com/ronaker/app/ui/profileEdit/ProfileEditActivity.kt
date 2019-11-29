@@ -15,11 +15,12 @@ import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.setEndDrawableRes
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileEditActivity : BaseActivity() {
 
-    private val TAG = ProfileEditActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileEditBinding
     private lateinit var viewModel: ProfileEditViewModel
@@ -27,8 +28,8 @@ class ProfileEditActivity : BaseActivity() {
 
     companion object {
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, ProfileEditActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ProfileEditActivity::class.java)
+            val boundle = Bundle()
             intent.putExtras(boundle)
 
             return intent
@@ -81,51 +82,53 @@ class ProfileEditActivity : BaseActivity() {
 
         viewModel.imageComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.imageText.setText(R.string.title_add_profile_image_edit)
-                binding.imageImage.setImageResource(R.drawable.ic_complete)
+                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
+                binding.imageLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else {
 
-                binding.imageText.setText(R.string.title_add_profile_image)
-                binding.imageImage.setImageResource(R.drawable.ic_chevron_right)
+                binding.imageLayout.setText(R.string.title_add_profile_image)
+                binding.imageLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
             }
         })
 
         viewModel.signComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.signImage.setImageResource(R.drawable.ic_complete)
+
+                binding.signLayout.setEndDrawableRes(R.drawable.ic_complete)
+
             } else {
-                binding.signImage.setImageResource(R.drawable.ic_chevron_right)
+                binding.signLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
             }
         })
 
 
         viewModel.phoneComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.phoneText.setText(R.string.title_add_and_verify_phone_number_edit)
-                binding.phoneImage.setImageResource(R.drawable.ic_complete)
+                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number_edit)
+                binding.phoneLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else {
-                binding.phoneText.setText(R.string.title_add_and_verify_phone_number)
-                binding.phoneImage.setImageResource(R.drawable.ic_chevron_right)
+                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number)
+                binding.phoneLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
             }
         })
 
 
         viewModel.identityComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.identityImage.setImageResource(R.drawable.ic_complete)
+                binding.identityLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else
-                binding.identityImage.setImageResource(R.drawable.ic_chevron_right)
+                binding.identityLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
         })
 
         viewModel.peymentComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.paymentImage.setImageResource(R.drawable.ic_complete)
+                binding.paymentLayout.setEndDrawableRes(R.drawable.ic_complete)
 
-                binding.paymentText.setText(R.string.title_add_a_payment_method_edit)
+                binding.paymentLayout.setText(R.string.title_add_a_payment_method_edit)
             } else {
-                binding.paymentImage.setImageResource(R.drawable.ic_chevron_right)
+                binding.paymentLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
 
-                binding.paymentText.setText(R.string.title_add_a_payment_method)
+                binding.paymentLayout.setText(R.string.title_add_a_payment_method)
             }
         })
 
@@ -176,21 +179,12 @@ class ProfileEditActivity : BaseActivity() {
     override fun onStart() {
 
         super.onStart()
-//
-//        if (isFistStart()) {
-
         viewModel.loadData()
 
 
-//        }
-
-
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed();
-    }
 
 
 }

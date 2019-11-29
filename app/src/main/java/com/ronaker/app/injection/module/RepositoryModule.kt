@@ -1,10 +1,11 @@
 package com.ronaker.app.injection.module
 
+import android.app.Application
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
-import com.ronaker.app.General
-import com.ronaker.app.base.PreferencesProvider
+import com.ronaker.app.R
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.*
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
@@ -12,13 +13,13 @@ import com.ronaker.app.utils.GOOGLE_URL
 import com.ronaker.app.utils.SslUtils
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 /**
  * Module which provides all required dependencies about Repository
@@ -26,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
-object RepositoryModule {
+ class RepositoryModule(private val app: Application) {
 
 
     /**
@@ -35,8 +36,7 @@ object RepositoryModule {
      * @return the User service implementation.
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
     }
@@ -48,8 +48,7 @@ object RepositoryModule {
      * @return the User service implementation.
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideCategoryApi(retrofit: Retrofit): CategoryApi {
         return retrofit.create(CategoryApi::class.java)
     }
@@ -61,8 +60,7 @@ object RepositoryModule {
      * @return the Order service implementation.
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideOrderApi(retrofit: Retrofit): OrderApi {
         return retrofit.create(OrderApi::class.java)
     }
@@ -74,8 +72,7 @@ object RepositoryModule {
      * @return the User service implementation.
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideContentApi(retrofit: Retrofit): ContentApi {
         return retrofit.create(ContentApi::class.java)
     }
@@ -87,15 +84,13 @@ object RepositoryModule {
      * @return the Product service implementation.
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideProductApi(retrofit: Retrofit): ProductApi {
         return retrofit.create(ProductApi::class.java)
     }
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideGoogleMapApi(): GoogleMapApi {
         val client = OkHttpClient().newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -105,7 +100,7 @@ object RepositoryModule {
             .build()
 
 
-        var retrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(GOOGLE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
@@ -118,61 +113,53 @@ object RepositoryModule {
     }
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideUserRepository(
         userApi: UserApi,
         preferencesProvider: PreferencesProvider
     ): UserRepository {
-        return UserRepository(userApi, preferencesProvider)
+
+        return DefaultUserRepository(userApi, preferencesProvider)
     }
 
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideContentRepository(api: ContentApi): ContentRepository {
 
-        return ContentRepository(api)
+        return DefaultContentRepository(api)
     }
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideProductRepository(
-        productApi: ProductApi,
-        preferencesProvider: PreferencesProvider
+        productApi: ProductApi
     ): ProductRepository {
-        return ProductRepository(productApi, preferencesProvider)
+        return DefaultProductRepository(productApi)
     }
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideCategoryRepository(
-        api: CategoryApi,
-        preferencesProvider: PreferencesProvider
+        api: CategoryApi
     ): CategoryRepository {
-        return CategoryRepository(api, preferencesProvider)
+        return DefaultCategoryRepository(api)
     }
 
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideOrderRepository(
-        api: OrderApi,
-        preferencesProvider: PreferencesProvider
+        api: OrderApi
     ): OrderRepository {
-        return OrderRepository(api, preferencesProvider)
+        return DefaultOrderRepository(api)
     }
 
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
-        return GoogleMapRepository(api,context)
+        return DefaultGoogleMapRepository(api, context.getString(R.string.google_api_key_me))
     }
 
 
@@ -181,9 +168,8 @@ object RepositoryModule {
      * @return the Retrofit object
      */
     @Provides
-    @Reusable
-    @JvmStatic
-    internal fun provideRetrofitInterface(): Retrofit {
+    @Singleton
+    internal fun provideRetrofitInterface(context: Context): Retrofit {
         val JSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
 
         val GSON = GsonBuilder()
@@ -192,7 +178,7 @@ object RepositoryModule {
             .create()
 
 
-        val clientBuilder = SslUtils.getUnsafeOkHttpClient()
+        val clientBuilder = SslUtils.getUnsafeOkHttpClient(context)
         clientBuilder.addInterceptor(HttpLoggingInterceptor().apply {
             level =
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
@@ -202,7 +188,7 @@ object RepositoryModule {
 //            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
 
 
-        val client = clientBuilder.build();
+        val client = clientBuilder.build()
 
 
 
@@ -222,8 +208,7 @@ object RepositoryModule {
      * @return the Retrofit object
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun providePreferencesInterface(context: Context): PreferencesProvider {
 
         return PreferencesProvider(context)
@@ -235,11 +220,10 @@ object RepositoryModule {
      * @return the Context object
      */
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     internal fun provideContext(): Context {
 
-        return General.context
+        return app
     }
 
 

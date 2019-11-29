@@ -1,150 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel"/>
+            name="viewModel"
+            type="com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ScrollView android:layout_width="match_parent" android:fillViewport="true" android:orientation="vertical"
-                    android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="80dp">
+
+                <TextView
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
-                    android:paddingBottom="80dp"
-                    android:layout_height="wrap_content">
-                <TextView android:layout_width="match_parent"
-                          app:layout_constraintTop_toTopOf="parent"
-                          android:layout_marginTop="24dp"
-                          android:layout_marginLeft="24dp"
-                          android:layout_marginRight="24dp"
-                          android:text="@string/title_verify_your_phone"
-                          android:textAppearance="@style/TextAppearance.Heading.1"
-                          android:gravity="left"
-                          android:id="@+id/title"
-                          android:textColor="@color/colorTextDark"
-                          android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="start"
+                    android:text="@string/title_verify_your_phone"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView android:layout_width="match_parent"
-                          android:layout_marginLeft="24dp"
-                          android:lines="2"
-                          android:textColor="@color/colorTextDark"
-                          android:textAppearance="@style/TextAppearance.Medium.Regular"
-                          android:layout_marginTop="16dp"
-                          android:text="@string/title_please_enter_the_code_we_texted_to_your_number"
-                          android:layout_marginRight="24dp"
-                          android:id="@+id/description"
-                          app:layout_constraintTop_toBottomOf="@id/title"
-                          android:layout_height="wrap_content"/>
-
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:lines="2"
+                    android:text="@string/title_please_enter_the_code_we_texted_to_your_number"
+                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toBottomOf="@id/title" />
 
 
                 <com.alimuzaffar.lib.pin.PinEntryEditText
-                        app:layout_constraintTop_toBottomOf="@id/description"
-                        android:id="@+id/pin_editText"
-                        android:layout_marginTop="80dp"
-                        android:layout_width="200dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:layout_marginLeft="24dp"
-                        android:digits="1234567890"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:textColor="@color/colorTextDark"
-                        android:textIsSelectable="false"
-                        android:textAppearance="@style/TextAppearance.Large.SB"
-                        android:textSize="@dimen/text_size_large"
-                        app:pinAnimationType="popIn"
-                        app:pinCharacterSpacing="5dp"
-                        app:pinLineColors="@color/color_verify_pin"
-                        app:pinLineStroke="1dp"
-                        app:pinLineStrokeSelected="1dp"
+                    android:id="@+id/pin_editText"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="80dp"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
+                    android:textColor="@color/colorTextDark"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/text_size_large"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description"
+                    app:pinAnimationType="popIn"
+                    app:pinCharacterSpacing="5dp"
+                    app:pinLineColors="@color/color_verify_pin"
+                    app:pinLineStroke="1dp"
+                    app:pinLineStrokeSelected="1dp"
 
-                />
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout app:layout_constraintBottom_toBottomOf="parent"
-                                                           android:layout_width="match_parent"
-                                                           android:layout_height="56dp">
-            <RelativeLayout app:layout_constraintTop_toTopOf="parent" android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorPlatinGrey"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView app:layout_constraintLeft_toLeftOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      android:text="00"
-                      app:mutableText="@{viewModel.getTimerValue()}"
-                      android:layout_marginLeft="24dp"
-                      android:textAppearance="@style/TextAppearance.Large.Regular"
-                      android:id="@+id/timer_text"
-                      android:textColor="@color/colorTextDark"
-                      app:mutableVisibility="@{viewModel.getTimerVisibility()}"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                    tools:ignore="HardcodedText" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPlatinGrey"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView app:layout_constraintLeft_toRightOf="@id/timer_text"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      android:text="@string/title_seconds_to_resend"
-                      android:id="@+id/timer_title"
+            <TextView
+                android:id="@+id/timer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="00"
+                android:textAppearance="@style/TextAppearance.Large.Regular"
+                android:textColor="@color/colorTextDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableText="@{viewModel.getTimerValue()}"
+                app:mutableVisibility="@{viewModel.getTimerVisibility()}"
+                tools:ignore="HardcodedText" />
 
-                      app:mutableVisibility="@{viewModel.getTimerVisibility()}"
-                      android:textColor="@color/colorTextDark"
-                      android:layout_marginLeft="8dp"
-                      android:textAppearance="@style/TextAppearance.Medium.Light"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/timer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/title_seconds_to_resend"
+
+                android:textAppearance="@style/TextAppearance.Medium.Light"
+                android:textColor="@color/colorTextDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/timer_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.getTimerVisibility()}" />
 
 
-            <TextView app:layout_constraintLeft_toLeftOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      android:text="@string/title_did_not_get_the_code_yet"
-                      android:layout_marginLeft="24dp"
-                      android:visibility="gone"
-                      android:textAppearance="@style/TextAppearance.Medium.Light"
-                      android:id="@+id/resend_title"
-                      android:layout_width="wrap_content"
-                      app:mutableVisibility="@{viewModel.getResendVisibility()}"
-                      android:textColor="@color/colorTextDark"
-                      android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/resend_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@string/title_did_not_get_the_code_yet"
+                android:textAppearance="@style/TextAppearance.Medium.Light"
+                android:textColor="@color/colorTextDark"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.getResendVisibility()}" />
 
-            <TextView app:layout_constraintLeft_toRightOf="@id/resend_title"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      android:text="@string/title_resend"
-                      android:visibility="gone"
-                      android:textColor="@color/colorNavy"
-                       android:onClick="@{()->viewModel.resend()}"
+            <TextView
+                android:id="@+id/resend_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:onClick="@{()->viewModel.resend()}"
+                android:text="@string/title_resend"
+                android:textAppearance="@style/TextAppearance.Medium.SB"
 
-                      app:mutableVisibility="@{viewModel.getResendVisibility()}"
-                      android:id="@+id/resend_text"
-                      android:layout_marginLeft="8dp"
-                      android:textAppearance="@style/TextAppearance.Medium.SB"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
+                android:textColor="@color/colorNavy"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/resend_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.getResendVisibility()}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <ImageButton
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="24dp"
-                android:layout_marginBottom="16dp"
-                android:id="@+id/next_button"
-                android:onClick="@{()->viewModel.onClickValidNext(pinEditText.getText().toString())}"
 
-                style="@style/Button.circle.accent"/>
+        <ImageButton
+            android:id="@+id/next_button"
+            style="@style/Button.circle.accent"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/text_content"
+            android:onClick="@{()->viewModel.onClickValidNext(pinEditText.getText().toString())}"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintRight_toRightOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

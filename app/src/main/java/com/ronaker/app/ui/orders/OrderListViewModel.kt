@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.orders
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -8,11 +9,10 @@ import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
-import com.ronaker.app.model.toOrderList
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderListViewModel : BaseViewModel() {
+class OrderListViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -29,8 +29,8 @@ class OrderListViewModel : BaseViewModel() {
     var orderRepository: OrderRepository
 
 
-    internal var page = 0
-    internal var hasNextPage = true
+    private var page = 0
+    private var hasNextPage = true
 
 
     var dataList: ArrayList<Order> = ArrayList()
@@ -45,7 +45,7 @@ class OrderListViewModel : BaseViewModel() {
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-    var mFilter: String? = null
+    private var mFilter: String? = null
     private var subscription: Disposable? = null
 
     init {
@@ -78,20 +78,12 @@ class OrderListViewModel : BaseViewModel() {
             .subscribe { result ->
                 if (result.isSuccess()) {
                     if ((result.data?.results?.size ?: 0) > 0) {
-
                         emptyVisibility.value = View.GONE
 
-
-                        result.data?.results?.toOrderList()?.let {
-
+                        result.data?.results?.let {
                             dataList.addAll(it)
-
                             productListAdapter.notifyDataSetChanged()
-
                         }
-
-
-
 
                         if (result.data?.next == null)
                             hasNextPage = false
@@ -107,7 +99,7 @@ class OrderListViewModel : BaseViewModel() {
                     }
                 } else {
 
-                    retry.value = result.error?.detail
+                    retry.value = result.error?.message
                 }
             }
 

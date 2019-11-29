@@ -4,10 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
-import android.view.View
 import android.widget.RelativeLayout
 import com.ronaker.app.R
-import com.ronaker.app.utils.ScreenCalcute
 
 class StatusBarSizeView : RelativeLayout {
 
@@ -72,7 +70,7 @@ class StatusBarSizeView : RelativeLayout {
         }
 
         // apply the size
-        postDelayed(Runnable {
+        postDelayed({
             applyHeight(heightSize)
         }, 0)
     }

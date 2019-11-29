@@ -1,8 +1,8 @@
 package com.ronaker.app.ui.profileSetting
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -15,17 +15,14 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
-import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
-import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
-import com.ronaker.app.ui.profileImage.ProfileImageActivity
-import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileSettingActivity : BaseActivity() {
 
-    private val TAG = ProfileSettingActivity::class.java.simpleName
+//    private val TAG = ProfileSettingActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileSettingBinding
     private lateinit var viewModel: ProfileSettingViewModel
@@ -33,8 +30,8 @@ class ProfileSettingActivity : BaseActivity() {
 
     companion object {
         fun newInstance(context: Context): Intent {
-            var intent = Intent(context, ProfileSettingActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, ProfileSettingActivity::class.java)
+            val boundle = Bundle()
             intent.putExtras(boundle)
 
             return intent
@@ -43,6 +40,7 @@ class ProfileSettingActivity : BaseActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setSlideTransition(this)
@@ -109,7 +107,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        binding.versionText.text="--Version V${BuildConfig.VERSION_NAME}--"
+        binding.versionText.text = "--Version V${BuildConfig.VERSION_NAME}--"
 
 
 
@@ -133,7 +131,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
     private fun showLogoutDialog() {
-        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage(getString(R.string.text_are_you_sure))
         builder.setPositiveButton(
             getString(android.R.string.ok)
@@ -145,11 +143,6 @@ class ProfileSettingActivity : BaseActivity() {
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }
         builder.show()
-    }
-
-
-    override fun onBackPressed() {
-        super.onBackPressed();
     }
 
 

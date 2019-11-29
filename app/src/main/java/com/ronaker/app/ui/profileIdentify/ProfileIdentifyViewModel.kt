@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.profileIdentify
 
 
+import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -11,7 +12,7 @@ import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileIdentifyViewModel : BaseViewModel() {
+class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
@@ -42,20 +43,18 @@ class ProfileIdentifyViewModel : BaseViewModel() {
     val uploadVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-    lateinit var mUri: Uri
-    var mImageSuid: String? = null
+    private lateinit var mUri: Uri
+    private var mImageSuid: String? = null
 
 
     private var uploadSubscription: Disposable? = null
     private var identitySubscription: Disposable? = null
 
-    init {
 
-    }
 
     fun selectImage(uri: Uri) {
 
-        if (!uri.toString().isNullOrEmpty()) {
+        if (uri.toString().isNotEmpty()) {
             emptyImageVisibility.value = View.GONE
             imageVisibility.value = View.VISIBLE
             uploadVisibility.value = View.VISIBLE
@@ -111,7 +110,7 @@ class ProfileIdentifyViewModel : BaseViewModel() {
                     result.data?.suid?.let { addIdentity(it) }
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -119,7 +118,7 @@ class ProfileIdentifyViewModel : BaseViewModel() {
     }
 
 
-    fun addIdentity(imageSuid: String) {
+    private fun addIdentity(imageSuid: String) {
 
         identitySubscription?.dispose()
 
@@ -142,7 +141,7 @@ class ProfileIdentifyViewModel : BaseViewModel() {
                 if (result.isAcceptable()) {
                     finish.value = true
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 

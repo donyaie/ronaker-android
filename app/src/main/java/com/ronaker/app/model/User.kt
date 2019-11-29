@@ -2,6 +2,7 @@ package com.ronaker.app.model
 
 import android.os.Parcelable
 import com.ronaker.app.data.network.response.UserInfoResponceModel
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -40,30 +41,29 @@ data class User(
         null,
         null
     )
+    @IgnoredOnParcel
+    var accessToken:String?=null
 
 
 }
 
 
-fun UserInfoResponceModel.toUser(): User {
+fun UserInfoResponceModel.toUserModel(): User {
 
 
-    var value = User(
-        this.suid,
-        this.email,
-        this.is_email_verified,
-        this.first_name,
-        this.last_name,
-        this.phone_number,
-        this.is_phone_number_verified,
-        this.is_payment_info_verified,
-        this.is_identity_info_verified,
-        this.avatar,
+    return User(
+        suid,
+        email,
+        is_email_verified,
+        first_name,
+        last_name,
+        phone_number,
+        is_phone_number_verified,
+        is_payment_info_verified,
+        is_identity_info_verified,
+        avatar,
         null
 
     )
-
-
-    return value
 
 }

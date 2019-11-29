@@ -63,7 +63,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
     }
 
     fun checkValid(): Boolean {
-        var field = isValid
+        val field = isValid
         if (!field) {
             showNotValidAlert()
         } else
@@ -72,7 +72,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         return field
     }
 
-    var isValid: Boolean = false
+    val isValid: Boolean
         get() {
             return regex?.matches(input_edit.text) ?: true
 
@@ -82,8 +82,6 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
     var isTransparent: Boolean = true
         set(value) {
             field = value
-
-
 
             title_text.setTextColor(
 
@@ -402,7 +400,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
-                R.styleable.input_component_attributes, 0, 0
+                R.styleable.InputComponent, 0, 0
             )
 
 
@@ -411,7 +409,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 typedArray
                     .getString(
                         R.styleable
-                            .input_component_attributes_input_title
+                            .InputComponent_input_title
                     )
 
 
@@ -420,7 +418,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 typedArray
                     .getString(
                         R.styleable
-                            .input_component_attributes_input_hint
+                            .InputComponent_input_hint
                     )
 
 
@@ -430,7 +428,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
             is_alert = typedArray
                 .getBoolean(
                     R.styleable
-                        .input_component_attributes_input_is_alert,
+                        .InputComponent_input_is_alert,
                     true
                 )
 
@@ -438,40 +436,40 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
 
             isTransparent = typedArray.getBoolean(
-                R.styleable.input_component_attributes_input_transparent,
+                R.styleable.InputComponent_input_transparent,
                 true
             )
 
 
             hasInputDotValidator =
-                typedArray.getBoolean(R.styleable.input_component_attributes_input_dot, true)
+                typedArray.getBoolean(R.styleable.InputComponent_input_dot, true)
 
-            counter = typedArray.getInteger(R.styleable.input_component_attributes_input_counter, 0)
+            counter = typedArray.getInteger(R.styleable.InputComponent_input_counter, 0)
 
 
             inputType = typedArray.getInt(
-                R.styleable.input_component_attributes_android_inputType,
+                R.styleable.InputComponent_android_inputType,
                 EditorInfo.TYPE_NULL
             )
 
 
             imeOptions = typedArray.getInt(
-                R.styleable.input_component_attributes_android_imeOptions,
+                R.styleable.InputComponent_android_imeOptions,
                 0
             )
 
             maxLength = typedArray.getInt(
-                R.styleable.input_component_attributes_android_maxLength,
+                R.styleable.InputComponent_android_maxLength,
                 0
             )
 
             autofillHints = typedArray.getString(
-                R.styleable.input_component_attributes_android_autofillHints
+                R.styleable.InputComponent_android_autofillHints
             )
 
-            var regexString = typedArray.getString(
+            val regexString = typedArray.getString(
                 R.styleable
-                    .input_component_attributes_input_regex
+                    .InputComponent_input_regex
             )
 
 
@@ -488,17 +486,17 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
             inputValidationMode = InputValidationMode.values()[typedArray
                 .getInt(
                     R.styleable
-                        .input_component_attributes_input_validation_mode,
+                        .InputComponent_input_validation_mode,
                     1
-                )];
+                )]
 
 
             inputMode = InputMode.values()[typedArray
                 .getInt(
                     R.styleable
-                        .input_component_attributes_input_mode,
+                        .InputComponent_input_mode,
                     0
-                )];
+                )]
 
 
 
@@ -532,7 +530,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
     fun showNotValidAlert() {
 
 
-        showAlert(AlertType.Error, title + " is not valid.")
+        showAlert(AlertType.Error, "$title is not valid.")
 
     }
 

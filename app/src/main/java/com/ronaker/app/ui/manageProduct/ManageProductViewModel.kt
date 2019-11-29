@@ -1,18 +1,18 @@
 package com.ronaker.app.ui.manageProduct
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductDetail
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ManageProductViewModel : BaseViewModel() {
+class ManageProductViewModel (app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -59,14 +59,14 @@ class ManageProductViewModel : BaseViewModel() {
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    result.data?.toProductDetail()?.let {
+                    result.data?.let {
                         mProduct = it
                         fillProduct(it)
                     }
 
 
                 } else {
-                    retry.value = result.error?.detail;
+                    retry.value = result.error?.message
                     // errorMessage.value = result.error?.detail
                 }
             }
@@ -116,7 +116,7 @@ class ManageProductViewModel : BaseViewModel() {
     fun updateActiveState(active: Boolean) {
 
         updateActivesubscription?.dispose()
-        var product = Product()
+        val product = Product()
         product.user_status =
             if (active) Product.ActiveStatusEnum.Active.key else Product.ActiveStatusEnum.Deactive.key
 
@@ -133,7 +133,7 @@ class ManageProductViewModel : BaseViewModel() {
 
                 } else {
                     activeState.value = !active
-                    errorMessage.value = result.error?.detail;
+                    errorMessage.value = result.error?.message
                 }
             }
 

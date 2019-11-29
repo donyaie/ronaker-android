@@ -7,12 +7,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.forEach
 import com.ronaker.app.R
-import com.ronaker.app.utils.ScreenCalcute
 import com.ronaker.app.utils.ShapeDrawableHelper
 
 
@@ -67,43 +63,16 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
         orientation= VERTICAL
 
 
-        layoutList.get(0).setOnClickListener(object : View.OnClickListener {
-
-            override fun onClick(v: View?) {
-                select(0)
-            }
-        })
+        layoutList[0].setOnClickListener { select(0) }
 
 
-        layoutList.get(1).setOnClickListener(object : View.OnClickListener {
+        layoutList[1].setOnClickListener { select(1) }
 
-            override fun onClick(v: View?) {
-                select(1)
-            }
-        })
+        layoutList[2].setOnClickListener { select(2) }
 
-        layoutList.get(2).setOnClickListener(object : View.OnClickListener {
+        layoutList[3].setOnClickListener { select(3) }
 
-            override fun onClick(v: View?) {
-                select(2)
-            }
-        })
-
-        layoutList.get(3).setOnClickListener(object : View.OnClickListener {
-
-            override fun onClick(v: View?) {
-                select(3)
-            }
-        })
-
-
-
-        layoutList.get(4).setOnClickListener(object : View.OnClickListener {
-
-            override fun onClick(v: View?) {
-                select(4)
-            }
-        })
+        layoutList[4].setOnClickListener { select(4) }
 
 
         select(0)

@@ -1,18 +1,18 @@
 package com.ronaker.app.utils.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.ronaker.app.utils.ScreenCalcute
+import com.ronaker.app.utils.ScreenCalculator
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import java.util.ArrayList
-import com.bumptech.glide.Glide
 import com.ronaker.app.R
 import com.ronaker.app.injection.module.GlideApp
 
@@ -22,7 +22,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
 
 
 
-    private var screenLibrary: ScreenCalcute
+    private var screenLibrary: ScreenCalculator
 
 
     private var containerLayout: ConstraintLayout
@@ -40,18 +40,18 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
             .inflate(R.layout.component_image_slide, this, true)
 
         containerLayout = findViewById(R.id.container_layout)
-        viewPager = findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager)
         adapter=ImagePagerAdapter(context,dataList)
         orientation = VERTICAL
 
-        screenLibrary = ScreenCalcute(context)
+        screenLibrary = ScreenCalculator(context)
         viewPager.adapter=adapter
 
 
         attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
-                R.styleable.image_slide_attributes, 0, 0
+                R.styleable.ImageSlideComponent, 0, 0
             )
 
             typedArray.recycle()
@@ -95,6 +95,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
             return view === Object
         }
 
+        @SuppressLint("InflateParams")
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view = LayoutInflater.from(context).inflate(R.layout.component_image_slide_item, null)
             val imageView = view.findViewById(R.id.image) as ImageView

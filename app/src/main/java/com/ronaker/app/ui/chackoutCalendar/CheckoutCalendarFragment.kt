@@ -15,7 +15,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.ENDDATE_KEY
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.PRODUCT_KEY
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.STARTDATE_KEY
-import com.ronaker.app.ui.orderMessage.OrderMessageActivity
+import com.ronaker.app.utils.extension.finishSafe
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -41,13 +41,13 @@ class CheckoutCalendarFragment : BaseFragment() {
 
 
 
-        viewModel.nextStep.observe(this, Observer { _ ->
+        viewModel.nextStep.observe(this, Observer {
 
 //
 
             if (viewModel.startDate != null && viewModel.endDate != null) {
 
-                var intent = Intent()
+                val intent = Intent()
 
                 intent.putExtra(STARTDATE_KEY, viewModel.startDate!!.time)
 
@@ -55,12 +55,8 @@ class CheckoutCalendarFragment : BaseFragment() {
 
                 activity?.setResult(Activity.RESULT_OK,intent)
 
-                finishSafe()
+                activity?.finishSafe()
             }
-
-
-
-
 
 
         })
@@ -76,7 +72,7 @@ class CheckoutCalendarFragment : BaseFragment() {
 
         binding.toolbar.cancelClickListener=View.OnClickListener {
 
-            finishSafe()
+            activity?.finishSafe()
         }
 
 
@@ -84,15 +80,15 @@ class CheckoutCalendarFragment : BaseFragment() {
     }
 
 
-    fun initCalendar(){
+    private fun initCalendar(){
 
 
 
-        var nextYear: Calendar = Calendar.getInstance();
-        nextYear.add(Calendar.YEAR, 1);
+        val nextYear: Calendar = Calendar.getInstance()
+        nextYear.add(Calendar.YEAR, 1)
 
-        var lastYear:Calendar = Calendar.getInstance();
-//        lastYear.add(Calendar.DAY_OF_MONTH, - 5);
+        val lastYear:Calendar = Calendar.getInstance()
+//        lastYear.add(Calendar.DAY_OF_MONTH, - 5)
 //
 //        val list = ArrayList<Int>()
 //
@@ -123,13 +119,13 @@ class CheckoutCalendarFragment : BaseFragment() {
         binding.calendarView.setOnDateSelectedListener(object:CalendarPickerView.OnDateSelectedListener{
             override fun onDateSelected(date: Date) {
 
-                viewModel.UpdateDate( binding.calendarView.selectedDates)
+                viewModel.updateDate( binding.calendarView.selectedDates)
 
             }
 
             override fun onDateUnselected(date: Date) {
 
-                viewModel.UpdateDate( binding.calendarView.selectedDates)
+                viewModel.updateDate( binding.calendarView.selectedDates)
             }
 
         })
@@ -145,7 +141,7 @@ class CheckoutCalendarFragment : BaseFragment() {
 
 
     fun getProduct(): Product?{
-        return   activity?.intent?.getParcelableExtra(CheckoutCalendarActivity.PRODUCT_KEY)
+        return   activity?.intent?.getParcelableExtra(PRODUCT_KEY)
     }
 
 

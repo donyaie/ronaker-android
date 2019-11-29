@@ -1,17 +1,17 @@
 package com.ronaker.app.ui.profile
 
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.model.toUser
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileViewModel: BaseViewModel(){
+class ProfileViewModel(app: Application): BaseViewModel(app){
 
 
     @Inject
@@ -36,7 +36,6 @@ class ProfileViewModel: BaseViewModel(){
 
     val logOutAction:MutableLiveData<Boolean> = MutableLiveData()
 
-    val settingAction:MutableLiveData<Boolean> = MutableLiveData()
 
 
 
@@ -61,27 +60,22 @@ class ProfileViewModel: BaseViewModel(){
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    result.data?.toUser()?.let {
-
-
+                    result.data?.let {
                         userRepository.saveUserInfo(it)
                         fillUser(it)
-
-
                     }
 
-
-
-                } else {
-
+                }   else{
+                    errorMessage.value=result.error?.message
                 }
+
             }
 
 
     }
 
 
-    fun fillUser(user: User){
+    private fun fillUser(user: User){
 
         var complete=0
 
@@ -97,9 +91,6 @@ class ProfileViewModel: BaseViewModel(){
         user.is_phone_number_verified?.let { if(it) complete++ }
 
 
-
-
-
         if(complete==5){
             completeProgressVisibility.value= View.GONE
             completeVisibility.value=View.GONE
@@ -109,7 +100,7 @@ class ProfileViewModel: BaseViewModel(){
 
             completeProgressVisibility.value= View.VISIBLE
             completeProgress.value=complete
-            userStep.value= "$complete of 5"
+            userStep.value= complete.toString()
 
             completeVisibility.value=View.VISIBLE
             editVisibility.value=View.GONE
@@ -118,13 +109,6 @@ class ProfileViewModel: BaseViewModel(){
 
     }
 
-
-
-   fun onClickLogout(){
-       userRepository.clearLogin()
-       logOutAction.value=true
-
-   }
 
 
     override fun onCleared() {

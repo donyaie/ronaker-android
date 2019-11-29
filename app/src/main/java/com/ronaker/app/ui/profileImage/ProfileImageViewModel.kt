@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.profileImage
 
 
+import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -14,7 +15,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileImageViewModel : BaseViewModel() {
+class ProfileImageViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
@@ -49,20 +50,16 @@ class ProfileImageViewModel : BaseViewModel() {
     val uploadVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-    lateinit var mUri: Uri
-    var mImageSuid: String? = null
+    private lateinit var mUri: Uri
+    private var mImageSuid: String? = null
 
 
     private var uploadSubscription: Disposable? = null
     private var identitySubscription: Disposable? = null
 
-    init {
-
-    }
-
     fun selectImage(uri: Uri) {
 
-        if (!uri.toString().isNullOrEmpty()) {
+        if (uri.toString().isNotEmpty()) {
             emptyImageVisibility.value = View.GONE
             imageVisibility.value = View.VISIBLE
             uploadVisibility.value = View.VISIBLE
@@ -130,7 +127,7 @@ class ProfileImageViewModel : BaseViewModel() {
                     result.data?.suid?.let { addIdentity(it) }
 
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -138,11 +135,11 @@ class ProfileImageViewModel : BaseViewModel() {
     }
 
 
-    fun addIdentity(imageSuid: String) {
+    private fun addIdentity(imageSuid: String) {
 
         identitySubscription?.dispose()
 
-        var user= User()
+        val user= User()
         user.avatar=imageSuid
 
         identitySubscription = userRepository
@@ -162,7 +159,7 @@ class ProfileImageViewModel : BaseViewModel() {
                 if (result.isSuccess()) {
                     finish.value = true
                 } else {
-                    errorMessage.value = result.error?.detail
+                    errorMessage.value = result.error?.message
                 }
             }
 

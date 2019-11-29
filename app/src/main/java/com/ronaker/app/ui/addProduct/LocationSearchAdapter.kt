@@ -38,7 +38,7 @@ class LocationSearchAdapter(dataList: ArrayList<Place>,viewModel:AddProductLocat
        var parentViewModel: AddProductLocationSearchViewModel
     ):RecyclerView.ViewHolder(binding.root){
 
-        private val viewModel = LocationSearchViewModel()
+        private val viewModel = LocationSearchViewModel(parentViewModel.getApplication())
 
         fun bind(product:Place){
             viewModel.bind(product,binding,parentViewModel)

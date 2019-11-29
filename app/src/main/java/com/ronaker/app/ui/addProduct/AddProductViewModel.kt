@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
+import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -12,12 +13,14 @@ import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.model.*
+import com.ronaker.app.model.Category
+import com.ronaker.app.model.Place
+import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AppDebug
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AddProductViewModel : BaseViewModel() {
+class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductViewModel::class.java.name
 
@@ -111,7 +114,7 @@ class AddProductViewModel : BaseViewModel() {
         companion object {
             operator fun get(position: Int): StateEnum {
                 var state = image
-                for (stateEnum in StateEnum.values()) {
+                for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
                 }
@@ -204,8 +207,7 @@ class AddProductViewModel : BaseViewModel() {
         if (categories.isNotEmpty()) {
 
             productSubCategoryTitle.value = category.title
-            categories[0].sub_categories = ArrayList()
-            categories[0].sub_categories?.add(category)
+            categories[0].sub_categories = listOf(category)
         }
     }
 
@@ -231,7 +233,7 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_day = dayPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_day = 0.0
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
         }
 
 
@@ -240,14 +242,14 @@ class AddProductViewModel : BaseViewModel() {
             product.price_per_week = weekPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_week = 0.0
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
         }
 
         try {
             product.price_per_month = monthPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_month = 0.0
-            AppDebug.Log(TAG, e)
+            AppDebug.log(TAG, e)
         }
         if (!updateSuid.isNullOrEmpty()) {
 
@@ -293,11 +295,11 @@ class AddProductViewModel : BaseViewModel() {
                 if (result.isSuccess()) {
                     goNext.value = false
                 } else {
-                    if (result.error?.detail_code == error_unverified_phone_number)
+                    if (result.error?.code == error_unverified_phone_number)
                         goNext.value = true
                     else
 
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                 }
             }
 
@@ -307,30 +309,28 @@ class AddProductViewModel : BaseViewModel() {
     fun deleteImage(image: Product.ProductImage) {
         deleteImageSubscription?.dispose()
 
-            deleteImageSubscription=
-                contentRepository.deleteImage(
-                    userRepository.getUserToken(),
-                    image.suid!!
-                )
-                    .doOnSubscribe {
-                        loading.value = true
+        deleteImageSubscription =
+            contentRepository.deleteImage(
+                userRepository.getUserToken(),
+                image.suid!!
+            )
+                .doOnSubscribe {
+                    loading.value = true
 
+                }
+                .doOnTerminate {
+
+                    loading.value = false
+
+                }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        adapter.removeItem(image)
+                    } else {
+                        adapter.removeItem(image)
+                        errorMessage.value = result.error?.message
                     }
-                    .doOnTerminate {
-
-                        loading.value = false
-
-                    }
-                    .subscribe { result ->
-                        if (result.isSuccess()) {
-                            adapter.removeItem(image)
-                        } else {
-                            adapter.removeItem(image)
-                            errorMessage.value = result.error?.detail
-                        }
-                    }
-
-
+                }
 
 
     }
@@ -420,13 +420,13 @@ class AddProductViewModel : BaseViewModel() {
                 .doOnTerminate { model.progress.value = false }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        model.url = result.data?.content
+                        model.url = result.data?.url
                         model.suid = result.data?.suid
                         model.isLocal = false
                         model.progress.value = false
                         checkNextSelectImage()
                     } else
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                 }
         }
         )
@@ -446,7 +446,7 @@ class AddProductViewModel : BaseViewModel() {
 
                             goNext.value = false
                         } else {
-                            errorMessage.value = result.error?.detail
+                            errorMessage.value = result.error?.message
 
                         }
                     }
@@ -470,29 +470,26 @@ class AddProductViewModel : BaseViewModel() {
                     if (result.isSuccess()) {
                         when (state) {
                             StateEnum.image -> {
-
-
-                                result.data?.images?.toProductImage()
-                                    ?.let { adapter.addRemoteImage(it) }
+                                result.data?.images?.let { adapter.addRemoteImage(it) }
 
                             }
                             StateEnum.price -> {
 
 
                                 productPriceDay.value =
-                                    if (result.data?.price_per_day != null && result.data.price_per_day.toInt() != 0) {
-                                        result.data.price_per_day.toString()
+                                    if (result.data?.price_per_day ?: 0 != 0) {
+                                        result.data?.price_per_day.toString()
                                     } else ""
 
                                 productPriceWeek.value =
-                                    if (result.data?.price_per_week != null && result.data.price_per_week.toInt() != 0) {
-                                        result.data.price_per_week.toString()
+                                    if (result.data?.price_per_week ?: 0 != 0) {
+                                        result.data?.price_per_week.toString()
                                     } else ""
 
 
                                 productPriceMonth.value =
-                                    if (result.data?.price_per_month != null && result.data.price_per_month.toInt() != 0) {
-                                        result.data.price_per_month.toString()
+                                    if (result.data?.price_per_month ?: 0 != 0) {
+                                        result.data?.price_per_month.toString()
                                     } else ""
 
 
@@ -507,12 +504,12 @@ class AddProductViewModel : BaseViewModel() {
 
                                 result.data?.categories?.let {
 
-                                    categories = it.toCategoryList()
+                                    categories.clear()
+                                    categories.addAll(it)
 
 
                                     if (categories.size > 1) {
-                                        categories[0].sub_categories = ArrayList()
-                                        categories[0].sub_categories?.add(categories[1])
+                                        categories[0].sub_categories = listOf(categories[1])
                                         categories.removeAt(1)
                                     }
 
@@ -548,10 +545,7 @@ class AddProductViewModel : BaseViewModel() {
                                 result.data?.location?.let {
 
 
-                                    productLocation.value = LatLng(
-                                        result.data.location.lat,
-                                        result.data.location.lng
-                                    )
+                                    productLocation.value = result.data.location
 
 
                                 }
@@ -560,7 +554,7 @@ class AddProductViewModel : BaseViewModel() {
                             }
                         }
                     } else {
-                        errorMessage.value = result.error?.detail
+                        errorMessage.value = result.error?.message
                         goNext.value = false
                     }
                 }

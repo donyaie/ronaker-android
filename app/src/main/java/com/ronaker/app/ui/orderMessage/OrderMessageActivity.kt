@@ -12,15 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.addProduct.AddProductCategorySelectDialog
-import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.extension.finishSafe
 import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
-
-    private val TAG = OrderMessageActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderMessageBinding
     private lateinit var viewModel: OrderMessageViewModel
@@ -39,8 +35,8 @@ class OrderMessageActivity : BaseActivity() {
             startDate: Date?,
             endDate: Date?
         ): Intent {
-            var intent = Intent(context, OrderMessageActivity::class.java)
-            var boundle = Bundle()
+            val intent = Intent(context, OrderMessageActivity::class.java)
+            val boundle = Bundle()
 
             if (endDate != null && startDate != null) {
 
@@ -77,12 +73,12 @@ class OrderMessageActivity : BaseActivity() {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
-        viewModel.next.observe(this, Observer { _ ->
+        viewModel.next.observe(this, Observer {
            finishSafe()
         })
 
 
-        viewModel.successMessage.observe(this, Observer { _ ->
+        viewModel.successMessage.observe(this, Observer {
            succeccSend()
         })
 
@@ -115,20 +111,20 @@ class OrderMessageActivity : BaseActivity() {
     }
 
 
-    fun getStartDate(): Date {
+    private fun getStartDate(): Date {
 
 
         return Date(intent.getLongExtra( STARTDATE_KEY,-1))
     }
 
 
-    fun getEndDate(): Date {
+    private fun getEndDate(): Date {
         return Date(intent.getLongExtra( ENDDATE_KEY,-1))
     }
 
 
-    fun succeccSend(){
-        var builder: AlertDialog.Builder = AlertDialog.Builder(this)
+    private fun succeccSend(){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         builder.setMessage(getString(R.string.text_your_request_sent))
         builder.setPositiveButton(

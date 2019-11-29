@@ -1,29 +1,46 @@
-package com.ronaker.app.utils;
+package com.ronaker.app.utils
 
 import android.util.Log
+import com.crashlytics.android.Crashlytics
+import com.ronaker.app.BuildConfig
 
 object AppDebug {
 
-    fun Log(TAG: String, Message: String?) {
-        if (Message != null)
-            Log.d(TAG, Message)
+    fun log(TAG: String, Message: String?) {
 
+
+        Message?.let {
+            if (BuildConfig.DEBUG)
+                Log.d(TAG, it)
+            Crashlytics.log(Log.DEBUG, TAG, it)
+        }
     }
 
-    fun Log(TAG: String, ex: Exception?) {
-        if (ex != null)
-            Log(TAG, "Exception ", ex)
-
+    fun log(TAG: String, ex: Exception?) {
+        ex?.let {
+            log(TAG, "Exception ", ex)
+        }
     }
 
-    fun Log(TAG: String, Message: String?, ex: Exception?) {
+    fun log(TAG: String, Message: String?, ex: Exception?) {
 
-        var message1 = Message?:""
+        var message1 = Message ?: ""
+
         if (ex != null)
             message1 = message1 + " --> " + ex.message
 
-        Log.e(TAG, message1)
-        ex?.printStackTrace()
+        if (BuildConfig.DEBUG)
+            Log.e(TAG, message1)
+
+        Crashlytics.log(Log.DEBUG, TAG, message1)
+
+
+        ex?.let {
+
+            if (BuildConfig.DEBUG)
+                it.printStackTrace()
+            Crashlytics.logException(ex)
+        }
     }
 
 }

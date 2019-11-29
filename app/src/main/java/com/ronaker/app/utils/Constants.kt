@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 
 /** The base URL  */
 const val BASE_URL: String = "https://api.ronaker.com"
+const val SHARE_URL: String = "https://ronaker.com/product/"
 const val FONT_PATH: String = "fonts/regular.otf"
 
 /** The Google URL  */

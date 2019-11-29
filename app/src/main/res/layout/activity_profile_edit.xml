@@ -37,6 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +64,7 @@
                     android:layout_marginLeft="24dp"
 
                     android:layout_marginTop="24dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginBottom="24dp"
                     android:text="@string/title_we_need_few_details_for_renting_or_lending_out"
                     android:textAppearance="@style/TextAppearance.Large.Regular"
@@ -72,33 +73,12 @@
                     app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
 
-                <LinearLayout
+                <Button
                     android:id="@+id/sign_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="@string/title_email_verification"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-                        android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                        android:id="@+id/sign_image"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-
-                        android:padding="3dp"
-                        app:srcCompat="@drawable/ic_complete" />
-
-
-                </LinearLayout>
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_email_verification"
+                    android:textColor="@color/colorTextDark" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -107,37 +87,15 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
 
-                <LinearLayout
 
+
+                <Button
                     android:id="@+id/image_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_add_profile_image"
+                    android:textColor="@color/colorTextDark" />
 
-                    <TextView
-                        android:id="@+id/image_text"
-                        android:layout_width="0dp"
-
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="@string/title_add_profile_image"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-                        android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                        android:id="@+id/image_image"
-                        android:layout_width="20dp"
-
-                        android:layout_height="20dp"
-
-                        android:padding="3dp"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -146,36 +104,13 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
 
-                <LinearLayout
 
+                <Button
                     android:id="@+id/phone_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:id="@+id/phone_text"
-                        android:text="@string/title_add_and_verify_phone_number"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-                        android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                        android:id="@+id/phone_image"
-                        android:layout_width="20dp"
-
-                        android:layout_height="20dp"
-
-                        android:padding="3dp"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                </LinearLayout>
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_add_and_verify_phone_number"
+                    android:textColor="@color/colorTextDark" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -184,36 +119,14 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
 
-                <LinearLayout
 
+                <Button
                     android:id="@+id/payment_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="73dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_add_a_payment_method"
+                    android:textColor="@color/colorTextDark" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:id="@+id/payment_text"
-                        android:text="@string/title_add_a_payment_method"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-                        android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                        android:id="@+id/payment_image"
-                        android:layout_width="20dp"
-
-                        android:layout_height="20dp"
-
-                        android:padding="3dp"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -222,35 +135,14 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
 
-                <LinearLayout
 
+                <Button
                     android:id="@+id/identity_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/title_verify_your_identity"
+                    android:textColor="@color/colorTextDark" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="@string/title_verify_your_identity"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-                        android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                        android:id="@+id/identity_image"
-                        android:layout_width="20dp"
-
-                        android:layout_height="20dp"
-
-                        android:padding="3dp"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
