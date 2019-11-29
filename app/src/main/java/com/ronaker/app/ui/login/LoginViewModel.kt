@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
+import com.ronaker.app.utils.AnalyticsManager
+import com.ronaker.app.utils.actionLogin
+import com.ronaker.app.utils.actionSignUp
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -109,6 +112,8 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
                 loading.value=false
                 if (result.isSuccess()) {
 
+
+                    getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
                     goNext.value=true
 
                 } else {
@@ -126,6 +131,7 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
             .subscribe { result ->
                 loading.value=false
                 if (result.isSuccess()) {
+                    getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
                     goNext.value=true
                 } else {
                    errorMessage.value= result.error?.message

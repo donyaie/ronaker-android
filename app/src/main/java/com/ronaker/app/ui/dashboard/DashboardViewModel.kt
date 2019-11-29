@@ -8,9 +8,9 @@ import com.ronaker.app.utils.AnalyticsManager
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class DashboardViewModel(app: Application): BaseViewModel(app){
+class DashboardViewModel(app: Application) : BaseViewModel(app) {
 
-    private  var subscription: Disposable?=null
+    private var subscription: Disposable? = null
 
 
     @Inject
@@ -19,23 +19,22 @@ class DashboardViewModel(app: Application): BaseViewModel(app){
 
     val goLogin: MutableLiveData<Boolean> = MutableLiveData()
 
-    var islogin=false
+    var islogin = false
 
-    init{
+    init {
         if (!userRepository.isLogin()) {
-            islogin=false
+            islogin = false
             goLogin.value = true
-        }
-        else{
-            islogin=true
-            userRepository.getUserInfo()?.suid?.let { AnalyticsManager.setUserIdTag(it) }
+        } else {
+            islogin = true
+            userRepository.getUserInfo()?.suid?.let {
+                getAnalytics()?.setUserId(it)
+                AnalyticsManager.setUserId(it)
+            }
         }
 
 
     }
-
-
-
 
 
     override fun onCleared() {

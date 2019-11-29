@@ -11,6 +11,7 @@ import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.actionOpenProduct
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -105,6 +106,7 @@ class ExploreProductViewModel (app: Application): BaseViewModel(app) {
 
     private fun fillProduct(product:Product){
 
+        getAnalytics()?.actionOpenProduct(product.suid, product.name, if(product.categories?.size?:0>0) product.categories?.get(0)?.title else null)
 
         val images=ArrayList<String>()
         product.images?.forEach {

@@ -9,6 +9,7 @@ import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -163,6 +164,8 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun search(search: String?) {
+
+        search?.let { getAnalytics()?.actionSearch(it) }
 
         reset()
         query = search

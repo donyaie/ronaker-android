@@ -2,6 +2,8 @@ package com.ronaker.app.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.ronaker.app.General
 import com.ronaker.app.injection.component.DaggerViewModelInjector
 import com.ronaker.app.injection.component.ViewModelInjector
 import com.ronaker.app.injection.module.RepositoryModule
@@ -32,12 +34,21 @@ import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
-abstract class BaseViewModel(  app:Application) : AndroidViewModel(app) {
+abstract class BaseViewModel(private  val app: Application) : AndroidViewModel(app) {
 
     private val injector: ViewModelInjector = DaggerViewModelInjector
         .builder()
         .repositoryModule(RepositoryModule(app))
         .build()
+
+
+    fun getAnalytics(): FirebaseAnalytics? {
+
+        return if (app is General)
+            app.analytics
+        else
+            null
+    }
 
     init {
         inject()
@@ -78,13 +89,13 @@ abstract class BaseViewModel(  app:Application) : AndroidViewModel(app) {
 
             is DashboardViewModel -> injector.inject(this)
 
-            is OrderAcceptViewModel ->injector.inject(this)
+            is OrderAcceptViewModel -> injector.inject(this)
 
-            is OrderDeclineViewModel->injector.inject(this)
-            is OrderStartRentingViewModel->injector.inject(this)
-            is OrderFinishViewModel->injector.inject(this)
-            is ProfileImageViewModel->injector.inject(this)
-            is ProfileSettingViewModel->injector.inject(this)
+            is OrderDeclineViewModel -> injector.inject(this)
+            is OrderStartRentingViewModel -> injector.inject(this)
+            is OrderFinishViewModel -> injector.inject(this)
+            is ProfileImageViewModel -> injector.inject(this)
+            is ProfileSettingViewModel -> injector.inject(this)
         }
 
     }

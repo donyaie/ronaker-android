@@ -5,7 +5,6 @@ import com.ronaker.app.utils.AppDebug
 import retrofit2.HttpException
 import java.io.EOFException
 import java.io.IOException
-import java.lang.Exception
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
@@ -56,23 +55,32 @@ class NetworkError(error: Throwable) {
             is HttpException -> {
                 val errorJsonString = error.response()
                     ?.errorBody()?.string()
+
                 try {
-                    this.message = JsonParser().parse(errorJsonString)
-                        .asJsonObject["detail"]
-                        .asString
-                } catch (e: Exception) {
-                    AppDebug.log(TAG, e)
+
+                    val json = JsonParser().parse(errorJsonString).asJsonObject
+
+                    try {
+                        if (json.has("detail"))
+                            this.message = json["detail"]
+                                .asString
+                    } catch (e: Exception) {
+                        AppDebug.log(TAG, e)
+                    }
+                    try {
+                        if (json.has("detail_code"))
+                            this.code = json["detail_code"]
+                                .asString
+                    } catch (e: Exception) {
+                        AppDebug.log(TAG, e)
+                    }
+                } catch (ex: Exception) {
+                    AppDebug.log(TAG, ex)
                 }
-                try {
-                    this.code = JsonParser().parse(errorJsonString)
-                        .asJsonObject["detail_code"]
-                        .asString
-                } catch (e: Exception) {
-                    AppDebug.log(TAG, e)
-                }
+
                 this.responseCode = error.code()
 
-                responseCode?.let {httpError = getHttpError(it)  }
+                responseCode?.let { httpError = getHttpError(it) }
 
             }
             is EOFException -> {

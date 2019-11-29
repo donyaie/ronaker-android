@@ -10,7 +10,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.BASE_URL
 
-class ManageProductAdapterViewModel(var app: Application) : BaseViewModel(app) {
+class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()

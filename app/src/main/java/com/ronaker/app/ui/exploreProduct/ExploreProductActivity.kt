@@ -21,8 +21,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.DEFULT_LOCATION
+import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import java.util.*
@@ -96,6 +95,7 @@ class ExploreProductActivity : BaseActivity() {
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -113,6 +113,19 @@ class ExploreProductActivity : BaseActivity() {
         }
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
+
+
+
+        binding.toolbar.action1BouttonClickListener = View.OnClickListener {
+
+            getCurrentSUID()?.let {
+                getAnalytics()?.actionShareProduct(it)
+                IntentManeger.shareTextUrl(this, "Share Product:", SHARE_URL + it)
+            }
+
+
+        }
+        binding.toolbar.action2BouttonClickListener = View.OnClickListener { }
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
 
@@ -188,9 +201,24 @@ class ExploreProductActivity : BaseActivity() {
 
         if (isFistStart()) {
 
-            getSUID()?.let { viewModel.loadProduct(it) }
 
-            getProduct()?.let { viewModel.loadProduct(it) }
+            getSUID()?.let {
+
+                binding.loading.visibility = View.VISIBLE
+                binding.loading.showLoading()
+                viewModel.loadProduct(it)
+
+            }
+
+            getProduct()?.let {
+
+                binding.loading.visibility = View.GONE
+                binding.loading.hideLoading()
+                viewModel.loadProduct(it)
+
+            }
+
+
 
 
             Handler().postDelayed({

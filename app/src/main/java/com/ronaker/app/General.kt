@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ronaker.app.utils.FONT_PATH
 import io.github.inflationx.calligraphy3.CalligraphyConfig
@@ -14,10 +15,17 @@ import com.ronaker.app.utils.LocaleHelper
 
 class General : MultiDexApplication() {
 
+
+
+    lateinit var  analytics: FirebaseAnalytics
+
+
     override fun onCreate() {
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate()
+
+        analytics = FirebaseAnalytics.getInstance(this)
 
 
         // OneSignal Initialization

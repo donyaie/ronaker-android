@@ -3,16 +3,29 @@ package com.ronaker.app.base
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import com.crashlytics.android.Crashlytics
 import com.ronaker.app.utils.LocaleHelper
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-
+import com.ronaker.app.General
+import io.fabric.sdk.android.Fabric
 
 
 abstract class BaseActivity: SwipeBackActivity() {
-    private lateinit var  analytics: FirebaseAnalytics
+
+
+
+    fun getAnalytics(): FirebaseAnalytics? {
+
+        return if (applicationContext is General)
+            (applicationContext as General).analytics
+        else
+            null
+    }
+
+
 
     var activityTag:String?=null
 
@@ -23,8 +36,8 @@ abstract class BaseActivity: SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addActivityStack(this)
-        analytics = FirebaseAnalytics.getInstance(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
+        Fabric.with(this, Crashlytics())
     }
 
    private var startCount=0

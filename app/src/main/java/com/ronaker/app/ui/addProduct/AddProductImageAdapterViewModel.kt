@@ -11,7 +11,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 
-class AddProductImageAdapterViewModel ( var app: Application): BaseViewModel(app) {
+class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app) {
 
 
     private val productImage = MutableLiveData<String>()
