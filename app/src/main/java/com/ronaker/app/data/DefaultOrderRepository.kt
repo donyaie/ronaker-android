@@ -5,6 +5,7 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.OrderApi
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
+import com.ronaker.app.data.network.request.ProductRateRequestModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
@@ -71,6 +72,22 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
     }
 
+    override fun orderRate(
+        token: String?,
+        orderSuid: String,
+        comment: String,
+        stars: Int
+    ): Observable<Result<Boolean>> {
+
+        val request=
+            ProductRateRequestModel(stars,comment)
+
+        return api.orderRate("Token $token",orderSuid,request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { true }.toResult()
+
+    }
 
 
 }

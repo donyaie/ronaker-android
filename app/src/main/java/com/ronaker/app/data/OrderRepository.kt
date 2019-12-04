@@ -25,5 +25,12 @@ interface OrderRepository {
         instruction: String?=null,
         reason: String?=null
     ): Observable<Result<Boolean>>
+
+    fun orderRate(
+        token: String?,
+        orderSuid: String,
+        comment: String,
+        stars: Int
+    ): Observable<Result<Boolean>>
 }
 

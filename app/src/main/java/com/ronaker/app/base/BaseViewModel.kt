@@ -25,6 +25,7 @@ import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
+import com.ronaker.app.ui.productRate.ProductRateViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
@@ -96,6 +97,7 @@ abstract class BaseViewModel(private  val app: Application) : AndroidViewModel(a
             is OrderFinishViewModel -> injector.inject(this)
             is ProfileImageViewModel -> injector.inject(this)
             is ProfileSettingViewModel -> injector.inject(this)
+            is ProductRateViewModel -> injector.inject(this)
         }
 
     }
