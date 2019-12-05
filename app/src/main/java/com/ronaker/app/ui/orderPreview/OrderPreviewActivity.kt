@@ -18,6 +18,7 @@ import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
+import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
@@ -105,6 +106,13 @@ class OrderPreviewActivity : BaseActivity() {
             )
         })
 
+        viewModel.startRate.observe(this, Observer {
+            startActivityMakeSceneForResult(
+                ProductRateActivity.newInstance(this, getOrder()),
+                ProductRateActivity.REQUEST_CODE
+            )
+        })
+
 
         viewModel.finishIntro.observe(this, Observer {
             startActivityMakeSceneForResult(
@@ -167,6 +175,12 @@ class OrderPreviewActivity : BaseActivity() {
         when (requestCode) {
 
             OrderAcceptActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    finishSafe()
+                }
+            }
+
+            ProductRateActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     finishSafe()
                 }

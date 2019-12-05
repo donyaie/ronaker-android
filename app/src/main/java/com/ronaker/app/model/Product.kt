@@ -5,10 +5,7 @@ import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
-import com.ronaker.app.data.network.response.LocationResponseModel
-import com.ronaker.app.data.network.response.ProductDetailResponceModel
-import com.ronaker.app.data.network.response.ProductItemImageResponceModel
-import com.ronaker.app.data.network.response.ProductItemResponceModel
+import com.ronaker.app.data.network.response.*
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -30,6 +27,9 @@ data class Product(
     , var new_categories: ArrayList<String>? = null
     , var review_status: String? = null
     , var user_status: String? = null
+    , var rate: Int? = null
+    , var owner: User? = null
+
 
 ) : Parcelable {
     constructor() : this(
@@ -117,7 +117,34 @@ data class Product(
 
     }
 
+
+    @Parcelize
+    data class ProductRate(
+        var stars: Int?,
+        var comment: String?
+    ) : Parcelable {
+
+
+    }
+
 }
+
+fun List<ProductRatingResponceModel>.toProductRateList(): List<Product.ProductRate> {
+
+
+    val list: ArrayList<Product.ProductRate> = ArrayList()
+
+    this.forEach {
+
+        val product = Product.ProductRate(it.stars,it.comment)
+
+        list.add(product)
+    }
+
+    return list
+
+}
+
 
 
 fun List<ProductItemResponceModel>.toProductList(): List<Product> {
@@ -148,14 +175,15 @@ fun ProductItemResponceModel.toProduct(): Product {
         price_per_month,
         description,
         avatar,
-       images?.toProductImage() ?: ArrayList(),
+        images?.toProductImage() ?: ArrayList(),
         categories?.toCategoryList() ?: ArrayList(),
         if (location != null) LatLng(location.lat, location.lng) else null,
         address,
         null,
         null,
         review_status,
-        user_status
+        user_status,
+        rating
     )
 
 }
@@ -171,10 +199,15 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         price_per_month,
         description,
         avatar,
-        images?.toProductImage()  ?: ArrayList(),
-        categories?.toCategoryList() ?: ArrayList(),
-        location?.let { LatLng(location.lat, location.lng) },
-        address
+        images = images?.toProductImage() ?: ArrayList(),
+        categories = categories?.toCategoryList() ?: ArrayList(),
+        location = location?.let { LatLng(location.lat, location.lng) },
+        address = address,
+        user_status = user_status,
+        review_status = review_status,
+        rate = rating,
+        owner = this.owner?.toUserModel()
+
     )
 
 }

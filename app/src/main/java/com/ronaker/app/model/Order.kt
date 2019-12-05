@@ -16,7 +16,10 @@ data class Order(
     val status: String,
     val product: Product,
     val productOwner: User?,
-    val orderUser: User?
+    val orderUser: User?,
+    val rejectionReason: String?,
+    val address: String?,
+    val instruction: String?
 ) : Parcelable {
 
     enum class OrderStatusEnum constructor(key: String) {
@@ -96,7 +99,10 @@ fun List<OrderResponseModel>.toOrderList(): List<Order> {
                 it.status,
                 it.product.toProduct(),
                 it.product_owner?.toUserModel(),
-                it.order_user?.toUserModel()
+                it.order_user?.toUserModel(),
+                it.rejection_reason,
+                it.address,
+                it.instruction
             )
 
             list.add(product)

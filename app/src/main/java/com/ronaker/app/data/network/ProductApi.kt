@@ -1,6 +1,7 @@
 package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
+import com.ronaker.app.data.network.request.ProductRateRequestModel
 import com.ronaker.app.data.network.request.ProductSearchRequestModel
 import com.ronaker.app.data.network.response.*
 import io.reactivex.Observable
@@ -50,6 +51,19 @@ interface ProductApi {
     @GET("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getProduct(@Header("Authorization") authToken: String?,@Path("suid") suid:String): Observable<ProductDetailResponceModel>
+
+
+
+
+    /**
+     * get rate List
+     */
+    @GET("/api/v1/products/{product_suid}/ratings")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun getProductRate(@Header("Authorization") authToken: String, @Path("product_suid") suid:String): Observable<ListResponseModel<ProductRatingResponceModel>>
+
+
+
 
 
 }

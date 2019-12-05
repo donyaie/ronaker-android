@@ -13,5 +13,9 @@ interface ProductRepository {
     fun productCreate(token: String?, product: Product): Observable<Result<String?>>
     fun productUpdate(token: String?, suid: String, product: Product): Observable<Result<String?>>
     fun getProduct(token: String?, suid: String): Observable<Result<Product>>
+    fun getProductRating(
+        token: String?,
+        suid: String
+    ): Observable<Result<ListResponseModel<Product.ProductRate>?>>
 }
 
