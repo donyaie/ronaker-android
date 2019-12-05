@@ -27,7 +27,7 @@ interface OrderApi {
 
 
     /**
-     * create Order
+     * update Order
      */
     @PUT("/api/v1/orders/{order_suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")

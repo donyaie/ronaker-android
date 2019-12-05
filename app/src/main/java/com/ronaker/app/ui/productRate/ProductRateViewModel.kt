@@ -48,14 +48,15 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun onClickAccept(comment: String, rate: Int) {
+    fun onClickAccept(comment: String, rate: Float) {
 
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.orderRate(
             token = userRepository.getUserToken(),
             orderSuid = mOrder.suid,
             comment = comment,
-            stars = rate
+            stars = rate.toInt()
+
         )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }

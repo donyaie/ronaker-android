@@ -7,10 +7,7 @@ import com.ronaker.app.data.network.ProductApi
 import com.ronaker.app.data.network.request.ProductSearchRequestModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.data.network.response.LocationResponseModel
-import com.ronaker.app.model.Product
-import com.ronaker.app.model.toProductCreateModel
-import com.ronaker.app.model.toProductDetail
-import com.ronaker.app.model.toProductList
+import com.ronaker.app.model.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -102,6 +99,21 @@ class DefaultProductRepository(private val productApi: ProductApi) :
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.toProductDetail() }
+            .toResult()
+    }
+
+
+
+    override fun getProductRating(
+        token: String?,
+        suid: String
+    ): Observable<Result<ListResponseModel<Product.ProductRate>?>> {
+        return productApi.getProductRate("Token $token", suid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                ListResponseModel(it.count, it.next, it.previous, it.results?.toProductRateList())
+            }
             .toResult()
     }
 

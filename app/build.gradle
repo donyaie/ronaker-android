@@ -10,8 +10,6 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'io.fabric'
 
-apply plugin: 'com.google.firebase.firebase-perf'
-
 android {
 
     compileOptions {
@@ -109,7 +107,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
 
     // Data binding
-    implementation 'com.google.firebase:firebase-invites:16.0.4'
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
     kapt "com.android.databinding:compiler:$databindingVersion"
 
     // Retrofit
@@ -240,5 +238,7 @@ dependencies {
 
 }
 
+
+apply plugin: 'com.google.firebase.firebase-perf'
 
 apply plugin: 'com.google.gms.google-services'
