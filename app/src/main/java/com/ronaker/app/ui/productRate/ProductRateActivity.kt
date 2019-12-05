@@ -25,7 +25,7 @@ class ProductRateActivity : BaseActivity() {
         var REQUEST_CODE = 358
         var Order_KEY = "order"
 
-        fun newInstance(context: Context,order: Order?): Intent {
+        fun newInstance(context: Context, order: Order?): Intent {
             val intent = Intent(context, ProductRateActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
@@ -46,7 +46,7 @@ class ProductRateActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this).get(ProductRateViewModel::class.java)
 
         binding.viewModel = viewModel
-binding.starRate.rating
+        binding.starRate.rating
 
 
 
@@ -71,11 +71,11 @@ binding.starRate.rating
 
         viewModel.finish.observe(this, Observer {
             setResult(Activity.RESULT_OK)
-           finishSafe()
+            finishSafe()
         })
 
 
-        binding.toolbar.cancelClickListener= View.OnClickListener {
+        binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finishSafe()
         }
@@ -86,22 +86,14 @@ binding.starRate.rating
     }
 
 
-
-
-    private fun getOrder():Order?
-    {
-        if ( intent.hasExtra(Order_KEY)) {
+    private fun getOrder(): Order? {
+        if (intent.hasExtra(Order_KEY)) {
 
             return intent.getParcelableExtra<Order?>(Order_KEY)
 
         }
         return null
     }
-
-
-
-
-
 
 
 }

@@ -168,6 +168,7 @@
     <string name="text_accept_and_start_renting">Accept and Start renting</string>
     <string name="text_version" translatable="false">Version</string>
     <string name="text_try_again">Try Again</string>
+    <string name="text_rate_product">Rate Product</string>
 
 
 </resources>

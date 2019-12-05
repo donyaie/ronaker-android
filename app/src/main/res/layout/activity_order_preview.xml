@@ -282,6 +282,9 @@
                         app:riv_corner_radius="32dp"
                         tools:ignore="VectorDrawableCompat" />
 
+
+
+
                 </LinearLayout>
 
                 <RelativeLayout
@@ -424,6 +427,24 @@
                     app:mutableVisibility="@{viewModel.getStartRentingVisibility()}"
 
                     />
+
+
+
+                <Button
+                    style="@style/Button.accent"
+                    android:layout_width="wrap_content"
+
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+
+                    android:layout_weight="1"
+
+                    android:onClick="@{()->viewModel.onClickStartRate()}"
+                    android:text="@string/text_rate_product"
+                    app:mutableVisibility="@{viewModel.getStartRatingVisibility()}"
+
+                    />
+
 
 
             </LinearLayout>

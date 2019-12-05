@@ -38,7 +38,7 @@ interface OrderApi {
     /**
      * create Order
      */
-    @PUT("/api/v1/orders/{order_suid}/rate")
+    @POST("/api/v1/orders/{order_suid}/rate")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun orderRate(@Header("Authorization") authToken: String, @Path("order_suid") suid:String, @Body request: ProductRateRequestModel): Observable<FreeResponseModel>
 

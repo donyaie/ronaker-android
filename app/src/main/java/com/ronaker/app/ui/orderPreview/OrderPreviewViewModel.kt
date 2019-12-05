@@ -37,6 +37,11 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     val acceptIntro: MutableLiveData<Boolean> = MutableLiveData()
     val declineIntro: MutableLiveData<Boolean> = MutableLiveData()
     val startRenting: MutableLiveData<Boolean> = MutableLiveData()
+    val startRate: MutableLiveData<Boolean> = MutableLiveData()
+
+
+
+
     val finishIntro: MutableLiveData<Boolean> = MutableLiveData()
     val cancelDialog: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -70,6 +75,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     val declineVisibility: MutableLiveData<Int> = MutableLiveData()
     val finishVisibility: MutableLiveData<Int> = MutableLiveData()
     val cancelVisibility: MutableLiveData<Int> = MutableLiveData()
+    val startRatingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     val startRentingVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -129,6 +135,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
         )
 
 
+
         when (Order.OrderTypeEnum[order.orderType]) {
 
             Order.OrderTypeEnum.Lending -> {
@@ -144,7 +151,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                 }
 
 
-
+                startRatingVisibility.value=View.GONE
                 orderDescriptionVisibility.value=View.GONE
                 orderIntroductionVisibility.value=View.VISIBLE
 
@@ -176,7 +183,17 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                     }
                     Order.OrderStatusEnum.Finished -> {
 
-                        actionVisibility.value = View.GONE
+                        actionVisibility.value = View.VISIBLE
+
+                        startRentingVisibility.value = View.GONE
+                        acceptVisibility.value = View.GONE
+                        declineVisibility.value = View.GONE
+                        finishVisibility.value = View.GONE
+                        cancelVisibility.value = View.GONE
+
+
+                        startRatingVisibility.value = View.VISIBLE
+
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
@@ -212,6 +229,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
                 }
 
+                startRatingVisibility.value=View.GONE
 
                 orderDescriptionVisibility.value=View.VISIBLE
                 orderIntroductionVisibility.value=View.GONE
@@ -364,6 +382,11 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
         startRenting.value = true
 
 
+    }
+
+    fun onClickStartRate(){
+
+        startRate.value = true
     }
 
     fun onClickFinished() {
