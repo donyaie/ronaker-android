@@ -235,38 +235,43 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="11dp"
+
+
+                            app:mutableVisibility="@{viewModel.getUserContactVisibility()}"
                             android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
 
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                            <ImageButton
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
                                 android:layout_marginEnd="8dp"
+                                android:background="@null"
+                                android:tint="@color/colorTextDark"
                                 android:contentDescription="@string/text_content"
-                                app:srcCompat="@drawable/ic_rating" />
+
+                                android:onClick="@{()->viewModel.onClickSendMail()}"
+
+                                android:padding="10dp"
+
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_message" />
 
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                            <ImageButton
+                                android:layout_width="42dp"
+                                android:layout_marginStart="30dp"
+                                android:layout_height="42dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="@null"
+                                android:tint="@color/colorTextDark"
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="87%"
-                                    android:textAppearance="@style/TextAppearance.Large.SB"
-                                    tools:ignore="HardcodedText" />
+                                android:onClick="@{()->viewModel.onClickMakeCall()}"
+                                android:contentDescription="@string/text_content"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_telephone" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/title_positive_rate"
-                                    android:textAppearance="@style/TextAppearance.Medium.Light" />
-
-
-                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -281,8 +286,6 @@
                         app:mutableImage="@{viewModel.getUserImage()}"
                         app:riv_corner_radius="32dp"
                         tools:ignore="VectorDrawableCompat" />
-
-
 
 
                 </LinearLayout>
@@ -300,12 +303,63 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="@string/text_whay_canceled"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
                     android:layout_margin="24dp"
-                    android:text="Description"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
-                    app:mutableText="@{viewModel.getOrderDescription()}"
-                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
+                    android:text="decline"
+                    android:textAppearance="@style/TextAppearance.Medium.Light"
+                    app:mutableText="@{viewModel.getOrderCancelRes()}"
+                    app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}"
                     tools:ignore="HardcodedText" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="@string/text_pickup_address"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:text="Address"
+                    android:textAppearance="@style/TextAppearance.Medium.Light"
+                    app:mutableText="@{viewModel.getOrderAddress()}"
+                    app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}"
+                    tools:ignore="HardcodedText" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="@string/text_introduction"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
 
 
                 <TextView
@@ -314,9 +368,32 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="24dp"
                     android:text="Introduction"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
+                    android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderIntroduction()}"
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="@string/text_user_request"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:text="Message"
+                    android:textAppearance="@style/TextAppearance.Medium.Light"
+                    app:mutableText="@{viewModel.getOrderDescription()}"
+                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
                     tools:ignore="HardcodedText" />
 
 
@@ -378,8 +455,6 @@
                     />
 
 
-
-
                 <Button
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
@@ -394,7 +469,6 @@
                     app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
 
                     />
-
 
 
                 <Button
@@ -429,7 +503,6 @@
                     />
 
 
-
                 <Button
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
@@ -444,7 +517,6 @@
                     app:mutableVisibility="@{viewModel.getStartRatingVisibility()}"
 
                     />
-
 
 
             </LinearLayout>

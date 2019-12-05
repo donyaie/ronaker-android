@@ -12,13 +12,14 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.IntentManeger
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
+class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -38,8 +39,6 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     val declineIntro: MutableLiveData<Boolean> = MutableLiveData()
     val startRenting: MutableLiveData<Boolean> = MutableLiveData()
     val startRate: MutableLiveData<Boolean> = MutableLiveData()
-
-
 
 
     val finishIntro: MutableLiveData<Boolean> = MutableLiveData()
@@ -62,6 +61,9 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     val orderIntroduction: MutableLiveData<String> = MutableLiveData()
 
 
+    val orderCancelRes: MutableLiveData<String> = MutableLiveData()
+    val orderAddress: MutableLiveData<String> = MutableLiveData()
+
 
     val orderDescriptionVisibility: MutableLiveData<Int> = MutableLiveData()
     val orderIntroductionVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -77,6 +79,12 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     val cancelVisibility: MutableLiveData<Int> = MutableLiveData()
     val startRatingVisibility: MutableLiveData<Int> = MutableLiveData()
 
+    val orderCancelResVisibility: MutableLiveData<Int> = MutableLiveData()
+    val orderAddressVisibility: MutableLiveData<Int> = MutableLiveData()
+
+    val userContactVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
     val startRentingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     private lateinit var mOrder: Order
@@ -91,8 +99,6 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
     private var finishSubscription: Disposable? = null
 
 
-
-
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
@@ -100,6 +106,55 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
         declineSubscription?.dispose()
         cancelSubscription?.dispose()
         finishSubscription?.dispose()
+    }
+
+
+    fun onClickMakeCall() {
+
+        when (Order.OrderTypeEnum[mOrder.orderType]) {
+
+            Order.OrderTypeEnum.Lending -> {
+
+                mOrder.productOwner?.let {
+
+                    it.phone_number?.let { value-> IntentManeger.makeCall(app, value) }
+                }
+            }
+
+
+            Order.OrderTypeEnum.Renting -> {
+
+                mOrder.orderUser?.let {
+
+                    it.phone_number?.let { value-> IntentManeger.makeCall(app, value) }
+                }
+            }
+            else -> {}
+        }
+    }
+
+    fun onClickSendMail() {
+
+        when (Order.OrderTypeEnum[mOrder.orderType]) {
+
+            Order.OrderTypeEnum.Lending -> {
+
+                mOrder.productOwner?.let {
+
+                    it.email?.let { value-> IntentManeger.sendMail(app, value) }
+                }
+            }
+
+
+            Order.OrderTypeEnum.Renting -> {
+
+                mOrder.orderUser?.let {
+
+                    it.email?.let { value-> IntentManeger.sendMail(app, value) }
+                }
+            }
+            else -> {}
+        }
     }
 
 
@@ -111,7 +166,6 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
         productImage.value = BASE_URL + order.product.avatar
 
-        orderDescription.value = order.message
 
         startDayName.value = SimpleDateFormat("EEEE", Locale.getDefault()).format(order.fromDate)
         firstDayMonth.value =
@@ -120,6 +174,22 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
         endDayName.value = SimpleDateFormat("EEEE", Locale.getDefault()).format(order.toDate)
         endDayMonth.value = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(order.toDate)
+
+
+        orderAddress.value = order.address
+        orderIntroduction.value = order.instruction
+        orderCancelRes.value = order.rejectionReason
+        orderDescription.value = order.message
+
+
+        orderAddressVisibility.value =
+            if (order.address.isNullOrBlank()) View.GONE else View.VISIBLE
+        orderIntroductionVisibility.value =
+            if (order.instruction.isNullOrBlank()) View.GONE else View.VISIBLE
+        orderCancelResVisibility.value =
+            if (order.rejectionReason.isNullOrBlank()) View.GONE else View.VISIBLE
+        orderDescriptionVisibility.value =
+            if (order.message.isNullOrBlank()) View.GONE else View.VISIBLE
 
 
         val days = TimeUnit.DAYS.convert(
@@ -136,6 +206,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
 
 
+
         when (Order.OrderTypeEnum[order.orderType]) {
 
             Order.OrderTypeEnum.Lending -> {
@@ -143,7 +214,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                 order.productOwner?.let {
 
                     userName.value = it.first_name + " " + it.last_name
-                    it.avatar?.let {image-> userImage.value= BASE_URL+image }
+                    it.avatar?.let { image -> userImage.value = BASE_URL + image }
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
                     userInfoVisibility.value = View.GONE
@@ -151,13 +222,11 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                 }
 
 
-                startRatingVisibility.value=View.GONE
-                orderDescriptionVisibility.value=View.GONE
-                orderIntroductionVisibility.value=View.VISIBLE
+                startRatingVisibility.value = View.GONE
+
 
 
                 when (Order.OrderStatusEnum[order.status]) {
-
 
                     Order.OrderStatusEnum.Accepted -> {
 
@@ -166,20 +235,24 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         acceptVisibility.value = View.GONE
                         declineVisibility.value = View.GONE
                         finishVisibility.value = View.GONE
-
                         startRentingVisibility.value = View.VISIBLE
-
                         cancelVisibility.value = View.VISIBLE
+
+                        userContactVisibility.value=View.VISIBLE
 
                     }
                     Order.OrderStatusEnum.Started -> {
 
                         actionVisibility.value = View.GONE
 
+                        userContactVisibility.value=View.VISIBLE
+
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
                         actionVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.VISIBLE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
@@ -191,13 +264,16 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         finishVisibility.value = View.GONE
                         cancelVisibility.value = View.GONE
 
-
                         startRatingVisibility.value = View.VISIBLE
+
+                        userContactVisibility.value=View.GONE
 
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
                         actionVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
@@ -209,10 +285,14 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         declineVisibility.value = View.GONE
                         finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
                         actionVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.GONE
                     }
                 }
 
@@ -221,7 +301,7 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                 order.orderUser?.let {
 
                     userName.value = it.first_name + " " + it.last_name
-                    it.avatar?.let { image-> userImage.value= BASE_URL+image }
+                    it.avatar?.let { image -> userImage.value = BASE_URL + image }
 
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
@@ -229,10 +309,8 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
                 }
 
-                startRatingVisibility.value=View.GONE
+                startRatingVisibility.value = View.GONE
 
-                orderDescriptionVisibility.value=View.VISIBLE
-                orderIntroductionVisibility.value=View.GONE
 
                 when (Order.OrderStatusEnum[order.status]) {
                     Order.OrderStatusEnum.Accepted -> {
@@ -244,6 +322,8 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         declineVisibility.value = View.GONE
                         finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.Started -> {
 
@@ -254,18 +334,26 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         declineVisibility.value = View.GONE
                         finishVisibility.value = View.VISIBLE
                         cancelVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.VISIBLE
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
                         actionVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
                         actionVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
                         actionVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
@@ -276,6 +364,8 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
                         finishVisibility.value = View.GONE
                         startRentingVisibility.value = View.GONE
                         cancelVisibility.value = View.GONE
+
+                        userContactVisibility.value=View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
@@ -352,11 +442,12 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
     fun onClickCanceled() {
 
-        cancelDialog.value=true
+        cancelDialog.value = true
 
 
     }
-    fun canceled(){
+
+    fun canceled() {
         cancelSubscription?.dispose()
         cancelSubscription = orderRepository.updateOrderStatus(
             userRepository.getUserToken(),
@@ -384,14 +475,14 @@ class OrderPreviewViewModel (app: Application): BaseViewModel(app) {
 
     }
 
-    fun onClickStartRate(){
+    fun onClickStartRate() {
 
         startRate.value = true
     }
 
     fun onClickFinished() {
 
-        finishIntro.value=true
+        finishIntro.value = true
 //        finishSubscription?.dispose()
 //        finishSubscription = orderRepository.updateOrderStatus(
 //            userRepository.getUserToken(),
