@@ -152,4 +152,8 @@
     <string name="text_try_again">Bandyk iš naujo</string>
     <string name="text_why_decline_this_order">Kodėl atmesti šį užsakymą?</string>
     <string name="text_rate_product">Įvertinkite produktą</string>
+    <string name="text_pickup_address">Paėmimo adresas</string>
+    <string name="text_user_request">Prašymas</string>
+    <string name="text_whay_canceled">Atmesta priežastis</string>
+    <string name="text_introduction">Įvadas</string>
 </resources>

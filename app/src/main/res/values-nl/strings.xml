@@ -152,4 +152,8 @@
     <string name="text_try_again">Probeer opnieuw</string>
     <string name="text_why_decline_this_order">Waarom deze bestelling weigeren?</string>
     <string name="text_rate_product">Beoordeel product</string>
+    <string name="text_pickup_address">Ophaaladres</string>
+    <string name="text_user_request">Verzoek</string>
+    <string name="text_whay_canceled">Afgewezen reden</string>
+    <string name="text_introduction">Invoering</string>
 </resources>

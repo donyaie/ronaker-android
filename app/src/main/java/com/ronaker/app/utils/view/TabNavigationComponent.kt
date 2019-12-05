@@ -9,7 +9,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.ronaker.app.R
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.ShapeDrawableHelper
+import java.lang.Exception
 
 
 class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet) :
@@ -104,7 +106,12 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
         textList[index].setTextColor(ContextCompat.getColor(context,R.color.colorAccent))
 //        imageList[index].setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
         ShapeDrawableHelper.changeSvgDrawableColor(context,R.color.colorAccent,imageList[index])
-        selectListener?.onSelect(index)
+
+        try {
+            selectListener?.onSelect(index)
+        }catch (ex:Exception){
+            AppDebug.log("Navigator",ex)
+        }
 
     }
 

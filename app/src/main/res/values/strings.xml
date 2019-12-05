@@ -169,6 +169,10 @@
     <string name="text_version" translatable="false">Version</string>
     <string name="text_try_again">Try Again</string>
     <string name="text_rate_product">Rate Product</string>
+    <string name="text_user_request">Request</string>
+    <string name="text_introduction">Introduction</string>
+    <string name="text_pickup_address">Pickup Address</string>
+    <string name="text_whay_canceled">Rejected Reason</string>
 
 
 </resources>
