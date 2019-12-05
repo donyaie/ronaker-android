@@ -8,9 +8,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -73,6 +76,14 @@ class ExploreProductActivity : BaseActivity() {
         activityTag = TAG + getCurrentSUID()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
+
+
+
+        binding.recycler.layoutManager=LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+
+
+
 
         viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
 
@@ -206,7 +217,7 @@ class ExploreProductActivity : BaseActivity() {
 
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
-                viewModel.loadProduct(it)
+                viewModel.loadProduct(it,true)
 
             }
 
@@ -228,6 +239,10 @@ class ExploreProductActivity : BaseActivity() {
             }, 500)
 
         }
+        else{
+            viewModel.onRefresh()
+        }
+
 
 
     }

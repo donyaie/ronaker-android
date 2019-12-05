@@ -27,7 +27,7 @@ data class Product(
     , var new_categories: ArrayList<String>? = null
     , var review_status: String? = null
     , var user_status: String? = null
-    , var rate: Int? = null
+    , var rate: Double? = null
     , var owner: User? = null
 
 
@@ -120,7 +120,7 @@ data class Product(
 
     @Parcelize
     data class ProductRate(
-        var stars: Int?,
+        var stars: Float?,
         var comment: String?
     ) : Parcelable {
 

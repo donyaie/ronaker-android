@@ -25,7 +25,7 @@
             android:background="@color/white">
 
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="80dp">
+                    android:paddingBottom="120dp">
 
                     <RelativeLayout
                         android:id="@+id/avatar_layout"
@@ -94,11 +94,7 @@
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@id/title_text">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
+
 
 
                             <ImageView
@@ -118,29 +114,21 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="87%"
+                                    app:mutableText="@{viewModel.getProductRate()}"
                                     android:textAppearance="@style/TextAppearance.Large.SB"
                                     tools:ignore="HardcodedText" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/title_positive_rate"
+
+                                    app:mutableText="@{viewModel.getProductRatestatus()}"
                                     android:textAppearance="@style/TextAppearance.Medium.Light" />
 
 
                             </LinearLayout>
 
 
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:layout_weight=".95"
-                            android:gravity="end|center_vertical"
-                            android:orientation="horizontal">
 
 
                             <TextView
@@ -151,10 +139,9 @@
                                 android:layout_weight=".95"
                                 android:gravity="end"
                                 android:singleLine="true"
-                                android:text="Owner Name"
                                 android:textAppearance="@style/TextAppearance.Large.Regular"
                                 app:mutableText="@{viewModel.getUserName()}"
-                                tools:ignore="HardcodedText,NestedWeights" />
+                              />
 
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:layout_width="42dp"
@@ -166,7 +153,6 @@
                                 tools:ignore="VectorDrawableCompat" />
 
 
-                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -192,6 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
                         android:layout_marginTop="16dp"
+                        android:id="@+id/map_layout"
                         app:layout_constraintTop_toBottomOf="@id/description_text">
 
 
@@ -242,10 +229,38 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
+                    <TextView
+
+                        app:layout_constraintTop_toBottomOf="@id/map_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/comment_title"
+                        android:layout_marginLeft="24dp"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        android:layout_marginRight="24dp"
+                        android:text="Reviews"
+                        android:textColor="@color/colorTextDark"
+                        />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:id="@+id/recycler"
+                        android:layout_marginTop="16dp"
+
+
+                        app:adapter="@{viewModel.getRateListAdapter()}"
+                        app:layout_constraintTop_toBottomOf="@id/comment_title"
+                        android:layout_height="wrap_content"/>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
 
             <com.ronaker.app.utils.view.ToolbarComponent
@@ -311,12 +326,15 @@
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
 
+                    app:mutableVisibility="@{viewModel.getCheckoutVisibility()}"
                     android:layout_marginEnd="24dp"
                     android:onClick="@{()->viewModel.checkOut()}"
                     android:text="@string/title_button_check_out"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+
+
 
                     />
 

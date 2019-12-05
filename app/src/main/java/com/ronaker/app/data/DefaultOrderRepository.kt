@@ -76,7 +76,7 @@ class DefaultOrderRepository(private val api: OrderApi) :
         token: String?,
         orderSuid: String,
         comment: String,
-        stars: Int
+        stars: Double
     ): Observable<Result<Boolean>> {
 
         val request=
