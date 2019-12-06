@@ -99,7 +99,7 @@ class OrderMessageViewModel (app: Application): BaseViewModel(app) {
                     mStartDate,
                     mEndDate,
                     message,
-                    mPrice*10
+                    mPrice*100
                 )
                     .doOnSubscribe { loading.value = true }
                     .doOnTerminate { loading.value = false }
