@@ -72,7 +72,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setAnimateTransition(this)
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
         activityTag = TAG + getCurrentSUID()
 
@@ -95,10 +95,10 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         binding.viewModel = viewModel
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
-            val imageTransitionName = getImageTransition()
-            binding.avatarSlide.transitionName = imageTransitionName
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
+//            val imageTransitionName = getImageTransition()
+//            binding.avatarSlide.transitionName = imageTransitionName
+//        }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
