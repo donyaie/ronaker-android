@@ -158,4 +158,13 @@
     <string name="text_introduction">Invoering</string>
     <string name="text_reviews">beoordelingen</string>
     <string name="text_not_have_comment_yet">Heb nog geen commentaar</string>
+    <string name="text_cancel_order">Annuleer bestelling</string>
+    <string name="text_explain_why_cancel">Leg uit waarom annuleren</string>
+    <string name="text_insurance_fee">Verzekeringspremie</string>
+    <string name="text_product_fee">Productkosten</string>
+    <string name="text_service_fee">Servicekosten</string>
+    <string name="text_total_fee">Totaal</string>
+    <string name="text_why_you_cancel_this_order">Waarom annuleert u deze bestelling?</string>
+    <string name="text_you_earn">Je zal verdienen</string>
+    <string name="text_you_pay">Je betaalt</string>
 </resources>

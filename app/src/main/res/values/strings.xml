@@ -8,10 +8,10 @@
     <string name="google_api_key_me" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
 
 
-    <string name="text_lend_request_accepted" formatted="true">Your request accepted by %1$s</string>
-    <string name="text_lend_request_started" formatted="true">You start renting %1$s item</string>
-    <string name="text_rent_request_accepted" formatted="true">You accepted %1$s request</string>
-    <string name="text_rent_request_started" formatted="true">%1$s started progress</string>
+    <string name="text_lend_request_accepted" formatted="true">Your Request Accepted By %1$s</string>
+    <string name="text_lend_request_started" formatted="true">You Start renting %1$s Item</string>
+    <string name="text_rent_request_accepted" formatted="true">You Accepted %1$s Request</string>
+    <string name="text_rent_request_started" formatted="true">%1$s Started Progress</string>
 
     <string name="text_lend_request_pending" formatted="true">Pending to accept from %1$s</string>
     <string name="text_rent_request_pending" >Someone requested to rent your item</string>
@@ -182,6 +182,8 @@
     <string name="text_cancel_order">Cancel Order</string>
     <string name="text_why_you_cancel_this_order">Why You Cancel This Order?</string>
     <string name="text_explain_why_cancel">Explain Why Cancel</string>
+    <string name="text_you_pay">You Pay</string>
+    <string name="text_you_earn">You Will Earn</string>
 
 
 </resources>

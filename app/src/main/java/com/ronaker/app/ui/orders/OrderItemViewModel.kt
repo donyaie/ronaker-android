@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class OrderItemViewModel (var app: Application): BaseViewModel(app) {
+class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
@@ -23,13 +23,12 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
     private val orderStatusImage = MutableLiveData<Int>()
 
     lateinit var data: Order
-    var activity: AppCompatActivity?=null
+    var activity: AppCompatActivity? = null
 
     fun bind(item: Order, context: AppCompatActivity?) {
         data = item
         activity = context
         productTitle.value = item.product.name
-
 
 
         val days = TimeUnit.DAYS.convert(
@@ -40,113 +39,138 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
 
 
 
-        productPrice.value =  ((data.product.price_per_day ?: 0.0) * days).toCurrencyFormat()
+        var total = 0.0
+
+        if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
+
+
+            data.price?.forEach {
+                if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.ProductFee)
+                    total =if (it.price == 0.0) 0.0 else it.price / 100.0
+            }
+
+        }else{
+
+            data.price?.forEach {
+                if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.Total)
+                    total = if (it.price == 0.0) 0.0 else it.price / 100.0
+            }
+
+        }
+
+        productPrice.value = total.toCurrencyFormat()
+
+
 //        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.price)
         productImage.value = BASE_URL + item.product.avatar
         productDate.value =
-            SimpleDateFormat("dd MMM", Locale.getDefault()).format(item.fromDate) + "-" + SimpleDateFormat(
+            SimpleDateFormat(
+                "dd MMM",
+                Locale.getDefault()
+            ).format(item.fromDate) + "-" + SimpleDateFormat(
                 "dd MMM",
                 Locale.getDefault()
             ).format(item.toDate)
 
 
-        val ownerName=(item.productOwner?.first_name?:"")+" "+(item.productOwner?.last_name?:"")
+        val ownerName =
+            (item.productOwner?.first_name ?: "") + " " + (item.productOwner?.last_name ?: "")
 
-        val userName=(item.orderUser?.first_name?:"")+" "+(item.orderUser?.last_name?:"")
+        val userName = (item.orderUser?.first_name ?: "") + " " + (item.orderUser?.last_name ?: "")
 
 
         when (Order.OrderStatusEnum[item.status]) {
             Order.OrderStatusEnum.Accepted -> {
 
-                orderStatusImage.value=R.drawable.ic_guide_success
+                orderStatusImage.value = R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
 
-                    orderStatus.value=  app.getString(R.string.text_rent_request_accepted,userName)
-                }else{
+                    orderStatus.value = app.getString(R.string.text_rent_request_accepted, userName)
+                } else {
 
-                    orderStatus.value=  app.getString(R.string.text_lend_request_accepted,ownerName)
+                    orderStatus.value =
+                        app.getString(R.string.text_lend_request_accepted, ownerName)
                 }
 
 
             }
             Order.OrderStatusEnum.Started -> {
 
-                orderStatusImage.value=R.drawable.ic_guide_success
+                orderStatusImage.value = R.drawable.ic_guide_success
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
 
-                    orderStatus.value=  app.getString(R.string.text_rent_request_started,userName)
-                }else{
+                    orderStatus.value = app.getString(R.string.text_rent_request_started, userName)
+                } else {
 
-                    orderStatus.value=  app.getString(R.string.text_lend_request_started,ownerName)
+                    orderStatus.value = app.getString(R.string.text_lend_request_started, ownerName)
                 }
 
 
             }
             Order.OrderStatusEnum.Canceled -> {
 
-                orderStatusImage.value=R.drawable.ic_remove_red
+                orderStatusImage.value = R.drawable.ic_remove_red
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value=app.getString(R.string.text_rent_canceled)
-                }else{
+                    orderStatus.value = app.getString(R.string.text_rent_canceled)
+                } else {
 
-                    orderStatus.value=app.getString(R.string.text_lend_canceled)
+                    orderStatus.value = app.getString(R.string.text_lend_canceled)
                 }
-
 
 
             }
             Order.OrderStatusEnum.Finished -> {
 
-                orderStatusImage.value=R.drawable.ic_guide_success
+                orderStatusImage.value = R.drawable.ic_guide_success
 
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value=app.getString(R.string.text_rent_complete)
-                }else{
+                    orderStatus.value = app.getString(R.string.text_rent_complete)
+                } else {
 
-                    orderStatus.value=app.getString(R.string.text_lend_complete)
+                    orderStatus.value = app.getString(R.string.text_lend_complete)
                 }
             }
             Order.OrderStatusEnum.Pending -> {
 
-                orderStatusImage.value=R.drawable.ic_pending
+                orderStatusImage.value = R.drawable.ic_pending
 
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value=app.getString(R.string.text_rent_request_pending)
-                }else{
-                    orderStatus.value=app.getString(R.string.text_lend_request_pending,ownerName)
+                    orderStatus.value = app.getString(R.string.text_rent_request_pending)
+                } else {
+                    orderStatus.value = app.getString(R.string.text_lend_request_pending, ownerName)
                 }
 
             }
 
             Order.OrderStatusEnum.Rejected -> {
 
-                orderStatusImage.value=R.drawable.ic_remove_red
+                orderStatusImage.value = R.drawable.ic_remove_red
 
 
-                if(Order.OrderTypeEnum[item.orderType] ==Order.OrderTypeEnum.Renting){
+                if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value=app.getString(R.string.text_rent_rejected)
-                }else{
+                    orderStatus.value = app.getString(R.string.text_rent_rejected)
+                } else {
 
-                    orderStatus.value=app.getString(R.string.text_lend_rejected)
+                    orderStatus.value = app.getString(R.string.text_lend_rejected)
                 }
 
             }
-            else->{
+            else -> {
 
-                orderStatusImage.value=R.drawable.ic_remove_red
+                orderStatusImage.value = R.drawable.ic_remove_red
 
-                orderStatus.value="Not Set"
+                orderStatus.value = "Not Set"
             }
 
 
@@ -158,7 +182,7 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
     fun onClickProduct() {
 
 
-        activity?.let {it.startActivityMakeScene(OrderPreviewActivity.newInstance(it, data) )  }
+        activity?.let { it.startActivityMakeScene(OrderPreviewActivity.newInstance(it, data)) }
     }
 
     fun getProductTitle(): MutableLiveData<String> {

@@ -158,4 +158,13 @@
     <string name="text_introduction">Įvadas</string>
     <string name="text_reviews">Atsiliepimai</string>
     <string name="text_not_have_comment_yet">Dar neturite komentaro</string>
+    <string name="text_cancel_order">Atšaukti užsakymą</string>
+    <string name="text_explain_why_cancel">Paaiškinkite, kodėl atšaukti</string>
+    <string name="text_insurance_fee">Draudimo mokestis</string>
+    <string name="text_product_fee">Produkto mokestis</string>
+    <string name="text_service_fee">Aptarnavimo mokestis</string>
+    <string name="text_total_fee">Iš viso</string>
+    <string name="text_why_you_cancel_this_order">Kodėl atšaukiate šį užsakymą?</string>
+    <string name="text_you_earn">Jūs uždirbsite</string>
+    <string name="text_you_pay">Tu moki</string>
 </resources>
