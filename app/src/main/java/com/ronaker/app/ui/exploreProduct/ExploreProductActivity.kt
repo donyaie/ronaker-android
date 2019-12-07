@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -30,7 +31,7 @@ import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import java.util.*
 
 
-class ExploreProductActivity : BaseActivity() {
+class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
@@ -83,6 +84,11 @@ class ExploreProductActivity : BaseActivity() {
         ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
 
 
+        binding.refreshLayout.setOnRefreshListener {
+
+
+            viewModel.onRefresh()
+        }
 
 
         viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
@@ -112,6 +118,12 @@ class ExploreProductActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
+
+        viewModel.loadingRefresh.observe(this, Observer { loading ->
+            binding.refreshLayout.isRefreshing = loading
+
+        })
+
         viewModel.retry.observe(this, Observer { value ->
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
@@ -137,29 +149,8 @@ class ExploreProductActivity : BaseActivity() {
 
         }
         binding.toolbar.action2BouttonClickListener = View.OnClickListener { }
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-
-            try {
-                val scrollY = binding.scrollView.scrollY
-
-                if (scrollY <= binding.avatarSlide.height / 2 - binding.toolbar.bottom) {
-
-                    binding.toolbar.isTransparent = true
-                    binding.toolbar.isBottomLine = false
-
-
-                } else {
-
-                    binding.toolbar.isTransparent = false
-                    binding.toolbar.isBottomLine = true
-
-                }
-
-            } catch (ex: Exception) {
-
-            }
-        }
 
 
 
@@ -245,6 +236,11 @@ class ExploreProductActivity : BaseActivity() {
 
 
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.scrollView.viewTreeObserver.removeOnScrollChangedListener(this)
     }
 
 
@@ -354,6 +350,28 @@ class ExploreProductActivity : BaseActivity() {
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onScrollChanged() {
+        try {
+            val scrollY = binding.scrollView.scrollY
+
+            if (scrollY <= binding.avatarSlide.height / 1.2 - binding.toolbar.bottom) {
+
+                binding.toolbar.isTransparent = true
+                binding.toolbar.isBottomLine = false
+
+
+            } else {
+
+                binding.toolbar.isTransparent = false
+                binding.toolbar.isBottomLine = true
+
+            }
+
+        } catch (ex: Exception) {
+
+        }
     }
 
 }

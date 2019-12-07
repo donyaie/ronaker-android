@@ -173,6 +173,7 @@
     <string name="text_introduction">Introduction</string>
     <string name="text_pickup_address">Pickup Address</string>
     <string name="text_whay_canceled">Rejected Reason</string>
+    <string name="text_reviews">Reviews</string>
 
 
 </resources>

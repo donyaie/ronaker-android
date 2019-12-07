@@ -46,6 +46,10 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingRefresh: MutableLiveData<Boolean> = MutableLiveData()
+
+
+
     val checkout: MutableLiveData<String> = MutableLiveData()
 
     val productRatestatus: MutableLiveData<String> = MutableLiveData()
@@ -90,7 +94,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun loadProduct(suid: String, showLoading: Boolean) {
+    fun loadProduct(suid: String, showLoading: Boolean,refresh:Boolean=false) {
         subscription?.dispose()
         this.suid = suid
         subscription = productRepository
@@ -99,9 +103,13 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             .doOnSubscribe {
                 retry.value = null
                 loading.value = showLoading
+
+                loadingRefresh.value=refresh
+
             }
             .doOnTerminate {
                 loading.value = false
+                loadingRefresh.value=false
             }
 
             .subscribe { result ->
@@ -260,7 +268,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun onRefresh() {
 
-        suid?.let { loadProduct(it, false) }
+        suid?.let { loadProduct(it, false,true) }
     }
 
     fun onRetry() {

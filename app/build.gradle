@@ -224,6 +224,8 @@ dependencies {
     debugImplementation "com.facebook.stetho:stetho:$stethoVersion"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+
 
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
 
