@@ -118,6 +118,15 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 binding.loading.hideLoading()
         })
 
+        viewModel.loadingComment.observe(this, Observer { value ->
+            if (value == true) {
+                binding.commentLoading.visibility = View.VISIBLE
+                binding.commentLoading.showLoading()
+            } else
+                binding.commentLoading.hideLoading()
+        })
+
+
 
         viewModel.loadingRefresh.observe(this, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading

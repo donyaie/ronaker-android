@@ -19,7 +19,7 @@
 
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,6 +70,14 @@
             android:textAppearance="@style/TextAppearance.Medium.SB"
             android:textColor="@color/colorTextDark"
             app:mutableText="@{viewModel.getComment()}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+
+            android:background="@color/colorPlatinGrey"
+            />
 
 
     </LinearLayout>

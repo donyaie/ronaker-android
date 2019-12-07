@@ -41,6 +41,7 @@ class StatusBarSizeView : RelativeLayout {
 //
 //        heightSize= sc.DP2Pixel(40)
 
+        heightSize=context.resources.getDimension(R.dimen.statusBarSize).toInt()
 
         // listen to get the height
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -55,9 +56,7 @@ class StatusBarSizeView : RelativeLayout {
                 windowInsets
             }
         }
-        else{
-            heightSize=context.resources.getDimension(R.dimen.statusBarSize).toInt()
-        }
+
 
     }
 

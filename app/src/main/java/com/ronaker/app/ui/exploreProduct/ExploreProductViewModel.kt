@@ -46,7 +46,9 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingComment: MutableLiveData<Boolean> = MutableLiveData()
     val loadingRefresh: MutableLiveData<Boolean> = MutableLiveData()
+    val noCommentVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
 
@@ -143,17 +145,25 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
             .doOnSubscribe {
 
+                loadingComment.value=true
             }
             .doOnTerminate {
 
+                loadingComment.value=false
             }
 
             .subscribe { result ->
                 if (result.isSuccess()) {
 
 
-                    result.data?.results?.let {
+                    if (result.data?.results!=null && result.data.results.isNotEmpty()){
+                        noCommentVisibility.value=View.GONE
+                    }else{
 
+                        noCommentVisibility.value=View.VISIBLE
+                    }
+
+                    result.data?.results?.let {
                         dataList.clear()
                         dataList.addAll(it)
                         rateListAdapter.notifyDataSetChanged()
