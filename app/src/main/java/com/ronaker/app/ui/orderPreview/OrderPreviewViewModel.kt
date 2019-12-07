@@ -11,8 +11,10 @@ import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.exploreProduct.ProductCommentAdapter
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +34,12 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var context: Context
+
+
+
+    var dataList: ArrayList<Order.OrderPrices> = ArrayList()
+
+    var priceListAdapter: OrderPreviewPriceAdapter
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -97,6 +105,12 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     private var declineSubscription: Disposable? = null
     private var cancelSubscription: Disposable? = null
     private var finishSubscription: Disposable? = null
+
+
+    init {
+
+        priceListAdapter = OrderPreviewPriceAdapter(dataList)
+    }
 
 
     override fun onCleared() {
@@ -198,13 +212,18 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
         )
 
         dayNumber.value = String.format(
-            "%s%.02f for %d days",
-            context.getString(R.string.title_curency_symbol),
-            (order.product.price_per_day ?: 0.toDouble()) * days,
+            "%s for %d days",
+            ((order.product.price_per_day ?: 0.toDouble()) * days).toCurrencyFormat(),
             days
         )
 
 
+        order.price?.let {
+
+            dataList.clear()
+            dataList.addAll(it)
+            priceListAdapter.notifyDataSetChanged()
+        }
 
 
         when (Order.OrderTypeEnum[order.orderType]) {

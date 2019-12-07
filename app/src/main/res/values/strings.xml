@@ -175,6 +175,13 @@
     <string name="text_whay_canceled">Rejected Reason</string>
     <string name="text_reviews">Reviews</string>
     <string name="text_not_have_comment_yet">Not have comment yet</string>
+    <string name="text_service_fee">Service Fee</string>
+    <string name="text_insurance_fee">Insurance Fee</string>
+    <string name="text_product_fee">Product Fee</string>
+    <string name="text_total_fee">Total</string>
+    <string name="text_cancel_order">Cancel Order</string>
+    <string name="text_why_you_cancel_this_order">Why You Cancel This Order?</string>
+    <string name="text_explain_why_cancel">Explain Why Cancel</string>
 
 
 </resources>

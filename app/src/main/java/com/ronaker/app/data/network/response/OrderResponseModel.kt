@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class OrderResponseModel(@SerializedName("suid") val suid: String,
-                              @SerializedName("price")  val price: Double,
+                              @SerializedName("prices")  val prices: List<OrderPriceResponseModel>?,
                               @SerializedName("start_date")  val start_date: Date,
                               @SerializedName("end_date")  val end_date: Date,
                               @SerializedName("message")  val message: String,
@@ -16,8 +16,4 @@ data class OrderResponseModel(@SerializedName("suid") val suid: String,
                               @SerializedName("rejection_reason")  val rejection_reason: String,
                               @SerializedName("address")  val address: String,
                               @SerializedName("instruction")  val instruction: String
-
-
-
-
                               )

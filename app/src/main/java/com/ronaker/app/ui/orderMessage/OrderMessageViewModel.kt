@@ -9,6 +9,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -68,8 +69,7 @@ class OrderMessageViewModel (app: Application): BaseViewModel(app) {
         mPrice = (product.price_per_day ?: 0.toDouble()) * days
 
         productPriceTitle.value = "for $days days"
-        productPrice.value =
-            String.format("%s%.02f", context.getString(R.string.title_curency_symbol), mPrice)
+        productPrice.value = mPrice.toCurrencyFormat()
 
 
         val user = userRepository.getUserInfo()

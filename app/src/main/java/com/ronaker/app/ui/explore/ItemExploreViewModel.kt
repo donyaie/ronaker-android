@@ -14,6 +14,7 @@ import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
+import com.ronaker.app.utils.toCurrencyFormat
 
 
 class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
@@ -41,9 +42,8 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
         when {
             post.price_per_day?:0!=0 -> {
                 productPrice.value = String.format(
-                    "%s%.02f %s",
-                    app.getString(R.string.title_curency_symbol),
-                    post.price_per_day,
+                    "%s %s",
+                    post.price_per_day?.toCurrencyFormat(),
                     app.getString(
                         R.string.title_per_day
                     )
@@ -52,9 +52,8 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
             post.price_per_week?:0!=0 -> {
 
                 productPrice.value = String.format(
-                    "%s%.02f %s",
-                    app.getString(R.string.title_curency_symbol),
-                    post.price_per_week,
+                    "%s %s",
+                    post.price_per_week?.toCurrencyFormat(),
                     app.getString(
                         R.string.title_per_week
                     )
@@ -63,9 +62,8 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
             post.price_per_month?:0!=0 -> {
 
                 productPrice.value = String.format(
-                    "%s%.02f %s",
-                    app.getString(R.string.title_curency_symbol),
-                    post.price_per_month,
+                    "%s %s",
+                    post.price_per_month?.toCurrencyFormat(),
                     app.getString(
                         R.string.title_per_month
                     )

@@ -9,6 +9,7 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.extension.startActivityMakeScene
+import com.ronaker.app.utils.toCurrencyFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -39,7 +40,7 @@ class OrderItemViewModel (var app: Application): BaseViewModel(app) {
 
 
 
-        productPrice.value = String.format("%s%.02f", app.getString(R.string.title_curency_symbol), (data.product.price_per_day ?: 0.toDouble()) * days)
+        productPrice.value =  ((data.product.price_per_day ?: 0.0) * days).toCurrencyFormat()
 //        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.price)
         productImage.value = BASE_URL + item.product.avatar
         productDate.value =
