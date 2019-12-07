@@ -19,7 +19,7 @@ class OrderListFragment : BaseFragment() {
     private lateinit var viewModel: OrderListViewModel
 
 
-    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private  var scrollListener: EndlessRecyclerViewScrollListener?=null
 
 
     override fun onCreateView(
@@ -50,7 +50,7 @@ class OrderListFragment : BaseFragment() {
         binding.loading.hideLoading()
 
         viewModel.resetList.observe(this, Observer {
-            scrollListener.resetState()
+            scrollListener?.resetState()
         })
 
 

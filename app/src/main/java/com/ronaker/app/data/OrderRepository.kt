@@ -30,7 +30,7 @@ interface OrderRepository {
         token: String?,
         orderSuid: String,
         comment: String,
-        stars: Int
+        stars: Double
     ): Observable<Result<Boolean>>
 }
 

@@ -1,8 +1,11 @@
 package com.ronaker.app.utils
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -12,13 +15,98 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ronaker.app.injection.module.GlideApp
 import com.ronaker.app.utils.extension.getParentActivity
+import java.lang.Exception
 
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
+    val duration=200L
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if(parentActivity != null && visibility != null) {
-        visibility.observe(parentActivity, Observer { value -> view.visibility = value?:View.VISIBLE})
+        visibility.observe(parentActivity, Observer { value ->
+
+
+            when(value){
+
+                View.GONE->{
+                    view.animate().alpha(0f).setDuration(duration).setListener(object :
+                        AnimatorListener{
+                        override fun onAnimationRepeat(animation: Animator?) {
+                        }
+
+                        override fun onAnimationEnd(animation: Animator?) {
+                            view.visibility = View.GONE
+                        }
+
+                        override fun onAnimationCancel(animation: Animator?) {
+                        }
+
+                        override fun onAnimationStart(animation: Animator?) {
+                        }
+
+                    })
+                    .start()
+                }
+                View.VISIBLE->{
+
+                    view.animate().alpha(1f).setDuration(duration).setListener(object :
+                        AnimatorListener{
+                        override fun onAnimationRepeat(animation: Animator?) {
+                        }
+
+                        override fun onAnimationEnd(animation: Animator?) {
+
+                        }
+
+                        override fun onAnimationCancel(animation: Animator?) {
+                        }
+
+                        override fun onAnimationStart(animation: Animator?) {
+                            view.visibility = View.VISIBLE
+                        }
+
+                    })
+                    .start()
+
+                }
+                View.INVISIBLE->{
+                    view.animate().alpha(0f).setDuration(duration).setListener(object :
+                        AnimatorListener{
+                        override fun onAnimationRepeat(animation: Animator?) {
+                        }
+
+                        override fun onAnimationEnd(animation: Animator?) {
+                            try {
+                                view.visibility = View.INVISIBLE
+                            }catch (ex:Exception){
+                                AppDebug.log("setMutableVisibility",ex)
+                            }
+
+                        }
+
+                        override fun onAnimationCancel(animation: Animator?) {
+                        }
+
+                        override fun onAnimationStart(animation: Animator?) {
+                        }
+
+                    })
+                        .start()
+                }
+                else->{
+                    view.visibility = value?:View.VISIBLE
+                }
+
+            }
+
+
+
+
+
+
+
+
+        })
     }
 }
 
@@ -49,6 +137,19 @@ fun setMutableText(view: ProgressBar, text: MutableLiveData<Int>?) {
         text.observe(parentActivity, Observer { value -> view.progress = value?:0})
     }
 }
+
+
+@BindingAdapter("mutableRate")
+fun setMutableRate(view: RatingBar, text: MutableLiveData<Float>?) {
+
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value -> view.rating = value?:0f})
+    }
+}
+
+
+
 
 @BindingAdapter("mutableImage")
 fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {

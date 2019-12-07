@@ -36,6 +36,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:id="@+id/scroll_view"
             app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -299,6 +300,8 @@
                     app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" />
 
 
+
+
                 <TextView
                     android:layout_width="match_parent"
 
@@ -322,6 +325,15 @@
                     app:mutableText="@{viewModel.getOrderCancelRes()}"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}"
                     tools:ignore="HardcodedText" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey"
+                    app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
+
 
 
                 <TextView
@@ -348,6 +360,14 @@
                     app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}"
                     tools:ignore="HardcodedText" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey"
+                    app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -373,6 +393,16 @@
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}"
                     tools:ignore="HardcodedText" />
 
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey"
+                    app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
+
+
                 <TextView
                     android:layout_width="match_parent"
 
@@ -396,6 +426,16 @@
                     app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
                     tools:ignore="HardcodedText" />
 
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey"
+                    android:layout_marginBottom="40dp"
+                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
 
             </LinearLayout>
 

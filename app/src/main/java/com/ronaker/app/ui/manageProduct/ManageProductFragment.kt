@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -17,7 +18,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
-class ManageProductFragment : BaseFragment() {
+class ManageProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedListener {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductBinding
     private lateinit var productViewModel: ManageProductViewModel
@@ -128,32 +129,16 @@ class ManageProductFragment : BaseFragment() {
         }
 
 
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-
-            try {
-                val scrollY = binding.scrollView.scrollY
-
-                if (scrollY <= binding.avatarImage.height / 2 - binding.toolbar.bottom) {
-
-                    binding.toolbar.isTransparent = true
-                    binding.toolbar.isBottomLine = false
-
-
-                } else {
-
-                    binding.toolbar.isTransparent = false
-                    binding.toolbar.isBottomLine = true
-
-                }
-
-            } catch (ex: Exception) {
-
-            }
-        }
         registerActiveListener()
 
         return binding.root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.scrollView.viewTreeObserver.removeOnScrollChangedListener(this)
     }
 
 
@@ -214,6 +199,29 @@ class ManageProductFragment : BaseFragment() {
             val fragment = ManageProductFragment()
             fragment.arguments = bundle
             return fragment
+        }
+
+    }
+
+    override fun onScrollChanged() {
+        try {
+            val scrollY = binding.scrollView.scrollY
+
+            if (scrollY <= binding.avatarImage.height / 1.2 - binding.toolbar.bottom) {
+
+                binding.toolbar.isTransparent = true
+                binding.toolbar.isBottomLine = false
+
+
+            } else {
+
+                binding.toolbar.isTransparent = false
+                binding.toolbar.isBottomLine = true
+
+            }
+
+        } catch (ex: Exception) {
+
         }
 
     }

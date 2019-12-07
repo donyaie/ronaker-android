@@ -66,8 +66,9 @@
                     android:id="@+id/star_rate"
                     android:layout_marginTop="40dp"
 
+                    android:stepSize="1.0"
                     android:numStars="5"
-                    android:rating="0"
+                    android:rating="5"
                     app:layout_constraintTop_toBottomOf="@id/title"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

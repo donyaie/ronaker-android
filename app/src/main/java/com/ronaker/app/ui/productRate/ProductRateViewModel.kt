@@ -55,7 +55,7 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
             token = userRepository.getUserToken(),
             orderSuid = mOrder.suid,
             comment = comment,
-            stars = rate.toInt()
+            stars = rate.toDouble()
 
         )
             .doOnSubscribe { loading.value = true }

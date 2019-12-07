@@ -156,4 +156,6 @@
     <string name="text_user_request">Prašymas</string>
     <string name="text_whay_canceled">Atmesta priežastis</string>
     <string name="text_introduction">Įvadas</string>
+    <string name="text_reviews">Atsiliepimai</string>
+    <string name="text_not_have_comment_yet">Dar neturite komentaro</string>
 </resources>

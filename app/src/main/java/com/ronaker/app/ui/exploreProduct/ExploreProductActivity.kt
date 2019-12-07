@@ -7,10 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -27,7 +31,7 @@ import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import java.util.*
 
 
-class ExploreProductActivity : BaseActivity() {
+class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
@@ -68,20 +72,33 @@ class ExploreProductActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setAnimateTransition(this)
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
         activityTag = TAG + getCurrentSUID()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
+
+
+        binding.recycler.layoutManager=LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+
+
+        binding.refreshLayout.setOnRefreshListener {
+
+
+            viewModel.onRefresh()
+        }
+
+
         viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
 
         binding.viewModel = viewModel
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
-            val imageTransitionName = getImageTransition()
-            binding.avatarSlide.transitionName = imageTransitionName
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
+//            val imageTransitionName = getImageTransition()
+//            binding.avatarSlide.transitionName = imageTransitionName
+//        }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
@@ -99,6 +116,21 @@ class ExploreProductActivity : BaseActivity() {
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
+        })
+
+        viewModel.loadingComment.observe(this, Observer { value ->
+            if (value == true) {
+                binding.commentLoading.visibility = View.VISIBLE
+                binding.commentLoading.showLoading()
+            } else
+                binding.commentLoading.hideLoading()
+        })
+
+
+
+        viewModel.loadingRefresh.observe(this, Observer { loading ->
+            binding.refreshLayout.isRefreshing = loading
+
         })
 
         viewModel.retry.observe(this, Observer { value ->
@@ -126,29 +158,8 @@ class ExploreProductActivity : BaseActivity() {
 
         }
         binding.toolbar.action2BouttonClickListener = View.OnClickListener { }
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-
-            try {
-                val scrollY = binding.scrollView.scrollY
-
-                if (scrollY <= binding.avatarSlide.height / 2 - binding.toolbar.bottom) {
-
-                    binding.toolbar.isTransparent = true
-                    binding.toolbar.isBottomLine = false
-
-
-                } else {
-
-                    binding.toolbar.isTransparent = false
-                    binding.toolbar.isBottomLine = true
-
-                }
-
-            } catch (ex: Exception) {
-
-            }
-        }
 
 
 
@@ -206,7 +217,7 @@ class ExploreProductActivity : BaseActivity() {
 
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
-                viewModel.loadProduct(it)
+                viewModel.loadProduct(it,true)
 
             }
 
@@ -228,8 +239,17 @@ class ExploreProductActivity : BaseActivity() {
             }, 500)
 
         }
+        else{
+            viewModel.onRefresh()
+        }
 
 
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.scrollView.viewTreeObserver.removeOnScrollChangedListener(this)
     }
 
 
@@ -339,6 +359,28 @@ class ExploreProductActivity : BaseActivity() {
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onScrollChanged() {
+        try {
+            val scrollY = binding.scrollView.scrollY
+
+            if (scrollY <= binding.avatarSlide.height / 1.2 - binding.toolbar.bottom) {
+
+                binding.toolbar.isTransparent = true
+                binding.toolbar.isBottomLine = false
+
+
+            } else {
+
+                binding.toolbar.isTransparent = false
+                binding.toolbar.isBottomLine = true
+
+            }
+
+        } catch (ex: Exception) {
+
+        }
     }
 
 }

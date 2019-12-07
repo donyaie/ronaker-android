@@ -27,7 +27,7 @@ data class Product(
     , var new_categories: ArrayList<String>? = null
     , var review_status: String? = null
     , var user_status: String? = null
-    , var rate: Int? = null
+    , var rate: Double? = null
     , var owner: User? = null
 
 
@@ -120,8 +120,9 @@ data class Product(
 
     @Parcelize
     data class ProductRate(
-        var stars: Int?,
-        var comment: String?
+        var stars: Float?,
+        var comment: String?,
+        var user:User?
     ) : Parcelable {
 
 
@@ -136,7 +137,7 @@ fun List<ProductRatingResponceModel>.toProductRateList(): List<Product.ProductRa
 
     this.forEach {
 
-        val product = Product.ProductRate(it.stars,it.comment)
+        val product = Product.ProductRate(it.stars,it.comment,it.user.toUserModel())
 
         list.add(product)
     }

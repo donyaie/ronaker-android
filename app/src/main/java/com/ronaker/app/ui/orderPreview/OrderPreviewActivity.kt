@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -23,7 +24,7 @@ import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 
-class OrderPreviewActivity : BaseActivity() {
+class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderPreviewBinding
@@ -55,8 +56,7 @@ class OrderPreviewActivity : BaseActivity() {
         binding.viewModel = viewModel
 
 
-
-
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -211,6 +211,11 @@ class OrderPreviewActivity : BaseActivity() {
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onScrollChanged() {
+
+        binding.toolbar.isBottomLine = binding.scrollView.canScrollVertically(-1)
     }
 
 

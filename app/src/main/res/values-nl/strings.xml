@@ -156,4 +156,6 @@
     <string name="text_user_request">Verzoek</string>
     <string name="text_whay_canceled">Afgewezen reden</string>
     <string name="text_introduction">Invoering</string>
+    <string name="text_reviews">beoordelingen</string>
+    <string name="text_not_have_comment_yet">Heb nog geen commentaar</string>
 </resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.exploreProduct.ProductCommentViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+
+        android:orientation="vertical"
+
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitCenter"
+
+
+                android:src="@color/colorPlatinGrey"
+                app:mutableImage="@{viewModel.getUserAvatar()}"
+                app:riv_corner_radius="15dp" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight=".95"
+                android:maxLines="2"
+
+                android:textAppearance="@style/TextAppearance.Medium.SB"
+                android:textColor="@color/colorTextDark"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                app:mutableText="@{viewModel.getUserName()}" />
+
+            <RatingBar
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                app:mutableRate="@{viewModel.getRate()}" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/caption_title"
+            android:textAppearance="@style/TextAppearance.Medium.SB"
+            android:textColor="@color/colorTextDark"
+            app:mutableText="@{viewModel.getComment()}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+
+            android:background="@color/colorPlatinGrey"
+            />
+
+
+    </LinearLayout>
+
+</layout>
