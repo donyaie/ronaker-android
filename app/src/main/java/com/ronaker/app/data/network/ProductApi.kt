@@ -18,6 +18,8 @@ interface ProductApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Body request: ProductSearchRequestModel?): Observable<ListResponseModel<ProductItemResponceModel>>
 
+
+
     /**
      * get my created mProduct
      */
