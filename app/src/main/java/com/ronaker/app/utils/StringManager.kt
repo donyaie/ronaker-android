@@ -7,7 +7,11 @@ import java.util.*
 fun Double.toCurrencyFormat(): String {
 
     val format: NumberFormat = NumberFormat.getCurrencyInstance()
-    format.maximumFractionDigits = 0
+
+    if (((this * 100.0) % 100) > 0)
+        format.maximumFractionDigits = 2
+    else
+        format.maximumFractionDigits = 0
     format.currency = Currency.getInstance("EUR")
     return format.format(this)
 }

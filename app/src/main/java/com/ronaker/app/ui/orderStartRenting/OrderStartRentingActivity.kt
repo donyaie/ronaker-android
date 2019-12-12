@@ -6,9 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
@@ -52,6 +54,9 @@ class OrderStartRentingActivity : BaseActivity() {
 
 
 
+
+        binding.recyclerView.layoutManager= LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->

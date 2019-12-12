@@ -7,6 +7,7 @@ import android.transition.Fade
 import android.transition.Slide
 import android.transition.Transition
 import android.view.Gravity
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import android.view.animation.DecelerateInterpolator
 
@@ -32,6 +33,7 @@ class AnimationHelper {
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                activity.window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
 //                activity.window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
                 val slide = Slide()
                 slide.slideEdge = Gravity.END

@@ -8,7 +8,9 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
+import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import io.reactivex.disposables.Disposable
+import java.util.ArrayList
 import javax.inject.Inject
 
 class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
@@ -32,6 +34,9 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
 
+    var dataList: ArrayList<Order.OrderPrices> = ArrayList()
+
+    var priceListAdapter: OrderPreviewPriceAdapter
 
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -43,6 +48,10 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
+    init {
+
+        priceListAdapter = OrderPreviewPriceAdapter(dataList)
+    }
 
 
     override fun onCleared() {
@@ -55,6 +64,13 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
 
     fun load(order: Order) {
         mOrder = order
+
+        order.price?.let {
+
+            dataList.clear()
+            dataList.addAll(it)
+            priceListAdapter.notifyDataSetChanged()
+        }
 
 
 

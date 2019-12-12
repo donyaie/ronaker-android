@@ -262,7 +262,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                 dayNumber.value = String.format(
-                    "%s %s For %d Days",
+                    "%s %s for %d days",
                     context.getString(R.string.text_you_pay),
                     total.toCurrencyFormat(),
                     days
@@ -366,7 +366,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                 dayNumber.value = String.format(
-                    "%s %s For %d Days",
+                    "%s %s for %d days",
                     context.getString(R.string.text_you_earn),
                     total.toCurrencyFormat(),
                     days

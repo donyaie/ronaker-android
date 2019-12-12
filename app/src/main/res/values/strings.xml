@@ -9,12 +9,12 @@
 
 
     <string name="text_lend_request_accepted" formatted="true">Your Request Accepted By %1$s</string>
-    <string name="text_lend_request_started" formatted="true">You Start renting %1$s Item</string>
+    <string name="text_lend_request_started" formatted="true">You Start Renting %1$s Item</string>
     <string name="text_rent_request_accepted" formatted="true">You Accepted %1$s Request</string>
     <string name="text_rent_request_started" formatted="true">%1$s Started Progress</string>
 
-    <string name="text_lend_request_pending" formatted="true">Pending to accept from %1$s</string>
-    <string name="text_rent_request_pending" >Someone requested to rent your item</string>
+    <string name="text_lend_request_pending" formatted="true">Pending To Accept From %1$s</string>
+    <string name="text_rent_request_pending" >Someone Requested To Rent Your Item</string>
 
     <string name="text_order_message" formatted="true">Hi I\'m %1$s %2$s\n I want to rent your %3$s for %4$s day\'s\nthank you.</string>
 
@@ -118,7 +118,7 @@
     <string name="button_finish">Finish</string>
     <string name="text_per_day">Per Day</string>
     <string name="text_complete_your_profile">Complete your profile</string>
-    <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or Lending out.</string>
+    <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or lending out.</string>
     <string name="titile_sign_up">Sign Up</string>
     <string name="title_add_profile_image">Add Profile Image</string>
     <string name="title_add_profile_image_edit">Change Profile Image</string>
@@ -165,7 +165,7 @@
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please make sure your product is functioning properly and delivered to you without damage</string>
     <string name="text_start_renting_instruction">Start Renting instruction</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please ensure that the rented goods are functioning properly</string>
-    <string name="text_accept_and_start_renting">Accept and Start renting</string>
+    <string name="text_accept_and_start_renting">Pay With Card</string>
     <string name="text_version" translatable="false">Version</string>
     <string name="text_try_again">Try Again</string>
     <string name="text_rate_product">Rate Product</string>
@@ -182,8 +182,8 @@
     <string name="text_cancel_order">Cancel Order</string>
     <string name="text_why_you_cancel_this_order">Why You Cancel This Order?</string>
     <string name="text_explain_why_cancel">Explain Why Cancel</string>
-    <string name="text_you_pay">You Pay</string>
-    <string name="text_you_earn">You Will Earn</string>
+    <string name="text_you_pay">You will pay</string>
+    <string name="text_you_earn">You will earn</string>
 
 
 </resources>
