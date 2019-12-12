@@ -14,6 +14,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.actionOpenProduct
+import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -241,27 +242,19 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         when {
             product.price_per_day != 0.0 -> {
 
-                productPrice.value = String.format(
-                    "%s%.02f",
-                    context.getString(R.string.title_curency_symbol),
-                    product.price_per_day
-                )
+                productPrice.value = product.price_per_day?.toCurrencyFormat()
                 productPriceTitle.value = context.getString(R.string.title_per_day)
             }
             product.price_per_week != 0.0 -> {
 
-                productPrice.value = String.format(
-                    "%s%.02f", context.getString(R.string.title_curency_symbol),
-                    product.price_per_week
-                )
+                productPrice.value =  product.price_per_week?.toCurrencyFormat()
+
                 productPriceTitle.value = context.getString(R.string.title_per_week)
             }
             product.price_per_month != 0.0 -> {
 
-                productPrice.value = String.format(
-                    "%s%.02f", context.getString(R.string.title_curency_symbol),
-                    product.price_per_month
-                )
+                productPrice.value = product.price_per_month?.toCurrencyFormat()
+
                 productPriceTitle.value = context.getString(R.string.title_per_month)
             }
         }

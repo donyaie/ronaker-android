@@ -13,6 +13,7 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,12 +34,22 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     lateinit
     var context: Context
 
+
+    val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
+
+    var dataList: ArrayList<Order.OrderPrices> = ArrayList()
+
+    var priceListAdapter: OrderPreviewPriceAdapter
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val acceptIntro: MutableLiveData<Boolean> = MutableLiveData()
     val declineIntro: MutableLiveData<Boolean> = MutableLiveData()
     val startRenting: MutableLiveData<Boolean> = MutableLiveData()
     val startRate: MutableLiveData<Boolean> = MutableLiveData()
+
+    val orderStatusImage: MutableLiveData<Int> = MutableLiveData()
+    val orderStatus: MutableLiveData<String> = MutableLiveData()
 
 
     val finishIntro: MutableLiveData<Boolean> = MutableLiveData()
@@ -99,6 +110,12 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     private var finishSubscription: Disposable? = null
 
 
+    init {
+
+        priceListAdapter = OrderPreviewPriceAdapter(dataList)
+    }
+
+
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
@@ -117,7 +134,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.phone_number?.let { value-> IntentManeger.makeCall(app, value) }
+                    it.phone_number?.let { value -> IntentManeger.makeCall(app, value) }
                 }
             }
 
@@ -126,10 +143,11 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.phone_number?.let { value-> IntentManeger.makeCall(app, value) }
+                    it.phone_number?.let { value -> IntentManeger.makeCall(app, value) }
                 }
             }
-            else -> {}
+            else -> {
+            }
         }
     }
 
@@ -141,7 +159,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.email?.let { value-> IntentManeger.sendMail(app, value) }
+                    it.email?.let { value -> IntentManeger.sendMail(app, value) }
                 }
             }
 
@@ -150,10 +168,11 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.email?.let { value-> IntentManeger.sendMail(app, value) }
+                    it.email?.let { value -> IntentManeger.sendMail(app, value) }
                 }
             }
-            else -> {}
+            else -> {
+            }
         }
     }
 
@@ -192,16 +211,23 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
             if (order.message.isNullOrBlank()) View.GONE else View.VISIBLE
 
 
+
+
+
+
+
+
+        order.price?.let {
+
+            dataList.clear()
+            dataList.addAll(it)
+            priceListAdapter.notifyDataSetChanged()
+        }
+
+
         val days = TimeUnit.DAYS.convert(
             order.toDate.time - order.fromDate.time,
             TimeUnit.MILLISECONDS
-        )
-
-        dayNumber.value = String.format(
-            "%s%.02f for %d days",
-            context.getString(R.string.title_curency_symbol),
-            (order.product.price_per_day ?: 0.toDouble()) * days,
-            days
         )
 
 
@@ -221,8 +247,29 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 }
 
+                recieptVisibility.value = View.VISIBLE
 
                 startRatingVisibility.value = View.GONE
+
+
+
+
+                var total = 0.0
+                order.price?.forEach {
+                    if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.Total)
+                        total = if (it.price == 0.0) 0.0 else it.price / 100.0
+                }
+
+
+                dayNumber.value = String.format(
+                    "%s %s for %d days",
+                    context.getString(R.string.text_you_pay),
+                    total.toCurrencyFormat(),
+                    days
+                )
+
+
+
 
 
 
@@ -238,21 +285,21 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
                         startRentingVisibility.value = View.VISIBLE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value=View.VISIBLE
+                        userContactVisibility.value = View.VISIBLE
 
                     }
                     Order.OrderStatusEnum.Started -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.VISIBLE
+                        userContactVisibility.value = View.VISIBLE
 
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.VISIBLE
+                        userContactVisibility.value = View.VISIBLE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
@@ -266,14 +313,14 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                         startRatingVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
 
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
@@ -286,13 +333,13 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
                         finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                 }
 
@@ -311,7 +358,22 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 startRatingVisibility.value = View.GONE
 
+                var total = 0.0
+                order.price?.forEach {
+                    if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.ProductFee)
+                        total = if (it.price == 0.0) 0.0 else it.price / 100.0
+                }
 
+
+                dayNumber.value = String.format(
+                    "%s %s for %d days",
+                    context.getString(R.string.text_you_earn),
+                    total.toCurrencyFormat(),
+                    days
+                )
+
+
+                recieptVisibility.value = View.GONE
                 when (Order.OrderStatusEnum[order.status]) {
                     Order.OrderStatusEnum.Accepted -> {
 
@@ -323,7 +385,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
                         finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Started -> {
 
@@ -335,25 +397,25 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
                         finishVisibility.value = View.VISIBLE
                         cancelVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.VISIBLE
+                        userContactVisibility.value = View.VISIBLE
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
@@ -365,7 +427,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
                         startRentingVisibility.value = View.GONE
                         cancelVisibility.value = View.GONE
 
-                        userContactVisibility.value=View.GONE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
@@ -382,6 +444,114 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
         }
 
 
+        val ownerName =
+            (order.productOwner?.first_name ?: "") + " " + (order.productOwner?.last_name ?: "")
+
+        val orderedUserName =
+            (order.orderUser?.first_name ?: "") + " " + (order.orderUser?.last_name ?: "")
+
+
+
+        when (Order.OrderStatusEnum[order.status]) {
+            Order.OrderStatusEnum.Accepted -> {
+
+                orderStatusImage.value = R.drawable.ic_guide_success
+
+                if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
+
+
+                    orderStatus.value =
+                        app.getString(R.string.text_rent_request_accepted, orderedUserName)
+                } else {
+
+                    orderStatus.value =
+                        app.getString(R.string.text_lend_request_accepted, ownerName)
+                }
+
+
+            }
+            Order.OrderStatusEnum.Started -> {
+
+                orderStatusImage.value = R.drawable.ic_guide_success
+
+                if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
+
+
+                    orderStatus.value =
+                        app.getString(R.string.text_rent_request_started, orderedUserName)
+                } else {
+
+                    orderStatus.value = app.getString(R.string.text_lend_request_started, ownerName)
+                }
+
+
+            }
+            Order.OrderStatusEnum.Canceled -> {
+
+                orderStatusImage.value = R.drawable.ic_remove_red
+
+                if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
+
+                    orderStatus.value = app.getString(R.string.text_rent_canceled)
+                } else {
+
+                    orderStatus.value = app.getString(R.string.text_lend_canceled)
+                }
+
+
+            }
+            Order.OrderStatusEnum.Finished -> {
+
+                orderStatusImage.value = R.drawable.ic_guide_success
+
+
+                if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
+
+                    orderStatus.value = app.getString(R.string.text_rent_complete)
+                } else {
+
+                    orderStatus.value = app.getString(R.string.text_lend_complete)
+                }
+            }
+            Order.OrderStatusEnum.Pending -> {
+
+                orderStatusImage.value = R.drawable.ic_pending
+
+
+                if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
+
+                    orderStatus.value = app.getString(R.string.text_rent_request_pending)
+                } else {
+                    orderStatus.value = app.getString(R.string.text_lend_request_pending, ownerName)
+                }
+
+            }
+
+            Order.OrderStatusEnum.Rejected -> {
+
+                orderStatusImage.value = R.drawable.ic_remove_red
+
+
+                if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
+
+                    orderStatus.value = app.getString(R.string.text_rent_rejected)
+                } else {
+
+                    orderStatus.value = app.getString(R.string.text_lend_rejected)
+                }
+
+            }
+            else -> {
+
+                orderStatusImage.value = R.drawable.ic_remove_red
+
+                orderStatus.value = "Not Set"
+            }
+
+
+        }
+
+
     }
 
 
@@ -389,23 +559,6 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
         acceptIntro.value = true
-//        acceptSubscription?.dispose()
-//        acceptSubscription = orderRepository.updateOrderStatus(
-//            userRepository.getUserToken(),
-//            mOrder.suid,
-//            "accepted"
-//        )
-//            .doOnSubscribe { loading.value = true }
-//            .doOnTerminate { loading.value = false }
-//            .subscribe { result ->
-//                if (result.isSuccess() || result.isAcceptable()) {
-//                    finish.value=true
-//
-//                } else {
-//
-//                    errorMessage.value = result.error?.detail
-//                }
-//            }
 
 
     }
@@ -415,23 +568,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
         declineIntro.value = true
-//        declineSubscription?.dispose()
-//        declineSubscription = orderRepository.updateOrderStatus(
-//            userRepository.getUserToken(),
-//            mOrder.suid,
-//            "rejected"
-//        )
-//            .doOnSubscribe { loading.value = true }
-//            .doOnTerminate { loading.value = false }
-//            .subscribe { result ->
-//                if (result.isSuccess() || result.isAcceptable()) {
-//                    finish.value=true
-//
-//                } else {
-//
-//                    errorMessage.value = result.error?.detail
-//                }
-//            }
+
 
     }
 
@@ -483,24 +620,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     fun onClickFinished() {
 
         finishIntro.value = true
-//        finishSubscription?.dispose()
-//        finishSubscription = orderRepository.updateOrderStatus(
-//            userRepository.getUserToken(),
-//            mOrder.suid,
-//            "finished"
-//        )
-//            .doOnSubscribe { loading.value = true }
-//            .doOnTerminate { loading.value = false }
-//            .subscribe { result ->
-//                if (result.isSuccess() || result.isAcceptable()) {
-//                    finish.value = true
-//
-//
-//                } else {
-//
-//                    errorMessage.value = result.error?.detail
-//                }
-//            }
+
 
     }
 

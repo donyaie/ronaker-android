@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.orderStartRenting
+package com.ronaker.app.ui.orderCancel
 
 
 import android.app.Application
@@ -8,12 +8,10 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import io.reactivex.disposables.Disposable
-import java.util.ArrayList
 import javax.inject.Inject
 
-class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
+class OrderCancelViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -34,10 +32,6 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
 
-    var dataList: ArrayList<Order.OrderPrices> = ArrayList()
-
-    var priceListAdapter: OrderPreviewPriceAdapter
-
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
     private lateinit var mOrder: Order
@@ -48,12 +42,6 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
-    init {
-
-        priceListAdapter = OrderPreviewPriceAdapter(dataList)
-    }
-
-
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
@@ -61,45 +49,41 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
     fun load(order: Order) {
         mOrder = order
-
-        order.price?.let {
-
-            dataList.clear()
-            dataList.addAll(it)
-            priceListAdapter.notifyDataSetChanged()
-        }
-
 
 
     }
 
 
-    fun onClickAccept() {
+    fun onClickAccept(reason: String) {
+
+        if(reason.isBlank()){
+            errorMessage.value="Please write reason"
+            return
+        }
+
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            userRepository.getUserToken(),
-            mOrder.suid,
-            "started"
+            token = userRepository.getUserToken(),
+            suid = mOrder.suid,
+            status = "canceled",
+            reason = reason
         )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
-                    finish.value=true
+                    finish.value = true
 
                 } else {
-                    finish.value=true
-                    errorMessage.value = "Successfully Send"
+
+                    errorMessage.value = result.error?.message
                 }
             }
 
 
     }
-
-
 
 
 }

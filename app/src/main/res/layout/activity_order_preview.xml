@@ -48,10 +48,61 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/split">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/text_content"
+
+                        android:padding="4dp"
+
+                        app:mutableImageSrc="@{viewModel.getOrderStatusImage()}"
+
+                        app:srcCompat="@drawable/ic_remove_red" />
+
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".95"
+                        android:gravity="start"
+                        android:lines="1"
+
+                        android:text="Lend | Canceled order"
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:mutableText="@{viewModel.getOrderStatus()}"
+                        tools:ignore="HardcodedText" />
+
+
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
 
 
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
                     android:minHeight="112dp"
                     android:onClick="@{()->viewModel.onClickItem()}"
                     android:orientation="horizontal">
@@ -96,7 +147,6 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
 
-                        android:layout_marginEnd="24dp"
 
                         android:scaleType="fitCenter"
                         android:src="@color/colorPlatinGrey"
@@ -104,8 +154,18 @@
                         app:riv_corner_radius="3dp"
                         app:srcCompat="@drawable/ic_empty_product" />
 
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/text_content"
+
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:tint="@color/colorAshGrey"
+                        app:srcCompat="@drawable/ic_chevron_right" />
 
                 </LinearLayout>
+
 
 
                 <RelativeLayout
@@ -194,10 +254,31 @@
 
                 </LinearLayout>
 
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:id="@+id/recycler_view"
+
+                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}"
+
+
+                    app:adapter="@{viewModel.getPriceListAdapter()}"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey" />
 

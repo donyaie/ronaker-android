@@ -198,6 +198,13 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.orderCancel.OrderCancelActivity"
+            android:screenOrientation="portrait"
+
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
             android:screenOrientation="portrait"
 

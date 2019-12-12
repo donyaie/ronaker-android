@@ -8,14 +8,17 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
+import com.ronaker.app.ui.orderCancel.OrderCancelActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
@@ -55,6 +58,9 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         binding.viewModel = viewModel
 
+
+        binding.recyclerView.layoutManager= LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
@@ -97,14 +103,23 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         })
 
         viewModel.cancelDialog.observe(this, Observer {
-            showCancel()
+
+            startActivityMakeSceneForResult(
+                OrderCancelActivity.newInstance(this, getOrder()),
+                OrderCancelActivity.REQUEST_CODE
+            )
         })
+
+
+
         viewModel.startRenting.observe(this, Observer {
             startActivityMakeSceneForResult(
                 OrderStartRentingActivity.newInstance(this, getOrder()),
                 OrderStartRentingActivity.REQUEST_CODE
             )
         })
+
+
 
         viewModel.startRate.observe(this, Observer {
             startActivityMakeSceneForResult(
@@ -206,6 +221,13 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
                     finishSafe()
                 }
             }
+
+            OrderCancelActivity.REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    finishSafe()
+                }
+            }
+
 
 
         }
