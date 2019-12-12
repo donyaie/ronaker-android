@@ -11,7 +11,6 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.actionOpenProduct
 import com.ronaker.app.utils.toCurrencyFormat
@@ -23,8 +22,6 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var productRepository: ProductRepository
-
-
 
 
     var dataList: ArrayList<Product.ProductRate> = ArrayList()
@@ -51,6 +48,8 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     val loadingRefresh: MutableLiveData<Boolean> = MutableLiveData()
     val noCommentVisibility: MutableLiveData<Int> = MutableLiveData()
 
+
+    val isFavorite: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val checkout: MutableLiveData<String> = MutableLiveData()
@@ -84,6 +83,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     private var subscription: Disposable? = null
     private var commentSubscription: Disposable? = null
+    private var faveSubscription: Disposable? = null
 
 
     fun loadProduct(product: Product) {
@@ -97,7 +97,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun loadProduct(suid: String, showLoading: Boolean,refresh:Boolean=false) {
+    fun loadProduct(suid: String, showLoading: Boolean, refresh: Boolean = false) {
         subscription?.dispose()
         this.suid = suid
         subscription = productRepository
@@ -107,12 +107,12 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
                 retry.value = null
                 loading.value = showLoading
 
-                loadingRefresh.value=refresh
+                loadingRefresh.value = refresh
 
             }
             .doOnTerminate {
                 loading.value = false
-                loadingRefresh.value=false
+                loadingRefresh.value = false
             }
 
             .subscribe { result ->
@@ -137,31 +137,31 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun loadComment(suid: String){
+    fun loadComment(suid: String) {
 
 
         commentSubscription?.dispose()
-        commentSubscription=productRepository
+        commentSubscription = productRepository
             .getProductRating(userRepository.getUserToken(), suid)
 
             .doOnSubscribe {
 
-                loadingComment.value=true
+                loadingComment.value = true
             }
             .doOnTerminate {
 
-                loadingComment.value=false
+                loadingComment.value = false
             }
 
             .subscribe { result ->
                 if (result.isSuccess()) {
 
 
-                    if (result.data?.results!=null && result.data.results.isNotEmpty()){
-                        noCommentVisibility.value=View.GONE
-                    }else{
+                    if (result.data?.results != null && result.data.results.isNotEmpty()) {
+                        noCommentVisibility.value = View.GONE
+                    } else {
 
-                        noCommentVisibility.value=View.VISIBLE
+                        noCommentVisibility.value = View.VISIBLE
                     }
 
                     result.data?.results?.let {
@@ -196,36 +196,38 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
         product.owner?.let {
 
-            it.avatar?.let {avatar->
+            it.avatar?.let { avatar ->
 
-                userImage.value=BASE_URL+avatar
+                userImage.value = BASE_URL + avatar
 
             }
 
-            userName.value=(it.first_name?:"")+" "+(it.last_name?:"")
+            userName.value = (it.first_name ?: "") + " " + (it.last_name ?: "")
 
-            userRepository.getUserInfo()?.let {info->
-                if(it.suid?.compareTo(info.suid?:"")==0)
-                    checkoutVisibility.value= View.GONE
+            userRepository.getUserInfo()?.let { info ->
+                if (it.suid?.compareTo(info.suid ?: "") == 0)
+                    checkoutVisibility.value = View.GONE
                 else
-                    checkoutVisibility.value= View.VISIBLE
+                    checkoutVisibility.value = View.VISIBLE
             }
 
         }
         //title_positive_rate
 
-        product.rate?.let {rate->
+        isFavorite.value = product.isFavourite != null && product.isFavourite == true
+
+        product.rate?.let { rate ->
 
 
-            productRate.value=rate.toString()
+            productRate.value = rate.toString()
 
-            productRatestatus.value="Positive Rate"
+            productRatestatus.value = "Positive Rate"
 
 
-        }?: run {
+        } ?: run {
 
-            productRate.value=""
-            productRatestatus.value="Not Rated"
+            productRate.value = ""
+            productRatestatus.value = "Not Rated"
         }
 
 
@@ -247,7 +249,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             }
             product.price_per_week != 0.0 -> {
 
-                productPrice.value =  product.price_per_week?.toCurrencyFormat()
+                productPrice.value = product.price_per_week?.toCurrencyFormat()
 
                 productPriceTitle.value = context.getString(R.string.title_per_week)
             }
@@ -271,7 +273,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun onRefresh() {
 
-        suid?.let { loadProduct(it, false,true) }
+        suid?.let { loadProduct(it, false, true) }
     }
 
     fun onRetry() {
@@ -283,6 +285,73 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         super.onCleared()
         subscription?.dispose()
         commentSubscription?.dispose()
+        faveSubscription?.dispose()
+    }
+
+    fun setFavorite(suid: String) {
+
+        faveSubscription?.dispose()
+
+
+
+        if(  mProduct?.isFavourite != null && mProduct?.isFavourite == true) {
+
+            faveSubscription = productRepository
+                .productSavedRemove(userRepository.getUserToken(), suid)
+
+                .doOnSubscribe {
+
+//                    loading.value = true
+                }
+                .doOnTerminate {
+
+//                    loading.value = false
+                }
+
+                .subscribe { result ->
+                    if (result.isAcceptable()) {
+                        mProduct?.isFavourite=false
+
+                        isFavorite.value=false
+
+
+
+                    }
+                    else{
+                        errorMessage.value= result?.error?.message
+                    }
+                }
+
+        }else{
+            faveSubscription = productRepository
+                .productSave(userRepository.getUserToken(), suid)
+
+                .doOnSubscribe {
+
+//                    loading.value = true
+                }
+                .doOnTerminate {
+
+//                    loading.value = false
+                }
+
+                .subscribe { result ->
+                    if (result.isAcceptable()) {
+
+                        mProduct?.isFavourite=true
+                        isFavorite.value=true
+
+
+                    }
+                    else{
+                        errorMessage.value= result?.error?.message
+                    }
+                }
+        }
+
+
+
+
     }
 
 

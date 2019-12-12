@@ -54,7 +54,7 @@ class ProductSavedActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            if(errorMessage!=null) Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
 
