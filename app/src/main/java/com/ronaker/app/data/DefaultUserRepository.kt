@@ -11,7 +11,10 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DefaultUserRepository(private val userApi: UserApi, private val preferencesProvider: PreferencesDataSource) :
+class DefaultUserRepository(
+    private val userApi: UserApi,
+    private val preferencesProvider: PreferencesDataSource
+) :
     UserRepository {
 
 
@@ -63,14 +66,14 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
 
 
     override fun updateUserInfo(user_token: String?, user: User): Observable<Result<User>> {
-        val info= UserUpdateRequestModel(
+        val info = UserUpdateRequestModel(
             user.first_name,
             user.last_name,
             user.email,
             user.avatar
         )
 
-        return userApi.updateUserInfo("Token $user_token",info)
+        return userApi.updateUserInfo("Token $user_token", info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -89,14 +92,22 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
 
             .map {
 
-                it.toUserModel()
+                it.toUserModel().apply {
+
+                    saveUserInfo(this)
+
+                }
+
             }
 
             .toResult()
 
     }
 
-    override fun addUserPhoneNumber(user_token: String?, phone_number: String): Observable<Result<String>> {
+    override fun addUserPhoneNumber(
+        user_token: String?,
+        phone_number: String
+    ): Observable<Result<String>> {
 
         val phone =
             UserAddPhoneRequestModel(
@@ -146,11 +157,11 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
                 imageSuid,
                 documentType.key
             )
-        return userApi.addDocument("Token $userToken",phone)
+        return userApi.addDocument("Token $userToken", phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-               true
+                true
             }
             .toResult()
 
@@ -158,8 +169,9 @@ class DefaultUserRepository(private val userApi: UserApi, private val preference
 
 
     override fun saveUserInfo(info: User?) {
-        preferencesProvider.putObject(UserInfoKey,info)
+        preferencesProvider.putObject(UserInfoKey, info)
     }
+
     override fun getUserInfo(): User? {
         return preferencesProvider.getObject(UserInfoKey, User::class.java)
     }

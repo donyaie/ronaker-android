@@ -30,6 +30,7 @@ import com.ronaker.app.ui.productRate.ProductRateViewModel
 import com.ronaker.app.ui.productSaved.ProductSavedViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
+import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
 import com.ronaker.app.ui.profileImage.ProfileImageViewModel
 import com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel
@@ -37,7 +38,7 @@ import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 
-abstract class BaseViewModel(private  val app: Application) : AndroidViewModel(app) {
+abstract class BaseViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private val injector: ViewModelInjector = DaggerViewModelInjector
         .builder()
@@ -102,7 +103,8 @@ abstract class BaseViewModel(private  val app: Application) : AndroidViewModel(a
             is ProductRateViewModel -> injector.inject(this)
 
             is OrderCancelViewModel -> injector.inject(this)
-            is ProductSavedViewModel ->injector.inject(this)
+            is ProductSavedViewModel -> injector.inject(this)
+            is ProfileEmailVerifyViewModel -> injector.inject(this)
         }
 
     }
