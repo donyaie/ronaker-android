@@ -82,11 +82,14 @@ class ProfileEditActivity : BaseActivity() {
 
         viewModel.imageComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
+//                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
+
+                binding.imageLayout.isClickable=false
                 binding.imageLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else {
 
-                binding.imageLayout.setText(R.string.title_add_profile_image)
+                binding.imageLayout.isClickable=true
+//                binding.imageLayout.setText(R.string.title_add_profile_image)
                 binding.imageLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
             }
         })
@@ -94,9 +97,13 @@ class ProfileEditActivity : BaseActivity() {
         viewModel.signComplete.observe(this, Observer { value ->
             if (value == true) {
 
+
+                binding.signLayout.isClickable=false
                 binding.signLayout.setEndDrawableRes(R.drawable.ic_complete)
 
             } else {
+
+                binding.signLayout.isClickable=true
                 binding.signLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
             }
         })
@@ -104,10 +111,14 @@ class ProfileEditActivity : BaseActivity() {
 
         viewModel.phoneComplete.observe(this, Observer { value ->
             if (value == true) {
-                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number_edit)
+
+                binding.phoneLayout.isClickable=false
+//                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number_edit)
                 binding.phoneLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else {
-                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number)
+
+                binding.phoneLayout.isClickable=true
+//                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number)
                 binding.phoneLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
             }
         })
@@ -115,20 +126,27 @@ class ProfileEditActivity : BaseActivity() {
 
         viewModel.identityComplete.observe(this, Observer { value ->
             if (value == true) {
+
+                binding.identityLayout.isClickable=false
                 binding.identityLayout.setEndDrawableRes(R.drawable.ic_complete)
-            } else
+            } else {
+
+                binding.identityLayout.isClickable=true
                 binding.identityLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+            }
         })
 
         viewModel.peymentComplete.observe(this, Observer { value ->
             if (value == true) {
                 binding.paymentLayout.setEndDrawableRes(R.drawable.ic_complete)
 
-                binding.paymentLayout.setText(R.string.title_add_a_payment_method_edit)
+                binding.paymentLayout.isClickable=false
+//                binding.paymentLayout.setText(R.string.title_add_a_payment_method_edit)
             } else {
                 binding.paymentLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
 
-                binding.paymentLayout.setText(R.string.title_add_a_payment_method)
+                binding.paymentLayout.isClickable=true
+//                binding.paymentLayout.setText(R.string.title_add_a_payment_method)
             }
         })
 

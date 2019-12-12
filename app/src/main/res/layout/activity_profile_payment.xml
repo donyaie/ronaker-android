@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
 
         android:background="@color/white"
-        android:fitsSystemWindows="true"
         android:gravity="center"
         android:layoutDirection="ltr">
 
@@ -36,6 +35,8 @@
         <androidx.core.widget.NestedScrollView
 
             android:id="@+id/scroll_view"
+
+            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -322,9 +323,12 @@
                     android:linksClickable="true"
                     android:autoLink="web"
                     android:layout_marginTop="16dp"
+
                     android:id="@+id/privecy_text"
                     android:layout_marginBottom="40dp"
                     android:text="Payments Terms"
+                    android:onClick="@{()->viewModel.onClickTerms()}"
+                    android:textColor="@color/colorTextLink"
                     android:textAppearance="@style/TextAppearance.Large.SB"
                     android:gravity="start"
 

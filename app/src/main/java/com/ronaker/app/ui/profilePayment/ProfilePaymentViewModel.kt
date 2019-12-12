@@ -7,11 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.TERMS_URL
 import io.reactivex.disposables.Disposable
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-class ProfilePaymentViewModel(app: Application) : BaseViewModel(app) {
+class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -113,6 +115,10 @@ class ProfilePaymentViewModel(app: Application) : BaseViewModel(app) {
             }
         }
 
+    }
+
+    fun onClickTerms(){
+        IntentManeger.openUrl(app,TERMS_URL)
     }
 
 
