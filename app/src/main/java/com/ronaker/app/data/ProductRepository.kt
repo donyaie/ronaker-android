@@ -17,5 +17,8 @@ interface ProductRepository {
         token: String?,
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>>
+
+    fun productSavedRemove(token: String?, suid: String): Observable<Result<Boolean>>
+    fun productSave(token: String?, suid: String): Observable<Result<Boolean>>
 }
 

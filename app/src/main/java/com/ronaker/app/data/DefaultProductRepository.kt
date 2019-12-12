@@ -120,4 +120,33 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
 
+
+    override fun productSave(
+        token: String?,
+        suid: String
+    ): Observable<Result<Boolean>> {
+        return productApi.productSave("Token $token", suid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+               true
+            }
+            .toResult()
+    }
+
+
+    override fun productSavedRemove(
+        token: String?,
+        suid: String
+    ): Observable<Result<Boolean>> {
+        return productApi.productSavedRemove("Token $token", suid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+    }
+
+
 }

@@ -67,5 +67,23 @@ interface ProductApi {
 
 
 
+    /**
+     * save product to fave item
+     */
+    @POST("/api/v1/products/{product_suid}/favourite")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun productSave(@Header("Authorization") authToken: String, @Path("product_suid") suid:String): Observable<FreeResponseModel>
+
+
+
+    /**
+     * save product to fave item
+     */
+    @DELETE("/api/v1/products/{product_suid}/favourite")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun productSavedRemove(@Header("Authorization") authToken: String, @Path("product_suid") suid:String): Observable<FreeResponseModel>
+
+
+
 
 }
