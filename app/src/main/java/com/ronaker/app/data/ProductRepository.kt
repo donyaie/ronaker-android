@@ -8,7 +8,7 @@ import com.ronaker.app.model.Product
 import io.reactivex.Observable
 
 interface ProductRepository {
-    fun productSearch(token: String?, query: String?, page: Int, location: LatLng?, radius: Int?): Observable<Result<ListResponseModel<Product>>>
+    fun productSearch(token: String?, query: String?, page: Int, location: LatLng?, radius: Int?, isSaved:Boolean?=null): Observable<Result<ListResponseModel<Product>>>
     fun getMyProduct(token: String?, page: Int): Observable<Result<ListResponseModel<Product>>>
     fun productCreate(token: String?, product: Product): Observable<Result<String?>>
     fun productUpdate(token: String?, suid: String, product: Product): Observable<Result<String?>>
@@ -17,5 +17,8 @@ interface ProductRepository {
         token: String?,
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>>
+
+    fun productSavedRemove(token: String?, suid: String): Observable<Result<Boolean>>
+    fun productSave(token: String?, suid: String): Observable<Result<Boolean>>
 }
 

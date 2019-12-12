@@ -29,6 +29,7 @@ data class Product(
     , var user_status: String? = null
     , var rate: Double? = null
     , var owner: User? = null
+    , var isFavourite: Boolean? = null
 
 
 ) : Parcelable {
@@ -122,7 +123,7 @@ data class Product(
     data class ProductRate(
         var stars: Float?,
         var comment: String?,
-        var user:User?
+        var user: User?
     ) : Parcelable {
 
 
@@ -137,7 +138,7 @@ fun List<ProductRatingResponceModel>.toProductRateList(): List<Product.ProductRa
 
     this.forEach {
 
-        val product = Product.ProductRate(it.stars,it.comment,it.user.toUserModel())
+        val product = Product.ProductRate(it.stars, it.comment, it.user.toUserModel())
 
         list.add(product)
     }
@@ -145,7 +146,6 @@ fun List<ProductRatingResponceModel>.toProductRateList(): List<Product.ProductRa
     return list
 
 }
-
 
 
 fun List<ProductItemResponceModel>.toProductList(): List<Product> {
@@ -207,7 +207,8 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         user_status = user_status,
         review_status = review_status,
         rate = rating,
-        owner = this.owner?.toUserModel()
+        owner = this.owner?.toUserModel(),
+        isFavourite = this.favourite
 
     )
 

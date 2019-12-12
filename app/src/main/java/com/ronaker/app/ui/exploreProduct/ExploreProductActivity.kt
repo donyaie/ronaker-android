@@ -3,7 +3,6 @@ package com.ronaker.app.ui.exploreProduct
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -80,8 +78,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-        binding.recycler.layoutManager=LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+        binding.recycler.layoutManager = LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
 
         binding.refreshLayout.setOnRefreshListener {
@@ -101,7 +99,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //        }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            if (errorMessage != null) Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
         viewModel.imageList.observe(this, Observer { images ->
@@ -126,6 +124,12 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 binding.commentLoading.hideLoading()
         })
 
+        viewModel.isFavorite.observe(this, Observer { value ->
+            if (value == true) {
+                binding.toolbar.action2Src = R.drawable.ic_fave_primery
+            } else
+                binding.toolbar.action2Src = R.drawable.ic_fave_white
+        })
 
 
         viewModel.loadingRefresh.observe(this, Observer { loading ->
@@ -157,7 +161,18 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
         }
-        binding.toolbar.action2BouttonClickListener = View.OnClickListener { }
+
+
+
+        binding.toolbar.action2BouttonClickListener = View.OnClickListener {
+
+            getCurrentSUID()?.let { viewModel.setFavorite(it) }
+
+        }
+
+
+
+
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
@@ -217,7 +232,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
-                viewModel.loadProduct(it,true)
+                viewModel.loadProduct(it, true)
 
             }
 
@@ -238,11 +253,9 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 binding.toolbar.isBottomLine = false
             }, 500)
 
-        }
-        else{
+        } else {
             viewModel.onRefresh()
         }
-
 
 
     }

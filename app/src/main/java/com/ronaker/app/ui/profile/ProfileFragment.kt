@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.ui.productSaved.ProductSavedActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.utils.IntentManeger
@@ -62,6 +63,8 @@ class ProfileFragment : BaseFragment() {
 
         binding.faveLayout.setOnClickListener{
 
+
+            activity?.let {   it.startActivityMakeScene(ProductSavedActivity.newInstance(it) )}
 
         }
 

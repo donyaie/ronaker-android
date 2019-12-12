@@ -21,6 +21,7 @@ import com.ronaker.app.ui.orders.OrderListViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.productRate.ProductRateViewModel
+import com.ronaker.app.ui.productSaved.ProductSavedViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
 import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
@@ -70,6 +71,7 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfileSettingViewModel)
     fun inject(viewModel: ProductRateViewModel)
     fun inject(viewModel: OrderCancelViewModel)
+    fun inject(viewModel: ProductSavedViewModel)
 
     @Component.Builder
     interface Builder {

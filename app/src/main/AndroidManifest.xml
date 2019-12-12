@@ -197,6 +197,14 @@
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
+
+        <activity
+            android:name=".ui.productSaved.ProductSavedActivity"
+            android:screenOrientation="portrait"
+
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".ui.orderCancel.OrderCancelActivity"
             android:screenOrientation="portrait"
