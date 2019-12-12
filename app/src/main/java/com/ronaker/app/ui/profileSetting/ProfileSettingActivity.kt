@@ -17,6 +17,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.TERMS_URL
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
@@ -98,7 +99,7 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding.termsLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this,"https://ronaker.com/?page_id=7678")
+            IntentManeger.openUrl(this,TERMS_URL)
         }
 
 

@@ -7,6 +7,11 @@ const val BASE_URL: String = "https://api.ronaker.com"
 const val SHARE_URL: String = "https://ronaker.com/product/"
 const val FONT_PATH: String = "fonts/regular.otf"
 
+
+const val SUPPORT_URL: String = "support@ronaker.com"
+const val TERMS_URL: String = "https://ronaker.com/?page_id=7678"
+
+
 /** The Google URL  */
 const val GOOGLE_URL: String = "https://maps.googleapis.com"
 

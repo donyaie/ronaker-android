@@ -24,21 +24,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_action_container="TEXT"
             app:toolbar_component_bottom_line="false"
             app:toolbar_component_cancel_container="BACK"
+            app:toolbar_component_action_text="Save"
             app:toolbar_component_center_container="NONE"
             app:toolbar_component_dot_count="3"
             app:toolbar_component_transparent="false" />
 
         <androidx.core.widget.NestedScrollView
 
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -134,7 +137,7 @@
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal"
 
-                    android:weightSum="3"
+                    android:weightSum="2"
                     app:layout_constraintTop_toBottomOf="@id/card_layout">
 
 
@@ -163,8 +166,8 @@
                         android:layout_marginStart="16dp"
                         android:layout_weight="1"
 
-                        android:imeOptions="actionDone"
-                        android:inputType="date"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
                         android:maxLength="4"
                         android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE"
 
@@ -181,7 +184,156 @@
                 </LinearLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/postal_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+
+                    app:inputMutableText="@{viewModel.getPostalCodeText()}"
+                    app:input_hint="12345"
+                    app:input_regex="^[0-9]$"
+                    app:input_title="Postal Code"
+                    app:input_transparent="false"
+                    app:input_validation_mode="AUTO"
+                    tools:ignore="UnusedAttribute" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Billing Address"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+
+
+                    app:inputMutableText="@{viewModel.getFullNameText()}"
+                    app:input_hint=""
+                    app:input_title="Full name"
+                    android:layout_marginTop="16dp"
+                    app:input_transparent="false"
+                    app:input_validation_mode="AUTO"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/address_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPostalAddress"
+
+
+                    app:inputMutableText="@{viewModel.getAddressText()}"
+                    app:input_hint=""
+                    app:input_title="Address"
+                    app:input_transparent="false"
+                    app:input_validation_mode="AUTO"
+                    tools:ignore="UnusedAttribute" />
+
+
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/address_line2_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPostalAddress"
+                    app:inputMutableText="@{viewModel.getAddressLine2Text()}"
+                    app:input_hint=""
+                    app:input_title="Address Line 2 (Optional)"
+                    app:input_transparent="false"
+                    app:input_validation_mode="AUTO"
+                    tools:ignore="UnusedAttribute" />
+
+
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/city_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    app:inputMutableText="@{viewModel.getCityText()}"
+                    app:input_hint=""
+                    app:input_title="City"
+                    app:input_transparent="false"
+                    app:input_validation_mode="AUTO"
+                    tools:ignore="UnusedAttribute" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                    <com.ronaker.app.utils.view.InputComponent
+                        android:id="@+id/country_input"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:layout_weight="1"
+                        android:inputType="text"
+                        app:inputMutableText="@{viewModel.getCountryText()}"
+                        app:input_hint=""
+                        app:input_title="Country/Region"
+                        app:input_transparent="false"
+                        app:input_validation_mode="NONE"
+                        tools:ignore="UnusedAttribute" />
+
+                    <com.ronaker.app.utils.view.InputComponent
+                        android:id="@+id/address_postal_input"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:layout_weight="1"
+                        android:inputType="text"
+                        app:inputMutableText="@{viewModel.getAddressPostalText()}"
+                        app:input_hint=""
+                        app:input_title="Postal Code"
+                        app:input_transparent="false"
+                        app:input_validation_mode="AUTO"
+                        tools:ignore="UnusedAttribute" />
+
+
+
+
+                </LinearLayout>
+
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/privecy_text"
+                    android:layout_marginBottom="40dp"
+                    android:text="Payments Terms"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
+                    android:gravity="start"
+
+                    />
+
+
+
+
+
+            </LinearLayout>
 
 
         </androidx.core.widget.NestedScrollView>

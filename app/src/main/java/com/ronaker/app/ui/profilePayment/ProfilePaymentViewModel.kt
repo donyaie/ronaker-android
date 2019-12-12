@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-class ProfilePaymentViewModel (app: Application): BaseViewModel(app) {
+class ProfilePaymentViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -33,6 +33,16 @@ class ProfilePaymentViewModel (app: Application): BaseViewModel(app) {
     val cardCVVText: MutableLiveData<String> = MutableLiveData()
 
 
+    val addressPostalText: MutableLiveData<String> = MutableLiveData()
+    val countryText: MutableLiveData<String> = MutableLiveData()
+    val cityText: MutableLiveData<String> = MutableLiveData()
+    val addressLine2Text: MutableLiveData<String> = MutableLiveData()
+    val addressText: MutableLiveData<String> = MutableLiveData()
+    val fullNameText: MutableLiveData<String> = MutableLiveData()
+
+    val postalCodeText: MutableLiveData<String> = MutableLiveData()
+
+
     private var subscription: Disposable? = null
 
 
@@ -50,11 +60,11 @@ class ProfilePaymentViewModel (app: Application): BaseViewModel(app) {
         private var pattern: Pattern? = null
         private var shortPattern: Pattern? = null
 
-         constructor() {
+        constructor() {
             this.pattern = null
         }
 
-         constructor(pattern: String?, shortPattern: String?) {
+        constructor(pattern: String?, shortPattern: String?) {
             pattern?.let { this.pattern = Pattern.compile(it) }
 
             shortPattern?.let { this.shortPattern = Pattern.compile(it) }
