@@ -26,8 +26,7 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
-import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
-import com.ronaker.app.ui.profileEdit.ProfileEditActivity
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeScene
@@ -227,7 +226,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value)
-                startActivityMakeScene(ProfileEditActivity.newInstance(this@AddProductActivity))
+                startActivityMakeScene(ProfileCompleteActivity.newInstance(this@AddProductActivity))
             else
                 finishSafe()
         })

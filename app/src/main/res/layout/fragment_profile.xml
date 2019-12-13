@@ -98,69 +98,82 @@
                             app:mutableVisibility="@{viewModel.getEditVisibility()}" />
 
 
-                        <ProgressBar
-
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:max="5"
-                            android:progress="0"
-                            app:mutableProgress="@{viewModel.getCompleteProgress()}"
-
-                            app:mutableVisibility="@{viewModel.getCompleteProgressVisibility()}" />
-
-
                         <LinearLayout
-                            android:id="@+id/complete_layout"
                             android:layout_width="match_parent"
+                            android:orientation="vertical"
+
+                            android:id="@+id/profile_complete_layout"
+                            android:clickable="true"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:orientation="horizontal"
-                            app:mutableVisibility="@{viewModel.getCompleteVisibility()}">
+                            android:focusable="true">
+                            <ProgressBar
 
-
-                            <TextView
-
-                                android:id="@+id/complete_text"
-
-                                android:layout_width="0dp"
+                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".95"
-                                android:text="@string/title_complete_profile"
-                                android:textAppearance="@style/TextAppearance.Medium.Regular"
-                                android:textColor="@color/colorTextDark" />
+                                android:layout_marginTop="8dp"
+                                android:max="5"
+                                android:progress="0"
+                                app:mutableProgress="@{viewModel.getCompleteProgress()}"
+
+                                app:mutableVisibility="@{viewModel.getCompleteProgressVisibility()}" />
 
 
-                            <TextView
-
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/complete_layout"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/background_oval_green"
-                                android:minWidth="16dp"
-                                android:gravity="center"
-                                android:text="3"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal"
+                                app:mutableVisibility="@{viewModel.getCompleteVisibility()}">
 
-                                android:textAppearance="@style/TextAppearance.Small.SB"
 
-                                android:textColor="@color/colorTextLight"
-                                app:mutableText="@{viewModel.getUserStep()}"
+                                <TextView
 
-                                tools:ignore="HardcodedText" />
+                                    android:id="@+id/complete_text"
 
-                            <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".95"
+                                    android:text="@string/title_complete_profile"
+                                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                                    android:textColor="@color/colorTextDark" />
 
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" for 5"
 
-                                android:textAppearance="@style/TextAppearance.Small.SB"
+                                <TextView
 
-                                android:textColor="@color/colorTextDark"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/background_oval_green"
+                                    android:minWidth="16dp"
+                                    android:gravity="center"
+                                    android:text="3"
 
-                                tools:ignore="HardcodedText" />
+                                    android:textAppearance="@style/TextAppearance.Small.SB"
+
+                                    android:textColor="@color/colorTextLight"
+                                    app:mutableText="@{viewModel.getUserStep()}"
+
+                                    tools:ignore="HardcodedText" />
+
+                                <TextView
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" for 5"
+
+                                    android:textAppearance="@style/TextAppearance.Small.SB"
+
+                                    android:textColor="@color/colorTextDark"
+
+                                    tools:ignore="HardcodedText" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
+
+
+
 
 
                     </LinearLayout>

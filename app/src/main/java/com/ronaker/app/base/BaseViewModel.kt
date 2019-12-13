@@ -29,7 +29,7 @@ import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.productRate.ProductRateViewModel
 import com.ronaker.app.ui.productSaved.ProductSavedViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
-import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteViewModel
 import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
 import com.ronaker.app.ui.profileImage.ProfileImageViewModel
@@ -86,7 +86,7 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
             is AddProductLocationViewModel -> injector.inject(this)
             is AddProductLocationSearchViewModel -> injector.inject(this)
             is AddProductCategorySelectViewModel -> injector.inject(this)
-            is ProfileEditViewModel -> injector.inject(this)
+            is ProfileCompleteViewModel -> injector.inject(this)
 
             is ProfilePaymentViewModel -> injector.inject(this)
             is ProfileIdentifyViewModel -> injector.inject(this)

@@ -23,7 +23,7 @@ import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.productRate.ProductRateViewModel
 import com.ronaker.app.ui.productSaved.ProductSavedViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
-import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteViewModel
 import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
 import com.ronaker.app.ui.profileImage.ProfileImageViewModel
@@ -59,7 +59,7 @@ interface ViewModelInjector {
     fun inject(viewModel: AddProductLocationViewModel)
     fun inject(viewModel: AddProductLocationSearchViewModel)
     fun inject(viewModel: AddProductCategorySelectViewModel)
-    fun inject(viewModel: ProfileEditViewModel)
+    fun inject(viewModel: ProfileCompleteViewModel)
     fun inject(viewModel: OrderListViewModel)
     fun inject(viewModel: ProfilePaymentViewModel)
     fun inject(viewModel: ProfileIdentifyViewModel)

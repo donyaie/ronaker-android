@@ -49,7 +49,7 @@ class ProfileEmailVerifyActivity : BaseActivity() {
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
-        viewModel.goNex.observe(this, Observer { errorMessage ->
+        viewModel.goNex.observe(this, Observer {
            finishSafe()
         })
 

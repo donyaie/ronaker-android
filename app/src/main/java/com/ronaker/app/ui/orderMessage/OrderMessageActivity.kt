@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.profileEdit.ProfileEditActivity
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeScene
@@ -81,7 +81,7 @@ class OrderMessageActivity : BaseActivity() {
 
 
         viewModel.goNext.observe(this, Observer {
-            startActivityMakeScene(ProfileEditActivity.newInstance(this))
+            startActivityMakeScene(ProfileCompleteActivity.newInstance(this))
         })
 
 

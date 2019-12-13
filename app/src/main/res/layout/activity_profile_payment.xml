@@ -205,7 +205,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Billing Address"
+                    android:text="@string/text_billing_address"
                     android:textAppearance="@style/TextAppearance.Heading.2"
                     android:textColor="@color/colorTextDark"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -326,7 +326,7 @@
 
                     android:id="@+id/privecy_text"
                     android:layout_marginBottom="40dp"
-                    android:text="Payments Terms"
+                    android:text="@string/text_payments_terms"
                     android:onClick="@{()->viewModel.onClickTerms()}"
                     android:textColor="@color/colorTextLink"
                     android:textAppearance="@style/TextAppearance.Large.SB"
