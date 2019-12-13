@@ -20,6 +20,7 @@ import com.ronaker.app.base.BaseActivity
 import android.text.style.ReplacementSpan
 import androidx.annotation.NonNull
 import android.text.Spanned
+import android.view.ViewTreeObserver
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -31,7 +32,7 @@ import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
 
-class ProfilePaymentActivity : BaseActivity() {
+class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfilePaymentBinding
@@ -80,6 +81,8 @@ class ProfilePaymentActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
+
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
         viewModel.retry.observe(this, Observer { value ->
@@ -260,6 +263,14 @@ class ProfilePaymentActivity : BaseActivity() {
 
 
             }).check()
+    }
+
+    override fun onScrollChanged() {
+
+
+
+        binding.toolbar.isBottomLine = binding.scrollView.canScrollVertically(-1)
+
     }
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

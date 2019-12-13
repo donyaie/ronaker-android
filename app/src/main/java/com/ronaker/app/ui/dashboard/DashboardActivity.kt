@@ -22,7 +22,9 @@ import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
+import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -64,6 +66,16 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
                 startActivity(LoginActivity.newInstance(this@DashboardActivity))
                 finish()
+
+            }
+        })
+
+
+        viewModel.goEmail.observe(this, Observer { value ->
+            if (value == true) {
+
+                startActivity(ProfileEmailVerifyActivity.newInstance(this@DashboardActivity))
+
 
             }
         })

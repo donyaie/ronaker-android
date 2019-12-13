@@ -10,14 +10,19 @@ import android.provider.Settings
 
 object IntentManeger {
 
+    private val TAG = IntentManeger::class.java.name
 
     fun openSettings(activity: Activity, requestCode: Int) {
+        try {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri: Uri = Uri.fromParts("package", activity.packageName, null)
+            intent.data = uri
+            intent.flags = FLAG_ACTIVITY_NEW_TASK
+            activity.startActivityForResult(intent, requestCode)
+        } catch (ex:Exception) {
 
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val uri: Uri = Uri.fromParts("package", activity.packageName, null)
-        intent.data = uri
-        intent.flags = FLAG_ACTIVITY_NEW_TASK
-        activity.startActivityForResult(intent, requestCode)
+            AppDebug.log(TAG, ex)
+        }
     }
 
 
@@ -28,12 +33,14 @@ object IntentManeger {
 
             context.startActivity(browserIntent)
         } catch (ex: Exception) {
-            ex.printStackTrace()
+            AppDebug.log(TAG, ex)
         }
     }
 
 
-     fun shareTextUrl(context: Context, title: String, url: String) {
+
+
+    fun shareTextUrl(context: Context, title: String, url: String) {
         try {
 
             val share = Intent(Intent.ACTION_SEND).apply {
@@ -48,27 +55,61 @@ object IntentManeger {
             shareIntent.flags = FLAG_ACTIVITY_NEW_TASK
             context.startActivity(shareIntent)
         } catch (ex: Exception) {
-            ex.printStackTrace()
+
+            AppDebug.log(TAG, ex)
         }
     }
 
 
     fun sendMail(context: Context, email: String) {
-        val intent = Intent(Intent.ACTION_SENDTO)
-        intent.type = "text/plain"
-        intent.data = Uri.parse("mailto:$email}")
-        val chooserIntent =  Intent.createChooser(intent, "Send Email")
-        chooserIntent.flags = FLAG_ACTIVITY_NEW_TASK
+        try {
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.type = "text/plain"
+            intent.data = Uri.parse("mailto:$email}")
+            val chooserIntent = Intent.createChooser(intent, "Send Email")
+            chooserIntent.flags = FLAG_ACTIVITY_NEW_TASK
 
-        context.startActivity(chooserIntent)
+            context.startActivity(chooserIntent)
+        } catch (ex: java.lang.Exception) {
+
+            AppDebug.log(TAG, ex)
+        }
+    }
+
+
+    fun openMailBox(context: Context) {
+        try {
+//
+//            val intent = Intent(Intent.ACTION_SENDTO)
+//            intent.type = "text/plain"
+//            intent.data = Uri.parse("mailto:")
+
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+
+
+
+            val chooserIntent = Intent.createChooser(intent, "Open Mail Box")
+            chooserIntent.flags = FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(chooserIntent)
+
+        } catch (ex: Exception) {
+
+            AppDebug.log(TAG, ex)
+        }
     }
 
 
     fun makeCall(context: Context, phone: String) {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.flags = FLAG_ACTIVITY_NEW_TASK
-        intent.data = Uri.parse("tel:$phone")
-        context.startActivity(intent)
+        try {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.flags = FLAG_ACTIVITY_NEW_TASK
+            intent.data = Uri.parse("tel:$phone")
+            context.startActivity(intent)
+        } catch (ex: java.lang.Exception) {
+
+            AppDebug.log(TAG, ex)
+        }
     }
 
 

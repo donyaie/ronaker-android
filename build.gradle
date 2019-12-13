@@ -31,13 +31,13 @@ buildscript {
     ext.ucropVersion = '2.2.4'
     ext.roundedImageVersion = '2.3.0'
 
-    ext.libPhoneNumberVersion = '8.10.19'
+    ext.libPhoneNumberVersion = '8.11.1'
     ext.ccpVersion = '2.2.9'
     ext.pinentryEditTextVersion = '2.0.6'
     ext.okhttpVersion = '3.12.1'
     ext.firebaseVersion = '17.2.1'
     ext.firebaseInvitesVersion = '17.0.0'
-    ext.firebasePerf = '19.0.2'
+    ext.firebasePerf = '19.0.3'
     ext.crashlyticsVersion='2.10.1'
 
     ext.swipebackVersion='1.1.0'

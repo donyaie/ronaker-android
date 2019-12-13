@@ -19,6 +19,8 @@ class DashboardViewModel(app: Application) : BaseViewModel(app) {
 
     val goLogin: MutableLiveData<Boolean> = MutableLiveData()
 
+    val goEmail: MutableLiveData<Boolean> = MutableLiveData()
+
     var islogin = false
 
     init {
@@ -27,10 +29,20 @@ class DashboardViewModel(app: Application) : BaseViewModel(app) {
             goLogin.value = true
         } else {
             islogin = true
-            userRepository.getUserInfo()?.suid?.let {
-                getAnalytics()?.setUserId(it)
-                AnalyticsManager.setUserId(it)
+            userRepository.getUserInfo()?.let {
+                it.suid?.let {suid->
+                    getAnalytics()?.setUserId(suid)
+                    AnalyticsManager.setUserId(suid) }
+                if(it.is_email_verified!=true){
+                    goEmail.value=true
+                }
+
+
             }
+
+
+
+
         }
 
 

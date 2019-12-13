@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.profileEdit
+package com.ronaker.app.ui.profileCompleteEdit
 
 import android.content.Context
 import android.content.Intent
@@ -19,16 +19,16 @@ import com.ronaker.app.utils.extension.setEndDrawableRes
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
-class ProfileEditActivity : BaseActivity() {
+class ProfileCompleteActivity : BaseActivity() {
 
 
-    private lateinit var binding: com.ronaker.app.databinding.ActivityProfileEditBinding
-    private lateinit var viewModel: ProfileEditViewModel
+    private lateinit var binding: com.ronaker.app.databinding.ActivityProfileCompleteBinding
+    private lateinit var viewModel: ProfileCompleteViewModel
 
 
     companion object {
         fun newInstance(context: Context): Intent {
-            val intent = Intent(context, ProfileEditActivity::class.java)
+            val intent = Intent(context, ProfileCompleteActivity::class.java)
             val boundle = Bundle()
             intent.putExtras(boundle)
 
@@ -43,9 +43,9 @@ class ProfileEditActivity : BaseActivity() {
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_complete)
 
-        viewModel = ViewModelProviders.of(this).get(ProfileEditViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ProfileCompleteViewModel::class.java)
 
         binding.viewModel = viewModel
 

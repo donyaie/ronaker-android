@@ -12,9 +12,11 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.productSaved.ProductSavedActivity
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.SUPPORT_URL
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
@@ -52,12 +54,17 @@ class ProfileFragment : BaseFragment() {
         }
 
 
+        binding.profileCompleteLayout.setOnClickListener {
+
+            activity?.let {   it.startActivityMakeScene(ProfileCompleteActivity.newInstance(it) )}
+        }
+
 
         binding.viewModel = viewModel
 
 
         binding.supportLayout.setOnClickListener {
-            activity?.let { it1 -> IntentManeger.sendMail(it1,"support@ronaker.com")}
+            activity?.let { it1 -> IntentManeger.sendMail(it1,SUPPORT_URL)}
         }
 
 

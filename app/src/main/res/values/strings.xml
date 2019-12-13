@@ -184,6 +184,8 @@
     <string name="text_explain_why_cancel">Explain Why Cancel</string>
     <string name="text_you_pay">You will pay</string>
     <string name="text_you_earn">You will earn</string>
+    <string name="text_payments_terms">Payments Terms</string>
+    <string name="text_billing_address">Billing Address</string>
 
 
 </resources>
