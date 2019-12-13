@@ -167,4 +167,13 @@
     <string name="text_why_you_cancel_this_order">Kodėl atšaukiate šį užsakymą?</string>
     <string name="text_you_earn">Jūs uždirbsite</string>
     <string name="text_you_pay">Tu moki</string>
+    <string name="text_add_new_method">+ Pridėti naują metodą</string>
+    <string name="text_billing_address">Atsiskaitymo adresas</string>
+    <string name="text_edit_payment_methods">mokėjimo metodai</string>
+    <string name="text_edit_profile">Redaguoti profilį</string>
+    <string name="text_email">El. Paštas:</string>
+    <string name="text_name">Vardas :</string>
+    <string name="text_number">Skaičius:</string>
+    <string name="text_payment_list">Mokėjimų sąrašas</string>
+    <string name="text_payments_terms">Mokėjimo sąlygos</string>
 </resources>

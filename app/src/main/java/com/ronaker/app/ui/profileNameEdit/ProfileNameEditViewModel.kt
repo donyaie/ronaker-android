@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.profileEdit
+package com.ronaker.app.ui.profileNameEdit
 
 
 import android.app.Application
@@ -7,11 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEditViewModel (app: Application): BaseViewModel(app) {
+class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -25,21 +24,15 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
+    val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
-    val userNumber: MutableLiveData<String> = MutableLiveData()
-    val userEmail: MutableLiveData<String> = MutableLiveData()
-    val userName: MutableLiveData<String> = MutableLiveData()
-
-
-    val userAvatar: MutableLiveData<String> = MutableLiveData()
-
-
-
+    val userLastName: MutableLiveData<String> = MutableLiveData()
+    val userFirstName: MutableLiveData<String> = MutableLiveData()
 
 
     private var subscription: Disposable? = null
 
-    private var mUser: User?=null
+    private var mUser: User? = null
 
 
     init {
@@ -49,52 +42,48 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
     }
 
     fun loadData() {
+
+
+    }
+
+    fun saveInfo(firstName: String?, lastName: String?) {
+
+        val user = User()
+        user.first_name = firstName
+        user.last_name = lastName
+
         subscription?.dispose()
         subscription = userRepository
-            .getUserInfo(userRepository.getUserToken())
+            .updateUserInfo(userRepository.getUserToken(), user)
 
             .doOnSubscribe {
-//                loading.value = true
+                loading.value = true
             }
             .doOnTerminate {
-//                loading.value = false
+                loading.value = false
             }
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                   result.data?.apply {
-                       fillUser(this)
-                   }
 
+                    goNext.value=true
 
                 } else {
                     errorMessage.value = result.error?.message
                 }
             }
-
-
     }
 
 
-     fun fillUser(user: User){
+   private fun fillUser(user: User) {
 
-         mUser=user
+        mUser = user
 
-
-         user.avatar?.let {
-             userAvatar.value= BASE_URL+it
-         }
-
-         userName.value=(user.first_name?:"")+" "+(user.last_name?:"")
+        userFirstName.value = user.first_name ?: ""
+        userLastName.value = user.last_name ?: ""
 
 
-         userNumber.value=user.phone_number?:""
-
-         userEmail.value=user.email?:""
-
-
-
-     }
+    }
 
 
     fun onRetry() {
@@ -107,10 +96,6 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
         subscription?.dispose()
     }
 
-    fun getAvatar(): String? {
-       return mUser?.avatar
-
-    }
 
 
 }

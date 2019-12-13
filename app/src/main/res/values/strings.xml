@@ -186,6 +186,13 @@
     <string name="text_you_earn">You will earn</string>
     <string name="text_payments_terms">Payments Terms</string>
     <string name="text_billing_address">Billing Address</string>
+    <string name="text_edit_profile">Edit profile</string>
+    <string name="text_name">Name :</string>
+    <string name="text_number">Number :</string>
+    <string name="text_email">Email :</string>
+    <string name="text_edit_payment_methods">Payment Methods</string>
+    <string name="text_payment_list">Payment List</string>
+    <string name="text_add_new_method">+ Add New Method</string>
 
 
 </resources>

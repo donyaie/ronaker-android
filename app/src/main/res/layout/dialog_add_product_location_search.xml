@@ -23,7 +23,8 @@
 
         <com.ronaker.app.utils.view.StatusBarSizeView
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+
+            android:layout_height="@dimen/statusBarSize" />
 
         <RelativeLayout
             android:layout_width="match_parent"

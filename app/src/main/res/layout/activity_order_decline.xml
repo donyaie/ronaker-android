@@ -60,6 +60,7 @@
                         app:input_transparent="false"
                         android:imeOptions="actionNext"
                         android:id="@+id/reason_input"
+
                         app:input_title=""
                         app:input_hint="Explain why decline"
                         app:input_regex="^\\s*(?:\\S\\s*){2,500}$"

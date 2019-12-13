@@ -27,7 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
         tools:replace="android:allowBackup,android:supportsRtl">
 
 
@@ -75,11 +75,39 @@
         </activity>
 
         <activity
-            android:name=".ui.orderPreview.OrderPreviewActivity"
+        android:name=".ui.orderPreview.OrderPreviewActivity"
+
+        android:screenOrientation="portrait"
+        android:theme="@style/PopTheme"
+        android:windowSoftInputMode="stateAlwaysHidden">
+
+    </activity>
+
+        <activity
+            android:name=".ui.profilePaymentList.ProfilePaymentListActivity"
 
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
+
+        <activity
+            android:name=".ui.profileNameEdit.ProfileNameEditActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
+
+
+        <activity
+            android:name=".ui.profileEmailEdit.ProfileEmailEditActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
         </activity>
 
