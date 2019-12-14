@@ -16,6 +16,7 @@ import androidx.core.app.CoreComponentFactory
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.ronaker.app.utils.ScreenCalculator
 
 
 class AddProductImageFragment : BaseFragment(), IPagerFragment {
@@ -33,7 +34,22 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
         }
 
 
-        binding.recycler.layoutManager =  GridLayoutManager(context, 2)
+
+        val screenMnager= ScreenCalculator(requireContext())
+
+
+        val itemsize= 170
+        val screensize= screenMnager.screenWidthDP.toInt()
+
+
+        var count =screensize/itemsize
+
+        if(count<2)
+            count=2
+
+
+
+        binding.recycler.layoutManager =  GridLayoutManager(context, count)
 
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
