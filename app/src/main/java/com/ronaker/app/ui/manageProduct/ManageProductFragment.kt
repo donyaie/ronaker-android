@@ -15,6 +15,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
@@ -127,6 +128,13 @@ class ManageProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedLi
                 }
             })
         }
+
+
+
+        val screenCalculator= ScreenCalculator(requireContext())
+
+
+        binding.avatarLayout.layoutParams.height=(screenCalculator.screenWidthPixel*0.7).toInt()
 
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)

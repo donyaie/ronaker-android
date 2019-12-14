@@ -52,33 +52,103 @@
 
                     android:layout_marginTop="24dp"
                     android:layout_marginRight="24dp"
-                    android:text="@string/text_complete_your_profile"
+                    android:text="@string/text_edit_profile"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextDark"
                     app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
-                <TextView
-                    android:id="@+id/description_text"
+
+                <RelativeLayout
+                    android:id="@+id/avatar_edit"
+                    android:layout_width="82dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="82dp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="match_parent"
+
+
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@color/colorPlatinGrey"
+
+                        app:mutableImage="@{viewModel.getUserAvatar()}"
+                        app:riv_corner_radius="41dp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:tint="@color/colorTextDark"
+
+                        app:srcCompat="@drawable/ic_edit"
+                        android:contentDescription="@string/text_content" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/name_Layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_height="76dp"
+                    android:layout_marginTop="20dp"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:text="@string/title_we_need_few_details_for_renting_or_lending_out"
-                    android:textAppearance="@style/TextAppearance.Large.Regular"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    android:textColor="@color/colorTextDark"
-                    app:layout_constraintTop_toBottomOf="@id/avatar_image" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="24dp"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
 
-                <Button
-                    android:id="@+id/sign_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/title_email_verification"
-                    android:textColor="@color/colorTextDark" />
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_name"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+
+                            android:layout_marginTop="5dp"
+
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark"
+
+                            app:mutableText="@{viewModel.getUserName()}" />
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        android:tint="@color/colorTextDark"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                </LinearLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -88,13 +158,62 @@
                     android:background="@color/colorPlatinGrey" />
 
 
+                <LinearLayout
+                    android:id="@+id/number_layout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="76dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/image_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/title_add_profile_image"
-                    android:textColor="@color/colorTextDark" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="24dp"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_number"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+
+                            android:layout_marginTop="5dp"
+
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark"
+
+                            app:mutableText="@{viewModel.getUserNumber()}" />
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        android:tint="@color/colorTextDark"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                </LinearLayout>
 
 
                 <RelativeLayout
@@ -105,12 +224,63 @@
                     android:background="@color/colorPlatinGrey" />
 
 
-                <Button
-                    android:id="@+id/phone_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/title_add_and_verify_phone_number"
-                    android:textColor="@color/colorTextDark" />
+                <LinearLayout
+                    android:id="@+id/mail_layout"
+                    android:layout_width="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_height="76dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="24dp"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_email"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+
+                            android:layout_marginTop="5dp"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+
+                            android:textColor="@color/colorTextDark"
+
+                            app:mutableText="@{viewModel.getUserEmail()}" />
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        android:tint="@color/colorTextDark"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                </LinearLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -120,28 +290,50 @@
                     android:background="@color/colorPlatinGrey" />
 
 
-                <Button
+                <LinearLayout
                     android:id="@+id/payment_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/title_add_a_payment_method"
-                    android:textColor="@color/colorTextDark" />
-
-
-                <RelativeLayout
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
+                    android:layout_height="76dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="24dp"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
 
-                <Button
-                    android:id="@+id/identity_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/title_verify_your_identity"
-                    android:textColor="@color/colorTextDark" />
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_edit_payment_methods"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        android:tint="@color/colorTextDark"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                </LinearLayout>
 
 
                 <RelativeLayout
@@ -162,7 +354,7 @@
             android:id="@+id/loading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:loading_transparent="false" />

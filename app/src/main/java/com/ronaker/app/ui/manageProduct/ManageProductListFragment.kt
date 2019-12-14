@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.addProduct.AddProductActivity
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
@@ -43,7 +44,18 @@ class ManageProductListFragment : BaseFragment() {
         binding.loading.hideLoading()
 
 
-        binding.recycler.layoutManager = GridLayoutManager(context, 2)
+        val screenMnager= ScreenCalculator(requireContext())
+
+
+        val itemsize= 170
+        val screensize= screenMnager.screenWidthDP.toInt()
+        var count =screensize/itemsize
+
+        if(count<2)
+            count=2
+
+
+        binding.recycler.layoutManager = GridLayoutManager(context, count)
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)

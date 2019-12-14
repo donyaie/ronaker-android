@@ -51,10 +51,6 @@ class OrderStartRentingActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
-
-
-
-
         binding.recyclerView.layoutManager= LinearLayoutManager(this)
         ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
 
@@ -63,18 +59,12 @@ class OrderStartRentingActivity : BaseActivity() {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
 
-
-
-
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
         })
-
-
-
 
         viewModel.finish.observe(this, Observer { _ ->
             setResult(Activity.RESULT_OK)

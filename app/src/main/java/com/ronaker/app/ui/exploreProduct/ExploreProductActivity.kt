@@ -220,6 +220,16 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         })
 
 
+
+
+        val screenCalculator=ScreenCalculator(this)
+
+
+        binding.avatarLayout.layoutParams.height=(screenCalculator.screenWidthPixel*0.7).toInt()
+
+
+
+
     }
 
     override fun onStart() {

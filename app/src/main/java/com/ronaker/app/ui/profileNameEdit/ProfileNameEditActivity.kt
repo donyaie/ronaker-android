@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.profileEdit
+package com.ronaker.app.ui.profileNameEdit
 
 import android.content.Context
 import android.content.Intent
@@ -11,28 +11,23 @@ import androidx.lifecycle.ViewModelProviders
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
-import com.ronaker.app.ui.profileEmailEdit.ProfileEmailEditActivity
-import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
-import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
-import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.setEndDrawableRes
+import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeScene
-import kotlin.math.absoluteValue
 
 
-class ProfileEditActivity : BaseActivity() {
+class ProfileNameEditActivity : BaseActivity() {
 
 
-    private lateinit var binding: com.ronaker.app.databinding.ActivityProfileEditBinding
-    private lateinit var viewModel: ProfileEditViewModel
+    private lateinit var binding: com.ronaker.app.databinding.ActivityProfileNameEditBinding
+    private lateinit var viewModel: ProfileNameEditViewModel
 
 
     companion object {
         fun newInstance(context: Context): Intent {
-            val intent = Intent(context, ProfileEditActivity::class.java)
+            val intent = Intent(context, ProfileNameEditActivity::class.java)
             val boundle = Bundle()
             intent.putExtras(boundle)
 
@@ -47,9 +42,9 @@ class ProfileEditActivity : BaseActivity() {
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_name_edit)
 
-        viewModel = ViewModelProviders.of(this).get(ProfileEditViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ProfileNameEditViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -70,6 +65,12 @@ class ProfileEditActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
+        viewModel.goNext.observe(this, Observer { value ->
+            if (value == true) {
+                finishSafe()
+            }
+        })
+
 
         binding.loading.oClickRetryListener = View.OnClickListener {
 
@@ -79,34 +80,17 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
 
+        binding.toolbar.actionTextClickListener=View.OnClickListener {
 
-        binding.avatarEdit.setOnClickListener {
+            if(binding.nameInput.checkValid() && binding.lastInput.checkValid()){
+                viewModel.saveInfo(binding.nameInput.text,binding.lastInput.text)
+            }
 
-            startActivityMakeScene(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
-        }
-
-        binding.paymentLayout.setOnClickListener {
-
-            startActivityMakeScene(ProfilePaymentListActivity.newInstance(this))
-
-        }
-        binding.numberLayout.setOnClickListener {
-
-            startActivityMakeScene(PhoneNumberActivity.newInstance(this))
 
         }
 
-        binding.nameLayout.setOnClickListener {
 
-            startActivityMakeScene(ProfileNameEditActivity.newInstance(this))
 
-        }
-
-        binding.mailLayout.setOnClickListener {
-
-            startActivityMakeScene(ProfileEmailEditActivity.newInstance(this))
-
-        }
 
 
     }
