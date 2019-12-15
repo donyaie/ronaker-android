@@ -93,7 +93,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
 
     fun changeCardNumber(cardNumber: String) {
 
-        cardTypeImage.value= PaymentCard.CardType.detectFast(cardNumber).getRecourse()
+        cardTypeImage.value= PaymentCard.CardType.detectFast(cardNumber).resource
 //        when (PaymentCard.CardType.detectFast(cardNumber)) {
 //            PaymentCard.CardType.MASTERCARD -> {
 //

@@ -8,12 +8,16 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
+import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
+import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
+import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.TERMS_URL
 import io.reactivex.disposables.Disposable
 import java.util.ArrayList
 import javax.inject.Inject
 
-class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
+class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -38,6 +42,13 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
 
     var priceListAdapter: OrderPreviewPriceAdapter
 
+
+
+
+    var cardDataList: ArrayList<PaymentCard> = ArrayList()
+
+    var cardListAdapter: PaymentSelectAdapter
+
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
     private lateinit var mOrder: Order
@@ -51,6 +62,7 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     init {
 
         priceListAdapter = OrderPreviewPriceAdapter(dataList)
+        cardListAdapter = PaymentSelectAdapter(cardDataList)
     }
 
 
@@ -61,6 +73,9 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
     }
 
 
+   fun onClickTerms(){
+       IntentManeger.openUrl(context,TERMS_URL)
+   }
 
     fun load(order: Order) {
         mOrder = order
@@ -72,6 +87,13 @@ class OrderStartRentingViewModel (app: Application): BaseViewModel(app) {
             priceListAdapter.notifyDataSetChanged()
         }
 
+
+
+        cardDataList.clear()
+        cardDataList.add(PaymentCard("9873946297430","***** 0836",PaymentCard.CardType.MASTERCARD.key).apply { selected=true })
+        cardDataList.add(PaymentCard("987394629987430","***** 0985",PaymentCard.CardType.VISA.key))
+        cardDataList.add(PaymentCard("987394674297430","***** 9009",PaymentCard.CardType.DINERS_CLUB.key))
+        cardListAdapter.notifyDataSetChanged()
 
 
     }

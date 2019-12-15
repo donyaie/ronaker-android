@@ -55,6 +55,11 @@ class OrderStartRentingActivity : BaseActivity() {
         ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
 
 
+        binding.cardRecyclerView.layoutManager= LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.cardRecyclerView,false)
+
+
+
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         })
