@@ -117,7 +117,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 editable?.let { addSpans(it) }
 
 
-                   editable?.let { if(it.length>=16)
+                   editable?.let { if(it.length>=19)
                        binding.expireInput.requestFocus() }
 
             }
@@ -149,13 +149,6 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-        disposable=  RxTextView.textChanges(binding.cardEdit)
-            .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-            .subscribe {
-
-                viewModel.changeCardNumber(it.toString())
-            }
-
 
 
 
@@ -167,6 +160,8 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
     }
+
+
 
     override fun onStop() {
         super.onStop()
@@ -237,7 +232,18 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         }
 
+        disposable=  RxTextView.textChanges(binding.cardEdit)
+            .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .subscribe {
+
+                viewModel.changeCardNumber(it.toString())
+            }
+
+
+
     }
+
+
 
 
     private fun onScanCard() {

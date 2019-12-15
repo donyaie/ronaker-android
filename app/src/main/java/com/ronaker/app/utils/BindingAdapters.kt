@@ -3,10 +3,7 @@ package com.ronaker.app.utils
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -160,6 +157,20 @@ fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
 
     }
 }
+
+
+@BindingAdapter("mutableRadioChecked")
+fun setMutableRadioChecked(view: RadioButton, url: MutableLiveData<Boolean>?) {
+
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && url != null) {
+        url.observe(parentActivity, Observer {value -> view.isChecked=value })
+
+    }
+}
+
+
+
 
 @BindingAdapter("mutableImageSrc")
 fun setMutableImageSrc(view: ImageView, src: MutableLiveData<Int>?) {

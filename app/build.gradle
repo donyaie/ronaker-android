@@ -169,7 +169,7 @@ dependencies {
     //number
 
     implementation "com.hbb20:ccp:$ccpVersion"
-    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libphonenumberVersion"
+    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libPhoneNumberVersion"
     implementation("com.alimuzaffar.lib:pinentryedittext:$pinentryEditTextVersion") {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.
