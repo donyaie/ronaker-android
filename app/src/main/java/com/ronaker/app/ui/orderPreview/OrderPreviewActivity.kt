@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -66,7 +66,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            Alert.makeTextError(this, errorMessage)
         })
 
 

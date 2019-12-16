@@ -24,7 +24,6 @@ import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.TabNavigationComponent
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -82,7 +81,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         handleIntent(intent)
 
+//
+//        ToastComponent. makeTextError(this, "ini")
 
+//        ToastComponent.makeTextError(this, "ini",binding.mainLayout).show()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -112,6 +114,14 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
             initNavigation(savedInstanceState)
         }
+
+
+//        TastyToast.makeText(this, "ini",Toast.LENGTH_LONG, TastyToast.ERROR).show()
+
+
+//        Toast.makeText(this, "ini",Toast.LENGTH_LONG).show()
+
+
     }
 
 

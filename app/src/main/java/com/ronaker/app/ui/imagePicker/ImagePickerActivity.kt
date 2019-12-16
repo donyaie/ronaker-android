@@ -11,7 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider.getUriForFile
@@ -53,11 +53,10 @@ class ImagePickerActivity : BaseActivity() {
 
         val intent = intent
         if (intent == null) {
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.toast_image_intent_null),
-                Toast.LENGTH_LONG
-            ).show()
+            Alert.makeTextError(
+                this,
+                getString(R.string.toast_image_intent_null)
+            )
             return
         }
 

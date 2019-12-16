@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -99,7 +99,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //        }
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage != null) Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
 
         viewModel.imageList.observe(this, Observer { images ->

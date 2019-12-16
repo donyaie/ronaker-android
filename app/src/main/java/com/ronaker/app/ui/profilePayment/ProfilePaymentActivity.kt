@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -71,7 +71,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            Alert.makeTextError(this, errorMessage)
         })
 
         viewModel.loading.observe(this, Observer { value ->

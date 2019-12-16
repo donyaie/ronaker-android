@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,15 +12,11 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileEmailEdit.ProfileEmailEditActivity
-import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
-import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.setEndDrawableRes
 import com.ronaker.app.utils.extension.startActivityMakeScene
-import kotlin.math.absoluteValue
 
 
 class ProfileEditActivity : BaseActivity() {
@@ -59,7 +55,7 @@ class ProfileEditActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            Alert.makeTextError(this, errorMessage)
         })
 
         viewModel.loading.observe(this, Observer { value ->

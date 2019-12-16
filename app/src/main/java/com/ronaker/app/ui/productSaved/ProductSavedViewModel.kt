@@ -54,7 +54,7 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
         productListAdapter = ItemExploreAdapter(dataList)
         reset()
 
-        loadProduct()
+
     }
 
     private fun reset() {

@@ -19,5 +19,5 @@ data class ProductDetailResponceModel(
     @SerializedName("rating") val rating: Double?,
     @SerializedName("review_status") val review_status: String?,
     @SerializedName("user_status") val user_status: String?,
-    @SerializedName("favourite") val favourite: Boolean?
+    @SerializedName("is_favourite") val is_favourite: Boolean?
 )

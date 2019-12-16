@@ -105,6 +105,10 @@ abstract class BaseActivity: SwipeBackActivity() {
         super.onStart()
         startCount += 1
 
+
+
+        
+
     }
 
 
