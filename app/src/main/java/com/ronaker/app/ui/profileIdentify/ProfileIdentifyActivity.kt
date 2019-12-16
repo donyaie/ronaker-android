@@ -7,7 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
@@ -64,7 +64,7 @@ class ProfileIdentifyActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            Alert.makeTextError(this, errorMessage)
         })
 
         viewModel.loading.observe(this, Observer { value ->

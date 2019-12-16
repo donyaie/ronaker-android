@@ -208,7 +208,7 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         review_status = review_status,
         rate = rating,
         owner = this.owner?.toUserModel(),
-        isFavourite = this.favourite
+        isFavourite = this.is_favourite
 
     )
 

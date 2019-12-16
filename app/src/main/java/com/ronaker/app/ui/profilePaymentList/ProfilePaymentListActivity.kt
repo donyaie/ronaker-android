@@ -1,24 +1,19 @@
 package com.ronaker.app.ui.profilePaymentList
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.TERMS_URL
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
@@ -59,7 +54,7 @@ class ProfilePaymentListActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            Alert.makeTextError(this, errorMessage)
         })
 
         viewModel.loading.observe(this, Observer { value ->

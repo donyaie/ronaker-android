@@ -3,7 +3,7 @@ package com.ronaker.app.ui.profileEmailVerify
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -47,7 +47,7 @@ class ProfileEmailVerifyActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage != null) Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
         viewModel.goNex.observe(this, Observer {
            finishSafe()

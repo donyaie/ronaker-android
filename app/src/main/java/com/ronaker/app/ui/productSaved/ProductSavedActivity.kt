@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -54,7 +54,7 @@ class ProductSavedActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if(errorMessage!=null) Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            if(errorMessage!=null) Alert.makeTextError(this, errorMessage)
         })
 
 
