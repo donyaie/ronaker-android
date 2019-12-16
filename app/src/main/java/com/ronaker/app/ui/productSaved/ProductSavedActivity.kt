@@ -123,6 +123,11 @@ class ProductSavedActivity : BaseActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.retry()
+    }
+
 
 
 
