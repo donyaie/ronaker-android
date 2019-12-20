@@ -32,5 +32,7 @@ interface OrderRepository {
         comment: String,
         stars: Double
     ): Observable<Result<Boolean>>
+
+    fun getOrderDetail(token: String?, suid: String): Observable<Result<Order>>
 }
 

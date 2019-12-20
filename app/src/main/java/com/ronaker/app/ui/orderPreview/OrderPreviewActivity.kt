@@ -149,8 +149,21 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        getOrder()?.let { viewModel.load(it) }
+        getOrder()?.let { viewModel.load(it)
 
+
+        }
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getOrder()?.suid?.let {
+
+
+            viewModel.getOrder(it)
+        }
 
     }
 
@@ -187,50 +200,50 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
-        when (requestCode) {
+//        when (requestCode) {
+//
+//            OrderAcceptActivity.REQUEST_CODE -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    finishSafe()
+//                }
+//            }
+//
+//            ProductRateActivity.REQUEST_CODE -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    finishSafe()
+//                }
+//            }
+//
+//
+//            OrderDeclineActivity.REQUEST_CODE -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    finishSafe()
+//                }
+//            }
+//
+//
+//            OrderStartRentingActivity.REQUEST_CODE -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    finishSafe()
+//                }
+//            }
+//
+//
+//            OrderFinishActivity.REQUEST_CODE -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    finishSafe()
+//                }
+//            }
+//
+//            OrderCancelActivity.REQUEST_CODE -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    finishSafe()
+//                }
+//            }
+//
 
-            OrderAcceptActivity.REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    finishSafe()
-                }
-            }
 
-            ProductRateActivity.REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    finishSafe()
-                }
-            }
-
-
-            OrderDeclineActivity.REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    finishSafe()
-                }
-            }
-
-
-            OrderStartRentingActivity.REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    finishSafe()
-                }
-            }
-
-
-            OrderFinishActivity.REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    finishSafe()
-                }
-            }
-
-            OrderCancelActivity.REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    finishSafe()
-                }
-            }
-
-
-
-        }
+//        }
 
         super.onActivityResult(requestCode, resultCode, data)
     }
