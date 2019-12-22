@@ -5,9 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
-import com.ronaker.app.utils.Alert
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -26,6 +27,13 @@ import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
+import io.branch.indexing.BranchUniversalObject
+import io.branch.referral.Branch
+import io.branch.referral.BranchError
+import io.branch.referral.SharingHelper
+import io.branch.referral.util.ContentMetadata
+import io.branch.referral.util.LinkProperties
+import io.branch.referral.util.ShareSheetStyle
 import java.util.*
 
 
@@ -154,10 +162,50 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         binding.toolbar.action1BouttonClickListener = View.OnClickListener {
 
-            getCurrentSUID()?.let {
-                getAnalytics()?.actionShareProduct(it)
-                IntentManeger.shareTextUrl(this, "Share Product:", SHARE_URL + it)
+
+            viewModel.mProduct?.let {
+
+                val buo = BranchUniversalObject()
+                    .setCanonicalIdentifier("product/${it.suid}")
+                    .setTitle(it.name.toString())
+                    .setContentDescription(it.description)
+                    .setContentImageUrl(BASE_URL+it.avatar)
+                    .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                    .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                    .setContentMetadata(ContentMetadata().addCustomMetadata("product", it.suid))
+                    .setContentMetadata(ContentMetadata().addCustomMetadata("action","show_product"))
+
+
+                val lp = LinkProperties()
+                    .setChannel("androidApp")
+                    .setFeature("product sharing")
+
+                    .setCampaign("content product id")
+//                .addControlParameter("$desktop_url", "http://example.com/home")
+                    .addControlParameter("product", it.suid)
+                    .addControlParameter(
+                        "custom_random",
+                        Calendar.getInstance().timeInMillis.toString()
+                    )
+
+
+                buo.generateShortUrl(this, lp) { url, error ->
+                    if (error == null) {
+                        Log.i("BRANCH SDK", "got my Branch link to share: $url")
+                        it.suid?.let { it1 -> getAnalytics()?.actionShareProduct(it1) }
+                        IntentManeger.shareTextUrl(this, "Share Product:", url)
+                    }
+                }
+
+                buo.listOnGoogleSearch(this)
+
             }
+
+
+//            getCurrentSUID()?.let {
+//                getAnalytics()?.actionShareProduct(it)
+//                IntentManeger.shareTextUrl(this, "Share Product:", SHARE_URL + it)
+//            }
 
 
         }
@@ -220,14 +268,10 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         })
 
 
+        val screenCalculator = ScreenCalculator(this)
 
 
-        val screenCalculator=ScreenCalculator(this)
-
-
-        binding.avatarLayout.layoutParams.height=(screenCalculator.screenWidthPixel*0.7).toInt()
-
-
+        binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
 
 
     }

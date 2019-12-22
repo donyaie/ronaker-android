@@ -176,6 +176,7 @@ dependencies {
         exclude group: "androidx.appcompat", module: "appcompat"
     }
 
+    implementation 'com.google.firebase:firebase-appindexing:19.0.0'
 
     //firebace
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
@@ -235,6 +236,9 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$testRunnerVersion"
     androidTestImplementation "androidx.test:core:$testRunnerVersion"
     androidTestImplementation "androidx.test:monitor:$testRunnerVersion"
+
+
+    implementation 'io.branch.sdk.android:library:4.2.1'
 
 
 }

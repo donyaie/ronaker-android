@@ -6,6 +6,7 @@ import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ronaker.app.utils.AnalyticsManager.Param.PRODUCT
+import io.branch.referral.Branch
 
 object AnalyticsManager {
 
@@ -20,6 +21,7 @@ object AnalyticsManager {
     fun setUserId(userId:String){
         OneSignal.sendTag("user_id",userId)
         Crashlytics.setUserIdentifier(userId)
+        Branch.getInstance().setIdentity(userId)
     }
 }
 
@@ -40,6 +42,11 @@ fun FirebaseAnalytics.actionLogin(method:String){
     bundle.putString(FirebaseAnalytics.Param.METHOD, method)
     logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
 
+}
+
+fun FirebaseAnalytics.actionLogout(){
+
+    Branch.getInstance().logout()
 }
 
 fun FirebaseAnalytics.actionShareProduct( itemId:String){

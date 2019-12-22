@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,9 +14,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.TERMS_URL
+import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
@@ -117,13 +114,7 @@ class ProfileSettingActivity : BaseActivity() {
     override fun onStart() {
 
         super.onStart()
-//
-//        if (isFistStart()) {
-
            viewModel.loadData()
-
-
-//        }
 
 
     }
@@ -139,6 +130,7 @@ class ProfileSettingActivity : BaseActivity() {
         ) { dialog, _ ->
             dialog?.cancel()
             viewModel.logout()
+            getAnalytics()?.actionLogout()
             startActivityMakeScene(DashboardActivity.newInstance(this) )
         }
         builder.setNegativeButton(getString(android.R.string.cancel))

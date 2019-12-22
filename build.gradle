@@ -5,7 +5,7 @@ buildscript {
     ext.lifecycle_version = '1.1.1'
 
     ext.retrofit_version = '2.7.0'
-    ext.dagger2_version = '2.25.2'
+    ext.dagger2_version = '2.25.3'
     ext.okhttpVersion = '3.12.1'
 
     ext.multidexVersion = '2.0.1'
@@ -37,7 +37,7 @@ buildscript {
     ext.okhttpVersion = '3.12.1'
     ext.firebaseVersion = '17.2.1'
     ext.firebaseInvitesVersion = '17.0.0'
-    ext.firebasePerf = '19.0.3'
+    ext.firebasePerf = '19.0.4'
     ext.crashlyticsVersion='2.10.1'
 
     ext.swipebackVersion='1.1.0'
@@ -46,7 +46,7 @@ buildscript {
     ext.testRunnerVersion='1.2.0'
     ext.espressoCoreVersion='3.2.0'
 
-    ext.oneSignalVersion='3.12.3'
+    ext.oneSignalVersion= '3.12.4'
     ext.stethoVersion='1.5.1'
 
     ext.libphonenumberVersion='8.11.0'
@@ -58,7 +58,7 @@ buildscript {
 
     ext.androidXTestCoreVersion='1.2.0'
     ext.androidXTestExtKotlinRunnerVersion='1.1.1'
-    ext.fragmentVersion='1.2.0-rc03'
+    ext.fragmentVersion= '1.2.0-rc04'
 
 
 

@@ -129,6 +129,7 @@
             android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysHidden">
 
 
@@ -136,6 +137,10 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+            <!-- ronaker://product/RncWkrhjT3BFPkHjMNueoR -->
+            <!-- ronaker.test-app.link/product/RncWkrhjT3BFPkHjMNueoR -->
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -155,6 +160,23 @@
                     android:scheme="https"
                     android:host="www.ronaker.com"
                     android:pathPrefix="/product" />
+            </intent-filter>
+
+
+            <!-- Branch URI scheme -->
+            <intent-filter>
+                <data android:scheme="ronaker" android:host="open" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+            <!-- Branch App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="ronaker.app.link" />
             </intent-filter>
 
 
@@ -318,6 +340,22 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
+
+        <!-- Branch init -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_pnSHm0Vi1768h8kzrkl3ciacqCm89MHa" />
+        <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
+
+
+
+        <!-- Branch install referrer tracking -->
+        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
 
 
     </application>
