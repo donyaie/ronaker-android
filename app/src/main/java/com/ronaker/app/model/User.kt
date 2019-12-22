@@ -28,6 +28,7 @@ data class User(
     , var is_identity_info_verified: Boolean?
     , var avatar: String?
     , var password: String? = null
+    , var promotionCode: String? = null
 ) : Parcelable {
     constructor() : this(
         null,
@@ -41,8 +42,9 @@ data class User(
         null,
         null
     )
+
     @IgnoredOnParcel
-    var accessToken:String?=null
+    var accessToken: String? = null
 
 
 }

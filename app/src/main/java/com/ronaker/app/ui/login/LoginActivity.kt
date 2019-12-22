@@ -137,6 +137,18 @@ class LoginActivity : BaseActivity() {
             }
         })
 
+        viewModel.gotoSignUp.observe(this, Observer { value ->
+            loginAction=LoginViewModel.LoginActionEnum.register
+            currentPosition=1
+        })
+
+
+        viewModel.gotoSignIn.observe(this, Observer { value ->
+
+            loginAction=LoginViewModel.LoginActionEnum.login
+            currentPosition=4
+        })
+
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.visibility=View.VISIBLE
@@ -199,6 +211,9 @@ class LoginActivity : BaseActivity() {
 
             try {
 
+
+
+
                 val state = LoginViewModel.LoginStateEnum[value]
                 val fm = supportFragmentManager
                 val ft = fm.beginTransaction()
@@ -216,7 +231,17 @@ class LoginActivity : BaseActivity() {
                         ft.commit()
                     }
                     value < field -> //back
+                    {
                         fm.popBackStack(state.name, 0)
+
+                       if( (field-value) >1){
+                           ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                           ft.replace(R.id.frame_container, getFragment(state), state.name)
+                               .addToBackStack(state.name)
+                           ft.commit()
+                       }
+
+                    }
                     else -> {
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         ft.replace(R.id.frame_container, getFragment(state), state.name)
