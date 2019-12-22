@@ -176,4 +176,12 @@
     <string name="text_number">Skaičius:</string>
     <string name="text_payment_list">Mokėjimų sąrašas</string>
     <string name="text_payments_terms">Mokėjimo sąlygos</string>
+    <string name="text_enter_your_invite_code">Įveskite savo kvietimo kodą</string>
+    <string name="text_invite_code">Kvietimo kodas (neprivaloma)</string>
+    <string name="text_repeat">Pakartokite slaptažodį</string>
+    <string name="text_repeat_your_password">Pakartokite slaptažodį</string>
+    <string name="text_repeated_password_not_match">Pakartotas slaptažodis nesutampa</string>
+    <string name="text_sign_up">Registruotis</string>
+    <string name="text_new_to_ronaker">"Naujiena „Ronaker“? "</string>
+    <string name="text_goto_sign_in">Prisijungti</string>
 </resources>

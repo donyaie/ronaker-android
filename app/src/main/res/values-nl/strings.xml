@@ -176,4 +176,12 @@
     <string name="text_number">Aantal</string>
     <string name="text_payment_list">Betalingslijst</string>
     <string name="text_payments_terms">Betalingsvoorwaarden</string>
+    <string name="text_enter_your_invite_code">Voer uw uitnodigingscode in</string>
+    <string name="text_invite_code">Uitnodigingscode (optioneel)</string>
+    <string name="text_repeat">Herhaal wachtwoord</string>
+    <string name="text_repeat_your_password">Herhaal je wachtwoord</string>
+    <string name="text_repeated_password_not_match">Herhaald wachtwoord komt niet overeen</string>
+    <string name="text_sign_up">Inschrijven</string>
+    <string name="text_new_to_ronaker">"Nieuw bij Ronaker? "</string>
+    <string name="text_goto_sign_in">Inloggen</string>
 </resources>

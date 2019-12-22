@@ -1,8 +1,10 @@
 package com.ronaker.app.ui.login
 
 import android.app.Application
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
@@ -22,14 +24,20 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
     private var signinSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
 
+    @Inject
+    lateinit var context: Context
 
     val errorMessage:MutableLiveData<String> = MutableLiveData()
     val loading:MutableLiveData<Boolean> = MutableLiveData()
+    val gotoSignUp:MutableLiveData<Boolean> = MutableLiveData()
+    val gotoSignIn:MutableLiveData<Boolean> = MutableLiveData()
 
     enum class LoginActionEnum {
         login,
         register
     }
+
+
 
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
@@ -66,30 +74,37 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
         }
     }
 
-    fun onClickLoginEmail(email: String?, isValid: Boolean) {
+    fun onClickLoginEmail(email: String?, isValid: Boolean,inviteCode:String) {
 
 
         if (isValid) {
             userInfo.email = email
+            userInfo.promotionCode=inviteCode
+
             viewState.value = LoginStateEnum.info
         }
 
     }
 
-    fun onClickLoginName(name: String?, nameIsValid: Boolean, lastName: String?, lastNameVaalid: Boolean) {
+    fun onClickLoginName(name: String?, nameIsValid: Boolean, lastName: String?, lastNameValid: Boolean) {
 
-        if (nameIsValid && lastNameVaalid) {
+        if (nameIsValid && lastNameValid) {
             userInfo.first_name = name
             userInfo.last_name = lastName
             viewState.value = LoginStateEnum.password
         }
     }
 
-    fun onClickLoginPassword(password: String?, isValid: Boolean) {
+    fun onClickLoginPassword(password: String, isValid: Boolean, repeat:String) {
 
         if (isValid) {
-            userInfo.password = password
-            signUp()
+            if(password.compareTo(repeat)==0) {
+
+                userInfo.password = password
+                signUp()
+            }else{
+                errorMessage.value=context.getString(R.string.text_repeated_password_not_match)
+            }
         }
 
     }
@@ -121,6 +136,15 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
                 }
             }
 
+    }
+
+    fun onClickGotoSignUp(){
+        gotoSignUp.value=true
+    }
+
+    fun onClickGotoSignIn(){
+
+        gotoSignIn.value=true
     }
 
 

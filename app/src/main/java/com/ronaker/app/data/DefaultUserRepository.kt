@@ -27,7 +27,8 @@ class DefaultUserRepository(
             user.email,
             user.password,
             user.first_name,
-            user.last_name
+            user.last_name,
+            user.promotionCode
         )
         return userApi.registerUser(info)
             .subscribeOn(Schedulers.io())

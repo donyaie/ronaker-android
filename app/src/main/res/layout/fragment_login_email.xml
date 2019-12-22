@@ -70,6 +70,25 @@
                     app:layout_constraintTop_toBottomOf="@id/title"
                     tools:ignore="UnusedAttribute" />
 
+
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/invite_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+
+                    android:layout_marginRight="24dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    app:input_hint="@string/text_enter_your_invite_code"
+                    app:input_regex="^.{2,}$"
+                    app:input_title="@string/text_invite_code"
+                    app:input_transparent="true"
+                    app:input_validation_mode="AUTO"
+                    app:layout_constraintTop_toBottomOf="@id/email_input"
+                    tools:ignore="UnusedAttribute"
+                    tools:layout_editor_absoluteX="24dp" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -77,7 +96,7 @@
             android:id="@+id/next_button"
             style="@style/Button.circle.accent"
             android:contentDescription="@string/title_button_next"
-            android:onClick="@{()->viewModel.onClickLoginEmail(emailInput.getText().toString(),emailInput.checkValid())}"
+            android:onClick="@{()->viewModel.onClickLoginEmail(emailInput.getText().toString(),emailInput.checkValid(),inviteInput.getText().toString())}"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

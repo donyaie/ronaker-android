@@ -193,6 +193,14 @@
     <string name="text_edit_payment_methods">Payment Methods</string>
     <string name="text_payment_list">Payment List</string>
     <string name="text_add_new_method">+ Add New Method</string>
+    <string name="text_repeated_password_not_match">Repeated password not match</string>
+    <string name="text_enter_your_invite_code">Enter Your Invite Code</string>
+    <string name="text_invite_code">Invite Code (Optional)</string>
+    <string name="text_repeat_your_password">Repeat your password</string>
+    <string name="text_repeat">Repeat Password</string>
+    <string name="text_new_to_ronaker">New to Ronaker? </string>
+    <string name="text_sign_up">Sign up</string>
+    <string name="text_goto_sign_in">Sign In</string>
 
 
 </resources>
