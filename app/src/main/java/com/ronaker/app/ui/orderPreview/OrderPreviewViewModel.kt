@@ -176,8 +176,41 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
         }
     }
 
+    fun load(order: Order){
+        fillView(order)
 
-    fun load(order: Order) {
+    }
+
+
+    fun getOrder(suid:String){
+
+        subscription?.dispose()
+        subscription = orderRepository
+            .getOrderDetail(userRepository.getUserToken(), suid)
+
+            .doOnSubscribe {
+//                retry.value = null
+//                loading.value = true
+
+            }
+            .doOnTerminate {
+
+//                loading.value = false
+
+
+            }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+                    result.data?.let { fillView(it) }
+                }
+                else{
+                    errorMessage.value=result.error?.message
+                }
+            }
+
+    }
+
+    fun fillView(order: Order) {
         mOrder = order
 
 

@@ -11,6 +11,7 @@ import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import com.ronaker.app.utils.LocaleHelper
+import io.branch.referral.Branch
 
 
 class General : MultiDexApplication() {
@@ -26,6 +27,12 @@ class General : MultiDexApplication() {
         super.onCreate()
 
         analytics = FirebaseAnalytics.getInstance(this)
+
+
+        // Branch logging for debugging
+        Branch.enableDebugMode();
+
+        Branch.getAutoInstance(this)
 
 
         // OneSignal Initialization

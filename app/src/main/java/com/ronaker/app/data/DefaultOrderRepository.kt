@@ -9,6 +9,7 @@ import com.ronaker.app.data.network.request.ProductRateRequestModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
+import com.ronaker.app.model.toOrderModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -29,6 +30,20 @@ class DefaultOrderRepository(private val api: OrderApi) :
             .toResult()
 
     }
+
+    override fun getOrderDetail(token: String?, suid:String): Observable<Result<Order>> {
+
+        return api.getOrderDetail("Token $token",suid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map {
+                it.toOrderModel()
+            }
+            .toResult()
+
+    }
+
 
     override fun createOrder(token: String?, product_suid:String, stateDate: Date, endDate: Date, message:String?, price:Double ): Observable<Result<Boolean>> {
 

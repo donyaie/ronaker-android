@@ -24,7 +24,9 @@ import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyActivity
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
+import io.branch.referral.Branch
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     FragNavController.RootFragmentListener {
@@ -79,7 +81,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             }
         })
 
-        handleIntent(intent)
+
 
 //
 //        ToastComponent. makeTextError(this, "ini")
@@ -96,14 +98,20 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     private fun handleIntent(intent: Intent) {
 
-        val action = intent.action
-        val data = intent.dataString
-        if (Intent.ACTION_VIEW == action && data != null && data.contains("product")) {
-            val suid = data.substring(data.lastIndexOf("/") + 1)
-            if (suid.isNotBlank() && viewModel.islogin)
-                startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+        Branch.getInstance().initSession({ referringParams, error ->
+            if (error == null) {
+                AppDebug.log("BRANCH SDK", referringParams.toString())
 
-        }
+                if (referringParams.has("product")) {
+                    val suid = referringParams.getString("product")
+                    if (suid.isNotBlank() && viewModel.islogin)
+                        startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+                }
+
+            } else {
+                AppDebug.log("BRANCH SDK", error.message)
+            }
+        }, intent.data, this)
 
 
     }
@@ -115,11 +123,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             initNavigation(savedInstanceState)
         }
 
-
-//        TastyToast.makeText(this, "ini",Toast.LENGTH_LONG, TastyToast.ERROR).show()
-
-
-//        Toast.makeText(this, "ini",Toast.LENGTH_LONG).show()
+        handleIntent(intent)
 
 
     }
@@ -165,12 +169,14 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
                 }
             }
-            defaultTransactionOptions = FragNavTransactionOptions.newBuilder().customAnimations(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out,
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            ).build()
+            defaultTransactionOptions = FragNavTransactionOptions.newBuilder()
+//                .customAnimations(
+//                    android.R.anim.fade_in,
+//                    android.R.anim.fade_out,
+//                    android.R.anim.fade_in,
+//                    android.R.anim.fade_out
+//                )
+                .build()
             fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
 
             navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {

@@ -54,7 +54,6 @@ data class Order(
     }
 
 
-
     enum class OrderPriceEnum constructor(key: String) {
         ProductFee("product_fee"),
         ServiceFee("service_fee"),
@@ -126,23 +125,8 @@ fun List<OrderResponseModel>.toOrderList(): List<Order> {
 
     this.forEach {
 
-            val product = Order(
-                it.suid,
-                it.message,
-                it.start_date,
-                it.end_date,
-                it.prices?.toOrderPriceList(),
-                it.order_type,
-                it.status,
-                it.product.toProduct(),
-                it.product_owner?.toUserModel(),
-                it.order_user?.toUserModel(),
-                it.rejection_reason,
-                it.address,
-                it.instruction
-            )
-
-            list.add(product)
+        val product = it.toOrderModel()
+        list.add(product)
 
     }
 
@@ -150,21 +134,42 @@ fun List<OrderResponseModel>.toOrderList(): List<Order> {
 
 }
 
- fun List<OrderPriceResponseModel>.toOrderPriceList(): List<Order.OrderPrices> {
-     val list: ArrayList<Order.OrderPrices> = ArrayList()
 
-     this.forEach {
+fun OrderResponseModel.toOrderModel(): Order {
+    return Order(
+        suid,
+        message,
+        start_date,
+        end_date,
+        prices?.toOrderPriceList(),
+        order_type,
+        status,
+        product.toProduct(),
+        product_owner?.toUserModel(),
+        order_user?.toUserModel(),
+        rejection_reason,
+        address,
+        instruction
+    )
 
-         val product = Order.OrderPrices(
-             it.key,
-             it.price
-         )
 
-         list.add(product)
+}
 
-     }
+fun List<OrderPriceResponseModel>.toOrderPriceList(): List<Order.OrderPrices> {
+    val list: ArrayList<Order.OrderPrices> = ArrayList()
 
-     return list
+    this.forEach {
+
+        val product = Order.OrderPrices(
+            it.key,
+            it.price
+        )
+
+        list.add(product)
+
+    }
+
+    return list
 }
 
 

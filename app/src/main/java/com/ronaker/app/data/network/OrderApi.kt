@@ -27,7 +27,7 @@ interface OrderApi {
 
 
     /**
-     * update Order
+     * update Order State
      */
     @PUT("/api/v1/orders/{order_suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -36,14 +36,20 @@ interface OrderApi {
 
 
     /**
-     * create Order
+     * get Order Detail
+     */
+    @GET("/api/v1/orders/{order_suid}/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun getOrderDetail(@Header("Authorization") authToken: String, @Path("order_suid") suid:String): Observable<OrderResponseModel>
+
+
+
+    /**
+     * Order Rate
      */
     @POST("/api/v1/orders/{order_suid}/rate")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun orderRate(@Header("Authorization") authToken: String, @Path("order_suid") suid:String, @Body request: ProductRateRequestModel): Observable<FreeResponseModel>
-
-
-
 
 
 }
