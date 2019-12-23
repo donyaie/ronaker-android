@@ -198,6 +198,12 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
+            android:name=".ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
             android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
             android:screenOrientation="portrait"
 
@@ -351,7 +357,9 @@
 
 
         <!-- Branch install referrer tracking -->
-        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+        <receiver android:name="io.branch.referral.InstallListener"
+            android:permission="android.permission.INSTALL_PACKAGES"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>

@@ -201,6 +201,7 @@
     <string name="text_new_to_ronaker">New to Ronaker? </string>
     <string name="text_sign_up">Sign up</string>
     <string name="text_goto_sign_in">Sign In</string>
+    <string name="text_payment_history">Payment History</string>
 
 
 </resources>

@@ -184,4 +184,5 @@
     <string name="text_sign_up">Inschrijven</string>
     <string name="text_new_to_ronaker">"Nieuw bij Ronaker? "</string>
     <string name="text_goto_sign_in">Inloggen</string>
+    <string name="text_payment_history">Betaalgeschiedenis</string>
 </resources>

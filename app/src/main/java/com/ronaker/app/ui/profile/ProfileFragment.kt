@@ -14,6 +14,7 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.productSaved.ProductSavedActivity
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
+import com.ronaker.app.ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.SUPPORT_URL
@@ -78,6 +79,11 @@ class ProfileFragment : BaseFragment() {
         binding.settingLayout.setOnClickListener{
 
             activity?.let {   it.startActivityMakeScene(ProfileSettingActivity.newInstance(it) )}
+        }
+
+        binding.paymentLayout.setOnClickListener{
+
+            activity?.let {   it.startActivityMakeScene(ProfilePaymentHistoryListActivity.newInstance(it) )}
         }
 
 
