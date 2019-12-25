@@ -50,9 +50,10 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     private fun reset() {
 
         page = 0
+        productListAdapter.reset()
         hasNextPage = true
         dataList.clear()
-        productListAdapter.updateproductList()
+        productListAdapter.updateList()
         resetList.value = true
 //        view.getScrollListener().resetState()
     }
@@ -84,18 +85,28 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
                                 result.data?.results
                             )
 
-                            if (result.data?.next == null)
+                            if (result.data?.next == null) {
                                 hasNextPage = false
+
+
+                            }
 
                         } else {
 
                             emptyVisibility.value = View.VISIBLE
+
+
+
 
                             hasNextPage = false
                         }
                     } else {
 
                         onRetrieveProductListError(result.error)
+
+//                        onRetrieveProductListSuccess(
+//                            dataList
+//                        )
                     }
                 }
         }

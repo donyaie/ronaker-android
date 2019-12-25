@@ -83,9 +83,11 @@ class OrderListFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.loadData(getFilter())
 
+        viewModel.loadData(getFilter())
     }
+
+
 
 
     private fun getFilter(): String? {
