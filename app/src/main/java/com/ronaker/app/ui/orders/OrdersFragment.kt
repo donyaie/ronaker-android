@@ -8,50 +8,23 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProviders
-import com.ncapdevi.fragnav.FragNavController
-import com.ncapdevi.fragnav.FragNavLogger
-import com.ncapdevi.fragnav.FragNavSwitchController
-import com.ncapdevi.fragnav.FragNavTransactionOptions
-import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
+import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
 
-class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
-    FragNavController.RootFragmentListener {
+class OrdersFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrdersBinding
     private lateinit var viewModel: OrdersViewModel
 
 
-
-    private val INDEX_ALL = FragNavController.TAB1
-    private val INDEX_Renting = FragNavController.TAB2
-    private val INDEX_Lending = FragNavController.TAB3
-    private val INDEX_Archive = FragNavController.TAB4
+    private lateinit var adapter: ViewPagerAdapter
 
 
-    private lateinit var fragNavController: FragNavController
-    override val numberOfRootFragments: Int = 5
-
-
-    override fun getRootFragment(index: Int): Fragment {
-        return when (index) {
-            INDEX_ALL -> OrderListFragment.newInstance(null)
-            INDEX_Renting -> OrderListFragment.newInstance(Order.OrderTypeEnum.Renting.key)
-            INDEX_Lending -> OrderListFragment.newInstance(Order.OrderTypeEnum.Lending.key)
-            INDEX_Archive ->OrderListFragment.newInstance("archive")
-            else -> OrderListFragment.newInstance(null)
-        }
-    }
-    override fun onFragmentTransaction(fragment: Fragment?, transactionType: FragNavController.TransactionType) {
-
-    }
-
-
-    override fun onTabTransaction(fragment: Fragment?, index: Int) {
-    }
 
 
     private val tabList :ArrayList< TextView> =ArrayList()
@@ -69,8 +42,6 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
 //
         binding.viewModel = viewModel
 
-        fragNavController = FragNavController(childFragmentManager, R.id.container)
-
 
         tabList.add(binding.text1)
         tabList.add(binding.text2)
@@ -84,45 +55,12 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
         binding.layout4.setOnClickListener { selectTab(3) }
 
 
-        initNavigation(savedInstanceState)
+//        initNavigation(savedInstanceState)
+
+        initViewPager()
 
 
         return binding.root
-    }
-
-
-
-    private fun initNavigation(savedInstanceState: Bundle?) {
-
-        fragNavController.apply {
-            transactionListener = this@OrdersFragment
-            rootFragmentListener = this@OrdersFragment
-            createEager = true
-            fragNavLogger = object : FragNavLogger {
-                override fun error(message: String, throwable: Throwable) {
-
-                }
-            }
-            defaultTransactionOptions = FragNavTransactionOptions.newBuilder().customAnimations(android.R.anim.fade_in, android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out).build()
-            fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-
-            navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {
-                override fun switchTab(index: Int, transactionOptions: FragNavTransactionOptions?) {
-                    selectTabUpdateView(index)
-                }
-            })
-        }
-
-        fragNavController.initialize(INDEX_ALL, savedInstanceState)
-
-
-        val initial = savedInstanceState == null
-        if (initial ) {
-            selectTab(INDEX_ALL)
-        }
-
-
-
     }
 
 
@@ -157,16 +95,7 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
 
         selectTabUpdateView(index)
 
-
-        when (index) {
-            0 -> fragNavController.switchTab(INDEX_ALL)
-            1 ->  fragNavController.switchTab(INDEX_Renting)
-            2 -> fragNavController.switchTab(INDEX_Lending)
-            3 -> fragNavController.switchTab(INDEX_Archive)
-
-
-        }
-
+        binding.viewpager.currentItem=index
 
     }
 
@@ -177,6 +106,80 @@ class OrdersFragment : BaseFragment(), FragNavController.TransactionListener,
             return OrdersFragment()
         }
     }
+
+
+
+    private fun initViewPager() {
+
+        adapter = ViewPagerAdapter(childFragmentManager)
+
+        binding.viewpager.adapter = adapter
+
+        adapter.clear()
+        adapter.addFragment(OrderListFragment.newInstance(null))
+        adapter.addFragment(OrderListFragment.newInstance(Order.OrderTypeEnum.Renting.key))
+        adapter.addFragment( OrderListFragment.newInstance(Order.OrderTypeEnum.Lending.key))
+        adapter.addFragment(OrderListFragment.newInstance("archive"))
+        binding.viewpager?.adapter?.notifyDataSetChanged()
+
+
+        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+
+                selectTabUpdateView(position)
+
+
+                binding.toolbar.showNavigator(true, position)
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+        })
+
+    }
+
+
+
+    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    ) {
+        private val mFragmentList = ArrayList<Fragment>()
+
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
+
+        override fun getItemPosition(`object`: Any): Int {
+
+            return POSITION_NONE
+        }
+
+
+        override fun getItem(position: Int): Fragment {
+            return mFragmentList[position]
+        }
+
+        fun addFragment(fragment: Fragment) {
+            mFragmentList.add(fragment)
+        }
+
+
+        fun clear() {
+            mFragmentList.clear()
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            return ""
+        }
+    }
+
 
 
 }
