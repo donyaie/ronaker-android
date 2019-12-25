@@ -185,4 +185,8 @@
     <string name="text_new_to_ronaker">"Nieuw bij Ronaker? "</string>
     <string name="text_goto_sign_in">Inloggen</string>
     <string name="text_payment_history">Betaalgeschiedenis</string>
+    <string name="text_go_to_your_mail_box">Ga naar je mailbox</string>
+    <string name="text_verify_your_email">Controleer je email</string>
+    <string name="text_resend_email">Email opnieuw verzenden</string>
+    <string name="text_please_check_your_inbox_and_verify_your_email">Controleer je inbox en verifieer je e-mail</string>
 </resources>
