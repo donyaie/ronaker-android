@@ -31,12 +31,12 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
         productTitle.value = item.product.name
 
 
-        val days = TimeUnit.DAYS.convert(
-            data.toDate.time - data.fromDate.time,
-            TimeUnit.MILLISECONDS
-        )
-
-
+//        val days = TimeUnit.DAYS.convert(
+//            data.toDate.time - data.fromDate.time,
+//            TimeUnit.MILLISECONDS
+//        )
+//
+//
 
 
         var total = 0.0

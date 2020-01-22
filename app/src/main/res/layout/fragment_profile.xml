@@ -244,6 +244,56 @@
 
 
                 <LinearLayout
+                    android:id="@+id/paymentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:contentDescription="@string/title_setting"
+                        android:padding="6dp"
+                        app:srcCompat="@drawable/ic_credit" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/text_payment_history"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
 
                     android:id="@+id/fave_Layout"
                     android:background="?attr/selectableItemBackground"

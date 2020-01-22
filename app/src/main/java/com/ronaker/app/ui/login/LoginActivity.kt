@@ -23,7 +23,7 @@ import com.ronaker.app.utils.view.ToolbarComponent
 
 class LoginActivity : BaseActivity() {
 
-    private val TAG = LoginActivity::class.java.simpleName
+//    private val TAG = LoginActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
@@ -137,13 +137,13 @@ class LoginActivity : BaseActivity() {
             }
         })
 
-        viewModel.gotoSignUp.observe(this, Observer { value ->
+        viewModel.gotoSignUp.observe(this, Observer {
             loginAction=LoginViewModel.LoginActionEnum.register
             currentPosition=1
         })
 
 
-        viewModel.gotoSignIn.observe(this, Observer { value ->
+        viewModel.gotoSignIn.observe(this, Observer {
 
             loginAction=LoginViewModel.LoginActionEnum.login
             currentPosition=4

@@ -82,11 +82,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         })
 
 
-
-//
-//        ToastComponent. makeTextError(this, "ini")
-
-//        ToastComponent.makeTextError(this, "ini",binding.mainLayout).show()
     }
 
     override fun onNewIntent(intent: Intent?) {

@@ -55,9 +55,9 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 12
+        versionCode 13
         vectorDrawables.useSupportLibrary = true
-        versionName "0.12-alpha"
+        versionName "0.13-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [
@@ -123,6 +123,11 @@ dependencies {
     // Dagger 2
     implementation "com.google.dagger:dagger:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+
+
+
+
+
     compileOnly "org.glassfish:javax.annotation:$annotationVersion"
 
     implementation "com.wang.avi:library:$aviVersion"
@@ -169,7 +174,7 @@ dependencies {
     //number
 
     implementation "com.hbb20:ccp:$ccpVersion"
-    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libPhoneNumberVersion"
+    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.11.2'
     implementation("com.alimuzaffar.lib:pinentryedittext:$pinentryEditTextVersion") {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.
@@ -198,6 +203,33 @@ dependencies {
 
     implementation "me.imid.swipebacklayout.lib:library:$swipebackVersion"
 
+
+
+
+
+
+
+    implementation "com.onesignal:OneSignal:$oneSignalVersion"
+
+    implementation "com.facebook.stetho:stetho:$stethoVersion"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+
+    implementation 'io.branch.sdk.android:library:4.2.1'
+
+
+
+
+
+
+
+    // Testing code should not be included in the main code.
+    // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
+    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    implementation "androidx.test:core:$androidXTestCoreVersion"
+
+
     //implementation
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
@@ -212,22 +244,8 @@ dependencies {
 
     def mockito_version = '2.7.1' // For local unit tests on your development machine
     testImplementation "org.mockito:mockito-core:$mockito_version"
-    // For instrumentation tests on Android devices and emulators
-    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 
 
-    // Testing code should not be included in the main code.
-    // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
-    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
-    implementation "androidx.test:core:$androidXTestCoreVersion"
-
-
-    implementation "com.onesignal:OneSignal:$oneSignalVersion"
-
-    debugImplementation "com.facebook.stetho:stetho:$stethoVersion"
-    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
-
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 
 
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
@@ -238,7 +256,10 @@ dependencies {
     androidTestImplementation "androidx.test:monitor:$testRunnerVersion"
 
 
-    implementation 'io.branch.sdk.android:library:4.2.1'
+    // For instrumentation tests on Android devices and emulators
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+
+
 
 
 }

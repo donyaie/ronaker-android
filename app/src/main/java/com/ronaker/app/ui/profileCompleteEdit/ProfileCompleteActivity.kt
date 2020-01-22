@@ -14,6 +14,7 @@ import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
+import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.setEndDrawableRes
 import com.ronaker.app.utils.extension.startActivityMakeScene
@@ -164,6 +165,7 @@ class ProfileCompleteActivity : BaseActivity() {
         binding.signLayout.setOnClickListener {
 
 
+
         }
 
         binding.imageLayout.setOnClickListener {
@@ -181,7 +183,7 @@ class ProfileCompleteActivity : BaseActivity() {
 
         binding.paymentLayout.setOnClickListener {
 
-            startActivityMakeScene(ProfilePaymentActivity.newInstance(this))
+            startActivityMakeScene(ProfilePaymentListActivity.newInstance(this))
 
         }
 

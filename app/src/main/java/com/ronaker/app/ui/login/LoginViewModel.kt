@@ -14,9 +14,9 @@ import com.ronaker.app.utils.actionSignUp
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class LoginViewModel (app: Application): BaseViewModel(app) {
+class LoginViewModel(app: Application) : BaseViewModel(app) {
 
-    private val TAG = LoginViewModel::class.java.name
+//    private val TAG = LoginViewModel::class.java.name
 
 
     @Inject
@@ -27,17 +27,15 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
     @Inject
     lateinit var context: Context
 
-    val errorMessage:MutableLiveData<String> = MutableLiveData()
-    val loading:MutableLiveData<Boolean> = MutableLiveData()
-    val gotoSignUp:MutableLiveData<Boolean> = MutableLiveData()
-    val gotoSignIn:MutableLiveData<Boolean> = MutableLiveData()
+    val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val gotoSignUp: MutableLiveData<Boolean> = MutableLiveData()
+    val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
 
     enum class LoginActionEnum {
         login,
         register
     }
-
-
 
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
@@ -74,19 +72,24 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
         }
     }
 
-    fun onClickLoginEmail(email: String?, isValid: Boolean,inviteCode:String) {
+    fun onClickLoginEmail(email: String?, isValid: Boolean, inviteCode: String) {
 
 
         if (isValid) {
             userInfo.email = email
-            userInfo.promotionCode=inviteCode
+            userInfo.promotionCode = if (inviteCode.isNotBlank()) inviteCode else null
 
             viewState.value = LoginStateEnum.info
         }
 
     }
 
-    fun onClickLoginName(name: String?, nameIsValid: Boolean, lastName: String?, lastNameValid: Boolean) {
+    fun onClickLoginName(
+        name: String?,
+        nameIsValid: Boolean,
+        lastName: String?,
+        lastNameValid: Boolean
+    ) {
 
         if (nameIsValid && lastNameValid) {
             userInfo.first_name = name
@@ -95,21 +98,26 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
         }
     }
 
-    fun onClickLoginPassword(password: String, isValid: Boolean, repeat:String) {
+    fun onClickLoginPassword(password: String, isValid: Boolean, repeat: String) {
 
         if (isValid) {
-            if(password.compareTo(repeat)==0) {
+            if (password.compareTo(repeat) == 0) {
 
                 userInfo.password = password
                 signUp()
-            }else{
-                errorMessage.value=context.getString(R.string.text_repeated_password_not_match)
+            } else {
+                errorMessage.value = context.getString(R.string.text_repeated_password_not_match)
             }
         }
 
     }
 
-    fun onClickLoginSignIn(email: String?, emailIsValid: Boolean, password: String?, passwordValid: Boolean) {
+    fun onClickLoginSignIn(
+        email: String?,
+        emailIsValid: Boolean,
+        password: String?,
+        passwordValid: Boolean
+    ) {
         if (passwordValid && emailIsValid) {
 
             userInfo.password = password
@@ -121,46 +129,47 @@ class LoginViewModel (app: Application): BaseViewModel(app) {
 
 
     private fun signin() {
-        signinSubscription = userRepository.loginUser(userInfo).doOnSubscribe { loading.value=true}
-            .doOnTerminate {loading.value=false}
-            .subscribe { result ->
-                loading.value=false
-                if (result.isSuccess()) {
+        signinSubscription =
+            userRepository.loginUser(userInfo).doOnSubscribe { loading.value = true }
+                .doOnTerminate { loading.value = false }
+                .subscribe { result ->
+                    loading.value = false
+                    if (result.isSuccess()) {
 
 
-                    getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
-                    goNext.value=true
+                        getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
+                        goNext.value = true
 
-                } else {
-                    errorMessage.value= result.error?.message
+                    } else {
+                        errorMessage.value = result.error?.message
+                    }
                 }
-            }
 
     }
 
-    fun onClickGotoSignUp(){
-        gotoSignUp.value=true
+    fun onClickGotoSignUp() {
+        gotoSignUp.value = true
     }
 
-    fun onClickGotoSignIn(){
+    fun onClickGotoSignIn() {
 
-        gotoSignIn.value=true
+        gotoSignIn.value = true
     }
-
 
 
     private fun signUp() {
-        signUpSubscription = userRepository.registerUser(userInfo).doOnSubscribe {loading.value=true }
-            .doOnTerminate {loading.value=false}
-            .subscribe { result ->
-                loading.value=false
-                if (result.isSuccess()) {
-                    getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
-                    goNext.value=true
-                } else {
-                   errorMessage.value= result.error?.message
+        signUpSubscription =
+            userRepository.registerUser(userInfo).doOnSubscribe { loading.value = true }
+                .doOnTerminate { loading.value = false }
+                .subscribe { result ->
+                    loading.value = false
+                    if (result.isSuccess()) {
+                        getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
+                        goNext.value = true
+                    } else {
+                        errorMessage.value = result.error?.message
+                    }
                 }
-            }
     }
 
 

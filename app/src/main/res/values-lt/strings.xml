@@ -184,4 +184,9 @@
     <string name="text_sign_up">Registruotis</string>
     <string name="text_new_to_ronaker">"Naujiena „Ronaker“? "</string>
     <string name="text_goto_sign_in">Prisijungti</string>
-</resources>
+    <string name="text_payment_history">Mokėjimų istorija</string>
+    <string name="text_go_to_your_mail_box">Eikite į savo pašto dėžutę</string>
+    <string name="text_verify_your_email">Patvirtinkite savo el. Pašto adresą</string>
+    <string name="text_please_check_your_inbox_and_verify_your_email">Patikrinkite savo pašto dėžutę ir patvirtinkite el. Pašto adresą</string>
+    <string name="text_resend_email">Siųsti el. Laišką dar kartą</string>
+  </resources>

@@ -201,6 +201,11 @@
     <string name="text_new_to_ronaker">New to Ronaker? </string>
     <string name="text_sign_up">Sign up</string>
     <string name="text_goto_sign_in">Sign In</string>
+    <string name="text_payment_history">Payment History</string>
+    <string name="text_resend_email">Resend Email</string>
+    <string name="text_go_to_your_mail_box">Go to your mail box</string>
+    <string name="text_verify_your_email">Verify Your Email</string>
+    <string name="text_please_check_your_inbox_and_verify_your_email">Please check your inbox and verify your email</string>
 
 
 </resources>

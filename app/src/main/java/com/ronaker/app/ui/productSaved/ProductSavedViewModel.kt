@@ -62,7 +62,7 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
         page = 0
         hasNextPage = true
         dataList.clear()
-        productListAdapter.updateproductList()
+        productListAdapter.updateList()
         resetList.value = true
     }
 

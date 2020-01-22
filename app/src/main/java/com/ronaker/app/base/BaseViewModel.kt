@@ -37,6 +37,7 @@ import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
 import com.ronaker.app.ui.profileImage.ProfileImageViewModel
 import com.ronaker.app.ui.profileNameEdit.ProfileNameEditViewModel
 import com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel
+import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListViewModel
 import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
@@ -111,6 +112,7 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
             is ProfileEditViewModel -> injector.inject(this)
             is ProfileNameEditViewModel -> injector.inject(this)
             is ProfileEmailEditViewModel -> injector.inject(this)
+            is ProfilePaymentListViewModel ->injector.inject(this)
         }
 
     }
