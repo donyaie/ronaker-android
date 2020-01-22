@@ -3,35 +3,28 @@ package com.ronaker.app.ui.profilePaymentHistoryList
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.model.PaymentCard
+import com.ronaker.app.model.Transaction
+import com.ronaker.app.utils.toCurrencyFormat
 
 class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
-    val cardTypeImage = MutableLiveData<Int>()
-    val title = MutableLiveData<String>()
+    val amount = MutableLiveData<String>()
+    val transactionType = MutableLiveData<String>()
+    val transactionStatus = MutableLiveData<String>()
+    val description = MutableLiveData<String>()
 
 
     fun bind(
-        data: PaymentCard
+        data: Transaction
     ) {
 
-        data.cardNumber?.let {
-
-            PaymentCard.CardType.detectFast(it) .apply {
 
 
-
-                cardTypeImage.value=this.resource
-
-
-            }
-
+        amount.value=data.amount?.toCurrencyFormat()
+        description.value=data.description
+        transactionType.value=data.transactionType
+        transactionStatus.value=data.transactionStatus
 
 
-        }
-
-
-
-        title.value=data.cardNumber
     }
 
 

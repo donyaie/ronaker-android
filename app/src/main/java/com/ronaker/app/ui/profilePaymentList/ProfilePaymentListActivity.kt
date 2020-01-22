@@ -115,20 +115,4 @@ class ProfilePaymentListActivity : BaseActivity() {
 
 
 
-    private fun showLogoutDialog() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage(getString(R.string.text_are_you_sure))
-        builder.setPositiveButton(
-            getString(android.R.string.ok)
-        ) { dialog, _ ->
-            dialog?.cancel()
-            viewModel.logout()
-            startActivityMakeScene(DashboardActivity.newInstance(this) )
-        }
-        builder.setNegativeButton(getString(android.R.string.cancel))
-        { dialog, _ -> dialog?.cancel() }
-        builder.show()
-    }
-
-
 }

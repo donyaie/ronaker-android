@@ -16,9 +16,12 @@ fun Double.toCurrencyFormat(): String {
         (format as DecimalFormat).decimalFormatSymbols
     decimalFormatSymbols.currencySymbol ="€"
 
-
-
     format.decimalFormatSymbols=decimalFormatSymbols
+
+    if((this*100.0)%100.0==0.0){
+        format.maximumFractionDigits=0
+    }else
+        format.minimumFractionDigits=2
 
     return format.format(this)
 }

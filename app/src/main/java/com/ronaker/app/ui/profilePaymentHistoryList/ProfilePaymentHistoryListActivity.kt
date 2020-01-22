@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.View
 import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -51,6 +53,9 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
 
 
+        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+
+        binding.recycler.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -101,22 +106,6 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
     }
 
 
-
-
-    private fun showLogoutDialog() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage(getString(R.string.text_are_you_sure))
-        builder.setPositiveButton(
-            getString(android.R.string.ok)
-        ) { dialog, _ ->
-            dialog?.cancel()
-            viewModel.logout()
-            startActivityMakeScene(DashboardActivity.newInstance(this) )
-        }
-        builder.setNegativeButton(getString(android.R.string.cancel))
-        { dialog, _ -> dialog?.cancel() }
-        builder.show()
-    }
 
 
 }

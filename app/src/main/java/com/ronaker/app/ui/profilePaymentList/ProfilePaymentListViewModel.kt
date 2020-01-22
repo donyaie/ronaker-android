@@ -80,9 +80,7 @@ class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    fun logout(){
-        userRepository.clearLogin()
-    }
+
 
 
 
