@@ -31,6 +31,7 @@ import com.ronaker.app.ui.profileIdentify.ProfileIdentifyViewModel
 import com.ronaker.app.ui.profileImage.ProfileImageViewModel
 import com.ronaker.app.ui.profileNameEdit.ProfileNameEditViewModel
 import com.ronaker.app.ui.profilePayment.ProfilePaymentViewModel
+import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListViewModel
 import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
@@ -80,6 +81,7 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfileEditViewModel)
     fun inject(viewModel: ProfileNameEditViewModel)
     fun inject(viewModel: ProfileEmailEditViewModel)
+    fun inject (viewModel: ProfilePaymentListViewModel)
 
     @Component.Builder
     interface Builder {

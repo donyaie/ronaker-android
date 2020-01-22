@@ -14,14 +14,24 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
         data: PaymentCard
     ) {
 
-        cardTypeImage.value=PaymentCard.CardType[data.type].resource
+        data.cardNumber?.let {
 
-        title.value=data.title
-
-
+            PaymentCard.CardType.detectFast(it) .apply {
 
 
 
+                cardTypeImage.value=this.resource
+
+
+            }
+
+
+
+        }
+
+
+
+        title.value=data.cardNumber
     }
 
 

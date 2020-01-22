@@ -13,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="@color/white"
         android:gravity="center"
         android:layoutDirection="ltr">
@@ -36,9 +35,9 @@
 
             android:id="@+id/scroll_view"
 
-            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fitsSystemWindows="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -149,12 +148,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:imeOptions="actionNext"
-                        android:inputType="date"
+                        android:inputType="number"
 
                         android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DAY"
                         app:inputMutableText="@{viewModel.getCardExpireText()}"
                         app:input_hint="MM/YY"
-                        app:input_regex="^\\d{2}\\/\\d{2}$"
+                        app:input_regex="^\\d{2}\\d{2}$"
                         app:input_title="Expiry"
                         app:input_transparent="false"
                         app:input_validation_mode="AUTO"
@@ -175,7 +174,7 @@
 
                         app:inputMutableText="@{viewModel.getCardCVVText()}"
                         app:input_hint="123"
-                        app:input_regex="^[0-9]{3,4}$"
+                        app:input_regex="^[0-9]{3,5}$"
                         app:input_title="CVV"
 
                         app:input_transparent="false"
@@ -184,22 +183,6 @@
 
 
                 </LinearLayout>
-
-
-                <com.ronaker.app.utils.view.InputComponent
-                    android:id="@+id/postal_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-
-                    app:inputMutableText="@{viewModel.getPostalCodeText()}"
-                    app:input_hint="12345"
-                    app:input_regex="^[0-9]$"
-                    app:input_title="Postal Code"
-                    app:input_transparent="false"
-                    app:input_validation_mode="AUTO"
-                    tools:ignore="UnusedAttribute" />
 
 
                 <TextView
@@ -219,6 +202,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="text"
 
+                    app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
 
                     app:inputMutableText="@{viewModel.getFullNameText()}"
                     app:input_hint=""
@@ -235,6 +219,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textPostalAddress"
 
+                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
 
                     app:inputMutableText="@{viewModel.getAddressText()}"
                     app:input_hint=""
@@ -254,6 +239,7 @@
                     app:input_hint=""
                     app:input_title="Address Line 2 (Optional)"
                     app:input_transparent="false"
+                    app:input_regex="^\\s*(?:\\S\\s*){0,500}$"
                     app:input_validation_mode="AUTO"
                     tools:ignore="UnusedAttribute" />
 
@@ -263,6 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
+                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
                     android:inputType="text"
                     app:inputMutableText="@{viewModel.getCityText()}"
                     app:input_hint=""
@@ -285,12 +272,13 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:layout_weight="1"
+                        app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
                         android:inputType="text"
                         app:inputMutableText="@{viewModel.getCountryText()}"
                         app:input_hint=""
                         app:input_title="Country/Region"
                         app:input_transparent="false"
-                        app:input_validation_mode="NONE"
+                        app:input_validation_mode="AUTO"
                         tools:ignore="UnusedAttribute" />
 
                     <com.ronaker.app.utils.view.InputComponent
@@ -299,6 +287,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
+
+                        app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
                         android:layout_weight="1"
                         android:inputType="text"
                         app:inputMutableText="@{viewModel.getAddressPostalText()}"

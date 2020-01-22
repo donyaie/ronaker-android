@@ -5,7 +5,9 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.PaymentCard
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -15,9 +17,18 @@ class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
+    @Inject
+    lateinit
+    var paymentInfoRepository: PaymentInfoRepository
+
     @Inject
     lateinit
     var context: Context
+
+    var dataList=ArrayList<PaymentCard>()
+
+    val adapter=PaymentInfoAdapter(dataList)
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -29,41 +40,37 @@ class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
 
     fun loadData() {
 
-//        subscription = userRepository
-//            .getUserInfo(userRepository.getUserToken())
-//
-//            .doOnSubscribe {
-//                retry.value = null
-//                loading.value = true
-//            }
-//            .doOnTerminate {
-//                loading.value = false
-//            }
-//
-//            .subscribe { result ->
-//                if (result.isSuccess()) {
-//                   mUser= result.data?.toUser()
-//                    signComplete.value = result.data?.is_email_verified
-//
-//                    phoneComplete.value = result.data?.is_phone_number_verified
-//
-//                    peymentComplete.value = result.data?.is_payment_info_verified
-//                    identityComplete.value = result.data?.is_identity_info_verified
-//
-//                    imageComplete.value = result.data?.avatar != null
-//
-//
-//                } else {
-//                    retry.value = result.error?.detail
-//                }
-//            }
+        subscription = paymentInfoRepository
+            .getPaymentInfoList(userRepository.getUserToken())
+
+            .doOnSubscribe {
+                retry.value = null
+                loading.value = true
+            }
+            .doOnTerminate {
+                loading.value = false
+            }
+
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+
+                    dataList.clear()
+                    result.data?.let { dataList.addAll(it) }
+                    adapter.notifyDataSetChanged()
+
+
+                } else {
+                    retry.value = result.error?.message
+                }
+            }
 
 
     }
 
 
     fun onRetry() {
-//        loadData()
+        loadData()
     }
 
 

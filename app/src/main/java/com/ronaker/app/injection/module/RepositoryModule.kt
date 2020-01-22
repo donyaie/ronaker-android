@@ -91,6 +91,12 @@ import javax.inject.Singleton
 
     @Provides
     @Singleton
+    internal fun providePaymentInfoApi(retrofit: Retrofit): PaymentInfoApi {
+        return retrofit.create(PaymentInfoApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     internal fun provideGoogleMapApi(): GoogleMapApi {
         val client = OkHttpClient().newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -121,6 +127,16 @@ import javax.inject.Singleton
 
         return DefaultUserRepository(userApi, preferencesProvider)
     }
+
+    @Provides
+    @Singleton
+    internal fun providePaymentInfoRepository(
+        api: PaymentInfoApi
+    ): PaymentInfoRepository {
+
+        return DefaultPaymentInfoRepository(api)
+    }
+
 
 
     @Provides
@@ -184,14 +200,11 @@ import javax.inject.Singleton
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         })
 
-//        if (BuildConfig.DEBUG)
-//            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
+        if (BuildConfig.DEBUG)
+            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
 
 
         val client = clientBuilder.build()
-
-
-
 
 
         return Retrofit.Builder()

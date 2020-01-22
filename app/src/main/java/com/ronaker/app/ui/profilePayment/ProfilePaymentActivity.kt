@@ -1,32 +1,35 @@
 package com.ronaker.app.ui.profilePayment
 
+//import io.card.payment.CardIOActivity
+//import io.card.payment.CreditCard
 import android.Manifest
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.style.ReplacementSpan
 import android.view.View
-import com.ronaker.app.utils.Alert
+import android.view.ViewTreeObserver
+import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.ronaker.app.R
-import com.ronaker.app.base.BaseActivity
-//import io.card.payment.CardIOActivity
-//import io.card.payment.CreditCard
-import android.text.style.ReplacementSpan
-import androidx.annotation.NonNull
-import android.text.Spanned
-import android.view.ViewTreeObserver
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.ronaker.app.R
+import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.PaymentCard
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.finishSafe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -38,11 +41,11 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfilePaymentBinding
     private lateinit var viewModel: ProfilePaymentViewModel
 
-    var disposable:Disposable?=null
+    var disposable: Disposable? = null
 
     companion object {
 
-        const val MY_SCAN_REQUEST_CODE=769
+        const val MY_SCAN_REQUEST_CODE = 769
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, ProfilePaymentActivity::class.java)
             val boundle = Bundle()
@@ -82,14 +85,17 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         })
 
 
+        viewModel.goNext.observe(this, Observer {
+            finishSafe()
+        })
+
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
         viewModel.retry.observe(this, Observer { value ->
 
 
-
-            value?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
         binding.loading.oClickRetryListener = View.OnClickListener {
@@ -117,10 +123,15 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 editable?.let { addSpans(it) }
 
 
-                   editable?.let { if(it.length>=19)
-                       binding.expireInput.requestFocus() }
+                editable?.let {
+                    if (it.length >= 19)
+                        binding.expireInput.requestFocus()
+                }
 
             }
+
+
+
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -146,10 +157,65 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         })
 
+        binding.expireInput.maxLength=4
+
+//        binding.expireInput.addTextChangedListener(object :TextWatcher{
+//            override fun afterTextChanged(s: Editable?) {
+//
+//
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, removed: Int, added: Int) {
+//
+//                if (start == 1 && start+added == 2 && s?.contains('/') == false) {
+//                    binding.expireInput.text=("$s/")
+//                } else if (start == 3 && start-removed == 2 && s?.contains('/') == true) {
+//                    binding.expireInput.text=s.toString().replace("/", "")
+//                }
+//            }
+//
+//        })
+
+        binding.expireInput.addTextChangedListener(  ExpiryDateTextWatcher())
 
 
+        binding.toolbar.actionTextClickListener = View.OnClickListener {
+
+            if (
+                binding.expireInput.checkValid() &&
+                binding.cvvInput.checkValid()  &&
+                binding.nameInput.checkValid() &&
+                binding.addressInput.checkValid() &&
+                binding.addressLine2Input.checkValid() &&
+                binding.cityInput.checkValid() &&
+                binding.countryInput.checkValid() &&
+                binding.addressPostalInput.checkValid()
+            ) {
+
+               if( PaymentCard.CardType.detect( binding.cardEdit.text.toString())==PaymentCard.CardType.UNKNOWN){
+
+                   Alert.makeTextError(this, "Please inter valid card number")
+               }else {
+
+                   viewModel.save(
+                       binding.cardEdit.text.toString(),
+                       binding.expireInput.text,
+                       binding.cvvInput.text,
+                       binding.nameInput.text,
+                       binding.addressInput.text,
+                       binding.addressLine2Input.text,
+                       binding.cityInput.text,
+                       binding.countryInput.text,
+                       binding.addressPostalInput.text
+                   )
+               }
+            }
 
 
+        }
 
 
 
@@ -162,17 +228,13 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
-
     override fun onStop() {
         super.onStop()
         disposable?.dispose()
     }
 
 
-
-
     inner class SpaceSpan : ReplacementSpan() {
-
 
 
         override fun getSize(
@@ -187,8 +249,6 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             val textSize = paint.measureText(text, start, end)
             return (padding + textSize).toInt()
         }
-
-
 
 
         override fun draw(
@@ -227,12 +287,12 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         if (isFistStart()) {
 
-           viewModel.loadData()
+            viewModel.loadData()
 
 
         }
 
-        disposable=  RxTextView.textChanges(binding.cardEdit)
+        disposable = RxTextView.textChanges(binding.cardEdit)
             .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .subscribe {
 
@@ -240,10 +300,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             }
 
 
-
     }
-
-
 
 
     private fun onScanCard() {
@@ -272,7 +329,6 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
     override fun onScrollChanged() {
-
 
 
         binding.toolbar.isBottomLine = binding.scrollView.canScrollVertically(-1)
@@ -330,6 +386,9 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //            AppDebug.Log("Card",resultDisplayStr)
 //        }
 //    }
+
+
+
 
 
 

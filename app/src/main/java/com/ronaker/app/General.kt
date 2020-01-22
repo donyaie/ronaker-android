@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ronaker.app.utils.FONT_PATH
@@ -30,7 +31,8 @@ class General : MultiDexApplication() {
 
 
         // Branch logging for debugging
-        Branch.enableDebugMode();
+        Branch.enableDebugMode()
+
 
         Branch.getAutoInstance(this)
 
@@ -41,9 +43,8 @@ class General : MultiDexApplication() {
             .unsubscribeWhenNotificationsAreDisabled(true)
             .init()
 
-//
-//        if (BuildConfig.DEBUG)
-//            com.facebook.stetho.Stetho.initializeWithDefaults(this)
+
+        Stetho.initializeWithDefaults(this)
 
 
         ViewPump.init(

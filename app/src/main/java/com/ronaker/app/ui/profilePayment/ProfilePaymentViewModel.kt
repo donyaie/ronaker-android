@@ -3,9 +3,10 @@ package com.ronaker.app.ui.profilePayment
 
 import android.app.Application
 import android.content.Context
+import android.text.Editable
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.utils.IntentManeger
@@ -19,6 +20,12 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
+
+    @Inject
+    lateinit
+    var paymentInfoRepository: PaymentInfoRepository
+
     @Inject
     lateinit
     var context: Context
@@ -27,6 +34,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val cardTypeImage: MutableLiveData<Int> = MutableLiveData()
@@ -94,34 +102,70 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     fun changeCardNumber(cardNumber: String) {
 
         cardTypeImage.value= PaymentCard.CardType.detectFast(cardNumber).resource
-//        when (PaymentCard.CardType.detectFast(cardNumber)) {
-//            PaymentCard.CardType.MASTERCARD -> {
-//
-//                cardTypeImage.value =PaymentCard.CardType.MASTERCARD.getRecourse()
-//            }
-//            PaymentCard.CardType.DINERS_CLUB -> {
-//
-//                cardTypeImage.value = PaymentCard.CardType.DINERS_CLUB.getRecourse()
-//            }
-//            PaymentCard.CardType.JCB -> {
-//
-//                cardTypeImage.value =  PaymentCard.CardType.JCB.getRecourse()
-//            }
-//            PaymentCard.CardType.DISCOVER -> {
-//
-//                cardTypeImage.value = PaymentCard.CardType.DISCOVER.getRecourse()
-//            }
-//            PaymentCard.CardType.VISA -> {
-//
-//                cardTypeImage.value = PaymentCard.CardType.VISA.getRecourse()
-//            }
-//            else -> {
-//
-//                cardTypeImage.value = PaymentCard.CardType.UNKNOWN.getRecourse()
-//            }
-//
-//
-//        }
+
+
+    }
+
+    fun save(
+        cardEdit: String?,
+        expireInput: String?,
+        cvvInput: String?,
+        nameInput: String?,
+        addressInput: String?,
+        addressLine2Input: String?,
+        cityInput: String?,
+        countryInput: String?,
+        addressPostalInput: String?
+    ) {
+
+
+        val year= expireInput?.substring(0,1)
+        val month= expireInput?.substring(2,3)
+
+
+      val payment=  PaymentCard (
+
+          cardNumber =   cardEdit,
+          cvv = cvvInput,
+          postalCode = addressPostalInput,
+          fullName = nameInput,
+          address = addressInput,
+          city = cityInput,
+          region = countryInput,
+          country = countryInput,
+          expiryYear = year,
+          expiryMonth = month,
+          paymentInfoType = PaymentCard.PaymentType.CreditCard.key
+
+      )
+
+
+
+
+        subscription = paymentInfoRepository
+            .addPaymentInfo(userRepository.getUserToken(),payment)
+
+            .doOnSubscribe {
+                loading.value = true
+            }
+            .doOnTerminate {
+                loading.value = false
+            }
+
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+                    goNext.value=true
+
+
+                } else {
+                    errorMessage.value = result.error?.message
+                }
+            }
+
+
+
+
 
 
     }
