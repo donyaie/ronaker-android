@@ -43,6 +43,17 @@
 
     </style>
 
+
+    <style name="Transparent" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+
+    </style>
+
     <style name="SearchTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimary">@color/white</item>

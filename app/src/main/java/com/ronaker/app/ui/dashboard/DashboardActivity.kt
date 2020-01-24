@@ -22,6 +22,7 @@ import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
+import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
 import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
@@ -29,7 +30,7 @@ import com.ronaker.app.utils.view.TabNavigationComponent
 import io.branch.referral.Branch
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
-    FragNavController.RootFragmentListener {
+    FragNavController.RootFragmentListener, EmailVerifyDialog.OnDialogResultListener {
 
 
     private val fragNavController: FragNavController =
@@ -75,8 +76,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         viewModel.goEmail.observe(this, Observer { value ->
             if (value == true) {
 
-                startActivity(ProfileEmailVerifyActivity.newInstance(this@DashboardActivity))
+//                startActivity(ProfileEmailVerifyActivity.newInstance(this@DashboardActivity))
 
+
+                EmailVerifyDialog.DialogBuilder(supportFragmentManager).setListener(this).show()
 
             }
         })
@@ -258,5 +261,11 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         if (!fragNavController.popFragment()) {
             super.onBackPressed()
         }
+    }
+
+    override fun onDialogResult(result: EmailVerifyDialog.DialogResultEnum) {
+
+
+
     }
 }
