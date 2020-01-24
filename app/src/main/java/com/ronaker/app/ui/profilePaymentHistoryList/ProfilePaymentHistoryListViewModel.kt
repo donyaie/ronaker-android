@@ -10,6 +10,7 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.model.Transaction
 import com.ronaker.app.ui.profilePaymentList.PaymentInfoAdapter
+import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -30,6 +31,9 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+
+    val walletBalance: MutableLiveData<String> = MutableLiveData()
+
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -43,6 +47,13 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
     private var subscription: Disposable? = null
 
     fun loadData() {
+
+        userRepository.getUserInfo()?.let {
+            walletBalance.value=((it.balance?:0.0)/100).toCurrencyFormat()
+
+        }
+
+
         subscription = paymentInfoRepository
             .getFinancialTransactions(userRepository.getUserToken())
 

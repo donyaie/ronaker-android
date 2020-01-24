@@ -130,6 +130,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
           postalCode = addressPostalInput,
           fullName = nameInput,
           address = addressInput,
+          address2 = addressLine2Input,
           city = cityInput,
           region = countryInput,
           country = countryInput,

@@ -5,7 +5,9 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.DefaultPaymentInfoRepository
 import com.ronaker.app.data.OrderRepository
+import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.PaymentCard
@@ -27,6 +29,14 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
+
+
+    @Inject
+    lateinit
+    var paymentInfoRepository: PaymentInfoRepository
+
+
     @Inject
     lateinit
     var context: Context
@@ -89,11 +99,32 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
 
 
 
-        cardDataList.clear()
-        cardDataList.add(PaymentCard("9873946297430","***** 0836",PaymentCard.CardType.MASTERCARD.key).apply { selected=true })
-        cardDataList.add(PaymentCard("987394629987430","***** 0985",PaymentCard.CardType.VISA.key))
-        cardDataList.add(PaymentCard("987394674297430","***** 9009",PaymentCard.CardType.DINERS_CLUB.key))
-        cardListAdapter.notifyDataSetChanged()
+
+        subscription?.dispose()
+        subscription = paymentInfoRepository.getPaymentInfoList(
+            userRepository.getUserToken()
+        )
+            .doOnSubscribe { loading.value = true }
+            .doOnTerminate { loading.value = false }
+            .subscribe { result ->
+                if (result.isSuccess() ) {
+
+                    cardDataList.clear()
+                    result.data?.let {
+                        if(it.isNotEmpty()){
+                            it[0].selected=true
+                        }
+                        cardDataList.addAll(it)
+                    }
+                    cardListAdapter.notifyDataSetChanged()
+
+                } else {
+                    finish.value=true
+                    errorMessage.value = "Successfully Send"
+                }
+            }
+
+
 
 
     }

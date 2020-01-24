@@ -19,21 +19,26 @@ class PaymentSelectViewModel(val app: Application) : BaseViewModel(app) {
     ) {
 
         data.cardNumber?.let {
-
             PaymentCard.CardType.detectFast(it) .apply {
-
-
-
                 cardTypeImage.value=this.resource
-
-
             }
+        }
 
+
+        val name= StringBuilder ()
+        data.cardNumber?.let {
+
+
+            name.append(it.substring(0,4))
+
+            name.append("*".repeat(it.length-8))
+
+            name.append(it.substring(it.length-5,it.length-1))
 
 
         }
 
-        title.value=data.cardNumber
+        title.value=name.toString()
         selected.value=data.selected
 
 

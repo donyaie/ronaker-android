@@ -74,19 +74,24 @@ class PaymentSelectAdapter(
         private val viewModel = PaymentSelectViewModel(binding.root.getApplication())
 
         fun bind(item: PaymentCard) {
-            viewModel.bind(item)
             binding.viewModel = viewModel
 
+            viewModel.bind(item)
             binding.container.setOnClickListener(this)
 
 
-            binding.checkbox.setOnCheckedChangeListener {_,ischeck->
+            binding.checkbox.isEnabled = item.isVerified == true
 
-                if(ischeck)
-                adapter.selectItem(item)
+            if (item.isVerified != true)
+                binding.checkbox.isSelected = false
+
+
+            binding.checkbox.setOnCheckedChangeListener { _, ischeck ->
+
+                if (ischeck)
+                    adapter.selectItem(item)
             }
         }
-
 
 
         fun onRecycled() {
@@ -101,9 +106,6 @@ class PaymentSelectAdapter(
 
 
     }
-
-
-
 
 
 }

@@ -58,6 +58,32 @@
                         app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+
+                    android:layout_marginRight="24dp"
+                    android:gravity="start"
+                    android:text="@string/text_balance"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toBottomOf="@id/avatar_image" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+
+                    app:mutableText="@{viewModel.getWalletBalance()}"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorAshGrey"
+                    app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
 
 

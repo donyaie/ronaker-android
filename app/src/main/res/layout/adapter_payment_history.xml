@@ -10,69 +10,68 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
 
+        android:layout_gravity="center"
         android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:id="@+id/container"
 
         android:orientation="vertical"
 
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
 
-            android:layout_marginTop="5dp"
+            android:minHeight="77dp"
+            android:orientation="horizontal">
 
-            android:textAppearance="@style/TextAppearance.Medium.SB"
-            android:textColor="@color/colorTextDark"
-            android:layout_marginBottom="5dp"
-            app:mutableText="@{viewModel.getAmount()}" />
+            <ImageView
+                android:id="@+id/verify_image"
+                mutableImageSrc="@{viewModel.getTransactionStatus()}"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="8dp"
 
-        <TextView
+                android:contentDescription="@string/text_content"
+                app:srcCompat="@drawable/ic_guide_dark" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:textAppearance="@style/TextAppearance.Large.SB"
+                android:textColor="@color/colorTextDark"
+                app:mutableText="@{viewModel.getAmount()}"
+                app:mutableTextColorRes="@{viewModel.getTransactionType()}" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".95"
+
+                android:gravity="end"
+                android:textAppearance="@style/TextAppearance.Small.Regular"
+                android:textColor="@color/colorTextDark"
+
+                app:mutableText="@{viewModel.getDescription()}" />
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-            android:layout_marginBottom="5dp"
-            android:textAppearance="@style/TextAppearance.Medium.Regular"
-            android:textColor="@color/colorTextDark"
-            app:mutableText="@{viewModel.getTransactionType()}" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-            android:layout_marginBottom="5dp"
-            android:textAppearance="@style/TextAppearance.Medium.Regular"
-            android:textColor="@color/colorTextDark"
-
-            app:mutableText="@{viewModel.getTransactionStatus()}" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-            android:layout_marginBottom="5dp"
-            android:textAppearance="@style/TextAppearance.Medium.Regular"
-            android:textColor="@color/colorTextDark"
-
-            app:mutableText="@{viewModel.getDescription()}" />
-
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/colorPlatinGrey"/>
+            android:layout_height="1dp"
+            android:background="@color/colorPlatinGrey" />
 
     </LinearLayout>
 

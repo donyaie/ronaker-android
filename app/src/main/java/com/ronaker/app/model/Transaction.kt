@@ -1,14 +1,8 @@
 package com.ronaker.app.model
 
 import android.os.Parcelable
-import com.ronaker.app.R
-import com.ronaker.app.data.network.request.PaymentInfoCreateRequestModel
 import com.ronaker.app.data.network.response.FinancialTransactionsResponseModel
-import com.ronaker.app.data.network.response.PaymentInfoListResponseModel
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import java.util.regex.Pattern
-
 
 @Parcelize
 data class Transaction(
@@ -18,6 +12,60 @@ data class Transaction(
     val transactionStatus: String? = null,
     val description: String? = null
 ) : Parcelable {
+
+    enum class TransactionTypeEnum constructor(key: String) {
+
+        Debit("debit"),
+        Credit("credit"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String?): TransactionTypeEnum {
+                var state = None
+                for (stateEnum in values()) {
+                    if (position?.compareTo(stateEnum.key,true) == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
+
+    enum class TransactionStatusEnum constructor(key: String) {
+        Successful("successful"),
+        Failed("failed"),
+        OnHold("on_hold"),
+        None("");
+
+
+        var key: String = ""
+            internal set
+
+        init {
+            this.key = key
+        }
+
+        companion object {
+            operator fun get(position: String?): TransactionStatusEnum {
+                var state = None
+                for (stateEnum in values()) {
+                    if (position?.compareTo(stateEnum.key,true)  == 0)
+                        state = stateEnum
+                }
+                return state
+            }
+        }
+
+    }
 
 
 
