@@ -24,4 +24,15 @@ interface PaymentInfoApi {
     fun addPaymentInfo(@Header("Authorization") authToken: String, @Body request: PaymentInfoCreateRequestModel): Observable<FreeResponseModel>
 
 
+
+    /**
+     * get Payment info List
+     */
+    @GET("/api/v1/financial_transactions/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun getFinancialTransactions(@Header("Authorization") authToken: String): Observable<ListResponseModel<FinancialTransactionsResponseModel>>
+
+
+
+
 }

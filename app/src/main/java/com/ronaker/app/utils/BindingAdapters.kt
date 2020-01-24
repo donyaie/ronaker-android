@@ -5,6 +5,7 @@ import android.animation.Animator.AnimatorListener
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -123,6 +124,15 @@ fun setMutableTextRes(view: TextView, text: MutableLiveData<Int>?) {
     val parentActivity:AppCompatActivity? = view.getParentActivity()
     if(parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value -> view.text = parentActivity.getString(value)})
+    }
+}
+
+@BindingAdapter("mutableTextColorRes")
+fun setMutableTextColorRes(view: TextView, text: MutableLiveData<Int>?) {
+
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value -> view.setTextColor(ContextCompat.getColor(parentActivity,value)) })
     }
 }
 

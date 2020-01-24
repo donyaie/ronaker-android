@@ -189,4 +189,5 @@
     <string name="text_verify_your_email">Controleer je email</string>
     <string name="text_resend_email">Email opnieuw verzenden</string>
     <string name="text_please_check_your_inbox_and_verify_your_email">Controleer je inbox en verifieer je e-mail</string>
+    <string name="text_balance">Balans :</string>
 </resources>

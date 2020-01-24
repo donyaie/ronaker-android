@@ -14,6 +14,9 @@ data class UserInfoResponceModel(
     ,@SerializedName("avatar") val avatar: String?
     ,@SerializedName("is_payment_info_verified") val is_payment_info_verified: Boolean?
     ,@SerializedName("is_identity_info_verified") val is_identity_info_verified: Boolean?
+    ,@SerializedName("balance") val balance: Double?
+
+
 
 ){
 

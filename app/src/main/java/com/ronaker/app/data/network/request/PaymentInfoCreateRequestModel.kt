@@ -9,6 +9,7 @@ data class PaymentInfoCreateRequestModel(@SerializedName("card_number") val card
                                          @SerializedName("postal_code") val postal_code: String?,
                                          @SerializedName("full_name") val full_name: String?,
                                          @SerializedName("address") val address: String?,
+                                         @SerializedName("address_2") val address_2: String?,
                                          @SerializedName("country") val country: String?,
                                          @SerializedName("region") val region: String?,
                                          @SerializedName("city") val city: String?,

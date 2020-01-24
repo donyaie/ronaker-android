@@ -18,6 +18,7 @@ data class PaymentCard(
     val postalCode: String? = null,
     val fullName: String? = null,
     val address: String? = null,
+    val address2: String? = null,
     val country: String? = null,
     val region: String? = null,
     val city: String? = null,
@@ -178,7 +179,7 @@ data class PaymentCard(
 
             operator fun get(position: String): CardType {
                 var state = UNKNOWN
-                for (stateEnum in CardType.values()) {
+                for (stateEnum in values()) {
                     if (position.compareTo(stateEnum.key) == 0)
                         state = stateEnum
                 }
@@ -242,6 +243,7 @@ fun List<PaymentInfoListResponseModel>.toPaymentInfoList(): List<PaymentCard> {
             it.postal_code,
             it.full_name,
             it.address,
+            it.address_2,
             it.country,
             it.region,
             it.city,
@@ -268,6 +270,7 @@ fun PaymentCard.toPaymentCardCreateModel(): PaymentInfoCreateRequestModel {
         this.postalCode,
         this.fullName,
         this.address,
+        this.address2,
         this.country,
         this.region,
         this.city,

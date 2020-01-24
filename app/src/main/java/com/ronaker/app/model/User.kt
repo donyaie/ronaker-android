@@ -29,6 +29,7 @@ data class User(
     , var avatar: String?
     , var password: String? = null
     , var promotionCode: String? = null
+    , val balance: Double? = null
 ) : Parcelable {
     constructor() : this(
         null,
@@ -54,17 +55,18 @@ fun UserInfoResponceModel.toUserModel(): User {
 
 
     return User(
-        suid,
-        email,
-        is_email_verified,
-        first_name,
-        last_name,
-        phone_number,
-        is_phone_number_verified,
-        is_payment_info_verified,
-        is_identity_info_verified,
-        avatar,
-        null
+        suid = suid,
+        email = email,
+        is_email_verified = is_email_verified,
+        first_name = first_name,
+        last_name = last_name,
+        phone_number = phone_number,
+        is_phone_number_verified = is_phone_number_verified,
+        is_payment_info_verified = is_payment_info_verified,
+        is_identity_info_verified = is_identity_info_verified,
+        avatar = avatar,
+        balance = balance
+
 
     )
 

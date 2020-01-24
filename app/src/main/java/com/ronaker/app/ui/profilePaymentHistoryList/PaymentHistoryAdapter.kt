@@ -9,12 +9,13 @@ import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterPaymentHistoryBinding
 import com.ronaker.app.databinding.AdapterPaymentSelectBinding
 import com.ronaker.app.model.PaymentCard
+import com.ronaker.app.model.Transaction
 import com.ronaker.app.utils.extension.getApplication
 
 class PaymentHistoryAdapter(
-    dataList: ArrayList<PaymentCard>
+    dataList: ArrayList<Transaction>
 ) : RecyclerView.Adapter<PaymentHistoryAdapter.ViewHolder>() {
-    private var productList: List<PaymentCard> = dataList
+    private var productList: List<Transaction> = dataList
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,19 +47,6 @@ class PaymentHistoryAdapter(
         notifyDataSetChanged()
     }
 
-    fun selectItem(item: PaymentCard) {
-
-
-        productList.forEach {
-
-            it.selected = false
-        }
-
-        item.selected = true
-
-        updateList()
-
-    }
 
     override fun onViewRecycled(holder: ViewHolder) {
 
@@ -74,7 +62,7 @@ class PaymentHistoryAdapter(
 
         private val viewModel = PaymentHistoryViewModel(binding.root.getApplication())
 
-        fun bind(item: PaymentCard) {
+        fun bind(item: Transaction) {
             viewModel.bind(item)
             binding.viewModel = viewModel
 

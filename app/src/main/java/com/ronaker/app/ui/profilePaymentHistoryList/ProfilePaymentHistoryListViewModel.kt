@@ -5,7 +5,12 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.PaymentCard
+import com.ronaker.app.model.Transaction
+import com.ronaker.app.ui.profilePaymentList.PaymentInfoAdapter
+import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -15,55 +20,70 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
     @Inject
     lateinit
     var userRepository: UserRepository
+
+    @Inject
+    lateinit
+    var paymentInfoRepository: PaymentInfoRepository
+
     @Inject
     lateinit
     var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+
+    val walletBalance: MutableLiveData<String> = MutableLiveData()
+
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+
+
+    var dataList=ArrayList<Transaction>()
+
+    val adapter= PaymentHistoryAdapter(dataList)
+
 
 
     private var subscription: Disposable? = null
 
     fun loadData() {
 
-//        subscription = userRepository
-//            .getUserInfo(userRepository.getUserToken())
-//
-//            .doOnSubscribe {
-//                retry.value = null
-//                loading.value = true
-//            }
-//            .doOnTerminate {
-//                loading.value = false
-//            }
-//
-//            .subscribe { result ->
-//                if (result.isSuccess()) {
-//                   mUser= result.data?.toUser()
-//                    signComplete.value = result.data?.is_email_verified
-//
-//                    phoneComplete.value = result.data?.is_phone_number_verified
-//
-//                    peymentComplete.value = result.data?.is_payment_info_verified
-//                    identityComplete.value = result.data?.is_identity_info_verified
-//
-//                    imageComplete.value = result.data?.avatar != null
-//
-//
-//                } else {
-//                    retry.value = result.error?.detail
-//                }
-//            }
+        userRepository.getUserInfo()?.let {
+            walletBalance.value=((it.balance?:0.0)/100).toCurrencyFormat()
 
+        }
+
+
+        subscription = paymentInfoRepository
+            .getFinancialTransactions(userRepository.getUserToken())
+
+            .doOnSubscribe {
+                retry.value = null
+                loading.value = true
+            }
+            .doOnTerminate {
+                loading.value = false
+            }
+
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+
+                    dataList.clear()
+                    result.data?.let { dataList.addAll(it) }
+                    adapter.notifyDataSetChanged()
+
+
+                } else {
+                    retry.value = result.error?.message
+                }
+            }
 
     }
 
 
     fun onRetry() {
-//        loadData()
+        loadData()
     }
 
 
