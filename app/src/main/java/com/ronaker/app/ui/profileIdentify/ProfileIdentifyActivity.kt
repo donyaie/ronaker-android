@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
@@ -19,14 +18,17 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.DocumentTypeEnum
+import com.ronaker.app.ui.dialog.SelectDialog
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.extension.finishSafe
 import java.io.IOException
 
 
-class ProfileIdentifyActivity : BaseActivity() {
+class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileIndentifyBinding
@@ -35,7 +37,7 @@ class ProfileIdentifyActivity : BaseActivity() {
 
     companion object {
 
-         const val REQUEST_IMAGE = 1233
+        const val REQUEST_IMAGE = 1233
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, ProfileIdentifyActivity::class.java)
             val boundle = Bundle()
@@ -82,6 +84,27 @@ class ProfileIdentifyActivity : BaseActivity() {
         viewModel.finish.observe(this, Observer {
             finishSafe()
         })
+
+
+
+        binding.documentInput.setOnClickListener {
+
+
+            val items = ArrayList<SelectDialog.SelectItem>()
+
+            DocumentTypeEnum.values().forEach {
+                if (it != DocumentTypeEnum.None)
+                    items.add(SelectDialog.SelectItem(it.key, it.title))
+
+            }
+
+
+
+            SelectDialog.DialogBuilder(supportFragmentManager).setTitle("Select Document Type")
+                .setItems(items).setListener(this).show()
+
+        }
+
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
@@ -205,6 +228,13 @@ class ProfileIdentifyActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
 
+    }
+
+    override fun onDialogResult(
+        result: SelectDialog.DialogResultEnum,
+        selectedItem: SelectDialog.SelectItem?
+    ) {
+        selectedItem?.let { viewModel.selectItem(selectedItem) }
     }
 
 

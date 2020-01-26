@@ -207,6 +207,7 @@
     <string name="text_verify_your_email">Verify Your Email</string>
     <string name="text_please_check_your_inbox_and_verify_your_email">Please check your inbox and verify your email</string>
     <string name="text_balance">Balance :</string>
+    <string name="text_add_document_image">Add document image</string>
 
 
 </resources>

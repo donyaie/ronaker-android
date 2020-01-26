@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.DocumentTypeEnum
+import com.ronaker.app.ui.dialog.SelectDialog
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -30,6 +32,9 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
     var context: Context
 
 
+    var selectedDocument:DocumentTypeEnum?=null
+
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -41,6 +46,9 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
     val imageVisibility: MutableLiveData<Int> = MutableLiveData()
     val identifyImage: MutableLiveData<String> = MutableLiveData()
     val uploadVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+    val documentTitle: MutableLiveData<String> = MutableLiveData()
 
 
     private lateinit var mUri: Uri
@@ -120,6 +128,15 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
 
     private fun addIdentity(imageSuid: String) {
 
+
+
+        if(selectedDocument==null){
+
+            errorMessage.value="Please select document type"
+
+            return
+        }
+
         identitySubscription?.dispose()
 
 
@@ -127,7 +144,7 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
             .addDocument(
                 userRepository.getUserToken(),
                 imageSuid,
-                UserRepository.DocumentTypeEnum.IdCard
+                selectedDocument?:DocumentTypeEnum.None
             )
 
             .doOnSubscribe {
@@ -152,6 +169,25 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
         super.onCleared()
         uploadSubscription?.dispose()
         identitySubscription?.dispose()
+    }
+
+    fun selectItem(selectedItem: SelectDialog.SelectItem) {
+
+        selectedDocument=DocumentTypeEnum.get(selectedItem.id)
+
+        documentTitle.value=selectedItem.title
+        if(selectedDocument==DocumentTypeEnum.None){
+            selectedDocument=null
+            documentTitle.value=""
+        }
+
+
+
+
+
+
+
+
     }
 
 
