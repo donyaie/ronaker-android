@@ -8,16 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import com.ronaker.app.utils.Alert
+import android.widget.HorizontalScrollView
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.search.SearchActivity
+import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
@@ -52,6 +56,9 @@ class ExploreFragment : BaseFragment() {
 
 
         binding.viewModel = viewModel
+
+
+        binding.categoryRecycler?.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
         val mnager = GridLayoutManager(context, count)
         binding.recycler.layoutManager = mnager
@@ -152,7 +159,38 @@ class ExploreFragment : BaseFragment() {
 
             }
         }
-        binding.recycler.addOnScrollListener(scrollListener)
+//        binding.scrollView.setOnScrollChangeListener()
+//
+//        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
+
+
+        binding.scrollView?.setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (v.getChildAt(v.childCount - 1) != null) {
+                if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight &&
+                    scrollY > oldScrollY
+                ) { //code to fetch more data for endless scrolling
+
+                    viewModel.loadMore()
+
+                    AppDebug.log("load_more","call")
+                }
+
+
+                if(!v.canScrollVertically(+1)){
+
+                    AppDebug.log("load_more","call2")
+                }
+
+                if (!v.canScrollVertically(-1)) {
+
+                    binding.header.cardElevation = 0f
+                } else {
+                    binding.header.cardElevation = 10f
+                }
+
+
+            }
+        }
 
 
         binding.backImage.setOnClickListener {
@@ -214,9 +252,9 @@ class ExploreFragment : BaseFragment() {
 
     override fun onDetach() {
         try {
-
-            binding.recycler.viewTreeObserver
-                .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
+//
+//            binding.recycler.viewTreeObserver
+//                .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
         } catch (e: Exception) {
 
         }

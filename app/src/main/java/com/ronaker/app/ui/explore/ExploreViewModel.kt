@@ -6,8 +6,10 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
+import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
+import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
@@ -25,17 +27,32 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     var userRepository: UserRepository
 
 
+
+    @Inject
+    lateinit
+    var categoryRepository: CategoryRepository
+
+
     private var page = 0
     private var hasNextPage = true
 
 
+    var selectedCategory:Category?=null
+
+
     var dataList: ArrayList<Product> = ArrayList()
+
+    var categoryList: ArrayList<Category> = ArrayList()
 
 
     private var query: String? = null
 
 
-    var productListAdapter: ItemExploreAdapter
+    var productListAdapter: ItemExploreAdapter= ItemExploreAdapter(dataList)
+
+
+    var categoryListAdapter: CategoryExploreAdapter= CategoryExploreAdapter(categoryList)
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
@@ -60,11 +77,38 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
 
     private var subscription: Disposable? = null
 
+    private var categorySubscription :Disposable? = null
+
     init {
-        productListAdapter = ItemExploreAdapter(dataList)
         reset()
+        loadCategory()
 
         loadProduct()
+    }
+
+
+    fun loadCategory() {
+
+        categorySubscription?.dispose()
+        categorySubscription = categoryRepository
+            .getCategories(userRepository.getUserToken())
+
+            .doOnSubscribe { }
+            .doOnTerminate {  }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+                    if ((result.data?.size ?: 0) > 0) {
+                        categoryList.clear()
+                        result.data?.let { categoryList.addAll(result.data) }
+                        categoryListAdapter.notifyDataSetChanged()
+
+
+                    }
+                }
+            }
+
+
+
     }
 
     fun loadProduct() {
@@ -160,6 +204,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
 
     override fun onCleared() {
         super.onCleared()
+        categorySubscription?.dispose()
         subscription?.dispose()
     }
 
@@ -171,6 +216,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app) {
     fun retry() {
         reset()
         loadProduct()
+        loadCategory()
 
     }
 
