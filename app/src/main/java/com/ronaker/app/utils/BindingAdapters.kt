@@ -136,6 +136,18 @@ fun setMutableTextColorRes(view: TextView, text: MutableLiveData<Int>?) {
     }
 }
 
+
+@BindingAdapter("mutableBackgroundRes")
+fun setMutableBackgroundRes(view: View, text: MutableLiveData<Int>?) {
+
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value -> view.setBackgroundResource(value) })
+    }
+}
+
+
+
 @BindingAdapter("mutableProgress")
 fun setMutableText(view: ProgressBar, text: MutableLiveData<Int>?) {
 
