@@ -3,8 +3,9 @@ package com.ronaker.app.utils
 import android.app.Activity
 import androidx.fragment.app.Fragment
 import com.irozon.sneaker.Sneaker
-
 class Alert {
+
+
 
 
     enum class Type {
@@ -17,6 +18,8 @@ class Alert {
     companion object {
 
 
+        private val duration=3000
+
         private fun makeText(context: Activity?, message: String?, type: Type) {
 
 
@@ -26,6 +29,8 @@ class Alert {
 
                     val sneaker = Sneaker.with(it) // Activity, Fragment or ViewGroup
                         .setMessage(message)
+
+                        .setDuration(duration)
                         .autoHide(true)
 
 
@@ -57,6 +62,7 @@ class Alert {
                 context?.let {
                     val sneaker = Sneaker.with(it) // Activity, Fragment or ViewGroup
                         .setMessage(message)
+                        .setDuration(duration)
                         .autoHide(true)
 
 
