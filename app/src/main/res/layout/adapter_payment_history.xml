@@ -31,25 +31,23 @@
             android:orientation="horizontal">
 
 
-
-
             <RelativeLayout
-                android:background="@color/colorRed"
+                android:layout_width="3dp"
 
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_width="3dp"
-                app:mutableBackgroundRes="@{viewModel.getTransactionStatus()}"
-                android:layout_height="match_parent"/>
+                android:background="@color/colorRed"
+                app:mutableBackgroundRes="@{viewModel.getTransactionStatus()}" />
 
 
             <LinearLayout
                 android:layout_width="67dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
                 android:background="@color/colorPlatinGrey"
+                android:gravity="center"
                 android:orientation="vertical"
 
                 >
@@ -60,8 +58,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text=""
                     android:layout_marginBottom="8dp"
+                    android:text=""
                     android:textAppearance="@style/TextAppearance.Medium.SB"
                     android:textColor="@color/colorTextDark"
 
@@ -81,18 +79,45 @@
 
             </LinearLayout>
 
-
-
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".95"
-                android:gravity="end"
-                android:text=""
-                android:textAppearance="@style/TextAppearance.Small.Regular"
-                android:textColor="@color/colorTextDark"
+                android:layout_weight=".95">
 
-                app:mutableText="@{viewModel.getDescription()}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.Small.Regular"
+                    android:textColor="@color/colorTextDark"
+
+                    app:mutableVisibility="@{viewModel.getDescriptionVisibility()}"
+                    app:mutableText="@{viewModel.getDescription()}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:visibility="gone"
+                    android:minHeight="30dp"
+                    app:mutableVisibility="@{viewModel.getOrderVisibility()}"
+                    android:gravity="center_vertical"
+
+                    android:textAppearance="@style/TextAppearance.Small.SB"
+                    android:textColor="@color/colorTextLink"
+                    android:text="@string/text_order_detail"
+
+                    />
+
+
+            </LinearLayout>
 
 
             <TextView

@@ -10,7 +10,10 @@ import com.ronaker.app.databinding.AdapterPaymentHistoryBinding
 import com.ronaker.app.databinding.AdapterPaymentSelectBinding
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.model.Transaction
+import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.extension.getApplication
+import com.ronaker.app.utils.extension.getParentActivity
+import com.ronaker.app.utils.extension.startActivityMakeScene
 
 class PaymentHistoryAdapter(
     dataList: ArrayList<Transaction>
@@ -58,7 +61,7 @@ class PaymentHistoryAdapter(
     class ViewHolder(
         private val binding: AdapterPaymentHistoryBinding,
         val adapter: PaymentHistoryAdapter
-    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = PaymentHistoryViewModel(binding.root.getApplication())
 
@@ -66,7 +69,11 @@ class PaymentHistoryAdapter(
             viewModel.bind(item)
             binding.viewModel = viewModel
 
-            binding.container.setOnClickListener(this)
+            binding.container.setOnClickListener{
+
+               item.OrderSuid?.let {   binding.root.getParentActivity()?.startActivityMakeScene(OrderPreviewActivity.newInstance(binding.root.getApplication(),it))}
+
+            }
 
 
 
@@ -76,10 +83,6 @@ class PaymentHistoryAdapter(
 
         fun onRecycled() {
 
-
-        }
-
-        override fun onClick(v: View?) {
 
         }
 

@@ -14,7 +14,7 @@ data class Transaction(
     val transactionStatus: String? = null,
     val description: String? = null,
     val createAt: Date?=null,
-    val product_suid:String?=null
+    val OrderSuid:String?=null
 ) : Parcelable {
 
     enum class TransactionTypeEnum constructor(key: String) {
@@ -89,7 +89,7 @@ fun List<FinancialTransactionsResponseModel>.mapToTransactionList(): List<Transa
             it.transaction_status,
             it.description,
             it.created_at,
-            it.product_suid
+            it.order_suid
         )
 
         list.add(value)
