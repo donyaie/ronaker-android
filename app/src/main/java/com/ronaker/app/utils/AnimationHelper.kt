@@ -35,8 +35,8 @@ class AnimationHelper {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 activity.window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
 //                activity.window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-                val slide = Slide()
-                slide.slideEdge = Gravity.END
+                val slide = Fade()
+//                slide.slideEdge = Gravity.END
                 slide.excludeTarget(android.R.id.statusBarBackground, true)
                 slide.excludeTarget(android.R.id.navigationBarBackground, true)
                 activity.window.enterTransition = slide
