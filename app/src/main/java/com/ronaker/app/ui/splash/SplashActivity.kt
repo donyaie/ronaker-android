@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
-        viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
 
 
         viewModel.goLogin.observe(this, Observer { value ->

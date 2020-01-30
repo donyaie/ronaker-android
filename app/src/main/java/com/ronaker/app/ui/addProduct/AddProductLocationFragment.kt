@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -73,11 +73,11 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
             false
         )
         activity?.let {
-            baseViewModel = ViewModelProviders.of(it).get(AddProductViewModel::class.java)
+            baseViewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
             binding.parentViewModel = baseViewModel
         }
 
-        viewModel = ViewModelProviders.of(this).get(AddProductLocationViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AddProductLocationViewModel::class.java)
         binding.viewModel = viewModel
 
 
@@ -139,13 +139,13 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
 
-        baseViewModel.productLocation.observe(this, Observer { value ->
+        baseViewModel.productLocation.observe(viewLifecycleOwner, Observer { value ->
             moveCamera(value)
 
         })
 
 
-        viewModel.newLocation.observe(this, Observer { value ->
+        viewModel.newLocation.observe(viewLifecycleOwner, Observer { value ->
             moveCamera(value)
         })
 

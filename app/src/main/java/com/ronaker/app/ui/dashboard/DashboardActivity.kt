@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -23,7 +23,6 @@ import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
-import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyActivity
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
@@ -59,7 +58,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         setSwipeCloseDisable()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
-        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -100,7 +99,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             if (error == null) {
                 AppDebug.log("BRANCH SDK", referringParams.toString())
 
-                if (referringParams.has("product")) {
+                if (referringParams?.has("product")==true) {
                     val suid = referringParams.getString("product")
                     if (suid.isNotBlank() && viewModel.islogin)
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))

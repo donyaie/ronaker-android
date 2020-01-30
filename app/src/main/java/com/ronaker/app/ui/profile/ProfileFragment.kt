@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -29,21 +29,21 @@ class ProfileFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 Alert.makeTextError(this, errorMessage)
             }
         })
 
-        viewModel.logOutAction.observe(this, Observer {
+        viewModel.logOutAction.observe(viewLifecycleOwner, Observer {
 
             activity?.let {   it.startActivityMakeScene(DashboardActivity.newInstance(it) )}
         })

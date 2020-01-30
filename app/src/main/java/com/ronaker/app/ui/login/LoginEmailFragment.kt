@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
@@ -21,11 +21,11 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_email, container, false)
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(LoginViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel
         }
 
-        viewModel.emailError.observe(this, Observer {
+        viewModel.emailError.observe(viewLifecycleOwner, Observer {
                 errorMessage-> if (errorMessage!=null)binding.emailInput.showNotValidAlert()else binding.emailInput.hideAlert()
         })
 

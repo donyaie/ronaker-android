@@ -7,13 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.widget.HorizontalScrollView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,7 +37,7 @@ class ExploreFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
-        viewModel = ViewModelProviders.of(this).get(ExploreViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
 
 
         val screenMnager=ScreenCalculator(requireContext())
@@ -64,11 +62,11 @@ class ExploreFragment : BaseFragment() {
         binding.recycler.layoutManager = mnager
         binding.loading.hideLoading()
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
 
         })
-        viewModel.retry.observe(this, Observer { loading ->
+        viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
 
         })
@@ -81,7 +79,7 @@ class ExploreFragment : BaseFragment() {
         }
 
 
-        viewModel.searchValue.observe(this, Observer { _ ->
+        viewModel.searchValue.observe(viewLifecycleOwner, Observer { _ ->
 
             // Check if we're running on Android 5.0 or higher
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -119,12 +117,12 @@ class ExploreFragment : BaseFragment() {
 
         })
 
-        viewModel.resetList.observe(this, Observer {
+        viewModel.resetList.observe(viewLifecycleOwner, Observer {
             scrollListener.resetState()
         })
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
 
                 Alert.makeTextError(this, errorMessage)
 
@@ -164,7 +162,7 @@ class ExploreFragment : BaseFragment() {
 //        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
 
 
-        binding.scrollView?.setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+        binding.scrollView?.setOnScrollChangeListener { v: NestedScrollView, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
             if (v.getChildAt(v.childCount - 1) != null) {
                 if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight &&
                     scrollY > oldScrollY

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -97,7 +97,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         }
 
 
-        viewModel = ViewModelProviders.of(this).get(ExploreProductViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
 
         binding.viewModel = viewModel
 

@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -165,7 +165,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
 
-        viewModel = ViewModelProviders.of(this).get(AddProductViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
 
         binding.viewModel = viewModel
 

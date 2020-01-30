@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
@@ -73,7 +73,7 @@ class SelectDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProviders.of(this).get(SelectDialogViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SelectDialogViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -81,7 +81,7 @@ class SelectDialog : BaseDialog() {
 
 
 
-        viewModel.selectedPlace.observe(this, Observer { value ->
+        viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
             selectedItem=value
             dialogResult= DialogResultEnum.OK
             stop()

@@ -7,7 +7,7 @@ import android.view.View
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
@@ -44,7 +44,7 @@ class ProductSavedActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_saved)
 
-        viewModel = ViewModelProviders.of(this).get(ProductSavedViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProductSavedViewModel::class.java)
 
         binding.viewModel = viewModel
 

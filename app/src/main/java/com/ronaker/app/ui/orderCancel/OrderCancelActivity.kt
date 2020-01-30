@@ -8,7 +8,7 @@ import android.view.View
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
@@ -43,7 +43,7 @@ class OrderCancelActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_cancel)
 
-        viewModel = ViewModelProviders.of(this).get(OrderCancelViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(OrderCancelViewModel::class.java)
 
         binding.viewModel = viewModel
 

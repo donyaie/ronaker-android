@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
@@ -24,7 +24,7 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_add_image, container, false)
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(AddProductViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
             binding.viewModel = viewModel
         }
 

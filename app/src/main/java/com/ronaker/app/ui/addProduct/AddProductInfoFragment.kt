@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
@@ -23,7 +23,7 @@ class AddProductInfoFragment : BaseFragment(), IPagerFragment {
 
 
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(AddProductViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
             binding.viewModel = viewModel
         }
 

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber
@@ -37,7 +37,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
 
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(PhoneNumberViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(PhoneNumberViewModel::class.java)
             binding.viewModel = viewModel
 
             binding.view=this@PhoneNumberFragment

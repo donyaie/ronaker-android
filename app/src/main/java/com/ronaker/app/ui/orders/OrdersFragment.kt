@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
@@ -37,7 +37,7 @@ class OrdersFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders, container, false)
-        viewModel = ViewModelProviders.of(this).get(OrdersViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(OrdersViewModel::class.java)
 
 //
         binding.viewModel = viewModel
@@ -121,7 +121,7 @@ class OrdersFragment : BaseFragment() {
         adapter.addFragment(OrderListFragment.newInstance(Order.OrderTypeEnum.Renting.key))
         adapter.addFragment( OrderListFragment.newInstance(Order.OrderTypeEnum.Lending.key))
         adapter.addFragment(OrderListFragment.newInstance("archive"))
-        binding.viewpager?.adapter?.notifyDataSetChanged()
+        binding.viewpager.adapter?.notifyDataSetChanged()
 
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

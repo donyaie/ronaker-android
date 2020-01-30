@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
@@ -21,7 +21,7 @@ class LoginPasswordFragment : BaseFragment(), IPagerFragment {
 
         binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_password,container , false)
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(LoginViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel
         }
         return binding.root

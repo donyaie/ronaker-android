@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.model.LatLng
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -73,7 +73,7 @@ class EmailVerifyDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProviders.of(this).get(ProfileEmailVerifyViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileEmailVerifyViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -82,10 +82,10 @@ class EmailVerifyDialog : BaseDialog() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
-        viewModel.goNex.observe(this, Observer {
+        viewModel.goNex.observe(viewLifecycleOwner, Observer {
 
             dialogResult=DialogResultEnum.OK
             stop()

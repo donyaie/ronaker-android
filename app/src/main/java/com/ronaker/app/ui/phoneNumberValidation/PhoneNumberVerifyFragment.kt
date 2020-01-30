@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
@@ -23,7 +23,7 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_phone_number_verify, container, false)
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(PhoneNumberViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(PhoneNumberViewModel::class.java)
             binding.viewModel = viewModel
         }
 

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -65,7 +65,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_preview)
 
-        viewModel = ViewModelProviders.of(this).get(OrderPreviewViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(OrderPreviewViewModel::class.java)
 
         binding.viewModel = viewModel
 

@@ -7,7 +7,7 @@ import android.view.View
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
@@ -45,7 +45,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
 
-        viewModel = ViewModelProviders.of(this).get(ProfileEditViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileEditViewModel::class.java)
 
         binding.viewModel = viewModel
 

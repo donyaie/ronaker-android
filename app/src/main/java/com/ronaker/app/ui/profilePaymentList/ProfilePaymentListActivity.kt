@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
@@ -48,7 +48,7 @@ class ProfilePaymentListActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment_list)
 
-        viewModel = ViewModelProviders.of(this).get(ProfilePaymentListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfilePaymentListViewModel::class.java)
 
         binding.viewModel = viewModel
 

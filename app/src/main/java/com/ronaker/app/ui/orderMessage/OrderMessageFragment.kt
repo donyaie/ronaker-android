@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.extension.finishSafe
@@ -22,7 +22,7 @@ class OrderMessageFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_message, container, false)
 
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(OrderMessageViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(OrderMessageViewModel::class.java)
             binding.viewModel = viewModel
         }
 

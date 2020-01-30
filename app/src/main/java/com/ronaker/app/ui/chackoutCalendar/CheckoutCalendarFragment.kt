@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Product
@@ -34,14 +34,14 @@ class CheckoutCalendarFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_checkout_calendar, container, false)
 
         activity?.let {
-            viewModel = ViewModelProviders.of(it).get(CheckoutCalendarViewModel::class.java)
+            viewModel = ViewModelProvider(it).get(CheckoutCalendarViewModel::class.java)
             binding.viewModel = viewModel
         }
 
 
 
 
-        viewModel.nextStep.observe(this, Observer {
+        viewModel.nextStep.observe(viewLifecycleOwner, Observer {
 
 //
 

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -56,7 +56,7 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_indentify)
 
-        viewModel = ViewModelProviders.of(this).get(ProfileIdentifyViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileIdentifyViewModel::class.java)
 
         binding.viewModel = viewModel
 
