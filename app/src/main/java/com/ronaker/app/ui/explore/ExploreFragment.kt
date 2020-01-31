@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -68,6 +69,34 @@ class ExploreFragment : BaseFragment() {
         })
         viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+
+        })
+
+
+        viewModel.scrollCategoryPosition.observe(viewLifecycleOwner, Observer { position ->
+            binding.categoryRecycler?.scrollToPosition(position)
+
+
+        })
+
+
+
+
+
+        viewModel.searchText.observe(viewLifecycleOwner, Observer { text ->
+
+
+            if(text.isNullOrBlank()) {
+
+                binding.searchText.text = getString(R.string.title_search_here)
+                binding.backImage.visibility = View.GONE
+                binding.searchImage.visibility = View.VISIBLE
+
+            }else{
+                binding.searchText.text = text
+                binding.backImage.visibility = View.VISIBLE
+                binding.searchImage.visibility = View.GONE
+            }
 
         })
 
@@ -193,7 +222,7 @@ class ExploreFragment : BaseFragment() {
 
         binding.backImage.setOnClickListener {
 
-            clearSearchValue()
+            viewModel.clearSearch()
         }
 
 
@@ -218,11 +247,11 @@ class ExploreFragment : BaseFragment() {
             if (data != null) {
                 val searchValue = data.getStringExtra(SearchActivity.Search_KEY)
 
-                if (searchValue == null || searchValue.isEmpty())
-                    clearSearchValue()
+                if (searchValue.isNullOrBlank())
+                    viewModel.search("")
                 else
 
-                    setSearchValue(searchValue)
+                    viewModel.search(searchValue)
             }
 
 
@@ -234,19 +263,7 @@ class ExploreFragment : BaseFragment() {
     }
 
 
-    private fun setSearchValue(search: String) {
 
-
-        binding.searchText.text = search
-
-        binding.backImage.visibility = View.VISIBLE
-        binding.searchImage.visibility = View.GONE
-
-
-        viewModel.search(search)
-
-
-    }
 
     override fun onDetach() {
         try {
@@ -260,14 +277,5 @@ class ExploreFragment : BaseFragment() {
     }
 
 
-    private fun clearSearchValue() {
-
-
-        binding.searchText.setText(R.string.title_search_here)
-
-        binding.backImage.visibility = View.GONE
-        binding.searchImage.visibility = View.VISIBLE
-        viewModel.search(null)
-    }
 
 }

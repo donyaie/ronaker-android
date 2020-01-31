@@ -60,18 +60,20 @@
 
                     <EditText
                         android:id="@+id/search_edit"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:autofillHints="AUTOFILL_TYPE_NONE"
 
                         android:background="@null"
 
+                        app:layout_constraintLeft_toLeftOf="parent"
 
                         android:gravity="start|center_vertical"
                         android:hint="@string/title_search_here"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:paddingLeft="16dp"
+                        app:layout_constraintRight_toLeftOf="@id/clear_text"
 
                         android:paddingRight="16dp"
                         android:textAppearance="@style/TextAppearance.Medium.SB"

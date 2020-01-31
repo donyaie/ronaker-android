@@ -36,6 +36,12 @@
     <color name="white">#ffffff</color>
 
 
+    <color name="white_opacity_75">#BDffffff</color>
+    <color name="white_opacity_30">#3fffffff</color>
+    <color name="white_opacity_10">#19ffffff</color>
+
+
+
     <color name="ic_launcher_background">#FFFFFF</color>
 
 </resources>

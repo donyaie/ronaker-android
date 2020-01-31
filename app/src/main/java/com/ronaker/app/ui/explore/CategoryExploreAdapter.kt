@@ -9,26 +9,30 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterExploreCategoryBinding
-import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Category
-import com.ronaker.app.model.Product
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
 
 
 class CategoryExploreAdapter(
-    dataList: ArrayList<Category>
+    dataList: ArrayList<Category>,
+    val listener: AdapterListener?
 ) : RecyclerView.Adapter<CategoryExploreAdapter.ViewHolder>() {
-    private  var productList:List<Category> = dataList
+    private var productList: List<Category> = dataList
 
-   lateinit var context:Context
-    private var lastPosition=-1
+    lateinit var context: Context
+    private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterExploreCategoryBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_explore_category, parent, false)
-        context=parent.context
+        val binding: AdapterExploreCategoryBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.adapter_explore_category,
+            parent,
+            false
+        )
+        context = parent.context
 
-        return ViewHolder(binding)
+        return ViewHolder(binding, listener)
     }
 
     override fun onViewDetachedFromWindow(holder: ViewHolder) {
@@ -40,7 +44,7 @@ class CategoryExploreAdapter(
 
         val animation: Animation = AnimationUtils.loadAnimation(
             context,
-            if (position > lastPosition) R.anim.adapter_up_from_bottom else R.anim.adapter_down_from_top
+            if (position > lastPosition) android.R.anim.fade_in else android.R.anim.fade_in
         )
         holder.itemView.startAnimation(animation)
         lastPosition = position
@@ -49,12 +53,12 @@ class CategoryExploreAdapter(
         holder.bind(productList[position])
     }
 
-    fun reset(){
-        lastPosition=-1
+    fun reset() {
+        lastPosition = -1
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return productList.size
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -63,19 +67,36 @@ class CategoryExploreAdapter(
     }
 
 
-    fun updateList(){
+    fun updateList() {
         notifyDataSetChanged()
     }
 
+
+    interface AdapterListener {
+
+        fun onSelectCategory(selected: Category)
+
+    }
+
     class ViewHolder(
-        private val binding: AdapterExploreCategoryBinding
-    ):RecyclerView.ViewHolder(binding.root){
+        private val binding: AdapterExploreCategoryBinding,
+
+        private val listener: AdapterListener?
+
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = CategoryExploreViewModel(binding.root.getApplication())
 
-        fun bind(product:Category){
-            viewModel.bind(product,binding,binding.root.getParentActivity())
+        fun bind(product: Category) {
+            viewModel.bind(product, binding, binding.root.getParentActivity())
             binding.viewModel = viewModel
+
+
+            binding.root.setOnClickListener {
+                listener?.onSelectCategory(product)
+            }
+
+
         }
 
         fun onViewRecycled() {

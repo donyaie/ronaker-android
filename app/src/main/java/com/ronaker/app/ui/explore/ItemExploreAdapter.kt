@@ -38,7 +38,7 @@ class ItemExploreAdapter(
 
         val animation: Animation = AnimationUtils.loadAnimation(
             context,
-            if (position > lastPosition) R.anim.adapter_up_from_bottom else R.anim.adapter_down_from_top
+            if (position > lastPosition) android.R.anim.fade_in else android.R.anim.fade_in
         )
         holder.itemView.startAnimation(animation)
         lastPosition = position
