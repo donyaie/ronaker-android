@@ -14,6 +14,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.General
 import com.ronaker.app.R
+import com.ronaker.app.utils.AnimationHelper
 import io.fabric.sdk.android.Fabric
 
 
@@ -122,6 +123,12 @@ abstract class BaseActivity: SwipeBackActivity() {
 
         
 
+    }
+
+    override fun finish() {
+
+        AnimationHelper.setAnimateTransition(this)
+        super.finish()
     }
 
 

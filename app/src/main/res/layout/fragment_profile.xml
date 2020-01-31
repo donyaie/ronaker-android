@@ -159,7 +159,7 @@
                                     android:background="@drawable/background_oval_green"
                                     android:minWidth="16dp"
                                     android:gravity="center"
-                                    android:text="3"
+                                    android:text="1"
 
                                     android:textAppearance="@style/TextAppearance.Small.SB"
 
@@ -172,13 +172,12 @@
 
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text=" for 5"
+                                    android:text="@string/text_of_5"
 
                                     android:textAppearance="@style/TextAppearance.Small.SB"
 
                                     android:textColor="@color/colorTextDark"
-
-                                    tools:ignore="HardcodedText" />
+ />
 
                             </LinearLayout>
 

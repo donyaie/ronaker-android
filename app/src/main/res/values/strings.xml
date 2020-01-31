@@ -209,6 +209,7 @@
     <string name="text_balance">Balance :</string>
     <string name="text_add_document_image">Add document image</string>
     <string name="text_order_detail">Order Detail</string>
+    <string name="text_of_5"> of 5</string>
 
 
 </resources>

@@ -4,13 +4,20 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import com.ronaker.app.utils.AnimationHelper
 
 fun Activity.finishSafe(){
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        AnimationHelper.setAnimateTransition(this as AppCompatActivity)
         this.finishAfterTransition()
     }
-    else
+    else {
+
+        AnimationHelper.setAnimateTransition(this as AppCompatActivity)
         this.finish()
+    }
 }
 
 
