@@ -46,8 +46,6 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     var cachCategoryList: ArrayList<Category> = ArrayList()
 
 
-
-
     private var query: String = ""
 
 
@@ -138,10 +136,10 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
             subscription?.dispose()
 
 
-            var searchValue:String?=query
+            var searchValue: String? = query
 
-            if(searchValue.isNullOrBlank())
-                searchValue=null
+            if (searchValue.isNullOrBlank())
+                searchValue = null
 
             subscription = productRepository
                 .productSearch(userRepository.getUserToken(), searchValue, page, null, null)
@@ -250,7 +248,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     fun search(search: String) {
 
-        if(search.isNotEmpty()){
+        if (search.isNotEmpty()) {
             getAnalytics()?.actionSearch(search)
         }
 
@@ -272,10 +270,10 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     override fun onSelectCategory(selected: Category) {
 
 
-        if(selected == selectedCategory)
+        if (selected == selectedCategory)
             return
 
-        if(selected.sub_categories.isNullOrEmpty()){
+        if (selected.sub_categories.isNullOrEmpty()) {
             categoryList.forEach {
                 it.isSelected = false
 
@@ -291,10 +289,10 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
             categoryListAdapter.notifyItemChanged(categoryList.indexOf(selected))
 
-            scrollCategoryPosition.value=categoryList.indexOf(selected)
+            scrollCategoryPosition.value = categoryList.indexOf(selected)
 
 
-        }else{
+        } else {
             categoryList.clear()
             categoryList.addAll(selected.sub_categories as ArrayList<Category>)
 
@@ -304,7 +302,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
             }
             categoryListAdapter.reset()
             categoryListAdapter.notifyDataSetChanged()
-            scrollCategoryPosition.value=0
+            scrollCategoryPosition.value = 0
 
         }
 
@@ -332,9 +330,22 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     private fun updateSearchCaption() {
 
-        searchText.value  = query+(selectedCategory?.let {" in "+ selectedCategory?.title   }?:run { "" })
+        searchText.value =
+            query + (selectedCategory?.let { " in " + selectedCategory?.title } ?: run { "" })
 
 
+    }
+
+    fun backPress(): Boolean {
+
+        var handle = false
+
+        if (selectedCategory != null || query.isNotEmpty()) {
+            clearSearch()
+            handle = true
+        }
+
+        return handle
     }
 
 }

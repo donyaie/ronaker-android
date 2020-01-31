@@ -99,7 +99,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             if (error == null) {
                 AppDebug.log("BRANCH SDK", referringParams.toString())
 
-                if (referringParams?.has("product")==true) {
+                if (referringParams?.has("product") == true) {
                     val suid = referringParams.getString("product")
                     if (suid.isNotBlank() && viewModel.islogin)
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
@@ -257,14 +257,51 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     override fun onBackPressed() {
+
+
+        if (handleFragmentBakeListener(fragNavController.currentFrag) == true) {
+            return
+        }
+
+
+
         if (!fragNavController.popFragment()) {
             super.onBackPressed()
         }
     }
 
+
     override fun onDialogResult(result: EmailVerifyDialog.DialogResultEnum) {
 
 
+    }
 
+    private var mainListener: HashMap<Fragment, MainaAtivityListener> = HashMap()
+
+
+    fun addFragmentListener(fragment: Fragment, listener: MainaAtivityListener) {
+
+        mainListener[fragment] = listener
+
+    }
+
+
+    fun removeFragmentListener(fragment: Fragment) {
+
+        mainListener.remove(fragment)
+
+    }
+
+    private fun handleFragmentBakeListener(fragment: Fragment?): Boolean? {
+
+        if (mainListener.containsKey(fragment))
+            return mainListener[fragment]?.onBackPressed()
+
+        return false
+    }
+
+
+    interface MainaAtivityListener {
+        fun onBackPressed(): Boolean
     }
 }

@@ -9,16 +9,18 @@
         <item name="android:typeface">sans</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:dialogTheme">@style/TransparentDialog</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowContentOverlay">@null</item>
 
 
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
 
+
+        <item name="android:statusBarColor">@color/white</item>
+
         <item name="android:textViewStyle">@style/Widget.Ronaker.TextView</item>
         <item name="android:windowTranslucentNavigation" >false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
 </resources>

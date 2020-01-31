@@ -41,21 +41,21 @@ class StatusBarSizeView : RelativeLayout {
 //
 //        heightSize= sc.DP2Pixel(40)
 
-        heightSize=context.resources.getDimension(R.dimen.statusBarSize).toInt()
-
-        // listen to get the height
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            (context as? Activity)?.window?.decorView?.setOnApplyWindowInsetsListener { _, windowInsets ->
-
-                // get the size
-                heightSize = windowInsets.systemWindowInsetTop
-
-
-
-                // return insets
-                windowInsets
-            }
-        }
+//        heightSize=context.resources.getDimension(R.dimen.statusBarSize).toInt()
+//
+//        // listen to get the height
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+//            (context as? Activity)?.window?.decorView?.setOnApplyWindowInsetsListener { _, windowInsets ->
+//
+//                // get the size
+//                heightSize = windowInsets.systemWindowInsetTop
+//
+//
+//
+//                // return insets
+//                windowInsets
+//            }
+//        }
 
 
     }
