@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -68,7 +68,7 @@ class PhoneNumberActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_number)
 
-        viewModel = ViewModelProviders.of(this).get(PhoneNumberViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(PhoneNumberViewModel::class.java)
 
         binding.viewModel = viewModel
 

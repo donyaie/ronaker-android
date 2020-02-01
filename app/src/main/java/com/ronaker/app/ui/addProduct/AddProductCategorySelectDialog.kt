@@ -5,10 +5,9 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
@@ -18,7 +17,7 @@ import com.ronaker.app.model.Category
 class AddProductCategorySelectDialog : BaseDialog() {
 
     //region field
-    private val TAG = AddProductCategorySelectDialog::class.java.getSimpleName()
+    private val TAG = AddProductCategorySelectDialog::class.java.simpleName
 
     lateinit var rootView: View
 
@@ -47,7 +46,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.NormalDialog)
+        setStyle(STYLE_NO_TITLE, R.style.NormalDialog)
     }
 
 
@@ -63,16 +62,16 @@ class AddProductCategorySelectDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProviders.of(this).get(AddProductCategorySelectViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AddProductCategorySelectViewModel::class.java)
 
         binding.viewModel = viewModel
 
-        rootView = binding.getRoot()
+        rootView = binding.root
         binding.dialog = this
 
 
 
-        viewModel.selectedPlace.observe(this, Observer { value ->
+        viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
             location=value
             dialogResult= DialogResultEnum.OK
             stop()

@@ -7,22 +7,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import com.ronaker.app.utils.Alert
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.search.SearchActivity
+import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 
-class ExploreFragment : BaseFragment() {
+class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
     private lateinit var viewModel: ExploreViewModel
@@ -35,34 +38,66 @@ class ExploreFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
-        viewModel = ViewModelProviders.of(this).get(ExploreViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
 
 
-        val screenMnager=ScreenCalculator(requireContext())
+        val screenMnager = ScreenCalculator(requireContext())
 
 
-        val itemsize= 170
-        val screensize= screenMnager.screenWidthDP.toInt()
+        val itemsize = 170
+        val screensize = screenMnager.screenWidthDP.toInt()
 
 
-        var count =screensize/itemsize
+        var count = screensize / itemsize
 
-        if(count<2)
-            count=2
+        if (count < 2)
+            count = 2
 
 
         binding.viewModel = viewModel
+
+
+        binding.categoryRecycler?.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val mnager = GridLayoutManager(context, count)
         binding.recycler.layoutManager = mnager
         binding.loading.hideLoading()
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
 
         })
-        viewModel.retry.observe(this, Observer { loading ->
-            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+        viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
+            loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
+
+        })
+
+
+        viewModel.scrollCategoryPosition.observe(viewLifecycleOwner, Observer { position ->
+            binding.categoryRecycler?.scrollToPosition(position)
+
+
+        })
+
+
+
+
+
+        viewModel.searchText.observe(viewLifecycleOwner, Observer { text ->
+
+
+            if (text.isNullOrBlank()) {
+
+                binding.searchText.text = getString(R.string.title_search_here)
+                binding.backImage.visibility = View.GONE
+                binding.searchImage.visibility = View.VISIBLE
+
+            } else {
+                binding.searchText.text = text
+                binding.backImage.visibility = View.VISIBLE
+                binding.searchImage.visibility = View.GONE
+            }
 
         })
 
@@ -74,7 +109,7 @@ class ExploreFragment : BaseFragment() {
         }
 
 
-        viewModel.searchValue.observe(this, Observer { _ ->
+        viewModel.searchValue.observe(viewLifecycleOwner, Observer { _ ->
 
             // Check if we're running on Android 5.0 or higher
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -84,7 +119,7 @@ class ExploreFragment : BaseFragment() {
 //                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
 
                 val p1 =
-                    androidx.core.util.Pair<View, String>(binding.searchLayout , "search")
+                    androidx.core.util.Pair<View, String>(binding.searchLayout, "search")
                 val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
                 val options =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
@@ -112,14 +147,14 @@ class ExploreFragment : BaseFragment() {
 
         })
 
-        viewModel.resetList.observe(this, Observer {
+        viewModel.resetList.observe(viewLifecycleOwner, Observer {
             scrollListener.resetState()
         })
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
 
-                Alert.makeTextError(this, errorMessage)
+            Alert.makeTextError(this, errorMessage)
 
         })
 
@@ -152,16 +187,44 @@ class ExploreFragment : BaseFragment() {
 
             }
         }
-        binding.recycler.addOnScrollListener(scrollListener)
+
+        binding.scrollView?.setOnScrollChangeListener { v: NestedScrollView, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
+            if (v.getChildAt(v.childCount - 1) != null) {
+                if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight &&
+                    scrollY > oldScrollY
+                ) { //code to fetch more data for endless scrolling
+
+                    viewModel.loadMore()
+
+                    AppDebug.log("load_more", "call")
+                }
+
+
+                if (!v.canScrollVertically(+1)) {
+
+                    AppDebug.log("load_more", "call2")
+                }
+
+                if (!v.canScrollVertically(-1)) {
+
+                    binding.header.cardElevation = 0f
+                } else {
+                    binding.header.cardElevation = 10f
+                }
+
+
+            }
+        }
 
 
         binding.backImage.setOnClickListener {
 
-            clearSearchValue()
+            viewModel.clearSearch()
         }
 
 
-
+        if (activity is DashboardActivity)
+            (activity as DashboardActivity).addFragmentListener(this, this)
 
 
         return binding.root
@@ -182,11 +245,11 @@ class ExploreFragment : BaseFragment() {
             if (data != null) {
                 val searchValue = data.getStringExtra(SearchActivity.Search_KEY)
 
-                if (searchValue == null || searchValue.isEmpty())
-                    clearSearchValue()
+                if (searchValue.isNullOrBlank())
+                    viewModel.search("")
                 else
 
-                    setSearchValue(searchValue)
+                    viewModel.search(searchValue)
             }
 
 
@@ -197,41 +260,29 @@ class ExploreFragment : BaseFragment() {
 
     }
 
-
-    private fun setSearchValue(search: String) {
-
-
-        binding.searchText.text = search
-
-        binding.backImage.visibility = View.VISIBLE
-        binding.searchImage.visibility = View.GONE
-
-
-        viewModel.search(search)
-
+    override fun onStop() {
+        super.onStop()
 
     }
 
+
     override fun onDetach() {
         try {
+//
 
-            binding.recycler.viewTreeObserver
-                .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
+
+            if (activity is DashboardActivity)
+                (activity as DashboardActivity).removeFragmentListener(this)
         } catch (e: Exception) {
 
         }
         super.onDetach()
     }
 
+    override fun onBackPressed(): Boolean {
+        return viewModel.backPress()
 
-    private fun clearSearchValue() {
-
-
-        binding.searchText.setText(R.string.title_search_here)
-
-        binding.backImage.visibility = View.GONE
-        binding.searchImage.visibility = View.VISIBLE
-        viewModel.search(null)
     }
+
 
 }

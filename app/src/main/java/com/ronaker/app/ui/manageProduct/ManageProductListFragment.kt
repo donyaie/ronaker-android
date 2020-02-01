@@ -9,7 +9,7 @@ import com.ronaker.app.utils.Alert
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
@@ -37,7 +37,7 @@ class ManageProductListFragment : BaseFragment() {
             container,
             false
         )
-        viewModel = ViewModelProviders.of(this).get(ManageProductListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ManageProductListViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -60,7 +60,7 @@ class ManageProductListFragment : BaseFragment() {
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
         })
 
@@ -73,13 +73,13 @@ class ManageProductListFragment : BaseFragment() {
         }
 
 
-        viewModel.retry.observe(this, Observer { loading ->
+        viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let { binding.loading.showRetry(loading)  }?:run{binding.loading.hideRetry()}
 
 
         })
 
-        viewModel.emptyView.observe(this, Observer { loading ->
+        viewModel.emptyView.observe(viewLifecycleOwner, Observer { loading ->
             if (loading) {
                 binding.emptyLayout.visibility = View.VISIBLE
             } else {
@@ -87,7 +87,7 @@ class ManageProductListFragment : BaseFragment() {
             }
         })
 
-        viewModel.addNewView.observe(this, Observer { loading ->
+        viewModel.addNewView.observe(viewLifecycleOwner, Observer { loading ->
             if (loading) {
 
                 binding.addNewProductButton.visibility = View.VISIBLE
@@ -110,7 +110,7 @@ class ManageProductListFragment : BaseFragment() {
             activity?.startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 Alert.makeTextError(this, errorMessage)
             }
@@ -123,7 +123,7 @@ class ManageProductListFragment : BaseFragment() {
 
         }
 
-        viewModel.resetList.observe(this, Observer {
+        viewModel.resetList.observe(viewLifecycleOwner, Observer {
             scrollListener.resetState()
         })
 

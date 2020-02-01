@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#143066</color>
-    <color name="colorPrimaryDark">#143066</color>
+    <color name="colorPrimaryDark">#0C1C3D</color>
     <color name="colorAccent">#FF4C6A</color>
 
     <color name="colorLiteGrey">#F0F1F2</color>
@@ -34,6 +34,13 @@
     <color name="transparent">#00000000</color>
 
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+
+    <color name="white_opacity_75">#BDffffff</color>
+    <color name="white_opacity_30">#3fffffff</color>
+    <color name="white_opacity_10">#19ffffff</color>
+
 
 
     <color name="ic_launcher_background">#FFFFFF</color>

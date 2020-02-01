@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -22,14 +22,14 @@ import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
-import com.ronaker.app.ui.profileEmailVerify.ProfileEmailVerifyActivity
+import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
 import io.branch.referral.Branch
 
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
-    FragNavController.RootFragmentListener {
+    FragNavController.RootFragmentListener, EmailVerifyDialog.OnDialogResultListener {
 
 
     private val fragNavController: FragNavController =
@@ -58,7 +58,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         setSwipeCloseDisable()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
-        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -75,8 +75,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         viewModel.goEmail.observe(this, Observer { value ->
             if (value == true) {
 
-                startActivity(ProfileEmailVerifyActivity.newInstance(this@DashboardActivity))
+//                startActivity(ProfileEmailVerifyActivity.newInstance(this@DashboardActivity))
 
+
+                EmailVerifyDialog.DialogBuilder(supportFragmentManager).setListener(this).show()
 
             }
         })
@@ -97,7 +99,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             if (error == null) {
                 AppDebug.log("BRANCH SDK", referringParams.toString())
 
-                if (referringParams.has("product")) {
+                if (referringParams?.has("product") == true) {
                     val suid = referringParams.getString("product")
                     if (suid.isNotBlank() && viewModel.islogin)
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
@@ -255,8 +257,51 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     override fun onBackPressed() {
+
+
+        if (handleFragmentBakeListener(fragNavController.currentFrag) == true) {
+            return
+        }
+
+
+
         if (!fragNavController.popFragment()) {
             super.onBackPressed()
         }
+    }
+
+
+    override fun onDialogResult(result: EmailVerifyDialog.DialogResultEnum) {
+
+
+    }
+
+    private var mainListener: HashMap<Fragment, MainaAtivityListener> = HashMap()
+
+
+    fun addFragmentListener(fragment: Fragment, listener: MainaAtivityListener) {
+
+        mainListener[fragment] = listener
+
+    }
+
+
+    fun removeFragmentListener(fragment: Fragment) {
+
+        mainListener.remove(fragment)
+
+    }
+
+    private fun handleFragmentBakeListener(fragment: Fragment?): Boolean? {
+
+        if (mainListener.containsKey(fragment))
+            return mainListener[fragment]?.onBackPressed()
+
+        return false
+    }
+
+
+    interface MainaAtivityListener {
+        fun onBackPressed(): Boolean
     }
 }

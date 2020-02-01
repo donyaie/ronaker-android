@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 
@@ -19,15 +19,15 @@ class InboxFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_inbox, container, false)
-        viewModel = ViewModelProviders.of(this).get(InboxViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(InboxViewModel::class.java)
 
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(this.viewLifecycleOwner, Observer { loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 Alert.makeTextError(this, errorMessage)
 //                binding.loading.showRetry()

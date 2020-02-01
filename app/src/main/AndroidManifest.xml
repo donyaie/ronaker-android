@@ -194,7 +194,7 @@
         <activity
             android:name=".ui.exploreProduct.ExploreProductActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/PopTheme"
+            android:theme="@style/ProductPreviewTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
@@ -275,7 +275,7 @@
             android:name=".ui.profileEmailVerify.ProfileEmailVerifyActivity"
             android:screenOrientation="portrait"
 
-            android:theme="@style/PopTheme"
+            android:theme="@style/Transparent"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
@@ -356,14 +356,14 @@
 
 
 
-        <!-- Branch install referrer tracking -->
-        <receiver android:name="io.branch.referral.InstallListener"
-            android:permission="android.permission.INSTALL_PACKAGES"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
+<!--        &lt;!&ndash; Branch install referrer tracking &ndash;&gt;-->
+<!--        <receiver android:name="io.branch.referral.InstallListener"-->
+<!--            android:permission="android.permission.INSTALL_PACKAGES"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.android.vending.INSTALL_REFERRER" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
 
     </application>

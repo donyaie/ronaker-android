@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
@@ -29,7 +29,7 @@ class OrderListFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_list, container, false)
-        viewModel = ViewModelProviders.of(this).get(OrderListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(OrderListViewModel::class.java)
 
 //
         binding.viewModel = viewModel
@@ -37,10 +37,10 @@ class OrderListFragment : BaseFragment() {
         binding.recycler.layoutManager = mnager
 
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
         })
-        viewModel.retry.observe(this, Observer { loading ->
+        viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
 
             loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
         })
@@ -49,12 +49,12 @@ class OrderListFragment : BaseFragment() {
 
         binding.loading.hideLoading()
 
-        viewModel.resetList.observe(this, Observer {
+        viewModel.resetList.observe(viewLifecycleOwner, Observer {
             scrollListener?.resetState()
         })
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null)
                 Alert.makeTextError(this, errorMessage)
 //

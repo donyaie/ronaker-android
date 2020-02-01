@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <style name="SplashTheme" parent="AppTheme">
 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:windowBackground">@drawable/launch_screen</item>
         <item name="colorAccent">@color/white</item>
 
@@ -16,18 +16,23 @@
     <style name="LoginTheme" parent="AppTheme">
 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:windowBackground">@drawable/launch_screen</item>
         <item name="colorAccent">@color/white</item>
+
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryDark</item>
+
 
         <item name="android:dialogTheme">@style/WhiteDialog</item>
     </style>
 
     <style name="DashboardTheme" parent="AppTheme">
 
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorPrimary">@color/white</item>
-        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@drawable/launch_screen_light</item>
 
         <item name="colorAccent">@color/colorAccent</item>
 
@@ -38,6 +43,31 @@
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+
+    </style>
+
+
+
+    <style name="ProductPreviewTheme" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/black</item>
+
+    </style>
+
+
+    <style name="Transparent" parent="AppTheme">
+
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
 
 

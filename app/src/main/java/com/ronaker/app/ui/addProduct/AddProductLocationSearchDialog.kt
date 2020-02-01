@@ -1,23 +1,19 @@
 package com.ronaker.app.ui.addProduct
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.model.LatLng
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
 import com.ronaker.app.databinding.DialogAddProductLocationSearchBinding
 import com.ronaker.app.model.Place
-import com.ronaker.app.utils.KeyboardManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -53,10 +49,10 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.NormalDialog)
+        setStyle(STYLE_NO_TITLE, R.style.NormalDialog)
     }
 
-    var disposable:Disposable?=null
+    var disposable: Disposable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +66,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProviders.of(this).get(AddProductLocationSearchViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AddProductLocationSearchViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -83,14 +79,14 @@ class AddProductLocationSearchDialog : BaseDialog() {
         binding.containerLayout.setOnClickListener { dismiss() }
 
         initilizeAdapter()
-        viewModel.selectedPlace.observe(this, Observer { value ->
-            location=value
-            dialogResult=DialogResultEnum.OK
+        viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
+            location = value
+            dialogResult = DialogResultEnum.OK
             stop()
         })
 
 
-      disposable=   RxTextView.textChanges(binding.searchEdit)
+        disposable = RxTextView.textChanges(binding.searchEdit)
             .debounce(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .subscribe {
 
@@ -118,11 +114,11 @@ class AddProductLocationSearchDialog : BaseDialog() {
     private fun searchLocation(filter: String?) {
 
 
-        if (filter == null || filter.trim { it <= ' ' }.isEmpty()) {
+        if (!(filter == null || filter.trim { it <= ' ' }.isEmpty())) {
 
-        } else
+            viewModel.searchLocation(filter)
+        }
 
-          viewModel.searchLocation(filter)
 
     }
 
@@ -164,7 +160,6 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
 
         }
-
 
 
     }

@@ -91,6 +91,15 @@ class OrderMessageViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun checkOut(message: String) {
+
+
+       if(!checkCanOrder()){
+           goNext.value = true
+           return
+       }
+
+
+
         subscription?.dispose()
         mProduct.suid?.let {
             subscription =
@@ -123,6 +132,26 @@ class OrderMessageViewModel(app: Application) : BaseViewModel(app) {
 
 
     }
+
+
+    fun checkCanOrder():Boolean{
+
+
+        userRepository.getUserInfo()?.let {
+
+
+          if(  it.is_email_verified ==true && it.is_payment_info_verified==true && it.is_phone_number_verified ==true && it.is_email_verified==true){
+
+
+              return true
+          }
+
+
+        }
+
+        return false
+    }
+
 
 
     override fun onCleared() {

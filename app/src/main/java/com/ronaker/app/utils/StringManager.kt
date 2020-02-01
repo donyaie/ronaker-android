@@ -20,7 +20,7 @@ fun Double.toCurrencyFormat(prefix:String?): String {
 
     val decimalFormatSymbols: DecimalFormatSymbols =
         (format as DecimalFormat).decimalFormatSymbols
-    decimalFormatSymbols.currencySymbol ="€" + (if(prefix==null) "" else " $prefix")
+    decimalFormatSymbols.currencySymbol=""
 
     format.decimalFormatSymbols=decimalFormatSymbols
 
@@ -29,5 +29,8 @@ fun Double.toCurrencyFormat(prefix:String?): String {
     }else
         format.minimumFractionDigits=2
 
-    return format.format(this)
+
+
+
+    return   (if(prefix==null) "" else "$prefix ") +"${format.format(this)} €"
 }

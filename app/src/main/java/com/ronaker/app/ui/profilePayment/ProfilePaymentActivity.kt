@@ -18,7 +18,7 @@ import android.view.ViewTreeObserver
 import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -64,7 +64,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment)
 
-        viewModel = ViewModelProviders.of(this).get(ProfilePaymentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfilePaymentViewModel::class.java)
 
         binding.viewModel = viewModel
 

@@ -1,36 +1,12 @@
 package com.ronaker.app.data
 
 import com.ronaker.app.base.Result
+import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import io.reactivex.Observable
 
 interface  UserRepository {
-    enum class DocumentTypeEnum constructor(key: String) {
-        IdCard("id_card"),
-        Passport("passport"),
-        DrivingLicense("driving_license"),
-        None("");
 
-
-        var key: String = ""
-            internal set
-
-        init {
-            this.key = key
-        }
-
-        companion object {
-            operator fun get(position: String): DocumentTypeEnum {
-                var state = None
-                for (stateEnum in values()) {
-                    if (position.compareTo(stateEnum.key) == 0)
-                        state = stateEnum
-                }
-                return state
-            }
-        }
-
-    }
 
     fun registerUser(user: User): Observable<Result<User>>
     fun loginUser(user: User): Observable<Result<User>>

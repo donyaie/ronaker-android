@@ -8,7 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -46,7 +46,7 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_setting)
 
-        viewModel = ViewModelProviders.of(this).get(ProfileSettingViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileSettingViewModel::class.java)
 
         binding.viewModel = viewModel
 

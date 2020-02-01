@@ -1,9 +1,7 @@
 package com.ronaker.app.ui.explore
 
-import android.app.Activity
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
@@ -12,7 +10,6 @@ import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import com.ronaker.app.utils.toCurrencyFormat
 

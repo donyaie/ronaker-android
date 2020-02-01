@@ -3,6 +3,8 @@ package com.ronaker.app.model
 import android.os.Parcelable
 import com.ronaker.app.data.network.response.FinancialTransactionsResponseModel
 import kotlinx.android.parcel.Parcelize
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Parcelize
 data class Transaction(
@@ -10,7 +12,9 @@ data class Transaction(
     val amount: Double? = null,
     val transactionType: String? = null,
     val transactionStatus: String? = null,
-    val description: String? = null
+    val description: String? = null,
+    val createAt: Date?=null,
+    val OrderSuid:String?=null
 ) : Parcelable {
 
     enum class TransactionTypeEnum constructor(key: String) {
@@ -83,7 +87,9 @@ fun List<FinancialTransactionsResponseModel>.mapToTransactionList(): List<Transa
             it.amount,
             it.transaction_type,
             it.transaction_status,
-            it.description
+            it.description,
+            it.created_at,
+            it.order_suid
         )
 
         list.add(value)

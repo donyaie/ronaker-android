@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
@@ -43,7 +43,7 @@ class CheckoutCalendarActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_checkout_calendar)
 
-        viewModel = ViewModelProviders.of(this).get(CheckoutCalendarViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CheckoutCalendarViewModel::class.java)
 
         binding.viewModel = viewModel
 

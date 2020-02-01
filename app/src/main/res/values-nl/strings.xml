@@ -190,4 +190,7 @@
     <string name="text_resend_email">Email opnieuw verzenden</string>
     <string name="text_please_check_your_inbox_and_verify_your_email">Controleer je inbox en verifieer je e-mail</string>
     <string name="text_balance">Balans :</string>
+    <string name="text_add_document_image">Documentafbeelding toevoegen</string>
+    <string name="text_of_5">" van 5"</string>
+    <string name="text_order_detail">Bestellingsdetail</string>
 </resources>

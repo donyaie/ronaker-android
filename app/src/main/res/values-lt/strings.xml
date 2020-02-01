@@ -190,4 +190,7 @@
     <string name="text_please_check_your_inbox_and_verify_your_email">Patikrinkite savo pašto dėžutę ir patvirtinkite el. Pašto adresą</string>
     <string name="text_resend_email">Siųsti el. Laišką dar kartą</string>
     <string name="text_balance">Likutis:</string>
+    <string name="text_add_document_image">Pridėti dokumento atvaizdą</string>
+    <string name="text_of_5">" iš 5"</string>
+    <string name="text_order_detail">Informacija apie užsakymą</string>
 </resources>

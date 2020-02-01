@@ -527,6 +527,7 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:visibility="gone"
             android:background="@color/white"
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -551,6 +552,7 @@
                     style="@style/Button.transparent"
                     android:layout_width="wrap_content"
 
+                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
 
@@ -565,6 +567,7 @@
                     style="@style/Button.transparent"
                     android:layout_width="wrap_content"
 
+                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
 
@@ -580,6 +583,7 @@
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
 
+                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
 
@@ -596,6 +600,7 @@
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
 
+                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
 
@@ -614,6 +619,7 @@
 
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
+                    android:visibility="gone"
 
                     android:layout_weight="1"
 
@@ -631,6 +637,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
 
+                    android:visibility="gone"
                     android:layout_weight="1"
 
                     android:onClick="@{()->viewModel.onClickStartRate()}"
@@ -648,6 +655,7 @@
 
         <com.ronaker.app.utils.view.LoadingComponent
             android:id="@+id/loading"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"

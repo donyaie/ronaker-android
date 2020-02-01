@@ -7,7 +7,7 @@ import android.view.inputmethod.EditorInfo
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.AnimationHelper
@@ -45,7 +45,7 @@ class SearchActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
         binding.viewModel = viewModel
 

@@ -35,12 +35,12 @@ class AnimationHelper {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 activity.window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
 //                activity.window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-                val slide = Slide()
-                slide.slideEdge = Gravity.END
+                val slide = Fade()
+//                slide.slideEdge = Gravity.END
                 slide.excludeTarget(android.R.id.statusBarBackground, true)
                 slide.excludeTarget(android.R.id.navigationBarBackground, true)
                 activity.window.enterTransition = slide
-                activity.window.enterTransition = slide
+                activity.window.exitTransition = null
 
             } else
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -70,7 +70,7 @@ class AnimationHelper {
                 slide.excludeTarget(android.R.id.statusBarBackground, true)
                 slide.excludeTarget(android.R.id.navigationBarBackground, true)
                 activity.window.enterTransition = slide
-                activity.window.enterTransition = slide
+                activity.window.exitTransition = null
             } else
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
@@ -85,7 +85,7 @@ class AnimationHelper {
                 slide.excludeTarget(android.R.id.statusBarBackground, true)
                 slide.excludeTarget(android.R.id.navigationBarBackground, true)
                 activity.window.enterTransition = slide
-                activity.window.enterTransition = slide
+                activity.window.exitTransition = null
 //                activity.window.sharedElementEnterTransition=enterTransition()
 //                activity.window.sharedElementReturnTransition=returnTransition()
             } else

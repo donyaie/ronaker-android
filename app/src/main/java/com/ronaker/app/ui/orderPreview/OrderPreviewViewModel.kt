@@ -181,6 +181,9 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
     }
 
+    fun getOrder():Order{
+        return mOrder
+    }
 
     fun getOrder(suid:String){
 
@@ -192,10 +195,12 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 //                retry.value = null
 //                loading.value = true
 
+                if(!::mOrder.isInitialized)
+                    loading.value=true
+
             }
             .doOnTerminate {
-
-//                loading.value = false
+                loading.value=false
 
 
             }
@@ -617,25 +622,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
     }
 
-    fun canceled() {
-        cancelSubscription?.dispose()
-        cancelSubscription = orderRepository.updateOrderStatus(
-            userRepository.getUserToken(),
-            mOrder.suid,
-            "canceled"
-        )
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
-            .subscribe { result ->
-                if (result.isSuccess() || result.isAcceptable()) {
-                    finish.value = true
 
-                } else {
-
-                    errorMessage.value = result.error?.message
-                }
-            }
-    }
 
 
     fun onClickStartRenting() {

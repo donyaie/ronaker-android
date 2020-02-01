@@ -7,7 +7,7 @@ import android.view.View
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
@@ -46,7 +46,7 @@ class ProfileCompleteActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_complete)
 
-        viewModel = ViewModelProviders.of(this).get(ProfileCompleteViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileCompleteViewModel::class.java)
 
         binding.viewModel = viewModel
 

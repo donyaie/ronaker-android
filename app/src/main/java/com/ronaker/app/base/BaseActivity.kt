@@ -2,7 +2,10 @@ package com.ronaker.app.base
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import androidx.core.app.CoreComponentFactory
+import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.ronaker.app.utils.LocaleHelper
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -10,6 +13,8 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.General
+import com.ronaker.app.R
+import com.ronaker.app.utils.AnimationHelper
 import io.fabric.sdk.android.Fabric
 
 
@@ -34,10 +39,19 @@ abstract class BaseActivity: SwipeBackActivity() {
    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//
+//
+//            window.navigationBarColor=ContextCompat.getColor(this,R.color.colorPrimaryDark)
+//            window.setBackgroundDrawableResource(R.color.colorPrimaryDark)
+//
+//        }
         super.onCreate(savedInstanceState)
         addActivityStack(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
         Fabric.with(this, Crashlytics())
+
     }
 
    private var startCount=0
@@ -109,6 +123,12 @@ abstract class BaseActivity: SwipeBackActivity() {
 
         
 
+    }
+
+    override fun finish() {
+
+        AnimationHelper.setAnimateTransition(this)
+        super.finish()
     }
 
 
