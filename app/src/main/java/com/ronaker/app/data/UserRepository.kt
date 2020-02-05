@@ -31,5 +31,6 @@ interface  UserRepository {
     fun clearLogin()
     fun getUserToken(): String?
     fun isLogin(): Boolean
+    fun sendEmailVerification(user_token: String?): Observable<Result<Boolean>>
 }
 

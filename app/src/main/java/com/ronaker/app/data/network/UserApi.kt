@@ -69,5 +69,13 @@ interface UserApi {
 
 
 
+    /**
+     * send Email verification
+     */
+    @GET("/api/v1/users/email-verification/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun sendEmailVerification(@Header("Authorization") authToken: String): Observable<FreeResponseModel>
+
+
 
 }
