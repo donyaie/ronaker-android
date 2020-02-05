@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="ButtonComponent">
+        <attr name="type" format="enum">
+            <enum name="NONE" value="0"/>
+            <enum name="AUTO" value="1"/>
+        </attr>
+
+
+
+    </declare-styleable>
+</resources>
