@@ -23,6 +23,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     lateinit var userRepository: UserRepository
     private var signinSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
+    private  var emailVerificationSubscription:Disposable?=null
 
     @Inject
     lateinit var context: Context
@@ -128,6 +129,18 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
+    fun sendVerificationEmail(){
+        emailVerificationSubscription =
+            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loading.value = true }
+                .doOnTerminate { loading.value = false }
+                .subscribe {
+                    loading.value = false
+                    goNext.value = true
+
+                }
+    }
+
+
     private fun signin() {
         signinSubscription =
             userRepository.loginUser(userInfo).doOnSubscribe { loading.value = true }
@@ -135,6 +148,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 .subscribe { result ->
                     loading.value = false
                     if (result.isSuccess()) {
+
 
 
                         getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
@@ -162,10 +176,11 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             userRepository.registerUser(userInfo).doOnSubscribe { loading.value = true }
                 .doOnTerminate { loading.value = false }
                 .subscribe { result ->
-                    loading.value = false
                     if (result.isSuccess()) {
                         getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
-                        goNext.value = true
+
+
+                         sendVerificationEmail()
                     } else {
                         errorMessage.value = result.error?.message
                     }

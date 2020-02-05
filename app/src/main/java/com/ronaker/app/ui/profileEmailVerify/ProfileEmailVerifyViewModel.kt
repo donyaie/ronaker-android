@@ -22,13 +22,15 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val successMessage: MutableLiveData<String> = MutableLiveData()
     val goNex: MutableLiveData<Boolean> = MutableLiveData()
 
 
     private var subscription: Disposable? = null
+    private var emailVerificationSubscription:Disposable?= null
 
     fun loadData() {
-
+        subscription?.dispose()
         subscription = userRepository
             .getUserInfo(userRepository.getUserToken())
 
@@ -52,6 +54,25 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
 
     }
 
+
+  private  fun sendVerificationEmail(){
+        emailVerificationSubscription?.dispose()
+        emailVerificationSubscription =
+            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { }
+                .doOnTerminate {  }
+                .subscribe {result->
+                    if(result.isAcceptable()){
+                        successMessage.value="Verification Email Sent"
+                    }else{
+                        errorMessage.value=result.error?.message
+                    }
+
+
+
+                }
+    }
+
+
     fun gotoMailClick(){
 
         IntentManeger.openMailBox(app)
@@ -59,7 +80,7 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
 
 
     fun resendMailClick(){
-
+        sendVerificationEmail()
     }
 
     fun onRetry() {
@@ -73,7 +94,7 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
     }
 
 
-    fun logout(){
+   private fun logout(){
         userRepository.clearLogin()
     }
 
