@@ -52,7 +52,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginRight="24dp"
                     android:gravity="start"
-                    android:text="Please, Tell us about your experience using this item"
+                    android:text="@string/text_please_tell_us_about_your_experience_using_this_item"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextDark"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +84,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
                     app:input_counter="500"
-                    app:input_hint="Please write your experience here"
+                    app:input_hint="@string/text_please_write_your_experience_here"
                     app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
                     app:input_title=""
                     app:input_transparent="false"
@@ -110,22 +110,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <Button
+            <com.ronaker.app.utils.view.ButtonComponent
                 style="@style/Button.accent"
                 android:layout_width="0dp"
 
                 android:onClick="@{()->viewModel.onClickAccept(commentInput.getText().toString(),starRate.getRating())}"
 
-                android:text="Send"
+                android:text="@string/text_send"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
 
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".6"
+                app:layout_constraintWidth_percent=".4"
+                app:buttonType="Text"
+                app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
 
                 />
+
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

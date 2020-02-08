@@ -1,80 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.addProduct.AddProductViewModel"/>
+            name="viewModel"
+            type="com.ronaker.app.ui.addProduct.AddProductViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ScrollView android:layout_width="match_parent" android:fillViewport="true" android:orientation="vertical"
-                    android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="80dp">
+
+                <TextView
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
-                    android:paddingBottom="80dp"
-                    android:layout_height="wrap_content">
-                <TextView android:layout_width="match_parent"
-                          app:layout_constraintTop_toTopOf="parent"
-                          android:layout_marginTop="24dp"
-                          android:layout_marginLeft="24dp"
-                          android:layout_marginRight="24dp"
-                          android:text="@string/title_tell_about_your_item"
-                          android:textAppearance="@style/TextAppearance.Heading.1"
-                          android:gravity="start"
-                          android:id="@+id/title"
-                          android:textColor="@color/colorTextDark"
-                          android:layout_height="wrap_content"/>
-                <com.ronaker.app.utils.view.InputComponent
-                        android:layout_marginRight="24dp"
-                        android:inputType="text"
-                        android:imeOptions="actionNext"
-                        android:id="@+id/title_input"
-                        app:input_transparent="false"
-                        app:inputMutableText="@{viewModel.getProductTitle()}"
-                        app:input_title="Title"
-
-                        app:input_hint="Enter Title"
-                        app:input_regex="^.{2,}$"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginLeft="24dp"
-                        app:layout_constraintTop_toBottomOf="@id/title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="start"
+                    android:text="@string/title_tell_about_your_item"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.ronaker.app.utils.view.InputComponent
-                        android:layout_marginRight="24dp"
-                        android:inputType="textMultiLine"
-                        app:input_transparent="false"
-                        android:imeOptions="actionNext"
-                        android:id="@+id/description_input"
+                    android:id="@+id/title_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="24dp"
+                    android:imeOptions="actionNext"
 
-                        app:inputMutableText="@{viewModel.getProductDescription()}"
-                        app:input_title="Description"
-                        app:input_hint="Describe  your item like model or color and..."
-                        app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
-                        app:input_counter="500"
-                        android:layout_marginLeft="24dp"
-                        app:layout_constraintTop_toBottomOf="@id/title_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:inputType="text"
+                    app:inputMutableText="@{viewModel.getProductTitle()}"
+                    app:input_hint="Enter Title"
+                    app:input_regex="^.{2,}$"
+                    app:input_title="Title"
+                    app:input_transparent="false"
+                    app:layout_constraintTop_toBottomOf="@id/title" />
+
+                <com.ronaker.app.utils.view.InputComponent
+                    android:id="@+id/description_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    app:inputMutableText="@{viewModel.getProductDescription()}"
+                    app:input_counter="500"
+                    app:input_hint="Describe  your item like model or color and..."
+                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
+                    app:input_title="Description"
+                    app:input_transparent="false"
+                    app:layout_constraintTop_toBottomOf="@id/title_input" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <Button
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_width="160dp"
-                android:layout_marginEnd="24dp"
-
-                android:onClick="@{()->viewModel.onClickInfoNext(titleInput.getText().toString(),titleInput.checkValid(),descriptionInput.getText().toString(),descriptionInput.checkValid())}"
-                android:layout_marginBottom="16dp"
-                android:id="@+id/next_button"
-                android:text="@string/title_button_next"
-                style="@style/Button.accent"/>
+        <com.ronaker.app.utils.view.ButtonComponent
+            android:id="@+id/next_button"
+            style="@style/Button.accent"
+            android:layout_width="160dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{()->viewModel.onClickInfoNext(titleInput.getText().toString(),titleInput.checkValid(),descriptionInput.getText().toString(),descriptionInput.checkValid())}"
+            android:text="@string/title_button_next"
+            app:buttonType="Text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:loadingColor="@color/white"
+            app:mutableButtonLoading="@{viewModel.getLoadingButton()}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -164,47 +164,53 @@
                         app:mutableText="@{viewModel.getProductDescription()}" />
 
 
-                    <fragment
+                    <!--                    <fragment-->
+                    <!--                        android:id="@+id/map"-->
+                    <!--                        android:name="com.google.android.gms.maps.SupportMapFragment"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="220dp"-->
+                    <!--                        android:layout_marginTop="16dp"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/description_text" />-->
+
+
+                    <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/map"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
                         android:layout_marginTop="16dp"
                         app:layout_constraintTop_toBottomOf="@id/description_text" />
 
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="16dp"
 
                         android:layout_marginRight="24dp"
-                        app:cardCornerRadius="4dp"
+                        android:minHeight="48dp"
 
+                        app:cardCornerRadius="4dp"
                         app:cardElevation="16dp"
                         app:layout_constraintTop_toTopOf="@id/map">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+
+                        <TextView
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="start|center_vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:text="Location Address"
+                            android:textAppearance="@style/TextAppearance.Medium.SB"
 
+                            android:textColor="@color/colorTextGreyLight"
+                            app:mutableText="@{viewModel.getProductAddress()}"
+                            tools:ignore="HardcodedText" />
 
-                            android:layout_height="48dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="start|center_vertical"
-
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp"
-                                android:text="Location Address"
-                                android:textAppearance="@style/TextAppearance.Medium.SB"
-
-                                android:textColor="@color/colorTextGreyLight"
-                                app:mutableText="@{viewModel.getProductAddress()}"
-                                tools:ignore="HardcodedText" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -245,16 +251,16 @@
 
                     <TextView
 
-                        app:mutableVisibility="@{viewModel.getNoCommentVisibility()}"
-
                         android:layout_width="match_parent"
+
                         android:layout_height="60dp"
                         android:gravity="center"
-                        android:visibility="gone"
                         android:text="@string/text_not_have_comment_yet"
                         android:textAppearance="@style/TextAppearance.Small.Regular"
                         android:textColor="@color/colorTextDark"
-                        app:layout_constraintTop_toBottomOf="@id/recycler" />
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/recycler"
+                        app:mutableVisibility="@{viewModel.getNoCommentVisibility()}" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

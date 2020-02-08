@@ -28,6 +28,8 @@ class OrderDeclineViewModel(app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+
     val instruction: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
@@ -70,8 +72,8 @@ class OrderDeclineViewModel(app: Application) : BaseViewModel(app) {
             status = "rejected",
             reason = reason
         )
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
                     finish.value = true

@@ -225,8 +225,17 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
+        val mapFragment=SupportMapFragment()
 
-        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync { map ->
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.map, mapFragment)
+            .commit()
+
+
+
+
+        mapFragment.getMapAsync { map ->
             googleMap = map
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(

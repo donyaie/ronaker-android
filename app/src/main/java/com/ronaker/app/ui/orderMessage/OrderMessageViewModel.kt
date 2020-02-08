@@ -30,6 +30,7 @@ class OrderMessageViewModel(app: Application) : BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
     val next: MutableLiveData<Boolean> = MutableLiveData()
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
@@ -111,8 +112,8 @@ class OrderMessageViewModel(app: Application) : BaseViewModel(app) {
                     message,
                     mPrice * 100
                 )
-                    .doOnSubscribe { loading.value = true }
-                    .doOnTerminate { loading.value = false }
+                    .doOnSubscribe { loadingButton.value = true }
+                    .doOnTerminate { loadingButton.value = false }
                     .subscribe { result ->
                         if (result.isSuccess() || result.isAcceptable()) {
                             successMessage.value = true

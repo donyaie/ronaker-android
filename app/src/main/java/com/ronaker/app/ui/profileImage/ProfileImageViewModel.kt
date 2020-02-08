@@ -39,6 +39,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
     val pickImage: MutableLiveData<Boolean> = MutableLiveData()
     val finish: MutableLiveData<Boolean> = MutableLiveData()
@@ -112,10 +113,10 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
             )
 
             .doOnSubscribe {
-                loading.value = true
+                loadingButton.value = true
             }
             .doOnTerminate {
-                loading.value = false
+                loadingButton.value = false
             }
 
             .subscribe { result ->
@@ -149,10 +150,10 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
             )
 
             .doOnSubscribe {
-                loading.value = true
+                loadingButton.value = true
             }
             .doOnTerminate {
-                loading.value = false
+                loadingButton.value = false
             }
 
             .subscribe { result ->

@@ -193,4 +193,9 @@
     <string name="text_add_document_image">Documentafbeelding toevoegen</string>
     <string name="text_of_5">" van 5"</string>
     <string name="text_order_detail">Bestellingsdetail</string>
+    <string name="text_please_tell_us_about_your_experience_using_this_item">Vertel ons over uw ervaring met dit item</string>
+    <string name="text_please_write_your_experience_here">Schrijf hier je ervaring</string>
+    <string name="text_send">Sturen</string>
+    <string name="text_choice_payment_type">Keuze Betalingstype</string>
+    <string name="text_save">Opslaan</string>
 </resources>

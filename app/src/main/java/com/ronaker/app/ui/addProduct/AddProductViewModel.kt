@@ -78,6 +78,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val parentCategory: MutableLiveData<Category> = MutableLiveData()
@@ -289,8 +290,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             userRepository.getUserToken(),
             product
         )
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
                     goNext.value = false
@@ -315,12 +316,12 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                 image.suid!!
             )
                 .doOnSubscribe {
-                    loading.value = true
+                    loadingButton.value = true
 
                 }
                 .doOnTerminate {
 
-                    loading.value = false
+                    loadingButton.value = false
 
                 }
                 .subscribe { result ->
@@ -439,8 +440,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         updateproductSubscription =
             updateSuid?.let {
                 productRepository.productUpdate(userRepository.getUserToken(), it, product)
-                    .doOnSubscribe { loading.value = true }
-                    .doOnTerminate { loading.value = false }
+                    .doOnSubscribe { loadingButton.value = true }
+                    .doOnTerminate { loadingButton.value = false }
                     .subscribe { result ->
                         if (result.isSuccess()) {
 

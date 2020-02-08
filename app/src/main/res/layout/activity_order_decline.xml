@@ -87,7 +87,7 @@
 
 
 
-                <Button
+                <com.ronaker.app.utils.view.ButtonComponent
                     style="@style/Button.accent"
                     android:layout_width="0dp"
 
@@ -102,7 +102,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent=".4"
 
+                    app:buttonType="Text"
+                    app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
                     />
+
+
+
+
 
 
 

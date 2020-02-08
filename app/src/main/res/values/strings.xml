@@ -210,6 +210,11 @@
     <string name="text_add_document_image">Add document image</string>
     <string name="text_order_detail">Order Detail</string>
     <string name="text_of_5"> of 5</string>
+    <string name="text_please_tell_us_about_your_experience_using_this_item">Please, Tell us about your experience using this item</string>
+    <string name="text_please_write_your_experience_here">Please write your experience here</string>
+    <string name="text_send">Send</string>
+    <string name="text_save">Save</string>
+    <string name="text_choice_payment_type">Choice Payment Type</string>
 
 
 </resources>

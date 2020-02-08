@@ -76,12 +76,12 @@ class ProfileNameEditActivity : BaseActivity() {
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
 
-        binding.toolbar.actionTextClickListener=View.OnClickListener {
 
+
+        binding.saveButton.setOnClickListener {
             if(binding.nameInput.checkValid() && binding.lastInput.checkValid()){
                 viewModel.saveInfo(binding.nameInput.text,binding.lastInput.text)
             }
-
 
         }
 

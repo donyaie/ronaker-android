@@ -3,12 +3,16 @@
 
 
     <declare-styleable name="ButtonComponent">
-        <attr name="type" format="enum">
-            <enum name="NONE" value="0"/>
-            <enum name="AUTO" value="1"/>
+
+        <attr name="buttonType" format="enum">
+            <enum name="Text" value="0"/>
+            <enum name="Image" value="1"/>
         </attr>
 
-
+        <attr name="android:text"/>
+        <attr name="buttonSrc"/>
+        <attr name="android:textColor"/>
+        <attr name="loadingColor" format="reference|color"/>
 
     </declare-styleable>
 </resources>

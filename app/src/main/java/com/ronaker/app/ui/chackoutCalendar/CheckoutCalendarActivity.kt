@@ -48,6 +48,11 @@ class CheckoutCalendarActivity : BaseActivity() {
         binding.viewModel = viewModel
 
 
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment, CheckoutCalendarFragment())
+            .commit()
+
 
 
 

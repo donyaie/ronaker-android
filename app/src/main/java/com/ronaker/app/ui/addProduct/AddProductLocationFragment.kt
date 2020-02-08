@@ -89,8 +89,15 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         }
 
 
+        val mapFragment=SupportMapFragment()
 
-        (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync {
+        childFragmentManager
+            .beginTransaction()
+            .replace(R.id.mapFragment, mapFragment)
+            .commit()
+
+
+        mapFragment.getMapAsync {
             mGoogleMap = it
             mGoogleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(

@@ -144,6 +144,9 @@ class EmailVerifyDialog : BaseDialog() {
         }
 
 
+        viewModel.loadData()
+
+
 
     }
 

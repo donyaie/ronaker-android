@@ -39,6 +39,9 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+
+
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -131,8 +134,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     fun sendVerificationEmail(){
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loading.value = true }
-                .doOnTerminate { loading.value = false }
+            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
                 .subscribe {
                     loading.value = false
                     goNext.value = true
@@ -143,8 +146,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun signin() {
         signinSubscription =
-            userRepository.loginUser(userInfo).doOnSubscribe { loading.value = true }
-                .doOnTerminate { loading.value = false }
+            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->
                     loading.value = false
                     if (result.isSuccess()) {
@@ -173,8 +176,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun signUp() {
         signUpSubscription =
-            userRepository.registerUser(userInfo).doOnSubscribe { loading.value = true }
-                .doOnTerminate { loading.value = false }
+            userRepository.registerUser(userInfo).doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->
                     if (result.isSuccess()) {
                         getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)

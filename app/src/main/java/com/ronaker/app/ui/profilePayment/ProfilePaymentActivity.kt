@@ -103,6 +103,11 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             viewModel.onRetry()
         }
 
+        binding.saveButton.setOnClickListener {
+            save()
+
+        }
+
 
 
         binding.cardScan.setOnClickListener {
@@ -182,47 +187,47 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         binding.expireInput.addTextChangedListener(  ExpiryDateTextWatcher())
 
 
-        binding.toolbar.actionTextClickListener = View.OnClickListener {
-
-            if (
-                binding.expireInput.checkValid() &&
-                binding.cvvInput.checkValid()  &&
-                binding.nameInput.checkValid() &&
-                binding.addressInput.checkValid() &&
-                binding.addressLine2Input.checkValid() &&
-                binding.cityInput.checkValid() &&
-                binding.countryInput.checkValid() &&
-                binding.addressPostalInput.checkValid()
-            ) {
-
-               if( PaymentCard.CardType.detect( binding.cardEdit.text.toString())==PaymentCard.CardType.UNKNOWN){
-
-                   Alert.makeTextError(this, "Please inter valid card number")
-               }else {
-
-                   viewModel.save(
-                       binding.cardEdit.text.toString(),
-                       binding.expireInput.text,
-                       binding.cvvInput.text,
-                       binding.nameInput.text,
-                       binding.addressInput.text,
-                       binding.addressLine2Input.text,
-                       binding.cityInput.text,
-                       binding.countryInput.text,
-                       binding.addressPostalInput.text
-                   )
-               }
-            }
-
-
-        }
-
 
 
 
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
+
+
+    }
+
+
+    fun save(){
+        if (
+            binding.expireInput.checkValid() &&
+            binding.cvvInput.checkValid()  &&
+            binding.nameInput.checkValid() &&
+            binding.addressInput.checkValid() &&
+            binding.addressLine2Input.checkValid() &&
+            binding.cityInput.checkValid() &&
+            binding.countryInput.checkValid() &&
+            binding.addressPostalInput.checkValid()
+        ) {
+
+            if( PaymentCard.CardType.detect( binding.cardEdit.text.toString())==PaymentCard.CardType.UNKNOWN){
+
+                Alert.makeTextError(this, "Please inter valid card number")
+            }else {
+
+                viewModel.save(
+                    binding.cardEdit.text.toString(),
+                    binding.expireInput.text,
+                    binding.cvvInput.text,
+                    binding.nameInput.text,
+                    binding.addressInput.text,
+                    binding.addressLine2Input.text,
+                    binding.cityInput.text,
+                    binding.countryInput.text,
+                    binding.addressPostalInput.text
+                )
+            }
+        }
 
 
     }

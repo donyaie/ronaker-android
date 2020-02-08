@@ -24,6 +24,7 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val successMessage: MutableLiveData<String> = MutableLiveData()
     val goNex: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
     private var subscription: Disposable? = null
@@ -58,8 +59,8 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
   private  fun sendVerificationEmail(){
         emailVerificationSubscription?.dispose()
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { }
-                .doOnTerminate {  }
+            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe {loadingButton.value=true }
+                .doOnTerminate {  loadingButton.value=false}
                 .subscribe {result->
                     if(result.isAcceptable()){
                         successMessage.value="Verification Email Sent"

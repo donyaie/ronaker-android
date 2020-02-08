@@ -103,7 +103,7 @@
                             android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
 
 
-            <Button style="@style/Button.accent" android:text="@string/title_send_request"
+            <com.ronaker.app.utils.view.ButtonComponent style="@style/Button.accent" android:text="@string/title_send_request"
                     android:id="@+id/checkout"
 
                     app:layout_constraintRight_toRightOf="parent"
@@ -112,8 +112,13 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="24dp"
                     android:layout_width="wrap_content"
+                app:buttonType="Text"
+                app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
 
             />
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

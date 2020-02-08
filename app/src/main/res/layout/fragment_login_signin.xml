@@ -94,7 +94,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <Button
+        <com.ronaker.app.utils.view.ButtonComponent
             android:id="@+id/next_button"
             style="@style/Button.accent"
             android:layout_width="match_parent"
@@ -103,8 +103,15 @@
             android:onClick="@{()->viewModel.onClickLoginSignIn(emailInput.getText().toString(),emailInput.checkValid(),passwordInput.getText().toString(),passwordInput.checkValid())}"
             android:text="@string/titile_button_login_to_your_account"
 
+
+            app:buttonType="Text"
+            app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
             app:layout_constraintBottom_toTopOf="@id/goto_sign_up"
             app:layout_constraintRight_toRightOf="parent" />
+
+
+
+
 
 
         <LinearLayout

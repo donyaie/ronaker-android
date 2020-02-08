@@ -39,6 +39,8 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -70,10 +72,10 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     fun onClickPhoneNext(phone: String) {
 
         addPhoneSubscription = userRepository.addUserPhoneNumber(userRepository.getUserToken(), phone)
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
-                loading.value = false
+                loadingButton.value = false
                 if (result.isSuccess()) {
                     mNumber = phone
                     viewState.value = StateEnum.validate
@@ -87,10 +89,10 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     }
     fun resend(){
         resendSubscription = userRepository.addUserPhoneNumber(userRepository.getUserToken(), mNumber)
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
-                loading.value = false
+                loadingButton.value = false
                 if (result.isSuccess()) {
                     startTimer()
 
@@ -123,10 +125,10 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     fun onClickValidNext(pin: String) {
 
         verifyPhoneSubscription = userRepository.activeUserPhoneNumber(userRepository.getUserToken(), mNumber, pin)
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
-                loading.value = false
+                loadingButton.value = false
                 if (result.isSuccess()) {
                     goNext.value = false
                 } else {

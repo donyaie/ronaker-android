@@ -70,6 +70,14 @@ class OrderMessageActivity : BaseActivity() {
 
 
 
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment, OrderMessageFragment())
+            .commit()
+
+
+
+
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Alert.makeTextError(this, errorMessage)

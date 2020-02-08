@@ -71,7 +71,7 @@
                     android:textAppearance="@style/TextAppearance.Large.Regular"
                     android:textColor="@color/colorTextDark" />
 
-                <Button
+                <com.ronaker.app.utils.view.ButtonComponent
                     android:id="@+id/retry"
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
@@ -83,6 +83,11 @@
                     app:layout_constraintBottom_toTopOf="@id/goto_text_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
+
+
+                    app:buttonType="Text"
+                    app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
+
                     app:layout_constraintWidth_percent=".5" />
 
 

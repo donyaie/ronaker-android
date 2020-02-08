@@ -5,11 +5,8 @@
     android:layout_width="wrap_content"
     android:gravity="center"
     android:layout_gravity="center"
-    android:background="@drawable/selector_accent"
     android:minWidth="42dp"
-    android:clickable="true"
-    android:layout_height="42dp"
-    android:focusable="true">
+    android:layout_height="42dp">
 
 
     <TextView
@@ -20,6 +17,7 @@
         android:textColor="@color/colorTextLight"
         android:textAllCaps="false"
         android:text="text"
+        android:visibility="visible"
         android:lines="1"
         tools:ignore="HardcodedText" />
 
@@ -28,10 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
+
         android:visibility="gone"
+        app:srcCompat="@drawable/ic_next_white"
         android:tint="@color/white"
 
-        />
+        android:contentDescription="@string/text_content" />
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/progress"
