@@ -195,7 +195,8 @@
     <string name="text_order_detail">Informacija apie užsakymą</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Papasakokite apie savo patirtį naudojant šį elementą</string>
     <string name="text_please_write_your_experience_here">Prašome parašyti savo patirtį čia</string>
-    <string name="text_send">Siųsti</string>
+    <string name="text_title_send">Siųsti</string>
     <string name="text_choice_payment_type">Pasirinkto mokėjimo rūšis</string>
-    <string name="text_save">Sutaupyti</string>
+    <string name="text_title_save">Sutaupyti</string>
+    <string name="text_nothing_saved_yet">Dar nieko neišsaugojo</string>
 </resources>

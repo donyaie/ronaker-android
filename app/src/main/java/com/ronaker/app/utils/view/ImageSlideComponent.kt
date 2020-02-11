@@ -1,6 +1,5 @@
 package com.ronaker.app.utils.view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -95,9 +94,12 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
             return view === Object
         }
 
-        @SuppressLint("InflateParams")
+//        @SuppressLint("InflateParams")
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val view = LayoutInflater.from(context).inflate(R.layout.component_image_slide_item, null)
+            val view =    View.inflate(context,R.layout.component_image_slide_item, null)
+
+
+
             val imageView = view.findViewById(R.id.image) as ImageView
             GlideApp.with(context).load(dataList[position]).into(imageView)
             container.addView(view)

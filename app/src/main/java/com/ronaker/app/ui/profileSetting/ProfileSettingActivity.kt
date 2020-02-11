@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.profileSetting
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -38,7 +37,6 @@ class ProfileSettingActivity : BaseActivity() {
 
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setSlideTransition(this)
@@ -105,7 +103,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        binding.versionText.text = "--Version V${BuildConfig.VERSION_NAME}--"
+        binding.versionText.text = String.format(getString(R.string.versionNameFormat) ,BuildConfig.VERSION_NAME)  //  "--Version V${BuildConfig.VERSION_NAME}--"
 
 
 

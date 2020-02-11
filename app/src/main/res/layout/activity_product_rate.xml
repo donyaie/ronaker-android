@@ -116,7 +116,7 @@
 
                 android:onClick="@{()->viewModel.onClickAccept(commentInput.getText().toString(),starRate.getRating())}"
 
-                android:text="@string/text_send"
+                android:text="@string/text_title_send"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

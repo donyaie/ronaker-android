@@ -195,7 +195,8 @@
     <string name="text_order_detail">Bestellingsdetail</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Vertel ons over uw ervaring met dit item</string>
     <string name="text_please_write_your_experience_here">Schrijf hier je ervaring</string>
-    <string name="text_send">Sturen</string>
+    <string name="text_title_send">Sturen</string>
     <string name="text_choice_payment_type">Keuze Betalingstype</string>
-    <string name="text_save">Opslaan</string>
+    <string name="text_title_save">Opslaan</string>
+    <string name="text_nothing_saved_yet">Nog niets opgeslagen</string>
 </resources>

@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:gravity="center"
-                        android:text="Nothing Saved Yet"
+                        android:text="@string/text_nothing_saved_yet"
                         android:textAppearance="@style/TextAppearance.Large.SB"
                         app:layout_constraintTop_toBottomOf="@id/empty_image" />
 
