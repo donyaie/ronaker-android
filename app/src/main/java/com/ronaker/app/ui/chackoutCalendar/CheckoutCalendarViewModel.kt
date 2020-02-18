@@ -64,8 +64,6 @@ class CheckoutCalendarViewModel (app: Application): BaseViewModel(app) {
 
     fun loadProduct() {
 
-
-
     }
 
     fun onClickSetDays() {

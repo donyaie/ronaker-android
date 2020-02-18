@@ -105,6 +105,14 @@ class OrderListFragment : BaseFragment() {
             fragment.arguments = bundle
             return fragment
         }
+
+
+        fun newBoundle(filter: String?):Bundle{
+
+            val bundle = Bundle()
+            bundle.putString(FILTER_KEY, filter)
+            return bundle
+        }
     }
 
 

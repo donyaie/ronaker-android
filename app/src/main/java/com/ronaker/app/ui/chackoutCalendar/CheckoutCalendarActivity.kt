@@ -57,12 +57,6 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Alert.makeTextError(this, errorMessage)
-        })
-
-
-
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.showLoading()
