@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.chackoutCalendar
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.ENDDATE_KEY
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.PRODUCT_KEY
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.STARTDATE_KEY
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.extension.finishSafe
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
@@ -38,6 +40,12 @@ class CheckoutCalendarFragment : BaseFragment() {
             binding.viewModel = viewModel
         }
 
+
+
+
+        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+            Alert.makeTextError(this, errorMessage)
+        })
 
 
 
@@ -76,11 +84,26 @@ class CheckoutCalendarFragment : BaseFragment() {
         }
 
 
+        if (arguments?.containsKey(PRODUCT_KEY)==true) {
+
+
+            viewModel.loadProduct()
+
+
+        } else {
+            activity?.finishSafe()
+        }
+
+
+
+
         return binding.root
     }
 
 
     private fun initCalendar(){
+
+
 
 
 
@@ -138,12 +161,26 @@ class CheckoutCalendarFragment : BaseFragment() {
 
 
 
-
-
     fun getProduct(): Product?{
-        return   activity?.intent?.getParcelableExtra(PRODUCT_KEY)
+        return   arguments?.getParcelable(PRODUCT_KEY)
     }
 
+
+
+    companion object {
+
+        const val PRODUCT_KEY = "mProduct"
+        const val STARTDATE_KEY = "start_date"
+        const val ENDDATE_KEY = "end_date"
+        const val REQUEST_CODE = 346
+
+        fun newBoundle( product: Product): Bundle {
+            val boundle = Bundle()
+            boundle.putParcelable(PRODUCT_KEY, product)
+
+            return boundle
+        }
+    }
 
 
 }

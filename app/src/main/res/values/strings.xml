@@ -8,6 +8,8 @@
     <string name="google_api_key_me" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
 
 
+    <string name="versionNameFormat"  formatted="true" translatable="false">--Version V%1$s--</string>
+
     <string name="text_lend_request_accepted" formatted="true">Your Request Accepted By %1$s</string>
     <string name="text_lend_request_started" formatted="true">You Start Renting %1$s Item</string>
     <string name="text_rent_request_accepted" formatted="true">You Accepted %1$s Request</string>
@@ -210,6 +212,12 @@
     <string name="text_add_document_image">Add document image</string>
     <string name="text_order_detail">Order Detail</string>
     <string name="text_of_5"> of 5</string>
+    <string name="text_please_tell_us_about_your_experience_using_this_item">Please, Tell us about your experience using this item</string>
+    <string name="text_please_write_your_experience_here">Please write your experience here</string>
+    <string name="text_title_send">Send</string>
+    <string name="text_title_save">Save</string>
+    <string name="text_choice_payment_type">Choice Payment Type</string>
+    <string name="text_nothing_saved_yet">Nothing Saved Yet</string>
 
 
 </resources>

@@ -1,8 +1,7 @@
 package com.ronaker.app.ui.language
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.ronaker.app.R
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -13,11 +12,9 @@ class LanguageDialog {
 
 
     companion object {
-        @SuppressLint("InflateParams")
         fun showDialog(context: Activity): AlertDialog? {
 
-
-            val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_language, null)
+            val mDialogView =  View.inflate(context, R.layout.dialog_language, null)
             //AlertDialogBuilder
             val mBuilder = AlertDialog.Builder(context)
                 .setView(mDialogView)

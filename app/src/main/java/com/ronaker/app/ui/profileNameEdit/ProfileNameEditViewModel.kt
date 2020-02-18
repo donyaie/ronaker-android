@@ -24,6 +24,8 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
     val userLastName: MutableLiveData<String> = MutableLiveData()
@@ -57,10 +59,10 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
             .updateUserInfo(userRepository.getUserToken(), user)
 
             .doOnSubscribe {
-                loading.value = true
+                loadingButton.value = true
             }
             .doOnTerminate {
-                loading.value = false
+                loadingButton.value = false
             }
 
             .subscribe { result ->

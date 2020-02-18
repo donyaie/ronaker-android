@@ -140,12 +140,13 @@
                 android:id="@+id/resend_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_marginEnd="8dp"
                 android:onClick="@{()->viewModel.resend()}"
                 android:text="@string/title_resend"
                 android:textAppearance="@style/TextAppearance.Medium.SB"
 
-                android:textColor="@color/colorNavy"
+                android:textColor="@color/colorPrimary"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/resend_title"
@@ -154,7 +155,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageButton
+        <com.ronaker.app.utils.view.ButtonComponent
             android:id="@+id/next_button"
             style="@style/Button.circle.accent"
             android:layout_marginEnd="24dp"
@@ -162,8 +163,13 @@
             android:contentDescription="@string/text_content"
             android:onClick="@{()->viewModel.onClickValidNext(pinEditText.getText().toString())}"
             app:layout_constraintBottom_toBottomOf="parent"
-
+            app:buttonType="Image"
+            app:buttonSrc="@drawable/ic_next_white"
+            app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
             app:layout_constraintRight_toRightOf="parent" />
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

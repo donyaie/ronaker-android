@@ -72,12 +72,12 @@ class ProfileEmailEditActivity : BaseActivity() {
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
 
-        binding.toolbar.actionTextClickListener=View.OnClickListener {
 
+
+        binding.saveButton.setOnClickListener {
             if(binding.emailInput.checkValid() ){
                 viewModel.saveInfo(binding.emailInput.text)
             }
-
 
         }
 

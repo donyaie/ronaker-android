@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -23,10 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:toolbar_component_action_container="TEXT"
+            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_action_text="Save"
             app:toolbar_component_bottom_line="false"
             app:toolbar_component_cancel_container="BACK"
-            app:toolbar_component_action_text="Save"
             app:toolbar_component_center_container="NONE"
             app:toolbar_component_dot_count="3"
             app:toolbar_component_transparent="false" />
@@ -38,15 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fitsSystemWindows="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp">
+                android:layout_marginRight="24dp"
+                android:orientation="vertical">
 
 
                 <TextView
@@ -147,10 +147,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-
                         android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DAY"
+                        android:imeOptions="actionNext"
+
+                        android:inputType="number"
                         app:inputMutableText="@{viewModel.getCardExpireText()}"
                         app:input_hint="MM/YY"
                         app:input_regex="^\\d{2}\\d{2}$"
@@ -167,10 +167,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_weight="1"
 
+                        android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE"
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE"
 
                         app:inputMutableText="@{viewModel.getCardCVVText()}"
                         app:input_hint="123"
@@ -194,20 +194,19 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-
                 <com.ronaker.app.utils.view.InputComponent
                     android:id="@+id/name_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
 
-                    app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
+                    android:inputType="text"
 
                     app:inputMutableText="@{viewModel.getFullNameText()}"
                     app:input_hint=""
+                    app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
                     app:input_title="Full name"
-                    android:layout_marginTop="16dp"
                     app:input_transparent="false"
                     app:input_validation_mode="AUTO"
                     tools:ignore="UnusedAttribute" />
@@ -219,10 +218,10 @@
                     android:imeOptions="actionNext"
                     android:inputType="textPostalAddress"
 
-                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
-
                     app:inputMutableText="@{viewModel.getAddressText()}"
+
                     app:input_hint=""
+                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
                     app:input_title="Address"
                     app:input_transparent="false"
                     app:input_validation_mode="AUTO"
@@ -237,9 +236,9 @@
                     android:inputType="textPostalAddress"
                     app:inputMutableText="@{viewModel.getAddressLine2Text()}"
                     app:input_hint=""
+                    app:input_regex="^\\s*(?:\\S\\s*){0,500}$"
                     app:input_title="Address Line 2 (Optional)"
                     app:input_transparent="false"
-                    app:input_regex="^\\s*(?:\\S\\s*){0,500}$"
                     app:input_validation_mode="AUTO"
                     tools:ignore="UnusedAttribute" />
 
@@ -249,10 +248,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
                     android:inputType="text"
                     app:inputMutableText="@{viewModel.getCityText()}"
                     app:input_hint=""
+                    app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
                     app:input_title="City"
                     app:input_transparent="false"
                     app:input_validation_mode="AUTO"
@@ -260,9 +259,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2"
-                    android:layout_height="wrap_content"
 
                     >
 
@@ -270,12 +269,12 @@
                         android:id="@+id/country_input"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
                         android:layout_weight="1"
-                        app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
+                        android:imeOptions="actionNext"
                         android:inputType="text"
                         app:inputMutableText="@{viewModel.getCountryText()}"
                         app:input_hint=""
+                        app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
                         app:input_title="Country/Region"
                         app:input_transparent="false"
                         app:input_validation_mode="AUTO"
@@ -283,55 +282,85 @@
 
                     <com.ronaker.app.utils.view.InputComponent
                         android:id="@+id/address_postal_input"
-                        android:layout_marginStart="16dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-
-                        app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
+                        android:layout_marginStart="16dp"
                         android:layout_weight="1"
+
+                        android:imeOptions="actionDone"
                         android:inputType="text"
                         app:inputMutableText="@{viewModel.getAddressPostalText()}"
                         app:input_hint=""
+                        app:input_regex="^\\s*(?:\\S\\s*){2,100}$"
                         app:input_title="Postal Code"
                         app:input_transparent="false"
                         app:input_validation_mode="AUTO"
                         tools:ignore="UnusedAttribute" />
 
 
-
-
                 </LinearLayout>
 
 
-
-
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:linksClickable="true"
-                    android:autoLink="web"
-                    android:layout_marginTop="16dp"
-
                     android:id="@+id/privecy_text"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="40dp"
-                    android:text="@string/text_payments_terms"
-                    android:onClick="@{()->viewModel.onClickTerms()}"
-                    android:textColor="@color/colorTextLink"
-                    android:textAppearance="@style/TextAppearance.Large.SB"
+
+                    android:autoLink="web"
                     android:gravity="start"
+                    android:linksClickable="true"
+                    android:onClick="@{()->viewModel.onClickTerms()}"
+                    android:text="@string/text_payments_terms"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
+                    android:textColor="@color/colorTextLink"
 
                     />
-
-
-
 
 
             </LinearLayout>
 
 
         </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="66dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPlatinGrey"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.ronaker.app.utils.view.ButtonComponent
+                android:id="@+id/saveButton"
+                style="@style/Button.accent"
+                android:layout_width="0dp"
+
+                android:text="@string/text_title_save"
+
+                app:buttonType="Text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".4"
+                app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <com.ronaker.app.utils.view.LoadingComponent

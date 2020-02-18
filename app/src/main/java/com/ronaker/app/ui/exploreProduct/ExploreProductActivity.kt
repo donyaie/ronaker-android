@@ -8,7 +8,6 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,17 +22,15 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarFragment
+import com.ronaker.app.ui.container.ContainerActivity
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import io.branch.indexing.BranchUniversalObject
-import io.branch.referral.Branch
-import io.branch.referral.BranchError
-import io.branch.referral.SharingHelper
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
-import io.branch.referral.util.ShareSheetStyle
 import java.util.*
 
 
@@ -169,11 +166,16 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                     .setCanonicalIdentifier("product/${it.suid}")
                     .setTitle(it.name.toString())
                     .setContentDescription(it.description)
-                    .setContentImageUrl(BASE_URL+it.avatar)
+                    .setContentImageUrl(BASE_URL + it.avatar)
                     .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                     .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                     .setContentMetadata(ContentMetadata().addCustomMetadata("product", it.suid))
-                    .setContentMetadata(ContentMetadata().addCustomMetadata("action","show_product"))
+                    .setContentMetadata(
+                        ContentMetadata().addCustomMetadata(
+                            "action",
+                            "show_product"
+                        )
+                    )
 
 
                 val lp = LinkProperties()
@@ -224,9 +226,17 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
+        val mapFragment = SupportMapFragment()
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.map, mapFragment)
+            .commit()
 
 
-        (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).getMapAsync { map ->
+
+
+        mapFragment.getMapAsync { map ->
             googleMap = map
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
@@ -256,11 +266,21 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         viewModel.checkout.observe(this, Observer { _ ->
             viewModel.mProduct?.let {
+                //                startActivityMakeSceneForResult(
+//                    CheckoutCalendarActivity.newInstance(
+//                        this,
+//                        it
+//                    ), CheckoutCalendarActivity.REQUEST_CODE
+//                )
+
+
                 startActivityMakeSceneForResult(
-                    CheckoutCalendarActivity.newInstance(
+                    ContainerActivity.newInstance(
                         this,
-                        it
-                    ), CheckoutCalendarActivity.REQUEST_CODE
+                        CheckoutCalendarFragment::class.java,
+                        CheckoutCalendarFragment.newBoundle(it)
+                    )
+                    , CheckoutCalendarActivity.REQUEST_CODE
                 )
 
             }

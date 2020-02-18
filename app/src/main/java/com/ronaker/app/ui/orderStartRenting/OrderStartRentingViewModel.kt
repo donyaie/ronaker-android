@@ -43,6 +43,7 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
     val instruction: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
@@ -137,15 +138,14 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
             mOrder.suid,
             "started"
         )
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
                     finish.value=true
 
                 } else {
-                    finish.value=true
-                    errorMessage.value = "Successfully Send"
+                    errorMessage.value = result.error?.message
                 }
             }
 

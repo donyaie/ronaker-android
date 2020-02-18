@@ -87,7 +87,7 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidexVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$androidxVersion"
-    implementation "androidx.core:core-ktx:$androidxVersion"
+    implementation "androidx.core:core-ktx:$androidCorexVersion"
 
 
     implementation "androidx.preference:preference-ktx:$androidxVersion"
@@ -174,14 +174,14 @@ dependencies {
     //number
 
     implementation "com.hbb20:ccp:$ccpVersion"
-    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.11.3'
+    implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: "$libphonenumberVersion"
     implementation("com.alimuzaffar.lib:pinentryedittext:$pinentryEditTextVersion") {
         // Exclude is only needed if you already have
         // androidx.appcompat as a dependency in your app.
         exclude group: "androidx.appcompat", module: "appcompat"
     }
 
-    implementation 'com.google.firebase:firebase-appindexing:19.0.0'
+    implementation "com.google.firebase:firebase-appindexing:$firebaseAppindexingVersion"
 
     //firebace
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
@@ -196,7 +196,7 @@ dependencies {
     implementation "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion"
     
     //Alert
-    implementation 'com.irozon.sneaker:sneaker:2.0.0'
+    implementation "com.irozon.sneaker:sneaker:$sneakerVersion"
 
     //picker
     implementation project(path: ":rangedatepicker")
@@ -214,9 +214,9 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$stethoVersion"
     implementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 
-    implementation 'io.branch.sdk.android:library:4.3.1'
+    implementation "io.branch.sdk.android:library:$branchVersion"
 
 
 
@@ -242,7 +242,6 @@ dependencies {
     testImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
 
 
-    def mockito_version = '2.7.1' // For local unit tests on your development machine
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
 

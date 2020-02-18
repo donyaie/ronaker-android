@@ -12,8 +12,16 @@
 
             android:gravity="center"
             android:layoutDirection="ltr">
-        <fragment class="com.ronaker.app.ui.orderMessage.OrderMessageFragment" android:id="@+id/fragment"
-                  android:layout_width="match_parent" android:layout_height="match_parent"/>
+<!--        <fragment class="com.ronaker.app.ui.orderMessage.OrderMessageFragment" android:id="@+id/fragment"-->
+<!--                  android:layout_width="match_parent" android:layout_height="match_parent"/>-->
+
+
+        <androidx.fragment.app.FragmentContainerView
+
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 
         <com.ronaker.app.utils.view.LoadingComponent

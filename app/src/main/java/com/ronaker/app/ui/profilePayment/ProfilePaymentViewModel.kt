@@ -34,6 +34,9 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -147,10 +150,10 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
             .addPaymentInfo(userRepository.getUserToken(),payment)
 
             .doOnSubscribe {
-                loading.value = true
+                loadingButton.value = true
             }
             .doOnTerminate {
-                loading.value = false
+                loadingButton.value = false
             }
 
             .subscribe { result ->

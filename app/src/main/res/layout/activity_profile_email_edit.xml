@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:toolbar_component_action_container="TEXT"
+            app:toolbar_component_action_container="NONE"
             app:toolbar_component_bottom_line="false"
             app:toolbar_component_action_text="Save"
             app:toolbar_component_cancel_container="BACK"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fitsSystemWindows="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
 
@@ -88,6 +88,45 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="66dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPlatinGrey"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.ronaker.app.utils.view.ButtonComponent
+                android:id="@+id/saveButton"
+                style="@style/Button.accent"
+                android:layout_width="0dp"
+
+                android:text="@string/text_title_save"
+
+                app:buttonType="Text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".4"
+                app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
         <com.ronaker.app.utils.view.LoadingComponent

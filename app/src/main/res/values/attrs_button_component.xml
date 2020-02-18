@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="ButtonComponent">
+
+        <attr name="buttonType" format="enum">
+            <enum name="Text" value="0"/>
+            <enum name="Image" value="1"/>
+        </attr>
+
+        <attr name="android:text"/>
+        <attr name="buttonSrc"/>
+        <attr name="android:textColor"/>
+        <attr name="loadingColor" format="reference|color"/>
+
+    </declare-styleable>
+</resources>

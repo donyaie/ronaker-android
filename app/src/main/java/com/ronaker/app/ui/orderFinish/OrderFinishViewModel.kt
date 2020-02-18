@@ -27,6 +27,7 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
     val instruction: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
@@ -68,8 +69,8 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
             mOrder.suid,
             "finished"
         )
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
                     finish.value=true

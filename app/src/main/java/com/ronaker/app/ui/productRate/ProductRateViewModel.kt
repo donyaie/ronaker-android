@@ -26,6 +26,7 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -58,8 +59,8 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
             stars = rate.toDouble()
 
         )
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
                     finish.value = true

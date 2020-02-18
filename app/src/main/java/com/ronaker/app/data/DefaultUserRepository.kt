@@ -106,6 +106,23 @@ class DefaultUserRepository(
 
     }
 
+
+
+    override fun sendEmailVerification(user_token: String?): Observable<Result<Boolean>> {
+        return userApi.sendEmailVerification("Token $user_token")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map {
+
+                true
+
+            }
+
+            .toResult()
+
+    }
+
     override fun addUserPhoneNumber(
         user_token: String?,
         phone_number: String

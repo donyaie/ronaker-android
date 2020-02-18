@@ -59,6 +59,7 @@ class ViewPagerCustom : ViewPager {
         return this.isPagingEnabled && super.onTouchEvent(event)
     }
 
+
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         return this.isPagingEnabled && super.onInterceptTouchEvent(event)
     }
@@ -83,13 +84,11 @@ class ViewPagerCustom : ViewPager {
 
         constructor(context: Context, interpolator: Interpolator) : super(context, interpolator) {}
 
-        @SuppressLint("NewApi")
         constructor(context: Context, interpolator: Interpolator, flywheel: Boolean) : super(
             context,
             interpolator,
             flywheel
-        ) {
-        }
+        )
 
         /**
          * Set the factor by which the duration will change
