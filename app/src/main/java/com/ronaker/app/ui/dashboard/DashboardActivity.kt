@@ -15,8 +15,9 @@ import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.container.ContainerActivity
 import com.ronaker.app.ui.explore.ExploreFragment
-import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
+import com.ronaker.app.ui.exploreProduct.ExploreProductFragment
 import com.ronaker.app.ui.inbox.InboxFragment
 import com.ronaker.app.ui.login.LoginActivity
 import com.ronaker.app.ui.manageProduct.ManageProductListFragment
@@ -102,7 +103,13 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                 if (referringParams?.has("product") == true) {
                     val suid = referringParams.getString("product")
                     if (suid.isNotBlank() && viewModel.islogin)
-                        startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+//                        startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+                    startActivity(ContainerActivity.newInstance(this,ExploreProductFragment::class.java,ExploreProductFragment.newBoundle(suid.trim())))
+
+
+
+
+
                 }
 
             } else {
@@ -244,7 +251,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
         when (requestCode) {
-            ExploreProductActivity.REQUEST_CODE -> {
+            ExploreProductFragment.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     binding.navigation.select(1)
                 }

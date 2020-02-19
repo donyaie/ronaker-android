@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.chackoutCalendar
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.ENDDATE_KEY
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.PRODUCT_KEY
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity.Companion.STARTDATE_KEY
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.extension.finishSafe
 import com.savvi.rangedatepicker.CalendarPickerView

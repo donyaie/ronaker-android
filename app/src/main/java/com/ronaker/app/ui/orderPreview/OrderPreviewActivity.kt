@@ -1,13 +1,10 @@
 package com.ronaker.app.ui.orderPreview
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import com.ronaker.app.utils.Alert
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,13 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
+import com.ronaker.app.ui.container.ContainerActivity
+import com.ronaker.app.ui.exploreProduct.ExploreProductFragment
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
 import com.ronaker.app.ui.orderCancel.OrderCancelActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
@@ -48,7 +47,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        fun newInstance(context: Context, orderId:String): Intent {
+        fun newInstance(context: Context, orderId: String): Intent {
             val intent = Intent(context, OrderPreviewActivity::class.java)
             val boundle = Bundle()
             boundle.putString(OrderId_KEY, orderId)
@@ -70,8 +69,8 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         binding.viewModel = viewModel
 
 
-        binding.recyclerView.layoutManager= LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recyclerView, false)
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
@@ -84,15 +83,23 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.showProduct.observe(this, Observer { product ->
             startActivityMakeSceneForResult(
-                ExploreProductActivity.newInstance(this, product, "ds"),
-                ExploreProductActivity.REQUEST_CODE
+//                ExploreProductActivity.newInstance(this, product, "ds")
+
+                ContainerActivity.newInstance(
+                    this,
+                    ExploreProductFragment::class.java,
+                    ExploreProductFragment.newBoundle(product)
+                )
+                ,
+
+                ExploreProductFragment.REQUEST_CODE
             )
         })
 
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -102,7 +109,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.acceptIntro.observe(this, Observer {
             startActivityMakeSceneForResult(
-                OrderAcceptActivity.newInstance(this,viewModel. getOrder()),
+                OrderAcceptActivity.newInstance(this, viewModel.getOrder()),
                 OrderAcceptActivity.REQUEST_CODE
             )
         })
@@ -143,7 +150,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.finishIntro.observe(this, Observer {
             startActivityMakeSceneForResult(
-                OrderFinishActivity.newInstance(this,viewModel.getOrder()),
+                OrderFinishActivity.newInstance(this, viewModel.getOrder()),
                 OrderFinishActivity.REQUEST_CODE
             )
         })
@@ -181,16 +188,14 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 //        }
 
 
+        getOrder()?.let { viewModel.getOrder(it.suid) } ?: kotlin.run {
 
-        getOrder()?.let { viewModel.getOrder(it.suid) }?: kotlin.run {
-
-            getOrderId()?.let{ ordreId->viewModel.getOrder(ordreId) }
+            getOrderId()?.let { ordreId -> viewModel.getOrder(ordreId) }
 
         }
 
 
     }
-
 
 
     private fun getOrder(): Order? {

@@ -20,8 +20,6 @@ class OrderAcceptActivity : BaseActivity() {
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderAcceptIntroBinding
     private lateinit var viewModel: OrderAcceptViewModel
 
-
-
     companion object {
 
 

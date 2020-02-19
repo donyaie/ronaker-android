@@ -38,6 +38,8 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     init {
 
+
+
         rateListAdapter = ProductCommentAdapter(dataList)
     }
 
@@ -137,7 +139,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun loadComment(suid: String) {
+    private fun loadComment(suid: String) {
 
 
         commentSubscription?.dispose()
@@ -273,11 +275,11 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun onRefresh() {
 
-        suid?.let { loadProduct(it, false, true) }
+        suid?.let { loadProduct(it, showLoading = false, refresh = true) }
     }
 
     fun onRetry() {
-        suid?.let { loadProduct(it, true) }
+        suid?.let { loadProduct(it, showLoading=true) }
     }
 
 

@@ -202,11 +202,11 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name=".ui.exploreProduct.ExploreProductActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ProductPreviewTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+<!--        <activity-->
+<!--            android:name=".ui.exploreProduct.ExploreProductActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/ProductPreviewTheme"-->
+<!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
 
         <activity
             android:name=".ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity"
@@ -296,12 +296,6 @@
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity
-            android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
-            android:screenOrientation="portrait"
-
-            android:theme="@style/PopTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".ui.addProduct.AddProductActivity"
