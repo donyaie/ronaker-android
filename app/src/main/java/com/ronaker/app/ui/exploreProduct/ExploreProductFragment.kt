@@ -25,7 +25,7 @@ import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarFragment
 import com.ronaker.app.ui.container.ContainerActivity
-import com.ronaker.app.ui.orderMessage.OrderMessageActivity
+import com.ronaker.app.ui.orderMessage.OrderMessageFragment
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
@@ -52,6 +52,22 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_product_explore, container, false)
+
+
+
+        //calcut image height
+        val screenCalculator = ScreenCalculator(requireContext())
+        binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
+
+
+
+
+        return binding.root
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
         binding.viewModel = viewModel
@@ -175,19 +191,11 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
         })
 
 
+
         initMap()
 
 
-        //calcut image height
-        val screenCalculator = ScreenCalculator(requireContext())
-        binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
 
-
-
-
-
-
-        return binding.root
     }
 
 
@@ -346,6 +354,9 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
     }
 
 
+
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         when (requestCode) {
@@ -361,21 +372,36 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
 
                         Handler().postDelayed({
+//                            requireActivity().startActivityMakeSceneForResult(
+//                                OrderMessageActivity.newInstance(
+//                                    requireContext(),
+//                                    getProduct(),
+//                                    start,
+//                                    end
+//                                ), OrderMessageActivity.REQUEST_CODE
+//                            )
+
+
                             requireActivity().startActivityMakeSceneForResult(
-                                OrderMessageActivity.newInstance(
+                                ContainerActivity.newInstance(
                                     requireContext(),
-                                    getProduct(),
-                                    start,
-                                    end
-                                ), OrderMessageActivity.REQUEST_CODE
+                                    OrderMessageFragment::class.java,
+                                    OrderMessageFragment.newBundle(
+                                        getProduct(),
+                                        start,
+                                        end)
+                                )
+                                , OrderMessageFragment.REQUEST_CODE
                             )
+
+
                         }, 100)
                     }
                 }
             }
 
 
-            OrderMessageActivity.REQUEST_CODE -> {
+            OrderMessageFragment.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
 
                     requireActivity().setResult(Activity.RESULT_OK)

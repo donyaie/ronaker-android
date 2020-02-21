@@ -4,30 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.AnimationHelper
 
 class ContainerActivity : BaseActivity() {
 
 
 
+  lateinit var fragment:Fragment
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityContainerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_container)
 
-
-
-
-
-
-
         getClassName()?.let {
 
-           val fragment= supportFragmentManager.fragmentFactory.instantiate(classLoader,it)
+            fragment= supportFragmentManager.fragmentFactory.instantiate(classLoader,it)
 
             fragment.arguments=intent.extras
 
@@ -35,14 +32,6 @@ class ContainerActivity : BaseActivity() {
                 .replace(R.id.fragmentContainer, fragment)
                 .commitNow()
         }
-
-
-
-
-
-
-
-
 
     }
 
@@ -70,6 +59,11 @@ class ContainerActivity : BaseActivity() {
         }
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        fragment.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
 
 }

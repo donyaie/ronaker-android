@@ -49,14 +49,6 @@
 
 
         <activity
-            android:name=".ui.orderMessage.OrderMessageActivity"
-            android:screenOrientation="portrait"
-
-            android:theme="@style/PopTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-
-        </activity>
-        <activity
             android:name=".ui.profilePayment.ProfilePaymentActivity"
             android:screenOrientation="portrait"
 
