@@ -142,7 +142,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
                 searchValue = null
 
             subscription = productRepository
-                .productSearch(userRepository.getUserToken(), searchValue, page, null, null)
+                .productSearch(userRepository.getUserToken(), searchValue, page, null, null,categorySiud = selectedCategory?.suid)
 
                 .doOnSubscribe { onRetrieveProductListStart() }
                 .doOnTerminate { onRetrieveProductListFinish() }

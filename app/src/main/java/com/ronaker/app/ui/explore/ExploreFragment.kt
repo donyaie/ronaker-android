@@ -2,12 +2,14 @@ package com.ronaker.app.ui.explore
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -23,7 +26,6 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
-
 
 class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
@@ -221,6 +223,37 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             viewModel.clearSearch()
         }
+
+
+
+
+        binding.categoryRecycler?.addItemDecoration(object : ItemDecoration() {
+
+            private val mEndOffset = context?.resources?.getDimensionPixelSize(R.dimen.margin_default)?:0
+
+
+
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+
+
+                super.getItemOffsets(outRect, view, parent, state)
+
+                val dataSize = state.itemCount
+                val position: Int = parent.getChildAdapterPosition(view)
+                if (dataSize > 0 && position == 0) {
+                    outRect.set(mEndOffset, 0, 0, 0)
+                }  else {
+
+                    outRect.set(0, 0, 0, 0)
+                }
+            }
+
+        })
 
 
         if (activity is DashboardActivity)

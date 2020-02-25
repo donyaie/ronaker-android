@@ -23,6 +23,9 @@
     <dimen name="statusBarSizeMargin">0dp</dimen>
 
 
+    <dimen name="margin_default">24dp</dimen>
+
+
 
 
 </resources>

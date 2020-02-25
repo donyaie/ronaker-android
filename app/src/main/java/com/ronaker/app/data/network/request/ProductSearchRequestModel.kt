@@ -7,7 +7,8 @@ data class ProductSearchRequestModel(
     @SerializedName("name") val name: String?,
     @SerializedName("location") val location: LocationResponseModel?,
     @SerializedName("radius") val radius: Int?,
-    @SerializedName("favourites") val favourites: Boolean?
+    @SerializedName("favourites") val favourites: Boolean?,
+    @SerializedName("category_suid") val category_suid: String?
 )
 
 

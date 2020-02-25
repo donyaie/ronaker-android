@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL

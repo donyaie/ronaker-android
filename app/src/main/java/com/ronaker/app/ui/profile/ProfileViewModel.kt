@@ -21,7 +21,6 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
 
 
     val errorMessage:MutableLiveData<String> = MutableLiveData()
-    val loading:MutableLiveData<Boolean> = MutableLiveData()
 
 
     val userAvatar:MutableLiveData<String> = MutableLiveData()
@@ -89,6 +88,8 @@ class ProfileViewModel(app: Application): BaseViewModel(app){
         user.is_email_verified?.let { if(it) complete++ }
 
         user.is_phone_number_verified?.let { if(it) complete++ }
+        user.is_payment_info_verified?.let { if(it) complete++ }
+        user.is_identity_info_verified?.let { if(it) complete++ }
 
 
         if(complete==5){

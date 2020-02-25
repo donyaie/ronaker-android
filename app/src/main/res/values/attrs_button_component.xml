@@ -10,7 +10,7 @@
         </attr>
 
         <attr name="android:text"/>
-        <attr name="buttonSrc"/>
+        <attr name="buttonSrc" format="reference"/>
         <attr name="android:textColor"/>
         <attr name="loadingColor" format="reference|color"/>
 

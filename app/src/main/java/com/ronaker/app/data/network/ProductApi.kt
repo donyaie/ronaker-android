@@ -1,7 +1,6 @@
 package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
-import com.ronaker.app.data.network.request.ProductRateRequestModel
 import com.ronaker.app.data.network.request.ProductSearchRequestModel
 import com.ronaker.app.data.network.response.*
 import io.reactivex.Observable

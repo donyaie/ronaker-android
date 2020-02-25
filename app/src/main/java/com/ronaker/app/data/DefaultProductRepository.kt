@@ -22,7 +22,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         page: Int,
         location: LatLng?,
         radius: Int?,
-        isSaved:Boolean?
+        isSaved:Boolean?,
+        categorySiud:String?
     ): Observable<Result<ListResponseModel<Product>>> {
 
         val loc = location?.let {
@@ -37,7 +38,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
             query,
             loc,
             radius,
-            isSaved
+            isSaved,
+            categorySiud
         )
 
 
