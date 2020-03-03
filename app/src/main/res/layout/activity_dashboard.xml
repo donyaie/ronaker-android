@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.dashboard.DashboardViewModel" />
+            name="viewModel"
+            type="com.ronaker.app.ui.dashboard.DashboardViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-
-        <RelativeLayout
-
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/navigation"
-                android:layout_marginBottom="@dimen/statusBarSizeMargin"
-                android:layout_alignTop="@id/navigation"
-                android:layout_alignParentTop="true">
-
-
-            <FrameLayout
-                    android:id="@+id/container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-        </RelativeLayout>
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/navigation"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <com.ronaker.app.utils.view.TabNavigationComponent
-                android:id="@+id/navigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
 
-                android:fitsSystemWindows="true"
-                />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:fitsSystemWindows="true"
 
-    </RelativeLayout>
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

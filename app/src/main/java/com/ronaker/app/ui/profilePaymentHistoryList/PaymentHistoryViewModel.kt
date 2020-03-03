@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.model.Transaction
 import com.ronaker.app.utils.toCurrencyFormat
 import java.text.SimpleDateFormat
@@ -15,6 +16,11 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
     val transactionType = MutableLiveData<Int>()
     val transactionStatus = MutableLiveData<Int>()
     val description = MutableLiveData<String>()
+
+    val cardNumber = MutableLiveData<String>()
+
+    val cardImage = MutableLiveData<Int>()
+    val cardVisibility = MutableLiveData<Int>()
 
     val descriptionVisibility= MutableLiveData<Int>()
     val createMonth = MutableLiveData<String>()
@@ -74,6 +80,27 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
             createDay.value = SimpleDateFormat("dd", Locale.getDefault()).format(it)
 
         }
+
+
+
+        data.paymentInfo?.card_number?.let {
+            PaymentCard.CardType.detectFast(it) .apply { cardImage.value=this.resource }
+
+            val name= StringBuilder ()
+
+            name.append(it.substring(0,4))
+
+            name.append("*".repeat(it.length-8))
+
+            name.append(it.substring(it.length-5,it.length-1))
+
+            cardNumber.value=name.toString()
+            cardVisibility.value=View.VISIBLE
+
+        }?:run{
+            cardVisibility.value=View.GONE
+        }
+
 
 
         orderVisibility.value = if (data.OrderSuid == null) View.GONE else View.VISIBLE

@@ -14,7 +14,9 @@ data class Transaction(
     val transactionStatus: String? = null,
     val description: String? = null,
     val createAt: Date?=null,
-    val OrderSuid:String?=null
+    val OrderSuid:String?=null,
+    val paymentInfo:PaymentInfo?=null
+
 ) : Parcelable {
 
     enum class TransactionTypeEnum constructor(key: String) {
@@ -72,6 +74,11 @@ data class Transaction(
     }
 
 
+    @Parcelize
+    data class PaymentInfo(var suid: String? = null,
+                           val card_number: String? = null,
+                           val payment_type: String? = null): Parcelable
+
 
 }
 
@@ -89,7 +96,8 @@ fun List<FinancialTransactionsResponseModel>.mapToTransactionList(): List<Transa
             it.transaction_status,
             it.description,
             it.created_at,
-            it.order_suid
+            it.order_suid,
+            it.payment_info?.let{ info->Transaction.PaymentInfo(info.suid,info.card_number,info.payment_type)}
         )
 
         list.add(value)
