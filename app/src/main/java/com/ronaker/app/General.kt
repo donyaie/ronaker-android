@@ -7,6 +7,7 @@ import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
+import com.ronaker.app.utils.AppNotificationOpenedHandler
 import com.ronaker.app.utils.FONT_PATH
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -41,6 +42,7 @@ class General : MultiDexApplication() {
         OneSignal.startInit(this)
             .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
             .unsubscribeWhenNotificationsAreDisabled(true)
+            .setNotificationOpenedHandler(AppNotificationOpenedHandler())
             .init()
 
 
