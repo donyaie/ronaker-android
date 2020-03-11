@@ -112,7 +112,7 @@ dependencies {
                 // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
                 exclude module: 'okhttp'
             }
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //noinspection GradleDependency

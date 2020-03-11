@@ -10,6 +10,10 @@
             type="com.ronaker.app.ui.profile.ProfileViewModel" />
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <androidx.core.widget.NestedScrollView
 
@@ -98,6 +102,7 @@
                     android:id="@+id/edit_image"
                     android:layout_width="40dp"
                     android:scaleType="fitCenter"
+                    android:contentDescription="@string/text_content"
                     android:background="?attr/selectableItemBackground"
                     android:padding="8dp"
                     android:layout_marginEnd="16dp"
@@ -403,6 +408,6 @@
 
 
     </androidx.core.widget.NestedScrollView>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

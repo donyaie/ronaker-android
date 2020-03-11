@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalculator
@@ -83,7 +83,7 @@ class LoginActivity : BaseActivity() {
     companion object {
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, LoginActivity::class.java)
-            intent.flags =Intent.FLAG_ACTIVITY_SINGLE_TOP
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }
     }
@@ -138,20 +138,20 @@ class LoginActivity : BaseActivity() {
         })
 
         viewModel.gotoSignUp.observe(this, Observer {
-            loginAction=LoginViewModel.LoginActionEnum.register
-            currentPosition=1
+            loginAction = LoginViewModel.LoginActionEnum.register
+            currentPosition = 1
         })
 
 
         viewModel.gotoSignIn.observe(this, Observer {
 
-            loginAction=LoginViewModel.LoginActionEnum.login
-            currentPosition=4
+            loginAction = LoginViewModel.LoginActionEnum.login
+            currentPosition = 4
         })
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -164,7 +164,6 @@ class LoginActivity : BaseActivity() {
     }
 
 
-
     private fun init() {
 
 
@@ -175,8 +174,6 @@ class LoginActivity : BaseActivity() {
     }
 
 
-
-
     private fun prePage() {
 
         if (currentPosition - 1 == LoginViewModel.LoginStateEnum.home.position)
@@ -184,9 +181,9 @@ class LoginActivity : BaseActivity() {
 
 
         when {
-            currentPosition == 0 -> finishSafe()
+            currentPosition == LoginViewModel.LoginStateEnum.home.position -> finishSafe()
             currentPosition == LoginViewModel.LoginStateEnum.login.position -> {
-                currentPosition = 0
+                currentPosition = LoginViewModel.LoginStateEnum.home.position
             }
             currentPosition > LoginViewModel.LoginStateEnum.home.position -> {
                 currentPosition -= 1
@@ -196,7 +193,7 @@ class LoginActivity : BaseActivity() {
     }
 
 
-   private fun getFragment(state: LoginViewModel.LoginStateEnum): Fragment {
+    private fun getFragment(state: LoginViewModel.LoginStateEnum): Fragment {
         return when (state) {
             LoginViewModel.LoginStateEnum.home -> LoginHomeFragment()
             LoginViewModel.LoginStateEnum.email -> LoginEmailFragment()
@@ -206,12 +203,10 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-   private var currentPosition: Int = 0
-       set(value) {
+    private var currentPosition: Int = 0
+        set(value) {
 
             try {
-
-
 
 
                 val state = LoginViewModel.LoginStateEnum[value]
@@ -232,14 +227,22 @@ class LoginActivity : BaseActivity() {
                     }
                     value < field -> //back
                     {
-                        fm.popBackStack(state.name, 0)
 
-                       if( (field-value) >1){
-                           ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                           ft.replace(R.id.frame_container, getFragment(state), state.name)
-                               .addToBackStack(state.name)
-                           ft.commit()
-                       }
+                        if(value== LoginViewModel.LoginStateEnum.home.position && field==LoginViewModel.LoginStateEnum.login.position ){
+                            fm.popBackStack(state.name, 0)
+                            ft.commit()
+                        }
+                        else if ((field - value) > 1) {
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            ft.replace(R.id.frame_container, getFragment(state), state.name)
+                                .addToBackStack(state.name)
+
+                            ft.commit()
+                        } else {
+                            fm.popBackStack(state.name, 0)
+                            ft.commit()
+                        }
+
 
                     }
                     else -> {
