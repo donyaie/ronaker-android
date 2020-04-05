@@ -204,6 +204,7 @@
                 android:id="@+id/settingLayout"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
+
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:orientation="horizontal">

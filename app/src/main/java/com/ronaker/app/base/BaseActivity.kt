@@ -40,13 +40,6 @@ abstract class BaseActivity: SwipeBackActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//
-//
-//            window.navigationBarColor=ContextCompat.getColor(this,R.color.colorPrimaryDark)
-//            window.setBackgroundDrawableResource(R.color.colorPrimaryDark)
-//
-//        }
         super.onCreate(savedInstanceState)
         addActivityStack(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
