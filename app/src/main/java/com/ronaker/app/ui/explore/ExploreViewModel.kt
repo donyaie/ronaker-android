@@ -75,8 +75,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         hasNextPage = true
         dataList.clear()
         productListAdapter.updateList()
-        resetList.value = true
-//        view.getScrollListener().resetState()
+        resetList.postValue( true)
     }
 
     private var subscription: Disposable? = null
@@ -150,7 +149,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
                     if (result.isSuccess()) {
                         if ((result.data?.results?.size ?: 0) > 0) {
 
-                            emptyVisibility.value = View.GONE
+                            emptyVisibility.postValue(  View.GONE)
                             onRetrieveProductListSuccess(
                                 result.data?.results
                             )
@@ -163,7 +162,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
                         } else {
 
-                            emptyVisibility.value = View.VISIBLE
+                            emptyVisibility.postValue(  View.VISIBLE)
 
 
 
@@ -184,18 +183,18 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
 
     private fun onRetrieveProductListStart() {
-        retry.value = null
+        retry.postValue(  null)
         if (page <= 1) {
-            loading.value = true
+            loading.postValue(  true)
 
-            emptyVisibility.value = View.GONE
+            emptyVisibility.postValue(  View.GONE)
 
         }
-        errorMessage.value = null
+        errorMessage.postValue(  null)
     }
 
     private fun onRetrieveProductListFinish() {
-        loading.value = false
+        loading.postValue(  false)
     }
 
     private fun onRetrieveProductListSuccess(productList: List<Product>?) {
@@ -203,7 +202,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         if (productList != null) {
 
             var insertIndex = 0
-            if (dataList.size > 0)
+            if (dataList.isNotEmpty())
                 insertIndex = dataList.size
 
             dataList.addAll(productList)
@@ -214,16 +213,16 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     private fun onRetrieveProductListError(error: NetworkError?) {
         if (page <= 1)
-            retry.value = error?.message
+            retry.postValue(  error?.message)
         else
-            errorMessage.value = error?.message
+            errorMessage.postValue(  error?.message)
 
 
     }
 
     fun onClickSearch() {
 
-        searchValue.value = ""
+        searchValue.postValue(  "")
 
     }
 
@@ -289,7 +288,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
             categoryListAdapter.notifyItemChanged(categoryList.indexOf(selected))
 
-            scrollCategoryPosition.value = categoryList.indexOf(selected)
+            scrollCategoryPosition.postValue(  categoryList.indexOf(selected))
 
 
         } else {
@@ -302,7 +301,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
             }
             categoryListAdapter.reset()
             categoryListAdapter.notifyDataSetChanged()
-            scrollCategoryPosition.value = 0
+            scrollCategoryPosition.postValue(  0)
 
         }
 
@@ -330,8 +329,8 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     private fun updateSearchCaption() {
 
-        searchText.value =
-            query + (selectedCategory?.let { " in " + selectedCategory?.title } ?: run { "" })
+        searchText.postValue( 
+            query + (selectedCategory?.let { " in " + selectedCategory?.title } ?: run { "" }))
 
 
     }

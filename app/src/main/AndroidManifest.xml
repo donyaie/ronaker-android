@@ -27,13 +27,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="android:allowBackup,android:supportsRtl">
 
 
-<!--        <meta-data-->
-<!--            android:name="firebase_crashlytics_collection_enabled"-->
-<!--            android:value="false" />-->
+        <!--        <meta-data-->
+        <!--            android:name="firebase_crashlytics_collection_enabled"-->
+        <!--            android:value="false" />-->
 
         <meta-data
             android:name="firebase_performance_logcat_enabled"
@@ -49,9 +49,20 @@
 
 
         <activity
+            android:name=".ui.orderMessage.OrderMessageActivity"
+            android:screenOrientation="portrait"
+
+            android:launchMode="singleTask"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
+
+        <activity
             android:name=".ui.profilePayment.ProfilePaymentActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
@@ -61,23 +72,26 @@
             android:name=".ui.profileCompleteEdit.ProfileCompleteActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
 
         <activity
-        android:name=".ui.orderPreview.OrderPreviewActivity"
+            android:name=".ui.orderPreview.OrderPreviewActivity"
 
-        android:screenOrientation="portrait"
-        android:theme="@style/PopTheme"
-        android:windowSoftInputMode="stateAlwaysHidden">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
 
-    </activity>
+        </activity>
 
         <activity
             android:name=".ui.profilePaymentList.ProfilePaymentListActivity"
 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
@@ -87,12 +101,32 @@
         <activity
             android:name=".ui.profileNameEdit.ProfileNameEditActivity"
 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
         </activity>
 
+        <activity
+            android:name=".ui.exploreProduct.ExploreProductActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
+
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
 
 
         <activity
@@ -108,6 +142,7 @@
         <activity
             android:name=".ui.profileEmailEdit.ProfileEmailEditActivity"
 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
@@ -126,14 +161,15 @@
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SearchTheme"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysVisible" />
 
         <activity
             android:name=".ui.dashboard.DashboardActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
 
 
             <intent-filter>
@@ -147,29 +183,36 @@
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="ronaker.com"
-                    android:pathPrefix="/product" />
+                    android:pathPrefix="/product"
+                    android:scheme="https" />
             </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="www.ronaker.com"
-                    android:pathPrefix="/product" />
+                    android:pathPrefix="/product"
+                    android:scheme="https" />
             </intent-filter>
 
 
             <!-- Branch URI scheme -->
             <intent-filter>
-                <data android:scheme="ronaker" android:host="open" />
+                <data
+                    android:host="open"
+                    android:scheme="ronaker" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
@@ -177,32 +220,38 @@
             <!-- Branch App Links -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="ronaker.app.link" />
-            </intent-filter>
 
+                <data
+                    android:host="ronaker.app.link"
+                    android:scheme="https" />
+            </intent-filter>
 
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "ronaker://product” -->
-                <data android:scheme="ronaker"
-                    android:host="product" />
+                <data
+                    android:host="product"
+                    android:scheme="ronaker" />
             </intent-filter>
 
         </activity>
-<!--        <activity-->
-<!--            android:name=".ui.exploreProduct.ExploreProductActivity"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/ProductPreviewTheme"-->
-<!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
+        <!--        <activity-->
+        <!--            android:name=".ui.exploreProduct.ExploreProductActivity"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            android:theme="@style/ProductPreviewTheme"-->
+        <!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
 
         <activity
             android:name=".ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
@@ -210,6 +259,7 @@
             android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
@@ -218,21 +268,23 @@
             android:name=".ui.profileEdit.ProfileEditActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
-
 
 
         <activity
             android:name=".ui.profileSetting.ProfileSettingActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.profileImage.ProfileImageActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
@@ -240,6 +292,7 @@
             android:name=".ui.orderStartRenting.OrderStartRentingActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
@@ -248,12 +301,14 @@
             android:screenOrientation="portrait"
 
             android:theme="@style/PopTheme"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".ui.productRate.ProductRateActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
 
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -261,6 +316,7 @@
         <activity
             android:name=".ui.orderDecline.OrderDeclineActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
 
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -269,6 +325,7 @@
         <activity
             android:name=".ui.productSaved.ProductSavedActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
 
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -278,6 +335,7 @@
             android:name=".ui.profileEmailVerify.ProfileEmailVerifyActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/Transparent"
             android:windowSoftInputMode="adjustResize" />
 
@@ -285,6 +343,7 @@
             android:name=".ui.orderCancel.OrderCancelActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
@@ -293,6 +352,7 @@
             android:name=".ui.addProduct.AddProductActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
@@ -301,6 +361,7 @@
             android:name=".ui.profileIdentify.ProfileIdentifyActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
@@ -308,11 +369,13 @@
             android:name=".ui.phoneNumberValidation.PhoneNumberActivity"
             android:screenOrientation="portrait"
 
+            android:launchMode="singleTask"
             android:theme="@style/phoneNumberTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <activity
             android:name=".ui.imagePicker.ImagePickerActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
 
@@ -345,22 +408,24 @@
         </provider>
 
 
-
         <!-- Branch init -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_pnSHm0Vi1768h8kzrkl3ciacqCm89MHa" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_pnSHm0Vi1768h8kzrkl3ciacqCm89MHa" />
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="true" />
 
 
-
-<!--        &lt;!&ndash; Branch install referrer tracking &ndash;&gt;-->
-<!--        <receiver android:name="io.branch.referral.InstallListener"-->
-<!--            android:permission="android.permission.INSTALL_PACKAGES"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.android.vending.INSTALL_REFERRER" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
+        <!--        &lt;!&ndash; Branch install referrer tracking &ndash;&gt;-->
+        <!--        <receiver android:name="io.branch.referral.InstallListener"-->
+        <!--            android:permission="android.permission.INSTALL_PACKAGES"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="com.android.vending.INSTALL_REFERRER" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
 
 
     </application>

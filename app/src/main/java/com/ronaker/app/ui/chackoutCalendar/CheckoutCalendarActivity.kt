@@ -1,65 +1,75 @@
 package com.ronaker.app.ui.chackoutCalendar
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
-import com.ronaker.app.utils.Alert
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
+import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.finishSafe
+import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
+class CheckoutCalendarActivity : BaseActivity() {
 
 
-class CheckoutCalendarFragment : BaseFragment() {
-
-    private lateinit var binding: com.ronaker.app.databinding.FragmentCheckoutCalendarBinding
+    private lateinit var binding: com.ronaker.app.databinding.ActivityCheckoutCalendarBinding
     private lateinit var viewModel: CheckoutCalendarViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_checkout_calendar, container, false)
+    companion object {
+
+        const val PRODUCT_KEY = "mProduct"
+        const val STARTDATE_KEY = "start_date"
+        const val ENDDATE_KEY = "end_date"
+        const val REQUEST_CODE = 346
 
 
+        fun newInstance(context: Context,
+                        product: Product): Intent {
+            val intent = Intent(context, CheckoutCalendarActivity::class.java)
+            val boundle = Bundle()
+            boundle.putParcelable(PRODUCT_KEY, product)
+            intent.putExtras(boundle)
 
-
-
-
-        return binding.root
+            return intent
+        }
     }
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        AnimationHelper.setSlideTransition(this)
+        super.onCreate(savedInstanceState)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_checkout_calendar)
 
         viewModel = ViewModelProvider(this).get(CheckoutCalendarViewModel::class.java)
+
         binding.viewModel = viewModel
 
 
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
-        viewModel.nextStep.observe(viewLifecycleOwner, Observer {
+        viewModel.nextStep.observe(this, Observer {
 
             //
 
@@ -71,13 +81,13 @@ class CheckoutCalendarFragment : BaseFragment() {
                 viewModel.startDate?.let { date -> intent.putExtra(STARTDATE_KEY, date.time) }
                 viewModel.endDate?.let { date -> intent.putExtra(ENDDATE_KEY, date.time) }
 
-                requireActivity().setResult(Activity.RESULT_OK, intent)
+                this.setResult(Activity.RESULT_OK, intent)
 
 
 
 
 
-                requireActivity().finishSafe()
+                this.finishSafe()
             }
 
 
@@ -93,24 +103,28 @@ class CheckoutCalendarFragment : BaseFragment() {
 
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
-            activity?.finishSafe()
+            finishSafe()
         }
 
 
-        if (arguments?.containsKey(PRODUCT_KEY) == true) {
+        if (intent?.hasExtra(PRODUCT_KEY) == true) {
 
 
             viewModel.loadProduct()
 
 
         } else {
-            activity?.finishSafe()
+            finishSafe()
         }
 
 
         initCalendar()
 
+
+
     }
+
+
 
 
     private fun initCalendar() {
@@ -175,24 +189,7 @@ class CheckoutCalendarFragment : BaseFragment() {
 
 
     fun getProduct(): Product? {
-        return arguments?.getParcelable(PRODUCT_KEY)
+        return intent?.getParcelableExtra(PRODUCT_KEY)
     }
-
-
-    companion object {
-
-        const val PRODUCT_KEY = "mProduct"
-        const val STARTDATE_KEY = "start_date"
-        const val ENDDATE_KEY = "end_date"
-        const val REQUEST_CODE = 346
-
-        fun newBoundle(product: Product): Bundle {
-            val boundle = Bundle()
-            boundle.putParcelable(PRODUCT_KEY, product)
-
-            return boundle
-        }
-    }
-
 
 }

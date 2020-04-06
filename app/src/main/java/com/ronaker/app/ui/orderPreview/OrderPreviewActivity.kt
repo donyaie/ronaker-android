@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.container.ContainerActivity
-import com.ronaker.app.ui.exploreProduct.ExploreProductFragment
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
 import com.ronaker.app.ui.orderCancel.OrderCancelActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
@@ -57,6 +56,30 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
     }
 
+
+    override fun onNewIntent(newIntent: Intent?) {
+        newIntent?.let {
+            val orderId = getCurrentOrderId(intent)
+            val newOrderId = getCurrentOrderId(newIntent)
+
+
+            if (orderId != newOrderId) {
+
+                val intent = Intent(this, OrderPreviewActivity::class.java)
+
+                intent.putExtras(newIntent)
+
+                this.finish()
+                startActivity(intent)
+            }
+        }
+
+        super.onNewIntent(newIntent)
+
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AnimationHelper.setSlideTransition(this)
@@ -83,17 +106,14 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.showProduct.observe(this, Observer { product ->
             startActivityMakeSceneForResult(
-//                ExploreProductActivity.newInstance(this, product, "ds")
+                ExploreProductActivity.newInstance(this, product)
 
-                ContainerActivity.newInstance(
-                    this,
-                    ExploreProductFragment::class.java,
-                    ExploreProductFragment.newBoundle(product)
-                )
                 ,
 
-                ExploreProductFragment.REQUEST_CODE
+                ExploreProductActivity.REQUEST_CODE
             )
+
+
         })
 
 
@@ -218,53 +238,25 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
     }
 
 
+    private fun getCurrentOrderId(intent: Intent?): String? {
+
+        var orderId: String? = null
+        if (intent?.hasExtra(OrderId_KEY) == true) {
+
+            orderId = intent.getStringExtra(OrderId_KEY)
+
+        } else if (intent?.hasExtra(Order_KEY) == true) {
+
+            orderId = intent.getParcelableExtra<Order?>(Order_KEY)?.suid
+
+        }
+
+
+        return orderId
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-
-//        when (requestCode) {
-//
-//            OrderAcceptActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//            ProductRateActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//
-//            OrderDeclineActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//
-//            OrderStartRentingActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//
-//            OrderFinishActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//            OrderCancelActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-
-
-//        }
 
         super.onActivityResult(requestCode, resultCode, data)
     }

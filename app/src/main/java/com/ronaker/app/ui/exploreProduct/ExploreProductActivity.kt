@@ -1,13 +1,12 @@
 package com.ronaker.app.ui.exploreProduct
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -21,11 +20,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarFragment
-import com.ronaker.app.ui.container.ContainerActivity
-import com.ronaker.app.ui.orderMessage.OrderMessageFragment
+import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
+import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
@@ -34,52 +31,105 @@ import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
 import java.util.*
 
+class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
-class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedListener {
 
-    private lateinit var binding: com.ronaker.app.databinding.FragmentProductExploreBinding
+    private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
+
 
 
     private lateinit var googleMap: GoogleMap
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    companion object {
+
+        private val TAG = ExploreProductActivity::class.java.simpleName
+
+        const val REQUEST_CODE = 345
+        const val SUID_KEY = "suid"
+        const val PRODUCT_KEY = "product"
+
+        fun newInstance(context: Context,
+                        product: Product): Intent {
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
+            boundle.putParcelable(PRODUCT_KEY, product)
+
+            intent.putExtras(boundle)
+
+            return intent
+        }
 
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_product_explore, container, false)
+        fun newInstance(context: Context,
+                        suid: String): Intent {
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
+            boundle.putString(SUID_KEY, suid)
+            intent.putExtras(boundle)
+
+            return intent
+        }
+
+
+
+    }
+
+
+
+    override fun onNewIntent(newIntent: Intent?) {
+
+        newIntent?.let {
+
+            val suid=getCurrentSUID(intent)
+            val newSuid=getCurrentSUID(it)
+            if(suid!=newSuid){
+
+                val intent = Intent(this, ExploreProductActivity::class.java)
+
+                intent.putExtras(newIntent)
+
+                this.finish()
+                startActivity(intent)
+
+            }
+
+        }
+
+
+
+        super.onNewIntent(newIntent)
+
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        AnimationHelper.setSlideTransition(this)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
+
+        viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
+
+        binding.viewModel = viewModel
 
 
 
         //calcut image height
-        val screenCalculator = ScreenCalculator(requireContext())
+        val screenCalculator = ScreenCalculator(this)
         binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
 
 
 
-
-        return binding.root
-    }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
-        binding.viewModel = viewModel
-
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
 
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.layoutManager = LinearLayoutManager(this)
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
 
@@ -89,17 +139,17 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
             viewModel.onRefresh()
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.imageList.observe(viewLifecycleOwner, Observer { images ->
+        viewModel.imageList.observe(this, Observer { images ->
 
             binding.avatarSlide.clearImage()
             binding.avatarSlide.addImagesUrl(images)
         })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
@@ -107,7 +157,7 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
                 binding.loading.hideLoading()
         })
 
-        viewModel.loadingComment.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.loadingComment.observe(this, Observer { value ->
             if (value == true) {
                 binding.commentLoading.visibility = View.VISIBLE
                 binding.commentLoading.showLoading()
@@ -115,7 +165,7 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
                 binding.commentLoading.hideLoading()
         })
 
-        viewModel.isFavorite.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.isFavorite.observe(this, Observer { value ->
             if (value == true) {
                 binding.toolbar.action2Src = R.drawable.ic_fave_primery
             } else
@@ -123,12 +173,12 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
         })
 
 
-        viewModel.loadingRefresh.observe(viewLifecycleOwner, Observer { loading ->
+        viewModel.loadingRefresh.observe(this, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
 
         })
 
-        viewModel.retry.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.retry.observe(this, Observer { value ->
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
 
@@ -140,7 +190,7 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
         }
 
         binding.toolbar.cancelClickListener =
-            View.OnClickListener { requireActivity().onBackPressed() }
+            View.OnClickListener { this.onBackPressed() }
 
 
 
@@ -160,7 +210,7 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
         binding.toolbar.action2BouttonClickListener = View.OnClickListener {
 
-            getCurrentSUID()?.let { viewModel.setFavorite(it) }
+            getCurrentSUID(intent)?.let { viewModel.setFavorite(it) }
 
         }
 
@@ -168,22 +218,18 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
-        viewModel.productLocation.observe(viewLifecycleOwner, Observer { suid ->
+        viewModel.productLocation.observe(this, Observer { suid ->
 
             addMarker(suid)
         })
 
-        viewModel.checkout.observe(viewLifecycleOwner, Observer { _ ->
+        viewModel.checkout.observe(this, Observer { _ ->
             viewModel.mProduct?.let {
 
 
-                requireActivity().startActivityMakeSceneForResult(
-                    ContainerActivity.newInstance(
-                        requireContext(),
-                        CheckoutCalendarFragment::class.java,
-                        CheckoutCalendarFragment.newBoundle(it)
-                    )
-                    , CheckoutCalendarFragment.REQUEST_CODE
+                this.startActivityMakeSceneForResult(
+                    CheckoutCalendarActivity.newInstance(this,it)
+                    , CheckoutCalendarActivity.REQUEST_CODE
                 )
 
             }
@@ -196,15 +242,13 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
 
 
-    }
 
+    }
 
     override fun onStart() {
         super.onStart()
 
-
-
-        if ((requireActivity() as BaseActivity).isFistStart()) {
+        if ((this as BaseActivity).isFistStart()) {
 
 
             getSUID()?.let {
@@ -236,14 +280,13 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
             viewModel.onRefresh()
         }
 
-
     }
 
 
     private fun initMap() {
 
         val mapFragment = SupportMapFragment()
-        childFragmentManager
+        supportFragmentManager
             .beginTransaction()
             .replace(R.id.map, mapFragment)
             .commit()
@@ -255,7 +298,7 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
             googleMap = map
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    requireContext(), R.raw.style_json
+                    this, R.raw.style_json
                 )
             )
 
@@ -295,20 +338,19 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
     }
 
-
     private fun getSUID(): String? {
-        return arguments?.getString(SUID_KEY)
+        return intent?.getStringExtra(SUID_KEY)
 
     }
 
 
-    private fun getCurrentSUID(): String? {
+    private fun getCurrentSUID(mIntent:Intent?): String? {
         return when {
-            arguments?.containsKey(SUID_KEY) == true -> {
-                arguments?.getString(SUID_KEY)
+            mIntent?.hasExtra(SUID_KEY) == true -> {
+                mIntent?.getStringExtra(SUID_KEY)
             }
-            arguments?.containsKey(PRODUCT_KEY) == true -> {
-                val p = arguments?.getParcelable(PRODUCT_KEY) as Product?
+            mIntent?.hasExtra(PRODUCT_KEY) == true -> {
+                val p = mIntent?.getParcelableExtra(PRODUCT_KEY) as Product?
                 return p?.suid
             }
             else -> {
@@ -319,41 +361,8 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
 
     fun getProduct(): Product? {
-        return arguments?.getParcelable(PRODUCT_KEY)
+        return intent?.getParcelableExtra(PRODUCT_KEY)
     }
-
-
-    companion object {
-
-
-        const val REQUEST_CODE = 345
-        const val SUID_KEY = "suid"
-        const val PRODUCT_KEY = "product"
-
-
-        fun newBoundle(product: Product): Bundle {
-            val boundle = Bundle()
-            boundle.putParcelable(PRODUCT_KEY, product)
-
-            return boundle
-        }
-
-        private val TAG = ExploreProductFragment::class.java.simpleName
-
-        fun isHavePending(product: Product): Boolean {
-            product.suid?.let { return BaseActivity.isTAGInStack(TAG + it) } ?: run { return false }
-        }
-
-        fun newBoundle(suid: String): Bundle {
-            val boundle = Bundle()
-            boundle.putString(SUID_KEY, suid)
-            return boundle
-        }
-
-
-    }
-
-
 
 
 
@@ -361,20 +370,20 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 
         when (requestCode) {
 
-            CheckoutCalendarFragment.REQUEST_CODE -> {
+            CheckoutCalendarActivity.REQUEST_CODE -> {
                 data?.let {
 
                     if (resultCode == Activity.RESULT_OK) {
 
                         val start =
-                            Date(data.getLongExtra(CheckoutCalendarFragment.STARTDATE_KEY, -1))
-                        val end = Date(data.getLongExtra(CheckoutCalendarFragment.ENDDATE_KEY, -1))
+                            Date(data.getLongExtra(CheckoutCalendarActivity.STARTDATE_KEY, -1))
+                        val end = Date(data.getLongExtra(CheckoutCalendarActivity.ENDDATE_KEY, -1))
 
 
                         Handler().postDelayed({
-//                            requireActivity().startActivityMakeSceneForResult(
+//                            this.startActivityMakeSceneForResult(
 //                                OrderMessageActivity.newInstance(
-//                                    requireContext(),
+//                                    this,
 //                                    getProduct(),
 //                                    start,
 //                                    end
@@ -382,16 +391,15 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
 //                            )
 
 
-                            requireActivity().startActivityMakeSceneForResult(
-                                ContainerActivity.newInstance(
-                                    requireContext(),
-                                    OrderMessageFragment::class.java,
-                                    OrderMessageFragment.newBundle(
-                                        getProduct(),
-                                        start,
-                                        end)
+                            this.startActivityMakeSceneForResult(
+                                OrderMessageActivity.newInstance(
+                                    this,
+                                    getProduct(),
+                                    start,
+                                    end
                                 )
-                                , OrderMessageFragment.REQUEST_CODE
+                                ,
+                                OrderMessageActivity.REQUEST_CODE
                             )
 
 
@@ -401,11 +409,11 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
             }
 
 
-            OrderMessageFragment.REQUEST_CODE -> {
+            OrderMessageActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
 
-                    requireActivity().setResult(Activity.RESULT_OK)
-                    requireActivity().finishSafe()
+                    this.setResult(Activity.RESULT_OK)
+                    this.finishSafe()
                 }
 
 
@@ -470,17 +478,16 @@ class ExploreProductFragment : BaseFragment(), ViewTreeObserver.OnScrollChangedL
             )
 
 
-        buo.generateShortUrl(requireContext(), lp) { url, error ->
+        buo.generateShortUrl(this, lp) { url, error ->
             if (error == null) {
                 Log.i("BRANCH SDK", "got my Branch link to share: $url")
                 it.suid?.let { it1 -> getAnalytics()?.actionShareProduct(it1) }
-                IntentManeger.shareTextUrl(requireContext(), "Share Product:", url)
+                IntentManeger.shareTextUrl(this, "Share Product:", url)
             }
         }
 
-        buo.listOnGoogleSearch(requireContext())
+        buo.listOnGoogleSearch(this)
 
     }
-
 
 }
