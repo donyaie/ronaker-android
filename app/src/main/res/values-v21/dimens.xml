@@ -1,8 +1,0 @@
-<resources>
-   <!--  -->
-
-    <dimen name="statusBarSize">24dp</dimen>
-<!--    <dimen name="statusBarSizeMargin">-25dp</dimen>-->
-    <dimen name="statusBarSizeMargin">0dp</dimen>
-
-</resources>

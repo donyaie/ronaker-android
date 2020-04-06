@@ -2,23 +2,20 @@ package com.ronaker.app.base
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import androidx.core.app.CoreComponentFactory
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.ronaker.app.General
+import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.LocaleHelper
+import io.fabric.sdk.android.Fabric
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.ronaker.app.General
-import com.ronaker.app.R
-import com.ronaker.app.utils.AnimationHelper
-import io.fabric.sdk.android.Fabric
 
 
-abstract class BaseActivity: SwipeBackActivity() {
+abstract class BaseActivity: AppCompatActivity()/* SwipeBackActivity()*/ {
 
 
 
@@ -35,14 +32,14 @@ abstract class BaseActivity: SwipeBackActivity() {
     var activityTag:String?=null
 
    fun setSwipeCloseDisable(){
-       swipeBackLayout.setEnableGesture(false)
+//       swipeBackLayout.setEnableGesture(false)
    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         addActivityStack(this)
-        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
+//        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
         Fabric.with(this, Crashlytics())
 
     }

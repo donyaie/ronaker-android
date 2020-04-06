@@ -95,7 +95,9 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         mProduct = product
         fillProduct(product)
 
-        product.suid?.let { loadProduct(it, false) }
+        product.suid?.let {
+              loadProduct(it, false)
+        }
 
     }
 
@@ -275,11 +277,15 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun onRefresh() {
 
-        suid?.let { loadProduct(it, showLoading = false, refresh = true) }
+        suid?.let {
+                loadProduct(it, showLoading = false, refresh = true)
+        }
     }
 
     fun onRetry() {
-        suid?.let { loadProduct(it, showLoading=true) }
+        suid?.let {
+                loadProduct(it, showLoading = true)
+        }
     }
 
 

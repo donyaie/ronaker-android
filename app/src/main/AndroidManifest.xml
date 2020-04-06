@@ -59,6 +59,17 @@
         </activity>
 
         <activity
+            android:name=".ui.manageProduct.ManageProductActivity"
+            android:screenOrientation="portrait"
+
+            android:launchMode="singleTask"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
+
+        </activity>
+
+
+        <activity
             android:name=".ui.profilePayment.ProfilePaymentActivity"
             android:screenOrientation="portrait"
 

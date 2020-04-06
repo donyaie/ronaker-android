@@ -51,9 +51,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setFadeTransition(this)
-
         super.onCreate(savedInstanceState)
+
+        AnimationHelper.setFadeTransition(this)
+        AnimationHelper.setReenterAnimation(this)
 
         setSwipeCloseDisable()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
@@ -95,7 +96,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     private fun handleIntent(intent: Intent) {
 
-        Branch.getInstance().initSession({ referringParams, error ->
+        Branch.sessionBuilder(this).withCallback { referringParams, error ->
             if (error == null) {
                 AppDebug.log("BRANCH SDK", referringParams.toString())
 
@@ -104,13 +105,13 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                     if (suid.isNotBlank() && viewModel.islogin)
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
 
-
                 }
 
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
-        }, intent.data, this)
+        }.withData( intent.data).init();
+
 
 
     }

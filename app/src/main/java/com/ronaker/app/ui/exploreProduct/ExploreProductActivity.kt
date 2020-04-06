@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -30,13 +31,13 @@ import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
 import java.util.*
+import kotlin.system.measureTimeMillis
 
 class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
-
 
 
     private lateinit var googleMap: GoogleMap
@@ -49,8 +50,10 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         const val SUID_KEY = "suid"
         const val PRODUCT_KEY = "product"
 
-        fun newInstance(context: Context,
-                        product: Product): Intent {
+        fun newInstance(
+            context: Context,
+            product: Product
+        ): Intent {
             val intent = Intent(context, ExploreProductActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
@@ -61,8 +64,10 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         }
 
 
-        fun newInstance(context: Context,
-                        suid: String): Intent {
+        fun newInstance(
+            context: Context,
+            suid: String
+        ): Intent {
             val intent = Intent(context, ExploreProductActivity::class.java)
             val boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
@@ -72,18 +77,16 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         }
 
 
-
     }
-
 
 
     override fun onNewIntent(newIntent: Intent?) {
 
         newIntent?.let {
 
-            val suid=getCurrentSUID(intent)
-            val newSuid=getCurrentSUID(it)
-            if(suid!=newSuid){
+            val suid = getCurrentSUID(intent)
+            val newSuid = getCurrentSUID(it)
+            if (suid != newSuid) {
 
                 val intent = Intent(this, ExploreProductActivity::class.java)
 
@@ -115,132 +118,150 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         binding.viewModel = viewModel
 
 
-
-        //calcut image height
-        val screenCalculator = ScreenCalculator(this)
-        binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
-
-
-
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            Alert.makeTextError(this, errorMessage)
-        })
+        val time = measureTimeMillis {
+            //calcut image height
+            val screenCalculator = ScreenCalculator(this)
+            binding.avatarLayout.layoutParams.height =
+                (screenCalculator.screenWidthPixel * 0.7).toInt()
 
 
 
+            viewModel.errorMessage.observe(this, Observer { errorMessage ->
+                Alert.makeTextError(this, errorMessage)
+            })
 
-        binding.recycler.layoutManager = LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
-
-
-        binding.refreshLayout.setOnRefreshListener {
-
-
-            viewModel.onRefresh()
-        }
-
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage != null) Alert.makeTextError(this, errorMessage)
-        })
-
-        viewModel.imageList.observe(this, Observer { images ->
-
-            binding.avatarSlide.clearImage()
-            binding.avatarSlide.addImagesUrl(images)
-        })
-
-        viewModel.loading.observe(this, Observer { value ->
-            if (value == true) {
-                binding.loading.visibility = View.VISIBLE
-                binding.loading.showLoading()
-            } else
-                binding.loading.hideLoading()
-        })
-
-        viewModel.loadingComment.observe(this, Observer { value ->
-            if (value == true) {
-                binding.commentLoading.visibility = View.VISIBLE
-                binding.commentLoading.showLoading()
-            } else
-                binding.commentLoading.hideLoading()
-        })
-
-        viewModel.isFavorite.observe(this, Observer { value ->
-            if (value == true) {
-                binding.toolbar.action2Src = R.drawable.ic_fave_primery
-            } else
-                binding.toolbar.action2Src = R.drawable.ic_fave_white
-        })
+            binding.recycler.layoutManager = LinearLayoutManager(this)
+            ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
 
-        viewModel.loadingRefresh.observe(this, Observer { loading ->
-            binding.refreshLayout.isRefreshing = loading
-
-        })
-
-        viewModel.retry.observe(this, Observer { value ->
-
-            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
-
-        })
-
-        binding.loading.oClickRetryListener = View.OnClickListener {
-
-            viewModel.onRetry()
-        }
-
-        binding.toolbar.cancelClickListener =
-            View.OnClickListener { this.onBackPressed() }
+            binding.refreshLayout.setOnRefreshListener {
 
 
+                viewModel.onRefresh()
+            }
 
-        binding.toolbar.action1BouttonClickListener = View.OnClickListener {
+            viewModel.errorMessage.observe(this, Observer { errorMessage ->
+                if (errorMessage != null) Alert.makeTextError(this, errorMessage)
+            })
+
+            viewModel.imageList.observe(this, Observer { images ->
+
+                binding.avatarSlide.clearImage()
+                binding.avatarSlide.addImagesUrl(images)
+            })
+
+            viewModel.loading.observe(this, Observer { value ->
+                if (value == true) {
+                    binding.loading.visibility = View.VISIBLE
+                    binding.loading.showLoading()
+                } else
+                    binding.loading.hideLoading()
+            })
+
+            viewModel.loadingComment.observe(this, Observer { value ->
+                if (value == true) {
+                    binding.commentLoading.visibility = View.VISIBLE
+                    binding.commentLoading.showLoading()
+                } else
+                    binding.commentLoading.hideLoading()
+            })
+
+            viewModel.isFavorite.observe(this, Observer { value ->
+                if (value == true) {
+                    binding.toolbar.action2Src = R.drawable.ic_fave_primery
+                } else
+                    binding.toolbar.action2Src = R.drawable.ic_fave_white
+            })
 
 
-            viewModel.mProduct?.let {
+            viewModel.loadingRefresh.observe(this, Observer { loading ->
+                binding.refreshLayout.isRefreshing = loading
 
-                generateShareLink(it)
+            })
+
+            viewModel.retry.observe(this, Observer { value ->
+
+                value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
+
+            })
+
+            binding.loading.oClickRetryListener = View.OnClickListener {
+
+                viewModel.onRetry()
+            }
+
+            binding.toolbar.cancelClickListener =
+                View.OnClickListener { this.onBackPressed() }
+
+
+
+            binding.toolbar.action1BouttonClickListener = View.OnClickListener {
+
+
+                viewModel.mProduct?.let {
+
+                    generateShareLink(it)
+
+                }
+
 
             }
 
 
-        }
 
+            binding.toolbar.action2BouttonClickListener = View.OnClickListener {
 
-
-        binding.toolbar.action2BouttonClickListener = View.OnClickListener {
-
-            getCurrentSUID(intent)?.let { viewModel.setFavorite(it) }
-
-        }
-
-
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
-
-
-        viewModel.productLocation.observe(this, Observer { suid ->
-
-            addMarker(suid)
-        })
-
-        viewModel.checkout.observe(this, Observer { _ ->
-            viewModel.mProduct?.let {
-
-
-                this.startActivityMakeSceneForResult(
-                    CheckoutCalendarActivity.newInstance(this,it)
-                    , CheckoutCalendarActivity.REQUEST_CODE
-                )
+                getCurrentSUID(intent)?.let { viewModel.setFavorite(it) }
 
             }
 
-        })
+
+            binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
+
+
+            viewModel.productLocation.observe(this, Observer { suid ->
+
+                addMarker(suid)
+            })
+
+            viewModel.checkout.observe(this, Observer { _ ->
+                viewModel.mProduct?.let {
+
+
+                    this.startActivityMakeSceneForResult(
+                        CheckoutCalendarActivity.newInstance(this, it)
+                        , CheckoutCalendarActivity.REQUEST_CODE
+                    )
+
+                }
+
+            })
+
+        }
+
+        Log.d(TAG, "event time : $time")
 
 
 
-        initMap()
+
+        Thread(Runnable {
+            try {
+                val mv =
+                    MapView(applicationContext)
+                mv.onCreate(null)
+                mv.onPause()
+                mv.onDestroy()
+            } catch (ignored:Exception) {
+            }
+        }).start()
 
 
+
+        val time2 = measureTimeMillis {
+            initMap()
+        }
+        Log.d(TAG, "map time : $time2")
+//        getData()
 
 
     }
@@ -249,32 +270,12 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         super.onStart()
 
         if ((this as BaseActivity).isFistStart()) {
-
-
-            getSUID()?.let {
-
-                binding.loading.visibility = View.VISIBLE
-                binding.loading.showLoading()
-                viewModel.loadProduct(it, true)
-
+            val time = measureTimeMillis {
+                getData()
             }
 
-            getProduct()?.let {
+            Log.d(TAG, "onStart time : $time")
 
-                binding.loading.visibility = View.GONE
-                binding.loading.hideLoading()
-                viewModel.loadProduct(it)
-
-            }
-
-
-
-
-            Handler().postDelayed({
-                binding.scrollView.smoothScrollTo(0, 0)
-                binding.toolbar.isTransparent = true
-                binding.toolbar.isBottomLine = false
-            }, 500)
 
         } else {
             viewModel.onRefresh()
@@ -283,7 +284,53 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
+    private fun getData() {
+
+
+        getSUID()?.let {
+
+            binding.loading.visibility = View.VISIBLE
+            binding.loading.showLoading()
+
+
+            val time2 = measureTimeMillis {
+
+                viewModel.loadProduct(it, true)
+
+            }
+            Log.d(TAG, "loadProduct getSUID time : $time2")
+
+        }
+
+        getProduct()?.let {
+
+            binding.loading.visibility = View.GONE
+            binding.loading.hideLoading()
+
+
+            val time2 = measureTimeMillis {
+                viewModel.loadProduct(it)
+            }
+
+            Log.d(TAG, "loadProduct getProduct time : $time2")
+
+        }
+
+
+
+
+        Handler().postDelayed({
+            binding.scrollView.smoothScrollTo(0, 0)
+            binding.toolbar.isTransparent = true
+            binding.toolbar.isBottomLine = false
+        }, 500)
+
+    }
+
     private fun initMap() {
+
+
+
 
         val mapFragment = SupportMapFragment()
         supportFragmentManager
@@ -344,13 +391,13 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
-    private fun getCurrentSUID(mIntent:Intent?): String? {
+    private fun getCurrentSUID(mIntent: Intent?): String? {
         return when {
             mIntent?.hasExtra(SUID_KEY) == true -> {
-                mIntent?.getStringExtra(SUID_KEY)
+                mIntent.getStringExtra(SUID_KEY)
             }
             mIntent?.hasExtra(PRODUCT_KEY) == true -> {
-                val p = mIntent?.getParcelableExtra(PRODUCT_KEY) as Product?
+                val p = mIntent.getParcelableExtra(PRODUCT_KEY) as Product?
                 return p?.suid
             }
             else -> {
@@ -363,7 +410,6 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     fun getProduct(): Product? {
         return intent?.getParcelableExtra(PRODUCT_KEY)
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
