@@ -40,7 +40,7 @@ class ProductRateActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_rate)
 
         viewModel = ViewModelProvider(this).get(ProductRateViewModel::class.java)

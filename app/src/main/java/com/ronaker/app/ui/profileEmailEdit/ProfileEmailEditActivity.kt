@@ -37,7 +37,7 @@ class ProfileEmailEditActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_email_edit)
 
         viewModel = ViewModelProvider(this).get(ProfileEmailEditViewModel::class.java)

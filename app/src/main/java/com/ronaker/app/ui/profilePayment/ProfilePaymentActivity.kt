@@ -61,7 +61,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment)
 
         viewModel = ViewModelProvider(this).get(ProfilePaymentViewModel::class.java)

@@ -125,7 +125,7 @@ object SslUtils {
             val ca: Certificate
             try {
                 ca = cf.generateCertificate(caInput)
-                Log.d("SslUtilsAndroid", "ca=" + (ca as X509Certificate).subjectDN)
+                AppDebug.log("SslUtilsAndroid", "ca=" + (ca as X509Certificate).subjectDN)
             } finally {
                 caInput.close()
             }

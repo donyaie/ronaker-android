@@ -40,7 +40,7 @@ class OrderDeclineActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_decline)
 
         viewModel = ViewModelProvider(this).get(OrderDeclineViewModel::class.java)

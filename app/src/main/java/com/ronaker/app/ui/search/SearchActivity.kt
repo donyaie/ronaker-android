@@ -42,7 +42,7 @@ class SearchActivity : BaseActivity() {
         AnimationHelper.setAnimateTransition(this)
 
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)

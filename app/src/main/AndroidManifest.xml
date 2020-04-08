@@ -164,7 +164,7 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
 

@@ -1,22 +1,24 @@
 package com.ronaker.app.utils.view
 
 import android.content.Context
+import android.graphics.Point
 import android.graphics.Typeface
 import android.os.Build
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewParent
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -36,14 +38,17 @@ fun setMutableInputText(view: InputComponent, text: MutableLiveData<String>?) {
 
 
 class InputComponent constructor(context: Context, attrs: AttributeSet) :
-    LinearLayout(context, attrs),
-    View.OnFocusChangeListener {
+    LinearLayout(context, attrs)
+    , View.OnFocusChangeListener {
+
+    private val TAG = InputComponent::class.java.simpleName
 
     enum class AlertType {
         Info,
         Error,
         Success
     }
+
 
     enum class InputMode {
         Editable,
@@ -146,7 +151,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
             counter_text.visibility = if (field > 0) View.VISIBLE else View.GONE
 
 
-            counter_text.text = String.format("0/%d",value)
+            counter_text.text = String.format("0/%d", value)
 
 
         }
@@ -195,7 +200,6 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 InputMode.DropDown -> {
 
 
-
                 }
             }
 
@@ -216,6 +220,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
     var input_view: TextView
 
     lateinit var counter_text: TextView
+
 
     fun addTextChangedListener(watcher: TextWatcher) {
         input_edit.addTextChangedListener(watcher)
@@ -333,7 +338,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
             textChangeValid(editable)
 
-            if (counter > 0) counter_text.text = String.format("%d/%d",editable.length,counter)
+            if (counter > 0) counter_text.text = String.format("%d/%d", editable.length, counter)
 
         }
     }
@@ -366,6 +371,8 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
 
 
+
+
         container_layout = findViewById(R.id.container_layout)
         title_text = findViewById(R.id.title_text)
         input_edit = findViewById(R.id.input_edit)
@@ -381,6 +388,8 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
 
         input_edit.onFocusChangeListener = this
+
+
 
         input_edit.addTextChangedListener(this.watcher)
 
@@ -543,6 +552,8 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
 
 
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
+
+
         if (hasFocus) {
             textChangeValid(input_edit.text)
             input_line.setBackgroundColor(
@@ -552,10 +563,83 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
                 ) else ContextCompat.getColor(context, R.color.colorNavy)
             )
 
+            scrollParentToBottom()
+
         } else {
             textChangeValid(input_edit.text)
             input_line.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPlatinGrey))
         }
+
+        onFocusChangeListener?.onFocusChange(rootView, hasFocus)
+
+    }
+
+
+    private fun scrollParentToBottom() {
+        findNestedScrollViewInParents(parent)?.let { scroll ->
+            scrollToView(scroll, this)
+        }
+
+
+    }
+
+    private fun scrollToView(
+        scrollViewParent: NestedScrollView,
+        view: View
+    ) {
+        // Get deepChild Offset
+        val childOffset = Point()
+        getDeepChildOffset(scrollViewParent, view.parent, view, childOffset)
+        // Scroll to child.
+        scrollViewParent.smoothScrollTo(0, childOffset.y)
+    }
+
+
+    private fun getDeepChildOffset(
+        mainParent: ViewGroup,
+        parent: ViewParent,
+        child: View,
+        accumulatedOffset: Point
+    ) {
+        val parentGroup = parent as ViewGroup
+        accumulatedOffset.x += child.left
+        accumulatedOffset.y += child.top
+        if (parentGroup == mainParent) {
+            return
+        }
+        getDeepChildOffset(mainParent, parentGroup.parent, parentGroup, accumulatedOffset)
+    }
+
+    private fun findNestedScrollViewInParents(parent: ViewParent): NestedScrollView? {
+
+        return when {
+            parent is NestedScrollView -> {
+                parent
+            }
+            parent.parent != null -> {
+                findNestedScrollViewInParents(parent.parent)
+            }
+            else -> {
+                null
+            }
+        }
+
+    }
+
+    private fun findScrollViewInParents(parent: ViewParent): ScrollView? {
+
+        return when {
+            parent is ScrollView -> {
+                parent
+            }
+            parent.parent != null -> {
+                findScrollViewInParents(parent.parent)
+            }
+            else -> {
+                null
+            }
+        }
+
     }
 
 

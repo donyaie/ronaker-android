@@ -65,7 +65,7 @@ class PhoneNumberActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_number)
 
         viewModel = ViewModelProvider(this).get(PhoneNumberViewModel::class.java)

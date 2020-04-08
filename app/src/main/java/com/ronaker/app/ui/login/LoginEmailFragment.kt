@@ -30,7 +30,25 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
         })
 
 
-
+//        binding.emailInput.setOnFocusChangeListener { v, hasFocus ->
+//
+//            if(hasFocus){
+//                binding.scrollView.smoothScrollTo(0, v.bottom+30)
+//            }
+//
+//
+//        }
+//
+//
+//
+//        binding.inviteInput.setOnFocusChangeListener { v, hasFocus ->
+//
+//            if(hasFocus){
+//                binding.scrollView.smoothScrollTo(0, v.bottom+30)
+//            }
+//
+//
+//        }
 
 
         return binding.root

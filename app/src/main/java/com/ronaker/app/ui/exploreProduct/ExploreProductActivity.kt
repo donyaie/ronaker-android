@@ -239,7 +239,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         }
 
-        Log.d(TAG, "event time : $time")
+        AppDebug.log(TAG, "event time : $time")
 
 
 
@@ -260,7 +260,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         val time2 = measureTimeMillis {
             initMap()
         }
-        Log.d(TAG, "map time : $time2")
+        AppDebug.log(TAG, "map time : $time2")
 //        getData()
 
 
@@ -274,7 +274,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 getData()
             }
 
-            Log.d(TAG, "onStart time : $time")
+            AppDebug.log(TAG, "onStart time : $time")
 
 
         } else {
@@ -298,7 +298,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 viewModel.loadProduct(it, true)
 
             }
-            Log.d(TAG, "loadProduct getSUID time : $time2")
+            AppDebug.log(TAG, "loadProduct getSUID time : $time2")
 
         }
 
@@ -312,7 +312,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 viewModel.loadProduct(it)
             }
 
-            Log.d(TAG, "loadProduct getProduct time : $time2")
+            AppDebug.log(TAG, "loadProduct getProduct time : $time2")
 
         }
 
@@ -449,7 +449,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                             )
 
 
-                        }, 100)
+                        }, 200)
                     }
                 }
             }

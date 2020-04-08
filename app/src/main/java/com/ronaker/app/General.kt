@@ -42,7 +42,7 @@ class General : MultiDexApplication() {
         OneSignal.startInit(this)
             .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
             .unsubscribeWhenNotificationsAreDisabled(true)
-            .setNotificationOpenedHandler(AppNotificationOpenedHandler())
+            .setNotificationOpenedHandler(AppNotificationOpenedHandler(this))
             .init()
 
 

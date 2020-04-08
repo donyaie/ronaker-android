@@ -2,6 +2,7 @@ package com.ronaker.app.base
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.crashlytics.android.Crashlytics
@@ -9,14 +10,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.General
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.LocaleHelper
+import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
+import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import io.fabric.sdk.android.Fabric
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-import me.imid.swipebacklayout.lib.SwipeBackLayout
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 
 
-abstract class BaseActivity: AppCompatActivity()/* SwipeBackActivity()*/ {
-
+abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
 
 
     fun getAnalytics(): FirebaseAnalytics? {
@@ -28,12 +28,24 @@ abstract class BaseActivity: AppCompatActivity()/* SwipeBackActivity()*/ {
     }
 
 
+    private val animator: BaseKeyboardAnimator by lazy(LazyThreadSafetyMode.NONE) {
+        SimpleKeyboardAnimator(
+            window
+        )
+    }
 
-    var activityTag:String?=null
 
-   fun setSwipeCloseDisable(){
+    fun enableKeyboardAnimator() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            animator.start()
+        }
+    }
+
+    var activityTag: String? = null
+
+    fun setSwipeCloseDisable() {
 //       swipeBackLayout.setEnableGesture(false)
-   }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -44,57 +56,55 @@ abstract class BaseActivity: AppCompatActivity()/* SwipeBackActivity()*/ {
 
     }
 
-   private var startCount=0
+    private var startCount = 0
 
 
     companion object {
 
-      private  fun addActivityStack(activity:Activity){
-            if(!activityList.contains(activity))
+        private fun addActivityStack(activity: Activity) {
+            if (!activityList.contains(activity))
                 activityList.add(activity)
             refreshActivityStack()
         }
 
-       private fun removeActivityStack(activity:Activity){
-            if(activityList.contains(activity))
+        private fun removeActivityStack(activity: Activity) {
+            if (activityList.contains(activity))
                 activityList.remove(activity)
 
             refreshActivityStack()
         }
 
 
-
-        fun isTAGInStack(tag:String):Boolean{
-            var find=false
+        fun isTAGInStack(tag: String): Boolean {
+            var find = false
             activityList.forEach {
 
-                if(tag .compareTo((it as BaseActivity).activityTag?:"")==0)
-                    find=true
+                if (tag.compareTo((it as BaseActivity).activityTag ?: "") == 0)
+                    find = true
 
             }
             return find
         }
 
-        private fun refreshActivityStack(){
-            val temp=ArrayList<Activity>()
+        private fun refreshActivityStack() {
+            val temp = ArrayList<Activity>()
 
             activityList.forEach {
 
-                if(it.isDestroyed || it.isFinishing)
-                temp.add(it)
+                if (it.isDestroyed || it.isFinishing)
+                    temp.add(it)
             }
 
             temp.forEach {
-                if(activityList.contains(it))
+                if (activityList.contains(it))
                     activityList.remove(it)
-
 
 
             }
 
         }
 
-       private var activityList: ArrayList<Activity> = ArrayList()
+        private var activityList: ArrayList<Activity> = ArrayList()
 
 
     }
@@ -110,9 +120,6 @@ abstract class BaseActivity: AppCompatActivity()/* SwipeBackActivity()*/ {
         startCount += 1
 
 
-
-        
-
     }
 
     override fun finish() {
@@ -122,17 +129,14 @@ abstract class BaseActivity: AppCompatActivity()/* SwipeBackActivity()*/ {
     }
 
 
-    fun isFistStart():Boolean{
-        return startCount<=1
+    fun isFistStart(): Boolean {
+        return startCount <= 1
     }
 
 
-     override fun attachBaseContext(newBase: Context) {
+    override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(LocaleHelper.onAttach(newBase)))
     }
-
-
-
 
 
 }

@@ -3,7 +3,10 @@ package com.ronaker.app.ui.login
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -88,13 +91,15 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
+
+        AnimationHelper.setFadeTransition(this)
+
         setSwipeCloseDisable()
-
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         screenLibrary = ScreenCalculator(this)
@@ -122,6 +127,10 @@ class LoginActivity : BaseActivity() {
 
 
         binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.2).toInt()
+        binding.background.layoutParams.height = (screenLibrary.screenHeightPixel ).toInt()
+        binding.bgCon.layoutParams.height = (screenLibrary.screenHeightPixel ).toInt()
+
+
 
         binding.scrollView.setOnTouchListener { _, _ -> true }
 
@@ -161,6 +170,10 @@ class LoginActivity : BaseActivity() {
         init()
         loginAction = LoginViewModel.LoginActionEnum.register
         loginState = LoginViewModel.LoginStateEnum.home
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
 

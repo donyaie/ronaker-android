@@ -64,7 +64,7 @@ class OrderMessageActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_message)
 
         viewModel = ViewModelProvider(this).get(OrderMessageViewModel::class.java)

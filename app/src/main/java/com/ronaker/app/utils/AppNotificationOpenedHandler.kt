@@ -1,12 +1,14 @@
 package com.ronaker.app.utils
 
+import android.app.Application
 import android.util.Log
 import com.onesignal.OSNotificationAction.ActionType
 import com.onesignal.OSNotificationOpenResult
 import com.onesignal.OneSignal
+import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 
 
-class AppNotificationOpenedHandler : OneSignal.NotificationOpenedHandler{
+class AppNotificationOpenedHandler(private val app: Application) : OneSignal.NotificationOpenedHandler{
     override fun notificationOpened(result: OSNotificationOpenResult?) {
 
 
@@ -14,7 +16,7 @@ class AppNotificationOpenedHandler : OneSignal.NotificationOpenedHandler{
 
             val actionType = result.action.type
             val data = result.notification.payload.additionalData
-            val customKey: String?
+
 
             Log.i(
                 "OSNotificationPayload",
@@ -22,12 +24,18 @@ class AppNotificationOpenedHandler : OneSignal.NotificationOpenedHandler{
             )
 
 
-            if (data != null) {
-                customKey = data.optString("customkey", null)
-                if (customKey != null) Log.i(
-                    "OneSignalExample",
-                    "customkey set with value: $customKey"
-                )
+            if (data != null && data.has("order_suid")) {
+                val orderId:String?=data.optString("order_suid")
+
+                if (orderId != null) {
+
+                    app.startActivity(OrderPreviewActivity.newInstance(app,orderId))
+
+                    Log.i(
+                        "OneSignalExample",
+                        "customkey set with value: $orderId"
+                    )
+                }
             }
 
             if (actionType == ActionType.ActionTaken) Log.i(

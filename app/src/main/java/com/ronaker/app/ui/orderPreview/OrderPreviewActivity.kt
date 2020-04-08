@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderPreview
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -54,6 +55,17 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
             return intent
         }
+
+
+        fun newInstance(context: Application, orderId: String): Intent {
+            val intent = Intent(context, OrderPreviewActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK
+            val boundle = Bundle()
+            boundle.putString(OrderId_KEY, orderId)
+            intent.putExtras(boundle)
+
+            return intent
+        }
     }
 
 
@@ -71,6 +83,12 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
                 this.finish()
                 startActivity(intent)
+            } else if (orderId != null) {
+                try {
+                    viewModel.getOrder(orderId)
+                } catch (ex: Exception) {
+
+                }
             }
         }
 
@@ -201,18 +219,15 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
     override fun onStart() {
         super.onStart()
-//        getOrder()?.suid?.let {
-//
-//
-//            viewModel.getOrder(it)
-//        }
 
-
-        getOrder()?.let { viewModel.getOrder(it.suid) } ?: kotlin.run {
-
-            getOrderId()?.let { ordreId -> viewModel.getOrder(ordreId) }
-
+        if (isFistStart() && getOrder() != null) {
+            getOrder()?.let { viewModel.load(it) }
+        } else {
+            getCurrentOrderId(intent)?.let {
+                viewModel.getOrder(it)
+            }
         }
+
 
 
     }

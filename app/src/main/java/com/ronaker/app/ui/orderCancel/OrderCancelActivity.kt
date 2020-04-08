@@ -40,7 +40,7 @@ class OrderCancelActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_cancel)
 
         viewModel = ViewModelProvider(this).get(OrderCancelViewModel::class.java)

@@ -110,7 +110,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
-        }.withData( intent.data).init();
+        }.withData( intent.data).init()
 
 
 
@@ -119,6 +119,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     override fun onStart() {
         super.onStart()
         if (isFistStart() && viewModel.islogin) {
+            window.setBackgroundDrawableResource(R.color.white)
 
             initNavigation(savedInstanceState)
         }

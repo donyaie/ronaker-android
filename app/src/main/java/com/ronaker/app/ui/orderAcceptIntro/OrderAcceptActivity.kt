@@ -38,9 +38,9 @@ class OrderAcceptActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        AnimationHelper.setSlideTransition(this)
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_accept_intro)
 
         viewModel = ViewModelProvider(this).get(OrderAcceptViewModel::class.java)

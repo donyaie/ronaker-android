@@ -37,7 +37,7 @@ class ProfileNameEditActivity : BaseActivity() {
 
         AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_name_edit)
 
         viewModel = ViewModelProvider(this).get(ProfileNameEditViewModel::class.java)

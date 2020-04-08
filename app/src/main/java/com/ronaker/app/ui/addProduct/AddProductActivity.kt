@@ -160,8 +160,10 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
+
+        AnimationHelper.setSlideTransition(this)
+        enableKeyboardAnimator()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
 
