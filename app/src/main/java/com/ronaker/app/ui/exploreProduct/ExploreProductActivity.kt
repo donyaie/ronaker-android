@@ -295,7 +295,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
             val time2 = measureTimeMillis {
 
-                viewModel.loadProduct(it, true)
+                viewModel.loadProduct(it)
 
             }
             AppDebug.log(TAG, "loadProduct getSUID time : $time2")
@@ -534,6 +534,15 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         buo.listOnGoogleSearch(this)
 
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.avatarImage.setImageResource(0)
+        binding.avatarSlide.clearImage()
+
+        binding.unbind()
     }
 
 }

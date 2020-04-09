@@ -53,9 +53,9 @@
                     android:id="@+id/profile_image"
                     android:scaleType="fitCenter"
 
-                    android:src="@color/colorPlatinGrey"
-
+                    android:background="@drawable/ic_profile"
                     app:mutableImage="@{viewModel.getUserAvatar()}"
+
                     app:riv_corner_radius="36dp" />
 
 

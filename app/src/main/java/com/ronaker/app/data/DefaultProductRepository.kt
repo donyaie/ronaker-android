@@ -100,8 +100,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         suid: String
     ): Observable<Result<Product>> {
         return productApi.getProduct("Token $token", suid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+
+//            .observeOn(AndroidSchedulers.mainThread())
             .map { it.toProductDetail() }
             .toResult()
     }
@@ -113,8 +113,7 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>> {
         return productApi.getProductRate("Token $token", suid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+
             .map {
                 ListResponseModel(it.count, it.next, it.previous, it.results?.toProductRateList())
             }

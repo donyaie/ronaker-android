@@ -10,9 +10,13 @@ import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class OrderListViewModel (app: Application): BaseViewModel(app) {
+class OrderListViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -53,9 +57,15 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
 
 
     }
+    fun getData(filter: String?){
 
+        uiScope.launch {
+            loadData(filter)
+        }
+    }
 
-    fun loadData(filter: String?) {
+    suspend fun loadData(filter: String?)  =
+        withContext(Dispatchers.Default){
 
         mFilter = filter
 
@@ -64,25 +74,27 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
         subscription = orderRepository
             .getOrders(userRepository.getUserToken(), filter)
 
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
             .doOnSubscribe {
-                retry.value = null
-                loading.value = true
+                retry.postValue( null)
+                loading.postValue( true)
 
             }
             .doOnTerminate {
 
-                loading.value = false
+                loading.postValue( false)
 
 
             }
             .subscribe { result ->
                 if (result.isSuccess()) {
                     if ((result.data?.results?.size ?: 0) > 0) {
-                        emptyVisibility.value = View.GONE
+                        emptyVisibility.postValue( View.GONE)
 
                         result.data?.results?.let {
                             dataList.addAll(it)
-                            productListAdapter.notifyDataSetChanged()
+                            productListAdapter.updateList()
                         }
 
                         if (result.data?.next == null)
@@ -92,14 +104,14 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
 
                         if (page == 0) {
 
-                            emptyVisibility.value = View.VISIBLE
+                            emptyVisibility.postValue( View.VISIBLE)
                         }
 
                         hasNextPage = false
                     }
                 } else {
 
-                    retry.value = result.error?.message
+                    retry.postValue( result.error?.message)
                 }
             }
 
@@ -114,7 +126,10 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
 
 
     fun retry() {
-        loadData(mFilter)
+
+        uiScope.launch {
+            loadData(mFilter)
+        }
 
     }
 

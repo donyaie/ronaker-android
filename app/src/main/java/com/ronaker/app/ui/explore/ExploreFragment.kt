@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -59,7 +58,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
         binding.viewModel = viewModel
 
 
-        binding.categoryRecycler?.layoutManager =
+        binding.categoryRecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val mnager = GridLayoutManager(context, count)
@@ -77,7 +76,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
         viewModel.scrollCategoryPosition.observe(viewLifecycleOwner, Observer { position ->
-            binding.categoryRecycler?.scrollToPosition(position)
+            binding.categoryRecycler.scrollToPosition(position)
 
 
         })
@@ -190,7 +189,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             }
         }
 
-        binding.scrollView?.setOnScrollChangeListener { v: NestedScrollView, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
+        binding.scrollView.setOnScrollChangeListener { v: NestedScrollView, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
             if (v.getChildAt(v.childCount - 1) != null) {
                 if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight &&
                     scrollY > oldScrollY
@@ -227,7 +226,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
 
-        binding.categoryRecycler?.addItemDecoration(object : ItemDecoration() {
+        binding.categoryRecycler.addItemDecoration(object : ItemDecoration() {
 
             private val mEndOffset = context?.resources?.getDimensionPixelSize(R.dimen.margin_default)?:0
 
@@ -293,10 +292,6 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-
-    }
 
 
     override fun onDetach() {

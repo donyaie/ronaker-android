@@ -10,9 +10,10 @@ import com.ronaker.app.model.toMediaModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
@@ -52,7 +53,7 @@ class DefaultContentRepository(private val contentApi: ContentApi) : ContentRepo
     }
 
     private fun createRequestBody(file: File): RequestBody {
-        return file.let { RequestBody.create(MediaType.parse("image/*"), it) }
+        return file.asRequestBody("image/*".toMediaTypeOrNull())
     }
 
 //    override fun uploadImage(token: String?, filePath: String): Flowable<Double> {

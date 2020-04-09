@@ -12,13 +12,15 @@ import com.ronaker.app.databinding.AdapterExploreCategoryBinding
 import com.ronaker.app.model.Category
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class CategoryExploreAdapter(
-    dataList: ArrayList<Category>,
+    private val dataList: ArrayList<Category>,
     val listener: AdapterListener?
 ) : RecyclerView.Adapter<CategoryExploreAdapter.ViewHolder>() {
-    private var productList: List<Category> = dataList
+//    private var dataList: ArrayList<Category> = dataList
 
     lateinit var context: Context
     private var lastPosition = -1
@@ -50,7 +52,7 @@ class CategoryExploreAdapter(
         lastPosition = position
 
 
-        holder.bind(productList[position])
+        holder.bind(dataList[position])
     }
 
     fun reset() {
@@ -58,7 +60,7 @@ class CategoryExploreAdapter(
     }
 
     override fun getItemCount(): Int {
-        return productList.size
+        return dataList.size
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -68,9 +70,28 @@ class CategoryExploreAdapter(
 
 
     fun updateList() {
-        notifyDataSetChanged()
+        MainScope().launch {
+            notifyDataSetChanged()
+        }
+    }
+    fun itemChanged(item:Category) {
+        MainScope().launch {
+            notifyItemChanged(dataList.indexOf(item))
+        }
     }
 
+    fun addData(data:ArrayList<Category>) {
+        MainScope().launch {
+            var insertIndex = 0
+            if (dataList.isNotEmpty())
+                insertIndex = dataList.size
+
+            dataList.addAll(data)
+            notifyItemRangeInserted(insertIndex, data.size)
+
+
+        }
+    }
 
     interface AdapterListener {
 

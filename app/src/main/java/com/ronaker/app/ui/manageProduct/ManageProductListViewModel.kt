@@ -9,9 +9,12 @@ import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ManageProductListViewModel (app: Application): BaseViewModel(app) {
+class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -39,13 +42,12 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
-    private  var subscription: Disposable?=null
+    private var subscription: Disposable? = null
 
     init {
         productListAdapter = ManageProductAdapter(dataList)
         reset()
     }
-
 
 
     private fun reset() {
@@ -54,11 +56,12 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
         hasNextPage = true
         dataList.clear()
         productListAdapter.updateproductList()
-        resetList.value = true
+        resetList.postValue( true)
 //        view.getScrollListener().resetState()
     }
 
-    fun loadProduct() {
+  suspend  fun loadProduct()  =
+        withContext(Dispatchers.Default){
 
         if (hasNextPage) {
             page++
@@ -70,11 +73,11 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
                 .doOnTerminate { onRetrieveProductListFinish() }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        if ((result.data?.results?.size?:0) > 0) {
+                        if ((result.data?.results?.size ?: 0) > 0) {
 
 
-                            addNewView.value = true
-                            emptyView.value = false
+                            addNewView.postValue( true)
+                            emptyView.postValue( false)
                             onRetrieveProductListSuccess(
                                 result.data?.results
                             )
@@ -85,8 +88,8 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
                         } else {
 
-                            addNewView.value = false
-                            emptyView.value = true
+                            addNewView.postValue( false)
+                            emptyView.postValue( true)
                         }
                     } else {
                         onRetrieveProductListError(result.error)
@@ -97,39 +100,31 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
 
     private fun onRetrieveProductListStart() {
-        retry.value = null
-        if (page <=1 ) {
-            loading.value = true
+        retry.postValue( null)
+        if (page <= 1) {
+            loading.postValue( true)
 
-            addNewView.value = false
-            emptyView.value = false
+            addNewView.postValue( false)
+            emptyView.postValue( false)
 
         }
-        errorMessage.value = null
+        errorMessage.postValue( null)
     }
 
     private fun onRetrieveProductListFinish() {
-        loading.value = false
+        loading.postValue( false)
 
 
     }
 
     private fun onRetrieveProductListSuccess(productList: List<Product>?) {
 
-//        if (productList != null) {
-//            dataList.addAll(productList)
-//            productListAdapter.updateproductList()
-//        }
 
 
         if (productList != null) {
 
-            var insertIndex=0
-            if(dataList.size>0)
-                insertIndex=dataList.size
+            productListAdapter.addData(productList)
 
-            dataList.addAll(productList)
-            productListAdapter.notifyItemRangeInserted(insertIndex,productList.size )
         }
 
 
@@ -137,10 +132,10 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
     private fun onRetrieveProductListError(error: NetworkError?) {
 
-        if(page<=1)
-            retry.value = error?.message
+        if (page <= 1)
+            retry.postValue( error?.message)
         else
-            errorMessage.value = error?.message
+            errorMessage.postValue( error?.message)
 
     }
 
@@ -152,14 +147,20 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
     fun loadMore() {
 
-        loadProduct()
+
+        uiScope.launch {
+            loadProduct()
+        }
 
     }
 
-    fun retry(){
+    fun retry() {
 
         reset()
-        loadProduct()
+
+        uiScope.launch {
+            loadProduct()
+        }
     }
 
 }

@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -55,6 +58,11 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         AnimationHelper.setFadeTransition(this)
         AnimationHelper.setReenterAnimation(this)
+
+
+
+
+//        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         setSwipeCloseDisable()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)

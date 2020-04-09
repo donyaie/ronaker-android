@@ -9,6 +9,8 @@ import com.ronaker.app.databinding.AdapterOrdreItemBinding
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class OrderItemAdapter(dataList: ArrayList<Order>) : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
     private  var datalist:List<Order> = dataList
@@ -28,8 +30,11 @@ class OrderItemAdapter(dataList: ArrayList<Order>) : RecyclerView.Adapter<OrderI
         return  datalist.size
     }
 
-    fun updateproductList(){
-        notifyDataSetChanged()
+    fun updateList(){
+        MainScope().launch {
+
+            notifyDataSetChanged()
+        }
     }
 
     class ViewHolder(

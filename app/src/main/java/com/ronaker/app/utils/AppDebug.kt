@@ -12,7 +12,8 @@ object AppDebug {
         Message?.let {
             if (BuildConfig.DEBUG)
                 Log.d(TAG, it)
-            Crashlytics.log(Log.DEBUG, TAG, it)
+            else
+                Crashlytics.log(Log.DEBUG, TAG, it)
         }
     }
 
@@ -31,15 +32,16 @@ object AppDebug {
 
         if (BuildConfig.DEBUG)
             Log.e(TAG, message1)
-
-        Crashlytics.log(Log.DEBUG, TAG, message1)
+        else
+            Crashlytics.log(Log.DEBUG, TAG, message1)
 
 
         ex?.let {
 
             if (BuildConfig.DEBUG)
                 it.printStackTrace()
-            Crashlytics.logException(ex)
+            else
+                Crashlytics.logException(ex)
         }
     }
 

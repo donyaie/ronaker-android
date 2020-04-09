@@ -65,23 +65,23 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
                     cancelButton.visibility = View.VISIBLE
 
-
-                    cancelButton.setImageResource(R.drawable.ic_back_white)
+//                    cancelButton.setImageResource(R.drawable.ic_back_white)
 
                     if (isTransparent)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,R.drawable.ic_back_white, R.color.colorIconLight, cancelButton)
                     else
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,R.drawable.ic_back_white, R.color.colorIconDark, cancelButton)
 
                 }
                 CancelContainer.CLOSE -> {
 
                     cancelButton.visibility = View.VISIBLE
-                    cancelButton.setImageResource(R.drawable.ic_close)
+//                    cancelButton.setImageResource(R.drawable.ic_close)
                     if (isTransparent)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,R.drawable.ic_close, R.color.colorIconLight, cancelButton)
+
                     else {
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,R.drawable.ic_close, R.color.colorIconDark, cancelButton)
 
                     }
                 }
@@ -128,22 +128,22 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                     action2Button.setImageResource(0)
 
 
-                    action1Button.setImageResource(action1Src)
-                    action2Button.setImageResource(action2Src)
+//                    action1Button.setImageResource(action1Src)
+//                    action2Button.setImageResource(action2Src)
 
 
 
                     if (isTransparent) {
 
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, action1Button)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, action2Button)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,action1Src, R.color.colorIconLight, action1Button)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,action2Src, R.color.colorIconLight, action2Button)
 
 
 
                     } else {
 
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, action1Button)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, action2Button)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,action1Src, R.color.colorIconDark, action1Button)
+                        ShapeDrawableHelper.changeSvgDrawableColor(context,action2Src, R.color.colorIconDark, action2Button)
 
 
                     }

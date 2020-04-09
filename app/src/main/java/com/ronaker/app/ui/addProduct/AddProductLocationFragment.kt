@@ -217,7 +217,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
     fun chech(move: Boolean) {
-        Dexter.withActivity(activity)
+        Dexter.withContext(activity)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION

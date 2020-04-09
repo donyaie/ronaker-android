@@ -104,7 +104,7 @@ class ProfileImageActivity : BaseActivity() {
 
 
     private fun onProfileImageClick() {
-        Dexter.withActivity(this)
+        Dexter.withContext(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionRationaleShouldBeShown(

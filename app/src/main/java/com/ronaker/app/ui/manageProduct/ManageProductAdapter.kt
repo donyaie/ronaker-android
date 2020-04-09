@@ -9,9 +9,11 @@ import com.ronaker.app.databinding.AdapterManageProductBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
-class ManageProductAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<ManageProductAdapter.ViewHolder>() {
-    private  var productList:List<Product> = dataList
+class ManageProductAdapter( val dataList: ArrayList<Product>) : RecyclerView.Adapter<ManageProductAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: AdapterManageProductBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_manage_product, parent, false)
@@ -21,16 +23,33 @@ class ManageProductAdapter(dataList: ArrayList<Product>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(productList[position])
+        holder.bind(this.dataList[position])
     }
 
     override fun getItemCount(): Int {
-        return productList.size
+        return this.dataList.size
     }
 
     fun updateproductList(){
-        notifyDataSetChanged()
+        MainScope().launch {
+            notifyDataSetChanged()
+        }
     }
+
+
+    fun addData(data:List<Product>) {
+        MainScope().launch {
+            var insertIndex = 0
+            if (dataList.isNotEmpty())
+                insertIndex = dataList.size
+
+            dataList.addAll(data)
+            notifyItemRangeInserted(insertIndex, data.size)
+
+
+        }
+    }
+
 
     class ViewHolder(
         private val binding: AdapterManageProductBinding

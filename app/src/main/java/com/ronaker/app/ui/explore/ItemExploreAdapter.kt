@@ -12,19 +12,25 @@ import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class ItemExploreAdapter(
-    dataList: ArrayList<Product>
+   val dataList: ArrayList<Product>
 ) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
-    private  var productList:List<Product> = dataList
 
-   lateinit var context:Context
-    private var lastPosition=-1
+    lateinit var context: Context
+    private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterExploreItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_explore_item, parent, false)
-        context=parent.context
+        val binding: AdapterExploreItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.adapter_explore_item,
+            parent,
+            false
+        )
+        context = parent.context
 
         return ViewHolder(binding)
     }
@@ -44,15 +50,15 @@ class ItemExploreAdapter(
         lastPosition = position
 
 
-        holder.bind(productList[position])
+        holder.bind(dataList[position])
     }
 
-    fun reset(){
-        lastPosition=-1
+    fun reset() {
+        lastPosition = -1
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return dataList.size
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -61,18 +67,34 @@ class ItemExploreAdapter(
     }
 
 
-    fun updateList(){
-        notifyDataSetChanged()
+    fun updateList() {
+        MainScope().launch {
+            notifyDataSetChanged()
+        }
+    }
+
+
+    fun addData(data:List<Product>) {
+        MainScope().launch {
+            var insertIndex = 0
+            if (dataList.isNotEmpty())
+                insertIndex = dataList.size
+
+            dataList.addAll(data)
+            notifyItemRangeInserted(insertIndex, data.size)
+
+
+        }
     }
 
     class ViewHolder(
         private val binding: AdapterExploreItemBinding
-    ):RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = ItemExploreViewModel(binding.root.getApplication())
 
-        fun bind(product:Product){
-            viewModel.bind(product,binding,binding.root.getParentActivity())
+        fun bind(product: Product) {
+            viewModel.bind(product, binding, binding.root.getParentActivity())
             binding.viewModel = viewModel
         }
 

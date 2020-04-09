@@ -2,7 +2,6 @@ package com.ronaker.app.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import okhttp3.OkHttpClient
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -20,46 +19,46 @@ object SslUtils {
     //openssl s_client -showcerts -connect myserver.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > app/main/assets/my_service_certifcate.pem
     private val TAG = SslUtils::class.java.name
 
-    fun getUnsafeOkHttpClientAll(): OkHttpClient {
-        try {
-            // Create a trust manager that does not validate certificate chains
-            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-
-                override fun getAcceptedIssuers(): Array<X509Certificate> {
-
-                    return arrayOf()
-                }
-
-
-                @SuppressLint("TrustAllX509TrustManager")
-                override fun checkClientTrusted(p0: Array<out X509Certificate>?, p1: String?) {
-
-                }
-
-                @SuppressLint("TrustAllX509TrustManager")
-                override fun checkServerTrusted(p0: Array<out X509Certificate>?, p1: String?) {
-
-                }
-
-            })
-
-            // Install the all-trusting trust manager
-            val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, SecureRandom())
-
-            // Create an ssl socket factory with our all-trusting manager
-            val sslSocketFactory = sslContext.socketFactory
-
-            val builder = OkHttpClient.Builder()
-            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
-            builder.hostnameVerifier { _, _ -> true }
-
-            return builder.build()
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
-
-    }
+//    fun getUnsafeOkHttpClientAll(): OkHttpClient {
+//        try {
+//            // Create a trust manager that does not validate certificate chains
+//            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+//
+//                override fun getAcceptedIssuers(): Array<X509Certificate> {
+//
+//                    return arrayOf()
+//                }
+//
+//
+//                @SuppressLint("TrustAllX509TrustManager")
+//                override fun checkClientTrusted(p0: Array<out X509Certificate>?, p1: String?) {
+//
+//                }
+//
+//                @SuppressLint("TrustAllX509TrustManager")
+//                override fun checkServerTrusted(p0: Array<out X509Certificate>?, p1: String?) {
+//
+//                }
+//
+//            })
+//
+//            // Install the all-trusting trust manager
+//            val sslContext = SSLContext.getInstance("SSL")
+//            sslContext.init(null, trustAllCerts, SecureRandom())
+//
+//            // Create an ssl socket factory with our all-trusting manager
+//            val sslSocketFactory = sslContext.socketFactory
+//
+//            val builder = OkHttpClient.Builder()
+//            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+//            builder.hostnameVerifier { _, _ -> true }
+//
+//            return builder.build()
+//        } catch (e: Exception) {
+//            throw RuntimeException(e)
+//        }
+//
+//    }
 
 
     // Create a trust manager that does not validate certificate chains

@@ -5,9 +5,11 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.General
+import com.ronaker.app.R
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.LocaleHelper
 import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
@@ -41,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
         }
     }
 
-    var activityTag: String? = null
+//    var activityTag: String? = null
 
     fun setSwipeCloseDisable() {
 //       swipeBackLayout.setEnableGesture(false)
@@ -50,9 +52,13 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        addActivityStack(this)
+//        addActivityStack(this)
 //        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
         Fabric.with(this, Crashlytics())
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black))
+
 
     }
 
@@ -60,58 +66,58 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
 
 
     companion object {
+//
+//        private fun addActivityStack(activity: Activity) {
+//            if (!activityList.contains(activity))
+//                activityList.add(activity)
+//            refreshActivityStack()
+//        }
+//
+//        private fun removeActivityStack(activity: Activity) {
+//            if (activityList.contains(activity))
+//                activityList.remove(activity)
+//
+//            refreshActivityStack()
+//        }
 
-        private fun addActivityStack(activity: Activity) {
-            if (!activityList.contains(activity))
-                activityList.add(activity)
-            refreshActivityStack()
-        }
+//
+//        fun isTAGInStack(tag: String): Boolean {
+//            var find = false
+//            activityList.forEach {
+//
+//                if (tag.compareTo((it as BaseActivity).activityTag ?: "") == 0)
+//                    find = true
+//
+//            }
+//            return find
+//        }
 
-        private fun removeActivityStack(activity: Activity) {
-            if (activityList.contains(activity))
-                activityList.remove(activity)
-
-            refreshActivityStack()
-        }
-
-
-        fun isTAGInStack(tag: String): Boolean {
-            var find = false
-            activityList.forEach {
-
-                if (tag.compareTo((it as BaseActivity).activityTag ?: "") == 0)
-                    find = true
-
-            }
-            return find
-        }
-
-        private fun refreshActivityStack() {
-            val temp = ArrayList<Activity>()
-
-            activityList.forEach {
-
-                if (it.isDestroyed || it.isFinishing)
-                    temp.add(it)
-            }
-
-            temp.forEach {
-                if (activityList.contains(it))
-                    activityList.remove(it)
-
-
-            }
-
-        }
-
-        private var activityList: ArrayList<Activity> = ArrayList()
+//        private fun refreshActivityStack() {
+//            val temp = ArrayList<Activity>()
+//
+//            activityList.forEach {
+//
+//                if (it.isDestroyed || it.isFinishing)
+//                    temp.add(it)
+//            }
+//
+//            temp.forEach {
+//                if (activityList.contains(it))
+//                    activityList.remove(it)
+//
+//
+//            }
+//
+//        }
+//
+//        private var activityList: ArrayList<Activity> = ArrayList()
 
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        removeActivityStack(this)
+//        removeActivityStack(this)
 
     }
 
