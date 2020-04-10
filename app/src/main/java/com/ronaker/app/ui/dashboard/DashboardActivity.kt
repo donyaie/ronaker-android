@@ -56,8 +56,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.setFadeTransition(this)
-        AnimationHelper.setReenterAnimation(this)
 
 
 

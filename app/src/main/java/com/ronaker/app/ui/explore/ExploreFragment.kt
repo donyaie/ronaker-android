@@ -31,7 +31,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
     private lateinit var viewModel: ExploreViewModel
 
-    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+//    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -149,7 +149,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
         })
 
         viewModel.resetList.observe(viewLifecycleOwner, Observer {
-            scrollListener.resetState()
+//            scrollListener.resetState()
         })
 
 
@@ -166,28 +166,28 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         }
 //
-        scrollListener = object : EndlessRecyclerViewScrollListener(mnager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-
-                viewModel.loadMore()
-
-
-            }
-
-            override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(view, dx, dy)
-
-
-
-                if (!view.canScrollVertically(-1)) {
-
-                    binding.header.cardElevation = 0f
-                } else {
-                    binding.header.cardElevation = 10f
-                }
-
-            }
-        }
+//        scrollListener = object : EndlessRecyclerViewScrollListener(mnager) {
+//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+//
+//                viewModel.loadMore()
+//
+//
+//            }
+//
+//            override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(view, dx, dy)
+//
+//
+//
+//                if (!view.canScrollVertically(-1)) {
+//
+//                    binding.header.elevation = 0f
+//                } else {
+//                    binding.header.elevation = 10f
+//                }
+//
+//            }
+//        }
 
         binding.scrollView.setOnScrollChangeListener { v: NestedScrollView, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
             if (v.getChildAt(v.childCount - 1) != null) {
@@ -208,9 +208,9 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
                 if (!v.canScrollVertically(-1)) {
 
-                    binding.header.cardElevation = 0f
+                    binding.header.elevation = 0f
                 } else {
-                    binding.header.cardElevation = 10f
+                    binding.header.elevation = 10f
                 }
 
 

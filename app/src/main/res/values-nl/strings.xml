@@ -22,8 +22,6 @@
     <string name="lbl_take_camera_picture">Maak een foto</string>
     <string name="password_hint">Voer uw wachtwoord in</string>
     <string name="password_title">Wachtwoord</string>
-    <string name="post_error">Er is een fout opgetreden bij het laden van de berichten</string>
-    <string name="retry">Opnieuw</string>
     <string name="text_complete_your_profile">Voltooi uw profiel</string>
     <string name="text_lend_canceled">Lenen | Geannuleerde bestelling</string>
     <string name="text_lend_complete">Lenen | Voltooide bestelling</string>
@@ -45,19 +43,15 @@
     <string name="text_you_have_not_any_order_hear">U heeft hier geen bestelling</string>
     <string name="titile_button_login">Log in</string>
     <string name="titile_button_login_to_your_account">Log in op jouw account</string>
-    <string name="titile_sign_up">Aanmelden</string>
     <string name="title_active">Actief</string>
     <string name="title_add_a_identity_document">Voeg een identiteitsdocument toe</string>
     <string name="title_add_a_payment_method">Voeg een Betalingsmethode toe</string>
-    <string name="title_add_a_payment_method_edit">Wijzig uw betaalmethode</string>
     <string name="title_add_and_verify_phone_number">Telefoonnummer toevoegen en verifiëren</string>
-    <string name="title_add_and_verify_phone_number_edit">Wijzig en verifieer nieuw telefoonnummer</string>
     <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Voeg enkele afbeeldingen van uw item toe. gebruik een duidelijk beeld vanuit de juiste hoek …</string>
     <string name="title_add_images_of_item">Afbeeldingen van item toevoegen</string>
     <string name="title_add_item">+ Item toevoegen</string>
     <string name="title_add_new_image">Nieuwe afbeelding toevoegen</string>
     <string name="title_add_profile_image">Profielafbeelding toevoegen</string>
-    <string name="title_add_profile_image_edit">Wijzig profielafbeelding</string>
     <string name="title_all">Allemaal</string>
     <string name="title_and_what_s_your_name">En wat is jouw naam?</string>
     <string name="title_archive">Archief</string>
@@ -99,7 +93,6 @@
     <string name="title_name_and_description">Naam en omschrijving</string>
     <string name="title_notification">Meldingen</string>
     <string name="title_order">bestellingen</string>
-    <string name="title_payment">Betaling</string>
     <string name="title_per_day">Per dag</string>
     <string name="title_per_month">Per maand</string>
     <string name="title_per_week">Per week</string>
@@ -108,8 +101,6 @@
     <string name="title_please_enter_your_phone">Voer uw telefoon in</string>
     <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Voer de gevraagde prijs in voor het verhuren van het artikel.</string>
     <string name="title_please_upload_one_of_your_identity_document_to_authentication">Upload een van uw identiteitsdocument naar verificatie.</string>
-    <string name="title_positive_rate">positief cijfer</string>
-    <string name="title_profile">Profiel</string>
     <string name="title_renting">Het huren</string>
     <string name="title_resend">Opnieuw verzenden</string>
     <string name="title_return_day">Terugkeer dag</string>

@@ -18,7 +18,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
                 app:riv_corner_radius="3dp"
                 android:layout_width="match_parent"
-                android:background="@drawable/background_image_corner"
+                android:src="@drawable/background_image_corner"
 
 
                    app:layout_constraintTop_toTopOf="parent"

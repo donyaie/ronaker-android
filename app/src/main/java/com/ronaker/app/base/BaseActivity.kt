@@ -38,9 +38,8 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
 
 
     fun enableKeyboardAnimator() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             animator.start()
-        }
+
     }
 
 //    var activityTag: String? = null
@@ -130,8 +129,10 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
 
     override fun finish() {
 
-        AnimationHelper.setAnimateTransition(this)
         super.finish()
+        AnimationHelper.setEndSlideTransition(this)
+
+
     }
 
 

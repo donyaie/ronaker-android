@@ -21,21 +21,45 @@
         android:layout_width="match_parent"
         android:layout_height="48dp">
 
-        <ImageButton
+        <RelativeLayout
             android:id="@+id/cancel_button"
-            android:layout_width="56dp"
-            android:background="?attr/selectableItemBackground"
-            android:layout_height="48dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:contentDescription="@string/text_content"
-            android:padding="16dp"
-            android:tint="@color/white"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back_white" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/cancelDark_image"
+                android:layout_width="56dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/text_content"
+
+                android:padding="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:tint="@color/colorIconDark"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_back_white" />
+
+            <ImageView
+                android:id="@+id/cancelLite_image"
+                android:layout_width="56dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/text_content"
+
+                android:padding="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:tint="@color/colorIconLight"
+                app:srcCompat="@drawable/ic_back_white" />
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -69,42 +93,79 @@
             android:orientation="horizontal"
             app:layout_constraintRight_toRightOf="parent">
 
-
-            <ImageButton
-
+            <RelativeLayout
                 android:id="@+id/action1_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:contentDescription="@string/text_content"
-                android:padding="15dp"
-                android:tint="@color/white"
-                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_share_white" />
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:background="?attr/selectableItemBackground"
+                <ImageView
+
+                    android:id="@+id/action1Light_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/text_content"
+                    android:padding="15dp"
+                    android:tint="@color/colorIconLight"
+                    app:srcCompat="@drawable/ic_share_white" />
+
+                <ImageView
+
+                    android:id="@+id/action1Dark_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/text_content"
+                    android:padding="15dp"
+                    android:tint="@color/colorIconDark"
+                    app:srcCompat="@drawable/ic_share_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/action2_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="@string/text_content"
-                android:padding="15dp"
-                android:tint="@color/white"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_fave_white" />
+                app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/action2Light_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/text_content"
+                    android:padding="15dp"
+                    android:tint="@color/colorIconLight"
+                    app:srcCompat="@drawable/ic_fave_white" />
+
+
+                <ImageView
+                    android:id="@+id/action2Dark_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/text_content"
+                    android:padding="15dp"
+                    android:tint="@color/colorIconDark"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_fave_white" />
+            </RelativeLayout>
 
             <Button
-                android:background="?attr/selectableItemBackground"
                 android:id="@+id/action_text"
                 android:layout_width="wrap_content"
-
                 android:layout_height="match_parent"
+
+                android:background="?attr/selectableItemBackground"
                 android:gravity="end|center_vertical"
 
                 android:minWidth="67dp"
