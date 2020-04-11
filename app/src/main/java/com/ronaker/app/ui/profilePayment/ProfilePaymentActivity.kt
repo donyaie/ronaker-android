@@ -3,7 +3,6 @@ package com.ronaker.app.ui.profilePayment
 //import io.card.payment.CardIOActivity
 //import io.card.payment.CreditCard
 import android.Manifest
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
@@ -28,8 +27,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -59,7 +56,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment)
@@ -86,7 +83,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
         viewModel.goNext.observe(this, Observer {
-            finishSafe()
+            finish()
         })
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)

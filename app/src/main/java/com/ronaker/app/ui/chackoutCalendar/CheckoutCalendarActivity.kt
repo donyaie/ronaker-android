@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,10 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.savvi.rangedatepicker.CalendarPickerView
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -51,8 +46,6 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        AnimationHelper.setSlideTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_checkout_calendar)
@@ -87,7 +80,7 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
 
-                this.finishSafe()
+                this.finish()
             }
 
 
@@ -103,7 +96,7 @@ class CheckoutCalendarActivity : BaseActivity() {
 
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
-            finishSafe()
+            finish()
         }
 
 
@@ -114,7 +107,7 @@ class CheckoutCalendarActivity : BaseActivity() {
 
 
         } else {
-            finishSafe()
+            finish()
         }
 
 

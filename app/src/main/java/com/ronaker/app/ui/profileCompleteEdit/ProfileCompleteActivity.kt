@@ -13,11 +13,8 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
-import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
-import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.extension.setEndDrawableRes
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileCompleteActivity : BaseActivity() {
@@ -41,7 +38,7 @@ class ProfileCompleteActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_complete)
@@ -156,7 +153,7 @@ class ProfileCompleteActivity : BaseActivity() {
         binding.identityLayout.setOnClickListener {
 
 
-            startActivityMakeScene(ProfileIdentifyActivity.newInstance(this))
+            startActivity(ProfileIdentifyActivity.newInstance(this))
 
 
         }
@@ -171,19 +168,19 @@ class ProfileCompleteActivity : BaseActivity() {
         binding.imageLayout.setOnClickListener {
 
 
-            startActivityMakeScene(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
+            startActivity(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
         }
 
         binding.phoneLayout.setOnClickListener {
 
 
-            startActivityMakeScene(PhoneNumberActivity.newInstance(this))
+            startActivity(PhoneNumberActivity.newInstance(this))
 
         }
 
         binding.paymentLayout.setOnClickListener {
 
-            startActivityMakeScene(ProfilePaymentListActivity.newInstance(this))
+            startActivity(ProfilePaymentListActivity.newInstance(this))
 
         }
 

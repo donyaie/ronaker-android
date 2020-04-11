@@ -25,8 +25,6 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.*
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
@@ -110,7 +108,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.setSlideTransition(this)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
 
         viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
@@ -228,7 +226,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 viewModel.mProduct?.let {
 
 
-                    this.startActivityMakeSceneForResult(
+                    this.startActivityForResult(
                         CheckoutCalendarActivity.newInstance(this, it)
                         , CheckoutCalendarActivity.REQUEST_CODE
                     )
@@ -437,7 +435,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //                            )
 
 
-                            this.startActivityMakeSceneForResult(
+                            this.startActivityForResult(
                                 OrderMessageActivity.newInstance(
                                     this,
                                     getProduct(),
@@ -459,7 +457,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 if (resultCode == Activity.RESULT_OK) {
 
                     this.setResult(Activity.RESULT_OK)
-                    this.finishSafe()
+                    this.finish()
                 }
 
 

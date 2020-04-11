@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
 
 class OrderCancelActivity : BaseActivity() {
 
@@ -38,7 +36,7 @@ class OrderCancelActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_cancel)
@@ -71,13 +69,13 @@ class OrderCancelActivity : BaseActivity() {
 
         viewModel.finish.observe(this, Observer {
             setResult(Activity.RESULT_OK)
-            finishSafe()
+            finish()
         })
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
-            finishSafe()
+            finish()
         }
 
 

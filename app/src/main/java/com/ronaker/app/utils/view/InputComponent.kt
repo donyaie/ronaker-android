@@ -164,9 +164,6 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         }
 
     var inputValidationMode: InputValidationMode = InputValidationMode.NONE
-        set(value) {
-            field = value
-        }
 
 
     var autofillHints: String? = null
@@ -234,7 +231,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         set(value) {
             field = value
 
-            title_text.setText(value)
+            title_text.text = value
         }
 
 
@@ -272,7 +269,7 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
             field = value
 
             input_edit.setText(value)
-            input_view.setText(value)
+            input_view.text = value
         }
         get() {
             return input_edit.text.toString()
@@ -282,8 +279,8 @@ class InputComponent constructor(context: Context, attrs: AttributeSet) :
         set(value) {
             field = value
 
-            input_edit.setHint(value)
-            input_view.setHint(value)
+            input_edit.hint = value
+            input_view.hint = value
         }
     var is_alert: Boolean = true
         set(value) {

@@ -3,6 +3,8 @@ package com.ronaker.app.ui.dashboard
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -52,17 +54,15 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     var savedInstanceState: Bundle? = null
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
-
-
-
-
-//        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-
         setSwipeCloseDisable()
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
@@ -73,6 +73,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             if (value == true) {
 
                 startActivity(LoginActivity.newInstance(this@DashboardActivity))
+                AnimationHelper.setFadeTransition(this)
                 finish()
 
             }
@@ -92,6 +93,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     }
+
+
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -125,7 +128,9 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     override fun onStart() {
         super.onStart()
         if (isFistStart() && viewModel.islogin) {
-            window.setBackgroundDrawableResource(R.color.white)
+
+            window.setBackgroundDrawable( ColorDrawable(Color.WHITE))
+
 
             initNavigation(savedInstanceState)
         }
@@ -293,6 +298,11 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         mainListener[fragment] = listener
 
+    }
+
+    override fun finish() {
+        super.finish()
+        AnimationHelper.clearTransition(this)
     }
 
 

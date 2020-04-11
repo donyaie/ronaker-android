@@ -18,7 +18,4 @@ data class UserInfoResponceModel(
 
 
 
-){
-
-
-}
+)

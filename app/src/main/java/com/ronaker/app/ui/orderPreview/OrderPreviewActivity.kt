@@ -22,9 +22,6 @@ import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 
 class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -100,7 +97,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_preview)
@@ -123,7 +120,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.showProduct.observe(this, Observer { product ->
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 ExploreProductActivity.newInstance(this, product)
 
                 ,
@@ -146,14 +143,14 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.acceptIntro.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderAcceptActivity.newInstance(this, viewModel.getOrder()),
                 OrderAcceptActivity.REQUEST_CODE
             )
         })
 
         viewModel.declineIntro.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderDeclineActivity.newInstance(this, viewModel.getOrder()),
                 OrderDeclineActivity.REQUEST_CODE
             )
@@ -161,7 +158,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.cancelDialog.observe(this, Observer {
 
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderCancelActivity.newInstance(this, viewModel.getOrder()),
                 OrderCancelActivity.REQUEST_CODE
             )
@@ -170,7 +167,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.startRenting.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderStartRentingActivity.newInstance(this, viewModel.getOrder()),
                 OrderStartRentingActivity.REQUEST_CODE
             )
@@ -179,7 +176,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.startRate.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 ProductRateActivity.newInstance(this, viewModel.getOrder()),
                 ProductRateActivity.REQUEST_CODE
             )
@@ -187,7 +184,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.finishIntro.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderFinishActivity.newInstance(this, viewModel.getOrder()),
                 OrderFinishActivity.REQUEST_CODE
             )
@@ -196,13 +193,13 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.finish.observe(this, Observer {
-            finishSafe()
+            finish()
         })
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
-            finishSafe()
+            finish()
         }
 
 
@@ -268,12 +265,6 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         return orderId
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onScrollChanged() {

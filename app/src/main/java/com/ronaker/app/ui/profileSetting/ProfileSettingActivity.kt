@@ -14,7 +14,6 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.utils.*
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileSettingActivity : BaseActivity() {
@@ -39,7 +38,7 @@ class ProfileSettingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_setting)
@@ -129,7 +128,8 @@ class ProfileSettingActivity : BaseActivity() {
             dialog?.cancel()
             viewModel.logout()
             getAnalytics()?.actionLogout()
-            startActivityMakeScene(DashboardActivity.newInstance(this) )
+            startActivity(DashboardActivity.newInstance(this) )
+            AnimationHelper.setFadeTransition(this)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))
         { dialog, _ -> dialog?.cancel() }

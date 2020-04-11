@@ -28,8 +28,6 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.*
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
 import java.io.IOException
@@ -162,7 +160,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.setSlideTransition(this)
+
         enableKeyboardAnimator()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
@@ -222,15 +220,15 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
-        binding.toolbar.actionTextClickListener = View.OnClickListener { finishSafe() }
+        binding.toolbar.actionTextClickListener = View.OnClickListener { finish() }
 
 
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value)
-                startActivityMakeScene(ProfileCompleteActivity.newInstance(this@AddProductActivity))
+                startActivity(ProfileCompleteActivity.newInstance(this@AddProductActivity))
             else
-                finishSafe()
+                finish()
         })
 
 
@@ -310,7 +308,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     internal fun prePage() {
 
         if (UpdateMode) {
-            finishSafe()
+            finish()
             return
         }
 
@@ -318,7 +316,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             KeyboardManager.hideSoftKeyboard(this)
 
         if (binding.viewpager.currentItem == 0)
-            finishSafe()
+            finish()
 
 
         if (binding.viewpager.currentItem > AddProductViewModel.StateEnum.image.position) {

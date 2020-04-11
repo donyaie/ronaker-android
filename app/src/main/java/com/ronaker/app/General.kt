@@ -31,9 +31,15 @@ class General : MultiDexApplication() {
         analytics = FirebaseAnalytics.getInstance(this)
 
 
-        // Branch logging for debugging
-        Branch.enableDebugMode()
 
+        if (BuildConfig.DEBUG){
+
+            // Branch logging for debugging
+            Branch.enableDebugMode()
+
+            Stetho.initializeWithDefaults(this)
+
+        }
 
         Branch.getAutoInstance(this)
 
@@ -46,7 +52,6 @@ class General : MultiDexApplication() {
             .init()
 
 
-        Stetho.initializeWithDefaults(this)
 
 
         ViewPump.init(

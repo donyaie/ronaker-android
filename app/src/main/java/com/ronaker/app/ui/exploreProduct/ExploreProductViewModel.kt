@@ -126,7 +126,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     }
 
     suspend fun loadProduct(id: String, showLoading: Boolean, refresh: Boolean = false) =
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
 
             mSuid = id
             subscription?.dispose()
@@ -173,7 +173,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         }
 
     suspend fun loadComment(suid: String) =
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
 
 
             commentSubscription?.dispose()

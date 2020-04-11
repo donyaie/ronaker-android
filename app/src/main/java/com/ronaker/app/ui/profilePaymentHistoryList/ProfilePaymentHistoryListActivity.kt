@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ronaker.app.utils.Alert
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,10 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfilePaymentHistoryListActivity : BaseActivity() {
@@ -41,7 +36,7 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment_history_list)

@@ -2,6 +2,8 @@ package com.ronaker.app.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.ronaker.app.BuildConfig
 import okhttp3.OkHttpClient
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -69,6 +71,7 @@ object SslUtils {
 
             val builder = OkHttpClient.Builder()
 
+
             getTrustAllHostsSSLSocketFactory()?.let {
                 builder.sslSocketFactory(it.first, it.second)
             }
@@ -81,8 +84,6 @@ object SslUtils {
                 builder.sslSocketFactory(it.first.socketFactory, it.second)
 
             }
-
-
 
 
 

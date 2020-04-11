@@ -124,10 +124,7 @@ data class Product(
         var stars: Float?,
         var comment: String?,
         var user: User?
-    ) : Parcelable {
-
-
-    }
+    ) : Parcelable
 
 }
 

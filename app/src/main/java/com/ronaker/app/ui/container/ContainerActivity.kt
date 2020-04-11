@@ -18,7 +18,7 @@ class ContainerActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityContainerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_container)
 

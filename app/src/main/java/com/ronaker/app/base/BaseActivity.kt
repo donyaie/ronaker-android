@@ -2,6 +2,7 @@ package com.ronaker.app.base
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,16 +13,20 @@ import com.ronaker.app.General
 import com.ronaker.app.R
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.LocaleHelper
+
 import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
 import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import io.fabric.sdk.android.Fabric
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 
 
-abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
+abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
 
 
     fun getAnalytics(): FirebaseAnalytics? {
+
+
 
         return if (applicationContext is General)
             (applicationContext as General).analytics
@@ -30,10 +35,24 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
     }
 
 
+
+
+
     private val animator: BaseKeyboardAnimator by lazy(LazyThreadSafetyMode.NONE) {
         SimpleKeyboardAnimator(
             window
         )
+    }
+
+
+    override fun startActivity(intent: Intent?) {
+        super.startActivity(intent)
+        AnimationHelper.setStartSlideTransition(this)
+    }
+
+    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+        super.startActivityForResult(intent, requestCode)
+        AnimationHelper.setStartSlideTransition(this)
     }
 
 
@@ -46,6 +65,8 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
 
     fun setSwipeCloseDisable() {
 //       swipeBackLayout.setEnableGesture(false)
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,6 +155,8 @@ abstract class BaseActivity : AppCompatActivity()/* SwipeBackActivity()*/ {
 
 
     }
+
+
 
 
     fun isFistStart(): Boolean {

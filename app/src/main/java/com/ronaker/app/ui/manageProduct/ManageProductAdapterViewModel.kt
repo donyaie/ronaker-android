@@ -7,9 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.toCurrencyFormat
 
 class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
@@ -69,7 +67,7 @@ class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
 
     fun onClickProduct() {
 
-        activity?.let {it.startActivityMakeScene(ManageProductActivity.newInstance(it,data))  }
+        activity?.let {it.startActivity(ManageProductActivity.newInstance(it,data))  }
 
 
     }

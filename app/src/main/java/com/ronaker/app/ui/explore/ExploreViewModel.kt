@@ -99,7 +99,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
 
     private suspend fun loadCategory() =
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
 
             categorySubscription?.dispose()
             categorySubscription = categoryRepository
@@ -140,7 +140,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         }
 
     suspend fun loadProduct() =
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
             if (hasNextPage) {
                 page++
                 subscription?.dispose()

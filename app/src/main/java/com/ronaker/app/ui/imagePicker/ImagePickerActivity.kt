@@ -21,8 +21,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
@@ -46,7 +44,7 @@ class ImagePickerActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_image_picker)
@@ -199,13 +197,13 @@ class ImagePickerActivity : BaseActivity() {
         val intent = Intent()
         intent.putExtra("path", imagePath)
         setResult(Activity.RESULT_OK, intent)
-        finishSafe()
+        finish()
     }
 
     private fun setResultCancelled() {
         val intent = Intent()
         setResult(Activity.RESULT_CANCELED, intent)
-        finishSafe()
+        finish()
     }
 
     private fun getCacheImagePath(fileName: String): Uri {

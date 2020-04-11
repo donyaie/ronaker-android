@@ -40,6 +40,10 @@
             android:value="true" />
 
         <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            tools:node="remove" />
+
+        <meta-data
             android:name="com.ronaker.app.injection.module.UnsafeOkHttpGlideModule"
             android:value="AppGlideModule" />
 
@@ -50,9 +54,9 @@
 
         <activity
             android:name=".ui.orderMessage.OrderMessageActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
@@ -60,9 +64,9 @@
 
         <activity
             android:name=".ui.manageProduct.ManageProductActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
 
@@ -71,9 +75,9 @@
 
         <activity
             android:name=".ui.profilePayment.ProfilePaymentActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
@@ -81,9 +85,9 @@
 
         <activity
             android:name=".ui.profileCompleteEdit.ProfileCompleteActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
 
@@ -122,9 +126,9 @@
         <activity
             android:name=".ui.exploreProduct.ExploreProductActivity"
 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
-            android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
         </activity>
@@ -170,9 +174,9 @@
 
         <activity
             android:name=".ui.search.SearchActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/SearchTheme"
-            android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysVisible" />
 
         <activity
@@ -261,73 +265,73 @@
 
         <activity
             android:name=".ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".ui.profileEdit.ProfileEditActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".ui.profileSetting.ProfileSettingActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.profileImage.ProfileImageActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".ui.orderStartRenting.OrderStartRentingActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.orderFinish.OrderFinishActivity"
-            android:screenOrientation="portrait"
-
-            android:theme="@style/PopTheme"
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".ui.productRate.ProductRateActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
 
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.orderDecline.OrderDeclineActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
 
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -335,8 +339,8 @@
 
         <activity
             android:name=".ui.productSaved.ProductSavedActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
 
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -344,43 +348,43 @@
 
         <activity
             android:name=".ui.profileEmailVerify.ProfileEmailVerifyActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/Transparent"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.orderCancel.OrderCancelActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".ui.addProduct.AddProductActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".ui.profileIdentify.ProfileIdentifyActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".ui.phoneNumberValidation.PhoneNumberActivity"
-            android:screenOrientation="portrait"
-
             android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
             android:theme="@style/phoneNumberTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 

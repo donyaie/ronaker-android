@@ -9,18 +9,21 @@ import com.bumptech.glide.load.model.GlideUrl
 import java.io.InputStream
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.module.AppGlideModule
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.ronaker.app.BuildConfig
 import com.ronaker.app.utils.SslUtils
 
 
 @GlideModule
 class UnsafeOkHttpGlideModule : AppGlideModule(){
-    override fun applyOptions(context: Context, builder: GlideBuilder) {
-        super.applyOptions(context, builder)
-    }
 
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         val client = SslUtils.getUnsafeOkHttpClient(context)
+
+        if (BuildConfig.DEBUG)
+            client.addNetworkInterceptor( StethoInterceptor())
+
         registry.replace(
             GlideUrl::class.java, InputStream::class.java,
             OkHttpUrlLoader.Factory(client.build())

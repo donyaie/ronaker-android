@@ -10,7 +10,6 @@ import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import com.ronaker.app.utils.toCurrencyFormat
 
 
@@ -81,7 +80,7 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
 
             activity?.let { mActivity->
 
-                mActivity.startActivityMakeSceneForResult(ExploreProductActivity.newInstance(mActivity,data),ExploreProductActivity.REQUEST_CODE)
+                mActivity.startActivityForResult(ExploreProductActivity.newInstance(mActivity,data),ExploreProductActivity.REQUEST_CODE)
 
 
             }

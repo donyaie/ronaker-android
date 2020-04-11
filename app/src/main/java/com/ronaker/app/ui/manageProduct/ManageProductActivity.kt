@@ -14,9 +14,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.ScreenCalculator
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -46,7 +44,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_product)
@@ -116,7 +114,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         binding.imageLayout.setOnClickListener {
 
             getCurrentSuid()?.let {
-                this.startActivityMakeScene(
+                this.startActivity(
                     AddProductActivity.newInstance(
                         this,
                         it, AddProductViewModel.StateEnum.image
@@ -130,7 +128,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
         binding.locationLayout.setOnClickListener {
             getCurrentSuid()?.let {
-                this.startActivityMakeScene(
+                this.startActivity(
                     AddProductActivity.newInstance(
                         this,
                         it, AddProductViewModel.StateEnum.location
@@ -144,7 +142,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
 
             getCurrentSuid()?.let {
-                this.startActivityMakeScene(
+                this.startActivity(
                     AddProductActivity.newInstance(
                         this,
                         it, AddProductViewModel.StateEnum.info
@@ -158,7 +156,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
 
             getCurrentSuid()?.let {
-                this.startActivityMakeScene(
+                this.startActivity(
                     AddProductActivity.newInstance(
                         this,
                         it, AddProductViewModel.StateEnum.price
@@ -172,7 +170,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         binding.categoryLayout.setOnClickListener {
 
             getCurrentSuid()?.let {
-                this.startActivityMakeScene(
+                this.startActivity(
                     AddProductActivity.newInstance(
                         this,
                         it, AddProductViewModel.StateEnum.category

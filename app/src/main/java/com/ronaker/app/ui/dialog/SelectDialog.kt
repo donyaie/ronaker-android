@@ -18,7 +18,7 @@ import com.ronaker.app.model.Category
 class SelectDialog : BaseDialog() {
 
     //region field
-    private val TAG = SelectDialog::class.java.getSimpleName()
+    private val TAG = SelectDialog::class.java.simpleName
 
     lateinit var rootView: View
 
@@ -170,11 +170,6 @@ class SelectDialog : BaseDialog() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
 
         dialogResultListener?.onDialogResult(dialogResult,selectedItem)
@@ -184,10 +179,6 @@ class SelectDialog : BaseDialog() {
 
         super.onDismiss(dialog)
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onDestroyView() {

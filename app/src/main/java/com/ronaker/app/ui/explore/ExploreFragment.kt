@@ -112,12 +112,6 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         viewModel.searchValue.observe(viewLifecycleOwner, Observer { _ ->
 
-            // Check if we're running on Android 5.0 or higher
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-//
-//                val options = ActivityOptions
-//                    .makeSceneTransitionAnimation(activity, binding.searchLayout, "search")
 
                 val p1 =
                     androidx.core.util.Pair<View, String>(binding.searchLayout, "search")
@@ -135,15 +129,6 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
                     )
                 }
 
-            } else {
-                // Swap without transition
-                activity?.let {
-                    startActivityForResult(
-                        SearchActivity.newInstance(it),
-                        SearchActivity.ResultCode
-                    )
-                }
-            }
 
 
         })

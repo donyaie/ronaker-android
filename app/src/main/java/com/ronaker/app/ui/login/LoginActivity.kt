@@ -3,10 +3,7 @@ package com.ronaker.app.ui.login
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -20,7 +17,6 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalculator
-import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.view.ToolbarComponent
 
 
@@ -96,7 +92,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AnimationHelper.setFadeTransition(this)
+
 
         setSwipeCloseDisable()
         enableKeyboardAnimator()
@@ -142,7 +138,9 @@ class LoginActivity : BaseActivity() {
         viewModel.goNext.observe(this, Observer { value ->
             if (value == true) {
                 startActivity(DashboardActivity.newInstance(this@LoginActivity))
+                AnimationHelper.setFadeTransition(this)
                 finish()
+                AnimationHelper.setFadeTransition(this)
             }
         })
 
@@ -172,10 +170,6 @@ class LoginActivity : BaseActivity() {
         loginState = LoginViewModel.LoginStateEnum.home
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
 
     private fun init() {
 
@@ -194,7 +188,7 @@ class LoginActivity : BaseActivity() {
 
 
         when {
-            currentPosition == LoginViewModel.LoginStateEnum.home.position -> finishSafe()
+            currentPosition == LoginViewModel.LoginStateEnum.home.position -> finish()
             currentPosition == LoginViewModel.LoginStateEnum.login.position -> {
                 currentPosition = LoginViewModel.LoginStateEnum.home.position
             }

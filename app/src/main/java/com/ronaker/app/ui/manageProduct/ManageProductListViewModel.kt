@@ -61,7 +61,7 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
     }
 
   suspend  fun loadProduct()  =
-        withContext(Dispatchers.Default){
+        withContext(Dispatchers.IO){
 
         if (hasNextPage) {
             page++

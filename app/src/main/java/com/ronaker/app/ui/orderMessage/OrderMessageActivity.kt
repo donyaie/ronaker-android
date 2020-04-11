@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.ronaker.app.utils.Alert
@@ -13,12 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
@@ -62,7 +57,7 @@ class OrderMessageActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_message)
@@ -80,7 +75,7 @@ class OrderMessageActivity : BaseActivity() {
 
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
-           finishSafe()
+           finish()
         }
 
 
@@ -92,12 +87,12 @@ class OrderMessageActivity : BaseActivity() {
         })
 
         viewModel.next.observe(this, Observer {
-            this.finishSafe()
+            this.finish()
         })
 
 
         viewModel.goNext.observe(this, Observer {
-            this.startActivityMakeScene(
+            this.startActivity(
                 ProfileCompleteActivity.newInstance(
                     this
                 )
@@ -145,7 +140,7 @@ class OrderMessageActivity : BaseActivity() {
         ) { dialog, _ ->
             dialog?.cancel()
             this.setResult(Activity.RESULT_OK)
-            this.finishSafe()
+            this.finish()
 
 
         }

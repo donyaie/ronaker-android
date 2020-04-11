@@ -65,7 +65,7 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
     }
 
     suspend fun loadData(filter: String?)  =
-        withContext(Dispatchers.Default){
+        withContext(Dispatchers.IO){
 
         mFilter = filter
 

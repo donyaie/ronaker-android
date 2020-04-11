@@ -256,7 +256,7 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     var title: String? = null
         set(value) {
             field = value
-            titleText.setText(value)
+            titleText.text = value
         }
 
 
@@ -304,7 +304,7 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     var actionTitle: String? = null
         set(value) {
             field = value
-            actionText.setText(value)
+            actionText.text = value
         }
 
     var dotCount: Int = 3

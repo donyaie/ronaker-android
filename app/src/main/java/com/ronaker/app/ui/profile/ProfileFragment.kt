@@ -18,7 +18,6 @@ import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.SUPPORT_URL
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileFragment : BaseFragment() {
@@ -47,24 +46,24 @@ class ProfileFragment : BaseFragment() {
 
         viewModel.logOutAction.observe(viewLifecycleOwner, Observer {
 
-            activity?.let { it.startActivityMakeScene(DashboardActivity.newInstance(it)) }
+            activity?.let { it.startActivity(DashboardActivity.newInstance(it)) }
         })
 
 
 
         binding.editImage.setOnClickListener {
-            activity?.let { it.startActivityMakeScene(ProfileEditActivity.newInstance(it)) }
+            activity?.let { it.startActivity(ProfileEditActivity.newInstance(it)) }
         }
 
 
 
         binding.editText.setOnClickListener {
-            requireActivity().startActivityMakeScene(ProfileEditActivity.newInstance(requireContext()))
+            requireActivity().startActivity(ProfileEditActivity.newInstance(requireContext()))
         }
 
         binding.profileCompleteLayout.setOnClickListener {
 
-            activity?.let { it.startActivityMakeScene(ProfileCompleteActivity.newInstance(it)) }
+            activity?.let { it.startActivity(ProfileCompleteActivity.newInstance(it)) }
         }
 
 
@@ -79,19 +78,19 @@ class ProfileFragment : BaseFragment() {
         binding.faveLayout.setOnClickListener {
 
 
-            activity?.let { it.startActivityMakeScene(ProductSavedActivity.newInstance(it)) }
+            activity?.let { it.startActivity(ProductSavedActivity.newInstance(it)) }
 
         }
 
         binding.settingLayout.setOnClickListener {
 
-            activity?.let { it.startActivityMakeScene(ProfileSettingActivity.newInstance(it)) }
+            activity?.let { it.startActivity(ProfileSettingActivity.newInstance(it)) }
         }
 
         binding.paymentLayout.setOnClickListener {
 
             activity?.let {
-                it.startActivityMakeScene(
+                it.startActivity(
                     ProfilePaymentHistoryListActivity.newInstance(
                         it
                     )

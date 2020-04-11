@@ -4,21 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import com.ronaker.app.utils.Alert
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfilePaymentListActivity : BaseActivity() {
@@ -43,7 +37,7 @@ class ProfilePaymentListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment_list)
@@ -90,7 +84,7 @@ class ProfilePaymentListActivity : BaseActivity() {
         binding.newLayout.setOnClickListener {
 
 
-            startActivityMakeScene(ProfilePaymentActivity.newInstance(this))
+            startActivity(ProfilePaymentActivity.newInstance(this))
         }
 
 
