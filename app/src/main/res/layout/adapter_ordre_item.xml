@@ -10,150 +10,141 @@
             type="com.ronaker.app.ui.orders.OrderItemViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+
+
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:onClick="@{()->viewModel.onClickProduct()}"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:onClick="@{()->viewModel.onClickProduct()}">
 
-        app:cardCornerRadius="3dp"
-        app:cardElevation="5dp">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mutableImage="@{viewModel.getProductImage()}"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+            app:riv_corner_radius="3dp" />
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:lines="2"
+            android:textAppearance="@style/TextAppearance.Medium.SB"
+
+            android:textColor="@color/colorTextDark"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mutableText="@{viewModel.getProductTitle()}" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="16dp"
+            android:lines="1"
+            android:textAppearance="@style/TextAppearance.Small.Regular"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:mutableText="@{viewModel.getProductDate()}" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="16dp"
+            android:lines="1"
+            android:textAppearance="@style/TextAppearance.Medium.SB"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@+id/date"
+            app:mutableText="@{viewModel.getProductPrice()}" />
+
+
+        <RelativeLayout
+            android:id="@+id/split"
             android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/colorPlatinGrey"
+            app:layout_constraintTop_toBottomOf="@id/price" />
 
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            app:layout_constraintTop_toBottomOf="@id/split">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:mutableImage="@{viewModel.getProductImage()}"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/text_content"
 
-                app:riv_corner_radius="3dp" />
+                android:padding="4dp"
 
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:lines="2"
-                android:text="@string/caption_title"
-                android:textAppearance="@style/TextAppearance.Medium.SB"
-
-                android:textColor="@color/colorTextDark"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:mutableText="@{viewModel.getProductTitle()}" />
-
+                app:mutableImageSrc="@{viewModel.getOrderStatusImage()}" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/status"
                 android:layout_width="0dp"
-
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight=".95"
+                android:gravity="start"
                 android:lines="1"
-                android:text="@string/caption_title"
+
                 android:textAppearance="@style/TextAppearance.Small.Regular"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/image"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                app:mutableText="@{viewModel.getProductDate()}" />
+                app:mutableText="@{viewModel.getOrderStatus()}"
+                tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="0dp"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/text_content"
 
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="16dp"
-                android:lines="1"
-                android:text="@string/caption_title"
-                android:textAppearance="@style/TextAppearance.Medium.SB"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/image"
-                app:layout_constraintTop_toBottomOf="@+id/date"
-                app:mutableText="@{viewModel.getProductPrice()}" />
+                android:padding="4dp"
+                android:tint="@color/colorAshGrey"
+                app:srcCompat="@drawable/ic_chevron_right" />
 
 
-            <RelativeLayout
-                android:id="@+id/split"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@color/colorPlatinGrey"
-                app:layout_constraintTop_toBottomOf="@id/price" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                app:layout_constraintTop_toBottomOf="@id/split">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/text_content"
-
-                    android:padding="4dp"
-
-                    app:mutableImageSrc="@{viewModel.getOrderStatusImage()}"
-
-                    app:srcCompat="@drawable/ic_remove_red" />
-
-                <TextView
-                    android:id="@+id/status"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight=".95"
-                    android:gravity="start"
-                    android:lines="1"
-
-                    android:text="Lend | Canceled order"
-                    android:textAppearance="@style/TextAppearance.Small.Regular"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:mutableText="@{viewModel.getOrderStatus()}"
-                    tools:ignore="HardcodedText" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/text_content"
-
-                    android:padding="4dp"
-                    android:tint="@color/colorAshGrey"
-                    app:srcCompat="@drawable/ic_chevron_right" />
+        </LinearLayout>
 
 
-            </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </layout>

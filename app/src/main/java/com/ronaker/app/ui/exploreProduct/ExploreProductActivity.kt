@@ -119,7 +119,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         val time = measureTimeMillis {
             //calcut image height
             val screenCalculator = ScreenCalculator(this)
-            binding.avatarLayout.layoutParams.height =
+            binding.avatarSlide.layoutParams.height =
                 (screenCalculator.screenWidthPixel * 0.7).toInt()
 
 
@@ -537,7 +537,6 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.avatarImage.setImageResource(0)
         binding.avatarSlide.clearImage()
 
         binding.unbind()
