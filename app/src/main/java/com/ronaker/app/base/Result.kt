@@ -1,17 +1,20 @@
 package com.ronaker.app.base
 
+import com.ronaker.app.utils.AppDebug
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 
 open class Result<T>(val data: T? = null, val error: NetworkError? = null ) {
     companion object {
         fun <T> fromData(data: T): Result<T> {
-
+//            AppDebug.log("toResult fromData",data.toString())
             return Result(data, null)
 
         }
 
         fun <T> fromError(error: Throwable): Result<T> {
+
+//            AppDebug.log("toResult fromError",error)
             return Result(null, NetworkError(error))
         }
     }
@@ -34,6 +37,8 @@ open class Result<T>(val data: T? = null, val error: NetworkError? = null ) {
 
 fun <T> Observable<T>.toResult(): Observable<Result<T>> {
     return map {
+
+
 
         Result.fromData(it)
 

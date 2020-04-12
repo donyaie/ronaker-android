@@ -44,7 +44,7 @@
             tools:node="remove" />
 
         <meta-data
-            android:name="com.ronaker.app.injection.module.UnsafeOkHttpGlideModule"
+            android:name="com.ronaker.app.injection.module.CustomGlideModule"
             android:value="AppGlideModule" />
 
         <meta-data

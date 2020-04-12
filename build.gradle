@@ -38,7 +38,7 @@ buildscript {
     ext.firebaseVersion = '17.3.0'
     ext.firebaseAppindexingVersion = '19.1.0'
     ext.firebaseInvitesVersion = '17.0.0'
-    ext.firebasePerf = '19.0.5'
+    ext.firebasePerf = '19.0.6'
     ext.crashlyticsVersion='2.10.1'
 
     ext.swipebackVersion='1.1.0'

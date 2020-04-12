@@ -23,7 +23,14 @@ object AppDebug {
         }
     }
 
-    fun log(TAG: String, Message: String?, ex: Exception?) {
+
+    fun log(TAG: String, ex: Throwable?) {
+        ex?.let {
+            log(TAG, "Exception ", ex)
+        }
+    }
+
+    fun log(TAG: String, Message: String?, ex: Throwable?) {
 
         var message1 = Message ?: ""
 

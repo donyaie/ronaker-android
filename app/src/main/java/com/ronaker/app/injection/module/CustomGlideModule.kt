@@ -15,7 +15,7 @@ import com.ronaker.app.utils.SslUtils
 
 
 @GlideModule
-class UnsafeOkHttpGlideModule : AppGlideModule(){
+class CustomGlideModule : AppGlideModule(){
 
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {

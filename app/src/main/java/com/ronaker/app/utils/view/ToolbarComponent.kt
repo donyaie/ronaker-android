@@ -16,6 +16,7 @@ import com.ronaker.app.utils.ShapeDrawableHelper
 class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs) {
 
+    val screenCalculator= ScreenCalculator(context)
 
     enum class CenterContainer {
         NONE, DOTS, TITLE
@@ -251,6 +252,8 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
         set(value) {
             field = value
             lineLayout.visibility = if (isBottomLine) View.VISIBLE else View.GONE
+
+//            containerLayout.elevation=  if (value) screenCalculator.DP2Pixel(2).toFloat() else 0f
         }
 
     var title: String? = null

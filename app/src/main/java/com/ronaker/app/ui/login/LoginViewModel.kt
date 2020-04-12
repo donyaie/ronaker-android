@@ -9,6 +9,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.AnalyticsManager
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.actionLogin
 import com.ronaker.app.utils.actionSignUp
 import io.reactivex.disposables.Disposable
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 class LoginViewModel(app: Application) : BaseViewModel(app) {
 
-//    private val TAG = LoginViewModel::class.java.name
+    private val TAG = LoginViewModel::class.java.name
 
 
     @Inject
@@ -137,6 +138,9 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loadingButton.value = true }
                 .doOnTerminate { loadingButton.value = false }
                 .subscribe {
+
+
+
                     loading.value = false
                     goNext.value = true
 
@@ -152,6 +156,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     loading.value = false
                     if (result.isSuccess()) {
 
+                        AppDebug.log("Login",result?.data.toString())
 
 
                         getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
@@ -182,6 +187,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     if (result.isSuccess()) {
                         getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
 
+                        AppDebug.log("Login",result?.data.toString())
 
                          sendVerificationEmail()
                     } else {
