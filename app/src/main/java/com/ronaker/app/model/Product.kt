@@ -47,6 +47,37 @@ data class Product(
         null
     )
 
+    override fun equals(other: Any?): Boolean {
+
+        if(other is Product){
+            return this.hashCode()==other.hashCode()
+        }
+
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        var result = suid?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (price_per_day?.hashCode() ?: 0)
+        result = 31 * result + (price_per_week?.hashCode() ?: 0)
+        result = 31 * result + (price_per_month?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (avatar?.hashCode() ?: 0)
+        result = 31 * result + (images?.hashCode() ?: 0)
+        result = 31 * result + (categories?.hashCode() ?: 0)
+        result = 31 * result + (location?.hashCode() ?: 0)
+        result = 31 * result + (address?.hashCode() ?: 0)
+        result = 31 * result + (avatar_suid?.hashCode() ?: 0)
+        result = 31 * result + (new_categories?.hashCode() ?: 0)
+        result = 31 * result + (review_status?.hashCode() ?: 0)
+        result = 31 * result + (user_status?.hashCode() ?: 0)
+        result = 31 * result + (rate?.hashCode() ?: 0)
+        result = 31 * result + (owner?.hashCode() ?: 0)
+        result = 31 * result + (isFavourite?.hashCode() ?: 0)
+        return result
+    }
+
 
     enum class ReviewStatusEnum constructor(key: String) {
         Pending("pending"),

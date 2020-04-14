@@ -5,20 +5,19 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.random.Random
 
 class ExploreViewModel(app: Application) : BaseViewModel(app),
     CategoryExploreAdapter.AdapterListener {
@@ -42,7 +41,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     private var hasNextPage = true
 
 
-  private  var selectedCategory: Category? = null
+    private var selectedCategory: Category? = null
 
 
     var dataList: ArrayList<Product> = ArrayList()
@@ -54,7 +53,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     private var query: String = ""
 
 
-    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter(dataList)
+    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter()
 
 
     var categoryListAdapter: CategoryExploreAdapter = CategoryExploreAdapter(categoryList, this)
@@ -79,7 +78,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         productListAdapter.reset()
         hasNextPage = true
         dataList.clear()
-        productListAdapter.updateList()
+//        productListAdapter.updateList(dataList)
         resetList.postValue(true)
     }
 
@@ -91,8 +90,9 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         reset()
         uiScope.launch {
 
-            loadCategory()
             loadProduct()
+            if (cachCategoryList.isEmpty())
+                loadCategory()
         }
 
     }
@@ -139,6 +139,8 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
         }
 
+    var incriment=1
+
     suspend fun loadProduct() =
         withContext(Dispatchers.IO) {
             if (hasNextPage) {
@@ -162,76 +164,51 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
                     )
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
-                    .doOnSubscribe { onRetrieveProductListStart() }
-                    .doOnTerminate { onRetrieveProductListFinish() }
+                    .doOnSubscribe {
+                        retry.postValue(null)
+                        if (page <= 1) {
+                            loading.postValue(true)
+
+                            emptyVisibility.postValue(View.GONE)
+
+                        }
+                        errorMessage.postValue(null)
+                    }
+                    .doOnTerminate {
+                        loading.postValue(false)
+                    }
                     .subscribe { result ->
                         if (result.isSuccess()) {
-                            if ((result.data?.results?.size ?: 0) > 0) {
 
+                            result.data?.results?.let { dataList.addAll(it) }
+
+                            productListAdapter.updateList(dataList)
+
+                            if (!result.data?.results.isNullOrEmpty()) {
                                 emptyVisibility.postValue(View.GONE)
-                                onRetrieveProductListSuccess(
-                                    result.data?.results
-                                )
+                            }
 
-                                if (result.data?.next == null) {
-                                    hasNextPage = false
-
-
-                                }
-
-                            } else {
-
-                                emptyVisibility.postValue(View.VISIBLE)
-
-
-
-
+                            if (result.data?.next == null) {
                                 hasNextPage = false
                             }
+
+
+                            if (dataList.isEmpty()) {
+                                emptyVisibility.postValue(View.VISIBLE)
+                            }
+
                         } else {
 
-                            onRetrieveProductListError(result.error)
+                            if (page <= 1)
+                                retry.postValue(result.error?.message)
+                            else
+                                errorMessage.postValue(result.error?.message)
 
-//                        onRetrieveProductListSuccess(
-//                            dataList
-//                        )
                         }
                     }
             }
         }
 
-
-    private fun onRetrieveProductListStart() {
-        retry.postValue(null)
-        if (page <= 1) {
-            loading.postValue(true)
-
-            emptyVisibility.postValue(View.GONE)
-
-        }
-        errorMessage.postValue(null)
-    }
-
-    private fun onRetrieveProductListFinish() {
-        loading.postValue(false)
-    }
-
-    private fun onRetrieveProductListSuccess(productList: List<Product>?) {
-
-        if (productList != null) {
-            productListAdapter.addData(productList)
-        }
-
-    }
-
-    private fun onRetrieveProductListError(error: NetworkError?) {
-        if (page <= 1)
-            retry.postValue(error?.message)
-        else
-            errorMessage.postValue(error?.message)
-
-
-    }
 
     fun onClickSearch() {
 
@@ -261,7 +238,8 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         uiScope.launch {
 
             loadProduct()
-            loadCategory()
+            if (cachCategoryList.isEmpty())
+                loadCategory()
         }
 
     }

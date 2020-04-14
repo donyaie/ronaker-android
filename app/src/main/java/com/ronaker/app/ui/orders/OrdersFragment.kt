@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
@@ -25,16 +24,17 @@ class OrdersFragment : BaseFragment() {
     private lateinit var adapter: ViewPagerAdapter
 
 
+    private val tabList: ArrayList<TextView> = ArrayList()
 
 
-    private val tabList :ArrayList< TextView> =ArrayList()
+    private var selectedTab = 0
 
 
-
-    private var selectedTab=0
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders, container, false)
         viewModel = ViewModelProvider(this).get(OrdersViewModel::class.java)
@@ -55,7 +55,6 @@ class OrdersFragment : BaseFragment() {
         binding.layout4.setOnClickListener { selectTab(3) }
 
 
-
 //        initNavigation(savedInstanceState)
 
         initViewPager()
@@ -67,18 +66,18 @@ class OrdersFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        selectTabUpdateView( selectedTab)
+        selectTabUpdateView(selectedTab)
 
     }
 
-    fun selectTabUpdateView(index:Int){
+    private fun selectTabUpdateView(index: Int) {
 
 
-        selectedTab=index
+        selectedTab = index
         tabList.forEach {
             context?.let { it1 ->
-                it.setTextColor(ContextCompat.getColor(it1,R.color.colorTextGreyLight) )
-                it.setBackgroundResource(0 )
+                it.setTextColor(ContextCompat.getColor(it1, R.color.colorTextGreyLight))
+                it.setBackgroundResource(0)
 
             }
 
@@ -92,11 +91,12 @@ class OrdersFragment : BaseFragment() {
         }
     }
 
-    private fun selectTab(index:Int){
+    private fun selectTab(index: Int) {
 
         selectTabUpdateView(index)
 
-        binding.viewpager.currentItem=index
+        binding.viewpager.setCurrentItem(index, true)
+
 
     }
 
@@ -108,79 +108,85 @@ class OrdersFragment : BaseFragment() {
         }
     }
 
+    private val viewPager2PageChangeCallback = ViewPager2PageChangeCallback { position ->
 
 
-    private fun initViewPager() {
-
-        adapter = ViewPagerAdapter(childFragmentManager)
-
-        binding.viewpager.adapter = adapter
-
-        adapter.clear()
-        adapter.addFragment(OrderListFragment.newInstance(null))
-        adapter.addFragment(OrderListFragment.newInstance(Order.OrderTypeEnum.Renting.key))
-        adapter.addFragment( OrderListFragment.newInstance(Order.OrderTypeEnum.Lending.key))
-        adapter.addFragment(OrderListFragment.newInstance("archive"))
-        binding.viewpager.adapter?.notifyDataSetChanged()
-
-
-        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-
-                selectTabUpdateView(position)
-
-
-                binding.toolbar.showNavigator(true, position)
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-        })
+//        binding.viewpager.setCurrentItem(position, false)
+        selectTabUpdateView(position)
 
     }
 
+    private fun initViewPager() {
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
-        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        adapter = ViewPagerAdapter(this)
+
+
+
+        binding.viewpager.adapter = adapter
+        binding.viewpager.registerOnPageChangeCallback(viewPager2PageChangeCallback)
+
+
+    }
+
+    class ViewPager2PageChangeCallback(private val listener: (Int) -> Unit) :
+        ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            listener.invoke(position)
+
+        }
+    }
+
+
+    internal inner class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(
+        fragment
     ) {
         private val mFragmentList = ArrayList<Fragment>()
 
-        override fun getCount(): Int {
-            return mFragmentList.size
+        val dataList = ArrayList<Fragment>()
+
+
+        init {
+            dataList.clear()
+
+
+            dataList.add(OrderListFragment.newInstance(null))
+            dataList.add(OrderListFragment.newInstance(Order.OrderTypeEnum.Renting.key))
+            dataList.add(OrderListFragment.newInstance(Order.OrderTypeEnum.Lending.key))
+            dataList.add(OrderListFragment.newInstance("archive"))
+
+
         }
-
-        override fun getItemPosition(`object`: Any): Int {
-
-            return POSITION_NONE
-        }
-
-
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        fun addFragment(fragment: Fragment) {
-            mFragmentList.add(fragment)
-        }
-
 
         fun clear() {
             mFragmentList.clear()
         }
 
-        override fun getPageTitle(position: Int): CharSequence {
-            return ""
+
+        override fun getItemCount(): Int {
+            return 4
+        }
+
+        override fun createFragment(position: Int): Fragment {
+
+
+            return dataList[position]
+//
+//            when (position) {
+//                dataList -> OrderListFragment.newInstance(null)
+//                1 -> OrderListFragment.newInstance(Order.OrderTypeEnum.Renting.key)
+//                2 -> OrderListFragment.newInstance(Order.OrderTypeEnum.Lending.key)
+//                3 -> OrderListFragment.newInstance("archive")
+//                else -> OrderListFragment.newInstance(null)
+//            }
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.viewpager.unregisterOnPageChangeCallback(viewPager2PageChangeCallback)
+    }
 
 
 }

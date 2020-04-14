@@ -37,7 +37,7 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
     private var query: String? = null
 
 
-    var productListAdapter: ItemExploreAdapter
+    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter()
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
@@ -51,9 +51,7 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
 
 
     init {
-        productListAdapter = ItemExploreAdapter(dataList)
         reset()
-
 
     }
 
@@ -62,7 +60,7 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
         page = 0
         hasNextPage = true
         dataList.clear()
-        productListAdapter.updateList()
+//        productListAdapter.updateList(dataList)
         resetList.value = true
     }
 
@@ -123,12 +121,8 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
 
         if (productList != null) {
 
-            var insertIndex = 0
-            if (dataList.size > 0)
-                insertIndex = dataList.size
-
             dataList.addAll(productList)
-            productListAdapter.notifyItemRangeInserted(insertIndex, productList.size)
+            productListAdapter.updateList(dataList)
         }
 
     }

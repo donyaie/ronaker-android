@@ -53,70 +53,68 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
     private var subscription: Disposable? = null
 
     init {
-        productListAdapter = OrderItemAdapter(dataList)
+        productListAdapter = OrderItemAdapter()
 
 
     }
-    fun getData(filter: String?){
+
+    fun getData(filter: String?) {
 
         uiScope.launch {
             loadData(filter)
         }
     }
 
-    suspend fun loadData(filter: String?)  =
-        withContext(Dispatchers.IO){
+    suspend fun loadData(filter: String?) =
+        withContext(Dispatchers.IO) {
 
-        mFilter = filter
+            mFilter = filter
 
-        dataList.clear()
-        subscription?.dispose()
-        subscription = orderRepository
-            .getOrders(userRepository.getUserToken(), filter)
+            subscription?.dispose()
+            subscription = orderRepository
+                .getOrders(userRepository.getUserToken(), filter)
 
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .doOnSubscribe {
-                retry.postValue( null)
-                loading.postValue( true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSubscribe {
+                    retry.postValue(null)
+                    loading.postValue(true)
 
-            }
-            .doOnTerminate {
+                }
+                .doOnTerminate {
 
-                loading.postValue( false)
+                    loading.postValue(false)
 
 
-            }
-            .subscribe { result ->
-                if (result.isSuccess()) {
-                    if ((result.data?.results?.size ?: 0) > 0) {
-                        emptyVisibility.postValue( View.GONE)
+                }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
 
-                        result.data?.results?.let {
-                            dataList.addAll(it)
-                            productListAdapter.updateList()
-                        }
+
+                        dataList.clear()
+                        result.data?.results?.let { dataList.addAll(it) }
+                        productListAdapter.updateList(dataList)
+
+                       if( !result.data?.results.isNullOrEmpty()){
+                           emptyVisibility.postValue(View.GONE)
+                       }
 
                         if (result.data?.next == null)
                             hasNextPage = false
 
+                        if(dataList.isEmpty())
+                            emptyVisibility.postValue(View.VISIBLE)
+
+
+
                     } else {
 
-                        if (page == 0) {
-
-                            emptyVisibility.postValue( View.VISIBLE)
-                        }
-
-                        hasNextPage = false
+                        retry.postValue(result.error?.message)
                     }
-                } else {
-
-                    retry.postValue( result.error?.message)
                 }
-            }
 
 
-    }
+        }
 
 
     override fun onCleared() {

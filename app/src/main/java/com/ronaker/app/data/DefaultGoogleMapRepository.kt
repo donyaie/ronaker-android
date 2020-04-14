@@ -18,7 +18,7 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         val language: String? = null// "en";
 
         val components: String? = null//"country:ir";
-        val types = "geocode"
+        val types = "(regions)"
         val radius = "50000"
 
         val location = if (latLng == null) null else String.format("%s,%s", latLng.latitude, latLng.longitude)
@@ -57,9 +57,9 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
 
 
         val latlng = String.format("%s,%s", location.latitude, location.longitude)
+        val types = "(regions)"
 
-
-        return api.getGeocode(null, latlng, null, null, language, null, apiKey)
+        return api.getGeocode(null, latlng, null, null, language, null,types, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map{

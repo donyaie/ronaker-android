@@ -57,7 +57,7 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     var cancelContainer: CancelContainer = CancelContainer.BACK
         set(value) {
 
-            when (cancelContainer) {
+            when (value) {
                 CancelContainer.NONE -> {
                     cancelButton.visibility = View.GONE
                 }
@@ -136,7 +136,7 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
 
             field = value
 
-            when (actionContainer) {
+            when (value) {
                 ActionContainer.NONE -> {
                     actionLayout.visibility = View.GONE
                 }
@@ -220,7 +220,7 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
             field = value
 
 
-            if (isTransparent) {
+            if (value) {
                 containerLayout.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
