@@ -15,7 +15,6 @@ import com.ronaker.app.R
  * Created by donyaie on 15/07/2016.
  */
 
-@SuppressLint("RtlHardcoded")
 class AnimationHelper {
 
 

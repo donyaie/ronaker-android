@@ -18,37 +18,8 @@ class ShapeDrawableHelper {
         fun changeSvgDrawableColor(context: Context, iconRes: Int, colorRes: Int, view: ImageView) {
             try {
 
-
-
-
-//
-//                view.setImageDrawable(null)
-//                view.clearColorFilter()
-
-
-//                if(view.tag!=null && view.tag==iconRes){
-//
-//                    AppDebug.log(TAG,"has res : $iconRes")
-//                    view.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context,colorRes))
-//
-////                    view.clearColorFilter()
-////                    view.setColorFilter(ContextCompat.getColor(context,colorRes))
-//                }else{
-
-//                    AppDebug.log(TAG,"new res : $iconRes")
                     view.setImageResource(iconRes)
-//                    view.tag=iconRes
-//                    view.clearColorFilter()
                     view.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context,colorRes))
-//                    view.setColorFilter(ContextCompat.getColor(context,colorRes))
-//                }
-
-
-//
-//                view.setImageResource(iconRes)
-//
-//                view.setColorFilter(ContextCompat.getColor(context,colorRes))
-
 
 
             } catch (e: Exception) {

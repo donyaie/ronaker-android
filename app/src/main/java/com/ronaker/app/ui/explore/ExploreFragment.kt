@@ -23,7 +23,6 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.search.SearchActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.ScreenCalculator
-import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
@@ -153,7 +152,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         }
 
-        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
             if (v.getChildAt(v.childCount - 1) != null) {
                 if (scrollY >= v.getChildAt(v.childCount - 1)
                         .measuredHeight - v.measuredHeight &&
