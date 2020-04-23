@@ -37,11 +37,6 @@ class SelectDialogViewModel(app:Application) : BaseViewModel(app) {
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-
-    }
-
     fun searchLocation( items: List< SelectDialog.SelectItem>) {
 
         dataList.clear()

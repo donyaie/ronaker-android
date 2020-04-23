@@ -15,8 +15,6 @@ import com.ronaker.app.ui.profileEmailEdit.ProfileEmailEditActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 
 class ProfileEditActivity : BaseActivity() {
@@ -40,7 +38,7 @@ class ProfileEditActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
@@ -78,29 +76,29 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.avatarEdit.setOnClickListener {
 
-            startActivityMakeScene(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
+            startActivity(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
         }
 
         binding.paymentLayout.setOnClickListener {
 
-            startActivityMakeScene(ProfilePaymentListActivity.newInstance(this))
+            startActivity(ProfilePaymentListActivity.newInstance(this))
 
         }
         binding.numberLayout.setOnClickListener {
 
-            startActivityMakeScene(PhoneNumberActivity.newInstance(this))
+            startActivity(PhoneNumberActivity.newInstance(this))
 
         }
 
         binding.nameLayout.setOnClickListener {
 
-            startActivityMakeScene(ProfileNameEditActivity.newInstance(this))
+            startActivity(ProfileNameEditActivity.newInstance(this))
 
         }
 
         binding.mailLayout.setOnClickListener {
 
-            startActivityMakeScene(ProfileEmailEditActivity.newInstance(this))
+            startActivity(ProfileEmailEditActivity.newInstance(this))
 
         }
 

@@ -1,13 +1,11 @@
 package com.ronaker.app.ui.orderPreview
 
-import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import com.ronaker.app.utils.Alert
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,9 +21,7 @@ import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
+import com.ronaker.app.utils.Alert
 
 class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -48,8 +44,19 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        fun newInstance(context: Context, orderId:String): Intent {
+        fun newInstance(context: Context, orderId: String): Intent {
             val intent = Intent(context, OrderPreviewActivity::class.java)
+            val boundle = Bundle()
+            boundle.putString(OrderId_KEY, orderId)
+            intent.putExtras(boundle)
+
+            return intent
+        }
+
+
+        fun newInstance(context: Application, orderId: String): Intent {
+            val intent = Intent(context, OrderPreviewActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK
             val boundle = Bundle()
             boundle.putString(OrderId_KEY, orderId)
             intent.putExtras(boundle)
@@ -58,9 +65,39 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
     }
 
+
+    override fun onNewIntent(newIntent: Intent?) {
+        newIntent?.let {
+            val orderId = getCurrentOrderId(intent)
+            val newOrderId = getCurrentOrderId(newIntent)
+
+
+            if (orderId != newOrderId) {
+
+                val intent = Intent(this, OrderPreviewActivity::class.java)
+
+                intent.putExtras(newIntent)
+
+                this.finish()
+                startActivity(intent)
+            } else if (orderId != null) {
+                try {
+                    viewModel.getOrder(orderId)
+                } catch (ex: Exception) {
+
+                }
+            }
+        }
+
+        super.onNewIntent(newIntent)
+
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_preview)
@@ -70,8 +107,8 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         binding.viewModel = viewModel
 
 
-        binding.recyclerView.layoutManager= LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recyclerView, false)
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
@@ -83,16 +120,21 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.showProduct.observe(this, Observer { product ->
-            startActivityMakeSceneForResult(
-                ExploreProductActivity.newInstance(this, product, "ds"),
+            startActivityForResult(
+                ExploreProductActivity.newInstance(this, product)
+
+                ,
+
                 ExploreProductActivity.REQUEST_CODE
             )
+
+
         })
 
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -101,14 +143,14 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.acceptIntro.observe(this, Observer {
-            startActivityMakeSceneForResult(
-                OrderAcceptActivity.newInstance(this,viewModel. getOrder()),
+            startActivityForResult(
+                OrderAcceptActivity.newInstance(this, viewModel.getOrder()),
                 OrderAcceptActivity.REQUEST_CODE
             )
         })
 
         viewModel.declineIntro.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderDeclineActivity.newInstance(this, viewModel.getOrder()),
                 OrderDeclineActivity.REQUEST_CODE
             )
@@ -116,7 +158,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.cancelDialog.observe(this, Observer {
 
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderCancelActivity.newInstance(this, viewModel.getOrder()),
                 OrderCancelActivity.REQUEST_CODE
             )
@@ -125,7 +167,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.startRenting.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 OrderStartRentingActivity.newInstance(this, viewModel.getOrder()),
                 OrderStartRentingActivity.REQUEST_CODE
             )
@@ -134,7 +176,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.startRate.observe(this, Observer {
-            startActivityMakeSceneForResult(
+            startActivityForResult(
                 ProductRateActivity.newInstance(this, viewModel.getOrder()),
                 ProductRateActivity.REQUEST_CODE
             )
@@ -142,8 +184,8 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.finishIntro.observe(this, Observer {
-            startActivityMakeSceneForResult(
-                OrderFinishActivity.newInstance(this,viewModel.getOrder()),
+            startActivityForResult(
+                OrderFinishActivity.newInstance(this, viewModel.getOrder()),
                 OrderFinishActivity.REQUEST_CODE
             )
         })
@@ -151,13 +193,13 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
         viewModel.finish.observe(this, Observer {
-            finishSafe()
+            finish()
         })
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
-            finishSafe()
+            finish()
         }
 
 
@@ -174,23 +216,18 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
     override fun onStart() {
         super.onStart()
-//        getOrder()?.suid?.let {
-//
-//
-//            viewModel.getOrder(it)
-//        }
 
-
-
-        getOrder()?.let { viewModel.getOrder(it.suid) }?: kotlin.run {
-
-            getOrderId()?.let{ ordreId->viewModel.getOrder(ordreId) }
-
+        if (isFistStart() && getOrder() != null) {
+            getOrder()?.let { viewModel.load(it) }
+        } else {
+            getCurrentOrderId(intent)?.let {
+                viewModel.getOrder(it)
+            }
         }
 
 
-    }
 
+    }
 
 
     private fun getOrder(): Order? {
@@ -213,55 +250,21 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    private fun getCurrentOrderId(intent: Intent?): String? {
+
+        var orderId: String? = null
+        if (intent?.hasExtra(OrderId_KEY) == true) {
+
+            orderId = intent.getStringExtra(OrderId_KEY)
+
+        } else if (intent?.hasExtra(Order_KEY) == true) {
+
+            orderId = intent.getParcelableExtra<Order?>(Order_KEY)?.suid
+
+        }
 
 
-//        when (requestCode) {
-//
-//            OrderAcceptActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//            ProductRateActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//
-//            OrderDeclineActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//
-//            OrderStartRentingActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//
-//            OrderFinishActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-//            OrderCancelActivity.REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK) {
-//                    finishSafe()
-//                }
-//            }
-//
-
-
-//        }
-
-        super.onActivityResult(requestCode, resultCode, data)
+        return orderId
     }
 
     override fun onScrollChanged() {

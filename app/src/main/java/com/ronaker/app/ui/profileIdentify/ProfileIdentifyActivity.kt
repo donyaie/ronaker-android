@@ -22,9 +22,7 @@ import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.ui.dialog.SelectDialog
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.extension.finishSafe
 import java.io.IOException
 
 
@@ -51,7 +49,7 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_indentify)
@@ -82,7 +80,7 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
             onProfileImageClick()
         })
         viewModel.finish.observe(this, Observer {
-            finishSafe()
+            finish()
         })
 
 
@@ -118,7 +116,7 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
 
 
     private fun onProfileImageClick() {
-        Dexter.withActivity(this)
+        Dexter.withContext(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionRationaleShouldBeShown(

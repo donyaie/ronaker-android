@@ -9,8 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
 
 
 class ProfileEmailVerifyActivity : BaseActivity() {
@@ -35,7 +33,6 @@ class ProfileEmailVerifyActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setFadeTransition(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_email_verify)
@@ -50,7 +47,7 @@ class ProfileEmailVerifyActivity : BaseActivity() {
             if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
         viewModel.goNex.observe(this, Observer {
-           finishSafe()
+           finish()
         })
 
 

@@ -65,7 +65,7 @@ object IntentManeger {
         try {
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.type = "text/plain"
-            intent.data = Uri.parse("mailto:$email}")
+            intent.data = Uri.parse("mailto:$email")
             val chooserIntent = Intent.createChooser(intent, "Send Email")
             chooserIntent.flags = FLAG_ACTIVITY_NEW_TASK
 

@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.addProduct
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,26 +22,25 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Place
-import com.ronaker.app.utils.DEFULT_LOCATION
-import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.MAP_ZOOM
+import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.IPagerFragment
 
 
 class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     AddProductLocationSearchDialog.OnDialogResultListener, GoogleMap.OnCameraIdleListener {
 
-    var isFirstIdle=false
+    var isFirstIdle = false
     var isFirstSelected = false
 
     override fun onCameraIdle() {
         if (isFirstSelected && isFirstIdle) {
             viewModel.updateLocation(mGoogleMap.cameraPosition.target)
-        }else if(isFirstSelected){
-            isFirstIdle=true
+        } else if (isFirstSelected) {
+            isFirstIdle = true
         }
     }
 
+    private lateinit var screenLibrary: ScreenCalculator
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProductAddLocationBinding
     private lateinit var baseViewModel: AddProductViewModel
@@ -57,6 +55,33 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
     fun getSuid(): String? {
         return activity?.intent?.getStringExtra(AddProductActivity.SUID_KEY)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+        screenLibrary = ScreenCalculator(requireContext())
+
+
+//
+//            val mheight=  screenLibrary.screenHeightPixel
+//            val mstatusSize=   windowInsets.systemWindowInsetTop
+//
+//            AppDebug.log("ScreenCalculator", "getVisibleDisplayHeight :$mheight")
+//            AppDebug.log("ScreenCalculator", "statusSize :$mstatusSize")
+//            AppDebug.log("ScreenCalculator", "height :${mheight-mheight - screenLibrary.DP2Pixel(48)}")
+//
+//            binding.containerMap.layoutParams.height =
+//                (mheight-mstatusSize -screenLibrary.DP2Pixel(48)).toInt()
+//            binding.scrollView.layoutParams.height =
+//                (mheight-mstatusSize -screenLibrary.DP2Pixel(48)).toInt()
+
+
+//            windowInsets
+//        }
+
+
     }
 
 
@@ -81,15 +106,29 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         binding.viewModel = viewModel
 
 
+        screenLibrary = ScreenCalculator(requireContext())
 
 
+        val mheight = screenLibrary.screenHeightPixel
+        val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
+
+        binding.containerMap.layoutParams.height =
+            (mheight - mstatusSize - screenLibrary.DP2Pixel(48)).toInt()
+        binding.scrollView.layoutParams.height =
+            (mheight - mstatusSize - screenLibrary.DP2Pixel(48)).toInt()
+
+
+
+
+
+        binding.scrollView.setOnTouchListener { _, _ -> true }
 
         activity?.let {
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
         }
 
 
-        val mapFragment=SupportMapFragment()
+        val mapFragment = SupportMapFragment()
 
         childFragmentManager
             .beginTransaction()
@@ -101,11 +140,13 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
             mGoogleMap = it
             mGoogleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    context, R.raw.style_json))
+                    context, R.raw.style_json
+                )
+            )
 
-            baseViewModel.productLocation.value?.let {it3->
+            baseViewModel.productLocation.value?.let { it3 ->
 
-                isFirstIdle=true
+                isFirstIdle = true
                 isFirstSelected = true
                 val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     it3,
@@ -114,8 +155,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
                 mGoogleMap.moveCamera(cameraUpdate)
 
 
-
-            }?:run {
+            } ?: run {
 
                 val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     DEFULT_LOCATION,
@@ -130,7 +170,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
             mGoogleMap.setOnCameraIdleListener(this@AddProductLocationFragment)
 
 
-
         }
 
         binding.currentButton.setOnClickListener {
@@ -143,7 +182,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 //
 //            baseViewModel.loading.value = value
 //        })
-
 
 
         baseViewModel.productLocation.observe(viewLifecycleOwner, Observer { value ->
@@ -166,6 +204,9 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
                     .setListener(this@AddProductLocationFragment).show()
             }
         }
+
+
+
 
 
 
@@ -193,10 +234,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     }
 
 
-
-
-
-
     fun moveCamera(location: LatLng) {
 
 
@@ -217,7 +254,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
     fun chech(move: Boolean) {
-        Dexter.withActivity(activity)
+        Dexter.withContext(activity)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -285,7 +322,4 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
 }

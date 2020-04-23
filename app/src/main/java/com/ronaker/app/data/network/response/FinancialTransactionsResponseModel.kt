@@ -9,5 +9,8 @@ data class FinancialTransactionsResponseModel(@SerializedName("suid") val suid: 
                                               @SerializedName("transaction_status")  val transaction_status: String,
                                               @SerializedName("description")  val description: String,
                                               @SerializedName("created_at")  val created_at: Date,
-                                              @SerializedName("order_suid")  val order_suid: String?
+                                              @SerializedName("order_suid")  val order_suid: String?,
+                                              @SerializedName("payment_info")  val payment_info: TransactionsPaymentInfoResponseModel?
+
                                               )
+

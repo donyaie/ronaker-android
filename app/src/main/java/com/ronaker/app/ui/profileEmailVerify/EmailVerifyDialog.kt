@@ -1,29 +1,18 @@
 package com.ronaker.app.ui.profileEmailVerify
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.model.LatLng
-import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
-import com.ronaker.app.databinding.DialogAddProductLocationSearchBinding
 import com.ronaker.app.databinding.DialogEmailVerifyBinding
-import com.ronaker.app.model.Place
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.extension.finishSafe
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import java.util.concurrent.TimeUnit
 
 class EmailVerifyDialog : BaseDialog() {
 
@@ -77,7 +66,7 @@ class EmailVerifyDialog : BaseDialog() {
 
         binding.viewModel = viewModel
 
-        rootView = binding.getRoot()
+        rootView = binding.root
         binding.dialog = this
 
 
@@ -160,11 +149,6 @@ class EmailVerifyDialog : BaseDialog() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
 
         dialogResultListener?.onDialogResult(dialogResult)
@@ -174,10 +158,6 @@ class EmailVerifyDialog : BaseDialog() {
 
         super.onDismiss(dialog)
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onDestroyView() {

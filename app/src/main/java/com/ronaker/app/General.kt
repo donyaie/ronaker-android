@@ -7,6 +7,7 @@ import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
+import com.ronaker.app.utils.AppNotificationOpenedHandler
 import com.ronaker.app.utils.FONT_PATH
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -30,9 +31,15 @@ class General : MultiDexApplication() {
         analytics = FirebaseAnalytics.getInstance(this)
 
 
-        // Branch logging for debugging
-        Branch.enableDebugMode()
 
+        if (BuildConfig.DEBUG){
+
+            // Branch logging for debugging
+            Branch.enableDebugMode()
+
+            Stetho.initializeWithDefaults(this)
+
+        }
 
         Branch.getAutoInstance(this)
 
@@ -41,10 +48,10 @@ class General : MultiDexApplication() {
         OneSignal.startInit(this)
             .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
             .unsubscribeWhenNotificationsAreDisabled(true)
+            .setNotificationOpenedHandler(AppNotificationOpenedHandler(this))
             .init()
 
 
-        Stetho.initializeWithDefaults(this)
 
 
         ViewPump.init(

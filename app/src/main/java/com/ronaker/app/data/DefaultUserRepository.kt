@@ -8,6 +8,7 @@ import com.ronaker.app.data.network.request.*
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUserModel
+import com.ronaker.app.utils.AppDebug
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -55,7 +56,13 @@ class DefaultUserRepository(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
+
+//                AppDebug.log("loginUser",it.toString())
+
+
                 it.user.toUserModel().apply {
+
+
                     accessToken = it.token
                     saveUserInfo(this)
                     saveUserToken(it.token)

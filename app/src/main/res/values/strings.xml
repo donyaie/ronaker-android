@@ -29,12 +29,7 @@
     <string name="text_rent_rejected">Rent | Rejected Order</string>
 
 
-    <string name="title_curency_symbol" translatable="false">€</string>
-
     <string name="hint_0000_0000_0000_0000" translatable="false">0000 0000 0000 0000</string>
-
-    <string name="retry">Retry</string>
-    <string name="post_error">An error occurred while loading the posts</string>
 
 
     <string name="email">Email</string>
@@ -96,7 +91,6 @@
     <string name="title_search_your_location">Search your Location</string>
     <string name="title_button_set_location">Set Location</string>
     <string name="title_set_your_asking_price">Set your asking price.</string>
-    <string name="title_profile">Profile</string>
     <string name="title_logout">Log out</string>
     <string name="error_set_price">please set price</string>
     <string name="error_add_image">add images</string>
@@ -113,7 +107,6 @@
     <string name="title_select_category">Select Category</string>
     <string name="error_set_location">Select Location</string>
 
-    <string name="title_positive_rate">positive rate</string>
     <string name="button_decline">Decline</string>
     <string name="button_accept">Accept</string>
     <string name="button_cancel">Cancel</string>
@@ -121,13 +114,9 @@
     <string name="text_per_day">Per Day</string>
     <string name="text_complete_your_profile">Complete your profile</string>
     <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or lending out.</string>
-    <string name="titile_sign_up">Sign Up</string>
     <string name="title_add_profile_image">Add Profile Image</string>
-    <string name="title_add_profile_image_edit">Change Profile Image</string>
     <string name="title_add_and_verify_phone_number">Add and verify phone number</string>
-    <string name="title_add_and_verify_phone_number_edit">Change and verify new phone number</string>
     <string name="title_add_a_payment_method">Add a payment method</string>
-    <string name="title_add_a_payment_method_edit">Change your payment method</string>
     <string name="title_verify_your_identity">Verify your Identity</string>
     <string name="title_add_a_identity_document">Add a identity document</string>
     <string name="title_please_upload_one_of_your_identity_document_to_authentication">Please Upload one of your Identity document to Authentication.</string>
@@ -139,7 +128,6 @@
     <string name="title_edit_profile">Edit Profile</string>
     <string name="title_complete_profile">Complete Your Profile</string>
     <string name="title_setting">Settings</string>
-    <string name="title_payment">Payment</string>
     <string name="title_categories">Categories</string>
     <string name="text_you_have_not_any_order_hear">You have not any order here</string>
     <string name="title_order">Orders</string>
@@ -218,6 +206,8 @@
     <string name="text_title_save">Save</string>
     <string name="text_choice_payment_type">Choice Payment Type</string>
     <string name="text_nothing_saved_yet">Nothing Saved Yet</string>
+    <string name="texy_you_haven_t_payment_method">You Haven\'t Payment Method</string>
+    <string name="text_location_address">Location Address</string>
 
 
 </resources>

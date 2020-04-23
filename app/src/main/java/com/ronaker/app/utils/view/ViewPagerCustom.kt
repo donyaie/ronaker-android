@@ -80,9 +80,9 @@ class ViewPagerCustom : ViewPager {
 
         private var mScrollFactor = 1.0
 
-        constructor(context: Context) : super(context) {}
+        constructor(context: Context) : super(context)
 
-        constructor(context: Context, interpolator: Interpolator) : super(context, interpolator) {}
+        constructor(context: Context, interpolator: Interpolator) : super(context, interpolator)
 
         constructor(context: Context, interpolator: Interpolator, flywheel: Boolean) : super(
             context,

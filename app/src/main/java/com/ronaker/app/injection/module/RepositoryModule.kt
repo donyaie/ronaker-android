@@ -2,6 +2,7 @@ package com.ronaker.app.injection.module
 
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
@@ -103,6 +104,10 @@ import javax.inject.Singleton
                 level =
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
+            .apply {
+                if (BuildConfig.DEBUG)  addNetworkInterceptor( StethoInterceptor())
+            }
+
             .build()
 
 
@@ -199,9 +204,10 @@ import javax.inject.Singleton
             level =
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         })
-
         if (BuildConfig.DEBUG)
-            clientBuilder.addNetworkInterceptor(com.facebook.stetho.okhttp3.StethoInterceptor())
+            clientBuilder.addNetworkInterceptor( StethoInterceptor())
+
+
 
 
         val client = clientBuilder.build()

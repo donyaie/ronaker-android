@@ -16,7 +16,6 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.utils.ScreenCalculator
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 class ManageProductListFragment : BaseFragment() {
@@ -104,10 +103,10 @@ class ManageProductListFragment : BaseFragment() {
 
 
         binding.addNewProductButton.setOnClickListener {
-            activity?.startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
         binding.addProductButton.setOnClickListener {
-            activity?.startActivityMakeScene(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->

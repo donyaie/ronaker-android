@@ -2,16 +2,18 @@ package com.ronaker.app.ui.search
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.transition.Fade
 import android.view.inputmethod.EditorInfo
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
+
 
 class SearchActivity : BaseActivity() {
 
@@ -39,16 +41,22 @@ class SearchActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
-        AnimationHelper.setAnimateTransition(this)
-
         super.onCreate(savedInstanceState)
-
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
         binding.viewModel = viewModel
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val fade = Fade()
+            fade.excludeTarget(android.R.id.statusBarBackground, true)
+            fade.excludeTarget(android.R.id.navigationBarBackground, true)
+            window.enterTransition = fade
+            window.exitTransition = fade
+        }
 
 
 
@@ -69,7 +77,7 @@ class SearchActivity : BaseActivity() {
 
 
         binding.cancelSearch.setOnClickListener {
-            finishSafe()
+            finishAfterTransition()
         }
 
         binding.searchEdit.setOnEditorActionListener { _, actionId, _ ->
@@ -80,7 +88,7 @@ class SearchActivity : BaseActivity() {
                 val value = binding.searchEdit.text.toString()
                 intent.putExtra(Search_KEY, value)
                 setResult(0, intent)
-                finishSafe()
+                finishAfterTransition()
                 true
             } else {
                 false
@@ -94,6 +102,16 @@ class SearchActivity : BaseActivity() {
         }
 
 
+    }
+
+    override fun onBackPressed() {
+       finishAfterTransition()
+    }
+
+
+    override fun finish() {
+        super.finish()
+        AnimationHelper.clearTransition(this)
     }
 
 

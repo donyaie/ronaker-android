@@ -13,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:gravity="center"
         android:layoutDirection="ltr">
 
@@ -34,9 +33,9 @@
             app:toolbar_component_transparent="false" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/scroll_view"
             app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -83,8 +82,6 @@
                         tools:ignore="HardcodedText" />
 
 
-
-
                 </LinearLayout>
 
 
@@ -101,8 +98,8 @@
 
 
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
                     android:minHeight="112dp"
                     android:onClick="@{()->viewModel.onClickItem()}"
                     android:orientation="horizontal">
@@ -157,15 +154,14 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:contentDescription="@string/text_content"
-
                         android:layout_marginEnd="24dp"
+
+                        android:contentDescription="@string/text_content"
                         android:padding="4dp"
                         android:tint="@color/colorAshGrey"
                         app:srcCompat="@drawable/ic_chevron_right" />
 
                 </LinearLayout>
-
 
 
                 <RelativeLayout
@@ -263,24 +259,24 @@
                     android:background="@color/colorPlatinGrey" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
                     android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
 
-                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}"
+                    android:layout_marginBottom="16dp"
 
 
                     app:adapter="@{viewModel.getPriceListAdapter()}"
-                    android:layout_height="wrap_content"/>
+                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"
-                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}"
                     android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
+                    android:background="@color/colorPlatinGrey"
+                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}" />
 
 
                 <LinearLayout
@@ -319,9 +315,9 @@
                             android:layout_marginTop="11dp"
 
 
-                            app:mutableVisibility="@{viewModel.getUserContactVisibility()}"
                             android:orientation="horizontal"
-                            android:visibility="visible">
+                            android:visibility="visible"
+                            app:mutableVisibility="@{viewModel.getUserContactVisibility()}">
 
 
                             <ImageButton
@@ -329,29 +325,29 @@
                                 android:layout_height="42dp"
                                 android:layout_marginEnd="8dp"
                                 android:background="@null"
-                                android:tint="@color/colorTextDark"
                                 android:contentDescription="@string/text_content"
-
                                 android:onClick="@{()->viewModel.onClickSendMail()}"
 
                                 android:padding="10dp"
 
                                 android:scaleType="fitCenter"
+
+                                android:tint="@color/colorTextDark"
                                 app:srcCompat="@drawable/ic_message" />
 
 
                             <ImageButton
                                 android:layout_width="42dp"
-                                android:layout_marginStart="30dp"
                                 android:layout_height="42dp"
+                                android:layout_marginStart="30dp"
                                 android:layout_marginEnd="8dp"
                                 android:background="@null"
-                                android:tint="@color/colorTextDark"
+                                android:contentDescription="@string/text_content"
 
                                 android:onClick="@{()->viewModel.onClickMakeCall()}"
-                                android:contentDescription="@string/text_content"
                                 android:padding="10dp"
                                 android:scaleType="fitCenter"
+                                android:tint="@color/colorTextDark"
                                 app:srcCompat="@drawable/ic_telephone" />
 
 
@@ -379,8 +375,6 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" />
-
-
 
 
                 <TextView
@@ -414,7 +408,6 @@
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
-
 
 
                 <TextView
@@ -508,14 +501,13 @@
                     tools:ignore="HardcodedText" />
 
 
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
                     android:layout_marginBottom="40dp"
+                    android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
 
             </LinearLayout>
@@ -527,8 +519,8 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:visibility="gone"
             android:background="@color/white"
+            android:visibility="gone"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:mutableVisibility="@{viewModel.getActionVisibility()}">
@@ -552,13 +544,13 @@
                     style="@style/Button.transparent"
                     android:layout_width="wrap_content"
 
-                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-
                     android:layout_weight="1"
+
                     android:onClick="@{()->viewModel.onClickCanceled()}"
                     android:text="@string/button_cancel"
+                    android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getCancelVisibility()}"
 
                     />
@@ -567,13 +559,13 @@
                     style="@style/Button.transparent"
                     android:layout_width="wrap_content"
 
-                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-
                     android:layout_weight="1"
+
                     android:onClick="@{()->viewModel.onClickDecline()}"
                     android:text="@string/button_decline"
+                    android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getDeclineVisibility()}"
 
                     />
@@ -583,14 +575,14 @@
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
 
-                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-
                     android:layout_weight="1"
 
                     android:onClick="@{()->viewModel.onClickAccept()}"
+
                     android:text="@string/button_accept"
+                    android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getAcceptVisibility()}"
 
                     />
@@ -600,14 +592,14 @@
                     style="@style/Button.accent"
                     android:layout_width="wrap_content"
 
-                    android:visibility="gone"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-
                     android:layout_weight="1"
 
                     android:onClick="@{()->viewModel.onClickFinished()}"
+
                     android:text="@string/button_finish"
+                    android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getFinishVisibility()}"
 
                     />
@@ -619,12 +611,12 @@
 
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:visibility="gone"
-
                     android:layout_weight="1"
 
                     android:onClick="@{()->viewModel.onClickStartRenting()}"
+
                     android:text="@string/button_start_renting"
+                    android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getStartRentingVisibility()}"
 
                     />
@@ -637,11 +629,11 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
 
-                    android:visibility="gone"
                     android:layout_weight="1"
-
                     android:onClick="@{()->viewModel.onClickStartRate()}"
+
                     android:text="@string/text_rate_product"
+                    android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getStartRatingVisibility()}"
 
                     />

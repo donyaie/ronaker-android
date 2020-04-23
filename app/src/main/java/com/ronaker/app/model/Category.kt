@@ -2,7 +2,6 @@ package com.ronaker.app.model
 
 import android.os.Parcelable
 import com.ronaker.app.data.network.response.CategoriesResponseModel
-import com.ronaker.app.data.network.response.ProductItemImageResponceModel
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 

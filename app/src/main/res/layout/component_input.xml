@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_layout"
         android:layout_width="match_parent"
+        android:paddingBottom="3dp"
         android:layout_height="wrap_content">
 
         <TextView

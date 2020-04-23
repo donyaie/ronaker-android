@@ -21,16 +21,11 @@
         android:focusable="true"
         android:orientation="vertical">
 
-        <com.ronaker.app.utils.view.StatusBarSizeView
-            android:layout_width="match_parent"
-
-            android:layout_height="0dp"
-            />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_size"
-            android:layout_marginBottom="76dp"
+            android:layout_marginBottom="116dp"
             tools:ignore="UselessLeaf" />
 
 
@@ -38,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="16dp"
 
             android:layout_marginRight="24dp"
             app:cardCornerRadius="4dp"

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 class AddProductLocationSearchDialog : BaseDialog() {
 
     //region field
-    private val TAG = AddProductLocationSearchDialog::class.java.getSimpleName()
+    private val TAG = AddProductLocationSearchDialog::class.java.simpleName
 
     lateinit var rootView: View
 
@@ -70,7 +70,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
         binding.viewModel = viewModel
 
-        rootView = binding.getRoot()
+        rootView = binding.root
         binding.dialog = this
 
 
@@ -105,7 +105,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
     internal fun initilizeAdapter() {
 
         val linearLayoutManager = LinearLayoutManager(context)
-        binding.recycler.setLayoutManager(linearLayoutManager)
+        binding.recycler.layoutManager = linearLayoutManager
 
 
     }
@@ -174,11 +174,6 @@ class AddProductLocationSearchDialog : BaseDialog() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
 
         dialogResultListener?.onDialogResult(dialogResult, location)
@@ -188,10 +183,6 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
         super.onDismiss(dialog)
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onDestroyView() {

@@ -8,11 +8,9 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import com.ronaker.app.utils.toCurrencyFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
@@ -182,7 +180,7 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
     fun onClickProduct() {
 
 
-        activity?.let { it.startActivityMakeScene(OrderPreviewActivity.newInstance(it, data)) }
+        activity?.let { it.startActivity(OrderPreviewActivity.newInstance(it, data)) }
     }
 
     fun getProductTitle(): MutableLiveData<String> {

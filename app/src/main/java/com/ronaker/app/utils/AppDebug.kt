@@ -12,7 +12,8 @@ object AppDebug {
         Message?.let {
             if (BuildConfig.DEBUG)
                 Log.d(TAG, it)
-            Crashlytics.log(Log.DEBUG, TAG, it)
+            else
+                Crashlytics.log(Log.DEBUG, TAG, it)
         }
     }
 
@@ -22,7 +23,14 @@ object AppDebug {
         }
     }
 
-    fun log(TAG: String, Message: String?, ex: Exception?) {
+
+    fun log(TAG: String, ex: Throwable?) {
+        ex?.let {
+            log(TAG, "Exception ", ex)
+        }
+    }
+
+    fun log(TAG: String, Message: String?, ex: Throwable?) {
 
         var message1 = Message ?: ""
 
@@ -31,15 +39,16 @@ object AppDebug {
 
         if (BuildConfig.DEBUG)
             Log.e(TAG, message1)
-
-        Crashlytics.log(Log.DEBUG, TAG, message1)
+        else
+            Crashlytics.log(Log.DEBUG, TAG, message1)
 
 
         ex?.let {
 
             if (BuildConfig.DEBUG)
                 it.printStackTrace()
-            Crashlytics.logException(ex)
+            else
+                Crashlytics.logException(ex)
         }
     }
 

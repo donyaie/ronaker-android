@@ -11,13 +11,22 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.actionOpenProduct
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.invoke
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
 
 class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
+
+    private val TAG = ExploreProductViewModel::class.java.simpleName
 
     @Inject
     lateinit
@@ -31,12 +40,14 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
 
 
     init {
+
 
         rateListAdapter = ProductCommentAdapter(dataList)
     }
@@ -78,104 +89,131 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     var mProduct: Product? = null
 
-    var suid: String? = null
+    var mSuid: String? = null
 
 
     private var subscription: Disposable? = null
     private var commentSubscription: Disposable? = null
     private var faveSubscription: Disposable? = null
 
+    fun loadProduct(suid: String){
+        uiScope.launch {
+            loadProduct(suid, true)
+        }
+    }
 
     fun loadProduct(product: Product) {
+        uiScope.launch {
+            val time1 = measureTimeMillis {
 
-        loading.value = false
-        this.suid = product.suid
-        mProduct = product
-        fillProduct(product)
-
-        product.suid?.let { loadProduct(it, false) }
-
-    }
-
-    fun loadProduct(suid: String, showLoading: Boolean, refresh: Boolean = false) {
-        subscription?.dispose()
-        this.suid = suid
-        subscription = productRepository
-            .getProduct(userRepository.getUserToken(), suid)
-
-            .doOnSubscribe {
-                retry.value = null
-                loading.value = showLoading
-
-                loadingRefresh.value = refresh
-
-            }
-            .doOnTerminate {
-                loading.value = false
-                loadingRefresh.value = false
+                loading.postValue(false)
+                mSuid = product.suid
+                mProduct = product
+                fillProduct(product)
             }
 
-            .subscribe { result ->
-                if (result.isSuccess()) {
-
-                    mProduct = result.data
+            AppDebug.log(TAG, "fillProduct time : $time1")
+            val time2 = measureTimeMillis {
 
 
-                    mProduct?.let { fillProduct(it) }
-
-
-                } else {
-                    if (showLoading)
-                        retry.value = result.error?.message
-                    else {
-                        errorMessage.value = result.error?.message
-                    }
-//
+                product.suid?.let {
+                    loadProduct(it, false)
                 }
             }
-        loadComment(suid)
 
+            AppDebug.log(TAG, "loadProduct time : $time2")
+        }
     }
 
-    fun loadComment(suid: String) {
+    suspend fun loadProduct(id: String, showLoading: Boolean, refresh: Boolean = false) =
+        withContext(Dispatchers.IO) {
+
+            mSuid = id
+            subscription?.dispose()
+
+            subscription = productRepository
+                .getProduct(userRepository.getUserToken(), id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+
+                .doOnSubscribe {
+                    retry.postValue(null)
+                    loading.postValue(showLoading)
+
+                    loadingRefresh.postValue(refresh)
+
+                }
+                .doOnTerminate {
+                    loading.postValue(false)
+                    loadingRefresh.postValue(false)
+                }
+
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+
+                        mProduct = result.data
 
 
-        commentSubscription?.dispose()
-        commentSubscription = productRepository
-            .getProductRating(userRepository.getUserToken(), suid)
-
-            .doOnSubscribe {
-
-                loadingComment.value = true
-            }
-            .doOnTerminate {
-
-                loadingComment.value = false
-            }
-
-            .subscribe { result ->
-                if (result.isSuccess()) {
+                        mProduct?.let { fillProduct(it) }
 
 
-                    if (result.data?.results != null && result.data.results.isNotEmpty()) {
-                        noCommentVisibility.value = View.GONE
                     } else {
-
-                        noCommentVisibility.value = View.VISIBLE
+                        if (showLoading)
+                            retry.postValue(result.error?.message)
+                        else {
+                            errorMessage.postValue(result.error?.message)
+                        }
+//
                     }
-
-                    result.data?.results?.let {
-                        dataList.clear()
-                        dataList.addAll(it)
-                        rateListAdapter.notifyDataSetChanged()
-                    }
-
 
                 }
 
-            }
 
-    }
+            loadComment(id)
+        }
+
+    suspend fun loadComment(suid: String) =
+        withContext(Dispatchers.IO) {
+
+
+            commentSubscription?.dispose()
+            commentSubscription = productRepository
+                .getProductRating(userRepository.getUserToken(), suid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSubscribe {
+
+                    loadingComment.postValue(true)
+                }
+                .doOnTerminate {
+
+                    loadingComment.postValue(false)
+                }
+
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+
+
+                        if (result.data?.results != null && result.data.results.isNotEmpty()) {
+                            noCommentVisibility.postValue(View.GONE)
+                        } else {
+
+                            noCommentVisibility.postValue(View.VISIBLE)
+                        }
+
+                        result.data?.results?.let {
+                            dataList.clear()
+                            dataList.addAll(it)
+
+                            rateListAdapter.updateList()
+                        }
+
+
+                    }
+
+                }
+
+        }
 
 
     private fun fillProduct(product: Product) {
@@ -190,53 +228,53 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         product.images?.forEach {
             images.add(BASE_URL + it.url)
         }
-        imageList.value = images
+        imageList.postValue(images)
 
-        productImage.value = BASE_URL + product.avatar
+        productImage.postValue(BASE_URL + product.avatar)
 
         product.owner?.let {
 
             it.avatar?.let { avatar ->
 
-                userImage.value = BASE_URL + avatar
+                userImage.postValue(BASE_URL + avatar)
 
             }
 
-            userName.value = (it.first_name ?: "") + " " + (it.last_name ?: "")
+            userName.postValue((it.first_name ?: "") + " " + (it.last_name ?: ""))
 
             userRepository.getUserInfo()?.let { info ->
                 if (it.suid?.compareTo(info.suid ?: "") == 0)
-                    checkoutVisibility.value = View.GONE
+                    checkoutVisibility.postValue(View.GONE)
                 else
-                    checkoutVisibility.value = View.VISIBLE
+                    checkoutVisibility.postValue(View.VISIBLE)
             }
 
         }
         //title_positive_rate
 
-        isFavorite.value = product.isFavourite != null && product.isFavourite == true
+        isFavorite.postValue(product.isFavourite != null && product.isFavourite == true)
 
         product.rate?.let { rate ->
 
 
-            productRate.value = rate.toString()
+            productRate.postValue(rate.toString())
 
-            productRatestatus.value = "Positive Rate"
+            productRatestatus.postValue("Positive Rate")
 
 
         } ?: run {
 
-            productRate.value = ""
-            productRatestatus.value = "Not Rated"
+            productRate.postValue("")
+            productRatestatus.postValue("Not Rated")
         }
 
 
-        productDescription.value = product.description
-        productTitle.value = product.name
+        productDescription.postValue(product.description)
+        productTitle.postValue(product.name)
 
-        productAddress.value = product.address
+        productAddress.postValue(product.address)
 
-        productLocation.value = product.location
+        productLocation.postValue(product.location)
 
 
 
@@ -244,20 +282,20 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         when {
             product.price_per_day != 0.0 -> {
 
-                productPrice.value = product.price_per_day?.toCurrencyFormat()
-                productPriceTitle.value = context.getString(R.string.title_per_day)
+                productPrice.postValue(product.price_per_day?.toCurrencyFormat())
+                productPriceTitle.postValue(context.getString(R.string.title_per_day))
             }
             product.price_per_week != 0.0 -> {
 
-                productPrice.value = product.price_per_week?.toCurrencyFormat()
+                productPrice.postValue(product.price_per_week?.toCurrencyFormat())
 
-                productPriceTitle.value = context.getString(R.string.title_per_week)
+                productPriceTitle.postValue(context.getString(R.string.title_per_week))
             }
             product.price_per_month != 0.0 -> {
 
-                productPrice.value = product.price_per_month?.toCurrencyFormat()
+                productPrice.postValue(product.price_per_month?.toCurrencyFormat())
 
-                productPriceTitle.value = context.getString(R.string.title_per_month)
+                productPriceTitle.postValue(context.getString(R.string.title_per_month))
             }
         }
 
@@ -267,17 +305,26 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun checkOut() {
 
-        checkout.value = suid
+        checkout.postValue(mSuid)
     }
 
 
     fun onRefresh() {
 
-        suid?.let { loadProduct(it, false, true) }
+        uiScope.launch {
+            mSuid?.let {
+                loadProduct(it, showLoading = false, refresh = true)
+            }
+        }
     }
 
     fun onRetry() {
-        suid?.let { loadProduct(it, true) }
+
+        uiScope.launch {
+            mSuid?.let {
+                loadProduct(it, showLoading = true)
+            }
+        }
     }
 
 
@@ -292,64 +339,57 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
         faveSubscription?.dispose()
 
-
-
-        if(  mProduct?.isFavourite != null && mProduct?.isFavourite == true) {
+        if (mProduct?.isFavourite != null && mProduct?.isFavourite == true) {
 
             faveSubscription = productRepository
                 .productSavedRemove(userRepository.getUserToken(), suid)
 
                 .doOnSubscribe {
 
-//                    loading.value = true
+//                    loading.postValue( true
                 }
                 .doOnTerminate {
 
-//                    loading.value = false
+//                    loading.postValue( false
                 }
 
                 .subscribe { result ->
                     if (result.isAcceptable()) {
-                        mProduct?.isFavourite=false
+                        mProduct?.isFavourite = false
 
-                        isFavorite.value=false
+                        isFavorite.postValue(false)
 
 
-
-                    }
-                    else{
-                        errorMessage.value= result?.error?.message
+                    } else {
+                        errorMessage.postValue(result?.error?.message)
                     }
                 }
 
-        }else{
+        } else {
             faveSubscription = productRepository
                 .productSave(userRepository.getUserToken(), suid)
 
                 .doOnSubscribe {
 
-//                    loading.value = true
+//                    loading.postValue( true
                 }
                 .doOnTerminate {
 
-//                    loading.value = false
+//                    loading.postValue( false
                 }
 
                 .subscribe { result ->
                     if (result.isAcceptable()) {
 
-                        mProduct?.isFavourite=true
-                        isFavorite.value=true
+                        mProduct?.isFavourite = true
+                        isFavorite.postValue(true)
 
 
-                    }
-                    else{
-                        errorMessage.value= result?.error?.message
+                    } else {
+                        errorMessage.postValue(result?.error?.message)
                     }
                 }
         }
-
-
 
 
     }

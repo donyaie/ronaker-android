@@ -22,7 +22,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         page: Int,
         location: LatLng?,
         radius: Int?,
-        isSaved:Boolean?
+        isSaved:Boolean?,
+        categorySiud:String?
     ): Observable<Result<ListResponseModel<Product>>> {
 
         val loc = location?.let {
@@ -37,7 +38,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
             query,
             loc,
             radius,
-            isSaved
+            isSaved,
+            categorySiud
         )
 
 
@@ -100,6 +102,7 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         return productApi.getProduct("Token $token", suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+//            .observeOn(AndroidSchedulers.mainThread())
             .map { it.toProductDetail() }
             .toResult()
     }
@@ -111,8 +114,7 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>> {
         return productApi.getProductRate("Token $token", suid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+
             .map {
                 ListResponseModel(it.count, it.next, it.previous, it.results?.toProductRateList())
             }

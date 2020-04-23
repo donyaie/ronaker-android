@@ -14,11 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalculator
-import com.ronaker.app.utils.extension.finishSafe
 import com.ronaker.app.utils.view.IPagerFragment
 
 
@@ -63,9 +61,9 @@ class PhoneNumberActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_number)
 
         viewModel = ViewModelProvider(this).get(PhoneNumberViewModel::class.java)
@@ -95,7 +93,7 @@ class PhoneNumberActivity : BaseActivity() {
         binding.toolbar.showNavigator(false, 0)
 
 
-        binding.toolbar.cancelClickListener = View.OnClickListener { finishSafe() }
+        binding.toolbar.cancelClickListener = View.OnClickListener { finish() }
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -116,7 +114,7 @@ class PhoneNumberActivity : BaseActivity() {
 
 
         viewModel.goNext.observe(this, Observer {
-           finishSafe()
+           finish()
         })
 
         initViewPagerRegister()
@@ -133,7 +131,7 @@ class PhoneNumberActivity : BaseActivity() {
 
 
         if (binding.viewpager.currentItem == 0)
-            finishSafe()
+            finish()
 
 
         if (binding.viewpager.currentItem > PhoneNumberViewModel.StateEnum.number.position) {

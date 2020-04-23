@@ -10,7 +10,6 @@ import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import com.ronaker.app.utils.toCurrencyFormat
 
 
@@ -79,40 +78,13 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
 
     fun onClickProduct() {
 
-
-        if (!ExploreProductActivity.isHavePending(data)) {
-
-
             activity?.let { mActivity->
-                mActivity.startActivityMakeSceneForResult(ExploreProductActivity.newInstance(mActivity,data,""),ExploreProductActivity.REQUEST_CODE)
 
+                mActivity.startActivityForResult(ExploreProductActivity.newInstance(mActivity,data),ExploreProductActivity.REQUEST_CODE)
 
 
             }
 
-//
-//            activity?.let {activity->
-//
-//                val options = ViewCompat.getTransitionName(mBinder.image)?.let {
-//                    val makeSceneTransitionAnimation =
-//                        ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                            activity as Activity,
-//                            mBinder.image,
-//                            it
-//                        )
-//                    makeSceneTransitionAnimation
-//                }
-//                activity.startActivityForResult(
-//                    ExploreProductActivity.newInstance(
-//                        activity,
-//                        data,
-//                        ViewCompat.getTransitionName(mBinder.image)
-//                    ),ExploreProductActivity.REQUEST_CODE, options?.toBundle()
-//                )
-//
-//            }
-
-        }
     }
 
     fun getProductTitle(): MutableLiveData<String> {

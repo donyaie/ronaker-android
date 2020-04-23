@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
 
 
 class ProfileEmailEditActivity : BaseActivity() {
@@ -35,9 +33,9 @@ class ProfileEmailEditActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_email_edit)
 
         viewModel = ViewModelProvider(this).get(ProfileEmailEditViewModel::class.java)
@@ -59,7 +57,7 @@ class ProfileEmailEditActivity : BaseActivity() {
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value == true) {
-                finishSafe()
+                finish()
             }
         })
 

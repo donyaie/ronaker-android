@@ -4,13 +4,12 @@ package com.ronaker.app.data.local
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 import com.google.gson.Gson
+import com.ronaker.app.utils.byteArrayOfInts
+import com.securepreferences.SecurePreferences
 import java.lang.reflect.Type
 
 class PreferencesProvider(context: Context):PreferencesDataSource {
-
-    lateinit var context: Context
 
 
     private lateinit var preferences: SharedPreferences
@@ -25,13 +24,10 @@ class PreferencesProvider(context: Context):PreferencesDataSource {
         return editor
     }
 
-
     init {
 
         try {
-            this.context = context
-            preferences = PreferenceManager
-                .getDefaultSharedPreferences(context)
+            preferences = SecurePreferences(context,byteArrayOfInts(0xA1, 0x2E, 0x39, 0xF4, 0x89, 0xC3).contentToString())
         } catch (e: Exception) {
             e.printStackTrace()
         }

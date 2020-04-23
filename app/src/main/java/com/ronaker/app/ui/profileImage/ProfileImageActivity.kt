@@ -20,9 +20,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
-import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.extension.finishSafe
 import java.io.IOException
 
 
@@ -56,7 +54,7 @@ class ProfileImageActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_image)
@@ -87,7 +85,7 @@ class ProfileImageActivity : BaseActivity() {
             onProfileImageClick()
         })
         viewModel.finish.observe(this, Observer {
-            finishSafe()
+            finish()
         })
 
 
@@ -104,7 +102,7 @@ class ProfileImageActivity : BaseActivity() {
 
 
     private fun onProfileImageClick() {
-        Dexter.withActivity(this)
+        Dexter.withContext(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionRationaleShouldBeShown(

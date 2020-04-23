@@ -4,14 +4,16 @@ package com.ronaker.app.ui.manageProduct
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ManageProductListViewModel (app: Application): BaseViewModel(app) {
+class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -30,7 +32,7 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
     var dataList: ArrayList<Product> = ArrayList()
 
 
-    var productListAdapter: ManageProductAdapter
+    var productListAdapter: ManageProductAdapter = ManageProductAdapter()
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
@@ -39,13 +41,11 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
-    private  var subscription: Disposable?=null
+    private var subscription: Disposable? = null
 
     init {
-        productListAdapter = ManageProductAdapter(dataList)
         reset()
     }
-
 
 
     private fun reset() {
@@ -53,96 +53,69 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
         page = 0
         hasNextPage = true
         dataList.clear()
-        productListAdapter.updateproductList()
-        resetList.value = true
+
+        resetList.postValue(true)
 //        view.getScrollListener().resetState()
     }
 
-    fun loadProduct() {
+    suspend fun loadProduct() =
+        withContext(Dispatchers.IO) {
 
-        if (hasNextPage) {
-            page++
-            subscription?.dispose()
-            subscription = productRepository
-                .getMyProduct(userRepository.getUserToken(), page)
+            if (hasNextPage) {
+                page++
+                subscription?.dispose()
+                subscription = productRepository
+                    .getMyProduct(userRepository.getUserToken(), page)
 
-                .doOnSubscribe { onRetrieveProductListStart() }
-                .doOnTerminate { onRetrieveProductListFinish() }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-                        if ((result.data?.results?.size?:0) > 0) {
+                    .doOnSubscribe {
+                        retry.postValue(null)
+                        if (page <= 1) {
+                            loading.postValue(true)
+
+//                            addNewView.postValue(false)
+//                            emptyView.postValue(false)
+
+                        }
+                        errorMessage.postValue(null)
+                    }
+                    .doOnTerminate { loading.postValue(false) }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
 
 
-                            addNewView.value = true
-                            emptyView.value = false
-                            onRetrieveProductListSuccess(
-                                result.data?.results
-                            )
+                            result.data?.results?.let { dataList.addAll(it) }
+                            productListAdapter.updateList(dataList)
+
 
                             if (result.data?.next == null) {
                                 hasNextPage = false
                             }
 
+                            if (!result.data?.results.isNullOrEmpty()) {
+
+
+                                addNewView.postValue(true)
+                                emptyView.postValue(false)
+                            }
+
+
+                            if (dataList.isEmpty()) {
+
+                                addNewView.postValue(false)
+                                emptyView.postValue(true)
+                            }
+
+
                         } else {
 
-                            addNewView.value = false
-                            emptyView.value = true
+                            if (page <= 1)
+                                retry.postValue(result.error?.message)
+                            else
+                                errorMessage.postValue(result.error?.message)
                         }
-                    } else {
-                        onRetrieveProductListError(result.error)
                     }
-                }
+            }
         }
-    }
-
-
-    private fun onRetrieveProductListStart() {
-        retry.value = null
-        if (page <=1 ) {
-            loading.value = true
-
-            addNewView.value = false
-            emptyView.value = false
-
-        }
-        errorMessage.value = null
-    }
-
-    private fun onRetrieveProductListFinish() {
-        loading.value = false
-
-
-    }
-
-    private fun onRetrieveProductListSuccess(productList: List<Product>?) {
-
-//        if (productList != null) {
-//            dataList.addAll(productList)
-//            productListAdapter.updateproductList()
-//        }
-
-
-        if (productList != null) {
-
-            var insertIndex=0
-            if(dataList.size>0)
-                insertIndex=dataList.size
-
-            dataList.addAll(productList)
-            productListAdapter.notifyItemRangeInserted(insertIndex,productList.size )
-        }
-
-
-    }
-
-    private fun onRetrieveProductListError(error: NetworkError?) {
-
-        if(page<=1)
-            retry.value = error?.message
-        else
-            errorMessage.value = error?.message
-
-    }
 
 
     override fun onCleared() {
@@ -152,14 +125,20 @@ class ManageProductListViewModel (app: Application): BaseViewModel(app) {
 
     fun loadMore() {
 
-        loadProduct()
+
+        uiScope.launch {
+            loadProduct()
+        }
 
     }
 
-    fun retry(){
+    fun retry() {
 
         reset()
-        loadProduct()
+
+        uiScope.launch {
+            loadProduct()
+        }
     }
 
 }

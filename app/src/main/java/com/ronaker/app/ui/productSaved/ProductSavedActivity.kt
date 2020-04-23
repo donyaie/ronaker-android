@@ -39,7 +39,7 @@ class ProductSavedActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_saved)
@@ -110,13 +110,6 @@ class ProductSavedActivity : BaseActivity() {
 
             }
 
-            override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(view, dx, dy)
-
-
-
-
-            }
         }
         binding.recycler.addOnScrollListener(scrollListener)
 

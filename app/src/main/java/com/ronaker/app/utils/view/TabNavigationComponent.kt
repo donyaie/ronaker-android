@@ -25,7 +25,6 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
     var selectedIndex: Int? = null
 
     var selectListener: OnSelectItemListener? = null
-        set
 
 
     init {

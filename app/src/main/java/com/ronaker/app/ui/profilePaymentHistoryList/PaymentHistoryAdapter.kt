@@ -1,19 +1,15 @@
 package com.ronaker.app.ui.profilePaymentHistoryList
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterPaymentHistoryBinding
-import com.ronaker.app.databinding.AdapterPaymentSelectBinding
-import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.model.Transaction
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
-import com.ronaker.app.utils.extension.startActivityMakeScene
 
 class PaymentHistoryAdapter(
     dataList: ArrayList<Transaction>
@@ -71,7 +67,7 @@ class PaymentHistoryAdapter(
 
             binding.container.setOnClickListener{
 
-               item.OrderSuid?.let {   binding.root.getParentActivity()?.startActivityMakeScene(OrderPreviewActivity.newInstance(binding.root.getApplication(),it))}
+               item.OrderSuid?.let {   binding.root.getParentActivity()?.startActivity(OrderPreviewActivity.newInstance(binding.root.getApplication(),it))}
 
             }
 

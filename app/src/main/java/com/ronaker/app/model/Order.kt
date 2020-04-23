@@ -23,6 +23,33 @@ data class Order(
     val instruction: String?
 ) : Parcelable {
 
+
+    override fun equals(other: Any?): Boolean {
+
+        if(other is Order)
+            return this.hashCode()==other.hashCode()
+
+
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        var result = suid.hashCode()
+        result = 31 * result + message.hashCode()
+        result = 31 * result + fromDate.hashCode()
+        result = 31 * result + toDate.hashCode()
+        result = 31 * result + (price?.hashCode() ?: 0)
+        result = 31 * result + orderType.hashCode()
+        result = 31 * result + status.hashCode()
+        result = 31 * result + product.hashCode()
+        result = 31 * result + (productOwner?.hashCode() ?: 0)
+        result = 31 * result + (orderUser?.hashCode() ?: 0)
+        result = 31 * result + (rejectionReason?.hashCode() ?: 0)
+        result = 31 * result + (address?.hashCode() ?: 0)
+        result = 31 * result + (instruction?.hashCode() ?: 0)
+        return result
+    }
+
     enum class OrderStatusEnum constructor(key: String) {
         Pending("pending"),
         Accepted("accepted"),

@@ -4,11 +4,5 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class FreeResponseModel(    val valid: Boolean=true)
-{
-
-
-
-
-}
 
 

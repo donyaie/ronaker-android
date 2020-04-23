@@ -16,12 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
-import java.util.Calendar
+import java.util.*
 import java.util.Calendar.*
-import java.util.Collections
-import java.util.Date
-import java.util.Locale
-import java.util.TimeZone
 import kotlin.collections.ArrayList
 
 
@@ -323,7 +319,7 @@ class CalendarPickerView(context: Context, attrs: AttributeSet) : RecyclerView(c
 
 
         fun withHighlightedDate(date: Date): FluentInitializer {
-            return withHighlightedDates(listOf<Date>(date))
+            return withHighlightedDates(listOf(date))
         }
 
         @SuppressLint("SimpleDateFormat")
@@ -569,7 +565,7 @@ class CalendarPickerView(context: Context, attrs: AttributeSet) : RecyclerView(c
         }
 
         when (selectionMode) {
-            CalendarPickerView.SelectionMode.RANGE -> {
+            SelectionMode.RANGE -> {
                 if (selectedCals.size > 1) {
                     // We've already got a range selected: clear the old one.
                     clearOldSelections()
@@ -579,11 +575,11 @@ class CalendarPickerView(context: Context, attrs: AttributeSet) : RecyclerView(c
                 }
             }
 
-            CalendarPickerView.SelectionMode.MULTIPLE -> {
+            SelectionMode.MULTIPLE -> {
                 applyMultiSelect(date, newlySelectedCal).let {date=it  }
             }
 
-            CalendarPickerView.SelectionMode.SINGLE -> {
+            SelectionMode.SINGLE -> {
                 clearOldSelections()
             }
 //            else -> throw IllegalStateException("Unknown selectionMode $selectionMode")
@@ -771,7 +767,7 @@ class CalendarPickerView(context: Context, attrs: AttributeSet) : RecyclerView(c
         return null
     }
 
-    private inner class MonthAdapter() : RecyclerView.Adapter<MonthAdapter.MyHolder>() {
+    private inner class MonthAdapter : RecyclerView.Adapter<MonthAdapter.MyHolder>() {
         private val inflater: LayoutInflater
 
         init {
@@ -828,7 +824,7 @@ class CalendarPickerView(context: Context, attrs: AttributeSet) : RecyclerView(c
         if (offset > 0) {
             offset -= 7
         }
-        cal.add(Calendar.DATE, offset)
+        cal.add(DATE, offset)
 
         val minSelectedCal = minDate(selectedCals)
         val maxSelectedCal = maxDate(selectedCals)

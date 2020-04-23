@@ -155,11 +155,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
 
         dialogResultListener?.onDialogResult(dialogResult,parentCategory, location)
@@ -169,10 +164,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
         super.onDismiss(dialog)
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onDestroyView() {

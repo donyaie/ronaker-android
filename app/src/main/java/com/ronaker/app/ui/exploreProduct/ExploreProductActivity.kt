@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -22,17 +23,13 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarFragment
-import com.ronaker.app.ui.container.ContainerActivity
 import com.ronaker.app.ui.orderMessage.OrderMessageActivity
 import com.ronaker.app.utils.*
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeSceneForResult
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
 import java.util.*
-
+import kotlin.system.measureTimeMillis
 
 class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -40,194 +37,300 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
     private lateinit var viewModel: ExploreProductViewModel
 
+
     private lateinit var googleMap: GoogleMap
 
     companion object {
 
+        private val TAG = ExploreProductActivity::class.java.simpleName
+
         const val REQUEST_CODE = 345
         const val SUID_KEY = "suid"
         const val PRODUCT_KEY = "product"
-        const val IMAGE_TRANSITION_KEY = "image_transition"
 
-        private val TAG = ExploreProductActivity::class.java.simpleName
+        fun newInstance(
+            context: Context,
+            product: Product
+        ): Intent {
+            val intent = Intent(context, ExploreProductActivity::class.java)
+            val boundle = Bundle()
+            boundle.putParcelable(PRODUCT_KEY, product)
 
-        fun isHavePending(product: Product): Boolean {
-            product.suid?.let { return isTAGInStack(TAG + it) } ?: run { return false }
+            intent.putExtras(boundle)
+
+            return intent
         }
 
-        fun newInstance(context: Context, suid: String): Intent {
+
+        fun newInstance(
+            context: Context,
+            suid: String
+        ): Intent {
             val intent = Intent(context, ExploreProductActivity::class.java)
             val boundle = Bundle()
             boundle.putString(SUID_KEY, suid)
             intent.putExtras(boundle)
+
             return intent
         }
 
-        fun newInstance(context: Context, product: Product, transitionName: String?): Intent {
-            val intent = Intent(context, ExploreProductActivity::class.java)
-            val boundle = Bundle()
-            boundle.putParcelable(PRODUCT_KEY, product)
-            boundle.putString(IMAGE_TRANSITION_KEY, transitionName)
-            intent.putExtras(boundle)
-            return intent
+
+    }
+
+
+    override fun onNewIntent(newIntent: Intent?) {
+
+        newIntent?.let {
+
+            val suid = getCurrentSUID(intent)
+            val newSuid = getCurrentSUID(it)
+            if (suid != newSuid) {
+
+                val intent = Intent(this, ExploreProductActivity::class.java)
+
+                intent.putExtras(newIntent)
+
+                this.finish()
+                startActivity(intent)
+
+            }
+
         }
+
+
+
+        super.onNewIntent(newIntent)
+
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
-        activityTag = TAG + getCurrentSUID()
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
-
-
-
-        binding.recycler.layoutManager = LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
-
-
-        binding.refreshLayout.setOnRefreshListener {
-
-
-            viewModel.onRefresh()
-        }
-
 
         viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
 
         binding.viewModel = viewModel
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getImageTransition() != null) {
-//            val imageTransitionName = getImageTransition()
-//            binding.avatarSlide.transitionName = imageTransitionName
-//        }
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage != null) Alert.makeTextError(this, errorMessage)
-        })
-
-        viewModel.imageList.observe(this, Observer { images ->
-
-            binding.avatarSlide.clearImage()
-            binding.avatarSlide.addImagesUrl(images)
-        })
-
-        viewModel.loading.observe(this, Observer { value ->
-            if (value == true) {
-                binding.loading.visibility = View.VISIBLE
-                binding.loading.showLoading()
-            } else
-                binding.loading.hideLoading()
-        })
-
-        viewModel.loadingComment.observe(this, Observer { value ->
-            if (value == true) {
-                binding.commentLoading.visibility = View.VISIBLE
-                binding.commentLoading.showLoading()
-            } else
-                binding.commentLoading.hideLoading()
-        })
-
-        viewModel.isFavorite.observe(this, Observer { value ->
-            if (value == true) {
-                binding.toolbar.action2Src = R.drawable.ic_fave_primery
-            } else
-                binding.toolbar.action2Src = R.drawable.ic_fave_white
-        })
-
-
-        viewModel.loadingRefresh.observe(this, Observer { loading ->
-            binding.refreshLayout.isRefreshing = loading
-
-        })
-
-        viewModel.retry.observe(this, Observer { value ->
-
-            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
-
-        })
-
-        binding.loading.oClickRetryListener = View.OnClickListener {
-
-            viewModel.onRetry()
-        }
-
-        binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
+        val time = measureTimeMillis {
+            //calcut image height
+            val screenCalculator = ScreenCalculator(this)
+            binding.avatarSlide.layoutParams.height =
+                (screenCalculator.screenWidthPixel * 0.7).toInt()
 
 
 
-        binding.toolbar.action1BouttonClickListener = View.OnClickListener {
+            viewModel.errorMessage.observe(this, Observer { errorMessage ->
+                Alert.makeTextError(this, errorMessage)
+            })
+
+            binding.recycler.layoutManager = LinearLayoutManager(this)
+            ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
 
-            viewModel.mProduct?.let {
-
-                val buo = BranchUniversalObject()
-                    .setCanonicalIdentifier("product/${it.suid}")
-                    .setTitle(it.name.toString())
-                    .setContentDescription(it.description)
-                    .setContentImageUrl(BASE_URL + it.avatar)
-                    .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                    .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                    .setContentMetadata(ContentMetadata().addCustomMetadata("product", it.suid))
-                    .setContentMetadata(
-                        ContentMetadata().addCustomMetadata(
-                            "action",
-                            "show_product"
-                        )
-                    )
+            binding.refreshLayout.setOnRefreshListener {
 
 
-                val lp = LinkProperties()
-                    .setChannel("androidApp")
-                    .setFeature("product sharing")
+                viewModel.onRefresh()
+            }
 
-                    .setCampaign("content product id")
-//                .addControlParameter("$desktop_url", "http://example.com/home")
-                    .addControlParameter("product", it.suid)
-                    .addControlParameter(
-                        "custom_random",
-                        Calendar.getInstance().timeInMillis.toString()
-                    )
+            viewModel.errorMessage.observe(this, Observer { errorMessage ->
+                if (errorMessage != null) Alert.makeTextError(this, errorMessage)
+            })
+
+            viewModel.imageList.observe(this, Observer { images ->
+
+                binding.avatarSlide.clearImage()
+                binding.avatarSlide.addImagesUrl(images)
+            })
+
+            viewModel.loading.observe(this, Observer { value ->
+                if (value == true) {
+                    binding.loading.visibility = View.VISIBLE
+                    binding.loading.showLoading()
+                } else
+                    binding.loading.hideLoading()
+            })
+
+            viewModel.loadingComment.observe(this, Observer { value ->
+                if (value == true) {
+                    binding.commentLoading.visibility = View.VISIBLE
+                    binding.commentLoading.showLoading()
+                } else
+                    binding.commentLoading.hideLoading()
+            })
+
+            viewModel.isFavorite.observe(this, Observer { value ->
+                if (value == true) {
+                    binding.toolbar.action2Src = R.drawable.ic_fave_primery
+                } else
+                    binding.toolbar.action2Src = R.drawable.ic_fave_white
+            })
 
 
-                buo.generateShortUrl(this, lp) { url, error ->
-                    if (error == null) {
-                        Log.i("BRANCH SDK", "got my Branch link to share: $url")
-                        it.suid?.let { it1 -> getAnalytics()?.actionShareProduct(it1) }
-                        IntentManeger.shareTextUrl(this, "Share Product:", url)
-                    }
+            viewModel.loadingRefresh.observe(this, Observer { loading ->
+                binding.refreshLayout.isRefreshing = loading
+
+            })
+
+            viewModel.retry.observe(this, Observer { value ->
+
+                value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
+
+            })
+
+            binding.loading.oClickRetryListener = View.OnClickListener {
+
+                viewModel.onRetry()
+            }
+
+            binding.toolbar.cancelClickListener =
+                View.OnClickListener { this.onBackPressed() }
+
+
+
+            binding.toolbar.action1BouttonClickListener = View.OnClickListener {
+
+
+                viewModel.mProduct?.let {
+
+                    generateShareLink(it)
+
                 }
 
-                buo.listOnGoogleSearch(this)
 
             }
 
 
-//            getCurrentSUID()?.let {
-//                getAnalytics()?.actionShareProduct(it)
-//                IntentManeger.shareTextUrl(this, "Share Product:", SHARE_URL + it)
-//            }
 
+            binding.toolbar.action2BouttonClickListener = View.OnClickListener {
+
+                getCurrentSUID(intent)?.let { viewModel.setFavorite(it) }
+
+            }
+
+
+            binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
+
+
+            viewModel.productLocation.observe(this, Observer { suid ->
+
+                addMarker(suid)
+            })
+
+            viewModel.checkout.observe(this, Observer { _ ->
+                viewModel.mProduct?.let {
+
+
+                    this.startActivityForResult(
+                        CheckoutCalendarActivity.newInstance(this, it)
+                        , CheckoutCalendarActivity.REQUEST_CODE
+                    )
+
+                }
+
+            })
+
+        }
+
+        AppDebug.log(TAG, "event time : $time")
+
+
+
+
+        Thread(Runnable {
+            try {
+                val mv =
+                    MapView(applicationContext)
+                mv.onCreate(null)
+                mv.onPause()
+                mv.onDestroy()
+            } catch (ignored:Exception) {
+            }
+        }).start()
+
+
+
+        val time2 = measureTimeMillis {
+            initMap()
+        }
+        AppDebug.log(TAG, "map time : $time2")
+//        getData()
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if ((this as BaseActivity).isFistStart()) {
+            val time = measureTimeMillis {
+                getData()
+            }
+
+            AppDebug.log(TAG, "onStart time : $time")
+
+
+        } else {
+            viewModel.onRefresh()
+        }
+
+    }
+
+
+    private fun getData() {
+
+
+        getSUID()?.let {
+
+            binding.loading.visibility = View.VISIBLE
+            binding.loading.showLoading()
+
+
+            val time2 = measureTimeMillis {
+
+                viewModel.loadProduct(it)
+
+            }
+            AppDebug.log(TAG, "loadProduct getSUID time : $time2")
+
+        }
+
+        getProduct()?.let {
+
+            binding.loading.visibility = View.GONE
+            binding.loading.hideLoading()
+
+
+            val time2 = measureTimeMillis {
+                viewModel.loadProduct(it)
+            }
+
+            AppDebug.log(TAG, "loadProduct getProduct time : $time2")
 
         }
 
 
 
-        binding.toolbar.action2BouttonClickListener = View.OnClickListener {
 
-            getCurrentSUID()?.let { viewModel.setFavorite(it) }
+        Handler().postDelayed({
+            binding.scrollView.smoothScrollTo(0, 0)
+            binding.toolbar.isTransparent = true
+            binding.toolbar.isBottomLine = false
+        }, 500)
 
-        }
+    }
+
+    private fun initMap() {
 
 
-
-
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
         val mapFragment = SupportMapFragment()
-
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.map, mapFragment)
@@ -258,85 +361,6 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             }
 
         }
-
-        viewModel.productLocation.observe(this, Observer { suid ->
-
-            addMarker(suid)
-        })
-
-        viewModel.checkout.observe(this, Observer { _ ->
-            viewModel.mProduct?.let {
-                //                startActivityMakeSceneForResult(
-//                    CheckoutCalendarActivity.newInstance(
-//                        this,
-//                        it
-//                    ), CheckoutCalendarActivity.REQUEST_CODE
-//                )
-
-
-                startActivityMakeSceneForResult(
-                    ContainerActivity.newInstance(
-                        this,
-                        CheckoutCalendarFragment::class.java,
-                        CheckoutCalendarFragment.newBoundle(it)
-                    )
-                    , CheckoutCalendarActivity.REQUEST_CODE
-                )
-
-            }
-
-        })
-
-
-        val screenCalculator = ScreenCalculator(this)
-
-
-        binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
-
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        if (isFistStart()) {
-
-
-            getSUID()?.let {
-
-                binding.loading.visibility = View.VISIBLE
-                binding.loading.showLoading()
-                viewModel.loadProduct(it, true)
-
-            }
-
-            getProduct()?.let {
-
-                binding.loading.visibility = View.GONE
-                binding.loading.hideLoading()
-                viewModel.loadProduct(it)
-
-            }
-
-
-
-
-            Handler().postDelayed({
-                binding.scrollView.smoothScrollTo(0, 0)
-                binding.toolbar.isTransparent = true
-                binding.toolbar.isBottomLine = false
-            }, 500)
-
-        } else {
-            viewModel.onRefresh()
-        }
-
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        binding.scrollView.viewTreeObserver.removeOnScrollChangedListener(this)
     }
 
 
@@ -348,7 +372,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 12f
             )
             googleMap.moveCamera(cameraUpdate)
-
+//
 //            googleMap.addMarker(
 //                MarkerOptions().position(latLng)
 //                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_map))
@@ -359,23 +383,19 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
     }
 
-
     private fun getSUID(): String? {
-        return if (intent.hasExtra(SUID_KEY)) {
-            intent.getStringExtra(SUID_KEY)
-        } else {
-            null
-        }
+        return intent?.getStringExtra(SUID_KEY)
+
     }
 
 
-    private fun getCurrentSUID(): String? {
+    private fun getCurrentSUID(mIntent: Intent?): String? {
         return when {
-            intent.hasExtra(SUID_KEY) -> {
-                intent.getStringExtra(SUID_KEY)
+            mIntent?.hasExtra(SUID_KEY) == true -> {
+                mIntent.getStringExtra(SUID_KEY)
             }
-            intent.hasExtra(PRODUCT_KEY) -> {
-                val p = intent.getParcelableExtra(PRODUCT_KEY) as Product?
+            mIntent?.hasExtra(PRODUCT_KEY) == true -> {
+                val p = mIntent.getParcelableExtra(PRODUCT_KEY) as Product?
                 return p?.suid
             }
             else -> {
@@ -385,25 +405,12 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
-    private fun getImageTransition(): String? {
-        return if (intent.hasExtra(IMAGE_TRANSITION_KEY)) {
-            intent.getStringExtra(IMAGE_TRANSITION_KEY)
-        } else {
-            null
-        }
-    }
-
     fun getProduct(): Product? {
-        return if (intent.hasExtra(PRODUCT_KEY)) {
-            intent.getParcelableExtra(PRODUCT_KEY)
-        } else {
-            null
-        }
+        return intent?.getParcelableExtra(PRODUCT_KEY)
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
 
         when (requestCode) {
 
@@ -418,15 +425,29 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
                         Handler().postDelayed({
-                            startActivityMakeSceneForResult(
+//                            this.startActivityMakeSceneForResult(
+//                                OrderMessageActivity.newInstance(
+//                                    this,
+//                                    getProduct(),
+//                                    start,
+//                                    end
+//                                ), OrderMessageActivity.REQUEST_CODE
+//                            )
+
+
+                            this.startActivityForResult(
                                 OrderMessageActivity.newInstance(
                                     this,
                                     getProduct(),
                                     start,
                                     end
-                                ), OrderMessageActivity.REQUEST_CODE
+                                )
+                                ,
+                                OrderMessageActivity.REQUEST_CODE
                             )
-                        }, 100)
+
+
+                        }, 200)
                     }
                 }
             }
@@ -435,8 +456,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             OrderMessageActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
 
-                    setResult(Activity.RESULT_OK)
-                    finishSafe()
+                    this.setResult(Activity.RESULT_OK)
+                    this.finish()
                 }
 
 
@@ -468,6 +489,57 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         } catch (ex: Exception) {
 
         }
+    }
+
+
+    private fun generateShareLink(it: Product) {
+        val buo = BranchUniversalObject()
+            .setCanonicalIdentifier("product/${it.suid}")
+            .setTitle(it.name.toString())
+            .setContentDescription(it.description)
+            .setContentImageUrl(BASE_URL + it.avatar)
+            .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+            .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+            .setContentMetadata(ContentMetadata().addCustomMetadata("product", it.suid))
+            .setContentMetadata(
+                ContentMetadata().addCustomMetadata(
+                    "action",
+                    "show_product"
+                )
+            )
+
+
+        val lp = LinkProperties()
+            .setChannel("androidApp")
+            .setFeature("product sharing")
+
+            .setCampaign("content product id")
+//                .addControlParameter("$desktop_url", "http://example.com/home")
+            .addControlParameter("product", it.suid)
+            .addControlParameter(
+                "custom_random",
+                Calendar.getInstance().timeInMillis.toString()
+            )
+
+
+        buo.generateShortUrl(this, lp) { url, error ->
+            if (error == null) {
+                Log.i("BRANCH SDK", "got my Branch link to share: $url")
+                it.suid?.let { it1 -> getAnalytics()?.actionShareProduct(it1) }
+                IntentManeger.shareTextUrl(this, "Share Product:", url)
+            }
+        }
+
+        buo.listOnGoogleSearch(this)
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.avatarSlide.clearImage()
+
+        binding.unbind()
     }
 
 }

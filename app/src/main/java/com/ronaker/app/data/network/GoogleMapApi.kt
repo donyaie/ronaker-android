@@ -44,10 +44,12 @@ interface GoogleMapApi {
     fun getGeocode(
         @Query("address") address: String?,
         @Query("latlng") latlng: String,
+
         @Query("components") components: String?,
         @Query("bounds") bounds: String?,
         @Query("language") language: String?,
         @Query("result_type") result_type: String?,
+        @Query("types") types: String,
         @Query("key") Key: String
     ): Observable<MapGeoCodeResponceModel>
 

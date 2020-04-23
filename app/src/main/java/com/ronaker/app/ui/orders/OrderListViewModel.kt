@@ -10,9 +10,13 @@ import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class OrderListViewModel (app: Application): BaseViewModel(app) {
+class OrderListViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -49,62 +53,68 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
     private var subscription: Disposable? = null
 
     init {
-        productListAdapter = OrderItemAdapter(dataList)
+        productListAdapter = OrderItemAdapter()
 
 
     }
 
+    fun getData(filter: String?) {
 
-    fun loadData(filter: String?) {
+        uiScope.launch {
+            loadData(filter)
+        }
+    }
 
-        mFilter = filter
+    suspend fun loadData(filter: String?) =
+        withContext(Dispatchers.IO) {
 
-        dataList.clear()
-        subscription?.dispose()
-        subscription = orderRepository
-            .getOrders(userRepository.getUserToken(), filter)
+            mFilter = filter
 
-            .doOnSubscribe {
-                retry.value = null
-                loading.value = true
+            subscription?.dispose()
+            subscription = orderRepository
+                .getOrders(userRepository.getUserToken(), filter)
 
-            }
-            .doOnTerminate {
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSubscribe {
+                    retry.postValue(null)
+                    loading.postValue(true)
 
-                loading.value = false
+                }
+                .doOnTerminate {
+
+                    loading.postValue(false)
 
 
-            }
-            .subscribe { result ->
-                if (result.isSuccess()) {
-                    if ((result.data?.results?.size ?: 0) > 0) {
-                        emptyVisibility.value = View.GONE
+                }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
 
-                        result.data?.results?.let {
-                            dataList.addAll(it)
-                            productListAdapter.notifyDataSetChanged()
-                        }
+
+                        dataList.clear()
+                        result.data?.results?.let { dataList.addAll(it) }
+                        productListAdapter.updateList(dataList)
+
+                       if( !result.data?.results.isNullOrEmpty()){
+                           emptyVisibility.postValue(View.GONE)
+                       }
 
                         if (result.data?.next == null)
                             hasNextPage = false
 
+                        if(dataList.isEmpty())
+                            emptyVisibility.postValue(View.VISIBLE)
+
+
+
                     } else {
 
-                        if (page == 0) {
-
-                            emptyVisibility.value = View.VISIBLE
-                        }
-
-                        hasNextPage = false
+                        retry.postValue(result.error?.message)
                     }
-                } else {
-
-                    retry.value = result.error?.message
                 }
-            }
 
 
-    }
+        }
 
 
     override fun onCleared() {
@@ -114,7 +124,10 @@ class OrderListViewModel (app: Application): BaseViewModel(app) {
 
 
     fun retry() {
-        loadData(mFilter)
+
+        uiScope.launch {
+            loadData(mFilter)
+        }
 
     }
 

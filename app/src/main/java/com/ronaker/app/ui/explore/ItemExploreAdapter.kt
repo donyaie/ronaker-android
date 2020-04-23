@@ -6,25 +6,36 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.DiffUtils
+import com.ronaker.app.utils.DiffUtils.createCombinedPayload
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class ItemExploreAdapter(
-    dataList: ArrayList<Product>
-) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
-    private  var productList:List<Product> = dataList
 
-   lateinit var context:Context
-    private var lastPosition=-1
+) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
+    val dataList = ArrayList<Product>()
+
+
+    lateinit var context: Context
+    private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterExploreItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_explore_item, parent, false)
-        context=parent.context
+        val binding: AdapterExploreItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.adapter_explore_item,
+            parent,
+            false
+        )
+        context = parent.context
 
         return ViewHolder(binding)
     }
@@ -36,23 +47,42 @@ class ItemExploreAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val animation: Animation = AnimationUtils.loadAnimation(
-            context,
-            if (position > lastPosition) android.R.anim.fade_in else android.R.anim.fade_in
-        )
-        holder.itemView.startAnimation(animation)
+//        val animation: Animation = AnimationUtils.loadAnimation(
+//            context,
+//            if (position > lastPosition) android.R.anim.fade_in else android.R.anim.fade_in
+//        )
+//        holder.itemView.startAnimation(animation)
         lastPosition = position
 
 
-        holder.bind(productList[position])
+        holder.bind(dataList[position])
     }
 
-    fun reset(){
-        lastPosition=-1
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            val combinedChange = createCombinedPayload(payloads as List<DiffUtils.Change<Product>>)
+//            val oldData = combinedChange.oldData
+            val newData = combinedChange.newData
+            holder.bind(newData)
+
+        }
+    }
+
+
+
+
+
+
+
+    fun reset() {
+        lastPosition = -1
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return dataList.size
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -61,18 +91,27 @@ class ItemExploreAdapter(
     }
 
 
-    fun updateList(){
-        notifyDataSetChanged()
+
+    fun updateList(newItems: List<Product>) {
+
+        MainScope().launch {
+
+            val result = DiffUtil.calculateDiff(DiffUtilCallback(dataList, newItems))
+            dataList.clear()
+            dataList.addAll(newItems)
+            result.dispatchUpdatesTo(this@ItemExploreAdapter)
+        }
     }
+
 
     class ViewHolder(
         private val binding: AdapterExploreItemBinding
-    ):RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = ItemExploreViewModel(binding.root.getApplication())
 
-        fun bind(product:Product){
-            viewModel.bind(product,binding,binding.root.getParentActivity())
+        fun bind(product: Product) {
+            viewModel.bind(product, binding, binding.root.getParentActivity())
             binding.viewModel = viewModel
         }
 
@@ -81,4 +120,36 @@ class ItemExploreAdapter(
 
         }
     }
+
+    class DiffUtilCallback(
+        private var oldItems: List<Product>,
+        private var newItems: List<Product>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int = oldItems.size
+
+        override fun getNewListSize(): Int = newItems.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+            oldItems[oldItemPosition].suid == newItems[newItemPosition].suid
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+            oldItems[oldItemPosition] == newItems[newItemPosition]
+
+        override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+            val oldItem = oldItems[oldItemPosition]
+            val newItem = newItems[newItemPosition]
+
+            return DiffUtils.Change(
+                oldItem,
+                newItem
+            )
+        }
+    }
+
+
+
+
+
+
 }

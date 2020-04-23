@@ -7,7 +7,4 @@ data class ProductRatingResponceModel(
     @SerializedName("comment") val comment: String,
     @SerializedName("user") val user: UserInfoResponceModel
 
-) {
-
-
-}
+)

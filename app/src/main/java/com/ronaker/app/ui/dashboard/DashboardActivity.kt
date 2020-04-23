@@ -3,7 +3,12 @@ package com.ronaker.app.ui.dashboard
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -49,13 +54,15 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     var savedInstanceState: Bundle? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setFadeTransition(this)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
         setSwipeCloseDisable()
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
@@ -66,6 +73,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             if (value == true) {
 
                 startActivity(LoginActivity.newInstance(this@DashboardActivity))
+                AnimationHelper.setFadeTransition(this)
                 finish()
 
             }
@@ -86,6 +94,8 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     }
 
+
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
@@ -95,7 +105,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     private fun handleIntent(intent: Intent) {
 
-        Branch.getInstance().initSession({ referringParams, error ->
+        Branch.sessionBuilder(this).withCallback { referringParams, error ->
             if (error == null) {
                 AppDebug.log("BRANCH SDK", referringParams.toString())
 
@@ -103,12 +113,14 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                     val suid = referringParams.getString("product")
                     if (suid.isNotBlank() && viewModel.islogin)
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+
                 }
 
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
-        }, intent.data, this)
+        }.withData( intent.data).init()
+
 
 
     }
@@ -116,6 +128,9 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     override fun onStart() {
         super.onStart()
         if (isFistStart() && viewModel.islogin) {
+
+            window.setBackgroundDrawable( ColorDrawable(Color.WHITE))
+
 
             initNavigation(savedInstanceState)
         }
@@ -283,6 +298,11 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         mainListener[fragment] = listener
 
+    }
+
+    override fun finish() {
+        super.finish()
+        AnimationHelper.clearTransition(this)
     }
 
 

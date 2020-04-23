@@ -4,8 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.ronaker.app.utils.Alert
+import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,17 +14,18 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
-import com.ronaker.app.utils.extension.startActivityMakeScene
 import java.util.*
 
 class OrderMessageActivity : BaseActivity() {
 
+
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderMessageBinding
     private lateinit var viewModel: OrderMessageViewModel
 
+
+
     companion object {
+
         var PRODUCT_KEY = "mProduct"
         var STARTDATE_KEY = "start_date"
         var ENDDATE_KEY = "end_date"
@@ -31,15 +33,14 @@ class OrderMessageActivity : BaseActivity() {
 
         var REQUEST_CODE = 347
 
-        fun newInstance(
-            context: Context,
-            product: Product?,
-            startDate: Date?,
-            endDate: Date?
-        ): Intent {
+
+
+        fun newInstance(context: Context,
+                        product: Product?,
+                        startDate: Date?,
+                        endDate: Date?): Intent {
             val intent = Intent(context, OrderMessageActivity::class.java)
             val boundle = Bundle()
-
             if (endDate != null && startDate != null) {
 
                 boundle.putParcelable(PRODUCT_KEY, product)
@@ -47,19 +48,18 @@ class OrderMessageActivity : BaseActivity() {
 
                 boundle.putLong(ENDDATE_KEY, endDate.time)
             }
-
-
             intent.putExtras(boundle)
 
             return intent
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
+        enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_message)
 
         viewModel = ViewModelProvider(this).get(OrderMessageViewModel::class.java)
@@ -67,13 +67,16 @@ class OrderMessageActivity : BaseActivity() {
         binding.viewModel = viewModel
 
 
+        binding.toolbar.actionTextClickListener = View.OnClickListener {
+
+        }
 
 
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment, OrderMessageFragment())
-            .commit()
+        binding.toolbar.cancelClickListener = View.OnClickListener {
+
+           finish()
+        }
 
 
 
@@ -84,61 +87,50 @@ class OrderMessageActivity : BaseActivity() {
         })
 
         viewModel.next.observe(this, Observer {
-           finishSafe()
+            this.finish()
         })
 
 
         viewModel.goNext.observe(this, Observer {
-            startActivityMakeScene(ProfileCompleteActivity.newInstance(this))
+            this.startActivity(
+                ProfileCompleteActivity.newInstance(
+                    this
+                )
+            )
         })
 
 
         viewModel.successMessage.observe(this, Observer {
-           succeccSend()
-        })
-
-
-        viewModel.loading.observe(this, Observer { value ->
-            if (value == true) {
-                binding.loading.showLoading()
-            } else
-                binding.loading.hideLoading()
+            succeccSend()
         })
 
 
 
-        if (intent.hasExtra(PRODUCT_KEY)) {
 
+        getProduct()?.let { viewModel.loadProduct(it, getStartDate(), getEndDate()) }
 
-            getProduct()?.let { viewModel.loadProduct(it,getStartDate(),getEndDate()) }
-
-
-        } else {
-            finishSafe()
-        }
 
 
     }
 
 
     fun getProduct(): Product? {
-        return intent.getParcelableExtra(PRODUCT_KEY)
+        return intent?.getParcelableExtra(PRODUCT_KEY)
     }
 
 
     private fun getStartDate(): Date {
 
 
-        return Date(intent.getLongExtra( STARTDATE_KEY,-1))
+        return Date(intent?.getLongExtra(STARTDATE_KEY, -1) ?: -1)
     }
 
 
     private fun getEndDate(): Date {
-        return Date(intent.getLongExtra( ENDDATE_KEY,-1))
+        return Date(intent?.getLongExtra(ENDDATE_KEY, -1) ?: -1)
     }
 
-
-    private fun succeccSend(){
+    private fun succeccSend() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         builder.setMessage(getString(R.string.text_your_request_sent))
@@ -147,16 +139,17 @@ class OrderMessageActivity : BaseActivity() {
 
         ) { dialog, _ ->
             dialog?.cancel()
-            setResult(Activity.RESULT_OK)
-            finishSafe()
+            this.setResult(Activity.RESULT_OK)
+            this.finish()
 
-//            startActivity(DashboardActivity.newInstance(this))
 
         }
         builder.setCancelable(false)
 
         builder.show()
     }
+
+
 
 
 }

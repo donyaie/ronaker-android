@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.extension.finishSafe
 
 class OrderStartRentingActivity : BaseActivity() {
 
@@ -42,7 +40,7 @@ class OrderStartRentingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AnimationHelper.setSlideTransition(this)
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_start_renting)
@@ -73,13 +71,13 @@ class OrderStartRentingActivity : BaseActivity() {
 
         viewModel.finish.observe(this, Observer { _ ->
             setResult(Activity.RESULT_OK)
-           finishSafe()
+           finish()
         })
 
 
         binding.toolbar.cancelClickListener= View.OnClickListener {
 
-            finishSafe()
+            finish()
         }
 
 

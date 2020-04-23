@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.manageProduct.ManageProductViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="80dp">
+
+                    <RelativeLayout
+                        android:id="@+id/avatar_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="320dp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/avatar_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPlatinGrey"
+                            android:contentDescription="@string/text_content"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:mutableImage="@{viewModel.getProductImage()}" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/rejected"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/background_accent"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:minHeight="20dp"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                android:text="@string/text_rejected"
+                                android:textAppearance="@style/TextAppearance.Small.Regular"
+                                android:textColor="@color/colorTextLight"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/image"
+                                app:mutableVisibility="@{viewModel.getRegectedVisibility()}" />
+
+
+                            <TextView
+                                android:id="@+id/pending"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/background_yellow"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:minHeight="20dp"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                android:text="@string/text_pending"
+                                android:textAppearance="@style/TextAppearance.Small.Regular"
+                                android:textColor="@color/colorTextLight"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/image"
+                                app:mutableVisibility="@{viewModel.getPendingVisibility()}" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/title_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="24dp"
+                        android:text="@string/caption_title"
+                        android:textAppearance="@style/TextAppearance.Heading.1"
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintTop_toBottomOf="@id/avatar_layout"
+                        app:mutableText="@{viewModel.getProductTitle()}" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:orientation="vertical"
+
+
+                        app:layout_constraintTop_toBottomOf="@id/title_text">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+                        <LinearLayout
+                            android:id="@+id/active_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="24dp"
+                            android:paddingRight="24dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight=".95"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="@string/title_is_item_available"
+                                    android:textAppearance="@style/TextAppearance.Small.SB"
+                                    android:textColor="@color/colorTextDark" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/title_active"
+                                    android:textAppearance="@style/TextAppearance.Large.Light"
+                                    android:textColor="@color/colorTextDark" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/active_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+
+                        <Button
+                            android:id="@+id/name_layout"
+                            style="@style/Button.transparent.width"
+                            android:text="@string/title_name_and_description"
+                            android:textColor="@color/colorTextDark"
+                            app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+
+                        <Button
+                            android:id="@+id/category_layout"
+                            style="@style/Button.transparent.width"
+                            android:text="@string/title_categories"
+                            android:textColor="@color/colorTextDark"
+                            app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+
+                        <Button
+                            android:id="@+id/image_layout"
+                            style="@style/Button.transparent.width"
+                            android:text="@string/title_images_gallery"
+                            android:textColor="@color/colorTextDark"
+                            app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+
+                        <Button
+                            android:id="@+id/price_layout"
+                            style="@style/Button.transparent.width"
+                            android:text="@string/title_asking_price"
+                            android:textColor="@color/colorTextDark"
+                            app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+
+                        <Button
+                            android:id="@+id/location_layout"
+                            style="@style/Button.transparent.width"
+                            android:text="@string/title_location"
+                            android:textColor="@color/colorTextDark"
+                            app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@color/colorPlatinGrey" />
+
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_bottom_line="false"
+            app:toolbar_component_cancel_container="BACK"
+            app:toolbar_component_center_container="NONE"
+            app:toolbar_component_dot_count="3"
+            app:toolbar_component_transparent="true" />
+
+        <com.ronaker.app.utils.view.LoadingComponent
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loading_transparent="true" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

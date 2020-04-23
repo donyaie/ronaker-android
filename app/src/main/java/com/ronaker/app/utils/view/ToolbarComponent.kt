@@ -13,8 +13,10 @@ import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.ShapeDrawableHelper
 
 
-class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
+    LinearLayout(context, attrs) {
 
+    val screenCalculator= ScreenCalculator(context)
 
     enum class CenterContainer {
         NONE, DOTS, TITLE
@@ -55,9 +57,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
     var cancelContainer: CancelContainer = CancelContainer.BACK
         set(value) {
 
-            cancelButton.setImageResource(0)
-            field = value
-            when (cancelContainer) {
+            when (value) {
                 CancelContainer.NONE -> {
                     cancelButton.visibility = View.GONE
                 }
@@ -65,28 +65,70 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
                     cancelButton.visibility = View.VISIBLE
 
+//                    cancelButton.setImageResource(R.drawable.ic_back_white)
 
-                    cancelButton.setImageResource(R.drawable.ic_back_white)
+                    if (field != value) {
+                        ShapeDrawableHelper.changeSvgDrawableColor(
+                            context,
+                            R.drawable.ic_back_white,
+                            R.color.colorIconLight,
+                            cancelLightImage
+                        )
+                        ShapeDrawableHelper.changeSvgDrawableColor(
+                            context,
+                            R.drawable.ic_back_white,
+                            R.color.colorIconDark,
+                            cancelDarkImage
+                        )
+                    }
 
-                    if (isTransparent)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
-                    else
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
+
+                    if (isTransparent) {
+                        cancelLightImage.visibility = View.VISIBLE
+                        cancelDarkImage.visibility = View.GONE
+                    } else {
+                        cancelLightImage.visibility = View.GONE
+                        cancelDarkImage.visibility = View.VISIBLE
+                    }
 
                 }
                 CancelContainer.CLOSE -> {
 
                     cancelButton.visibility = View.VISIBLE
-                    cancelButton.setImageResource(R.drawable.ic_close)
-                    if (isTransparent)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, cancelButton)
-                    else {
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, cancelButton)
+//                    cancelButton.setImageResource(R.drawable.ic_close)
 
+                    if (field != value) {
+                        ShapeDrawableHelper.changeSvgDrawableColor(
+                            context,
+                            R.drawable.ic_close,
+                            R.color.colorIconLight,
+                            cancelLightImage
+                        )
+                        ShapeDrawableHelper.changeSvgDrawableColor(
+                            context,
+                            R.drawable.ic_close,
+                            R.color.colorIconDark,
+                            cancelDarkImage
+                        )
+                    }
+
+
+
+
+                    if (isTransparent) {
+                        cancelLightImage.visibility = View.VISIBLE
+                        cancelDarkImage.visibility = View.GONE
+                    } else {
+                        cancelLightImage.visibility = View.GONE
+                        cancelDarkImage.visibility = View.VISIBLE
                     }
                 }
 
             }
+
+
+
+            field = value
         }
 
     var actionContainer: ActionContainer = ActionContainer.NONE
@@ -94,7 +136,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
             field = value
 
-            when (actionContainer) {
+            when (value) {
                 ActionContainer.NONE -> {
                     actionLayout.visibility = View.GONE
                 }
@@ -107,10 +149,20 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
 
                     if (isTransparent) {
-                        actionText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLight))
+                        actionText.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.colorTextLight
+                            )
+                        )
 
                     } else {
-                        actionText.setTextColor(ContextCompat.getColor(context, R.color.colorTextDark))
+                        actionText.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.colorTextDark
+                            )
+                        )
 
                     }
 
@@ -123,27 +175,30 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                     action2Button.visibility = View.VISIBLE
 
 
-
-                    action1Button.setImageResource(0)
-                    action2Button.setImageResource(0)
-
-
-                    action1Button.setImageResource(action1Src)
-                    action2Button.setImageResource(action2Src)
-
+//                    action1Button.setImageResource(action1Src)
+//                    action2Button.setImageResource(action2Src)
 
 
                     if (isTransparent) {
 
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, action1Button)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconLight, action2Button)
 
+                        action1LightImage.visibility = View.VISIBLE
+                        action1DarkImage.visibility = View.GONE
+
+
+                        action2LightImage.visibility = View.VISIBLE
+                        action2DarkImage.visibility = View.GONE
 
 
                     } else {
 
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, action1Button)
-                        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorIconDark, action2Button)
+
+                        action1LightImage.visibility = View.GONE
+                        action1DarkImage.visibility = View.VISIBLE
+
+
+                        action2LightImage.visibility = View.GONE
+                        action2DarkImage.visibility = View.VISIBLE
 
 
                     }
@@ -159,15 +214,19 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
     private var screenLibrary: ScreenCalculator
 
 
-
     var isTransparent: Boolean = false
         set(value) {
 
             field = value
 
 
-            if (isTransparent) {
-                containerLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+            if (value) {
+                containerLayout.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.transparent
+                    )
+                )
                 titleText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLight))
 
                 statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
@@ -185,7 +244,7 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
             cancelContainer = cancelContainer
 
-            actionContainer=actionContainer
+            actionContainer = actionContainer
 
         }
 
@@ -193,32 +252,62 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         set(value) {
             field = value
             lineLayout.visibility = if (isBottomLine) View.VISIBLE else View.GONE
+
+//            containerLayout.elevation=  if (value) screenCalculator.DP2Pixel(2).toFloat() else 0f
         }
 
     var title: String? = null
         set(value) {
             field = value
-            titleText.setText(value)
+            titleText.text = value
         }
 
 
     var action1Src: Int = 0
         set(value) {
+
+                ShapeDrawableHelper.changeSvgDrawableColor(
+                    context,
+                    value,
+                    R.color.colorIconLight,
+                    action1LightImage
+                )
+                ShapeDrawableHelper.changeSvgDrawableColor(
+                    context,
+                    value,
+                    R.color.colorIconDark,
+                    action1DarkImage
+                )
+
+
             field = value
-            action1Button.setImageResource(value)
         }
 
     var action2Src: Int = 0
         set(value) {
+
+                ShapeDrawableHelper.changeSvgDrawableColor(
+                    context,
+                    value,
+                    R.color.colorIconLight,
+                    action2LightImage
+                )
+                ShapeDrawableHelper.changeSvgDrawableColor(
+                    context,
+                    value,
+                    R.color.colorIconDark,
+                    action2DarkImage
+                )
+
+
             field = value
-            action2Button.setImageResource(value)
         }
 
 
     var actionTitle: String? = null
         set(value) {
             field = value
-            actionText.setText(value)
+            actionText.text = value
         }
 
     var dotCount: Int = 3
@@ -234,11 +323,22 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
 
     private var lineLayout: RelativeLayout
     private var actionText: Button
-    private var action1Button: ImageButton
-    private var action2Button: ImageButton
+
+    private var action1Button: RelativeLayout
+    private var action1DarkImage: ImageView
+    private var action1LightImage: ImageView
+
+
+    private var action2Button: RelativeLayout
+    private var action2DarkImage: ImageView
+    private var action2LightImage: ImageView
+
+
     private var actionLayout: LinearLayout
 
-    private var cancelButton: ImageButton
+    private var cancelButton: RelativeLayout
+    private var cancelDarkImage: ImageView
+    private var cancelLightImage: ImageView
     private var statusBar: StatusBarSizeView
 
     private var countDots: LinearLayout
@@ -287,12 +387,23 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         actionText = findViewById(R.id.action_text)
         actionLayout = findViewById(R.id.action_Layout)
         cancelButton = findViewById(R.id.cancel_button)
+        cancelLightImage = findViewById(R.id.cancelLite_image)
+        cancelDarkImage = findViewById(R.id.cancelDark_image)
         countDots = findViewById(R.id.countDots)
         containerLayout = findViewById(R.id.container_layout)
-        statusBar=findViewById(R.id.statusBar)
+        statusBar = findViewById(R.id.statusBar)
 
         action1Button = findViewById(R.id.action1_button)
         action2Button = findViewById(R.id.action2_button)
+
+
+        action1LightImage = findViewById(R.id.action1Light_image)
+        action1DarkImage = findViewById(R.id.action1Dark_image)
+
+        action2LightImage = findViewById(R.id.action2Light_image)
+        action2DarkImage = findViewById(R.id.action2Dark_image)
+
+
 
         orientation = VERTICAL
 
@@ -400,7 +511,12 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
             countDots.removeAllViewsInLayout()
             for (i in 0 until dotCount) {
                 dots[i] = ImageView(context)
-                dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
+                dots[i]?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.navigate_dot_normal
+                    )
+                )
 
                 val params = LayoutParams(
                     screenLibrary.DP2Pixel(9),
@@ -414,12 +530,17 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                 countDots.addView(dots[i], params)
             }
 
-            dots[0]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_select))
+            dots[0]?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.navigate_dot_select
+                )
+            )
         }
     }
 
 
-     fun showNavigator(visiable: Boolean, position: Int) {
+    fun showNavigator(visiable: Boolean, position: Int) {
 
         if (visiable) {
 
@@ -442,7 +563,8 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                                     )
                                 )
                                 dots[position]?.setPadding(0, 0, 0, 0)
-                                dots[position]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.setListener(null)
+                                dots[position]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)
+                                    ?.setListener(null)
                                     ?.start()
                             }
 
@@ -455,9 +577,15 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
                             }
                         })?.start()
                 } else {
-                    dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
+                    dots[i]?.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.navigate_dot_normal
+                        )
+                    )
                     dots[i]?.setPadding(3, 3, 3, 3)
-                    dots[i]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.setListener(null)?.start()
+                    dots[i]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.setListener(null)
+                        ?.start()
 
                 }
 
@@ -468,9 +596,15 @@ class ToolbarComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         } else {
 
             for (i in 0 until dotCount) {
-                dots[i]?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.navigate_dot_normal))
+                dots[i]?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.navigate_dot_normal
+                    )
+                )
                 dots[i]?.setPadding(3, 3, 3, 3)
-                dots[i]?.animate()?.scaleX(0f)?.scaleY(0f)?.setDuration(100)?.setListener(null)?.start()
+                dots[i]?.animate()?.scaleX(0f)?.scaleY(0f)?.setDuration(100)?.setListener(null)
+                    ?.start()
 
             }
 

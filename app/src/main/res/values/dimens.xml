@@ -9,18 +9,13 @@
 
     
     <dimen name="toolbar_size">45dp</dimen>
-    
-    
-    <dimen name="toolbar_icon_size">45dp</dimen>
-    <dimen name="toolbar_icon_padding">7dp</dimen>
-    <dimen name="icon_toolbar_size">45dp</dimen>
-    <dimen name="icon_toolbar_padding">7dp</dimen>
-    <dimen name="button_height">42dp</dimen>
 
 
-    <dimen name="statusBarSize">24dp</dimen>
-<!--    <dimen name="statusBarSizeMargin">-25dp</dimen>-->
+    <!--    <dimen name="statusBarSizeMargin">-25dp</dimen>-->
     <dimen name="statusBarSizeMargin">0dp</dimen>
+
+
+    <dimen name="margin_default">24dp</dimen>
 
 
 

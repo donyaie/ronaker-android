@@ -29,6 +29,7 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingAction: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
     val activeState: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -42,20 +43,23 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
     private var subscription: Disposable? = null
     private var updateActivesubscription: Disposable? = null
 
+    var  mSuid:String?=null
 
     fun loadProduct(product: Product) {
-        loading.value = false
         mProduct = product
+        mSuid=mProduct.suid
         fillProduct(product)
     }
 
     fun loadProduct(suid: String) {
 
-
+        mSuid=suid
+        subscription?.dispose()
         subscription = productRepository
             .getProduct(userRepository.getUserToken(), suid)
 
-            .doOnSubscribe { retry.value = null; loading.value = true }
+            .doOnSubscribe { //retry.value = null;
+                loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
@@ -66,8 +70,8 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
 
 
                 } else {
-                    retry.value = result.error?.message
-                    // errorMessage.value = result.error?.detail
+//                    retry.value = result.error?.message
+                     errorMessage.value = result.error?.message
                 }
             }
 
@@ -113,6 +117,11 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
         updateActivesubscription?.dispose()
     }
 
+
+    fun retry(){
+        mSuid?.let { loadProduct(it) }
+    }
+
     fun updateActiveState(active: Boolean) {
 
         updateActivesubscription?.dispose()
@@ -121,10 +130,10 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
             if (active) Product.ActiveStatusEnum.Active.key else Product.ActiveStatusEnum.Deactive.key
 
         updateActivesubscription = productRepository
-            .productUpdate(userRepository.getUserToken(), mProduct.suid ?: "", product)
+            .productUpdate(userRepository.getUserToken(), mSuid ?: "", product)
 
-            .doOnSubscribe { loading.value = true }
-            .doOnTerminate { loading.value = false }
+            .doOnSubscribe { loadingAction.value = true }
+            .doOnTerminate { loadingAction.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
 

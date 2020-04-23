@@ -9,6 +9,8 @@ import com.ronaker.app.databinding.AdapterProductCommentBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class ProductCommentAdapter(
     dataList: ArrayList<Product.ProductRate>
@@ -30,8 +32,12 @@ class ProductCommentAdapter(
         return  productList.size
     }
 
-    fun updateproductList(){
-        notifyDataSetChanged()
+    fun updateList(){
+        MainScope().launch {
+
+            notifyDataSetChanged()
+
+        }
     }
 
     class ViewHolder(
@@ -45,4 +51,10 @@ class ProductCommentAdapter(
             binding.viewModel = viewModel
         }
     }
+
+
+
+
+
+
 }

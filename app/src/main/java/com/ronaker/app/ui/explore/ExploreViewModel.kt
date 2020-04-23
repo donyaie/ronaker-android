@@ -5,7 +5,6 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -13,7 +12,12 @@ import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.random.Random
 
 class ExploreViewModel(app: Application) : BaseViewModel(app),
     CategoryExploreAdapter.AdapterListener {
@@ -37,19 +41,19 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     private var hasNextPage = true
 
 
-    var selectedCategory: Category? = null
+    private var selectedCategory: Category? = null
 
 
     var dataList: ArrayList<Product> = ArrayList()
 
-    var categoryList: ArrayList<Category> = ArrayList()
-    var cachCategoryList: ArrayList<Category> = ArrayList()
+    private var categoryList: ArrayList<Category> = ArrayList()
+    private var cachCategoryList: ArrayList<Category> = ArrayList()
 
 
     private var query: String = ""
 
 
-    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter(dataList)
+    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter()
 
 
     var categoryListAdapter: CategoryExploreAdapter = CategoryExploreAdapter(categoryList, this)
@@ -74,9 +78,8 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         productListAdapter.reset()
         hasNextPage = true
         dataList.clear()
-        productListAdapter.updateList()
-        resetList.value = true
-//        view.getScrollListener().resetState()
+//        productListAdapter.updateList(dataList)
+        resetList.postValue(true)
     }
 
     private var subscription: Disposable? = null
@@ -85,145 +88,131 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     init {
         reset()
-        loadCategory()
+        uiScope.launch {
 
-        loadProduct()
+            loadProduct()
+            if (cachCategoryList.isEmpty())
+                loadCategory()
+        }
+
     }
 
 
-    fun loadCategory() {
+    private suspend fun loadCategory() =
+        withContext(Dispatchers.IO) {
 
-        categorySubscription?.dispose()
-        categorySubscription = categoryRepository
-            .getCategories(userRepository.getUserToken())
-
-            .doOnSubscribe { }
-            .doOnTerminate { }
-            .subscribe { result ->
-                if (result.isSuccess()) {
-                    if ((result.data?.size ?: 0) > 0) {
-
-
-                        result.data?.let {
+            categorySubscription?.dispose()
+            categorySubscription = categoryRepository
+                .getCategories(userRepository.getUserToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSubscribe { }
+                .doOnTerminate { }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        if ((result.data?.size ?: 0) > 0) {
 
 
-                            cachCategoryList = ArrayList(result.data)
+                            result.data?.let {
 
-                            if (selectedCategory == null) {
 
-                                categoryList.clear()
-                                categoryList.addAll(cachCategoryList)
+                                cachCategoryList = ArrayList(result.data)
 
-                                categoryListAdapter.reset()
-                                categoryListAdapter.notifyDataSetChanged()
+                                if (selectedCategory == null) {
+
+                                    categoryList.clear()
+                                    categoryList.addAll(cachCategoryList)
+
+                                    categoryListAdapter.reset()
+                                    categoryListAdapter.updateList()
+
+                                }
+
 
                             }
 
 
                         }
-
-
                     }
                 }
-            }
 
 
-    }
+        }
 
-    fun loadProduct() {
-        if (hasNextPage) {
-            page++
-            subscription?.dispose()
+    var incriment=1
+
+    suspend fun loadProduct() =
+        withContext(Dispatchers.IO) {
+            if (hasNextPage) {
+                page++
+                subscription?.dispose()
 
 
-            var searchValue: String? = query
+                var searchValue: String? = query
 
-            if (searchValue.isNullOrBlank())
-                searchValue = null
+                if (searchValue.isNullOrBlank())
+                    searchValue = null
 
-            subscription = productRepository
-                .productSearch(userRepository.getUserToken(), searchValue, page, null, null)
+                subscription = productRepository
+                    .productSearch(
+                        userRepository.getUserToken(),
+                        searchValue,
+                        page,
+                        null,
+                        null,
+                        categorySiud = selectedCategory?.suid
+                    )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .doOnSubscribe {
+                        retry.postValue(null)
+                        if (page <= 1) {
+                            loading.postValue(true)
 
-                .doOnSubscribe { onRetrieveProductListStart() }
-                .doOnTerminate { onRetrieveProductListFinish() }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-                        if ((result.data?.results?.size ?: 0) > 0) {
+                            emptyVisibility.postValue(View.GONE)
 
-                            emptyVisibility.value = View.GONE
-                            onRetrieveProductListSuccess(
-                                result.data?.results
-                            )
+                        }
+                        errorMessage.postValue(null)
+                    }
+                    .doOnTerminate {
+                        loading.postValue(false)
+                    }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
+
+                            result.data?.results?.let { dataList.addAll(it) }
+
+                            productListAdapter.updateList(dataList)
+
+                            if (!result.data?.results.isNullOrEmpty()) {
+                                emptyVisibility.postValue(View.GONE)
+                            }
 
                             if (result.data?.next == null) {
                                 hasNextPage = false
+                            }
 
 
+                            if (dataList.isEmpty()) {
+                                emptyVisibility.postValue(View.VISIBLE)
                             }
 
                         } else {
 
-                            emptyVisibility.value = View.VISIBLE
+                            if (page <= 1)
+                                retry.postValue(result.error?.message)
+                            else
+                                errorMessage.postValue(result.error?.message)
 
-
-
-
-                            hasNextPage = false
                         }
-                    } else {
-
-                        onRetrieveProductListError(result.error)
-
-//                        onRetrieveProductListSuccess(
-//                            dataList
-//                        )
                     }
-                }
-        }
-    }
-
-
-    private fun onRetrieveProductListStart() {
-        retry.value = null
-        if (page <= 1) {
-            loading.value = true
-
-            emptyVisibility.value = View.GONE
-
-        }
-        errorMessage.value = null
-    }
-
-    private fun onRetrieveProductListFinish() {
-        loading.value = false
-    }
-
-    private fun onRetrieveProductListSuccess(productList: List<Product>?) {
-
-        if (productList != null) {
-
-            var insertIndex = 0
-            if (dataList.size > 0)
-                insertIndex = dataList.size
-
-            dataList.addAll(productList)
-            productListAdapter.notifyItemRangeInserted(insertIndex, productList.size)
+            }
         }
 
-    }
-
-    private fun onRetrieveProductListError(error: NetworkError?) {
-        if (page <= 1)
-            retry.value = error?.message
-        else
-            errorMessage.value = error?.message
-
-
-    }
 
     fun onClickSearch() {
 
-        searchValue.value = ""
+        searchValue.postValue("")
 
     }
 
@@ -235,14 +224,23 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     }
 
     fun loadMore() {
-        loadProduct()
+
+        uiScope.launch {
+
+            loadProduct()
+        }
 
     }
 
     fun retry() {
         reset()
-        loadProduct()
-        loadCategory()
+
+        uiScope.launch {
+
+            loadProduct()
+            if (cachCategoryList.isEmpty())
+                loadCategory()
+        }
 
     }
 
@@ -256,7 +254,11 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         query = search
 
         updateSearchCaption()
-        loadProduct()
+
+        uiScope.launch {
+
+            loadProduct()
+        }
 
 
     }
@@ -283,13 +285,13 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
 
             selectedCategory?.let {
-                categoryListAdapter.notifyItemChanged(categoryList.indexOf(it))
+                categoryListAdapter.itemChanged(it)
 
             }
 
-            categoryListAdapter.notifyItemChanged(categoryList.indexOf(selected))
+            categoryListAdapter.itemChanged(selected)
 
-            scrollCategoryPosition.value = categoryList.indexOf(selected)
+            scrollCategoryPosition.postValue(categoryList.indexOf(selected))
 
 
         } else {
@@ -301,8 +303,8 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
             }
             categoryListAdapter.reset()
-            categoryListAdapter.notifyDataSetChanged()
-            scrollCategoryPosition.value = 0
+            categoryListAdapter.updateList()
+            scrollCategoryPosition.postValue(0)
 
         }
 
@@ -323,15 +325,16 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
 
         categoryListAdapter.reset()
-        categoryListAdapter.notifyDataSetChanged()
+        categoryListAdapter.updateList()
 
 
     }
 
     private fun updateSearchCaption() {
 
-        searchText.value =
+        searchText.postValue(
             query + (selectedCategory?.let { " in " + selectedCategory?.title } ?: run { "" })
+        )
 
 
     }

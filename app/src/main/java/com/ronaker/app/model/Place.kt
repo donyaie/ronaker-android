@@ -4,6 +4,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
 import com.ronaker.app.data.network.response.MapGeoCodeResponceModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 data class Place(
@@ -51,111 +53,89 @@ fun GooglePlaceDetailResponseModel.GooglePlaceResultResponseModel.toPlace(): Pla
 fun MapGeoCodeResponceModel.converGeoToPlace(): Place? {
 
 
-//    val DefaultIndex = 0
-//
-//    var address: String? = null
-//
-//    val direction = java.util.ArrayList<LatLng>()
-//
-//    val add = java.util.ArrayList<MapGeoCodeResponceModel.MapGeoCodeAddressModel>()
-//
-//
-//    val stringBuilder = StringBuilder()
-//
-//    var mapGeocode = this
-//
-//
-//    if (mapGeocode != null)
-//
-//
-//        if (mapGeocode.status.toLowerCase().compareTo("ok") == 0) {
-//
-//            if (mapGeocode?.results!!.isNotEmpty()) {
-//
-//
-//                var neighborhood: String? = null
-//
-//                mapGeocode?.results?.forEach { Addresses ->
-//
-//
-//                    for (mapGeoCodeAddress in Addresses.address_components) {
-//
-//                        mapGeoCodeAddress.types.forEach { type ->
-//                            if (type.toLowerCase().trim({ it <= ' ' }).compareTo("neighborhood") == 0) {
-//                                neighborhood = mapGeoCodeAddress.long_name
-//
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                }
-//
-//                var isNeighborhood = false
-//
-//
-//                mapGeocode?.results?.get(DefaultIndex)
-//                    ?.address_components?.forEach { mapGeoCodeAddress ->
-//
-//                    var remove = false
-//
-//                    for (type in mapGeoCodeAddress.types) {
-//                        if (type.compareTo("locality") == 0 ||
-//                            type.compareTo("administrative_area_level_1") == 0 ||
-//                            type.compareTo("administrative_area_level_2") == 0 ||
-//                            type.compareTo("sublocality_level_1") == 0 ||
-//                            type.compareTo("country") == 0
-//                        ) {
-//                            remove = true
-//                        } else if (type.toLowerCase().trim { it <= ' ' }.compareTo("neighborhood") == 0) {
-//                            isNeighborhood = true
-//                        }
-//
-//                    }
-//
-//
-//                    if (!remove) {
-//                        add.add(0, mapGeoCodeAddress)
-//                    }
-//
-//
-//                }
-//
-//                add.forEach { mapGeoCodeAddress ->
-//
-//                    stringBuilder.append(mapGeoCodeAddress.long_name).append(" , ")
-//
-//                }
-//
-//
-//
-//
-//                if (add.size > 0)
-//                    address = stringBuilder.substring(0, stringBuilder.length - 3)
-//
-//
-//                if (!isNeighborhood && neighborhood != null)
-//                    address = neighborhood + if (address == null) "" else " , $address"
-//
-//
-//            }
-//
-//
-//        }
+
+    var country: String? = null
+    var city: String? = null
+    var route: String? = null
+
+
+    val stringBuilder = StringBuilder()
+
+    val mapGeocode = this
+
+
+
+    if (mapGeocode.status.toLowerCase(Locale.ROOT).compareTo("ok") == 0) {
+
+        if (!mapGeocode.results.isNullOrEmpty()) {
+
+
+            mapGeocode.results.forEach { Addresses ->
+
+
+                for (mapGeoCodeAddress in Addresses.address_components) {
+
+                    mapGeoCodeAddress.types.forEach { type ->
+                        when {
+                            type.contains("country", true) -> {
+
+                                if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
+
+                                    country = mapGeoCodeAddress.long_name
+                                }
+                            }
+                            type.contains("locality", true) -> {
+
+                                if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
+
+                                    city = mapGeoCodeAddress.long_name
+                                }
+
+                            }
+                            type.contains("route", true) -> {
+                                if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
+
+                                    route = mapGeoCodeAddress.long_name
+                                }
+                            }
+                        }
+
+                    }
+
+
+
+                }
+
+            }
+
+        }
+
+    }
+
+    if (!country.isNullOrEmpty()) {
+        stringBuilder.append(country)
+    }
+    if (!city.isNullOrEmpty()) {
+        stringBuilder.append(", ")
+        stringBuilder.append(city)
+    }
+    if (!route.isNullOrEmpty()) {
+        stringBuilder.append(", ")
+        stringBuilder.append(route)
+    }
+
 
     return this.results?.let {
 
         return Place(
             it[0].place_id,
-            it[0].formatted_address,
-            it[0].formatted_address,
-            it[0].formatted_address,
+            stringBuilder.toString(),
+            stringBuilder.toString(),
+            stringBuilder.toString(),
             null
         )
 
     }
-
 
 
 }
