@@ -126,12 +126,12 @@ class PreferencesProvider(context: Context):PreferencesDataSource {
         return preferences.getLong(key, defValue)
     }
 
-    override  fun getBoolean(key: String, defValue: Boolean?): Boolean? {
-        return defValue?.let { preferences.getBoolean(key, it) }
+    override  fun getBoolean(key: String, defValue: Boolean): Boolean {
+        return preferences.getBoolean(key, defValue)
     }
 
-    override fun getFloat(key: String, defValue: Float?): Float? {
-        return defValue?.let { preferences.getFloat(key, it) }
+    override fun getFloat(key: String, defValue: Float): Float {
+        return  preferences.getFloat(key, defValue)
     }
 
     override fun clearAll() {

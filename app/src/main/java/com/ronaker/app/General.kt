@@ -30,15 +30,8 @@ class General : MultiDexApplication() {
 
         analytics = FirebaseAnalytics.getInstance(this)
 
-
-
         if (BuildConfig.DEBUG){
-
-            // Branch logging for debugging
-            Branch.enableDebugMode()
-
             Stetho.initializeWithDefaults(this)
-
         }
 
         Branch.getAutoInstance(this)

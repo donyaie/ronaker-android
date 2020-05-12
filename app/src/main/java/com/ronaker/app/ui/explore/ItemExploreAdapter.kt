@@ -19,6 +19,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
+@Suppress("UNCHECKED_CAST")
 class ItemExploreAdapter(
 
 ) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
@@ -62,7 +63,7 @@ class ItemExploreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
-        } else {
+        } else if (payloads[0] is Product)  {
             val combinedChange = createCombinedPayload(payloads as List<DiffUtils.Change<Product>>)
 //            val oldData = combinedChange.oldData
             val newData = combinedChange.newData

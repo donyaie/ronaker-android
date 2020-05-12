@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ronaker.app.model.Category
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -42,9 +43,9 @@ class AddProductViewModelTest {
 
         val value = addProductViewModel.productSubCategoryVisibility.value
 
-        assertThat(value, `is`(View.VISIBLE))
+        assertThat(value, equalTo(View.VISIBLE) )
 
-        assertThat( addProductViewModel.categories.size, `is`(1))
+        assertThat( addProductViewModel.categories.size,  equalTo(1) )
 
     }
 

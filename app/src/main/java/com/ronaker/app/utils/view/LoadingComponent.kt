@@ -75,14 +75,14 @@ class LoadingComponent  constructor(context: Context, attrs: AttributeSet) : Lin
         attrs.let {
             val typedArray = context.obtainStyledAttributes(
                 it,
-                R.styleable.loading_component_attributes, 0, 0
+                R.styleable.LoadingComponent, 0, 0
             )
 
 
             isTransparent = typedArray
                 .getBoolean(
                     R.styleable
-                        .loading_component_attributes_loading_transparent,
+                        .LoadingComponent_loading_transparent,
                     true
                 )
 

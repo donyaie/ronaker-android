@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.ronaker.app.ui.manageProduct
 
 import android.view.LayoutInflater
@@ -38,6 +40,7 @@ class ManageProductAdapter() : RecyclerView.Adapter<ManageProductAdapter.ViewHol
             super.onBindViewHolder(holder, position, payloads)
         } else {
             try {
+
 
                 val combinedChange =
                     DiffUtils.createCombinedPayload(payloads as List<DiffUtils.Change<Product>>)

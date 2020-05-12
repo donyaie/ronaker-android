@@ -72,8 +72,10 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight=".95"
+
                         android:gravity="start"
                         android:lines="1"
+
 
                         android:text="Lend | Canceled order"
                         android:textAppearance="@style/TextAppearance.Medium.SB"

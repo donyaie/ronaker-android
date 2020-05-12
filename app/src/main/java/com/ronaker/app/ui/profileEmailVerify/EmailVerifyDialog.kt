@@ -34,7 +34,6 @@ class EmailVerifyDialog : BaseDialog() {
     private var dialogResult = DialogResultEnum.NONE
 
 
-
     lateinit var viewModel: ProfileEmailVerifyViewModel
 
 
@@ -48,7 +47,7 @@ class EmailVerifyDialog : BaseDialog() {
 
     }
 
-    var disposable:Disposable?=null
+    var disposable: Disposable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,11 +75,11 @@ class EmailVerifyDialog : BaseDialog() {
         })
         viewModel.goNex.observe(viewLifecycleOwner, Observer {
 
-            dialogResult=DialogResultEnum.OK
+            dialogResult = DialogResultEnum.OK
             stop()
         })
 
-        binding.containerLayout.setOnClickListener { dismiss() }
+//        binding.containerLayout.setOnClickListener { dismiss() }
 
 
 
@@ -91,9 +90,6 @@ class EmailVerifyDialog : BaseDialog() {
     }
 
 
-
-
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -101,14 +97,23 @@ class EmailVerifyDialog : BaseDialog() {
         // request a window without the title
 
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCanceledOnTouchOutside(true)
+//        dialog.setCanceledOnTouchOutside(true)
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
 
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
 
-
+        dialog.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.action == KeyEvent.ACTION_UP
+            ) {
+                return@setOnKeyListener true
+            }
+             false
+        }
 
 
         return dialog
@@ -134,7 +139,6 @@ class EmailVerifyDialog : BaseDialog() {
 
 
         viewModel.loadData()
-
 
 
     }
@@ -166,9 +170,6 @@ class EmailVerifyDialog : BaseDialog() {
     }
 
 
-
-
-
     //endregion static function
 
 
@@ -176,7 +177,6 @@ class EmailVerifyDialog : BaseDialog() {
         fun onDialogResult(result: DialogResultEnum)
 
     }
-
 
 
     class DialogBuilder(internal val fragmentManager: FragmentManager) {
@@ -198,5 +198,8 @@ class EmailVerifyDialog : BaseDialog() {
 
 
     }
+
+
+
 
 }

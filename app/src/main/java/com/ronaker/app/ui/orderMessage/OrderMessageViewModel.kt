@@ -121,7 +121,7 @@ class OrderMessageViewModel(app: Application) : BaseViewModel(app) {
 
                         } else {
 
-                            if (result.error?.code == NetworkError.error_unverified_phone_number)
+                            if (result.error?.responseCode == 406)
                                 goNext.value = true
                             else
                                 errorMessage.value = result.error?.message

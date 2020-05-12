@@ -94,11 +94,11 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
         user.is_email_verified?.let { if (it) complete++ }
 
         user.is_phone_number_verified?.let { if (it) complete++ }
-        user.is_payment_info_verified?.let { if (it) complete++ }
-        user.is_identity_info_verified?.let { if (it) complete++ }
+//        user.is_payment_info_verified?.let { if (it) complete++ }
+//        user.is_identity_info_verified?.let { if (it) complete++ }
 
 
-        if (complete == 5) {
+        if (complete == 3) {
             completeProgressVisibility.postValue( View.GONE)
             completeVisibility.postValue( View.GONE)
             editVisibility.postValue( View.VISIBLE)

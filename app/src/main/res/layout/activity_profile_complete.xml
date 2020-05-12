@@ -120,6 +120,7 @@
 
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/payment_layout"
                     style="@style/Button.transparent.width"
                     app:drawableEndCompat="@drawable/ic_chevron_right"
@@ -128,6 +129,7 @@
 
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"
@@ -137,6 +139,7 @@
 
                 <Button
                     android:id="@+id/identity_layout"
+                    android:visibility="gone"
                     style="@style/Button.transparent.width"
                     app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_verify_your_identity"
@@ -144,6 +147,7 @@
 
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"

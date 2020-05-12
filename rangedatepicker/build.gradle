@@ -32,7 +32,7 @@ android {
 dependencies {
 
 
-    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation "androidx.appcompat:appcompat:$androidxCompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerviewVersion"
     implementation "androidx.core:core-ktx:$androidCorexVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"

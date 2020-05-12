@@ -27,7 +27,7 @@ interface ContentApi {
     /**
      * delete image
      */
-    @DELETE("/api/v1/contents/images/{suid}/?")
+    @DELETE("/api/v1/contents/images/{suid}/")
     fun deleteImage(@Header("Authorization") authToken: String?, @Path("suid") suid:String ): Observable<FreeResponseModel>
 
 

@@ -8,8 +8,8 @@ const val SHARE_URL: String = "https://ronaker.com/product/"
 const val FONT_PATH: String = "fonts/regular.otf"
 
 
-//const val SUPPORT_URL: String = "support@ronaker.com"
-const val SUPPORT_URL: String = "ronaker.app@gmail.com"
+const val SUPPORT_URL: String = "support@ronaker.com"
+//const val SUPPORT_URL: String = "ronaker.app@gmail.com"
 
 const val TERMS_URL: String = "https://ronaker.com/?page_id=7678"
 

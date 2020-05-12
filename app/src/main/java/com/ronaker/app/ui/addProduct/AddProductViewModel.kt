@@ -296,7 +296,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                 if (result.isSuccess()) {
                     goNext.value = false
                 } else {
-                    if (result.error?.code == error_unverified_phone_number)
+                    if (result.error?.responseCode == 406)
                         goNext.value = true
                     else
 
