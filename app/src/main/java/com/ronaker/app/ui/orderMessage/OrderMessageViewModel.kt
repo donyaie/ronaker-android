@@ -93,11 +93,11 @@ class OrderMessageViewModel(app: Application) : BaseViewModel(app) {
 
     fun checkOut(message: String) {
 
-
-       if(!checkCanOrder()){
-           goNext.value = true
-           return
-       }
+//
+//       if(!checkCanOrder()){
+//           goNext.value = true
+//           return
+//       }
 
 
 

@@ -30,16 +30,16 @@ buildscript {
     ext.glideVersion = '4.11.0'
 
     ext.playServicesVersion = '17.0.0'
-    ext.dexterVersion = '6.1.0'
+    ext.dexterVersion = '6.1.2'
     ext.ucropVersion = '2.2.4'
     ext.roundedImageVersion = '2.3.0'
 
     ext.ccpVersion = '2.2.9'
     ext.pinentryEditTextVersion = '2.0.6'
 
-    ext.firebaseVersion = '17.4.0'
+    ext.firebaseVersion = '17.4.1'
     ext.firebaseAppindexingVersion = '19.1.0'
-    ext.firebaseMessagingVersion = '20.1.6'
+    ext.firebaseMessagingVersion = '20.1.7'
     ext.firebaseInvitesVersion = '17.0.0'
     ext.firebasePerf = '19.0.7'
     ext.crashlyticsVersion='2.10.1'

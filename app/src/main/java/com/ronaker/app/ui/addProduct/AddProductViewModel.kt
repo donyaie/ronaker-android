@@ -311,27 +311,29 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         deleteImageSubscription?.dispose()
 
         deleteImageSubscription =
-            contentRepository.deleteImage(
-                userRepository.getUserToken(),
-                image.suid!!
-            )
-                .doOnSubscribe {
-                    loadingButton.value = true
+            image.suid?.let {
+                contentRepository.deleteImage(
+                    userRepository.getUserToken(),
+                    it
+                )
+                    .doOnSubscribe {
+                        loadingButton.value = true
 
-                }
-                .doOnTerminate {
-
-                    loadingButton.value = false
-
-                }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-                        adapter.removeItem(image)
-                    } else {
-                        adapter.removeItem(image)
-                        errorMessage.value = result.error?.message
                     }
-                }
+                    .doOnTerminate {
+
+                        loadingButton.value = false
+
+                    }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
+                            adapter.removeItem(image)
+                        } else {
+                            adapter.removeItem(image)
+                            errorMessage.value = result.error?.message
+                        }
+                    }
+            }
 
 
     }

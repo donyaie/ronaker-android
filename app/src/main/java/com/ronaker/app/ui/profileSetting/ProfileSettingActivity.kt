@@ -93,7 +93,7 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding.termsLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this,TERMS_URL)
+            IntentManeger.openUrl(this,LICENSE_URL)
         }
 
 

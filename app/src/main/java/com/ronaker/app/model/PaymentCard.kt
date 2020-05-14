@@ -40,6 +40,7 @@ data class PaymentCard(
 
         PayPal("paypal"),
         CreditCard("credit_cart"),
+        Cash("cash"),
         UNKNOWN("");
 
 

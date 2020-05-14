@@ -155,7 +155,7 @@
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please make sure your product is functioning properly and delivered to you without damage</string>
     <string name="text_start_renting_instruction">Start Renting instruction</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please ensure that the rented goods are functioning properly</string>
-    <string name="text_accept_and_start_renting">Pay With Card</string>
+    <string name="text_accept_and_start_renting">Accept &amp; Continue</string>
     <string name="text_version" translatable="false">Version</string>
     <string name="text_try_again">Try Again</string>
     <string name="text_rate_product">Rate Product</string>
@@ -167,7 +167,7 @@
     <string name="text_not_have_comment_yet">Not have comment yet</string>
     <string name="text_service_fee">Service Fee</string>
     <string name="text_insurance_fee">Insurance Fee</string>
-    <string name="text_product_fee">Product Fee</string>
+    <string name="text_product_fee">Rental Fee</string>
     <string name="text_total_fee">Total</string>
     <string name="text_cancel_order">Cancel Order</string>
     <string name="text_why_you_cancel_this_order">Why You Cancel This Order?</string>

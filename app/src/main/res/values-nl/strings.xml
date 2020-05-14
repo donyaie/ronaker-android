@@ -134,7 +134,7 @@
     <string name="text_please_upload_a_image_of_you_for_identify_you">Upload een afbeelding van u om u te identificeren</string>
     <string name="text_your_request_sent">Uw verzoek is verstuurd.</string>
     <string name="text_are_you_sure">Weet je zeker dat?</string>
-    <string name="text_accept_and_start_renting">Accepteer en start verhuur</string>
+    <string name="text_accept_and_start_renting">Accepteren en doorgaan</string>
     <string name="text_finish_order">Bestelling voltooien</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Zorg ervoor dat het gehuurde goed functioneert</string>
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Zorg ervoor dat uw product naar behoren functioneert en zonder schade aan u wordt geleverd</string>
@@ -152,7 +152,7 @@
     <string name="text_cancel_order">Annuleer bestelling</string>
     <string name="text_explain_why_cancel">Leg uit waarom annuleren</string>
     <string name="text_insurance_fee">Verzekeringspremie</string>
-    <string name="text_product_fee">Productkosten</string>
+    <string name="text_product_fee">Huurprijs</string>
     <string name="text_service_fee">Servicekosten</string>
     <string name="text_total_fee">Totaal</string>
     <string name="text_why_you_cancel_this_order">Waarom annuleert u deze bestelling?</string>

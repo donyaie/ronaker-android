@@ -3,14 +3,13 @@ package com.ronaker.app.ui.profilePayment
 
 import android.app.Application
 import android.content.Context
-import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.TERMS_URL
+import com.ronaker.app.utils.LICENSE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -60,7 +59,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
 
 
     fun onClickTerms(){
-        IntentManeger.openUrl(app,TERMS_URL)
+        IntentManeger.openUrl(app,LICENSE_URL)
     }
 
 

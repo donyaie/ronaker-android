@@ -11,7 +11,11 @@ const val FONT_PATH: String = "fonts/regular.otf"
 const val SUPPORT_URL: String = "support@ronaker.com"
 //const val SUPPORT_URL: String = "ronaker.app@gmail.com"
 
-const val TERMS_URL: String = "https://ronaker.com/?page_id=7678"
+const val LICENSE_URL: String = "https://ronaker.com/license-agreement.html"
+
+const val PRIVACY_URL: String = "https://ronaker.com/privacy-policy.html"
+
+const val REFUNDS_URL: String = "https://ronaker.com/refunds-policy.html"
 
 
 /** The Google URL  */

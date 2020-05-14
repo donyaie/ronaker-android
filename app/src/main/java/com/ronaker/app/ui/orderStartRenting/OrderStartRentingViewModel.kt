@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.data.DefaultPaymentInfoRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
@@ -14,9 +13,9 @@ import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
 import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.TERMS_URL
+import com.ronaker.app.utils.LICENSE_URL
 import io.reactivex.disposables.Disposable
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
 
 class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
@@ -85,7 +84,7 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
 
 
    fun onClickTerms(){
-       IntentManeger.openUrl(context,TERMS_URL)
+       IntentManeger.openUrl(context,LICENSE_URL)
    }
 
     fun load(order: Order) {
@@ -98,9 +97,10 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
             priceListAdapter.notifyDataSetChanged()
         }
 
+        cardDataList.clear()
 
-
-
+        cardDataList.add(PaymentCard(paymentInfoType = PaymentCard.PaymentType.Cash.key,fullName = "By Cash", isVerified = true).apply { selected=true })
+        cardListAdapter.notifyDataSetChanged()
         subscription?.dispose()
         subscription = paymentInfoRepository.getPaymentInfoList(
             userRepository.getUserToken()
@@ -109,23 +109,19 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess() ) {
-
-                    cardDataList.clear()
                     result.data?.let {
-                        if(it.isNotEmpty()){
-                            it[0].selected=true
+                        if (it.isNotEmpty()) {
+                            cardDataList.addAll(it)
+                            cardListAdapter.notifyDataSetChanged()
                         }
-                        cardDataList.addAll(it)
+
                     }
-                    cardListAdapter.notifyDataSetChanged()
 
                 } else {
                     finish.value=true
                     errorMessage.value = "Successfully Send"
                 }
             }
-
-
 
 
     }
