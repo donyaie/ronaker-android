@@ -44,7 +44,7 @@ import javax.inject.Singleton
 
 
     /**
-     * Provides the category service implementation.
+     * Provides the Category service implementation.
      * @param retrofit the Retrofit object used to instantiate the service
      * @return the User service implementation.
      */

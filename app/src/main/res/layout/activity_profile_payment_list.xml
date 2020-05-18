@@ -114,6 +114,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <Button
+            android:visibility="gone"
             android:id="@+id/new_layout"
 
             style="@style/Button.accent"

@@ -106,7 +106,7 @@ class DefaultContentRepository(private val contentApi: ContentApi) : ContentRepo
 //        val file = filePath.toFile()
 //        var call: Call<ContentImageResponceModel>? = null
 //        //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//        val mFile = RequestBody.create(MediaType.parse("image/*"), file)
+//        val mFile = RequestBody.create(MediaType.parse("Image/*"), file)
 //        val fileToUpload = MultipartBody.Part.createFormData("content", file.name, mFile)
 ////        val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
 //

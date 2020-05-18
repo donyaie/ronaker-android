@@ -8,12 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.NetworkError.Companion.error_unverified_phone_number
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Category
+import com.ronaker.app.model.Image
 import com.ronaker.app.model.Place
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AppDebug
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
-    internal val TAG = AddProductViewModel::class.java.name
+    private val TAG = AddProductViewModel::class.java.name
 
 
     @Inject
@@ -81,12 +81,21 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
+    val imageInsuranceVisibility: MutableLiveData<Int> = MutableLiveData()
+    val imageInsuranceEmptyVisibility: MutableLiveData<Int> = MutableLiveData()
+
+    val insuranceImage: MutableLiveData<String> = MutableLiveData()
+
+    val insuranceMedia = Image(isLocal = true)
+
+
     val parentCategory: MutableLiveData<Category> = MutableLiveData()
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    val showPickerNext: MutableLiveData<Boolean> = MutableLiveData()
+    val showImagePicker: MutableLiveData<Boolean> = MutableLiveData()
+    val showInsurancePicker: MutableLiveData<Boolean> = MutableLiveData()
 
 
     var categories: ArrayList<Category> = ArrayList()
@@ -95,15 +104,16 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     val viewState: MutableLiveData<StateEnum> = MutableLiveData()
 
-    lateinit var imagesTemp: ArrayList<Product.ProductImage>
+    lateinit var imagesTemp: ArrayList<Image>
 
 
     enum class StateEnum constructor(position: Int) {
-        image(0),
-        info(1),
-        category(2),
-        price(3),
-        location(4);
+//        Insurance(0),
+        Image(0),
+        Info(1),
+        Category(2),
+        Price(3),
+        Location(4);
 
         var position: Int = 0
             internal set
@@ -114,7 +124,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         companion object {
             operator fun get(position: Int): StateEnum {
-                var state = image
+                var state = StateEnum.values()[0]
                 for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
@@ -158,7 +168,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
                 updateProduct(product)
             } else
-                viewState.value = StateEnum.category
+                viewState.value = StateEnum.Category
         }
 
     }
@@ -182,7 +192,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
                 updateProduct(product)
             } else
-                viewState.value = StateEnum.price
+                viewState.value = StateEnum.Price
 
 
         }
@@ -256,7 +266,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
             updateProduct(product)
         } else if (product.price_per_day ?: 0.toDouble() > 0 || product.price_per_week ?: 0.toDouble() > 0 || product.price_per_month ?: 0.toDouble() > 0)
-            viewState.value = StateEnum.location
+            viewState.value = StateEnum.Location
         else
             errorMessage.value = context.getString(R.string.error_set_price)
 
@@ -282,7 +292,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun createProduct() {
+    private fun createProduct() {
 
         createPostSubscription?.dispose()
 
@@ -307,7 +317,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun deleteImage(image: Product.ProductImage) {
+    private fun deleteImage(image: Image) {
         deleteImageSubscription?.dispose()
 
         deleteImageSubscription =
@@ -338,12 +348,12 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun onClickRemoveImage(image: Product.ProductImage?) {
+    fun onClickRemoveImage(image: Image?) {
 
 
         if (image?.isLocal == true)
             adapter.removeItem(image)
-        else if (updateState == StateEnum.image) {
+        else if (updateState == StateEnum.Image) {
 
             image?.let { deleteImage(it) }
         }
@@ -352,7 +362,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun onClickAddImage() {
-        showPickerNext.value = true
+        showImagePicker.value = true
     }
 
 
@@ -363,7 +373,29 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun uploadAll(images: ArrayList<Product.ProductImage>) {
+    fun onClickAddInsuranceImage() {
+//        showPickerNext.value = true
+        showInsurancePicker.value=true
+    }
+
+    fun onClickInsuranceNext() {
+        viewState.value = StateEnum.Image
+    }
+
+    fun selectInsurance(uri: Uri) {
+
+        insuranceMedia.apply {
+            this.isLocal = true
+            this.uri = uri
+            this.suid = null
+        }
+
+        insuranceImage.value=uri.toString()
+
+
+    }
+
+    private fun uploadAll(images: ArrayList<Image>) {
         images.forEach {
             if (it.isLocal) {
                 upload(it)
@@ -372,7 +404,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun checkNextSelectImage(): Boolean {
+    private fun checkNextSelectImage(): Boolean {
         var resault = true
 
         imagesTemp.forEach {
@@ -392,7 +424,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                 updateProduct(product)
             } else
 
-                viewState.value = StateEnum.info
+                viewState.value = StateEnum.Info
 
 
         }
@@ -401,7 +433,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         return resault
     }
 
-    fun checkInprogressSelectImage(): Boolean {
+    private fun checkInprogressSelectImage(): Boolean {
         var resault = false
         imagesTemp.forEach {
             if (it.progress.value == true)
@@ -411,7 +443,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         return resault
     }
 
-    fun upload(model: Product.ProductImage) {
+    private fun upload(model: Image) {
 //
 //
         uploadSubscriptionList.add(model.uri?.let {
@@ -437,7 +469,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun updateProduct(product: Product) {
+    private fun updateProduct(product: Product) {
         updateproductSubscription?.dispose()
         updateproductSubscription =
             updateSuid?.let {
@@ -472,11 +504,11 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                 .subscribe { result ->
                     if (result.isSuccess()) {
                         when (state) {
-                            StateEnum.image -> {
+                            StateEnum.Image -> {
                                 result.data?.images?.let { adapter.addRemoteImage(it) }
 
                             }
-                            StateEnum.price -> {
+                            StateEnum.Price -> {
 
 
                                 productPriceDay.value =
@@ -497,13 +529,13 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
                             }
-                            StateEnum.info -> {
+                            StateEnum.Info -> {
 
                                 productTitle.value = result.data?.name
                                 productDescription.value = result.data?.description
                             }
 
-                            StateEnum.category -> {
+                            StateEnum.Category -> {
 
                                 result.data?.categories?.let {
 
@@ -542,7 +574,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
                             }
-                            StateEnum.location -> {
+                            StateEnum.Location -> {
 
 
                                 result.data?.location?.let {

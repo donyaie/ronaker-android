@@ -27,7 +27,7 @@ interface UserApi {
     fun loginUser(@Body user: UserLoginRequestModel): Observable<UserRegisterResponseModel>
 
     /**
-     * get user info with token
+     * get user Info with token
      */
     @GET("/api/v1/users/?")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -43,7 +43,7 @@ interface UserApi {
 
 
     /**
-     * update user info
+     * update user Info
      */
     @PUT("/api/v1/users/")
     @Headers("Content-Type:application/json; charset=UTF-8")

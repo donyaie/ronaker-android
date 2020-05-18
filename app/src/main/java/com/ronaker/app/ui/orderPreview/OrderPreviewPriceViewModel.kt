@@ -22,7 +22,7 @@ class OrderPreviewPriceViewModel(val app: Application) : BaseViewModel(app) {
 
 
         price.value = mPrice.toCurrencyFormat()
-//        price.value = String.format(
+//        Price.value = String.format(
 //            "%s%.02f",
 //            app.getString(R.string.title_curency_symbol),
 //            mPrice

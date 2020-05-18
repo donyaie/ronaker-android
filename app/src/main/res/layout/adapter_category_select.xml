@@ -7,7 +7,7 @@
 
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.addProduct.CategorySelectViewModel" />
+                type="com.ronaker.app.ui.selectCategory.CategorySelectViewModel" />
     </data>
 
 

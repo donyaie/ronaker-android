@@ -35,6 +35,8 @@ import com.ronaker.app.ui.profilePaymentHistoryList.ProfilePaymentHistoryListVie
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListViewModel
 import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
+import com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchViewModel
+import com.ronaker.app.ui.selectCategory.AddProductCategorySelectViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 import dagger.Component
 import javax.inject.Singleton

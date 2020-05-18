@@ -1,12 +1,9 @@
 package com.ronaker.app.model
 
-import android.net.Uri
 import android.os.Parcelable
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
 import com.ronaker.app.data.network.response.*
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 
@@ -19,7 +16,7 @@ data class Product(
     , var price_per_month: Double?
     , var description: String?
     , var avatar: String?
-    , var images: List<ProductImage>?
+    , var images: List<Image>?
     , var categories: List<Category>?
     , var location: LatLng?
     , var address: String?
@@ -134,23 +131,6 @@ data class Product(
 
 
     @Parcelize
-    data class ProductImage(
-        var url: String?,
-        var suid: String?,
-        var uri: Uri? = null,
-        var isLocal: Boolean = false
-    ) : Parcelable {
-
-        constructor() : this(null, null)
-
-
-        @IgnoredOnParcel
-        val progress: MutableLiveData<Boolean> = MutableLiveData()
-
-    }
-
-
-    @Parcelize
     data class ProductRate(
         var stars: Float?,
         var comment: String?,
@@ -243,14 +223,14 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
 }
 
 
-fun List<ProductItemImageResponceModel>.toProductImage(): List<Product.ProductImage> {
+fun List<ProductItemImageResponceModel>.toProductImage(): List<Image> {
 
 
-    val list: ArrayList<Product.ProductImage> = ArrayList()
+    val list: ArrayList<Image> = ArrayList()
 
     this.forEach {
 
-        val product = Product.ProductImage(it.url, it.suid)
+        val product = Image(it.url, it.suid)
         product.isLocal = false
 
         list.add(product)

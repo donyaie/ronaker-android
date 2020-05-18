@@ -227,6 +227,12 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
                         R.color.transparent
                     )
                 )
+
+                containerLayout.setBackgroundResource(
+                  R.drawable.background_gradient_transparent_bottom
+                )
+
+
                 titleText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLight))
 
                 statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))

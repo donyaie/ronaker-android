@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="com.ronaker.app.ui.addProduct.AddProductLocationSearchViewModel" />
+            type="com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchViewModel" />
 
         <variable
             name="dialog"
-            type="com.ronaker.app.ui.addProduct.AddProductLocationSearchDialog" />
+            type="com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchDialog" />
     </data>
 
     <LinearLayout

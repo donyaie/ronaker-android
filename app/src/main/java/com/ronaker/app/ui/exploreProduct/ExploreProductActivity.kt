@@ -117,7 +117,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
         val time = measureTimeMillis {
-            //calcut image height
+            //calcut Image height
             val screenCalculator = ScreenCalculator(this)
             binding.avatarSlide.layoutParams.height =
                 (screenCalculator.screenWidthPixel * 0.7).toInt()
@@ -217,9 +217,9 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
-            viewModel.productLocation.observe(this, Observer { suid ->
-
-                addMarker(suid)
+            viewModel.productLocation.observe(this, Observer { location ->
+                if (location != null)
+                    addMarker(location)
             })
 
             viewModel.checkout.observe(this, Observer { _ ->
@@ -249,10 +249,9 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 mv.onCreate(null)
                 mv.onPause()
                 mv.onDestroy()
-            } catch (ignored:Exception) {
+            } catch (ignored: Exception) {
             }
         }).start()
-
 
 
         val time2 = measureTimeMillis {
@@ -326,8 +325,6 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
     private fun initMap() {
-
-
 
 
         val mapFragment = SupportMapFragment()
