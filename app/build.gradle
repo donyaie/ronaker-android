@@ -12,7 +12,6 @@ apply plugin: 'io.fabric'
 
 apply plugin: 'com.google.firebase.firebase-perf'
 
-
 apply plugin: 'com.google.gms.google-services'
 
 
@@ -83,7 +82,7 @@ android {
 
         manifestPlaceholders = [
                 onesignal_app_id               : ONESIGNAL_APP_ID,
-                // Project number pulled from dashboard, local value is ignored.
+                // Project Checkout pulled from dashboard, local value is ignored.
                 onesignal_google_project_number: 'REMOTE'
         ]
 
@@ -215,7 +214,7 @@ dependencies {
     // rounded image view
     implementation "com.makeramen:roundedimageview:$roundedImageVersion"
 
-    //number
+    //Checkout
 
     implementation "com.hbb20:ccp:$ccpVersion"
     implementation "com.googlecode.libphonenumber:libphonenumber:$libphonenumberVersion"

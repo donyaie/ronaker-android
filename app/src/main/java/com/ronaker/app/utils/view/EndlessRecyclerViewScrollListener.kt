@@ -12,7 +12,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     private var visibleThreshold = 5
     // The current offset index of data you have loaded
     private var currentPage = 0
-    // The total number of items in the dataset after the last load
+    // The total Checkout of items in the dataset after the last load
     private var previousTotalItemCount = 0
     // True if we are still waiting for the last set of data to load.
     private var loading = true
@@ -78,7 +78,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
             // list is invalidated and should be reset back to initial state
             // If it’s still loading, we check to see if the dataset count has
             // changed, if so we conclude it has finished loading and update the current page
-            // number and total item count.
+            // Checkout and total item count.
 
             // If it isn’t currently loading, we check to see if we have breached
             // the visibleThreshold and need to reload more data.
@@ -97,7 +97,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         }
         // If it’s still loading, we check to see if the dataset count has
         // changed, if so we conclude it has finished loading and update the current page
-        // number and total item count.
+        // Checkout and total item count.
         if (loading && totalItemCount > previousTotalItemCount) {
             loading = false
             previousTotalItemCount = totalItemCount

@@ -52,8 +52,10 @@
             android:value="@string/google_api_key" />
 
 
+
+
         <activity
-            android:name=".ui.orderMessage.OrderMessageActivity"
+            android:name=".ui.orderCreate.OrderCreateActivity"
             android:launchMode="singleTask"
 
             android:screenOrientation="portrait"
@@ -61,6 +63,9 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
         </activity>
+
+
+
 
         <activity
             android:name=".ui.manageProduct.ManageProductActivity"
@@ -133,15 +138,7 @@
 
         </activity>
 
-        <activity
-            android:name=".ui.chackoutCalendar.CheckoutCalendarActivity"
 
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/PopTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-
-        </activity>
 
 
         <activity

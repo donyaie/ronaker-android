@@ -2,7 +2,6 @@ package com.ronaker.app.injection.component
 
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.*
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
 import com.ronaker.app.ui.dashboard.DashboardViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
@@ -12,9 +11,9 @@ import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptViewModel
 import com.ronaker.app.ui.orderCancel.OrderCancelViewModel
+import com.ronaker.app.ui.orderCreate.OrderCreateViewModel
 import com.ronaker.app.ui.orderDecline.OrderDeclineViewModel
 import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
-import com.ronaker.app.ui.orderMessage.OrderMessageViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
@@ -56,9 +55,7 @@ interface ViewModelInjector {
     fun inject(viewModel: ExploreProductViewModel)
     fun inject(viewModel: ManageProductListViewModel)
     fun inject(viewModel: ManageProductViewModel)
-    fun inject(viewModel: CheckoutCalendarViewModel)
     fun inject(viewModel: OrdersViewModel)
-    fun inject(viewModel: OrderMessageViewModel)
     fun inject(viewModel: ProfileViewModel)
     fun inject(viewModel: InboxViewModel)
     fun inject(viewModel: SearchViewModel)
@@ -86,6 +83,7 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfileEmailEditViewModel)
     fun inject(viewModel: ProfilePaymentListViewModel)
     fun inject(viewModel: ProfilePaymentHistoryListViewModel)
+    fun inject(viewModel: OrderCreateViewModel)
 
     @Component.Builder
     interface Builder {

@@ -34,7 +34,7 @@ interface UserApi {
     fun getUserInfo(@Header("Authorization") authToken: String): Observable<UserInfoResponceModel>
 
     /**
-     * add phone number to user and recive otp
+     * add phone Checkout to user and recive otp
      */
     @POST("/api/v1/users/phone_number/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -52,7 +52,7 @@ interface UserApi {
 
 
     /**
-     * valid phone number of user with otp
+     * valid phone Checkout of user with otp
      */
     @POST("/api/v1/users/phone_number/activation/")
     @Headers("Content-Type:application/json; charset=UTF-8")

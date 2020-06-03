@@ -4,27 +4,15 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.orderMessage.OrderMessageViewModel"/>
+                type="com.ronaker.app.ui.orderCreate.OrderCreateViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-        <com.ronaker.app.utils.view.ToolbarComponent
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:toolbar_component_transparent="false"
-                app:toolbar_component_bottom_line="false"
-                app:toolbar_component_action_text="@string/text_clear"
-                app:toolbar_component_center_container="NONE"
-                app:toolbar_component_action_container="NONE"
-                app:toolbar_component_cancel_container="CLOSE"
-        />
 
-        <ScrollView android:layout_width="match_parent" app:layout_constraintTop_toBottomOf="@id/toolbar"
+        <androidx.core.widget.NestedScrollView android:layout_width="match_parent" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" android:fillViewport="true" android:orientation="vertical"
                     android:layout_height="0dp">
 
@@ -61,7 +49,7 @@
                         android:layout_height="wrap_content"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
 

@@ -12,8 +12,8 @@ import kotlinx.android.parcel.Parcelize
  * @property email the unique email Address
  * @property is_email_verified if email verified is true
  * @property first_name the first name of user
- * @property phone_number the number of user
- * @property is_phone_number_verified if number verified is true
+ * @property phone_number the Checkout of user
+ * @property is_phone_number_verified if Checkout verified is true
  */
 @Parcelize
 data class User(

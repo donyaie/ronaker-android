@@ -22,8 +22,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarActivity
-import com.ronaker.app.ui.orderMessage.OrderMessageActivity
+import com.ronaker.app.ui.orderCreate.OrderCreateActivity
 import com.ronaker.app.utils.*
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.util.ContentMetadata
@@ -227,8 +226,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
                     this.startActivityForResult(
-                        CheckoutCalendarActivity.newInstance(this, it)
-                        , CheckoutCalendarActivity.REQUEST_CODE
+                        OrderCreateActivity.newInstance(this, it)
+                        , OrderCreateActivity.REQUEST_CODE
                     )
 
                 }
@@ -411,46 +410,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         when (requestCode) {
 
-            CheckoutCalendarActivity.REQUEST_CODE -> {
-                data?.let {
-
-                    if (resultCode == Activity.RESULT_OK) {
-
-                        val start =
-                            Date(data.getLongExtra(CheckoutCalendarActivity.STARTDATE_KEY, -1))
-                        val end = Date(data.getLongExtra(CheckoutCalendarActivity.ENDDATE_KEY, -1))
-
-
-                        Handler().postDelayed({
-//                            this.startActivityMakeSceneForResult(
-//                                OrderMessageActivity.newInstance(
-//                                    this,
-//                                    getProduct(),
-//                                    start,
-//                                    end
-//                                ), OrderMessageActivity.REQUEST_CODE
-//                            )
-
-
-                            this.startActivityForResult(
-                                OrderMessageActivity.newInstance(
-                                    this,
-                                    getProduct(),
-                                    start,
-                                    end
-                                )
-                                ,
-                                OrderMessageActivity.REQUEST_CODE
-                            )
-
-
-                        }, 200)
-                    }
-                }
-            }
-
-
-            OrderMessageActivity.REQUEST_CODE -> {
+            OrderCreateActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
 
                     this.setResult(Activity.RESULT_OK)
