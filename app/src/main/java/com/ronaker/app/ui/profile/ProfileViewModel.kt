@@ -46,70 +46,72 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
         userRepository.getUserInfo()?.let { fillUser(it) }
 
     }
+
     fun updateUser() {
         uiScope.launch {
             getUserData()
         }
     }
 
-    private suspend  fun getUserData()  =
-        withContext(Dispatchers.IO){
-        subscription = userRepository
-            .getUserInfo(userRepository.getUserToken())
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .doOnSubscribe {
-            }
-            .doOnTerminate {
-            }
-
-            .subscribe { result ->
-                if (result.isSuccess()) {
-                    result.data?.let {
-                        userRepository.saveUserInfo(it)
-                        fillUser(it)
-                    }
-
-                } else {
-                    errorMessage.postValue(result.error?.message)
+    private suspend fun getUserData() =
+        withContext(Dispatchers.IO) {
+            subscription = userRepository
+                .getUserInfo(userRepository.getUserToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSubscribe {
+                }
+                .doOnTerminate {
                 }
 
-            }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+                        result.data?.let {
+                            userRepository.saveUserInfo(it)
+                            fillUser(it)
+                        }
+
+                    } else {
+                        errorMessage.postValue(result.error?.message)
+                    }
+
+                }
 
 
-    }
+        }
 
 
     private fun fillUser(user: User) {
 
         var complete = 0
 
-        userName.postValue( "${user.first_name} ${user.last_name}")
+        userName.postValue("${user.first_name} ${user.last_name}")
 
         user.avatar?.let {
-            userAvatar.postValue( BASE_URL + it)
+            userAvatar.postValue(BASE_URL + it)
             complete++
         }
 
-        user.is_email_verified?.let { if (it) complete++ }
+//        if (user.smart_id_personal_code != null) complete++
 
-        user.is_phone_number_verified?.let { if (it) complete++ }
+        if (user.is_email_verified) complete++
+        if (user.is_phone_number_verified) complete++
 //        user.is_payment_info_verified?.let { if (it) complete++ }
 //        user.is_identity_info_verified?.let { if (it) complete++ }
 
 
-        if (complete == 3) {
-            completeProgressVisibility.postValue( View.GONE)
-            completeVisibility.postValue( View.GONE)
-            editVisibility.postValue( View.VISIBLE)
+        if (complete == 4) {
+            completeProgressVisibility.postValue(View.GONE)
+            completeVisibility.postValue(View.GONE)
+            editVisibility.postValue(View.VISIBLE)
         } else {
 
-            completeProgressVisibility.postValue( View.VISIBLE)
-            completeProgress.postValue( complete)
-            userStep.postValue( complete.toString())
+            completeProgressVisibility.postValue(View.VISIBLE)
+            completeProgress.postValue(complete)
+            userStep.postValue(complete.toString())
 
-            completeVisibility.postValue( View.VISIBLE)
-            editVisibility.postValue( View.GONE)
+            completeVisibility.postValue(View.VISIBLE)
+            editVisibility.postValue(View.GONE)
         }
 
 

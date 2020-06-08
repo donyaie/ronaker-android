@@ -31,6 +31,8 @@ class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
     val signComplete: MutableLiveData<Boolean> = MutableLiveData()
     val peymentComplete: MutableLiveData<Boolean> = MutableLiveData()
     val identityComplete: MutableLiveData<Boolean> = MutableLiveData()
+    val smartIDComplete: MutableLiveData<Boolean> = MutableLiveData()
+
 
 
 
@@ -63,6 +65,8 @@ class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
 
                     imageComplete.value = result.data?.avatar != null
 
+
+                    smartIDComplete.value = result.data?.smart_id_personal_code != null
 
                 } else {
                     retry.value = result.error?.message

@@ -17,30 +17,24 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class User(
-    var suid: String?
-    , var email: String?
-    , var is_email_verified: Boolean?
-    , var first_name: String?
-    , var last_name: String?
-    , var phone_number: String?
-    , var is_phone_number_verified: Boolean?
-    , var is_payment_info_verified: Boolean?
-    , var is_identity_info_verified: Boolean?
-    , var avatar: String?
+    var suid: String?=null
+    , var email: String?=null
+    , var is_email_verified: Boolean=false
+    , var first_name: String?=null
+    , var last_name: String?=null
+    , var phone_number: String?=null
+    , var is_phone_number_verified: Boolean=false
+    , var is_payment_info_verified: Boolean=false
+    , var is_identity_info_verified: Boolean=false
+    , var avatar: String?=null
     , var password: String? = null
     , var promotionCode: String? = null
-    , val balance: Double? = null
+    , var balance: Double = 0.0
+    ,val smart_id_national_code:String?=null
+    ,val smart_id_personal_code:String?=null
+
 ) : Parcelable {
     constructor() : this(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
         null
     )
 
@@ -54,6 +48,7 @@ data class User(
 fun UserInfoResponceModel.toUserModel(): User {
 
 
+    smart_id_national_code
     return User(
         suid = suid,
         email = email,
@@ -65,9 +60,9 @@ fun UserInfoResponceModel.toUserModel(): User {
         is_payment_info_verified = is_payment_info_verified,
         is_identity_info_verified = is_identity_info_verified,
         avatar = avatar,
-        balance = balance
-
-
+        balance = balance,
+        smart_id_national_code = smart_id_national_code,
+        smart_id_personal_code = smart_id_personal_code
     )
 
 }

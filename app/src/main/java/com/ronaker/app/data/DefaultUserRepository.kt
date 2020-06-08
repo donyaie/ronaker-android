@@ -172,6 +172,66 @@ class DefaultUserRepository(
     }
 
 
+    override fun getSmartIDVerificationCode(
+
+        user_token: String?,
+        national_code: String,
+        personal_code: String
+    ): Observable<Result<String>> {
+
+        val request =
+            UserSmartIdVerificationCodeRequestModel(
+                national_code,
+                personal_code
+            )
+        return userApi.getSmartIDVerificationCode("Token $user_token", request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.verification_code
+            }
+            .toResult()
+
+    }
+
+
+    override fun startSmartIDAuth(
+
+        user_token: String?,
+        national_code: String,
+        personal_code: String
+    ): Observable<Result<Boolean>> {
+
+        val request =
+            UserSmartIdVerificationCodeRequestModel(
+                national_code,
+                personal_code
+            )
+        return userApi.startSmartIDAuth("Token $user_token", request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+               true
+            }
+            .toResult()
+
+    }
+
+
+    override fun checkSmartIDSession(
+        user_token: String?
+    ): Observable<Result<Boolean>> {
+        return userApi.checkSmartIDSession("Token $user_token")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
     override fun addDocument(
         userToken: String?,
         imageSuid: String,

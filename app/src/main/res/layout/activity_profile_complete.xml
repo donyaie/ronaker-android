@@ -120,6 +120,21 @@
 
 
                 <Button
+                    android:id="@+id/auth_layout"
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/textauthorize_your_identity"
+                    android:textColor="@color/colorTextDark" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <Button
                     android:visibility="gone"
                     android:id="@+id/payment_layout"
                     style="@style/Button.transparent.width"

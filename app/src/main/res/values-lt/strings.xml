@@ -181,7 +181,7 @@
     <string name="text_resend_email">Siųsti el. Laišką dar kartą</string>
     <string name="text_balance">Likutis:</string>
     <string name="text_add_document_image">Pridėti dokumento atvaizdą</string>
-    <string name="text_of_5">" iš 3"</string>
+    <string name="text_of_5">" iš 4"</string>
     <string name="text_order_detail">Informacija apie užsakymą</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Papasakokite apie savo patirtį naudojant šį elementą</string>
     <string name="text_please_write_your_experience_here">Prašome parašyti savo patirtį čia</string>
@@ -196,4 +196,11 @@
     <string name="text_privacy_policy">Privatumo politika</string>
     <string name="text_returns_and_refunds_policy">Grąžinimo ir grąžinimo politika</string>
     <string name="text_license_agreement">Licencijos sutartis</string>
+    <string name="text_check_the_provided_control_code">Patikrinkite pateiktą valdymo kodą</string>
+    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Patikrinkite pateiktą valdymo kodą telefone. Patvirtinkite įvesdami PIN1 kodą:</string>
+    <string name="text_time_remaining">Likęs laikas</string>
+    <string name="text_please_enter_your_personal_code">Įveskite savo asmens kodą</string>
+    <string name="text_we_will_authorize_you_with_your_smart_id">Mes suteiksime jums prieigą prie jūsų „Smart ID“</string>
+    <string name="text_smart_id">Smart ID</string>
+    <string name="textauthorize_your_identity">Įgaliokite savo tapatybę</string>
 </resources>
