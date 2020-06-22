@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.ronaker.app.utils
 
 import android.annotation.TargetApi
@@ -9,16 +7,6 @@ import androidx.preference.PreferenceManager
 import java.util.*
 
 
-/**
- * This class is used to change your application locale and persist this change for the next time
- * that your app is going to be used.
- *
- *
- * You can also change the locale of your application on the fly by using the setLocale method.
- *
- *
- * Created by gunhansancar on 07/10/15.
- */
 object LocaleHelper {
 
     private const val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
@@ -64,11 +52,9 @@ object LocaleHelper {
     private fun updateResources(context: Context, language: String): Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
-
         val configuration = context.resources.configuration
         configuration.setLocale(locale)
         configuration.setLayoutDirection(locale)
-
         return context.createConfigurationContext(configuration)
     }
 
@@ -86,6 +72,8 @@ object LocaleHelper {
 
         return context
     }
+
+
 
 
 }

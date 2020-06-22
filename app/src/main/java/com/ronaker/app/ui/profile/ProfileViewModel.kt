@@ -92,7 +92,7 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
             complete++
         }
 
-//        if (user.smart_id_personal_code != null) complete++
+        if (user.smart_id_personal_code != null) complete++
 
         if (user.is_email_verified) complete++
         if (user.is_phone_number_verified) complete++

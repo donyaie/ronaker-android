@@ -64,9 +64,10 @@ class General : MultiDexApplication() {
 
 
 
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base?.let { LocaleHelper.onAttach(it, "en") })
+    override fun attachBaseContext(base: Context) {
         MultiDex.install(this)
+        super.attachBaseContext(LocaleHelper.onAttach(base, "en") )
+
 
     }
 
