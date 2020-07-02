@@ -5,7 +5,7 @@ import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import io.reactivex.Observable
 
-interface  UserRepository {
+interface UserRepository {
 
 
     fun registerUser(user: User): Observable<Result<User>>
@@ -32,5 +32,18 @@ interface  UserRepository {
     fun getUserToken(): String?
     fun isLogin(): Boolean
     fun sendEmailVerification(user_token: String?): Observable<Result<Boolean>>
+
+    fun getSmartIDVerificationCode(
+        user_token: String?,
+        national_code: String,
+        personal_code: String
+    ): Observable<Result<String>>
+
+    fun checkSmartIDSession(user_token: String?): Observable<Result<Boolean>>
+    fun startSmartIDAuth(
+        user_token: String?,
+        national_code: String,
+        personal_code: String
+    ): Observable<Result<Boolean>>
 }
 

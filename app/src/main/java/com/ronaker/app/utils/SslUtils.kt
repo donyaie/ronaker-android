@@ -23,7 +23,7 @@ object SslUtils {
 
 //    fun getUnsafeOkHttpClientAll(): OkHttpClient {
 //        try {
-//            // Create a trust manager that does not validate certificate chains
+//            // Create a trust manager that does not Message certificate chains
 //            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
 //
 //                override fun getAcceptedIssuers(): Array<X509Certificate> {
@@ -63,7 +63,7 @@ object SslUtils {
 //    }
 
 
-    // Create a trust manager that does not validate certificate chains
+    // Create a trust manager that does not Message certificate chains
     // Install the all-trusting trust manager
     // Create an ssl socket factory with our all-trusting manager
     fun getUnsafeOkHttpClient(context: Context): OkHttpClient.Builder {
@@ -143,7 +143,7 @@ object SslUtils {
 
     private fun getTrustAllHostsSSLSocketFactory(): Pair<SSLSocketFactory, X509TrustManager>? {
         try {
-            // Create a trust manager that does not validate certificate chains
+            // Create a trust manager that does not Message certificate chains
             val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
 
                 override fun getAcceptedIssuers(): Array<X509Certificate> {

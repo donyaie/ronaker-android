@@ -2,7 +2,7 @@
 <resources>
 
 
-    <declare-styleable name="loading_component_attributes">
+    <declare-styleable name="LoadingComponent">
 
 
         <attr name="loading_transparent" format="boolean"/>

@@ -22,6 +22,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Place
+import com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchDialog
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.IPagerFragment
 
@@ -33,7 +34,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     var isFirstSelected = false
 
     override fun onCameraIdle() {
-        if (isFirstSelected && isFirstIdle) {
+        if ( isFirstIdle) {
             viewModel.updateLocation(mGoogleMap.cameraPosition.target)
         } else if (isFirstSelected) {
             isFirstIdle = true
@@ -53,9 +54,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     var lastLocation: LatLng? = null
 
 
-    fun getSuid(): String? {
-        return activity?.intent?.getStringExtra(AddProductActivity.SUID_KEY)
-    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -156,7 +155,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
             } ?: run {
-
+//                isFirstSelected = true
                 val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     DEFULT_LOCATION,
                     10f

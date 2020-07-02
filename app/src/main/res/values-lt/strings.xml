@@ -127,14 +127,13 @@
     <string name="title_favorites">Mėgstamiausi</string>
     <string name="title_notification">Pranešimas</string>
     <string name="title_support">Palaikymas</string>
-    <string name="title_terms_and_conditions">Taisyklės ir sąlygos</string>
     <string name="text_clear">Aišku</string>
     <string name="text_add_a_image">Pridėkite vaizdą</string>
     <string name="text_add_a_profile_image">Pridėkite profilio vaizdą</string>
     <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo atvaizdą, kad galėtumėte jus atpažinti</string>
     <string name="text_your_request_sent">Jūsų prašymas išsiųstas.</string>
     <string name="text_are_you_sure">Ar tu tuo tikras?</string>
-    <string name="text_accept_and_start_renting">Priimk ir pradėk nuomoti</string>
+    <string name="text_accept_and_start_renting">Priimti ir tęsti</string>
     <string name="text_finish_order">Baigti užsakymą</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Įsitikinkite, kad išsinuomotos prekės veikia tinkamai</string>
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Įsitikinkite, kad jūsų produktas veikia tinkamai ir yra pristatytas jums be žalos</string>
@@ -152,7 +151,7 @@
     <string name="text_cancel_order">Atšaukti užsakymą</string>
     <string name="text_explain_why_cancel">Paaiškinkite, kodėl atšaukti</string>
     <string name="text_insurance_fee">Draudimo mokestis</string>
-    <string name="text_product_fee">Produkto mokestis</string>
+    <string name="text_product_fee">Nuomos mokestis</string>
     <string name="text_service_fee">Aptarnavimo mokestis</string>
     <string name="text_total_fee">Iš viso</string>
     <string name="text_why_you_cancel_this_order">Kodėl atšaukiate šį užsakymą?</string>
@@ -182,7 +181,7 @@
     <string name="text_resend_email">Siųsti el. Laišką dar kartą</string>
     <string name="text_balance">Likutis:</string>
     <string name="text_add_document_image">Pridėti dokumento atvaizdą</string>
-    <string name="text_of_5">" iš 5"</string>
+    <string name="text_of_5">" iš 4"</string>
     <string name="text_order_detail">Informacija apie užsakymą</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Papasakokite apie savo patirtį naudojant šį elementą</string>
     <string name="text_please_write_your_experience_here">Prašome parašyti savo patirtį čia</string>
@@ -192,4 +191,16 @@
     <string name="text_nothing_saved_yet">Dar nieko neišsaugojo</string>
     <string name="texy_you_haven_t_payment_method">Jums nav jāmaksā</string>
     <string name="text_location_address">Vietos adresas</string>
+    <string name="text_add_insurance_of_item">Pridėti prekės draudimą</string>
+    <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Pridėkite savo daikto draudimo vaizdą. naudokite aiškų vaizdą iš pavadinimo ir parašo</string>
+    <string name="text_privacy_policy">Privatumo politika</string>
+    <string name="text_returns_and_refunds_policy">Grąžinimo ir grąžinimo politika</string>
+    <string name="text_license_agreement">Licencijos sutartis</string>
+    <string name="text_check_the_provided_control_code">Patikrinkite pateiktą valdymo kodą</string>
+    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Patikrinkite pateiktą valdymo kodą telefone. Patvirtinkite įvesdami PIN1 kodą:</string>
+    <string name="text_time_remaining">Likęs laikas</string>
+    <string name="text_please_enter_your_personal_code">Įveskite savo asmens kodą</string>
+    <string name="text_we_will_authorize_you_with_your_smart_id">Mes suteiksime jums prieigą prie jūsų „Smart ID“</string>
+    <string name="text_smart_id">Smart ID</string>
+    <string name="textauthorize_your_identity">Įgaliokite savo tapatybę</string>
 </resources>

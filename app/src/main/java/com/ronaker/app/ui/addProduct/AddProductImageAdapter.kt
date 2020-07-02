@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterProductAddImageBinding
 import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
-import com.ronaker.app.model.Product
+import com.ronaker.app.model.Image
 import com.ronaker.app.utils.extension.getParentActivity
 
 class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private  var productList: ArrayList<Product.ProductImage> = ArrayList()
+    private  var list: ArrayList<Image> = ArrayList()
 
 
     private val EmptyType = 0
@@ -21,7 +21,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
 
     init {
-        productList.add(Product.ProductImage())
+        list.add(Image())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -55,13 +55,13 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
             holder.bind()
         else if (holder is ViewHolder)
 
-            holder.bind(productList[position])
+            holder.bind(list[position])
 
 
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return  list.size
     }
 
     fun updateproductList() {
@@ -69,7 +69,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = productList[position]
+        val item = list[position]
         return if (item.url == null && item.uri == null)
             EmptyType
         else
@@ -77,40 +77,47 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     }
 
     fun addLocalImage(uri: Uri?) {
-        productList.add(Product.ProductImage(null, null, uri, true))
+        list.add(
+            Image(
+                null,
+                null,
+                uri,
+                true
+            )
+        )
         notifyDataSetChanged()
     }
 
 
-    fun addRemoteImage(imageList: List< Product.ProductImage>) {
-        productList.addAll(imageList)
+    fun addRemoteImage(imageList: List<Image>) {
+        list.addAll(imageList)
         notifyDataSetChanged()
     }
 
-    fun removeItem(image: Product.ProductImage) {
+    fun removeItem(image: Image) {
 
 
-        productList.remove(image)
+        list.remove(image)
         notifyDataSetChanged()
     }
 
     fun isAllUploaded(): Boolean {
         var result = true
-        productList.forEach {
+        list.forEach {
             if (it.isLocal)
                 result = false
         }
         return result
     }
 
-    fun getimages(): ArrayList<Product.ProductImage> {
+    fun getimages(): ArrayList<Image> {
 
-        val list= ArrayList<Product.ProductImage>()
+        val list= ArrayList<Image>()
 
-        if (productList.size <= 1)
+        if (this.list.size <= 1)
             return list
 
-        productList.forEach { list.add(it) }
+        this.list.forEach { list.add(it) }
 
         list.removeAt(0)
 
@@ -125,7 +132,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
         private val viewModel = AddProductImageAdapterViewModel(baseViewModel.getApplication())
 
-        fun bind(product: Product.ProductImage) {
+        fun bind(product: Image) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
             viewModel.bind(product,binding.root.getParentActivity() )

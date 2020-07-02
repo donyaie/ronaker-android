@@ -72,8 +72,10 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight=".95"
+
                         android:gravity="start"
                         android:lines="1"
+
 
                         android:text="Lend | Canceled order"
                         android:textAppearance="@style/TextAppearance.Medium.SB"
@@ -110,11 +112,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginEnd="16dp"
+
                         android:layout_weight=".95"
                         android:orientation="vertical">
 
 
                         <TextView
+                            android:layout_marginTop="8dp"
+                            android:maxLines="2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -131,6 +136,7 @@
 
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:layout_marginBottom="8dp"
                             android:text="$124 for 2 day"
                             android:textAppearance="@style/TextAppearance.Large.Regular"
                             android:textColor="@color/colorTextDark"
@@ -256,29 +262,30 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
+                    android:visibility="gone"
                     android:background="@color/colorPlatinGrey" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
 
                     android:layout_marginBottom="16dp"
 
 
-                    app:adapter="@{viewModel.getPriceListAdapter()}"
-                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}" />
 
+                    app:adapter="@{viewModel.getPriceListAdapter()}"/>
+<!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPlatinGrey"
-                    app:mutableVisibility="@{viewModel.getRecieptVisibility()}" />
-
-
+                     />
+<!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

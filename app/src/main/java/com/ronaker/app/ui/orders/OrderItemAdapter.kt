@@ -16,6 +16,7 @@ import com.ronaker.app.utils.extension.getParentActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
+@Suppress("UNCHECKED_CAST")
 class OrderItemAdapter() : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
     private  var datalist= ArrayList<Order>()
 

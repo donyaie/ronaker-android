@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.addProduct.AddProductViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="80dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="start"
+                    android:text="@string/text_add_insurance_of_item"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:text="@string/text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature"
+                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toBottomOf="@id/title" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/emptyLayout"
+
+                    app:mutableVisibility="@{viewModel.getImageInsuranceEmptyVisibility()}"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center"
+
+                    android:onClick="@{()->viewModel.onClickAddInsuranceImage()}"
+                    app:layout_constraintTop_toBottomOf="@id/description"
+
+                    android:layout_margin="24dp"
+
+                    android:background="@drawable/border_dash_dark"
+                   >
+
+                    <ImageView
+                        android:id="@+id/sampleimage"
+                        android:layout_width="24dp"
+                        android:contentDescription="@string/text_content"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="50dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_camera" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/text_add_a_image"
+                        android:textAppearance="@style/TextAppearance.Large.Regular"
+                        app:layout_constraintTop_toBottomOf="@id/sampleimage" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/text_content"
+                    android:layout_margin="24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/description"
+                    android:minHeight="400dp"
+                    android:onClick="@{()->viewModel.onClickAddInsuranceImage()}"
+
+                    android:scaleType="fitStart"
+
+                    android:visibility="gone"
+
+
+                    app:mutableImage="@{viewModel.getInsuranceImage()}"
+
+                    app:mutableVisibility="@{viewModel.getImageInsuranceVisibility()}" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.ronaker.app.utils.view.ButtonComponent
+            android:id="@+id/next_button"
+            style="@style/Button.accent"
+            android:layout_width="160dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{()->viewModel.onClickInsuranceNext()}"
+            android:text="@string/title_button_next"
+            app:buttonType="Text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:loadingColor="@color/white"
+            app:mutableButtonLoading="@{viewModel.getLoadingButton()}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

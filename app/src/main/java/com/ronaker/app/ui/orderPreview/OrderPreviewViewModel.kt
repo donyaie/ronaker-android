@@ -246,7 +246,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
         orderCancelResVisibility.value =
             if (order.rejectionReason.isNullOrBlank()) View.GONE else View.VISIBLE
         orderDescriptionVisibility.value =
-            if (order.message.isNullOrBlank()) View.GONE else View.VISIBLE
+            if (order.message.isBlank()) View.GONE else View.VISIBLE
 
 
 
@@ -337,7 +337,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                         actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.VISIBLE
+                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 

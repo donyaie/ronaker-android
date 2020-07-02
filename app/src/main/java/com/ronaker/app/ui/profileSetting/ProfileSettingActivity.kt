@@ -91,10 +91,22 @@ class ProfileSettingActivity : BaseActivity() {
         }
 
 
-        binding.termsLayout.setOnClickListener {
+        binding.licenseLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this,TERMS_URL)
+            IntentManeger.openUrl(this,LICENSE_URL)
         }
+
+        binding.privacyLayout.setOnClickListener {
+
+            IntentManeger.openUrl(this, PRIVACY_URL)
+        }
+
+
+        binding.refundLayout.setOnClickListener {
+
+            IntentManeger.openUrl(this, REFUNDS_URL)
+        }
+
 
 
 
@@ -102,7 +114,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        binding.versionText.text = String.format(getString(R.string.versionNameFormat) ,BuildConfig.VERSION_NAME)  //  "--Version V${BuildConfig.VERSION_NAME}--"
+        binding.versionText.text = String.format(getString(R.string.versionNameFormat) ,getString(R.string.app_version))  //  "--Version V${BuildConfig.VERSION_NAME}--"
 
 
 

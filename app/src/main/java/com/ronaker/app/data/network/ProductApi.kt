@@ -17,16 +17,12 @@ interface ProductApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Body request: ProductSearchRequestModel?): Observable<ListResponseModel<ProductItemResponceModel>>
 
-
-
     /**
      * get my created mProduct
      */
     @GET("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getMyProduct(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ListResponseModel<ProductItemResponceModel>>
-
-
 
     /**
      * create new mProduct
@@ -43,18 +39,12 @@ interface ProductApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productUpdate(@Header("Authorization") authToken: String?,@Path("suid") suid:String,@Body request: ProductCreateRequestModel): Observable<ProductCreateResponseModel>
 
-
-
-
     /**
      * get mProduct detail
      */
     @GET("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getProduct(@Header("Authorization") authToken: String?,@Path("suid") suid:String): Observable<ProductDetailResponceModel>
-
-
-
 
     /**
      * get rate List
@@ -63,9 +53,6 @@ interface ProductApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getProductRate(@Header("Authorization") authToken: String, @Path("product_suid") suid:String): Observable<ListResponseModel<ProductRatingResponceModel>>
 
-
-
-
     /**
      * save product to fave item
      */
@@ -73,16 +60,10 @@ interface ProductApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSave(@Header("Authorization") authToken: String, @Path("product_suid") suid:String): Observable<FreeResponseModel>
 
-
-
     /**
      * save product to fave item
      */
     @DELETE("/api/v1/products/{product_suid}/favourite")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSavedRemove(@Header("Authorization") authToken: String, @Path("product_suid") suid:String): Observable<FreeResponseModel>
-
-
-
-
 }

@@ -2,7 +2,6 @@ package com.ronaker.app.injection.component
 
 import com.ronaker.app.injection.module.RepositoryModule
 import com.ronaker.app.ui.addProduct.*
-import com.ronaker.app.ui.chackoutCalendar.CheckoutCalendarViewModel
 import com.ronaker.app.ui.dashboard.DashboardViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
@@ -12,9 +11,9 @@ import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptViewModel
 import com.ronaker.app.ui.orderCancel.OrderCancelViewModel
+import com.ronaker.app.ui.orderCreate.OrderCreateViewModel
 import com.ronaker.app.ui.orderDecline.OrderDeclineViewModel
 import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
-import com.ronaker.app.ui.orderMessage.OrderMessageViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
@@ -23,6 +22,7 @@ import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
 import com.ronaker.app.ui.productRate.ProductRateViewModel
 import com.ronaker.app.ui.productSaved.ProductSavedViewModel
 import com.ronaker.app.ui.profile.ProfileViewModel
+import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationViewModel
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteViewModel
 import com.ronaker.app.ui.profileEdit.ProfileEditViewModel
 import com.ronaker.app.ui.profileEmailEdit.ProfileEmailEditViewModel
@@ -35,6 +35,8 @@ import com.ronaker.app.ui.profilePaymentHistoryList.ProfilePaymentHistoryListVie
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListViewModel
 import com.ronaker.app.ui.profileSetting.ProfileSettingViewModel
 import com.ronaker.app.ui.search.SearchViewModel
+import com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchViewModel
+import com.ronaker.app.ui.selectCategory.AddProductCategorySelectViewModel
 import com.ronaker.app.ui.splash.SplashViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -54,9 +56,7 @@ interface ViewModelInjector {
     fun inject(viewModel: ExploreProductViewModel)
     fun inject(viewModel: ManageProductListViewModel)
     fun inject(viewModel: ManageProductViewModel)
-    fun inject(viewModel: CheckoutCalendarViewModel)
     fun inject(viewModel: OrdersViewModel)
-    fun inject(viewModel: OrderMessageViewModel)
     fun inject(viewModel: ProfileViewModel)
     fun inject(viewModel: InboxViewModel)
     fun inject(viewModel: SearchViewModel)
@@ -84,6 +84,10 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfileEmailEditViewModel)
     fun inject(viewModel: ProfilePaymentListViewModel)
     fun inject(viewModel: ProfilePaymentHistoryListViewModel)
+    fun inject(viewModel: OrderCreateViewModel)
+    fun inject(viewModel: ProfileAuthorizationViewModel)
+
+
 
     @Component.Builder
     interface Builder {

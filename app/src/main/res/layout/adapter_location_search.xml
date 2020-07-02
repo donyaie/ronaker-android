@@ -7,7 +7,7 @@
 
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.addProduct.LocationSearchViewModel" />
+                type="com.ronaker.app.ui.searchLocationDialog.LocationSearchViewModel" />
     </data>
 
 

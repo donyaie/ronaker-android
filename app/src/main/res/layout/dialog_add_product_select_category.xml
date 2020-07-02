@@ -5,11 +5,11 @@
 
         <variable
                 name="viewModel"
-                type="com.ronaker.app.ui.addProduct.AddProductCategorySelectViewModel" />
+                type="com.ronaker.app.ui.selectCategory.AddProductCategorySelectViewModel" />
 
         <variable
                 name="dialog"
-                type="com.ronaker.app.ui.addProduct.AddProductCategorySelectDialog" />
+                type="com.ronaker.app.ui.selectCategory.AddProductCategorySelectDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

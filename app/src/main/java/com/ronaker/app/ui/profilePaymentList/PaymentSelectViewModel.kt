@@ -18,27 +18,50 @@ class PaymentSelectViewModel(val app: Application) : BaseViewModel(app) {
         data: PaymentCard
     ) {
 
-        data.cardNumber?.let {
-            PaymentCard.CardType.detectFast(it) .apply {
-                cardTypeImage.value=this.resource
+
+
+        when(data.paymentInfoType?.let { PaymentCard.PaymentType[it] }){
+
+
+            PaymentCard.PaymentType.Cash->{
+                cardTypeImage.value=R.drawable.ic_card_empty
+                title.value="By Cash"
             }
+            PaymentCard.PaymentType.CreditCard->{
+
+                data.cardNumber?.let {
+                    PaymentCard.CardType.detectFast(it) .apply {
+                        cardTypeImage.value=this.resource
+                    }
+                }
+
+
+                val name= StringBuilder ()
+                data.cardNumber?.let {
+
+
+                    name.append(it.substring(0,4))
+
+                    name.append("*".repeat(it.length-8))
+
+                    name.append(it.substring(it.length-5,it.length-1))
+
+
+                }
+
+                title.value=name.toString()
+            }
+            PaymentCard.PaymentType.PayPal->{
+                title.value=data.cardNumber
+            }
+            else->{
+
+            }
+
         }
 
 
-        val name= StringBuilder ()
-        data.cardNumber?.let {
 
-
-            name.append(it.substring(0,4))
-
-            name.append("*".repeat(it.length-8))
-
-            name.append(it.substring(it.length-5,it.length-1))
-
-
-        }
-
-        title.value=name.toString()
         selected.value=data.selected
 
 

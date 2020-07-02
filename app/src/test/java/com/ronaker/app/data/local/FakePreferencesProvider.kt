@@ -44,13 +44,14 @@ class FakePreferencesProvider:PreferencesDataSource {
         return 0
     }
 
-    override fun getBoolean(key: String, defValue: Boolean?): Boolean? {
-        return false
+    override fun getBoolean(key: String, defValue: Boolean): Boolean {
+       return false
     }
 
-    override fun getFloat(key: String, defValue: Float?): Float? {
+    override fun getFloat(key: String, defValue: Float): Float {
         return 0f
     }
+
 
     override fun clearAll() {
 

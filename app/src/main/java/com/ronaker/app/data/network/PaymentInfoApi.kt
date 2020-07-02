@@ -10,14 +10,14 @@ import retrofit2.http.*
  */
 interface PaymentInfoApi {
     /**
-     * get Payment info List
+     * get Payment Info List
      */
     @GET("/api/v1/payment_info/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getPaymentInfoList(@Header("Authorization") authToken: String): Observable<ListResponseModel<PaymentInfoListResponseModel>>
 
     /**
-     * get Payment info List
+     * get Payment Info List
      */
     @POST("/api/v1/payment_info/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -26,7 +26,7 @@ interface PaymentInfoApi {
 
 
     /**
-     * get Payment info List
+     * get Payment Info List
      */
     @GET("/api/v1/financial_transactions/")
     @Headers("Content-Type:application/json; charset=UTF-8")

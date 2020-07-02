@@ -6,9 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -54,8 +51,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     var savedInstanceState: Bundle? = null
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -95,7 +90,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
 
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
@@ -119,8 +113,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
-        }.withData( intent.data).init()
-
+        }.withData(intent.data).init()
 
 
     }
@@ -129,7 +122,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         super.onStart()
         if (isFistStart() && viewModel.islogin) {
 
-            window.setBackgroundDrawable( ColorDrawable(Color.WHITE))
+            window.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
 
             initNavigation(savedInstanceState)
@@ -261,7 +254,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         when (requestCode) {
             ExploreProductActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    binding.navigation.select(1)
+                    binding.navigation.postDelayed({ binding.navigation.select(1) },50)
                 }
             }
         }

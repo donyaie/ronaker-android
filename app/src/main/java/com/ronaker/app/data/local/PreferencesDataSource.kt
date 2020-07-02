@@ -26,9 +26,9 @@ interface PreferencesDataSource {
 
     fun getLong(key: String, defValue: Long): Long
 
-    fun getBoolean(key: String, defValue: Boolean?): Boolean?
+    fun getBoolean(key: String, defValue: Boolean): Boolean
 
-    fun getFloat(key: String, defValue: Float?): Float?
+    fun getFloat(key: String, defValue: Float): Float
 
     fun clearAll()
 

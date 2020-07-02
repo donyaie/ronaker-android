@@ -59,7 +59,7 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
         productPrice.value = total.toCurrencyFormat()
 
 
-//        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.price)
+//        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.Price)
         productImage.value = BASE_URL + item.product.avatar
         productDate.value =
             SimpleDateFormat(

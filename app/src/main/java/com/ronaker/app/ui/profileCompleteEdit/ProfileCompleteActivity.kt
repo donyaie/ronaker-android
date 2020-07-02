@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
+import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationActivity
+import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationViewModel
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
@@ -134,6 +136,19 @@ class ProfileCompleteActivity : BaseActivity() {
             }
         })
 
+
+        viewModel.smartIDComplete.observe(this, Observer { value ->
+            if (value == true) {
+
+                binding.authLayout.isClickable=true
+                binding.authLayout.setEndDrawableRes(R.drawable.ic_complete)
+            } else {
+
+                binding.authLayout.isClickable=true
+                binding.authLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+            }
+        })
+
         viewModel.peymentComplete.observe(this, Observer { value ->
             if (value == true) {
                 binding.paymentLayout.setEndDrawableRes(R.drawable.ic_complete)
@@ -169,6 +184,13 @@ class ProfileCompleteActivity : BaseActivity() {
 
 
             startActivity(ProfileImageActivity.newInstance(this, viewModel.getAvatar()))
+        }
+
+
+        binding.authLayout.setOnClickListener {
+
+
+            startActivity(ProfileAuthorizationActivity.newInstance(this))
         }
 
         binding.phoneLayout.setOnClickListener {

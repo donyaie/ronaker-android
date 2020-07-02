@@ -30,15 +30,8 @@ class General : MultiDexApplication() {
 
         analytics = FirebaseAnalytics.getInstance(this)
 
-
-
         if (BuildConfig.DEBUG){
-
-            // Branch logging for debugging
-            Branch.enableDebugMode()
-
             Stetho.initializeWithDefaults(this)
-
         }
 
         Branch.getAutoInstance(this)
@@ -71,9 +64,10 @@ class General : MultiDexApplication() {
 
 
 
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base?.let { LocaleHelper.onAttach(it, "en") })
+    override fun attachBaseContext(base: Context) {
         MultiDex.install(this)
+        super.attachBaseContext(LocaleHelper.onAttach(base, "en") )
+
 
     }
 

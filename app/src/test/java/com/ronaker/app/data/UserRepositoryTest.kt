@@ -73,7 +73,7 @@ class UserRepositoryTest {
         )
 
         var request =
-            UserRegisterRequestModel(user.email, user.password, user.first_name, user.last_name)
+            UserRegisterRequestModel(user.email, user.password, user.first_name, user.last_name,null)
 
         var responce = UserRegisterResponseModel(
             "gfgfg",
@@ -87,7 +87,8 @@ class UserRepositoryTest {
                 false,
                 null,
                 false,
-                false
+                false,
+                0.0
             )
         )
 
@@ -96,13 +97,13 @@ class UserRepositoryTest {
         var result = userRepository.registerUser(user)
 
 
-        val testObserver = TestObserver<Result<UserRegisterResponseModel>>()
+        val testObserver = TestObserver<Result<User>>()
         result.subscribe(testObserver)
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValueCount(1)
         val listResult = testObserver.values()[0]
-        assertThat(listResult.data?.token, `is`("gfgfg"))
+        assertThat(listResult.data?.accessToken, `is`("gfgfg"))
 
 
     }

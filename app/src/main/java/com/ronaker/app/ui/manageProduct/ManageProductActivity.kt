@@ -117,7 +117,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
                 this.startActivity(
                     AddProductActivity.newInstance(
                         this,
-                        it, AddProductViewModel.StateEnum.image
+                        it, AddProductViewModel.StateEnum.Image
                     )
 
                 )
@@ -131,7 +131,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
                 this.startActivity(
                     AddProductActivity.newInstance(
                         this,
-                        it, AddProductViewModel.StateEnum.location
+                        it, AddProductViewModel.StateEnum.Location
                     )
 
                 )
@@ -145,7 +145,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
                 this.startActivity(
                     AddProductActivity.newInstance(
                         this,
-                        it, AddProductViewModel.StateEnum.info
+                        it, AddProductViewModel.StateEnum.Info
                     )
 
                 )
@@ -159,7 +159,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
                 this.startActivity(
                     AddProductActivity.newInstance(
                         this,
-                        it, AddProductViewModel.StateEnum.price
+                        it, AddProductViewModel.StateEnum.Price
                     )
 
                 )
@@ -173,7 +173,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
                 this.startActivity(
                     AddProductActivity.newInstance(
                         this,
-                        it, AddProductViewModel.StateEnum.category
+                        it, AddProductViewModel.StateEnum.Category
                     )
 
                 )

@@ -78,9 +78,12 @@
 
 
                     <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/notification_switch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                        android:id="@+id/notification_switch"
+
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
 
 
                 </LinearLayout>
@@ -95,10 +98,28 @@
 
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/download_layout"
                     style="@style/Button.transparent.width"
                     app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_download_user_data"
+                    android:textColor="@color/colorTextDark" />
+
+
+                <RelativeLayout
+                    android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:background="@color/colorPlatinGrey" />
+
+
+                <Button
+                    android:id="@+id/license_layout"
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:text="@string/text_license_agreement"
                     android:textColor="@color/colorTextDark" />
 
 
@@ -111,19 +132,35 @@
 
 
                 <Button
-                    android:id="@+id/terms_layout"
+                    android:id="@+id/privacy_layout"
                     style="@style/Button.transparent.width"
                     app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/title_terms_and_conditions"
+                    android:text="@string/text_privacy_policy"
                     android:textColor="@color/colorTextDark" />
 
 
                 <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
-                        android:background="@color/colorPlatinGrey" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey" />
+
+                <Button
+                    android:id="@+id/refund_layout"
+                    style="@style/Button.transparent.width"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    android:lines="1"
+                    android:text="@string/text_returns_and_refunds_policy"
+                    android:textColor="@color/colorTextDark" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPlatinGrey" />
 
 
 

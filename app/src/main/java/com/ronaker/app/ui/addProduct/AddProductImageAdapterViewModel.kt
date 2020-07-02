@@ -1,13 +1,12 @@
 package com.ronaker.app.ui.addProduct
 
-import android.app.Activity
 import android.app.Application
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.model.Product
+import com.ronaker.app.model.Image
 import com.ronaker.app.utils.BASE_URL
 
 class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app) {
@@ -15,12 +14,12 @@ class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app
 
     private val productImage = MutableLiveData<String>()
 
-    lateinit var imageModel: Product.ProductImage
+    lateinit var imageModel: Image
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     fun bind(
-        post: Product.ProductImage,
+        post: Image,
         baseActivity: AppCompatActivity?
     ) {
 
@@ -43,7 +42,7 @@ class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app
     }
 
 
-    fun getImage(): Product.ProductImage? {
+    fun getImage(): Image? {
         return imageModel
     }
 

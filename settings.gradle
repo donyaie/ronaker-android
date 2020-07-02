@@ -1,1 +1,1 @@
-include ':app' ,':rangedatepicker'
+include ':app'

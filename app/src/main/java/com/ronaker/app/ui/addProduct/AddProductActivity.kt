@@ -7,16 +7,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -26,7 +23,9 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
+import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
+import com.ronaker.app.ui.selectCategory.AddProductCategorySelectDialog
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
@@ -34,20 +33,7 @@ import java.io.IOException
 
 
 class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDialogResultListener {
-    override fun onDialogResult(
-        result: AddProductCategorySelectDialog.DialogResultEnum,
-        parent: Category?,
-        selectedCategory: Category?
-    ) {
 
-
-        if (parent == null) {
-            selectedCategory?.let { viewModel.selectCategory(it) }
-        } else {
-
-            selectedCategory?.let { viewModel.selectSubCategory(it) }
-        }
-    }
 
 
     private val TAG = AddProductActivity::class.java.simpleName
@@ -56,49 +42,32 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     private lateinit var viewModel: AddProductViewModel
 
     private lateinit var imageFragment: AddProductImageFragment
+//    private lateinit var insuranceFragment: AddProductInsuranceFragment
     private lateinit var infoFragment: AddProductInfoFragment
     private lateinit var priceFragment: AddProductPriceFragment
     private lateinit var locationFragment: AddProductLocationFragment
     private lateinit var categoryFragment: AddProductCategoryFragment
 
     private lateinit var adapter: ViewPagerAdapter
+
     private lateinit var screenLibrary: ScreenCalculator
 
 
-    val REQUEST_IMAGE = 1233
+    private val REQUEST_IMAGE = 1233
+    private val REQUEST_INSURNCE = 1224
 
-    var UpdateMode = false
+    private var UpdateMode = false
 
 
-    internal var actionState = AddProductViewModel.StateEnum.image
+    private var actionState = AddProductViewModel.StateEnum.values()[0]
         set(value) {
             field = value
             if (UpdateMode)
                 binding.viewpager.currentItem = 0
-            else
-                when (actionState) {
+            else {
+                binding.viewpager.currentItem = actionState.position
+            }
 
-                    AddProductViewModel.StateEnum.image -> {
-                        binding.viewpager.currentItem = AddProductViewModel.StateEnum.image.position
-                    }
-
-                    AddProductViewModel.StateEnum.info -> {
-                        binding.viewpager.currentItem = AddProductViewModel.StateEnum.info.position
-                    }
-                    AddProductViewModel.StateEnum.price -> {
-                        binding.viewpager.currentItem = AddProductViewModel.StateEnum.price.position
-                    }
-                    AddProductViewModel.StateEnum.location -> {
-
-                        binding.viewpager.currentItem =
-                            AddProductViewModel.StateEnum.location.position
-                    }
-                    AddProductViewModel.StateEnum.category -> {
-
-                        binding.viewpager.currentItem =
-                            AddProductViewModel.StateEnum.category.position
-                    }
-                }
 
         }
         get() {
@@ -159,8 +128,6 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         enableKeyboardAnimator()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
@@ -193,10 +160,18 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        viewModel.showPickerNext.observe(this, Observer { state ->
+        viewModel.showImagePicker.observe(this, Observer { state ->
 
             if (state)
-                onProfileImageClick()
+                pickImage(REQUEST_IMAGE)
+
+
+        })
+
+        viewModel.showInsurancePicker.observe(this, Observer { state ->
+
+            if (state)
+                pickImage(REQUEST_INSURNCE)
 
 
         })
@@ -232,7 +207,9 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        binding.viewpager.setScrollDurationFactor(2.0)
+//        binding.viewpager.setScrollDurationFactor(2.0)
+
+        binding.viewpager.isUserInputEnabled = false
 
 
     }
@@ -269,7 +246,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             } else {
                 binding.loading.visibility = View.GONE
                 init(null)
-                actionState = AddProductViewModel.StateEnum.image
+                actionState = AddProductViewModel.StateEnum.Image
             }
 
         }
@@ -277,16 +254,16 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    fun getSuid(): String? {
+    private fun getSuid(): String? {
         return intent.getStringExtra(SUID_KEY)
     }
 
-    fun getState(): AddProductViewModel.StateEnum? {
+    private fun getState(): AddProductViewModel.StateEnum? {
 
-        if (intent.hasExtra(STATE_KEY))
-            return AddProductViewModel.StateEnum.get(intent.getIntExtra(STATE_KEY, 0))
+        return if (intent.hasExtra(STATE_KEY))
+            AddProductViewModel.StateEnum[intent.getIntExtra(STATE_KEY, 0)]
         else
-            return null
+            null
     }
 
     fun getProduct(): Product? {
@@ -305,58 +282,60 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    internal fun prePage() {
+    private fun prePage() {
 
         if (UpdateMode) {
             finish()
             return
         }
 
-        if (binding.viewpager.currentItem - 1 == AddProductViewModel.StateEnum.image.position)
+        if (binding.viewpager.currentItem - 1 == AddProductViewModel.StateEnum.Image.position)
             KeyboardManager.hideSoftKeyboard(this)
 
         if (binding.viewpager.currentItem == 0)
             finish()
 
 
-        if (binding.viewpager.currentItem > AddProductViewModel.StateEnum.image.position) {
+        if (binding.viewpager.currentItem > 0) {
             binding.viewpager.setCurrentItem(binding.viewpager.currentItem - 1, true)
         }
 
     }
 
 
-    fun initViewPagerRegister(state: AddProductViewModel.StateEnum?) {
+    private fun initViewPagerRegister(state: AddProductViewModel.StateEnum?) {
         adapter.clear()
 
 
 
         if (state != null)
             when (state) {
-                AddProductViewModel.StateEnum.image -> {
+                AddProductViewModel.StateEnum.Image -> {
 
                     adapter.addFragment(imageFragment)
                 }
-                AddProductViewModel.StateEnum.info -> {
+                AddProductViewModel.StateEnum.Info -> {
 
                     adapter.addFragment(infoFragment)
                 }
-                AddProductViewModel.StateEnum.category -> {
+                AddProductViewModel.StateEnum.Category -> {
 
                     adapter.addFragment(categoryFragment)
                 }
-                AddProductViewModel.StateEnum.location -> {
+                AddProductViewModel.StateEnum.Location -> {
 
                     adapter.addFragment(locationFragment)
                 }
-                AddProductViewModel.StateEnum.price -> {
+                AddProductViewModel.StateEnum.Price -> {
 
                     adapter.addFragment(priceFragment)
                 }
+//                AddProductViewModel.StateEnum.Insurance -> {
+//                    adapter.addFragment(insuranceFragment)
+//                }
             }
-
-
-        else{
+        else {
+//            adapter.addFragment(insuranceFragment)
             adapter.addFragment(imageFragment)
             adapter.addFragment(infoFragment)
             adapter.addFragment(categoryFragment)
@@ -373,35 +352,39 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    internal fun initViewPager(state: AddProductViewModel.StateEnum?) {
+    private fun initViewPager(state: AddProductViewModel.StateEnum?) {
 
-        adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter = ViewPagerAdapter()
 
 
 
         if (state != null) {
 
             when (state) {
-                AddProductViewModel.StateEnum.image -> {
+                AddProductViewModel.StateEnum.Image -> {
 
                     imageFragment = AddProductImageFragment()
                 }
-                AddProductViewModel.StateEnum.info -> {
+                AddProductViewModel.StateEnum.Info -> {
 
                     infoFragment = AddProductInfoFragment()
                 }
-                AddProductViewModel.StateEnum.category -> {
+                AddProductViewModel.StateEnum.Category -> {
 
                     categoryFragment = AddProductCategoryFragment()
                 }
-                AddProductViewModel.StateEnum.location -> {
+                AddProductViewModel.StateEnum.Location -> {
 
                     locationFragment = AddProductLocationFragment()
                 }
-                AddProductViewModel.StateEnum.price -> {
+                AddProductViewModel.StateEnum.Price -> {
 
                     priceFragment = AddProductPriceFragment()
                 }
+//                AddProductViewModel.StateEnum.Insurance -> {
+//
+//                    insuranceFragment = AddProductInsuranceFragment()
+//                }
             }
         } else {
             infoFragment = AddProductInfoFragment()
@@ -409,84 +392,74 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             locationFragment = AddProductLocationFragment()
             priceFragment = AddProductPriceFragment()
             imageFragment = AddProductImageFragment()
+//            insuranceFragment = AddProductInsuranceFragment()
         }
 
 
 
         binding.viewpager.adapter = adapter
 
-        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
 
 
-                actionState = AddProductViewModel.StateEnum.get(position)
+        binding.viewpager.registerOnPageChangeCallback(viewPager2PageChangeCallback)
 
 
-
-
-                AppDebug.log(TAG, String.format("onSelect:%s", actionState.name))
-                (adapter.getItem(position) as IPagerFragment).onSelect()
-
-
-                if (actionState == AddProductViewModel.StateEnum.image)
-                    KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
-
-
-                if (actionState == AddProductViewModel.StateEnum.category)
-                    KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
-
-                if (actionState == AddProductViewModel.StateEnum.location)
-                    KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
-
-                if (!UpdateMode) {
-                    if (actionState == AddProductViewModel.StateEnum.image) {
-
-                        showBack(false)
-                    } else {
-                        showBack(true)
-                    }
-
-
-                    binding.toolbar.showNavigator(true, position)
-                }
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-        })
 
         KeyboardManager.hideSoftKeyboard(this)
     }
 
+    private val viewPager2PageChangeCallback =
+        OrdersFragment.ViewPager2PageChangeCallback { position ->
 
-    internal fun showBack(visiable: Boolean) {
+            actionState = AddProductViewModel.StateEnum[position]
+
+
+
+
+            AppDebug.log(TAG, String.format("onSelect:%s", actionState.name))
+                (adapter.getItem(position) as IPagerFragment).onSelect()
+
+
+            if (actionState == AddProductViewModel.StateEnum.Image)
+                KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
+//
+//            if (actionState == AddProductViewModel.StateEnum.Insurance)
+//                KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
+
+
+            if (actionState == AddProductViewModel.StateEnum.Category)
+                KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
+
+            if (actionState == AddProductViewModel.StateEnum.Location)
+                KeyboardManager.hideSoftKeyboard(this@AddProductActivity)
+
+            if (!UpdateMode) {
+                if (actionState == AddProductViewModel.StateEnum.Image) {
+
+                    showBack(false)
+                } else {
+                    showBack(true)
+                }
+
+
+                binding.toolbar.showNavigator(true, position)
+            }
+
+        }
+
+
+    private fun showBack(visiable: Boolean) {
         if (visiable) {
 
-//            binding.backButton.animate().scaleX(1f).scaleY(1f).setDuration(200).start()
-//            binding.backButton.setClickable(true)
-//
             binding.toolbar.cancelContainer = ToolbarComponent.CancelContainer.BACK
         } else {
 
             binding.toolbar.cancelContainer = ToolbarComponent.CancelContainer.NONE
-//            binding.backButton.animate().scaleX(0f).scaleY(0f).setDuration(100).start()
-//            binding.backButton.setClickable(false)
         }
     }
 
 
-    fun onProfileImageClick() {
+    private fun pickImage(request:Int) {
         Dexter.withContext(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
@@ -499,7 +472,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
-                        showImagePickerOptions()
+                        showImagePickerOptions(request)
                     }
 
                     if (report.isAnyPermissionPermanentlyDenied) {
@@ -512,21 +485,21 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    private fun showImagePickerOptions() {
+    private fun showImagePickerOptions(request:Int) {
         ImagePickerActivity.showImagePickerOptions(
             this,
             object : ImagePickerActivity.PickerOptionListener {
                 override fun onTakeCameraSelected() {
-                    launchCameraIntent()
+                    launchCameraIntent(request)
                 }
 
                 override fun onChooseGallerySelected() {
-                    launchGalleryIntent()
+                    launchGalleryIntent(request)
                 }
             })
     }
 
-    private fun launchCameraIntent() {
+    private fun launchCameraIntent(requset :Int) {
         val intent = Intent(this, ImagePickerActivity::class.java)
         intent.putExtra(
             ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
@@ -543,10 +516,10 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000)
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000)
 
-        startActivityForResult(intent, REQUEST_IMAGE)
+        startActivityForResult(intent, requset)
     }
 
-    private fun launchGalleryIntent() {
+    private fun launchGalleryIntent(requset :Int) {
         val intent = Intent(this, ImagePickerActivity::class.java)
         intent.putExtra(
             ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
@@ -557,7 +530,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
-        startActivityForResult(intent, REQUEST_IMAGE)
+        startActivityForResult(intent, requset)
 
     }
 
@@ -572,6 +545,20 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
                     viewModel.selectImage(uri)
                 } catch (e: IOException) {
                     e.printStackTrace()
+                }
+
+            }
+        }
+
+        if (requestCode == REQUEST_INSURNCE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = data?.getParcelableExtra("path")
+                try {
+
+                    uri?.toFile()
+                    uri?.let { viewModel.selectInsurance(it) }
+                } catch (e: IOException) {
+                    AppDebug.log(TAG,e)
                 }
 
             }
@@ -597,24 +584,26 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         builder.show()
     }
 
+    override fun onDialogResult(
+        result: AddProductCategorySelectDialog.DialogResultEnum,
+        parent: Category?,
+        selectedCategory: Category?
+    ) {
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentStatePagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        if (parent == null) {
+            selectedCategory?.let { viewModel.selectCategory(it) }
+        } else {
+
+            selectedCategory?.let { viewModel.selectSubCategory(it) }
+        }
+    }
+
+
+    internal inner class ViewPagerAdapter() :
+        FragmentStateAdapter(this@AddProductActivity) {
         private val mFragmentList = ArrayList<Fragment>()
 
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-
-        override fun getItemPosition(`object`: Any): Int {
-
-            return POSITION_NONE
-        }
-
-
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
 
         fun addFragment(fragment: Fragment) {
             mFragmentList.add(fragment)
@@ -625,8 +614,18 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             mFragmentList.clear()
         }
 
-        override fun getPageTitle(position: Int): CharSequence {
-            return ""
+
+        override fun getItemCount(): Int {
+            return mFragmentList.size
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            return mFragmentList[position]
+        }
+
+        fun getItem(position: Int): Fragment {
+
+            return mFragmentList[position]
         }
     }
 

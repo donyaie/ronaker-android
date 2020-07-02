@@ -209,7 +209,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
             if( PaymentCard.CardType.detect( binding.cardEdit.text.toString())==PaymentCard.CardType.UNKNOWN){
 
-                Alert.makeTextError(this, "Please inter valid card number")
+                Alert.makeTextError(this, "Please inter valid card Checkout")
             }else {
 
                 viewModel.save(
@@ -351,11 +351,11 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //                mscanResult?.let {scanResult->
 //
 //
-//                    // Never log a raw card number. Avoid displaying it, but if necessary use getFormattedCardNumber()
+//                    // Never log a raw card Checkout. Avoid displaying it, but if necessary use getFormattedCardNumber()
 //                    resultDisplayStr = "Card Number: " + scanResult.getRedactedCardNumber() + "\n"
 //
 //                    scanResult.cardNumber?.let {  binding.cardEdit.setText(it) }
-//                    // Do something with the raw number, e.g.:
+//                    // Do something with the raw Checkout, e.g.:
 //                    // myService.setCardNumber( scanResult.cardNumber );
 //
 //                    if (scanResult.isExpiryValid) {

@@ -15,7 +15,7 @@ import retrofit2.http.*
  */
 interface ContentApi {
     /**
-     * upload  new image
+     * upload  new Image
      */
     @POST("/api/v1/contents/images/")
     @Multipart
@@ -25,14 +25,14 @@ interface ContentApi {
 
 
     /**
-     * delete image
+     * delete Image
      */
-    @DELETE("/api/v1/contents/images/{suid}/?")
+    @DELETE("/api/v1/contents/images/{suid}/")
     fun deleteImage(@Header("Authorization") authToken: String?, @Path("suid") suid:String ): Observable<FreeResponseModel>
 
 
     /**
-     * upload  new image
+     * upload  new Image
      */
     @POST("/api/v1/contents/images/")
     @Multipart
@@ -42,7 +42,7 @@ interface ContentApi {
 
 
     /**
-     * upload  new image
+     * upload  new Image
      */
     @POST("/api/v1/contents/images/")
     @Multipart
