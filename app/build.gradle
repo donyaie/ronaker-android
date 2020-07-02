@@ -17,7 +17,7 @@ apply plugin: 'com.google.gms.google-services'
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 19
+def versionPatch = 20
 
 android {
 

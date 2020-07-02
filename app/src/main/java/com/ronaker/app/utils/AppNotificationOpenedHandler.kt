@@ -29,6 +29,7 @@ class AppNotificationOpenedHandler(private val app: Application) : OneSignal.Not
 
                 if (orderId != null) {
 
+                    //TODO check user Login
                     app.startActivity(OrderPreviewActivity.newInstance(app,orderId))
 
                     Log.i(

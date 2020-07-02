@@ -57,7 +57,7 @@
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:text="@string/text_verify_your_email"
-                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
                     android:textColor="@color/colorTextDark" />
 
 
@@ -68,7 +68,7 @@
                     android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:text="@string/text_please_check_your_inbox_and_verify_your_email"
-                    android:textAppearance="@style/TextAppearance.Large.Regular"
+                    android:textAppearance="@style/TextAppearance.Medium.Regular"
                     android:textColor="@color/colorTextDark" />
 
                 <com.ronaker.app.utils.view.ButtonComponent

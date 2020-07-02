@@ -103,17 +103,17 @@ class EmailVerifyDialog : BaseDialog() {
             ViewGroup.LayoutParams.MATCH_PARENT
         )
 
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCancelable(true)
 
-        dialog.setOnKeyListener { _, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.action == KeyEvent.ACTION_UP
-            ) {
-                return@setOnKeyListener true
-            }
-             false
-        }
+//        dialog.setOnKeyListener { _, keyCode, event ->
+//            if (keyCode == KeyEvent.KEYCODE_BACK
+//                && event.action == KeyEvent.ACTION_UP
+//            ) {
+//                return@setOnKeyListener true
+//            }
+//             false
+//        }
 
 
         return dialog
