@@ -203,4 +203,8 @@
     <string name="text_we_will_authorize_you_with_your_smart_id">Mes suteiksime jums prieigą prie jūsų „Smart ID“</string>
     <string name="text_smart_id">Smart ID</string>
     <string name="textauthorize_your_identity">Įgaliokite savo tapatybę</string>
+    <string name="text_instruction_text">Prekės naudojimo terminas ir kaip ją atsiimti</string>
+    <string name="text_Instruction">Instrukcija</string>
+    <string name="text_tell_pickup_address">Pasakykite paėmimo adresą</string>
+    <string name="text_explan_why_decline">"Explain why decline   "</string>
 </resources>

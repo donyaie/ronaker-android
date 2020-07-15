@@ -62,7 +62,7 @@
                         android:id="@+id/reason_input"
 
                         app:input_title=""
-                        app:input_hint="Explain why decline"
+                        app:input_hint="@string/text_explan_why_decline"
                         app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
                         app:input_counter="500"
                         android:layout_marginLeft="24dp"

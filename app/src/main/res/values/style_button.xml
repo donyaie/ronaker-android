@@ -9,6 +9,8 @@
         <item name="android:singleLine">true</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:minWidth">155dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorTextLight</item>
     </style>

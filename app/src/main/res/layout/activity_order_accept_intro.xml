@@ -69,9 +69,9 @@
                     android:inputType="textMultiLine"
                     app:inputMutableText="@{viewModel.getInstruction()}"
                     app:input_counter="500"
-                    app:input_hint="Term of use item and how pick up item"
+                    app:input_hint="@string/text_instruction_text"
                     app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
-                    app:input_title="Instruction"
+                    app:input_title="@string/text_Instruction"
                     app:input_transparent="false"
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
@@ -87,9 +87,9 @@
                     android:inputType="textMultiLine"
                     app:inputMutableText="@{viewModel.getOrderAddress()}"
                     app:input_counter="500"
-                    app:input_hint="Tell Pickup address"
+                    app:input_hint="@string/text_tell_pickup_address"
                     app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
-                    app:input_title="Pickup Address"
+                    app:input_title="@string/text_pickup_address"
                     app:input_transparent="false"
                     app:layout_constraintTop_toBottomOf="@id/instruction_input" />
 

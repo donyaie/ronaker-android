@@ -203,4 +203,8 @@
     <string name="text_we_will_authorize_you_with_your_smart_id">We zullen u autoriseren met uw Smart ID</string>
     <string name="text_smart_id">Smart ID</string>
     <string name="textauthorize_your_identity">Autoriseer uw identiteit</string>
+    <string name="text_instruction_text">Gebruiksduur item en hoe item op te halen</string>
+    <string name="text_Instruction">Instructie</string>
+    <string name="text_tell_pickup_address">Vertel het afhaaladres</string>
+    <string name="text_explan_why_decline">Leg uit waarom weigeren</string>
 </resources>

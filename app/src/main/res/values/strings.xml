@@ -219,6 +219,10 @@
     <string name="text_we_will_authorize_you_with_your_smart_id">We will authorize you with your Smart ID</string>
     <string name="text_smart_id">Smart ID</string>
     <string name="textauthorize_your_identity">Authorize your identity</string>
+    <string name="text_instruction_text">Term of use item and how pick up item</string>
+    <string name="text_Instruction">Instruction</string>
+    <string name="text_tell_pickup_address">Tell Pickup address</string>
+    <string name="text_explan_why_decline">Explain why decline</string>
 
 
 </resources>
