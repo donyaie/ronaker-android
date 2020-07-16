@@ -133,6 +133,8 @@
                     android:layout_height="match_parent">
 
 
+
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/category_recycler"
                         android:layout_width="match_parent"
@@ -162,6 +164,7 @@
                         android:visibility="gone"
 
                         app:layout_constraintTop_toTopOf="@id/recycler"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:mutableVisibility="@{viewModel.getEmptyVisibility()}">
 
                         <ImageView

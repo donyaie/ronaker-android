@@ -165,7 +165,7 @@
     <string name="text_name">Naam :</string>
     <string name="text_number">Aantal</string>
     <string name="text_payment_list">Betalingslijst</string>
-    <string name="text_payments_terms">Betalingsvoorwaarden</string>
+    <string name="text_payments_terms">Ik ga akkoord met de algemene voorwaarden en het privacybeleid van Ronaker.</string>
     <string name="text_enter_your_invite_code">Voer uw uitnodigingscode in</string>
     <string name="text_invite_code">Uitnodigingscode (optioneel)</string>
     <string name="text_repeat">Herhaal wachtwoord</string>
@@ -195,7 +195,7 @@
     <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Voeg een verzekeringsafbeelding toe voor uw item. gebruik duidelijke afbeelding van titel en handtekening</string>
     <string name="text_privacy_policy">Privacybeleid</string>
     <string name="text_returns_and_refunds_policy">Retour- en restitutiebeleid</string>
-    <string name="text_license_agreement">Licentieovereenkomst</string>
+    <string name="text_license_agreement">algemene voorwaarden</string>
     <string name="text_check_the_provided_control_code">Controleer de meegeleverde controlecode</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Controleer de meegeleverde controlecode op uw telefoon Bevestig door PIN1 in te voeren:</string>
     <string name="text_time_remaining">Overgebleven tijd</string>
@@ -207,4 +207,15 @@
     <string name="text_Instruction">Instructie</string>
     <string name="text_tell_pickup_address">Vertel het afhaaladres</string>
     <string name="text_explan_why_decline">Leg uit waarom weigeren</string>
+    <string name="text_enter_title">Voer titel in</string>
+    <string name="text_title">Titel</string>
+    <string name="text_item_description">Beschrijf uw item zoals model of kleur en …</string>
+    <string name="text_description">Omschrijving</string>
+    <string name="text_select_item_category">Selecteer itemcategorie</string>
+    <string name="text_category">Categorie</string>
+    <string name="text_select_item_sub_category">Selecteer item subcategorie</string>
+    <string name="text_sub_category">Subcategorie</string>
+    <string name="text_rent_fee">Huurprijs (€)</string>
+    <string name="text_daily">Dagelijks</string>
+    <string name="format_you_will_pay">U betaalt %1$s voor %2$s dagen</string>
 </resources>

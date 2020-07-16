@@ -63,10 +63,10 @@ class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
                     peymentComplete.value = result.data?.is_payment_info_verified
                     identityComplete.value = result.data?.is_identity_info_verified
 
-                    imageComplete.value = result.data?.avatar != null
+                    imageComplete.value = !result.data?.avatar.isNullOrEmpty()
 
 
-                    smartIDComplete.value = result.data?.smart_id_personal_code != null
+                    smartIDComplete.value = !result.data?.smart_id_personal_code.isNullOrEmpty()
 
                 } else {
                     retry.value = result.error?.message

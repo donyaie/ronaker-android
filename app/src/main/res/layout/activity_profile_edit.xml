@@ -271,6 +271,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:visibility="gone"
 
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
@@ -294,6 +295,7 @@
                     android:id="@+id/payment_layout"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="76dp"
                     android:background="?attr/selectableItemBackground"
@@ -337,6 +339,7 @@
 
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="24dp"

@@ -58,7 +58,13 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         setSwipeCloseDisable()
 
 
+
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
+
+
+        binding.root.setBackgroundResource(R.color.white)
 
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 

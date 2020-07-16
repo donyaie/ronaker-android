@@ -4,6 +4,7 @@ package com.ronaker.app.ui.orderPreview
 import android.app.Application
 import android.content.Context
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -20,7 +21,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
+class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -30,6 +31,8 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
+
     @Inject
     lateinit
     var context: Context
@@ -134,7 +137,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.phone_number?.let { value -> IntentManeger.makeCall(app, value) }
+                    it.phone_number?.let { value -> IntentManeger.makeCall(context, value) }
                 }
             }
 
@@ -143,7 +146,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.phone_number?.let { value -> IntentManeger.makeCall(app, value) }
+                    it.phone_number?.let { value -> IntentManeger.makeCall(context, value) }
                 }
             }
             else -> {
@@ -159,7 +162,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.email?.let { value -> IntentManeger.sendMail(app, value) }
+                    it.email?.let { value -> IntentManeger.sendMail(context, value) }
                 }
             }
 
@@ -168,7 +171,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.email?.let { value -> IntentManeger.sendMail(app, value) }
+                    it.email?.let { value -> IntentManeger.sendMail(context, value) }
                 }
             }
             else -> {
@@ -300,8 +303,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                 dayNumber.value = String.format(
-                    "%s %s for %d days",
-                    context.getString(R.string.text_you_pay),
+                    context.getString(R.string.format_you_will_pay),
                     total.toCurrencyFormat(),
                     days
                 )
@@ -499,11 +501,11 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        app.getString(R.string.text_rent_request_accepted, orderedUserName)
+                        context.getString(R.string.text_rent_request_accepted, orderedUserName)
                 } else {
 
                     orderStatus.value =
-                        app.getString(R.string.text_lend_request_accepted, ownerName)
+                        context.getString(R.string.text_lend_request_accepted, ownerName)
                 }
 
 
@@ -516,10 +518,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        app.getString(R.string.text_rent_request_started, orderedUserName)
+                        context.getString(R.string.text_rent_request_started, orderedUserName)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_request_started, ownerName)
+                    orderStatus.value = context.getString(R.string.text_lend_request_started, ownerName)
                 }
 
 
@@ -530,10 +532,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_canceled)
+                    orderStatus.value = context.getString(R.string.text_rent_canceled)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_canceled)
+                    orderStatus.value = context.getString(R.string.text_lend_canceled)
                 }
 
 
@@ -545,10 +547,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_complete)
+                    orderStatus.value = context.getString(R.string.text_rent_complete)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_complete)
+                    orderStatus.value = context.getString(R.string.text_lend_complete)
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -558,9 +560,9 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_request_pending)
+                    orderStatus.value = context.getString(R.string.text_rent_request_pending)
                 } else {
-                    orderStatus.value = app.getString(R.string.text_lend_request_pending, ownerName)
+                    orderStatus.value = context.getString(R.string.text_lend_request_pending, ownerName)
                 }
 
             }
@@ -572,10 +574,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_rejected)
+                    orderStatus.value = context.getString(R.string.text_rent_rejected)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_rejected)
+                    orderStatus.value = context.getString(R.string.text_lend_rejected)
                 }
 
             }

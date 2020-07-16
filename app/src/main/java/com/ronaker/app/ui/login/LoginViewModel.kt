@@ -33,6 +33,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
+    val keyboardDown: MutableLiveData<Boolean> = MutableLiveData()
 
     enum class LoginActionEnum {
         login,
@@ -105,6 +106,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickLoginPassword(password: String, isValid: Boolean, repeat: String) {
 
+        keyboardDown.postValue(true)
         if (isValid) {
             if (password.compareTo(repeat) == 0) {
 
@@ -123,6 +125,9 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         password: String?,
         passwordValid: Boolean
     ) {
+
+        keyboardDown.postValue(true)
+
         if (passwordValid && emailIsValid) {
 
             userInfo.password = password
@@ -135,14 +140,14 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     fun sendVerificationEmail(){
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loadingButton.value = true }
-                .doOnTerminate { loadingButton.value = false }
+            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loadingButton.postValue(true)  }
+                .doOnTerminate { loadingButton.postValue(false)  }
                 .subscribe {
 
 
 
-                    loading.value = false
-                    goNext.value = true
+                    loading.postValue(false)
+                    goNext.postValue(true)
 
                 }
     }
@@ -150,32 +155,32 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun signin() {
         signinSubscription =
-            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.value = true }
-                .doOnTerminate { loadingButton.value = false }
+            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.postValue(true)  }
+                .doOnTerminate { loadingButton.postValue(false)  }
                 .subscribe { result ->
-                    loading.value = false
+                    loading.postValue(false)
                     if (result.isSuccess()) {
 
                         AppDebug.log("Login",result?.data.toString())
 
 
                         getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
-                        goNext.value = true
+                        goNext.postValue(true)
 
                     } else {
-                        errorMessage.value = result.error?.message
+                        errorMessage.postValue( result.error?.message)
                     }
                 }
 
     }
 
     fun onClickGotoSignUp() {
-        gotoSignUp.value = true
+        gotoSignUp.postValue(true)
     }
 
     fun onClickGotoSignIn() {
 
-        gotoSignIn.value = true
+        gotoSignIn.postValue(true)
     }
 
 

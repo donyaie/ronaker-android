@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -93,7 +92,7 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding.licenseLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this,LICENSE_URL)
+            IntentManeger.openUrl(this,TERM_URL)
         }
 
         binding.privacyLayout.setOnClickListener {

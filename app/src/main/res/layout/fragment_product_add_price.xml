@@ -50,9 +50,9 @@
                             android:imeOptions="actionNext"
                             android:id="@+id/day_input"
                             app:input_transparent="false"
-                            app:input_title="Rent Fee (€)"
+                            app:input_title="@string/text_rent_fee"
                             android:layout_weight="3"
-                            app:input_hint="Daily"
+                            app:input_hint="@string/text_daily"
                             app:inputMutableText="@{viewModel.getProductPriceDay()}"
 
                             app:input_is_alert="false"

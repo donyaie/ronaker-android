@@ -13,7 +13,7 @@ import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
 import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.LICENSE_URL
+import com.ronaker.app.utils.TERM_URL
 import io.reactivex.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
 
 
    fun onClickTerms(){
-       IntentManeger.openUrl(context,LICENSE_URL)
+       IntentManeger.openUrl(context,TERM_URL)
    }
 
     fun load(order: Order) {

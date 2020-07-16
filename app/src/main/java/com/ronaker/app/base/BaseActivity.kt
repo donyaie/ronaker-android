@@ -18,10 +18,11 @@ import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
 import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import io.fabric.sdk.android.Fabric
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 
 
-abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
+abstract class BaseActivity :SwipeBackActivity() {
 
 
     fun getAnalytics(): FirebaseAnalytics? {
@@ -64,7 +65,8 @@ abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
 //    var activityTag: String? = null
 
     fun setSwipeCloseDisable() {
-//       swipeBackLayout.setEnableGesture(false)
+       swipeBackLayout.setEnableGesture(false)
+
 
 
     }
@@ -73,7 +75,7 @@ abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
 
         super.onCreate(savedInstanceState)
 //        addActivityStack(this)
-//        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
+        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
         Fabric.with(this, Crashlytics())
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)

@@ -48,9 +48,9 @@
 
                     android:inputType="text"
                     app:inputMutableText="@{viewModel.getProductTitle()}"
-                    app:input_hint="Enter Title"
+                    app:input_hint="@string/text_enter_title"
                     app:input_regex="^.{2,}$"
-                    app:input_title="Title"
+                    app:input_title="@string/text_title"
                     app:input_transparent="false"
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
@@ -65,9 +65,9 @@
                     android:inputType="textMultiLine"
                     app:inputMutableText="@{viewModel.getProductDescription()}"
                     app:input_counter="500"
-                    app:input_hint="Describe  your item like model or color and..."
+                    app:input_hint="@string/text_item_description"
                     app:input_regex="^\\s*(?:\\S\\s*){2,500}$"
-                    app:input_title="Description"
+                    app:input_title="@string/text_description"
                     app:input_transparent="false"
                     app:layout_constraintTop_toBottomOf="@id/title_input" />
 

@@ -47,11 +47,11 @@
                     android:layout_marginRight="24dp"
                     android:onClick="@{()->viewModel.onClickSelectCategory()}"
                     app:inputMutableText="@{viewModel.getProductCategoryTitle()}"
-                    app:input_hint="Select item category"
+                    app:input_hint="@string/text_select_item_category"
                     app:input_is_alert="false"
 
                     app:input_mode="NoneEditable"
-                    app:input_title="Category"
+                    app:input_title="@string/text_category"
                     app:input_transparent="false"
                     app:input_validation_mode="NONE"
                     app:layout_constraintTop_toBottomOf="@id/title" />
@@ -67,11 +67,11 @@
                     android:onClick="@{()->viewModel.onClickSelectSubCategory()}"
                     android:visibility="gone"
                     app:inputMutableText="@{viewModel.getProductSubCategoryTitle()}"
-                    app:input_hint="Select item Sub-Category"
+                    app:input_hint="@string/text_select_item_sub_category"
                     app:input_is_alert="false"
                     app:input_mode="NoneEditable"
 
-                    app:input_title="Sub-Category"
+                    app:input_title="@string/text_sub_category"
                     app:input_transparent="false"
                     app:input_validation_mode="NONE"
                     app:layout_constraintTop_toBottomOf="@id/category"

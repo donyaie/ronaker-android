@@ -13,6 +13,7 @@ import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.inbox.InboxViewModel
 import com.ronaker.app.ui.login.LoginViewModel
+import com.ronaker.app.ui.manageProduct.ManageProductAdapterViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
 import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptViewModel
@@ -20,6 +21,7 @@ import com.ronaker.app.ui.orderCancel.OrderCancelViewModel
 import com.ronaker.app.ui.orderCreate.OrderCreateViewModel
 import com.ronaker.app.ui.orderDecline.OrderDeclineViewModel
 import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
+import com.ronaker.app.ui.orderPreview.OrderPreviewPriceViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
@@ -139,6 +141,8 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
             is ProfilePaymentListViewModel ->injector.inject(this)
             is ProfilePaymentHistoryListViewModel -> injector.inject(this)
             is ProfileAuthorizationViewModel -> injector.inject(this)
+            is OrderPreviewPriceViewModel -> injector.inject(this)
+            is ManageProductAdapterViewModel ->injector.inject(this)
         }
 
     }

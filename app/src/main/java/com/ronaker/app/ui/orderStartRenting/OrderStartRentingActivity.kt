@@ -75,6 +75,12 @@ class OrderStartRentingActivity : BaseActivity() {
         })
 
 
+        binding.acceptButton.isEnabled=false
+        binding.acceptTerm.setOnCheckedChangeListener { _, isChecked ->
+            binding.acceptButton.isEnabled=isChecked
+        }
+
+
         binding.toolbar.cancelClickListener= View.OnClickListener {
 
             finish()

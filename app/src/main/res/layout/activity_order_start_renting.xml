@@ -69,7 +69,7 @@
                     android:layout_marginRight="24dp"
                     android:gravity="start"
                     android:text="@string/text_please_ensure_that_the_rented_goods_are_functioning_properly"
-                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                    android:textAppearance="@style/TextAppearance.Large.Regular"
                     android:textColor="@color/colorTextDark" />
 
 
@@ -127,24 +127,52 @@
                     android:layout_height="wrap_content"/>
 
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:visibility="gone"
-                    android:layout_marginTop="16dp"
-
-                    android:id="@+id/privecy_text"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
-                    android:layout_marginBottom="40dp"
-                    android:text="@string/text_payments_terms"
-                    android:onClick="@{()->viewModel.onClickTerms()}"
-                    android:textColor="@color/colorTextLink"
-                    android:textAppearance="@style/TextAppearance.Large.SB"
-                    android:gravity="start"
+                    android:background="@color/colorPlatinGrey" />
 
-                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="40dp"
+                    android:orientation="horizontal"
+                    >
+                    <CheckBox
+                        android:id="@+id/accept_term"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextLink"
+
+                        android:padding="4dp"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+
+                        />
+                    <TextView
+                        android:padding="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+
+                        android:visibility="visible"
+
+                        android:id="@+id/privecy_text"
+                        android:text="@string/text_payments_terms"
+                        android:onClick="@{()->viewModel.onClickTerms()}"
+                        android:textColor="@color/colorTextLink"
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:gravity="start"
+
+                        />
+
+                </LinearLayout>
+
 
 
 
@@ -172,6 +200,8 @@
                 style="@style/Button.accent"
                 android:layout_width="wrap_content"
 
+
+
                 android:layout_marginLeft="24dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
@@ -185,6 +215,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent=".4"
 
+                android:id="@+id/accept_button"
 
                 app:buttonType="Text"
                 app:mutableButtonLoading="@{viewModel.getLoadingButton()}"

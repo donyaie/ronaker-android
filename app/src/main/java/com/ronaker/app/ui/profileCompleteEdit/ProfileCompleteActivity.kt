@@ -13,13 +13,14 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationActivity
 import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationViewModel
+import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
 import com.ronaker.app.ui.profileIdentify.ProfileIdentifyActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.extension.setEndDrawableRes
 
 
-class ProfileCompleteActivity : BaseActivity() {
+class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResultListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileCompleteBinding
@@ -176,6 +177,7 @@ class ProfileCompleteActivity : BaseActivity() {
 
         binding.signLayout.setOnClickListener {
 
+            EmailVerifyDialog.DialogBuilder(supportFragmentManager).setListener(this).show()
 
 
         }
@@ -223,7 +225,8 @@ class ProfileCompleteActivity : BaseActivity() {
 
     }
 
-
+    override fun onDialogResult(result: EmailVerifyDialog.DialogResultEnum) {
+    }
 
 
 }

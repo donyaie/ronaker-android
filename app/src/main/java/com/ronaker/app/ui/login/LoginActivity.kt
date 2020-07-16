@@ -150,6 +150,16 @@ class LoginActivity : BaseActivity() {
         })
 
 
+
+        viewModel.keyboardDown.observe(this, Observer {
+
+            if(it){
+                KeyboardManager.hideSoftKeyboard(this@LoginActivity)
+            }
+        })
+
+
+
         viewModel.gotoSignIn.observe(this, Observer {
 
             loginAction = LoginViewModel.LoginActionEnum.login

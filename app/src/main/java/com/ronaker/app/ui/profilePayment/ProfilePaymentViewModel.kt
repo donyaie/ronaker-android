@@ -9,7 +9,7 @@ import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.LICENSE_URL
+import com.ronaker.app.utils.TERM_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -59,7 +59,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
 
 
     fun onClickTerms(){
-        IntentManeger.openUrl(app,LICENSE_URL)
+        IntentManeger.openUrl(app,TERM_URL)
     }
 
 

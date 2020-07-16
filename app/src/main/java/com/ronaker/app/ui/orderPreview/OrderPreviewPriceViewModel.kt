@@ -1,15 +1,24 @@
 package com.ronaker.app.ui.orderPreview
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.toCurrencyFormat
+import javax.inject.Inject
 
-class OrderPreviewPriceViewModel(val app: Application) : BaseViewModel(app) {
+class OrderPreviewPriceViewModel( app: Application) : BaseViewModel(app) {
     val title = MutableLiveData<String>()
     val price = MutableLiveData<String>()
+
+    @Inject
+    lateinit
+    var context: Context
+
+
+
 
 
     fun bind(
@@ -32,19 +41,19 @@ class OrderPreviewPriceViewModel(val app: Application) : BaseViewModel(app) {
         when (Order.OrderPriceEnum[data.key]) {
             Order.OrderPriceEnum.ServiceFee -> {
 
-                title.value = app.getString(R.string.text_service_fee)
+                title.value = context.getString(R.string.text_service_fee)
             }
             Order.OrderPriceEnum.InsuranceFee -> {
 
-                title.value = app.getString(R.string.text_insurance_fee)
+                title.value = context.getString(R.string.text_insurance_fee)
             }
             Order.OrderPriceEnum.ProductFee -> {
 
-                title.value = app.getString(R.string.text_product_fee)
+                title.value = context.getString(R.string.text_product_fee)
             }
             Order.OrderPriceEnum.Total -> {
 
-                title.value = app.getString(R.string.text_total_fee)
+                title.value = context.getString(R.string.text_total_fee)
             }
             else -> {
 

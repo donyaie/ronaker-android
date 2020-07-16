@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.ronaker.app.utils
 
 import android.annotation.TargetApi
@@ -12,7 +14,7 @@ object LocaleHelper {
     private const val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
     fun onAttach(context: Context): Context {
-        val lang = getPersistedData(context, Locale.getDefault().language) ?: "en"
+        val lang = getPersistedData(context, Locale.getDefault().language) ?: "lt"
         return setLocale(context, lang)
     }
 

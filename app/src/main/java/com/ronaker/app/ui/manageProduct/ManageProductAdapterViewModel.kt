@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.manageProduct
 
 import android.app.Application
+import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -9,8 +10,9 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.toCurrencyFormat
+import javax.inject.Inject
 
-class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
+class ManageProductAdapterViewModel( app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
@@ -21,6 +23,13 @@ class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
     lateinit var data: Product
     var activity: AppCompatActivity? = null
 
+
+    @Inject
+    lateinit
+    var context: Context
+
+
+
     fun bind(post: Product, context: AppCompatActivity?) {
         data = post
         productTitle.value = post.name
@@ -29,21 +38,21 @@ class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
             post.price_per_day ?: 0 != 0 -> productPrice.value = String.format(
                 "%s %s",
                 post.price_per_day?.toCurrencyFormat(),
-                app.getString(
+                context?.getString(
                     R.string.title_per_day
                 )
             )
             post.price_per_week ?: 0 != 0 -> productPrice.value = String.format(
                 "%s %s",
                 post.price_per_week?.toCurrencyFormat(),
-                app.getString(
+                context?.getString(
                     R.string.title_per_week
                 )
             )
             post.price_per_month ?: 0 != 0 -> productPrice.value = String.format(
                 "%s %s",
                 post.price_per_month?.toCurrencyFormat(),
-                app.getString(
+                context?.getString(
                     R.string.title_per_month
                 )
             )

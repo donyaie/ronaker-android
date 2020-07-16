@@ -96,11 +96,11 @@ class ProfileEditActivity : BaseActivity() {
 
         }
 
-        binding.mailLayout.setOnClickListener {
-
-            startActivity(ProfileEmailEditActivity.newInstance(this))
-
-        }
+//        binding.mailLayout.setOnClickListener {
+//
+//            startActivity(ProfileEmailEditActivity.newInstance(this))
+//
+//        }
 
 
     }
