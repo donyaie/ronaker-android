@@ -2,9 +2,8 @@ package com.ronaker.app.data.network
 
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
-import com.ronaker.app.data.network.response.MapGeoCodeResponceModel
+import com.ronaker.app.data.network.response.MapGeoCodeResponseModel
 import io.reactivex.Observable
-import retrofit2.Call
 import retrofit2.http.*
 
 /**
@@ -51,7 +50,7 @@ interface GoogleMapApi {
         @Query("result_type") result_type: String?,
         @Query("types") types: String,
         @Query("key") Key: String
-    ): Observable<MapGeoCodeResponceModel>
+    ): Observable<MapGeoCodeResponseModel>
 
 
 

@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
 
-class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
+class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -28,7 +28,6 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
-
 
 
     @Inject
@@ -51,8 +50,6 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
 
     var priceListAdapter: OrderPreviewPriceAdapter
-
-
 
 
     var cardDataList: ArrayList<PaymentCard> = ArrayList()
@@ -83,9 +80,9 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
     }
 
 
-   fun onClickTerms(){
-       IntentManeger.openUrl(context,TERM_URL)
-   }
+    fun onClickTerms() {
+        IntentManeger.openUrl(context, TERM_URL)
+    }
 
     fun load(order: Order) {
         mOrder = order
@@ -99,7 +96,12 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
 
         cardDataList.clear()
 
-        cardDataList.add(PaymentCard(paymentInfoType = PaymentCard.PaymentType.Cash.key,fullName = "By Cash", isVerified = true).apply { selected=true })
+        cardDataList.add(
+            PaymentCard(
+                paymentInfoType = PaymentCard.PaymentType.Cash.key,
+                fullName = "By Cash",
+                isVerified = true
+            ).apply { selected = true })
         cardListAdapter.notifyDataSetChanged()
         subscription?.dispose()
         subscription = paymentInfoRepository.getPaymentInfoList(
@@ -108,7 +110,7 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
-                if (result.isSuccess() ) {
+                if (result.isSuccess()) {
                     result.data?.let {
                         if (it.isNotEmpty()) {
                             cardDataList.addAll(it)
@@ -118,7 +120,7 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
                     }
 
                 } else {
-                    finish.value=true
+                    finish.value = true
                     errorMessage.value = "Successfully Send"
                 }
             }
@@ -130,25 +132,23 @@ class OrderStartRentingViewModel (val app: Application): BaseViewModel(app) {
     fun onClickAccept() {
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            userRepository.getUserToken(),
-            mOrder.suid,
-            "started"
+            token = userRepository.getUserToken(),
+            suid = mOrder.suid,
+            status = "started"
         )
-            .doOnSubscribe { loadingButton.value = true }
-            .doOnTerminate { loadingButton.value = false }
+            .doOnSubscribe { loadingButton.postValue(true)  }
+            .doOnTerminate { loadingButton.postValue(false) }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
-                    finish.value=true
+                    finish.postValue(true)
 
                 } else {
-                    errorMessage.value = result.error?.message
+                    errorMessage.postValue(result.error?.message)
                 }
             }
 
 
     }
-
-
 
 
 }

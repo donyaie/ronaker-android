@@ -71,14 +71,15 @@ class DefaultOrderRepository(private val api: OrderApi) :
     override fun updateOrderStatus(
         token: String?,
         suid: String,
-        status: String,
+        status: String?,
         address: String?,
         instruction: String?,
-        reason:String?
+        reason:String?,
+        isArchived:Boolean?
     ): Observable<Result<Boolean>> {
 
         val request=
-            OrderUpdateRequestModel(status,address,instruction,reason)
+            OrderUpdateRequestModel(status,address,instruction,reason,isArchived)
 
         return api.updateOrderStatus("Token $token",suid,request)
             .subscribeOn(Schedulers.io())

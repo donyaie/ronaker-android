@@ -1,7 +1,7 @@
 package com.ronaker.app.model
 
 import android.os.Parcelable
-import com.ronaker.app.data.network.response.ContentImageResponceModel
+import com.ronaker.app.data.network.response.ContentImageResponseModel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -45,7 +45,7 @@ enum class DocumentTypeEnum constructor(key: String, title:String) {
 }
 
 
-fun ContentImageResponceModel.toMediaModel(): Media {
+fun ContentImageResponseModel.toMediaModel(): Media {
     return Media(
         suid,
         content,

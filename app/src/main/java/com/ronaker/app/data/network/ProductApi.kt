@@ -15,14 +15,14 @@ interface ProductApi {
      */
     @POST("/api/v1/products/search")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Body request: ProductSearchRequestModel?): Observable<ListResponseModel<ProductItemResponceModel>>
+    fun productSearch(@Header("Authorization") authToken: String?, @Query("page") page: Int,@Body request: ProductSearchRequestModel?): Observable<ListResponseModel<ProductItemResponseModel>>
 
     /**
      * get my created mProduct
      */
     @GET("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getMyProduct(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ListResponseModel<ProductItemResponceModel>>
+    fun getMyProduct(@Header("Authorization") authToken: String?, @Query("page") page: Int): Observable<ListResponseModel<ProductItemResponseModel>>
 
     /**
      * create new mProduct
@@ -44,7 +44,7 @@ interface ProductApi {
      */
     @GET("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getProduct(@Header("Authorization") authToken: String?,@Path("suid") suid:String): Observable<ProductDetailResponceModel>
+    fun getProduct(@Header("Authorization") authToken: String?,@Path("suid") suid:String): Observable<ProductDetailResponseModel>
 
     /**
      * get rate List

@@ -2,7 +2,7 @@ package com.ronaker.app.data.network.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MapGeoCodeResponceModel(
+data class MapGeoCodeResponseModel(
     @SerializedName("results") val results: List<MapGeoCodeResultModel>?,
     @SerializedName("status") val status: String
 ) {

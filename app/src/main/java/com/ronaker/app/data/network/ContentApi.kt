@@ -1,8 +1,7 @@
 package com.ronaker.app.data.network
 
-import com.ronaker.app.data.network.response.ContentImageResponceModel
+import com.ronaker.app.data.network.response.ContentImageResponseModel
 import com.ronaker.app.data.network.response.FreeResponseModel
-import com.ronaker.app.data.network.response.ProductCreateResponseModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -36,7 +35,7 @@ interface ContentApi {
      */
     @POST("/api/v1/contents/images/")
     @Multipart
-    fun uploadImageWithoutProgress(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Observable<ContentImageResponceModel>
+    fun uploadImageWithoutProgress(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Observable<ContentImageResponseModel>
 
 
 
@@ -46,6 +45,6 @@ interface ContentApi {
      */
     @POST("/api/v1/contents/images/")
     @Multipart
-    fun uploadImageWithoutProgressr(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Call<ContentImageResponceModel>
+    fun uploadImageWithoutProgressr(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Call<ContentImageResponseModel>
 
 }
