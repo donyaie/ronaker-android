@@ -18,6 +18,7 @@ import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
+import com.ronaker.app.ui.orders.OrderItemViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
@@ -90,6 +91,7 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfileAuthorizationViewModel)
     fun inject(viewModel: OrderPreviewPriceViewModel)
     fun inject(viewModel: ManageProductAdapterViewModel)
+    fun inject(viewModel: OrderItemViewModel)
 
 
 

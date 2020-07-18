@@ -24,6 +24,7 @@ import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
+import com.ronaker.app.ui.orders.OrderItemViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
@@ -112,6 +113,7 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
 
             is OrderPreviewViewModel -> injector.inject(this)
 
+            is OrderItemViewModel -> injector.inject(this)
 
             is AddProductLocationViewModel -> injector.inject(this)
             is AddProductLocationSearchViewModel -> injector.inject(this)

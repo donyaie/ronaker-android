@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
+import com.ronaker.app.ui.productRate.ProductRateActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 class OrderListFragment : BaseFragment() {
@@ -19,7 +21,7 @@ class OrderListFragment : BaseFragment() {
     private lateinit var viewModel: OrderListViewModel
 
 
-    private  var scrollListener: EndlessRecyclerViewScrollListener?=null
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
 
     override fun onCreateView(
@@ -33,16 +35,18 @@ class OrderListFragment : BaseFragment() {
 
 //
         binding.viewModel = viewModel
-        val mnager = LinearLayoutManager(context)
+        val mnager = LinearLayoutManager(context).apply {
+        }
         binding.recycler.layoutManager = mnager
 
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
         })
+
         viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
 
-            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+            loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
 
@@ -66,6 +70,16 @@ class OrderListFragment : BaseFragment() {
 
         }
 
+        viewModel.launchOrderDetail.observe(viewLifecycleOwner, Observer { order ->
+
+            startActivity(OrderPreviewActivity.newInstance(requireContext(), order))
+        })
+
+        viewModel.launchOrderRateDetail.observe(viewLifecycleOwner, Observer { order ->
+
+            startActivity(ProductRateActivity.newInstance(requireContext(), order))
+        })
+
 
         binding.refreshLayout.setOnRefreshListener {
 
@@ -88,8 +102,6 @@ class OrderListFragment : BaseFragment() {
     }
 
 
-
-
     private fun getFilter(): String? {
         return this.arguments?.getString(FILTER_KEY)
     }
@@ -107,7 +119,7 @@ class OrderListFragment : BaseFragment() {
         }
 
 
-        fun newBoundle(filter: String?):Bundle{
+        fun newBoundle(filter: String?): Bundle {
 
             val bundle = Bundle()
             bundle.putString(FILTER_KEY, filter)

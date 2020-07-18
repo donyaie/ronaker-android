@@ -56,6 +56,7 @@ class OrdersFragment : BaseFragment() {
 
 
 //        initNavigation(savedInstanceState)
+        binding.viewpager.isUserInputEnabled = false
 
         initViewPager()
 
@@ -187,6 +188,9 @@ class OrdersFragment : BaseFragment() {
         super.onDestroy()
         binding.viewpager.unregisterOnPageChangeCallback(viewPager2PageChangeCallback)
     }
+
+
+
 
 
 }

@@ -60,6 +60,23 @@
         <item name="android:textColor">@color/colorTextDark</item>
     </style>
 
+    <style name="Button.chips" parent="android:Widget.Button">
+        <item name="fontPath">fonts/bold.otf</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:background">@drawable/selector_corner_grey</item>
+
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorTextLink</item>
+    </style>
+
 
     <style name="Button.transparent.width" parent="android:Widget.Button">
         <item name="android:textAppearance">@style/TextAppearance.Large.Light</item>

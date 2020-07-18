@@ -218,4 +218,6 @@
     <string name="text_rent_fee">Huurprijs (€)</string>
     <string name="text_daily">Dagelijks</string>
     <string name="format_you_will_pay">U betaalt %1$s voor %2$s dagen</string>
+    <string name="text_rate_it">Beoordeel het</string>
+    <string name="text_archive_it">Archiveer het</string>
 </resources>

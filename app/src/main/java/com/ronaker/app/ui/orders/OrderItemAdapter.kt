@@ -17,7 +17,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
-class OrderItemAdapter() : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
+class OrderItemAdapter(val listener:OrderItemListener) : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
     private  var datalist= ArrayList<Order>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +28,7 @@ class OrderItemAdapter() : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datalist[position])
+        holder.bind(datalist[position],listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -39,7 +39,7 @@ class OrderItemAdapter() : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
                 DiffUtils.createCombinedPayload(payloads as List<DiffUtils.Change<Order>>)
 //            val oldData = combinedChange.oldData
             val newData = combinedChange.newData
-            holder.bind(newData)
+            holder.bind(newData,listener)
 
         }
     }
@@ -68,17 +68,38 @@ class OrderItemAdapter() : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
     }
 
 
+    override fun onViewRecycled(holder: ViewHolder) {
+        holder.onViewRecycled()
+        super.onViewRecycled(holder)
+    }
+
 
     class ViewHolder(
         private val binding: AdapterOrdreItemBinding
     ):RecyclerView.ViewHolder(binding.root){
 
+
+
         private val viewModel = OrderItemViewModel(binding.root.getApplication())
 
-        fun bind(item:Order){
-            viewModel.bind(item,binding.root.getParentActivity())
+        fun bind(item:Order,listener: OrderItemListener){
+            viewModel.bind(item,listener)
             binding.viewModel = viewModel
         }
+
+        fun onViewRecycled() {
+            viewModel.onCleared()
+        }
+
+
+    }
+
+
+
+    interface  OrderItemListener{
+        fun onClickItem(order:Order)
+        fun onClickItemArchive(order:Order)
+        fun onClickItemRate(order:Order)
     }
 
 
@@ -107,4 +128,11 @@ class OrderItemAdapter() : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
             )
         }
     }
+
+
+
+
+
+
+
 }

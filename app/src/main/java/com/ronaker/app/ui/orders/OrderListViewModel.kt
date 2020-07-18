@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class OrderListViewModel(app: Application) : BaseViewModel(app) {
+class OrderListViewModel(app: Application) : BaseViewModel(app),
+    OrderItemAdapter.OrderItemListener {
 
     @Inject
     lateinit
@@ -40,10 +41,16 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
     var dataList: ArrayList<Order> = ArrayList()
 
 
-    var productListAdapter: OrderItemAdapter
+    var productListAdapter: OrderItemAdapter = OrderItemAdapter(this)
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
+
+
+    val launchOrderDetail: MutableLiveData<Order> = MutableLiveData()
+    val launchOrderRateDetail: MutableLiveData<Order> = MutableLiveData()
+
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -51,12 +58,6 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
 
     private var mFilter: String? = null
     private var subscription: Disposable? = null
-
-    init {
-        productListAdapter = OrderItemAdapter()
-
-
-    }
 
     fun getData(filter: String?) {
 
@@ -117,6 +118,34 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
         }
 
 
+    suspend fun doArchive(suid: String) =
+        withContext(Dispatchers.IO) {
+
+            subscription?.dispose()
+            subscription = orderRepository
+                .updateOrderStatus(token =  userRepository.getUserToken(), suid = suid,isArchived = true)
+
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSubscribe {
+                }
+                .doOnTerminate {
+                }
+                .subscribe { result ->
+                    if (!result.isAcceptable()) {
+
+
+                        errorMessage.postValue(result.error?.message)
+
+
+                    }
+                }
+
+
+        }
+
+
+
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
@@ -129,6 +158,29 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
             loadData(mFilter)
         }
 
+    }
+
+    override fun onClickItem(order: Order) {
+
+        launchOrderDetail.postValue(order)
+    }
+
+    override fun onClickItemArchive(order: Order) {
+
+        uiScope.launch {
+            doArchive(order.suid)
+        }
+
+        dataList.remove(order)
+        productListAdapter.updateList(dataList)
+
+
+
+    }
+
+    override fun onClickItemRate(order: Order) {
+
+        launchOrderRateDetail.postValue(order)
     }
 
 

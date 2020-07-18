@@ -234,6 +234,8 @@
     <string name="text_rent_fee">Rent Fee (€)</string>
     <string name="text_daily">Daily</string>
     <string name="format_you_will_pay" formatted="true">You will pay %1$s for %2$s days</string>
+    <string name="text_rate_it">Rate it</string>
+    <string name="text_archive_it">Archive it</string>
 
 
 </resources>

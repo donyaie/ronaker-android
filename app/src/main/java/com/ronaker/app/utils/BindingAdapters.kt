@@ -109,6 +109,23 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
     }
 }
 
+
+
+@BindingAdapter("mutableFastVisibility")
+fun setMutableFastVisibility(view: View, visibility: MutableLiveData<Int>?) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && visibility != null) {
+        visibility.observe(parentActivity, Observer { value ->
+            view.visibility=value
+
+        })
+    }
+}
+
+
+
+
 @BindingAdapter("mutableText")
 fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
 
