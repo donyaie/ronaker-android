@@ -6,6 +6,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -65,7 +68,9 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
         binding.root.setBackgroundResource(R.color.white)
-
+//        ( window.decorView.findViewById<View>(Window.ID_ANDROID_CONTENT)?.parent as? ViewGroup)?.setBackgroundResource(R.color.white)
+//        window.setBackgroundDrawableResource(R.color.white)
+//
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         binding.viewModel = viewModel

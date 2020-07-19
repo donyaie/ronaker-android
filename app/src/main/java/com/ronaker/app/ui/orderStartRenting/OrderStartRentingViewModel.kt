@@ -91,6 +91,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
             dataList.clear()
             dataList.addAll(it)
+            dataList.removeAll {  price ->Order.OrderPriceEnum[price.key] ==Order.OrderPriceEnum.InsuranceFee }
             priceListAdapter.notifyDataSetChanged()
         }
 
