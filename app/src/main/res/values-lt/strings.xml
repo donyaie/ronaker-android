@@ -220,4 +220,5 @@
     <string name="format_you_will_pay">Jūs mokėsite %1$s už %2$s dienas</string>
     <string name="text_rate_it">Įvertink</string>
     <string name="text_archive_it">Archyvuoti</string>
+    <string name="text_near_me">Šalia manęs</string>
 </resources>

@@ -14,14 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
 
 
         android:orientation="vertical"
 
         >
-
-
 
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -39,9 +37,8 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
 
             android:layout_margin="4dp"
             android:background="@drawable/selector_corner_dark"
@@ -49,10 +46,10 @@
             android:gravity="center"
             android:lines="1"
             android:minWidth="60dp"
-            android:paddingBottom="10dp"
+            android:paddingLeft="12dp"
             android:paddingTop="10dp"
             android:paddingRight="12dp"
-            android:paddingLeft="12dp"
+            android:paddingBottom="10dp"
 
             android:text="@string/caption_title"
             android:textAppearance="@style/TextAppearance.Small.SB"

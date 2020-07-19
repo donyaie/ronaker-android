@@ -45,7 +45,7 @@ class CategoryExploreViewModel(val app: Application) : BaseViewModel(app) {
             }
         } else {
 
-            binder.title.setBackgroundResource(R.drawable.selector_corner_dark)
+            binder.title.setBackgroundResource(R.drawable.selector_corner_white_accent)
             context?.let {
 
                 binder.title.setTextColor(ContextCompat.getColor(it,R.color.colorTextDark))

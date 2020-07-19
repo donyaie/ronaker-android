@@ -9,116 +9,184 @@
             type="com.ronaker.app.ui.explore.ExploreViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <LinearLayout
-
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/header"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="@color/white"
-
-            android:orientation="horizontal"
-
             app:layout_constraintTop_toTopOf="parent">
 
 
             <LinearLayout
-                android:background="@color/white"
-                android:elevation="6dp"
-                android:id='@+id/search_layout'
+
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="24dp"
 
-                android:clickable="true"
-                android:layout_marginBottom="16dp"
-                android:focusable="true"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
 
-                android:onClick="@{()->viewModel.onClickSearch()}"
                 android:orientation="horizontal"
-                android:paddingStart="4dp"
-                android:paddingEnd="12dp"
-                android:transitionName="search">
+
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:layout_scrollFlags="scroll|snap">
 
 
-                <ImageView
+                <LinearLayout
+                    android:id='@+id/search_layout'
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
 
-                    android:id="@+id/back_image"
-                    android:layout_width="40dp"
+                    android:clickable="true"
+                    android:elevation="6dp"
+                    android:focusable="true"
+                    android:gravity="center"
 
-                    android:layout_height="40dp"
+                    android:onClick="@{()->viewModel.onClickSearch()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="12dp"
+                    android:transitionName="search">
 
 
-                    android:clickable="false"
-                    android:contentDescription="@string/text_content"
-                    android:focusable="false"
-                    android:padding="12dp"
-                    android:tint="@color/colorTextGreyLight"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_back_white" />
+                    <ImageView
+
+                        android:id="@+id/back_image"
+                        android:layout_width="40dp"
+
+                        android:layout_height="40dp"
+
+
+                        android:clickable="false"
+                        android:contentDescription="@string/text_content"
+                        android:focusable="false"
+                        android:padding="12dp"
+                        android:tint="@color/colorTextGreyLight"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_back_white" />
+
+                    <TextView
+                        android:id="@+id/search_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".95"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="16dp"
+
+                        android:text="@string/title_search_here"
+
+
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:textColor="@color/colorTextGreyLight" />
+
+                    <ImageView
+                        android:id="@+id/search_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@string/text_content"
+
+                        android:tint="@color/colorTextGreyLight"
+
+                        app:srcCompat="@drawable/ic_search_white" />
+
+                </LinearLayout>
+
 
                 <TextView
-                    android:id="@+id/search_text"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".95"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="16dp"
+                    android:id="@+id/cancelSearch"
+                    android:layout_width="40dp"
 
-                    android:text="@string/title_search_here"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
 
+                    android:layout_marginEnd="-40dp"
+                    android:gravity="center"
 
-                    android:textAppearance="@style/TextAppearance.Medium.SB"
-                    android:textColor="@color/colorTextGreyLight" />
+                    android:text="@string/title_cancel"
+                    android:textAppearance="@style/TextAppearance.Small.Regular"
+                    android:textColor="@color/colorTextDark"
 
-                <ImageView
-                    android:id="@+id/search_image"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@string/text_content"
+                    android:transitionName="searchCancel"
 
-                    android:tint="@color/colorTextGreyLight"
+                    app:layout_constraintLeft_toRightOf="parent" />
 
-                    app:srcCompat="@drawable/ic_search_white" />
 
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/cancelSearch"
-                android:layout_width="40dp"
+            <HorizontalScrollView
+                android:layout_width="match_parent"
 
-                android:layout_height="48dp"
-                android:layout_marginEnd="-40dp"
+                android:scrollbars="none"
+                android:id="@+id/filter_recycler"
+                android:layout_height="wrap_content">
 
-                android:layout_marginTop="24dp"
-                android:gravity="center"
-
-                android:text="@string/title_cancel"
-                android:textAppearance="@style/TextAppearance.Small.Regular"
-                android:textColor="@color/colorTextDark"
-
-                android:transitionName="searchCancel"
-
-                app:layout_constraintLeft_toRightOf="parent" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
 
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/filter_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+android:layout_marginStart="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_corner_dark"
+                        android:elevation="3dp"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:minWidth="60dp"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="10dp"
+
+                        android:text="@string/text_near_me"
+                        android:textAppearance="@style/TextAppearance.Small.SB"
+                        android:textColor="@color/colorTextDark" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/category_recycler"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight=".95"
+                        app:adapter="@{viewModel.getCategoryListAdapter()}"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refreshLayout"
 
+
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header">
 
@@ -133,17 +201,6 @@
                     android:layout_height="match_parent">
 
 
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/category_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:adapter="@{viewModel.getCategoryListAdapter()}"
-
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler"
                         android:layout_width="match_parent"
@@ -154,7 +211,7 @@
                         android:paddingRight="16dp"
 
                         app:adapter="@{viewModel.getProductListAdapter()}"
-                        app:layout_constraintTop_toBottomOf="@id/category_recycler" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,8 +220,8 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone"
 
-                        app:layout_constraintTop_toTopOf="@id/recycler"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/recycler"
                         app:mutableVisibility="@{viewModel.getEmptyVisibility()}">
 
                         <ImageView
@@ -208,6 +265,6 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
