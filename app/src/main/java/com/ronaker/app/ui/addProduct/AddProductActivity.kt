@@ -152,12 +152,23 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.parentCategory.observe(this, Observer { category ->
+        viewModel.parentCategory.observe(this, Observer { categoies ->
 
             AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
-                .setParent(category).show()
+                .setParent(null).setCategories(categoies).show()
 
         })
+
+
+        viewModel.childCategory.observe(this, Observer { category ->
+
+            category.sub_categories?.let {
+                AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
+                    .setParent(category).setCategories(it).show()
+            }
+
+        })
+
 
 
         viewModel.showImagePicker.observe(this, Observer { state ->

@@ -89,7 +89,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     val insuranceMedia = Image(isLocal = true)
 
 
-    val parentCategory: MutableLiveData<Category> = MutableLiveData()
+    val parentCategory: MutableLiveData<List<Category>> = MutableLiveData()
+    val childCategory: MutableLiveData<Category> = MutableLiveData()
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -204,8 +205,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         productCategoryTitle.value = category.title
         categories.clear()
-        category.sub_categories = null
-        categories.add(category)
+        categories.add(category.copy())
 
         productSubCategoryVisibility.value = View.VISIBLE
         productSubCategoryTitle.value = ""
@@ -222,13 +222,74 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         }
     }
 
-    fun onClickSelectCategory() {
-        parentCategory.value = null
+
+    private var categorySubscription: Disposable? = null
+
+
+    private var cachedCategory: List<Category>? = null
+
+    private fun getCategories(selectParent: Boolean = false, selectChild: Boolean = false) {
+
+        if (selectParent && cachedCategory != null) {
+            parentCategory.value = cachedCategory
+            return
+        }
+
+        if (selectChild && cachedCategory != null) {
+            onClickSelectSubCategory()
+            return
+        }
+
+
+        categorySubscription?.dispose()
+
+        categorySubscription = categoryRepository.getCategories(
+            userRepository.getUserToken()
+        )
+            .doOnSubscribe { }
+            .doOnTerminate { }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+                    cachedCategory = result.data
+
+
+                    if (selectParent) {
+                        parentCategory.value = cachedCategory
+                    }
+
+                    if (selectChild && !cachedCategory.isNullOrEmpty()) {
+                        onClickSelectSubCategory()
+                    }
+
+                } else {
+                    errorMessage.postValue(result.error?.message)
+                }
+            }
+
     }
 
+
+    fun onClickSelectCategory() {
+
+
+        getCategories(selectParent = true)
+    }
+
+
     fun onClickSelectSubCategory() {
-        if (categories.isNotEmpty())
-            parentCategory.value = categories[0]
+
+        if (cachedCategory.isNullOrEmpty()) {
+            getCategories(selectChild = true)
+        } else if (categories.isNotEmpty()) {
+
+
+            val parent =
+                cachedCategory?.find { category -> category.suid == categories[0].suid }
+
+            childCategory.value = parent
+
+        }
     }
 
 

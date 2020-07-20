@@ -53,39 +53,16 @@ class AddProductCategorySelectViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun searchLocation(parent: Category?) {
-
-        searchSubscription?.dispose()
-
-        searchSubscription = categoryRepository.getCategories(
-            userRepository.getUserToken()
-        )
-            .doOnSubscribe { }
-            .doOnTerminate { }
-            .subscribe { result ->
-                if (result.isSuccess()) {
-
-                    dataList.clear()
-                    parent?.let { category ->
-
-                        result.data?.forEach {
-                            if (category.suid.compareTo(it.suid) == 0) {
-
-                                it.sub_categories?.let { it1 ->
-                                    dataList.addAll(it1)
-
-                                }
-                            }
-                        }
+    fun searchLocation(categoryList:List<Category>) {
 
 
-                    } ?: run { result.data?.let { dataList.addAll(it) } }
+
+        dataList.clear()
+
+        dataList.addAll(categoryList)
 
 
-                    listAdapter.notifyDataSetChanged()
-
-                }
-            }
+        listAdapter.notifyDataSetChanged()
 
 
     }

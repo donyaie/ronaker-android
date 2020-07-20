@@ -11,11 +11,21 @@ data class Category(
     var suid: String
     , var title: String
     , var avatar: String
-    , var sub_categories: List<Category>?
+    , var sub_categories: List<Category>?=null
 ) : Parcelable {
     @IgnoredOnParcel
     var isSelected = false
+
+
+
+    fun copy():Category{
+
+        return this.copy(suid= suid,title = title,avatar = avatar)
+    }
+
+
 }
+
 
 
 fun List<CategoriesResponseModel>.toCategoryList(): List<Category> {
