@@ -14,7 +14,7 @@ import com.ronaker.app.ui.dialog.SelectDialog
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
+class ProfileIdentifyViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -32,7 +32,7 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
     var context: Context
 
 
-    var selectedDocument:DocumentTypeEnum?=null
+    var selectedDocument: DocumentTypeEnum? = null
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -58,7 +58,6 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
 
     private var uploadSubscription: Disposable? = null
     private var identitySubscription: Disposable? = null
-
 
 
     fun selectImage(uri: Uri) {
@@ -130,10 +129,9 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
     private fun addIdentity(imageSuid: String) {
 
 
+        if (selectedDocument == null) {
 
-        if(selectedDocument==null){
-
-            errorMessage.value="Please select document type"
+            errorMessage.value = "Please select document type"
 
             return
         }
@@ -145,7 +143,7 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
             .addDocument(
                 userRepository.getUserToken(),
                 imageSuid,
-                selectedDocument?:DocumentTypeEnum.None
+                selectedDocument ?: DocumentTypeEnum.None
             )
 
             .doOnSubscribe {
@@ -174,19 +172,13 @@ class ProfileIdentifyViewModel (app: Application): BaseViewModel(app) {
 
     fun selectItem(selectedItem: SelectDialog.SelectItem) {
 
-        selectedDocument=DocumentTypeEnum.get(selectedItem.id)
+        selectedDocument = DocumentTypeEnum.get(selectedItem.id)
 
-        documentTitle.value=selectedItem.title
-        if(selectedDocument==DocumentTypeEnum.None){
-            selectedDocument=null
-            documentTitle.value=""
+        documentTitle.value = selectedItem.title
+        if (selectedDocument == DocumentTypeEnum.None) {
+            selectedDocument = null
+            documentTitle.value = ""
         }
-
-
-
-
-
-
 
 
     }

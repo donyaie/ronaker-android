@@ -20,9 +20,13 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: LoginViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_home,container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_home, container, false)
 
 
         activity?.let {
@@ -30,11 +34,11 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
             binding.viewModel = viewModel
         }
 
-      binding.  languageChange.setOnClickListener{
-          activity?.let { it1 -> LanguageDialog.showDialog(it1) }
-      }
+        binding.languageChange.setOnClickListener {
+            activity?.let { it1 -> LanguageDialog.showDialog(it1) }
+        }
 
-        AppDebug.log("capture","LoginEmailFragment : CreateView")
+        AppDebug.log("capture", "LoginEmailFragment : CreateView")
 
         return binding.root
     }
@@ -46,6 +50,7 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
             return LoginHomeFragment()
         }
     }
+
     override fun onSelect() {
 
         activity?.let { KeyboardManager.hideSoftKeyboard(it) }

@@ -11,7 +11,7 @@ import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderFinishViewModel (app: Application): BaseViewModel(app) {
+class OrderFinishViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -21,6 +21,7 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -33,7 +34,6 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
 
-
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
     private lateinit var mOrder: Order
@@ -44,8 +44,6 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
-
-
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
@@ -53,10 +51,8 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
     fun load(order: Order) {
         mOrder = order
-
 
 
     }
@@ -65,15 +61,15 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
     fun onClickAccept() {
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-          token =   userRepository.getUserToken(),
-          suid =   mOrder.suid,
-          status =   "finished"
+            token = userRepository.getUserToken(),
+            suid = mOrder.suid,
+            status = "finished"
         )
             .doOnSubscribe { loadingButton.value = true }
             .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {
-                    finish.value=true
+                    finish.value = true
 
                 } else {
 
@@ -83,8 +79,6 @@ class OrderFinishViewModel (app: Application): BaseViewModel(app) {
 
 
     }
-
-
 
 
 }

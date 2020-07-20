@@ -20,6 +20,7 @@ class OrderAcceptViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -27,7 +28,6 @@ class OrderAcceptViewModel(app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
-
 
 
     val instruction: MutableLiveData<String> = MutableLiveData()
@@ -60,13 +60,13 @@ class OrderAcceptViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickAccept(address: String, ins: String) {
 
-        if(ins.isBlank() ){
-            errorMessage.value="Please Write instruction"
+        if (ins.isBlank()) {
+            errorMessage.value = "Please Write instruction"
             return
         }
 
-        if(address.isBlank() ){
-            errorMessage.value="Please Write Address"
+        if (address.isBlank()) {
+            errorMessage.value = "Please Write Address"
             return
         }
 

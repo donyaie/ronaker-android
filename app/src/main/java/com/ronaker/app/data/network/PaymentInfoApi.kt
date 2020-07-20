@@ -1,7 +1,10 @@
 package com.ronaker.app.data.network
 
-import com.ronaker.app.data.network.request.*
-import com.ronaker.app.data.network.response.*
+import com.ronaker.app.data.network.request.PaymentInfoCreateRequestModel
+import com.ronaker.app.data.network.response.FinancialTransactionsResponseModel
+import com.ronaker.app.data.network.response.FreeResponseModel
+import com.ronaker.app.data.network.response.ListResponseModel
+import com.ronaker.app.data.network.response.PaymentInfoListResponseModel
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -21,8 +24,10 @@ interface PaymentInfoApi {
      */
     @POST("/api/v1/payment_info/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun addPaymentInfo(@Header("Authorization") authToken: String, @Body request: PaymentInfoCreateRequestModel): Observable<FreeResponseModel>
-
+    fun addPaymentInfo(
+        @Header("Authorization") authToken: String,
+        @Body request: PaymentInfoCreateRequestModel
+    ): Observable<FreeResponseModel>
 
 
     /**
@@ -31,8 +36,6 @@ interface PaymentInfoApi {
     @GET("/api/v1/financial_transactions/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getFinancialTransactions(@Header("Authorization") authToken: String): Observable<ListResponseModel<FinancialTransactionsResponseModel>>
-
-
 
 
 }

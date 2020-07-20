@@ -1,13 +1,7 @@
 package com.ronaker.app.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.os.Build
-import android.transition.*
-import android.view.Gravity
-import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import android.view.animation.DecelerateInterpolator
 import com.ronaker.app.R
 
 
@@ -25,16 +19,16 @@ class AnimationHelper {
         }
 
 
-        fun setStartSlideTransition(activity: AppCompatActivity){
-            activity. overridePendingTransition(R.anim.from_right_in, R.anim.from_left_out)
+        fun setStartSlideTransition(activity: AppCompatActivity) {
+            activity.overridePendingTransition(R.anim.from_right_in, R.anim.from_left_out)
         }
 
-        fun setEndSlideTransition(activity: AppCompatActivity){
-            activity. overridePendingTransition(R.anim.from_left_in, R.anim.from_right_out)
+        fun setEndSlideTransition(activity: AppCompatActivity) {
+            activity.overridePendingTransition(R.anim.from_left_in, R.anim.from_right_out)
         }
 
-        fun clearTransition(activity: AppCompatActivity){
-            activity. overridePendingTransition(0,0)
+        fun clearTransition(activity: AppCompatActivity) {
+            activity.overridePendingTransition(0, 0)
         }
 
 //        fun settSlideTransition(activity: AppCompatActivity) {
@@ -78,9 +72,6 @@ class AnimationHelper {
 //
 //            return bounds
 //        }
-
-
-
 
 
 //        fun setAnimateTransition(activity: AppCompatActivity) {

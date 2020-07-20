@@ -16,8 +16,8 @@
 
 
                   android:text="@string/title_your_inbox"
-                  android:layout_marginRight="24dp"
-                  android:layout_marginLeft="24dp"
+                  android:layout_marginRight="@dimen/margin_default"
+                  android:layout_marginLeft="@dimen/margin_default"
                   android:layout_marginTop="80dp"
                   android:textAppearance="@style/TextAppearance.Heading.1"
 

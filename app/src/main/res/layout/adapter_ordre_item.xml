@@ -100,11 +100,11 @@
 
 
         <ImageView
-            android:layout_width="24dp"
+            android:layout_width="@dimen/margin_default"
             android:layout_marginTop="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="12dp"
-            android:layout_height="24dp"
+            android:layout_height="@dimen/margin_default"
             android:id="@+id/status_image"
             android:contentDescription="@string/text_content"
 
@@ -134,10 +134,10 @@
 
 
         <ImageView
-            android:layout_width="24dp"
+            android:layout_width="@dimen/margin_default"
             android:id="@+id/next"
             android:layout_marginEnd="12dp"
-            android:layout_height="24dp"
+            android:layout_height="@dimen/margin_default"
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="@string/text_content"
             app:layout_constraintTop_toTopOf="@id/status_image"

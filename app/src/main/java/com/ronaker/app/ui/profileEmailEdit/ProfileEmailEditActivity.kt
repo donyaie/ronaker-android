@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.Alert
 
 
 class ProfileEmailEditActivity : BaseActivity() {
@@ -49,7 +49,7 @@ class ProfileEmailEditActivity : BaseActivity() {
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -73,14 +73,11 @@ class ProfileEmailEditActivity : BaseActivity() {
 
 
         binding.saveButton.setOnClickListener {
-            if(binding.emailInput.checkValid() ){
+            if (binding.emailInput.checkValid()) {
                 viewModel.saveInfo(binding.emailInput.text)
             }
 
         }
-
-
-
 
 
     }
@@ -92,8 +89,6 @@ class ProfileEmailEditActivity : BaseActivity() {
 
 
     }
-
-
 
 
 }

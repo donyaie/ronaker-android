@@ -9,16 +9,13 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.utils.toCurrencyFormat
 import javax.inject.Inject
 
-class OrderPreviewPriceViewModel( app: Application) : BaseViewModel(app) {
+class OrderPreviewPriceViewModel(app: Application) : BaseViewModel(app) {
     val title = MutableLiveData<String>()
     val price = MutableLiveData<String>()
 
     @Inject
     lateinit
     var context: Context
-
-
-
 
 
     fun bind(

@@ -7,7 +7,7 @@ import com.ronaker.app.databinding.AdapterCategorySelectBinding
 import com.ronaker.app.model.Category
 
 
-class CategorySelectViewModel (app: Application): BaseViewModel(app) {
+class CategorySelectViewModel(app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
 
     lateinit var data: Category
@@ -26,7 +26,7 @@ class CategorySelectViewModel (app: Application): BaseViewModel(app) {
         mBinder = binder
         mParentViewModel = parentViewModel
 
-        productTitle.value=data.title
+        productTitle.value = data.title
 
 
     }

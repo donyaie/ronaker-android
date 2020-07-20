@@ -9,7 +9,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Image
 import com.ronaker.app.utils.BASE_URL
 
-class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app) {
+class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app) {
 
 
     private val productImage = MutableLiveData<String>()
@@ -24,9 +24,9 @@ class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app
     ) {
 
         imageModel = post
-        if (post.uri!=null && post.uri.toString().isNotEmpty())
+        if (post.uri != null && post.uri.toString().isNotEmpty())
             productImage.value = post.uri?.toString()
-        else if(!post.url.isNullOrEmpty())
+        else if (!post.url.isNullOrEmpty())
             productImage.value = BASE_URL + post.url
 
         baseActivity?.let {

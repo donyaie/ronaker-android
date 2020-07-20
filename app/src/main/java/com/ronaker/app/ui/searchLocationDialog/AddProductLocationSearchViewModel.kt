@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class AddProductLocationSearchViewModel (app: Application): BaseViewModel(app) {
+class AddProductLocationSearchViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductLocationSearchViewModel::class.java.name
 
@@ -74,7 +74,6 @@ class AddProductLocationSearchViewModel (app: Application): BaseViewModel(app) {
                 },
                 { error -> error.message }
             )
-
 
 
     }

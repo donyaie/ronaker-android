@@ -19,7 +19,7 @@ object IntentManeger {
             intent.data = uri
             intent.flags = FLAG_ACTIVITY_NEW_TASK
             activity.startActivityForResult(intent, requestCode)
-        } catch (ex:Exception) {
+        } catch (ex: Exception) {
 
             AppDebug.log(TAG, ex)
         }
@@ -36,8 +36,6 @@ object IntentManeger {
             AppDebug.log(TAG, ex)
         }
     }
-
-
 
 
     fun shareTextUrl(context: Context, title: String, url: String) {
@@ -86,7 +84,6 @@ object IntentManeger {
 
             val intent = Intent(Intent.ACTION_MAIN)
             intent.addCategory(Intent.CATEGORY_APP_EMAIL)
-
 
 
             val chooserIntent = Intent.createChooser(intent, "Open Mail Box")

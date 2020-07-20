@@ -20,6 +20,7 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context

@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
+class AddProductCategorySelectViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductCategorySelectViewModel::class.java.name
 
@@ -25,7 +25,6 @@ class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
 
     @Inject
     lateinit var categoryRepository: CategoryRepository
-
 
 
     private var searchSubscription: Disposable? = null
@@ -54,7 +53,7 @@ class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
 
     }
 
-    fun searchLocation(parent:Category?) {
+    fun searchLocation(parent: Category?) {
 
         searchSubscription?.dispose()
 
@@ -64,15 +63,15 @@ class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
             .doOnSubscribe { }
             .doOnTerminate { }
             .subscribe { result ->
-                if (result .isSuccess()) {
+                if (result.isSuccess()) {
 
                     dataList.clear()
-                    parent?.let {category->
+                    parent?.let { category ->
 
-                        result.data?.forEach{
-                            if(category.suid.compareTo(it.suid)==0){
+                        result.data?.forEach {
+                            if (category.suid.compareTo(it.suid) == 0) {
 
-                                it.sub_categories?.let {it1->
+                                it.sub_categories?.let { it1 ->
                                     dataList.addAll(it1)
 
                                 }
@@ -80,7 +79,7 @@ class AddProductCategorySelectViewModel(app:Application) : BaseViewModel(app) {
                         }
 
 
-                    }?:run{result.data?.let { dataList.addAll(it) }}
+                    } ?: run { result.data?.let { dataList.addAll(it) } }
 
 
                     listAdapter.notifyDataSetChanged()

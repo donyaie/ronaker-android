@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/explore_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/margin_default"
+                android:layout_height="@dimen/margin_default"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/text_content"
 
@@ -63,8 +63,8 @@
 
             <ImageView
                 android:id="@+id/history_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/margin_default"
+                android:layout_height="@dimen/margin_default"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/text_content"
                 app:srcCompat="@drawable/ic_tab_orders" />
@@ -93,8 +93,8 @@
 
             <ImageView
                 android:id="@+id/addItem_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/margin_default"
+                android:layout_height="@dimen/margin_default"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/text_content"
                 app:srcCompat="@drawable/ic_tab_items" />
@@ -123,8 +123,8 @@
 
             <ImageView
                 android:id="@+id/inbox_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/margin_default"
+                android:layout_height="@dimen/margin_default"
                 android:layout_marginTop="8dp"
 
                 android:contentDescription="@string/text_content"
@@ -152,8 +152,8 @@
 
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/margin_default"
+                android:layout_height="@dimen/margin_default"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/text_content"
                 app:srcCompat="@drawable/ic_tab_profile" />

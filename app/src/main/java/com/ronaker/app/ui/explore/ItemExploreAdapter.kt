@@ -3,8 +3,6 @@ package com.ronaker.app.ui.explore
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,9 +18,7 @@ import kotlinx.coroutines.launch
 
 
 @Suppress("UNCHECKED_CAST")
-class ItemExploreAdapter(
-
-) : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
+class ItemExploreAdapter : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>() {
     val dataList = ArrayList<Product>()
 
 
@@ -63,7 +59,7 @@ class ItemExploreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
-        } else if (payloads[0] is Product)  {
+        } else if (payloads[0] is Product) {
             val combinedChange = createCombinedPayload(payloads as List<DiffUtils.Change<Product>>)
 //            val oldData = combinedChange.oldData
             val newData = combinedChange.newData
@@ -71,11 +67,6 @@ class ItemExploreAdapter(
 
         }
     }
-
-
-
-
-
 
 
     fun reset() {
@@ -90,7 +81,6 @@ class ItemExploreAdapter(
         holder.onViewRecycled()
         super.onViewRecycled(holder)
     }
-
 
 
     fun updateList(newItems: List<Product>) {
@@ -147,10 +137,6 @@ class ItemExploreAdapter(
             )
         }
     }
-
-
-
-
 
 
 }

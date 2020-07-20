@@ -4,7 +4,9 @@ import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
 import com.ronaker.app.data.network.response.MapGeoCodeResponseModel
 import io.reactivex.Observable
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
 
 /**
  * The interface which provides methods to get result of webservices
@@ -25,8 +27,6 @@ interface GoogleMapApi {
     ): Observable<GoogleAutocompleteResponseModel>
 
 
-
-
     @GET("/maps/api/place/details/json?")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getPlaceDetails(
@@ -34,8 +34,6 @@ interface GoogleMapApi {
         @Query("language") language: String?,
         @Query("key") Key: String
     ): Observable<GooglePlaceDetailResponseModel>
-
-
 
 
     @GET("/maps/api/geocode/json?")
@@ -51,7 +49,6 @@ interface GoogleMapApi {
         @Query("types") types: String,
         @Query("key") Key: String
     ): Observable<MapGeoCodeResponseModel>
-
 
 
 }

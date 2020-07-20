@@ -46,10 +46,10 @@
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
 
-                        android:layout_marginTop="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:layout_marginBottom="40dp"
                         android:text="@string/title_setting"
                         android:textAppearance="@style/TextAppearance.Heading.1"
@@ -64,8 +64,8 @@
 
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp">
+                        android:paddingLeft="@dimen/margin_default"
+                        android:paddingRight="@dimen/margin_default">
 
 
                     <TextView
@@ -91,8 +91,8 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:background="@color/colorPlatinGrey" />
 
 
@@ -110,8 +110,8 @@
                     android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:background="@color/colorPlatinGrey" />
 
 
@@ -126,8 +126,8 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:background="@color/colorPlatinGrey" />
 
 
@@ -142,8 +142,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
                 <Button
@@ -158,8 +158,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
@@ -175,8 +175,8 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:background="@color/colorPlatinGrey" />
 
 
@@ -189,8 +189,8 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:background="@color/colorPlatinGrey" />
 
 

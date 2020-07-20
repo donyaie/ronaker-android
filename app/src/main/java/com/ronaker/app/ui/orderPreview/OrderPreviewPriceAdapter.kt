@@ -7,24 +7,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterOrderPreviewPriceBinding
 import com.ronaker.app.databinding.AdapterOrderPreviewPriceTotalBinding
-import com.ronaker.app.databinding.AdapterProductAddImageEmptyBinding
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.addProduct.AddProductImageAdapter
-import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.utils.extension.getApplication
 
 class OrderPreviewPriceAdapter(
     dataList: ArrayList<Order.OrderPrices>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private  var productList:List<Order.OrderPrices> = dataList
-
+    private var productList: List<Order.OrderPrices> = dataList
 
 
     private val PriceType = 0
     private val TotalType = 1
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder  {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
 
         if (viewType == PriceType) {
@@ -36,7 +32,7 @@ class OrderPreviewPriceAdapter(
                     false
                 )
             return ViewHolder(binding)
-        } else  {
+        } else {
             val binding: AdapterOrderPreviewPriceTotalBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.adapter_order_preview_price_total,
@@ -57,17 +53,17 @@ class OrderPreviewPriceAdapter(
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return productList.size
     }
 
-    fun updateproductList(){
+    fun updateproductList() {
         notifyDataSetChanged()
     }
 
 
     override fun getItemViewType(position: Int): Int {
         val item = productList[position]
-        return if (Order.OrderPriceEnum[item.key] ==Order.OrderPriceEnum.Total)
+        return if (Order.OrderPriceEnum[item.key] == Order.OrderPriceEnum.Total)
             TotalType
         else
             PriceType
@@ -76,11 +72,11 @@ class OrderPreviewPriceAdapter(
 
     class ViewHolder(
         private val binding: AdapterOrderPreviewPriceBinding
-    ):RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = OrderPreviewPriceViewModel(binding.root.getApplication())
 
-        fun bind(product: Order.OrderPrices){
+        fun bind(product: Order.OrderPrices) {
             viewModel.bind(product)
             binding.viewModel = viewModel
         }
@@ -93,7 +89,7 @@ class OrderPreviewPriceAdapter(
 
         private val viewModel = OrderPreviewPriceViewModel(binding.root.getApplication())
 
-        fun bind(product: Order.OrderPrices){
+        fun bind(product: Order.OrderPrices) {
             viewModel.bind(product)
             binding.viewModel = viewModel
         }

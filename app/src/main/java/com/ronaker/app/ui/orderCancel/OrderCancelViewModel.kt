@@ -21,6 +21,7 @@ class OrderCancelViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -59,8 +60,8 @@ class OrderCancelViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickAccept(reason: String) {
 
-        if(reason.isBlank()){
-            errorMessage.value="Please write reason"
+        if (reason.isBlank()) {
+            errorMessage.value = "Please write reason"
             return
         }
 

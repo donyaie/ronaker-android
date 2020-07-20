@@ -18,7 +18,6 @@ import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -96,7 +95,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     private var commentSubscription: Disposable? = null
     private var faveSubscription: Disposable? = null
 
-    fun loadProduct(suid: String){
+    fun loadProduct(suid: String) {
         uiScope.launch {
             loadProduct(suid, true)
         }
@@ -225,7 +224,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         )
 
         val images = ArrayList<String>()
-        product.images?.forEach {
+        product.images.forEach {
             images.add(BASE_URL + it.url)
         }
         imageList.postValue(images)
@@ -252,7 +251,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         }
         //title_positive_rate
 
-        isFavorite.postValue(product.isFavourite != null && product.isFavourite == true)
+        isFavorite.postValue(product.isFavourite)
 
         product.rate?.let { rate ->
 

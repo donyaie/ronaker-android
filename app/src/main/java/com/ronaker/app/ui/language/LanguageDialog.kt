@@ -14,7 +14,7 @@ class LanguageDialog {
     companion object {
         fun showDialog(context: Activity): AlertDialog? {
 
-            val mDialogView =  View.inflate(context, R.layout.dialog_language, null)
+            val mDialogView = View.inflate(context, R.layout.dialog_language, null)
             //AlertDialogBuilder
             val mBuilder = AlertDialog.Builder(context)
                 .setView(mDialogView)

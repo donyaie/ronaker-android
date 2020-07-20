@@ -16,7 +16,7 @@ import com.ronaker.app.utils.extension.getParentActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class ManageProductAdapter() : RecyclerView.Adapter<ManageProductAdapter.ViewHolder>() {
+class ManageProductAdapter : RecyclerView.Adapter<ManageProductAdapter.ViewHolder>() {
     val dataList = ArrayList<Product>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,8 +53,6 @@ class ManageProductAdapter() : RecyclerView.Adapter<ManageProductAdapter.ViewHol
             }
 
         }
-
-
 
 
     }

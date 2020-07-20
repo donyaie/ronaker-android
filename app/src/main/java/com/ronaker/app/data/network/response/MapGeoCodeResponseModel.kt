@@ -11,12 +11,12 @@ data class MapGeoCodeResponseModel(
         @SerializedName("address_components") val address_components: List<MapGeoCodeAddressModel>,
         @SerializedName("formatted_address") val formatted_address: String,
         @SerializedName("place_id") val place_id: String,
-        @SerializedName("types")  val types: List<String>
+        @SerializedName("types") val types: List<String>
     )
 
     data class MapGeoCodeAddressModel(
-        @SerializedName("long_name")  val long_name: String,
-        @SerializedName("short_name")  val short_name: String,
-        @SerializedName("types")  val types: List<String>
+        @SerializedName("long_name") val long_name: String,
+        @SerializedName("short_name") val short_name: String,
+        @SerializedName("types") val types: List<String>
     )
 }

@@ -40,7 +40,7 @@ class CategoryExploreViewModel(val app: Application) : BaseViewModel(app) {
             binder.title.setBackgroundResource(R.drawable.selector_corner_accent_fill)
             context?.let {
 
-                binder.title.setTextColor(ContextCompat.getColor(it,R.color.colorTextLight))
+                binder.title.setTextColor(ContextCompat.getColor(it, R.color.colorTextLight))
 
             }
         } else {
@@ -48,7 +48,7 @@ class CategoryExploreViewModel(val app: Application) : BaseViewModel(app) {
             binder.title.setBackgroundResource(R.drawable.selector_corner_white_accent)
             context?.let {
 
-                binder.title.setTextColor(ContextCompat.getColor(it,R.color.colorTextDark))
+                binder.title.setTextColor(ContextCompat.getColor(it, R.color.colorTextDark))
 
             }
         }

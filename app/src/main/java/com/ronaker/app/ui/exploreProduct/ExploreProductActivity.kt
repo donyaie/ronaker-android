@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
@@ -315,7 +316,9 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-        Handler().postDelayed({
+
+
+        Handler(Looper.getMainLooper()).postDelayed({
             binding.scrollView.smoothScrollTo(0, 0)
             binding.toolbar.isTransparent = true
             binding.toolbar.isBottomLine = false

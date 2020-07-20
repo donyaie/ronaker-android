@@ -28,7 +28,7 @@ class SplashActivity : BaseActivity() {
 
         viewModel.goLogin.observe(this, Observer { value ->
             if (value == true) {
-                    startActivity(LoginActivity.newInstance(this@SplashActivity))
+                startActivity(LoginActivity.newInstance(this@SplashActivity))
 //                    finishSafe()
 
             }
@@ -39,7 +39,7 @@ class SplashActivity : BaseActivity() {
 //
 //                Handler().postDelayed({
 
-                        startActivity(DashboardActivity.newInstance(this@SplashActivity))
+                startActivity(DashboardActivity.newInstance(this@SplashActivity))
 //                        finishSafe()
 //
 //                },1000)
@@ -55,7 +55,8 @@ class SplashActivity : BaseActivity() {
     companion object {
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, SplashActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }
     }

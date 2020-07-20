@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 
 
 class ShapeDrawableHelper {
@@ -18,8 +17,9 @@ class ShapeDrawableHelper {
         fun changeSvgDrawableColor(context: Context, iconRes: Int, colorRes: Int, view: ImageView) {
             try {
 
-                    view.setImageResource(iconRes)
-                    view.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context,colorRes))
+                view.setImageResource(iconRes)
+                view.imageTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
 
 
             } catch (e: Exception) {
@@ -39,7 +39,6 @@ class ShapeDrawableHelper {
                 e.printStackTrace()
             }
         }
-
 
 
     }

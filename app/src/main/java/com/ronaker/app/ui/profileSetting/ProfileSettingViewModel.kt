@@ -9,12 +9,13 @@ import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileSettingViewModel (app: Application): BaseViewModel(app) {
+class ProfileSettingViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -73,10 +74,9 @@ class ProfileSettingViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    fun logout(){
+    fun logout() {
         userRepository.clearLogin()
     }
-
 
 
 }

@@ -9,18 +9,17 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ronaker.app.utils.AppNotificationOpenedHandler
 import com.ronaker.app.utils.FONT_PATH
+import com.ronaker.app.utils.LocaleHelper
+import io.branch.referral.Branch
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
-import com.ronaker.app.utils.LocaleHelper
-import io.branch.referral.Branch
 
 
 class General : MultiDexApplication() {
 
 
-
-    lateinit var  analytics: FirebaseAnalytics
+    lateinit var analytics: FirebaseAnalytics
 
 
     override fun onCreate() {
@@ -30,7 +29,7 @@ class General : MultiDexApplication() {
 
         analytics = FirebaseAnalytics.getInstance(this)
 
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
         }
 
@@ -63,10 +62,9 @@ class General : MultiDexApplication() {
     }
 
 
-
     override fun attachBaseContext(base: Context) {
         MultiDex.install(this)
-        super.attachBaseContext(LocaleHelper.onAttach(base, "lt") )
+        super.attachBaseContext(LocaleHelper.onAttach(base, "lt"))
 
 
     }

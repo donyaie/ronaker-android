@@ -190,7 +190,4 @@ class OrdersFragment : BaseFragment() {
     }
 
 
-
-
-
 }

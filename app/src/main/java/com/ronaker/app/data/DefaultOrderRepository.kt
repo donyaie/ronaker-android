@@ -18,22 +18,25 @@ import java.util.*
 class DefaultOrderRepository(private val api: OrderApi) :
     OrderRepository {
 
-    override fun getOrders(token: String?, filter:String?): Observable<Result<ListResponseModel<Order>>> {
+    override fun getOrders(
+        token: String?,
+        filter: String?
+    ): Observable<Result<ListResponseModel<Order>>> {
 
-        return api.getOrders("Token $token",filter)
+        return api.getOrders("Token $token", filter)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
             .map {
-                ListResponseModel(it.count,it.next,it.previous, it.results?.toOrderList())
+                ListResponseModel(it.count, it.next, it.previous, it.results?.toOrderList())
             }
             .toResult()
 
     }
 
-    override fun getOrderDetail(token: String?, suid:String): Observable<Result<Order>> {
+    override fun getOrderDetail(token: String?, suid: String): Observable<Result<Order>> {
 
-        return api.getOrderDetail("Token $token",suid)
+        return api.getOrderDetail("Token $token", suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -45,9 +48,16 @@ class DefaultOrderRepository(private val api: OrderApi) :
     }
 
 
-    override fun createOrder(token: String?, product_suid:String, stateDate: Date, endDate: Date, message:String?, price:Double ): Observable<Result<Boolean>> {
+    override fun createOrder(
+        token: String?,
+        product_suid: String,
+        stateDate: Date,
+        endDate: Date,
+        message: String?,
+        price: Double
+    ): Observable<Result<Boolean>> {
 
-        val request=
+        val request =
             OrderCreateRequestModel(
                 product_suid,
                 stateDate,
@@ -56,7 +66,7 @@ class DefaultOrderRepository(private val api: OrderApi) :
                 price
             )
 
-        return api.createOrder("Token $token",request)
+        return api.createOrder("Token $token", request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -74,14 +84,14 @@ class DefaultOrderRepository(private val api: OrderApi) :
         status: String?,
         address: String?,
         instruction: String?,
-        reason:String?,
-        isArchived:Boolean?
+        reason: String?,
+        isArchived: Boolean?
     ): Observable<Result<Boolean>> {
 
-        val request=
-            OrderUpdateRequestModel(status,address,instruction,reason,isArchived)
+        val request =
+            OrderUpdateRequestModel(status, address, instruction, reason, isArchived)
 
-        return api.updateOrderStatus("Token $token",suid,request)
+        return api.updateOrderStatus("Token $token", suid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
@@ -95,10 +105,10 @@ class DefaultOrderRepository(private val api: OrderApi) :
         stars: Double
     ): Observable<Result<Boolean>> {
 
-        val request=
-            ProductRateRequestModel(stars,comment)
+        val request =
+            ProductRateRequestModel(stars, comment)
 
-        return api.orderRate("Token $token",orderSuid,request)
+        return api.orderRate("Token $token", orderSuid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()

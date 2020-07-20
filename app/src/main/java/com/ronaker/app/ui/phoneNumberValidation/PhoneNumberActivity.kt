@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.ScreenCalculator
@@ -32,7 +32,6 @@ class PhoneNumberActivity : BaseActivity() {
 
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var screenLibrary: ScreenCalculator
-
 
 
     internal var loginState = PhoneNumberViewModel.StateEnum.number
@@ -105,7 +104,7 @@ class PhoneNumberActivity : BaseActivity() {
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
 
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -114,14 +113,10 @@ class PhoneNumberActivity : BaseActivity() {
 
 
         viewModel.goNext.observe(this, Observer {
-           finish()
+            finish()
         })
 
         initViewPagerRegister()
-
-
-
-
 
 
     }
@@ -163,7 +158,11 @@ class PhoneNumberActivity : BaseActivity() {
         binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
 
             }
 
@@ -193,8 +192,10 @@ class PhoneNumberActivity : BaseActivity() {
     }
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
-        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
+        manager,
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    ) {
         private val mFragmentList = ArrayList<Fragment>()
 
         override fun getCount(): Int {

@@ -39,7 +39,7 @@ class ExpiryDateTextWatcher : TextWatcher {
     }
 
     class SlashSpan : ReplacementSpan() {
-       override   fun getSize(
+        override fun getSize(
             @NonNull paint: Paint, text: CharSequence?,
             start: Int,
             end: Int,
@@ -68,7 +68,8 @@ class ExpiryDateTextWatcher : TextWatcher {
             paint: Paint
         ) {
             val xtext = "/" + text.subSequence(start, end)
-            canvas.drawText(xtext, 0, xtext.length, x, y.toFloat(), paint)        }
+            canvas.drawText(xtext, 0, xtext.length, x, y.toFloat(), paint)
+        }
 
 
     }

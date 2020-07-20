@@ -16,9 +16,14 @@ class SmartIDAuthFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: ProfileAuthorizationViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_smartid_auth, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_smartid_auth, container, false)
         activity?.let {
             viewModel = ViewModelProvider(it).get(ProfileAuthorizationViewModel::class.java)
             binding.viewModel = viewModel
@@ -30,7 +35,6 @@ class SmartIDAuthFragment : BaseFragment(), IPagerFragment {
     }
 
 
-
     companion object {
 
         fun newInstance(): SmartIDAuthFragment {
@@ -39,10 +43,6 @@ class SmartIDAuthFragment : BaseFragment(), IPagerFragment {
     }
 
     override fun onSelect() {
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
 }

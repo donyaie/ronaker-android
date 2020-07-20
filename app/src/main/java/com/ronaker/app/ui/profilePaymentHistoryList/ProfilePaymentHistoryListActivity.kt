@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -12,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.Alert
 
 
 class ProfilePaymentHistoryListActivity : BaseActivity() {
@@ -39,7 +39,8 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment_history_list)
+        binding =
+            DataBindingUtil.setContentView(this, R.layout.activity_profile_payment_history_list)
 
         viewModel = ViewModelProvider(this).get(ProfilePaymentHistoryListViewModel::class.java)
 
@@ -48,9 +49,10 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
 
 
-        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+        ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
-        binding.recycler.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        binding.recycler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -67,8 +69,8 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
 
         viewModel.retry.observe(this, Observer { value ->
-            
-            value?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+
+            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
         binding.loading.oClickRetryListener = View.OnClickListener {
@@ -81,9 +83,6 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
 
 
-
-
-
     }
 
     override fun onStart() {
@@ -92,15 +91,13 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 //
 //        if (isFistStart()) {
 
-           viewModel.loadData()
+        viewModel.loadData()
 
 
 //        }
 
 
     }
-
-
 
 
 }

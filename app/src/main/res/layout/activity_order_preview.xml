@@ -56,8 +56,8 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="@dimen/margin_default"
+                        android:layout_height="@dimen/margin_default"
                         android:contentDescription="@string/text_content"
 
                         android:padding="4dp"
@@ -91,8 +91,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
@@ -111,7 +111,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginStart="@dimen/margin_default"
                         android:layout_marginEnd="16dp"
 
                         android:layout_weight=".95"
@@ -159,9 +159,9 @@
                         app:srcCompat="@drawable/ic_empty_product" />
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="24dp"
+                        android:layout_width="@dimen/margin_default"
+                        android:layout_height="@dimen/margin_default"
+                        android:layout_marginEnd="@dimen/margin_default"
 
                         android:contentDescription="@string/text_content"
                         android:padding="4dp"
@@ -174,16 +174,16 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:gravity="center"
                     android:minHeight="72dp"
                     android:orientation="horizontal">
@@ -218,8 +218,8 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="@dimen/margin_default"
+                        android:layout_height="@dimen/margin_default"
                         android:contentDescription="@string/text_content"
                         android:tint="@color/colorIconDark"
                         app:srcCompat="@drawable/ic_chevron_right" />
@@ -261,8 +261,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:visibility="gone"
                     android:background="@color/colorPlatinGrey" />
 
@@ -282,8 +282,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                      />
 <!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
@@ -294,8 +294,8 @@
                     android:minHeight="112dp"
 
                     android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp"
+                    android:paddingLeft="@dimen/margin_default"
+                    android:paddingRight="@dimen/margin_default"
                     app:mutableVisibility="@{viewModel.getUserInfoVisibility()}">
 
 
@@ -391,8 +391,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" />
 
@@ -401,10 +401,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_whay_canceled"
                     android:textAppearance="@style/TextAppearance.Heading.2"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
@@ -414,7 +414,7 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
+                    android:layout_margin="@dimen/margin_default"
                     android:text="decline"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderCancelRes()}"
@@ -424,8 +424,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
 
@@ -434,10 +434,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_pickup_address"
                     android:textAppearance="@style/TextAppearance.Heading.2"
                     app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
@@ -447,7 +447,7 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
+                    android:layout_margin="@dimen/margin_default"
                     android:text="Address"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderAddress()}"
@@ -457,8 +457,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
 
@@ -467,10 +467,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_introduction"
                     android:textAppearance="@style/TextAppearance.Heading.2"
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
@@ -480,7 +480,7 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
+                    android:layout_margin="@dimen/margin_default"
                     android:text="Introduction"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderIntroduction()}"
@@ -491,8 +491,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
 
@@ -501,9 +501,9 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_user_request"
                     android:textAppearance="@style/TextAppearance.Heading.2"
                     app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
@@ -513,7 +513,7 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
+                    android:layout_margin="@dimen/margin_default"
                     android:text="Message"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderDescription()}"
@@ -524,8 +524,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:layout_marginBottom="40dp"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />

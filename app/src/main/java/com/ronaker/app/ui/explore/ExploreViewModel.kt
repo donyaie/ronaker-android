@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.random.Random
 
 class ExploreViewModel(app: Application) : BaseViewModel(app),
     CategoryExploreAdapter.AdapterListener {
@@ -139,7 +138,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
         }
 
-    var incriment=1
+    var incriment = 1
 
     suspend fun loadProduct() =
         withContext(Dispatchers.IO) {

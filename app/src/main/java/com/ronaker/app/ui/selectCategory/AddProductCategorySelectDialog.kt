@@ -73,8 +73,8 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
         viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
-            location=value
-            dialogResult=
+            location = value
+            dialogResult =
                 DialogResultEnum.OK
             stop()
         })
@@ -102,8 +102,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
     }
-
-
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -145,7 +143,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
         }
 
 
-
     }
 
 
@@ -159,7 +156,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
     override fun onDismiss(dialog: DialogInterface) {
 
-        dialogResultListener?.onDialogResult(dialogResult,parentCategory, location)
+        dialogResultListener?.onDialogResult(dialogResult, parentCategory, location)
 
 
 
@@ -194,6 +191,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
             return this
 
         }
+
         fun setParent(category: Category?): DialogBuilder {
 
             dialog.parentCategory = category

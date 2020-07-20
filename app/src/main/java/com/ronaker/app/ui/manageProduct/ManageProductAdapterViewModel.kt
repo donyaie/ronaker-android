@@ -12,7 +12,7 @@ import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.toCurrencyFormat
 import javax.inject.Inject
 
-class ManageProductAdapterViewModel( app: Application) : BaseViewModel(app) {
+class ManageProductAdapterViewModel(app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
@@ -27,7 +27,6 @@ class ManageProductAdapterViewModel( app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var context: Context
-
 
 
     fun bind(post: Product, context: AppCompatActivity?) {
@@ -76,7 +75,7 @@ class ManageProductAdapterViewModel( app: Application) : BaseViewModel(app) {
 
     fun onClickProduct() {
 
-        activity?.let {it.startActivity(ManageProductActivity.newInstance(it,data))  }
+        activity?.let { it.startActivity(ManageProductActivity.newInstance(it, data)) }
 
 
     }

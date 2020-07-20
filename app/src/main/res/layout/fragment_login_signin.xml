@@ -42,9 +42,9 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:gravity="start"
                     android:text="@string/title_welcome_back"
                     android:textAppearance="@style/TextAppearance.Heading.1"
@@ -56,11 +56,11 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
                     android:layout_marginTop="40dp"
 
-                    android:layout_marginRight="24dp"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="emailAddress"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
@@ -78,8 +78,8 @@
 
                     android:layout_height="wrap_content"
 
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="password"
 
                     android:imeOptions="actionNext"
@@ -98,8 +98,8 @@
             android:id="@+id/next_button"
             style="@style/Button.accent"
             android:layout_width="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
             android:onClick="@{()->viewModel.onClickLoginSignIn(emailInput.getText().toString(),emailInput.checkValid(),passwordInput.getText().toString(),passwordInput.checkValid())}"
             android:text="@string/titile_button_login_to_your_account"
 
@@ -125,7 +125,7 @@
 
             android:onClick="@{()->viewModel.onClickGotoSignUp()}"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/margin_default"
             android:paddingTop="16dp"
 
             android:orientation="horizontal"

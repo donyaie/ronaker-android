@@ -1,15 +1,11 @@
 package com.ronaker.app.utils
 
 import android.app.Activity
-import android.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.irozon.sneaker.Sneaker
 import com.ronaker.app.R
 
 class Alert {
-
-
 
 
     enum class Type {
@@ -22,7 +18,7 @@ class Alert {
     companion object {
 
 
-        private val duration=3000
+        private val duration = 3000
 
         private fun makeText(context: Activity?, message: String?, type: Type) {
 
@@ -36,7 +32,7 @@ class Alert {
 
                         .setDuration(duration)
                         .autoHide(true)
-                        .setCornerRadius(5,5)
+                        .setCornerRadius(5, 5)
 
                     when (type) {
                         Type.Warning -> {
@@ -49,14 +45,12 @@ class Alert {
 //                            sneaker.sneakError()
 
 
-
-
-                            sneaker.setTitle("Error!!",R.color.colorTextDark)
+                            sneaker.setTitle("Error!!", R.color.colorTextDark)
 
 
                             sneaker.setIcon(R.drawable.ic_guide_red)
-                            sneaker .setMessage(message,R.color.colorTextLink)
-                            sneaker.sneak( R.color.white)
+                            sneaker.setMessage(message, R.color.colorTextLink)
+                            sneaker.sneak(R.color.white)
 
                         }
                         Type.Success -> {
@@ -78,30 +72,30 @@ class Alert {
 
                         .setDuration(duration)
                         .autoHide(true)
-                        .setCornerRadius(5,5)
+                        .setCornerRadius(5, 5)
 
 
 
                     when (type) {
                         Type.Warning -> {
-                            sneaker .setMessage(message)
+                            sneaker.setMessage(message)
                             sneaker.setTitle("Warning!!")
                             sneaker.sneakWarning()
 
                         }
                         Type.Error -> {
 
-                            sneaker.setTitle("Error!!",R.color.colorTextDark)
+                            sneaker.setTitle("Error!!", R.color.colorTextDark)
 
 
                             sneaker.setIcon(R.drawable.ic_guide_red)
-                            sneaker .setMessage(message,R.color.colorTextLink)
-                            sneaker.sneak( R.color.white)
+                            sneaker.setMessage(message, R.color.colorTextLink)
+                            sneaker.sneak(R.color.white)
 
                         }
                         Type.Success -> {
                             sneaker.setTitle("Success!!")
-                            sneaker .setMessage(message)
+                            sneaker.setMessage(message)
                             sneaker.sneakSuccess()
 
                         }

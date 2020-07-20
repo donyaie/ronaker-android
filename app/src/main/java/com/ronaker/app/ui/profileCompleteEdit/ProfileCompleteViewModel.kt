@@ -10,12 +10,13 @@ import com.ronaker.app.model.User
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
+class ProfileCompleteViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -34,11 +35,9 @@ class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
     val smartIDComplete: MutableLiveData<Boolean> = MutableLiveData()
 
 
-
-
     private var subscription: Disposable? = null
 
-    private var mUser: User?=null
+    private var mUser: User? = null
 
     fun loadData() {
 
@@ -55,7 +54,7 @@ class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                   mUser= result.data
+                    mUser = result.data
                     signComplete.value = result.data?.is_email_verified
 
                     phoneComplete.value = result.data?.is_phone_number_verified
@@ -88,7 +87,7 @@ class ProfileCompleteViewModel (app: Application): BaseViewModel(app) {
     }
 
     fun getAvatar(): String? {
-       return mUser?.avatar
+        return mUser?.avatar
 
     }
 

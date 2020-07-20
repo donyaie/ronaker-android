@@ -8,7 +8,8 @@ import com.onesignal.OneSignal
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 
 
-class AppNotificationOpenedHandler(private val app: Application) : OneSignal.NotificationOpenedHandler{
+class AppNotificationOpenedHandler(private val app: Application) :
+    OneSignal.NotificationOpenedHandler {
     override fun notificationOpened(result: OSNotificationOpenResult?) {
 
 
@@ -20,17 +21,18 @@ class AppNotificationOpenedHandler(private val app: Application) : OneSignal.Not
 
             Log.i(
                 "OSNotificationPayload",
-                "result.notification.payload.toJSONObject().toString(): " + result.notification.payload.toJSONObject().toString()
+                "result.notification.payload.toJSONObject().toString(): " + result.notification.payload.toJSONObject()
+                    .toString()
             )
 
 
             if (data != null && data.has("order_suid")) {
-                val orderId:String?=data.optString("order_suid")
+                val orderId: String? = data.optString("order_suid")
 
                 if (orderId != null) {
 
                     //TODO check user Login
-                    app.startActivity(OrderPreviewActivity.newInstance(app,orderId))
+                    app.startActivity(OrderPreviewActivity.newInstance(app, orderId))
 
                     Log.i(
                         "OneSignalExample",

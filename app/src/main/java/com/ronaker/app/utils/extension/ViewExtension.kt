@@ -11,7 +11,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 
-fun View.getParentActivity(): AppCompatActivity?{
+fun View.getParentActivity(): AppCompatActivity? {
     var context = this.context
     while (context is ContextWrapper) {
         if (context is AppCompatActivity) {
@@ -22,15 +22,15 @@ fun View.getParentActivity(): AppCompatActivity?{
     return null
 }
 
-fun View.getApplication(): Application{
+fun View.getApplication(): Application {
     val context = this.context.applicationContext
 
     return context as Application
 }
 
-fun Button.setEndDrawableRes(res:Int){
+fun Button.setEndDrawableRes(res: Int) {
 //    this.setCompoundDrawablesRelative(null,null,ContextCompat.getDrawable(context,res),null)
-    this.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,res,0)
+    this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, res, 0)
 
 
 }
@@ -52,10 +52,19 @@ fun ViewPager2.setCurrentItem(
         previousValue = currentValue
     }
     animator.addListener(object : Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator?) { beginFakeDrag() }
-        override fun onAnimationEnd(animation: Animator?) { endFakeDrag() }
-        override fun onAnimationCancel(animation: Animator?) { /* Ignored */ }
-        override fun onAnimationRepeat(animation: Animator?) { /* Ignored */ }
+        override fun onAnimationStart(animation: Animator?) {
+            beginFakeDrag()
+        }
+
+        override fun onAnimationEnd(animation: Animator?) {
+            endFakeDrag()
+        }
+
+        override fun onAnimationCancel(animation: Animator?) { /* Ignored */
+        }
+
+        override fun onAnimationRepeat(animation: Animator?) { /* Ignored */
+        }
     })
     animator.interpolator = interpolator
     animator.duration = duration

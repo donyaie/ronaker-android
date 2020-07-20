@@ -8,13 +8,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Image(
-    var url: String?=null,
-    var suid: String?=null,
+    var url: String? = null,
+    var suid: String? = null,
     var uri: Uri? = null,
     var isLocal: Boolean = false
 ) : Parcelable {
-
-
 
 
     @IgnoredOnParcel

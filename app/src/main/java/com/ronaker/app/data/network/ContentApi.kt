@@ -18,16 +18,20 @@ interface ContentApi {
      */
     @POST("/api/v1/contents/images/")
     @Multipart
-    fun uploadImage(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Single<ResponseBody>
-
-
+    fun uploadImage(
+        @Header("Authorization") authToken: String?,
+        @Part file: MultipartBody.Part
+    ): Single<ResponseBody>
 
 
     /**
      * delete Image
      */
     @DELETE("/api/v1/contents/images/{suid}/")
-    fun deleteImage(@Header("Authorization") authToken: String?, @Path("suid") suid:String ): Observable<FreeResponseModel>
+    fun deleteImage(
+        @Header("Authorization") authToken: String?,
+        @Path("suid") suid: String
+    ): Observable<FreeResponseModel>
 
 
     /**
@@ -35,9 +39,10 @@ interface ContentApi {
      */
     @POST("/api/v1/contents/images/")
     @Multipart
-    fun uploadImageWithoutProgress(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Observable<ContentImageResponseModel>
-
-
+    fun uploadImageWithoutProgress(
+        @Header("Authorization") authToken: String?,
+        @Part file: MultipartBody.Part
+    ): Observable<ContentImageResponseModel>
 
 
     /**
@@ -45,6 +50,9 @@ interface ContentApi {
      */
     @POST("/api/v1/contents/images/")
     @Multipart
-    fun uploadImageWithoutProgressr(@Header("Authorization") authToken: String?, @Part file: MultipartBody.Part ): Call<ContentImageResponseModel>
+    fun uploadImageWithoutProgressr(
+        @Header("Authorization") authToken: String?,
+        @Part file: MultipartBody.Part
+    ): Call<ContentImageResponseModel>
 
 }

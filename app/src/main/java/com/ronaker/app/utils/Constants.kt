@@ -21,6 +21,6 @@ const val REFUNDS_URL: String = "https://ronaker.com/refunds-policy.html"
 /** The Google URL  */
 const val GOOGLE_URL: String = "https://maps.googleapis.com"
 
- val DEFULT_LOCATION=LatLng(54.688023, 25.274819)
+val DEFULT_LOCATION = LatLng(54.688023, 25.274819)
 
 const val MAP_ZOOM: Float = 17f

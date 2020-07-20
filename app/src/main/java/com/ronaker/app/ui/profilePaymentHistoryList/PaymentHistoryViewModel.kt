@@ -22,7 +22,7 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
     val cardImage = MutableLiveData<Int>()
     val cardVisibility = MutableLiveData<Int>()
 
-    val descriptionVisibility= MutableLiveData<Int>()
+    val descriptionVisibility = MutableLiveData<Int>()
     val createMonth = MutableLiveData<String>()
     val createDay = MutableLiveData<String>()
 
@@ -35,10 +35,10 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
 
         description.value = data.description
 
-        if(data.description.isNullOrBlank()){
-            descriptionVisibility.value=View.GONE
-        }else
-            descriptionVisibility.value=View.VISIBLE
+        if (data.description.isNullOrBlank()) {
+            descriptionVisibility.value = View.GONE
+        } else
+            descriptionVisibility.value = View.VISIBLE
 
 
         when (Transaction.TransactionStatusEnum[data.transactionStatus]) {
@@ -84,21 +84,21 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
 
 
         data.paymentInfo?.card_number?.let {
-            PaymentCard.CardType.detectFast(it) .apply { cardImage.value=this.resource }
+            PaymentCard.CardType.detectFast(it).apply { cardImage.value = this.resource }
 
-            val name= StringBuilder ()
+            val name = StringBuilder()
 
-            name.append(it.substring(0,4))
+            name.append(it.substring(0, 4))
 
-            name.append("*".repeat(it.length-8))
+            name.append("*".repeat(it.length - 8))
 
-            name.append(it.substring(it.length-5,it.length-1))
+            name.append(it.substring(it.length - 5, it.length - 1))
 
-            cardNumber.value=name.toString()
-            cardVisibility.value=View.VISIBLE
+            cardNumber.value = name.toString()
+            cardVisibility.value = View.VISIBLE
 
-        }?:run{
-            cardVisibility.value=View.GONE
+        } ?: run {
+            cardVisibility.value = View.GONE
         }
 
 
@@ -107,9 +107,6 @@ class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
 
 
     }
-
-
-
 
 
 }

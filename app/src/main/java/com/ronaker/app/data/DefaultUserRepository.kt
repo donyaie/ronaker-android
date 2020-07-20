@@ -8,7 +8,6 @@ import com.ronaker.app.data.network.request.*
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUserModel
-import com.ronaker.app.utils.AppDebug
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -114,7 +113,6 @@ class DefaultUserRepository(
     }
 
 
-
     override fun sendEmailVerification(user_token: String?): Observable<Result<Boolean>> {
         return userApi.sendEmailVerification("Token $user_token")
             .subscribeOn(Schedulers.io())
@@ -211,7 +209,7 @@ class DefaultUserRepository(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-               true
+                true
             }
             .toResult()
 

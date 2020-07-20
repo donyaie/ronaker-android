@@ -8,27 +8,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterOrdreItemBinding
 import com.ronaker.app.model.Order
-import com.ronaker.app.model.Product
-import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.DiffUtils
 import com.ronaker.app.utils.extension.getApplication
-import com.ronaker.app.utils.extension.getParentActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
-class OrderItemAdapter(val listener:OrderItemListener) : RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
-    private  var datalist= ArrayList<Order>()
+class OrderItemAdapter(val listener: OrderItemListener) :
+    RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
+    private var datalist = ArrayList<Order>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterOrdreItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_ordre_item, parent, false)
+        val binding: AdapterOrdreItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.adapter_ordre_item,
+            parent,
+            false
+        )
 
 
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datalist[position],listener)
+        holder.bind(datalist[position], listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -39,16 +42,15 @@ class OrderItemAdapter(val listener:OrderItemListener) : RecyclerView.Adapter<Or
                 DiffUtils.createCombinedPayload(payloads as List<DiffUtils.Change<Order>>)
 //            val oldData = combinedChange.oldData
             val newData = combinedChange.newData
-            holder.bind(newData,listener)
+            holder.bind(newData, listener)
 
         }
     }
 
 
     override fun getItemCount(): Int {
-        return  datalist.size
+        return datalist.size
     }
-
 
 
     fun updateList(newItems: List<Order>) {
@@ -76,14 +78,13 @@ class OrderItemAdapter(val listener:OrderItemListener) : RecyclerView.Adapter<Or
 
     class ViewHolder(
         private val binding: AdapterOrdreItemBinding
-    ):RecyclerView.ViewHolder(binding.root){
-
+    ) : RecyclerView.ViewHolder(binding.root) {
 
 
         private val viewModel = OrderItemViewModel(binding.root.getApplication())
 
-        fun bind(item:Order,listener: OrderItemListener){
-            viewModel.bind(item,listener)
+        fun bind(item: Order, listener: OrderItemListener) {
+            viewModel.bind(item, listener)
             binding.viewModel = viewModel
         }
 
@@ -95,11 +96,10 @@ class OrderItemAdapter(val listener:OrderItemListener) : RecyclerView.Adapter<Or
     }
 
 
-
-    interface  OrderItemListener{
-        fun onClickItem(order:Order)
-        fun onClickItemArchive(order:Order)
-        fun onClickItemRate(order:Order)
+    interface OrderItemListener {
+        fun onClickItem(order: Order)
+        fun onClickItemArchive(order: Order)
+        fun onClickItemRate(order: Order)
     }
 
 
@@ -128,11 +128,6 @@ class OrderItemAdapter(val listener:OrderItemListener) : RecyclerView.Adapter<Or
             )
         }
     }
-
-
-
-
-
 
 
 }

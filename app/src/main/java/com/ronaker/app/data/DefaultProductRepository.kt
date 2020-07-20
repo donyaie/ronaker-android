@@ -22,8 +22,8 @@ class DefaultProductRepository(private val productApi: ProductApi) :
         page: Int,
         location: LatLng?,
         radius: Int?,
-        isSaved:Boolean?,
-        categorySiud:String?
+        isSaved: Boolean?,
+        categorySiud: String?
     ): Observable<Result<ListResponseModel<Product>>> {
 
         val loc = location?.let {
@@ -108,7 +108,6 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
 
-
     override fun getProductRating(
         token: String?,
         suid: String
@@ -122,7 +121,6 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
 
-
     override fun productSave(
         token: String?,
         suid: String
@@ -131,7 +129,7 @@ class DefaultProductRepository(private val productApi: ProductApi) :
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-               true
+                true
             }
             .toResult()
     }

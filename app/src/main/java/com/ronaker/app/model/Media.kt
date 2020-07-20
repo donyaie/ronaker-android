@@ -9,14 +9,14 @@ data class Media(
     var suid: String,
     var url: String,
     var created_at: String
-): Parcelable
+) : Parcelable
 
 
-enum class DocumentTypeEnum constructor(key: String, title:String) {
-    IDCard("id_card","ID Card"),
-    Passport("passport","Passport"),
-    DrivingLicense("driving_license","Driving License"),
-    None("","");
+enum class DocumentTypeEnum constructor(key: String, title: String) {
+    IDCard("id_card", "ID Card"),
+    Passport("passport", "Passport"),
+    DrivingLicense("driving_license", "Driving License"),
+    None("", "");
 
 
     var key: String = ""
@@ -35,7 +35,7 @@ enum class DocumentTypeEnum constructor(key: String, title:String) {
         operator fun get(position: String): DocumentTypeEnum {
             var state = None
             for (stateEnum in values()) {
-                if (position.compareTo(stateEnum.key,true) == 0)
+                if (position.compareTo(stateEnum.key, true) == 0)
                     state = stateEnum
             }
             return state

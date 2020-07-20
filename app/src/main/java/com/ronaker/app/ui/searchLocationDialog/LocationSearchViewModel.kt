@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterLocationSearchBinding
 import com.ronaker.app.model.Place
-import com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchViewModel
 
 
-class LocationSearchViewModel (app: Application): BaseViewModel(app) {
+class LocationSearchViewModel(app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
 
     lateinit var data: Place
@@ -27,7 +26,7 @@ class LocationSearchViewModel (app: Application): BaseViewModel(app) {
         mBinder = binder
         mParentViewModel = parentViewModel
 
-        productTitle.value="${data.mainText} - ${data.secondaryText} "
+        productTitle.value = "${data.mainText} - ${data.secondaryText} "
 
 
     }

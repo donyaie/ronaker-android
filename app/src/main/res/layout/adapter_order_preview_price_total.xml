@@ -18,8 +18,8 @@
 
         android:orientation="horizontal"
 
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:paddingLeft="@dimen/margin_default"
+        android:paddingRight="@dimen/margin_default"
         android:paddingBottom="10dp">
 
 

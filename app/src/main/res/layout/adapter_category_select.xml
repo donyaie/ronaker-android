@@ -30,8 +30,8 @@
                 android:id="@+id/title_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginRight="@dimen/margin_default"
                 android:layout_weight=".95"
                 android:gravity="center_vertical"
 
@@ -49,8 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
 
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginRight="@dimen/margin_default"
                 android:background="@color/colorPlatinGrey" />
 
     </LinearLayout>

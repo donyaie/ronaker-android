@@ -34,7 +34,6 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
     val goValidate: MutableLiveData<Boolean> = MutableLiveData()
 
 
-
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -147,7 +146,6 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
     fun checkOut(message: String) {
 
 
-
         subscription?.dispose()
         mProduct.suid?.let {
             subscription =
@@ -258,7 +256,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
     fun clearDates() {
         updateDate(ArrayList())
-        clearData.value=true
+        clearData.value = true
 
     }
 

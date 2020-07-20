@@ -121,9 +121,9 @@
 
             <ImageView
                 android:id="@+id/alert_image"
-                android:layout_width="24dp"
+                android:layout_width="@dimen/margin_default"
                 android:contentDescription="@string/text_content"
-                android:layout_height="24dp"
+                android:layout_height="@dimen/margin_default"
                 android:layout_marginTop="4dp"
                 android:alpha="0"
                 android:padding="4dp"

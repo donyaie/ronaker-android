@@ -20,8 +20,8 @@
         android:gravity="center"
 
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingLeft="@dimen/margin_default"
+        android:paddingRight="@dimen/margin_default">
 
         <LinearLayout
             android:gravity="center"

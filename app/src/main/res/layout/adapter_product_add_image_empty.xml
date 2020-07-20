@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/margin_default"
+            android:layout_height="@dimen/margin_default"
             android:layout_marginTop="50dp"
             android:contentDescription="@string/text_content"
             app:layout_constraintLeft_toLeftOf="parent"

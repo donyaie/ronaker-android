@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
+import com.ronaker.app.utils.Alert
 
 class OrderStartRentingActivity : BaseActivity() {
 
@@ -22,13 +22,12 @@ class OrderStartRentingActivity : BaseActivity() {
     private lateinit var viewModel: OrderStartRentingViewModel
 
 
-
     companion object {
         var Order_KEY = "order"
 
         var REQUEST_CODE = 352
 
-        fun newInstance(context: Context,order: Order?): Intent {
+        fun newInstance(context: Context, order: Order?): Intent {
             val intent = Intent(context, OrderStartRentingActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
@@ -49,12 +48,12 @@ class OrderStartRentingActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
-        binding.recyclerView.layoutManager= LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.recyclerView,false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.recyclerView, false)
 
 
-        binding.cardRecyclerView.layoutManager= LinearLayoutManager(this)
-        ViewCompat.setNestedScrollingEnabled(binding.cardRecyclerView,false)
+        binding.cardRecyclerView.layoutManager = LinearLayoutManager(this)
+        ViewCompat.setNestedScrollingEnabled(binding.cardRecyclerView, false)
 
 
 
@@ -71,17 +70,17 @@ class OrderStartRentingActivity : BaseActivity() {
 
         viewModel.finish.observe(this, Observer { _ ->
             setResult(Activity.RESULT_OK)
-           finish()
+            finish()
         })
 
 
-        binding.acceptButton.isEnabled=false
+        binding.acceptButton.isEnabled = false
         binding.acceptTerm.setOnCheckedChangeListener { _, isChecked ->
-            binding.acceptButton.isEnabled=isChecked
+            binding.acceptButton.isEnabled = isChecked
         }
 
 
-        binding.toolbar.cancelClickListener= View.OnClickListener {
+        binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finish()
         }
@@ -90,26 +89,17 @@ class OrderStartRentingActivity : BaseActivity() {
         getOrder()?.let { viewModel.load(it) }
 
 
-
     }
 
 
-
-
-    private fun getOrder():Order?
-    {
-        if ( intent.hasExtra(Order_KEY)) {
+    private fun getOrder(): Order? {
+        if (intent.hasExtra(Order_KEY)) {
 
             return intent.getParcelableExtra<Order?>(Order_KEY)
 
         }
         return null
     }
-
-
-
-
-
 
 
 }

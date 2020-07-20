@@ -105,7 +105,7 @@ class SearchActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-       finishAfterTransition()
+        finishAfterTransition()
     }
 
 
@@ -115,7 +115,7 @@ class SearchActivity : BaseActivity() {
     }
 
 
-   private fun getSearchValue(): String? {
+    private fun getSearchValue(): String? {
         if (intent.hasExtra(Search_KEY)) {
             return intent.getStringExtra(Search_KEY)
         }

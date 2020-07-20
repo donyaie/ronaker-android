@@ -7,13 +7,9 @@ import android.view.MotionEvent
 import android.view.animation.Interpolator
 import android.widget.Scroller
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
-
-
 
 
 class ViewPagerCustom : ViewPager {
-
 
 
     private var isPagingEnabled = false

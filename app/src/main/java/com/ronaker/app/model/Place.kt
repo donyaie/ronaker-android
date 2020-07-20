@@ -53,7 +53,6 @@ fun GooglePlaceDetailResponseModel.GooglePlaceResultResponseModel.toPlace(): Pla
 fun MapGeoCodeResponseModel.converGeoToPlace(): Place? {
 
 
-
     var country: String? = null
     var city: String? = null
     var route: String? = null
@@ -101,7 +100,6 @@ fun MapGeoCodeResponseModel.converGeoToPlace(): Place? {
                         }
 
                     }
-
 
 
                 }

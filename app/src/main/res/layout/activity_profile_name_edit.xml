@@ -51,17 +51,17 @@
                     android:id="@+id/title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/title_and_what_s_your_name"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextDark"
                     app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
                 <com.ronaker.app.utils.view.InputComponent
-                    android:layout_marginRight="24dp"
+                    android:layout_marginRight="@dimen/margin_default"
                     app:input_transparent="false"
 
                     android:layout_marginTop="20dp"
@@ -75,14 +75,14 @@
                     app:input_regex="^.{2,}$"
                     app:input_title="@string/first_name_title"
 
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
                     app:layout_constraintTop_toBottomOf="@id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:ignore="UnusedAttribute" />
 
                 <com.ronaker.app.utils.view.InputComponent
-                    android:layout_marginRight="24dp"
+                    android:layout_marginRight="@dimen/margin_default"
                     app:input_transparent="false"
                     android:id="@+id/last_input"
 
@@ -97,7 +97,7 @@
                     app:input_title="@string/last_name_title"
 
 
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
                     app:layout_constraintTop_toBottomOf="@id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

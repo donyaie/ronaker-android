@@ -10,12 +10,13 @@ import com.ronaker.app.utils.IntentManeger
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
+class ProfileEmailVerifyViewModel(val app: Application) : BaseViewModel(app) {
 
 
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -28,7 +29,7 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
 
 
     private var subscription: Disposable? = null
-    private var emailVerificationSubscription:Disposable?= null
+    private var emailVerificationSubscription: Disposable? = null
 
     fun loadData() {
         subscription?.dispose()
@@ -43,8 +44,8 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                    if(result?.data?.is_email_verified==true){
-                        goNex.value=true
+                    if (result?.data?.is_email_verified == true) {
+                        goNex.value = true
                     }
 
                 } else {
@@ -56,31 +57,31 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
     }
 
 
-  private  fun sendVerificationEmail(){
+    private fun sendVerificationEmail() {
         emailVerificationSubscription?.dispose()
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe {loadingButton.value=true }
-                .doOnTerminate {  loadingButton.value=false}
-                .subscribe {result->
-                    if(result.isAcceptable()){
-                        successMessage.value="Verification Email Sent"
-                    }else{
-                        errorMessage.value=result.error?.message
+            userRepository.sendEmailVerification(userRepository.getUserToken())
+                .doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
+                .subscribe { result ->
+                    if (result.isAcceptable()) {
+                        successMessage.value = "Verification Email Sent"
+                    } else {
+                        errorMessage.value = result.error?.message
                     }
-
 
 
                 }
     }
 
 
-    fun gotoMailClick(){
+    fun gotoMailClick() {
 
         IntentManeger.openMailBox(app)
     }
 
 
-    fun resendMailClick(){
+    fun resendMailClick() {
         sendVerificationEmail()
     }
 
@@ -95,10 +96,9 @@ class ProfileEmailVerifyViewModel  (val app: Application): BaseViewModel(app) {
     }
 
 
-   private fun logout(){
+    private fun logout() {
         userRepository.clearLogin()
     }
-
 
 
 }

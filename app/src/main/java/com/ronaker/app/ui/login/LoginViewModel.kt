@@ -24,7 +24,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     lateinit var userRepository: UserRepository
     private var signinSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
-    private  var emailVerificationSubscription:Disposable?=null
+    private var emailVerificationSubscription: Disposable? = null
 
     @Inject
     lateinit var context: Context
@@ -138,12 +138,12 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun sendVerificationEmail(){
+    fun sendVerificationEmail() {
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loadingButton.postValue(true)  }
-                .doOnTerminate { loadingButton.postValue(false)  }
+            userRepository.sendEmailVerification(userRepository.getUserToken())
+                .doOnSubscribe { loadingButton.postValue(true) }
+                .doOnTerminate { loadingButton.postValue(false) }
                 .subscribe {
-
 
 
                     loading.postValue(false)
@@ -155,20 +155,20 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun signin() {
         signinSubscription =
-            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.postValue(true)  }
-                .doOnTerminate { loadingButton.postValue(false)  }
+            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.postValue(true) }
+                .doOnTerminate { loadingButton.postValue(false) }
                 .subscribe { result ->
                     loading.postValue(false)
                     if (result.isSuccess()) {
 
-                        AppDebug.log("Login",result?.data.toString())
+                        AppDebug.log("Login", result?.data.toString())
 
 
                         getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
                         goNext.postValue(true)
 
                     } else {
-                        errorMessage.postValue( result.error?.message)
+                        errorMessage.postValue(result.error?.message)
                     }
                 }
 
@@ -192,9 +192,9 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     if (result.isSuccess()) {
                         getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
 
-                        AppDebug.log("Login",result?.data.toString())
+                        AppDebug.log("Login", result?.data.toString())
 
-                         sendVerificationEmail()
+                        sendVerificationEmail()
                     } else {
                         errorMessage.value = result.error?.message
                     }

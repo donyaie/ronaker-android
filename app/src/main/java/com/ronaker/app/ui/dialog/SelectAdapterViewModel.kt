@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterSelectBinding
 
-class SelectAdapterViewModel (app: Application): BaseViewModel(app) {
+class SelectAdapterViewModel(app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
 
     lateinit var data: SelectDialog.SelectItem
@@ -24,7 +24,7 @@ class SelectAdapterViewModel (app: Application): BaseViewModel(app) {
         mBinder = binder
         mParentViewModel = parentViewModel
 
-        productTitle.value=data.title
+        productTitle.value = data.title
 
 
     }

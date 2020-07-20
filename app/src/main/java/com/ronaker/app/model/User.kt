@@ -17,21 +17,21 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class User(
-    var suid: String?=null
-    , var email: String?=null
-    , var is_email_verified: Boolean=false
-    , var first_name: String?=null
-    , var last_name: String?=null
-    , var phone_number: String?=null
-    , var is_phone_number_verified: Boolean=false
-    , var is_payment_info_verified: Boolean=false
-    , var is_identity_info_verified: Boolean=false
-    , var avatar: String?=null
+    var suid: String? = null
+    , var email: String? = null
+    , var is_email_verified: Boolean = false
+    , var first_name: String? = null
+    , var last_name: String? = null
+    , var phone_number: String? = null
+    , var is_phone_number_verified: Boolean = false
+    , var is_payment_info_verified: Boolean = false
+    , var is_identity_info_verified: Boolean = false
+    , var avatar: String? = null
     , var password: String? = null
     , var promotionCode: String? = null
     , var balance: Double = 0.0
-    ,val smart_id_national_code:String?=null
-    ,val smart_id_personal_code:String?=null
+    , val smart_id_national_code: String? = null
+    , val smart_id_personal_code: String? = null
 
 ) : Parcelable {
     constructor() : this(

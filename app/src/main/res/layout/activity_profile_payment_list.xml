@@ -46,11 +46,11 @@
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
 
-                        android:layout_marginTop="24dp"
-                        android:layout_marginRight="24dp"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:layout_marginBottom="@dimen/margin_default"
                         android:text="@string/text_payment_list"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
@@ -96,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="@dimen/margin_default"
                         android:text="@string/texy_you_haven_t_payment_method"
                         android:textAppearance="@style/TextAppearance.Large.Regular"
                         android:textColor="@color/colorTextDark"
@@ -119,7 +119,7 @@
 
             style="@style/Button.accent"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/text_add_new_method"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

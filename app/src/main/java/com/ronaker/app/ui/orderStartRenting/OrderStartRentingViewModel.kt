@@ -91,7 +91,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
             dataList.clear()
             dataList.addAll(it)
-            dataList.removeAll {  price ->Order.OrderPriceEnum[price.key] ==Order.OrderPriceEnum.InsuranceFee }
+            dataList.removeAll { price -> Order.OrderPriceEnum[price.key] == Order.OrderPriceEnum.InsuranceFee }
             priceListAdapter.notifyDataSetChanged()
         }
 
@@ -137,7 +137,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
             suid = mOrder.suid,
             status = "started"
         )
-            .doOnSubscribe { loadingButton.postValue(true)  }
+            .doOnSubscribe { loadingButton.postValue(true) }
             .doOnTerminate { loadingButton.postValue(false) }
             .subscribe { result ->
                 if (result.isSuccess() || result.isAcceptable()) {

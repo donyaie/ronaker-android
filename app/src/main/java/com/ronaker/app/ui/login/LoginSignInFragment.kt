@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.login
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +17,14 @@ class LoginSignInFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: LoginViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_signin,container , false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_login_signin, container, false)
         activity?.let {
             viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel
@@ -28,7 +32,6 @@ class LoginSignInFragment : BaseFragment(), IPagerFragment {
 
         return binding.root
     }
-
 
 
     companion object {
@@ -41,7 +44,6 @@ class LoginSignInFragment : BaseFragment(), IPagerFragment {
     override fun onSelect() {
 
     }
-
 
 
 }

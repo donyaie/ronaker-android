@@ -123,8 +123,8 @@ class LoginActivity : BaseActivity() {
 
 
         binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.2).toInt()
-        binding.background.layoutParams.height = (screenLibrary.screenHeightPixel ).toInt()
-        binding.bgCon.layoutParams.height = (screenLibrary.screenHeightPixel ).toInt()
+        binding.background.layoutParams.height = (screenLibrary.screenHeightPixel).toInt()
+        binding.bgCon.layoutParams.height = (screenLibrary.screenHeightPixel).toInt()
 
 
 
@@ -153,7 +153,7 @@ class LoginActivity : BaseActivity() {
 
         viewModel.keyboardDown.observe(this, Observer {
 
-            if(it){
+            if (it) {
                 KeyboardManager.hideSoftKeyboard(this@LoginActivity)
             }
         })
@@ -245,11 +245,10 @@ class LoginActivity : BaseActivity() {
                     value < field -> //back
                     {
 
-                        if(value== LoginViewModel.LoginStateEnum.home.position && field==LoginViewModel.LoginStateEnum.login.position ){
+                        if (value == LoginViewModel.LoginStateEnum.home.position && field == LoginViewModel.LoginStateEnum.login.position) {
                             fm.popBackStack(state.name, 0)
                             ft.commit()
-                        }
-                        else if ((field - value) > 1) {
+                        } else if ((field - value) > 1) {
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             ft.replace(R.id.frame_container, getFragment(state), state.name)
                                 .addToBackStack(state.name)

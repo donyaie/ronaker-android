@@ -13,13 +13,13 @@ import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.toCurrencyFormat
 
 
-class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
+class ItemExploreViewModel(val app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
 
     lateinit var data: Product
-    var activity: AppCompatActivity?=null
+    var activity: AppCompatActivity? = null
 
 
     private lateinit var mBinder: AdapterExploreItemBinding
@@ -36,7 +36,7 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
         productTitle.value = post.name
 
         when {
-            post.price_per_day?:0!=0 -> {
+            post.price_per_day ?: 0 != 0 -> {
                 productPrice.value = String.format(
                     "%s %s",
                     post.price_per_day?.toCurrencyFormat(),
@@ -45,7 +45,7 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
                     )
                 )
             }
-            post.price_per_week?:0!=0 -> {
+            post.price_per_week ?: 0 != 0 -> {
 
                 productPrice.value = String.format(
                     "%s %s",
@@ -55,7 +55,7 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
                     )
                 )
             }
-            post.price_per_month?:0!=0 -> {
+            post.price_per_month ?: 0 != 0 -> {
 
                 productPrice.value = String.format(
                     "%s %s",
@@ -78,12 +78,15 @@ class ItemExploreViewModel (val app: Application): BaseViewModel(app) {
 
     fun onClickProduct() {
 
-            activity?.let { mActivity->
+        activity?.let { mActivity ->
 
-                mActivity.startActivityForResult(ExploreProductActivity.newInstance(mActivity,data),ExploreProductActivity.REQUEST_CODE)
+            mActivity.startActivityForResult(
+                ExploreProductActivity.newInstance(mActivity, data),
+                ExploreProductActivity.REQUEST_CODE
+            )
 
 
-            }
+        }
 
     }
 

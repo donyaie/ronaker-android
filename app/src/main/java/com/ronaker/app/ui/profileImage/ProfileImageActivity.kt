@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
@@ -20,6 +19,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
 import java.io.IOException
 
@@ -29,7 +29,6 @@ class ProfileImageActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileImageBinding
     private lateinit var viewModel: ProfileImageViewModel
-
 
 
     companion object {

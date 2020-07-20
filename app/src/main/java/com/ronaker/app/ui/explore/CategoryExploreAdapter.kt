@@ -74,13 +74,14 @@ class CategoryExploreAdapter(
             notifyDataSetChanged()
         }
     }
-    fun itemChanged(item:Category) {
+
+    fun itemChanged(item: Category) {
         MainScope().launch {
             notifyItemChanged(dataList.indexOf(item))
         }
     }
 
-    fun addData(data:ArrayList<Category>) {
+    fun addData(data: ArrayList<Category>) {
         MainScope().launch {
             var insertIndex = 0
             if (dataList.isNotEmpty())

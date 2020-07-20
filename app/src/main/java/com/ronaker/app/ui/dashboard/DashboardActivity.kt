@@ -6,9 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -265,7 +262,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         when (requestCode) {
             ExploreProductActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    binding.navigation.postDelayed({ binding.navigation.select(1) },50)
+                    binding.navigation.postDelayed({ binding.navigation.select(1) }, 50)
                 }
             }
         }

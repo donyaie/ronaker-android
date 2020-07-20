@@ -96,16 +96,15 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
                         result.data?.results?.let { dataList.addAll(it) }
                         productListAdapter.updateList(dataList)
 
-                       if( !result.data?.results.isNullOrEmpty()){
-                           emptyVisibility.postValue(View.GONE)
-                       }
+                        if (!result.data?.results.isNullOrEmpty()) {
+                            emptyVisibility.postValue(View.GONE)
+                        }
 
                         if (result.data?.next == null)
                             hasNextPage = false
 
-                        if(dataList.isEmpty())
+                        if (dataList.isEmpty())
                             emptyVisibility.postValue(View.VISIBLE)
-
 
 
                     } else {
@@ -123,7 +122,11 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
             subscription?.dispose()
             subscription = orderRepository
-                .updateOrderStatus(token =  userRepository.getUserToken(), suid = suid,isArchived = true)
+                .updateOrderStatus(
+                    token = userRepository.getUserToken(),
+                    suid = suid,
+                    isArchived = true
+                )
 
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -143,7 +146,6 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
 
         }
-
 
 
     override fun onCleared() {
@@ -173,7 +175,6 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
         dataList.remove(order)
         productListAdapter.updateList(dataList)
-
 
 
     }

@@ -12,9 +12,9 @@ data class Category(
     , var title: String
     , var avatar: String
     , var sub_categories: List<Category>?
-): Parcelable{
+) : Parcelable {
     @IgnoredOnParcel
-    var isSelected=false
+    var isSelected = false
 }
 
 
@@ -25,11 +25,11 @@ fun List<CategoriesResponseModel>.toCategoryList(): List<Category> {
 
     this.forEach {
 
-        val value = Category(it.suid, it.title,it.avatar,ArrayList())
+        val value = Category(it.suid, it.title, it.avatar, ArrayList())
 
 
-        if(it.sub_categories!=null && it.sub_categories.isNotEmpty() )
-            value.sub_categories=it.sub_categories.toCategoryList()
+        if (it.sub_categories != null && it.sub_categories.isNotEmpty())
+            value.sub_categories = it.sub_categories.toCategoryList()
         list.add(value)
     }
 

@@ -20,11 +20,11 @@ interface OrderRepository {
     fun updateOrderStatus(
         token: String?,
         suid: String,
-        status: String?=null,
-        address: String?=null,
-        instruction: String?=null,
-        reason: String?=null,
-        isArchived:Boolean?=null
+        status: String? = null,
+        address: String? = null,
+        instruction: String? = null,
+        reason: String? = null,
+        isArchived: Boolean? = null
     ): Observable<Result<Boolean>>
 
     fun orderRate(

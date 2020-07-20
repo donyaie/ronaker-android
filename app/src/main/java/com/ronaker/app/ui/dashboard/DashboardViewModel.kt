@@ -30,17 +30,16 @@ class DashboardViewModel(app: Application) : BaseViewModel(app) {
         } else {
             islogin = true
             userRepository.getUserInfo()?.let {
-                it.suid?.let {suid->
+                it.suid?.let { suid ->
                     getAnalytics()?.setUserId(suid)
-                    AnalyticsManager.setUserId(suid) }
-                if(it.is_email_verified!=true){
-                    goEmail.value=true
+                    AnalyticsManager.setUserId(suid)
+                }
+                if (it.is_email_verified != true) {
+                    goEmail.value = true
                 }
 
 
             }
-
-
 
 
         }

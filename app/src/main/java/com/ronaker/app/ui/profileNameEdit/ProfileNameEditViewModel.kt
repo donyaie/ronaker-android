@@ -16,6 +16,7 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
     @Inject
     lateinit
     var context: Context
@@ -68,7 +69,7 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                    goNext.value=true
+                    goNext.value = true
 
                 } else {
                     errorMessage.value = result.error?.message
@@ -77,7 +78,7 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-   private fun fillUser(user: User) {
+    private fun fillUser(user: User) {
 
         mUser = user
 
@@ -97,7 +98,6 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
         super.onCleared()
         subscription?.dispose()
     }
-
 
 
 }

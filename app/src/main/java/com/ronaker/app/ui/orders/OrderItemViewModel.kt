@@ -111,10 +111,10 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
         val userName = (item.orderUser?.first_name ?: "") + " " + (item.orderUser?.last_name ?: "")
 
 
-        archiveVisibility.postValue( View.GONE)
+        archiveVisibility.postValue(View.GONE)
 
 
-        rateVisibility.postValue( View.GONE)
+        rateVisibility.postValue(View.GONE)
 
 
 
@@ -184,7 +184,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
 
                 if (!item.isArchived)
-                    archiveVisibility.postValue( View.VISIBLE)
+                    archiveVisibility.postValue(View.VISIBLE)
             }
             Order.OrderStatusEnum.Finished -> {
 
@@ -194,7 +194,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
 
                 if (!item.isArchived)
-                    archiveVisibility.postValue( View.VISIBLE)
+                    archiveVisibility.postValue(View.VISIBLE)
 
 
 
@@ -203,7 +203,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
                     orderStatus.postValue(context.getString(R.string.text_rent_complete))
                 } else {
-                    rateVisibility.postValue( View.VISIBLE)
+                    rateVisibility.postValue(View.VISIBLE)
 
                     orderStatus.postValue(context.getString(R.string.text_lend_complete))
                 }
@@ -245,7 +245,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
                 }
 
                 if (!item.isArchived)
-                    archiveVisibility.postValue( View.VISIBLE)
+                    archiveVisibility.postValue(View.VISIBLE)
             }
             else -> {
 

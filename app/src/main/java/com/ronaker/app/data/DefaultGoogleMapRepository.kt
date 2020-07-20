@@ -21,9 +21,18 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         val types = "(regions)"
         val radius = "50000"
 
-        val location = if (latLng == null) null else String.format("%s,%s", latLng.latitude, latLng.longitude)
+        val location =
+            if (latLng == null) null else String.format("%s,%s", latLng.latitude, latLng.longitude)
 
-        return api.getQueryAutocomplete(Query, location, radius, language, components, types, apiKey)
+        return api.getQueryAutocomplete(
+            Query,
+            location,
+            radius,
+            language,
+            components,
+            types,
+            apiKey
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -38,7 +47,7 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         val language: String? = null// "en";
 
 
-        return api.getPlaceDetails(placeId, language,apiKey)
+        return api.getPlaceDetails(placeId, language, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -49,8 +58,6 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
     }
 
 
-
-
     override fun getGeocode(location: LatLng): Observable<Place?> {
 
         val language: String? = null// "en";
@@ -59,15 +66,14 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         val latlng = String.format("%s,%s", location.latitude, location.longitude)
         val types = "(regions)"
 
-        return api.getGeocode(null, latlng, null, null, language, null,types, apiKey)
+        return api.getGeocode(null, latlng, null, null, language, null, types, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map{
+            .map {
                 it.converGeoToPlace()
             }
 
     }
-
 
 
 }

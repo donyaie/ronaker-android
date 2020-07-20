@@ -35,28 +35,40 @@ interface UserApi {
      */
     @POST("/api/v1/users/phone_number/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun addUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserAddPhoneRequestModel): Observable<UserAddPhoneResponceModel>
+    fun addUserPhoneNumber(
+        @Header("Authorization") authToken: String,
+        @Body user: UserAddPhoneRequestModel
+    ): Observable<UserAddPhoneResponceModel>
 
     /**
      * update user Info
      */
     @PUT("/api/v1/users/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun updateUserInfo(@Header("Authorization") authToken: String,@Body user: UserUpdateRequestModel): Observable<UserInfoResponceModel>
+    fun updateUserInfo(
+        @Header("Authorization") authToken: String,
+        @Body user: UserUpdateRequestModel
+    ): Observable<UserInfoResponceModel>
 
     /**
      * valid phone Checkout of user with otp
      */
     @POST("/api/v1/users/phone_number/activation/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun activeUserPhoneNumber(@Header("Authorization") authToken: String,@Body user: UserActivePhoneRequestModel): Observable<UserAddPhoneResponceModel>
+    fun activeUserPhoneNumber(
+        @Header("Authorization") authToken: String,
+        @Body user: UserActivePhoneRequestModel
+    ): Observable<UserAddPhoneResponceModel>
 
     /**
      * add user identify
      */
     @POST("/api/v1/documents/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun addDocument(@Header("Authorization") authToken: String,@Body request: UserIdentifyRequestModel): Observable<FreeResponseModel>
+    fun addDocument(
+        @Header("Authorization") authToken: String,
+        @Body request: UserIdentifyRequestModel
+    ): Observable<FreeResponseModel>
 
     /**
      * send Email verification
@@ -70,14 +82,20 @@ interface UserApi {
      */
     @POST("/api/v1/users/smart-id/code/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getSmartIDVerificationCode(@Header("Authorization") authToken: String,@Body request: UserSmartIdVerificationCodeRequestModel): Observable<UserSmartIdVerificationResponseModel>
+    fun getSmartIDVerificationCode(
+        @Header("Authorization") authToken: String,
+        @Body request: UserSmartIdVerificationCodeRequestModel
+    ): Observable<UserSmartIdVerificationResponseModel>
 
     /**
      * Start SmartID Auth
      */
     @POST("/api/v1/users/smart-id/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun startSmartIDAuth(@Header("Authorization") authToken: String,@Body request: UserSmartIdVerificationCodeRequestModel): Observable<FreeResponseModel>
+    fun startSmartIDAuth(
+        @Header("Authorization") authToken: String,
+        @Body request: UserSmartIdVerificationCodeRequestModel
+    ): Observable<FreeResponseModel>
 
     /**
      * Check smart-id session

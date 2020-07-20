@@ -13,7 +13,7 @@ import com.ronaker.app.utils.extension.getParentActivity
 
 class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private  var list: ArrayList<Image> = ArrayList()
+    private var list: ArrayList<Image> = ArrayList()
 
 
     private val EmptyType = 0
@@ -61,7 +61,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return  list.size
+        return list.size
     }
 
     fun updateproductList() {
@@ -112,7 +112,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
     fun getimages(): ArrayList<Image> {
 
-        val list= ArrayList<Image>()
+        val list = ArrayList<Image>()
 
         if (this.list.size <= 1)
             return list
@@ -135,7 +135,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
         fun bind(product: Image) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
-            viewModel.bind(product,binding.root.getParentActivity() )
+            viewModel.bind(product, binding.root.getParentActivity())
 
 
         }
@@ -145,7 +145,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
     class EmptyViewHolder(
         private val binding: AdapterProductAddImageEmptyBinding,
-        private  val baseViewModel: AddProductViewModel
+        private val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
 

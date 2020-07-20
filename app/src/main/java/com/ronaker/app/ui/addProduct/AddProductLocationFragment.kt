@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.addProduct
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,10 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Place
 import com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchDialog
-import com.ronaker.app.utils.*
+import com.ronaker.app.utils.DEFULT_LOCATION
+import com.ronaker.app.utils.KeyboardManager
+import com.ronaker.app.utils.MAP_ZOOM
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.IPagerFragment
 
 
@@ -34,7 +38,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     var isFirstSelected = false
 
     override fun onCameraIdle() {
-        if ( isFirstIdle) {
+        if (isFirstIdle) {
             viewModel.updateLocation(mGoogleMap.cameraPosition.target)
         } else if (isFirstSelected) {
             isFirstIdle = true
@@ -52,8 +56,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
     var lastLocation: LatLng? = null
-
-
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -112,9 +114,9 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
 
         binding.containerMap.layoutParams.height =
-            (mheight - mstatusSize - screenLibrary.DP2Pixel(48)).toInt()
+            (mheight - mstatusSize - screenLibrary.convertDPtoPixel(48)).toInt()
         binding.scrollView.layoutParams.height =
-            (mheight - mstatusSize - screenLibrary.DP2Pixel(48)).toInt()
+            (mheight - mstatusSize - screenLibrary.convertDPtoPixel(48)).toInt()
 
 
 
@@ -266,6 +268,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
                     token?.continuePermissionRequest()
                 }
 
+                @SuppressLint("MissingPermission")
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
 

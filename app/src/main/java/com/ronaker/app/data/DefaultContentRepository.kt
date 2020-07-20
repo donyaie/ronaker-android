@@ -45,14 +45,14 @@ class DefaultContentRepository(private val contentApi: ContentApi) : ContentRepo
     }
 
 
-   private fun createMultipartBody(filePath: Uri): MultipartBody.Part {
+    private fun createMultipartBody(filePath: Uri): MultipartBody.Part {
         val file = filePath.toFile()
         val requestBody = createRequestBody(file)
         return requestBody.let { MultipartBody.Part.createFormData("content", file.name, it) }
     }
 
     private fun createRequestBody(file: File): RequestBody {
-        return file .let {  RequestBody.create(MediaType.parse("image/*"), it)}
+        return file.let { RequestBody.create(MediaType.parse("image/*"), it) }
     }
 
 //    override fun uploadImage(token: String?, filePath: String): Flowable<Double> {

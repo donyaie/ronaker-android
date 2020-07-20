@@ -14,7 +14,7 @@ import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProductSavedViewModel (app: Application): BaseViewModel(app) {
+class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -46,7 +46,6 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-
     private var subscription: Disposable? = null
 
 
@@ -65,13 +64,12 @@ class ProductSavedViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
     fun loadProduct() {
         if (hasNextPage) {
             page++
             subscription?.dispose()
             subscription = productRepository
-                .productSearch(userRepository.getUserToken(), query, page, null, null,true)
+                .productSearch(userRepository.getUserToken(), query, page, null, null, true)
 
                 .doOnSubscribe { onRetrieveProductListStart() }
                 .doOnTerminate { onRetrieveProductListFinish() }

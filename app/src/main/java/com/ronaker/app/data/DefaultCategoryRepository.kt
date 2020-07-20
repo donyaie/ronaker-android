@@ -4,8 +4,6 @@ package com.ronaker.app.data
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.CategoryApi
-import com.ronaker.app.data.network.response.CategoriesResponseModel
-import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.toCategoryList
 import io.reactivex.Observable

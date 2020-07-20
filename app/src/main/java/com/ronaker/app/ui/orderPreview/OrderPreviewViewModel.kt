@@ -4,7 +4,6 @@ package com.ronaker.app.ui.orderPreview
 import android.app.Application
 import android.content.Context
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -21,7 +20,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
+class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -179,16 +178,16 @@ class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
         }
     }
 
-    fun load(order: Order){
+    fun load(order: Order) {
         fillView(order)
 
     }
 
-    fun getOrder():Order{
+    fun getOrder(): Order {
         return mOrder
     }
 
-    fun getOrder(suid:String){
+    fun getOrder(suid: String) {
 
         subscription?.dispose()
         subscription = orderRepository
@@ -198,21 +197,20 @@ class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
 //                retry.value = null
 //                loading.value = true
 
-                if(!::mOrder.isInitialized)
-                    loading.value=true
+                if (!::mOrder.isInitialized)
+                    loading.value = true
 
             }
             .doOnTerminate {
-                loading.value=false
+                loading.value = false
 
 
             }
             .subscribe { result ->
                 if (result.isSuccess()) {
                     result.data?.let { fillView(it) }
-                }
-                else{
-                    errorMessage.value=result.error?.message
+                } else {
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -291,8 +289,6 @@ class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
                 recieptVisibility.value = View.VISIBLE
 
                 startRatingVisibility.value = View.GONE
-
-
 
 
                 var total = 0.0
@@ -521,7 +517,8 @@ class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
                         context.getString(R.string.text_rent_request_started, orderedUserName)
                 } else {
 
-                    orderStatus.value = context.getString(R.string.text_lend_request_started, ownerName)
+                    orderStatus.value =
+                        context.getString(R.string.text_lend_request_started, ownerName)
                 }
 
 
@@ -562,7 +559,8 @@ class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
 
                     orderStatus.value = context.getString(R.string.text_rent_request_pending)
                 } else {
-                    orderStatus.value = context.getString(R.string.text_lend_request_pending, ownerName)
+                    orderStatus.value =
+                        context.getString(R.string.text_lend_request_pending, ownerName)
                 }
 
             }
@@ -623,8 +621,6 @@ class OrderPreviewViewModel( app: Application) : BaseViewModel(app) {
 
 
     }
-
-
 
 
     fun onClickStartRenting() {

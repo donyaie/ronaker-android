@@ -58,8 +58,8 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     private var subscription: Disposable? = null
 
 
-    fun onClickTerms(){
-        IntentManeger.openUrl(app,TERM_URL)
+    fun onClickTerms() {
+        IntentManeger.openUrl(app, TERM_URL)
     }
 
 
@@ -103,7 +103,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
 
     fun changeCardNumber(cardNumber: String) {
 
-        cardTypeImage.value= PaymentCard.CardType.detectFast(cardNumber).resource
+        cardTypeImage.value = PaymentCard.CardType.detectFast(cardNumber).resource
 
 
     }
@@ -121,32 +121,32 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     ) {
 
 
-        val year= expireInput?.substring(0,1)
-        val month= expireInput?.substring(2,3)
+        val year = expireInput?.substring(0, 1)
+        val month = expireInput?.substring(2, 3)
 
 
-      val payment=  PaymentCard (
+        val payment = PaymentCard(
 
-          cardNumber =   cardEdit,
-          cvv = cvvInput,
-          postalCode = addressPostalInput,
-          fullName = nameInput,
-          address = addressInput,
-          address2 = addressLine2Input,
-          city = cityInput,
-          region = countryInput,
-          country = countryInput,
-          expiryYear = year,
-          expiryMonth = month,
-          paymentInfoType = PaymentCard.PaymentType.CreditCard.key
+            cardNumber = cardEdit,
+            cvv = cvvInput,
+            postalCode = addressPostalInput,
+            fullName = nameInput,
+            address = addressInput,
+            address2 = addressLine2Input,
+            city = cityInput,
+            region = countryInput,
+            country = countryInput,
+            expiryYear = year,
+            expiryMonth = month,
+            paymentInfoType = PaymentCard.PaymentType.CreditCard.key
 
-      )
+        )
 
 
 
 
         subscription = paymentInfoRepository
-            .addPaymentInfo(userRepository.getUserToken(),payment)
+            .addPaymentInfo(userRepository.getUserToken(), payment)
 
             .doOnSubscribe {
                 loadingButton.value = true
@@ -158,17 +158,13 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                    goNext.value=true
+                    goNext.value = true
 
 
                 } else {
                     errorMessage.value = result.error?.message
                 }
             }
-
-
-
-
 
 
     }

@@ -35,14 +35,14 @@ import java.io.IOException
 class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDialogResultListener {
 
 
-
     private val TAG = AddProductActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductAddBinding
     private lateinit var viewModel: AddProductViewModel
 
     private lateinit var imageFragment: AddProductImageFragment
-//    private lateinit var insuranceFragment: AddProductInsuranceFragment
+
+    //    private lateinit var insuranceFragment: AddProductInsuranceFragment
     private lateinit var infoFragment: AddProductInfoFragment
     private lateinit var priceFragment: AddProductPriceFragment
     private lateinit var locationFragment: AddProductLocationFragment
@@ -417,7 +417,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
             AppDebug.log(TAG, String.format("onSelect:%s", actionState.name))
-                (adapter.getItem(position) as IPagerFragment).onSelect()
+            (adapter.getItem(position) as IPagerFragment).onSelect()
 
 
             if (actionState == AddProductViewModel.StateEnum.Image)
@@ -459,7 +459,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    private fun pickImage(request:Int) {
+    private fun pickImage(request: Int) {
         Dexter.withContext(this)
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
@@ -485,7 +485,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    private fun showImagePickerOptions(request:Int) {
+    private fun showImagePickerOptions(request: Int) {
         ImagePickerActivity.showImagePickerOptions(
             this,
             object : ImagePickerActivity.PickerOptionListener {
@@ -499,7 +499,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             })
     }
 
-    private fun launchCameraIntent(requset :Int) {
+    private fun launchCameraIntent(requset: Int) {
         val intent = Intent(this, ImagePickerActivity::class.java)
         intent.putExtra(
             ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
@@ -519,7 +519,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         startActivityForResult(intent, requset)
     }
 
-    private fun launchGalleryIntent(requset :Int) {
+    private fun launchGalleryIntent(requset: Int) {
         val intent = Intent(this, ImagePickerActivity::class.java)
         intent.putExtra(
             ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
@@ -558,7 +558,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
                     uri?.toFile()
                     uri?.let { viewModel.selectInsurance(it) }
                 } catch (e: IOException) {
-                    AppDebug.log(TAG,e)
+                    AppDebug.log(TAG, e)
                 }
 
             }
@@ -600,7 +600,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
     }
 
 
-    internal inner class ViewPagerAdapter() :
+    internal inner class ViewPagerAdapter :
         FragmentStateAdapter(this@AddProductActivity) {
         private val mFragmentList = ArrayList<Fragment>()
 

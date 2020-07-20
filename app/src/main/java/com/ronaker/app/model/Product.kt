@@ -45,22 +45,22 @@ data class Product(
     override fun hashCode(): Int {
         var result = suid?.hashCode() ?: 0
         result = 31 * result + (name?.hashCode() ?: 0)
-        result = 31 * result + (price_per_day.hashCode() )
-        result = 31 * result + (price_per_week.hashCode() )
-        result = 31 * result + (price_per_month.hashCode() )
+        result = 31 * result + (price_per_day.hashCode())
+        result = 31 * result + (price_per_week.hashCode())
+        result = 31 * result + (price_per_month.hashCode())
         result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (avatar?.hashCode() ?: 0)
-        result = 31 * result + (images.hashCode() )
+        result = 31 * result + (images.hashCode())
         result = 31 * result + (categories?.hashCode() ?: 0)
         result = 31 * result + (location?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (avatar_suid?.hashCode() ?: 0)
-        result = 31 * result + (new_categories.hashCode() )
+        result = 31 * result + (new_categories.hashCode())
         result = 31 * result + (review_status?.hashCode() ?: 0)
         result = 31 * result + (user_status?.hashCode() ?: 0)
-        result = 31 * result + (rate.hashCode() )
+        result = 31 * result + (rate.hashCode())
         result = 31 * result + (owner?.hashCode() ?: 0)
-        result = 31 * result + (isFavourite.hashCode() )
+        result = 31 * result + (isFavourite.hashCode())
         return result
     }
 

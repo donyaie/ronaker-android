@@ -17,9 +17,14 @@ class LoginPasswordFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: LoginViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_password,container , false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_login_password, container, false)
         activity?.let {
             viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel

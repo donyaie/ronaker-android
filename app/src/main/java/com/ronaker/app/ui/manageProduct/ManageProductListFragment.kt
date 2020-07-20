@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import com.ronaker.app.utils.Alert
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.addProduct.AddProductActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
@@ -43,15 +43,15 @@ class ManageProductListFragment : BaseFragment() {
         binding.loading.hideLoading()
 
 
-        val screenMnager= ScreenCalculator(requireContext())
+        val screenMnager = ScreenCalculator(requireContext())
 
 
-        val itemsize= 170
-        val screensize= screenMnager.screenWidthDP.toInt()
-        var count =screensize/itemsize
+        val itemsize = 170
+        val screensize = screenMnager.screenWidthDP.toInt()
+        var count = screensize / itemsize
 
-        if(count<2)
-            count=2
+        if (count < 2)
+            count = 2
 
 
         binding.recycler.layoutManager = GridLayoutManager(context, count)
@@ -73,7 +73,8 @@ class ManageProductListFragment : BaseFragment() {
 
 
         viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
-            loading?.let { binding.loading.showRetry(loading)  }?:run{binding.loading.hideRetry()}
+            loading?.let { binding.loading.showRetry(loading) }
+                ?: run { binding.loading.hideRetry() }
 
 
         })

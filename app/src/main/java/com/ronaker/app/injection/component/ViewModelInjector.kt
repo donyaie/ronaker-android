@@ -1,7 +1,9 @@
 package com.ronaker.app.injection.component
 
 import com.ronaker.app.injection.module.RepositoryModule
-import com.ronaker.app.ui.addProduct.*
+import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
+import com.ronaker.app.ui.addProduct.AddProductLocationViewModel
+import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
@@ -92,7 +94,6 @@ interface ViewModelInjector {
     fun inject(viewModel: OrderPreviewPriceViewModel)
     fun inject(viewModel: ManageProductAdapterViewModel)
     fun inject(viewModel: OrderItemViewModel)
-
 
 
     @Component.Builder

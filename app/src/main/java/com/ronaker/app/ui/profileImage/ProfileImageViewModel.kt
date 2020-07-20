@@ -15,7 +15,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileImageViewModel (app: Application): BaseViewModel(app) {
+class ProfileImageViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -85,7 +85,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
             imageVisibility.value = View.VISIBLE
             uploadVisibility.value = View.GONE
 
-            identifyImage.value= BASE_URL+it
+            identifyImage.value = BASE_URL + it
         }
 
     }
@@ -140,8 +140,8 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
 
         identitySubscription?.dispose()
 
-        val user= User()
-        user.avatar=imageSuid
+        val user = User()
+        user.avatar = imageSuid
 
         identitySubscription = userRepository
             .updateUserInfo(
@@ -172,7 +172,6 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
         uploadSubscription?.dispose()
         identitySubscription?.dispose()
     }
-
 
 
 }

@@ -13,7 +13,7 @@ fun Double.toCurrencyFormat(): String {
 
 fun byteArrayOfInts(vararg ints: Int) = ByteArray(ints.size) { pos -> ints[pos].toByte() }
 
-fun Double.toCurrencyFormat(prefix:String?): String {
+fun Double.toCurrencyFormat(prefix: String?): String {
 
     val format: NumberFormat = NumberFormat.getCurrencyInstance()
 
@@ -22,17 +22,17 @@ fun Double.toCurrencyFormat(prefix:String?): String {
 
     val decimalFormatSymbols: DecimalFormatSymbols =
         (format as DecimalFormat).decimalFormatSymbols
-    decimalFormatSymbols.currencySymbol=""
+    decimalFormatSymbols.currencySymbol = ""
 
-    format.decimalFormatSymbols=decimalFormatSymbols
+    format.decimalFormatSymbols = decimalFormatSymbols
 
-    if((this*100.0)%100.0==0.0){
-        format.maximumFractionDigits=0
-    }else
-        format.minimumFractionDigits=2
-
-
+    if ((this * 100.0) % 100.0 == 0.0) {
+        format.maximumFractionDigits = 0
+    } else
+        format.minimumFractionDigits = 2
 
 
-    return   (if(prefix==null) "" else "$prefix ") +"€ ${format.format(this)}"
+
+
+    return (if (prefix == null) "" else "$prefix ") + "€ ${format.format(this)}"
 }

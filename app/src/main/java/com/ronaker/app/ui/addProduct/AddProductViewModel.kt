@@ -108,7 +108,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     enum class StateEnum constructor(position: Int) {
-//        Insurance(0),
+        //        Insurance(0),
         Image(0),
         Info(1),
         Category(2),
@@ -124,7 +124,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         companion object {
             operator fun get(position: Int): StateEnum {
-                var state = StateEnum.values()[0]
+                var state = values()[0]
                 for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
@@ -184,8 +184,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             errorMessage.value = "Please Select Sub-Category"
         } else {
             product.new_categories = ArrayList()
-            product.new_categories?.apply { add(categories[0].suid) }
-            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories?.add(it) }
+            product.new_categories.apply { add(categories[0].suid) }
+            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories.add(it) }
 
 
             if (!updateSuid.isNullOrEmpty()) {
@@ -375,7 +375,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickAddInsuranceImage() {
 //        showPickerNext.value = true
-        showInsurancePicker.value=true
+        showInsurancePicker.value = true
     }
 
     fun onClickInsuranceNext() {
@@ -390,7 +390,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             this.suid = null
         }
 
-        insuranceImage.value=uri.toString()
+        insuranceImage.value = uri.toString()
 
 
     }

@@ -2,7 +2,6 @@ package com.ronaker.app.utils
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -11,14 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
-import com.makeramen.roundedimageview.RoundedImageView
 import com.ronaker.app.injection.module.GlideApp
 import com.ronaker.app.utils.extension.getParentActivity
 
@@ -110,20 +102,17 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
 }
 
 
-
 @BindingAdapter("mutableFastVisibility")
 fun setMutableFastVisibility(view: View, visibility: MutableLiveData<Int>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && visibility != null) {
         visibility.observe(parentActivity, Observer { value ->
-            view.visibility=value
+            view.visibility = value
 
         })
     }
 }
-
-
 
 
 @BindingAdapter("mutableText")
@@ -131,7 +120,7 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && text != null) {
-        text.observe(parentActivity, Observer { value -> view.setText(value ?: "") })
+        text.observe(parentActivity, Observer { value -> view.text = value ?: "" })
     }
 }
 

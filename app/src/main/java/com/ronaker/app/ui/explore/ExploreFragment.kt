@@ -2,7 +2,6 @@ package com.ronaker.app.ui.explore
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -42,8 +39,8 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
         binding.viewModel = viewModel
 
         var visibleItemCount: Int
-        var totalItemCount : Int
-        var pastVisiblesItems : Int
+        var totalItemCount: Int
+        var pastVisiblesItems: Int
 
         val screenMnager = ScreenCalculator(requireContext())
 
@@ -190,7 +187,6 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             viewModel.clearSearch()
         }
-
 
 
 //

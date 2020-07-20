@@ -6,8 +6,8 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
-import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.*
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
@@ -28,7 +28,7 @@ import javax.inject.Singleton
 @Module
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
- class RepositoryModule(private val app: Application) {
+class RepositoryModule(private val app: Application) {
 
 
     /**
@@ -105,7 +105,7 @@ import javax.inject.Singleton
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
             .apply {
-                if (BuildConfig.DEBUG)  addNetworkInterceptor( StethoInterceptor())
+                if (BuildConfig.DEBUG) addNetworkInterceptor(StethoInterceptor())
             }
 
             .build()
@@ -143,7 +143,6 @@ import javax.inject.Singleton
     }
 
 
-
     @Provides
     @Singleton
     internal fun provideContentRepository(api: ContentApi): ContentRepository {
@@ -179,7 +178,10 @@ import javax.inject.Singleton
 
     @Provides
     @Singleton
-    internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
+    internal fun provideGoogleMapRepository(
+        api: GoogleMapApi,
+        context: Context
+    ): GoogleMapRepository {
         return DefaultGoogleMapRepository(api, context.getString(R.string.google_api_key_me))
     }
 
@@ -205,9 +207,7 @@ import javax.inject.Singleton
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         })
         if (BuildConfig.DEBUG)
-            clientBuilder.addNetworkInterceptor( StethoInterceptor())
-
-
+            clientBuilder.addNetworkInterceptor(StethoInterceptor())
 
 
         val client = clientBuilder.build()

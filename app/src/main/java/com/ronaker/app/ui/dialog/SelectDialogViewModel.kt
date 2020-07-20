@@ -4,17 +4,12 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.data.CategoryRepository
-import com.ronaker.app.data.UserRepository
-import com.ronaker.app.model.Category
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class SelectDialogViewModel(app:Application) : BaseViewModel(app) {
+class SelectDialogViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = SelectDialogViewModel::class.java.name
-
 
 
     @Inject
@@ -37,12 +32,11 @@ class SelectDialogViewModel(app:Application) : BaseViewModel(app) {
 
     }
 
-    fun searchLocation( items: List< SelectDialog.SelectItem>) {
+    fun searchLocation(items: List<SelectDialog.SelectItem>) {
 
         dataList.clear()
         dataList.addAll(items)
         listAdapter.notifyDataSetChanged()
-
 
 
     }

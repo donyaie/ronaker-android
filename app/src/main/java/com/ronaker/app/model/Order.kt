@@ -21,7 +21,7 @@ data class Order(
     val rejectionReason: String?,
     val address: String?,
     val instruction: String?,
-    val  isArchived:Boolean=false
+    val isArchived: Boolean = false
 ) : Parcelable {
 
 

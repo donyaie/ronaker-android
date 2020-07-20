@@ -3,7 +3,6 @@ package com.ronaker.app.utils.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,16 +10,15 @@ import androidx.core.content.ContextCompat
 import com.ronaker.app.R
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.ShapeDrawableHelper
-import java.lang.Exception
 
 
-class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet) :
+class TabNavigationComponent constructor(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs) {
 
 
-     var layoutList: ArrayList<LinearLayout>
-     var imageList: ArrayList<ImageView>
-     var textList: ArrayList<TextView>
+    var layoutList: ArrayList<LinearLayout>
+    var imageList: ArrayList<ImageView>
+    var textList: ArrayList<TextView>
 
     var selectedIndex: Int? = null
 
@@ -61,7 +59,7 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
         textList.add(findViewById(R.id.profile_text))
 
 
-        orientation= VERTICAL
+        orientation = VERTICAL
 
 
         layoutList[0].setOnClickListener { select(0) }
@@ -94,22 +92,22 @@ class TabNavigationComponent  constructor(context: Context, attrs: AttributeSet)
         selectedIndex = index
 
         textList.forEach {
-            it.setTextColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
+            it.setTextColor(ContextCompat.getColor(context, R.color.colorTextGreyLight))
         }
         imageList.forEach {
 //            it.setBackgroundColor(ContextCompat.getColor(context,R.color.colorTextGreyLight))
-            ShapeDrawableHelper.changeSvgDrawableColor(context,R.color.colorTextGreyLight,it)
+            ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorTextGreyLight, it)
         }
 
 
-        textList[index].setTextColor(ContextCompat.getColor(context,R.color.colorAccent))
+        textList[index].setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
 //        imageList[index].setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
-        ShapeDrawableHelper.changeSvgDrawableColor(context,R.color.colorAccent,imageList[index])
+        ShapeDrawableHelper.changeSvgDrawableColor(context, R.color.colorAccent, imageList[index])
 
         try {
             selectListener?.onSelect(index)
-        }catch (ex:Exception){
-            AppDebug.log("Navigator",ex)
+        } catch (ex: Exception) {
+            AppDebug.log("Navigator", ex)
         }
 
     }
