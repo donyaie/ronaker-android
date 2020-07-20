@@ -18,14 +18,23 @@ apply plugin: 'com.google.gms.google-services'
 def versionMajor = 0
 def versionMinor = 0
 def versionPatch = 21
-
 android {
+
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
 
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion = '29.0.3'
 
     dataBinding {
@@ -70,7 +79,7 @@ android {
 
     defaultConfig {
         applicationId "com.ronaker.app"
-
+        resConfigs "en", "lt", "nl"
         versionCode versionMajor * 10000+ versionMinor * 100+ versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
