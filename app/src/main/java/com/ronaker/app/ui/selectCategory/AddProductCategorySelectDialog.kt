@@ -88,7 +88,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
 
-        categoryList?.let { viewModel.searchLocation(it) }
+        categoryList.let { viewModel.searchLocation(it) }
 
 
 

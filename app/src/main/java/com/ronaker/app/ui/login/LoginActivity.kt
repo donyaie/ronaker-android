@@ -122,8 +122,9 @@ class LoginActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
 
 
-        binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.2).toInt()
+        binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.8).toInt()
         binding.background.layoutParams.height = (screenLibrary.screenHeightPixel).toInt()
+//        binding.bgCon.layoutParams.width = (screenLibrary.screenHeightPixel * 1.08).toInt()
         binding.bgCon.layoutParams.height = (screenLibrary.screenHeightPixel).toInt()
 
 

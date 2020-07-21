@@ -40,16 +40,16 @@
                 android:scrollbars="none">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="800dp"
                     android:layout_height="800dp"
                     android:id="@+id/bgCon"
 
-                    android:gravity="top">
+                    android:gravity="start">
 
                     <ImageView
                         android:layout_height="800dp"
                         android:id="@+id/background"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:contentDescription="@string/text_content"
                         android:minWidth="500dp"
                         android:scaleType="centerCrop"
@@ -68,6 +68,7 @@
             <LinearLayout
                 android:id="@+id/overlay_layout"
                 android:layout_width="match_parent"
+                android:visibility="visible"
 
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"

@@ -30,17 +30,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:padding="12dp"
+
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/text_content"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/logo_ronaker_white" />
+                app:srcCompat="@drawable/ic_luncher_transparent" />
+
+
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
-                android:layout_marginTop="@dimen/margin_default"
+                android:layout_marginTop="12dp"
                 android:contentDescription="@string/text_content"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_ronaker_text" />
