@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.login
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -270,10 +271,15 @@ class LoginActivity : BaseActivity() {
                     }
                 }
 
-//                val x = ((binding.frameContainer.width*value) * computeFactor()).toInt()
+                val x = ((binding.frameContainer.width*value) * computeFactor()).toInt()
+
+
+                val animator =
+                    ObjectAnimator.ofInt(binding.scrollView, "scrollX", x)
+                animator.duration = 800
+                animator.start()
 
 //                    ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
-
 //                binding.scrollView.scrollTo(x, 0)
 
                 when (loginAction) {
