@@ -16,6 +16,8 @@
 
 
     <dimen name="margin_default">24dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_half">12dp</dimen>
 
 
 

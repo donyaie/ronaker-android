@@ -88,18 +88,17 @@
                 </LinearLayout>
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:background="@color/colorPlatinGrey" />
+                <!--                <RelativeLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1dp"-->
+                <!--                    android:layout_marginLeft="@dimen/margin_default"-->
+                <!--                    android:layout_marginRight="@dimen/margin_default"-->
+                <!--                    android:background="@color/colorPlatinGrey" />-->
 
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
-
-
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
@@ -119,14 +118,14 @@
 
 
                         <TextView
-                            android:layout_marginTop="8dp"
-                            android:maxLines="2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:maxLines="2"
 
 
                             android:text="sample product"
-                            android:textAppearance="@style/TextAppearance.Medium.SB"
+                            android:textAppearance="@style/TextAppearance.Small.SB"
                             android:textColor="@color/colorTextDark"
                             app:mutableText="@{viewModel.getProductTitle()}"
                             tools:ignore="HardcodedText" />
@@ -263,30 +262,28 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
-                    android:visibility="gone"
-                    android:background="@color/colorPlatinGrey" />
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-
                     android:layout_marginBottom="16dp"
 
+                    android:visibility="gone"
 
 
-                    app:adapter="@{viewModel.getPriceListAdapter()}"/>
-<!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
+                    app:adapter="@{viewModel.getPriceListAdapter()}" />
+                <!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
-                    android:background="@color/colorPlatinGrey"
-                     />
-<!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
+                    android:background="@color/colorPlatinGrey" />
+                <!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -312,7 +309,7 @@
                             android:layout_height="wrap_content"
 
                             android:text="David"
-                            android:textAppearance="@style/TextAppearance.Heading.2"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
                             app:mutableText="@{viewModel.getUserName()}"
                             tools:ignore="HardcodedText" />
 
@@ -324,50 +321,50 @@
 
 
                             android:orientation="horizontal"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:mutableVisibility="@{viewModel.getUserContactVisibility()}">
 
 
                             <ImageButton
-                                android:elevation="3dp"
-
                                 android:layout_width="48dp"
+
                                 android:layout_height="48dp"
-                                android:layout_marginEnd="8dp"
-                                android:contentDescription="@string/text_content"
-                                android:onClick="@{()->viewModel.onClickSendMail()}"
-
-                                android:padding="14dp"
-                                android:visibility="gone"
-
                                 android:layout_marginTop="5dp"
+                                android:layout_marginEnd="8dp"
                                 android:layout_marginBottom="5dp"
                                 android:background="@drawable/selector_circle_accent"
-                                android:scaleType="fitCenter"
 
+                                android:contentDescription="@string/text_content"
+                                android:elevation="3dp"
+
+                                android:onClick="@{()->viewModel.onClickSendMail()}"
+                                android:padding="14dp"
+                                android:scaleType="fitCenter"
                                 android:tint="@color/white"
+
+                                android:visibility="visible"
                                 app:srcCompat="@drawable/ic_message" />
 
 
                             <ImageButton
                                 android:layout_width="48dp"
-                                android:elevation="3dp"
-
-                                android:visibility="gone"
-
                                 android:layout_height="48dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
+
                                 android:layout_marginStart="30dp"
 
+                                android:layout_marginTop="5dp"
                                 android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="5dp"
                                 android:background="@drawable/selector_circle_green"
-                                android:contentDescription="@string/text_content"
 
+                                android:contentDescription="@string/text_content"
+                                android:elevation="3dp"
                                 android:onClick="@{()->viewModel.onClickMakeCall()}"
+
                                 android:padding="14dp"
                                 android:scaleType="fitCenter"
                                 android:tint="@color/white"
+                                android:visibility="visible"
                                 app:srcCompat="@drawable/ic_telephone" />
 
 
@@ -397,16 +394,165 @@
                     app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" />
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_default"
+
+                    android:visibility="gone"
+                    app:mutableVisibility="@{viewModel.getContractVisibility()}">
+
+                    <TextView
+                        android:id="@+id/contract_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_contract"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/contractView_text"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->viewModel.onViewContract()}"
+                        android:padding="4dp"
+                        android:text="@string/text_view_the_contract"
+
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:textColor="@color/colorTextLinkLight"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:mutableVisibility="@{viewModel.getContractPreviewVisibility()}" />
+
+
+                    <ImageView
+                        android:id="@+id/renter_sign_state_image"
+                        android:layout_width="@dimen/margin_default"
+                        android:layout_height="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_half"
+                        android:contentDescription="@string/caption_title"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_guide_red"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/contract_text"
+                        app:mutableImageSrc="@{viewModel.getRenterSignImage()}" />
+
+
+                    <TextView
+                        android:id="@+id/renter_sign_state_text"
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/text_please_sign_the_contract"
+
+                        android:textAppearance="@style/TextAppearance.Small.SB"
+
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintBottom_toBottomOf="@id/renter_sign_state_image"
+                        app:layout_constraintEnd_toStartOf="@id/renter_sign_state_button"
+                        app:layout_constraintStart_toEndOf="@id/renter_sign_state_image"
+
+                        app:layout_constraintTop_toTopOf="@id/renter_sign_state_image"
+                        app:mutableText="@{viewModel.getRenterSignText()}" />
+
+
+                    <TextView
+                        android:id="@+id/renter_sign_state_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->viewModel.onRenterSign()}"
+
+                        android:padding="4dp"
+
+                        android:text="@string/text_sign_the_contract"
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:textColor="@color/colorTextLinkLight"
+                        app:layout_constraintBottom_toBottomOf="@id/renter_sign_state_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/renter_sign_state_image"
+                        app:mutableVisibility="@{viewModel.getRenterSignVisibility()}" />
+
+
+                    <ImageView
+                        android:id="@+id/lister_sign_state_image"
+                        android:layout_width="@dimen/margin_default"
+                        android:layout_height="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_half"
+                        android:contentDescription="@string/caption_title"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_guide_success"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/renter_sign_state_image"
+                        app:mutableImageSrc="@{viewModel.getLenderSignImage()}" />
+
+
+                    <TextView
+                        android:id="@+id/lister_sign_state_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+
+                        android:text="@string/text_please_sign_the_contract"
+                        android:textAppearance="@style/TextAppearance.Small.SB"
+
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintBottom_toBottomOf="@id/lister_sign_state_image"
+                        app:layout_constraintEnd_toStartOf="@id/lister_sign_state_button"
+                        app:layout_constraintStart_toEndOf="@id/lister_sign_state_image"
+
+                        app:layout_constraintTop_toTopOf="@id/lister_sign_state_image"
+                        app:mutableText="@{viewModel.getListerSignText()}" />
+
+
+                    <TextView
+                        android:id="@+id/lister_sign_state_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->viewModel.onListerSign()}"
+                        android:padding="4dp"
+
+                        android:text="@string/text_sign_the_contract"
+
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:textColor="@color/colorTextLinkLight"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@id/lister_sign_state_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/lister_sign_state_image"
+                        app:mutableVisibility="@{viewModel.getListerSignVisibility()}" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_half"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone"
+                    app:mutableVisibility="@{viewModel.getContractVisibility()}" />
+
+
                 <TextView
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_whay_canceled"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
 
 
@@ -414,7 +560,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_default"
+                    android:layout_marginLeft="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="decline"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderCancelRes()}"
@@ -425,6 +574,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
@@ -436,10 +587,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_pickup_address"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
                     app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
 
 
@@ -447,7 +598,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_default"
+                    android:layout_marginLeft="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="Address"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderAddress()}"
@@ -458,6 +612,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
@@ -469,10 +624,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_introduction"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
 
 
@@ -480,7 +635,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_default"
+                    android:layout_marginLeft="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="Introduction"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderIntroduction()}"
@@ -492,6 +650,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
@@ -502,10 +661,11 @@
 
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginTop="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_user_request"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    android:textAppearance="@style/TextAppearance.Large.SB"
                     app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
 
 
@@ -513,7 +673,10 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_default"
+                    android:layout_marginLeft="@dimen/margin_default"
+
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="Message"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
                     app:mutableText="@{viewModel.getOrderDescription()}"
@@ -525,6 +688,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginRight="@dimen/margin_default"
                     android:layout_marginBottom="40dp"
                     android:background="@color/colorPlatinGrey"

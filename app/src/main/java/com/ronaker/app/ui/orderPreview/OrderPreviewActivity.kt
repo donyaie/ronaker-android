@@ -15,7 +15,8 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
-import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
+import com.ronaker.app.ui.orderAccept.OrderAcceptActivity
+import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
 import com.ronaker.app.ui.orderCancel.OrderCancelActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
@@ -163,6 +164,16 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
                 OrderCancelActivity.REQUEST_CODE
             )
         })
+
+
+        viewModel.signContractShow.observe(this, Observer {
+
+            startActivityForResult(
+                OrderAuthorizationActivity.newInstance(this, viewModel.getOrder()),
+                OrderAuthorizationActivity.REQUEST_CODE
+            )
+        })
+
 
 
 

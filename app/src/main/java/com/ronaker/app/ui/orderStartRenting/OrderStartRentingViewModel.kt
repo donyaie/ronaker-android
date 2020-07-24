@@ -42,6 +42,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+    val doSignContract: MutableLiveData<Boolean> = MutableLiveData()
 
     val instruction: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
@@ -144,7 +145,13 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
                     finish.postValue(true)
 
                 } else {
-                    errorMessage.postValue(result.error?.message)
+
+                    if (result.error?.responseCode == 406) {
+
+
+                        doSignContract.postValue(true)
+                    } else
+                        errorMessage.postValue(result.error?.message)
                 }
             }
 

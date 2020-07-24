@@ -12,7 +12,8 @@ import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductAdapterViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
-import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptViewModel
+import com.ronaker.app.ui.orderAccept.OrderAcceptViewModel
+import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationViewModel
 import com.ronaker.app.ui.orderCancel.OrderCancelViewModel
 import com.ronaker.app.ui.orderCreate.OrderCreateViewModel
 import com.ronaker.app.ui.orderDecline.OrderDeclineViewModel
@@ -94,6 +95,7 @@ interface ViewModelInjector {
     fun inject(viewModel: OrderPreviewPriceViewModel)
     fun inject(viewModel: ManageProductAdapterViewModel)
     fun inject(viewModel: OrderItemViewModel)
+    fun inject(viewModel: OrderAuthorizationViewModel)
 
 
     @Component.Builder

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
+import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
 import com.ronaker.app.utils.Alert
 
 class OrderStartRentingActivity : BaseActivity() {
@@ -71,6 +72,17 @@ class OrderStartRentingActivity : BaseActivity() {
         viewModel.finish.observe(this, Observer { _ ->
             setResult(Activity.RESULT_OK)
             finish()
+        })
+
+
+
+        viewModel.doSignContract.observe(this, Observer { _ ->
+
+            startActivity(getOrder()?.let {
+                OrderAuthorizationActivity.newInstance(this@OrderStartRentingActivity,
+                    it
+                )
+            })
         })
 
 

@@ -220,4 +220,11 @@
     <string name="text_rate_it">Beoordeel het</string>
     <string name="text_archive_it">Archiveer het</string>
     <string name="text_near_me">Dicht bij mij</string>
+    <string name="text_you_will_sign_this_contract_with_your_smart_id">U ondertekent dit contract met uw Smart ID</string>
+    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Controleer de meegeleverde controlecode op uw telefoon Bevestig door PIN2 in te voeren:</string>
+    <string name="text_view_the_contract">Bekijk het contract</string>
+    <string name="text_contract">Contract</string>
+    <string name="text_please_sign_the_contract">Onderteken het contract</string>
+    <string name="text_sign_the_contract">Teken Het contract</string>
+    <string name="text_please_read_and_sign_the_contract">Lees en onderteken het contract</string>
 </resources>

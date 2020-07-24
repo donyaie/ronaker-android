@@ -21,7 +21,10 @@ data class Order(
     val rejectionReason: String?,
     val address: String?,
     val instruction: String?,
-    val isArchived: Boolean = false
+    val isArchived: Boolean = false,
+    val smart_id_creator_session_id: String?,
+    val smart_id_owner_session_id: String?,
+    val signPdf: String?
 ) : Parcelable {
 
 
@@ -178,7 +181,10 @@ fun OrderResponseModel.toOrderModel(): Order {
         rejectionReason = rejection_reason,
         address = address,
         instruction = instruction,
-        isArchived = is_archived
+        isArchived = is_archived,
+        smart_id_creator_session_id = smart_id_creator_session_id,
+        smart_id_owner_session_id = this.smart_id_owner_session_id,
+        signPdf = sign_pdf
 
     )
 

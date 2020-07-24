@@ -74,6 +74,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     val orderIntroduction: MutableLiveData<String> = MutableLiveData()
 
 
+    val signContractShow: MutableLiveData<Boolean> = MutableLiveData()
+    val previewContractShow: MutableLiveData<Boolean> = MutableLiveData()
+
+    val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
+
     val orderCancelRes: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
@@ -84,6 +89,18 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     val actionVisibility: MutableLiveData<Int> = MutableLiveData()
     val userInfoVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+    val contractVisibility: MutableLiveData<Int> = MutableLiveData()
+    val renterSignVisibility: MutableLiveData<Int> = MutableLiveData()
+    val listerSignVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+    val renterSignImage: MutableLiveData<Int> = MutableLiveData()
+    val lenderSignImage: MutableLiveData<Int> = MutableLiveData()
+
+    val renterSignText: MutableLiveData<String> = MutableLiveData()
+    val listerSignText: MutableLiveData<String> = MutableLiveData()
 
 
     val acceptVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -252,10 +269,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
 
-
-
-
-
         order.price?.let {
 
             dataList.clear()
@@ -270,6 +283,9 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
         )
 
 
+
+        order.signPdf?.let { contractPreviewVisibility.postValue(View.VISIBLE) }
+            .run { contractPreviewVisibility.postValue(View.GONE) }
 
 
         when (Order.OrderTypeEnum[order.orderType]) {
@@ -288,8 +304,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 recieptVisibility.value = View.VISIBLE
 
-                startRatingVisibility.value = View.GONE
-
 
                 var total = 0.0
                 order.price?.forEach {
@@ -306,6 +320,57 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
 
+                if (order.smart_id_creator_session_id.isNullOrBlank()) {
+
+                    renterSignImage.postValue(R.drawable.ic_guide_red)
+
+                    renterSignText.postValue("Please sign the contract")
+
+                    renterSignVisibility.postValue(View.VISIBLE)
+
+                } else {
+
+                    renterSignVisibility.postValue(View.GONE)
+                    renterSignText.postValue("you signed the contract")
+                    renterSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+                listerSignVisibility.postValue(View.GONE)
+                if (order.smart_id_owner_session_id.isNullOrBlank()) {
+
+                    listerSignText.postValue(
+                        String.format(
+                            "Waite for %s sign",
+                            order.productOwner?.first_name
+                        )
+                    )
+                    lenderSignImage.postValue(R.drawable.ic_guide_red)
+                } else {
+
+                    listerSignText.postValue(
+                        String.format(
+                            "%s signed the contract",
+                            order.productOwner?.first_name
+                        )
+                    )
+                    lenderSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+
+                startRatingVisibility.value = View.GONE
+
+                actionVisibility.value = View.GONE
+
+                acceptVisibility.value = View.GONE
+                declineVisibility.value = View.GONE
+                finishVisibility.value = View.GONE
+                startRentingVisibility.value = View.GONE
+                cancelVisibility.value = View.GONE
+
+                userContactVisibility.value = View.GONE
+
+                contractVisibility.postValue(View.GONE)
+
 
 
 
@@ -315,67 +380,53 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                         actionVisibility.value = View.VISIBLE
 
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
                         startRentingVisibility.value = View.VISIBLE
                         cancelVisibility.value = View.VISIBLE
 
                         userContactVisibility.value = View.VISIBLE
 
+                        contractVisibility.postValue(View.VISIBLE)
+
                     }
                     Order.OrderStatusEnum.Started -> {
 
-                        actionVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
 
                         userContactVisibility.value = View.VISIBLE
+
 
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
                         actionVisibility.value = View.VISIBLE
 
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
-                        cancelVisibility.value = View.GONE
+                        userContactVisibility.value = View.VISIBLE
 
                         startRatingVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
+
 
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
 
                         actionVisibility.value = View.VISIBLE
 
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                 }
 
@@ -392,7 +443,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 }
 
-                startRatingVisibility.value = View.GONE
 
                 var total = 0.0
                 order.price?.forEach {
@@ -409,49 +459,93 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                 )
 
 
+
+
+
+                if (order.smart_id_owner_session_id.isNullOrBlank()) {
+
+                    lenderSignImage.postValue(R.drawable.ic_guide_red)
+
+                    listerSignText.postValue("Please sign the contract")
+
+                    listerSignVisibility.postValue(View.VISIBLE)
+
+                } else {
+
+                    listerSignVisibility.postValue(View.GONE)
+                    listerSignText.postValue("you signed the contract")
+                    lenderSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+                renterSignVisibility.postValue(View.GONE)
+                if (order.smart_id_creator_session_id.isNullOrBlank()) {
+
+                    renterSignText.postValue(
+                        String.format(
+                            "Waite for %s sign",
+                            order.orderUser?.first_name
+                        )
+                    )
+                    renterSignImage.postValue(R.drawable.ic_guide_red)
+                } else {
+
+                    renterSignText.postValue(
+                        String.format(
+                            "%s signed the contract",
+                            order.orderUser?.first_name
+                        )
+                    )
+                    renterSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+
+
+
+
+
+
+                startRatingVisibility.value = View.GONE
+
+                actionVisibility.value = View.GONE
                 recieptVisibility.value = View.GONE
+                startRentingVisibility.value = View.GONE
+                acceptVisibility.value = View.GONE
+                declineVisibility.value = View.GONE
+                finishVisibility.value = View.GONE
+                cancelVisibility.value = View.GONE
+                userContactVisibility.value = View.GONE
+
+                contractVisibility.postValue(View.GONE)
+
                 when (Order.OrderStatusEnum[order.status]) {
                     Order.OrderStatusEnum.Accepted -> {
 
                         actionVisibility.value = View.VISIBLE
-
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
+
                     }
                     Order.OrderStatusEnum.Started -> {
 
                         actionVisibility.value = View.VISIBLE
 
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
                         finishVisibility.value = View.VISIBLE
-                        cancelVisibility.value = View.GONE
-
                         userContactVisibility.value = View.VISIBLE
+
+                        contractVisibility.postValue(View.VISIBLE)
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
-                        actionVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
-                        actionVisibility.value = View.GONE
-
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
@@ -459,15 +553,9 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                         acceptVisibility.value = View.VISIBLE
                         declineVisibility.value = View.VISIBLE
-                        finishVisibility.value = View.GONE
-                        startRentingVisibility.value = View.GONE
-                        cancelVisibility.value = View.GONE
-
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
-                        actionVisibility.value = View.GONE
                     }
                 }
 
@@ -642,5 +730,22 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+    fun onListerSign() {
+
+        signContractShow.postValue(true)
+
+
+    }
+
+    fun onRenterSign() {
+
+        signContractShow.postValue(true)
+    }
+
+    fun onViewContract() {
+
+        previewContractShow.postValue(true)
+
+    }
 
 }

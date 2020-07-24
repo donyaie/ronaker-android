@@ -271,8 +271,11 @@ dependencies {
 
     implementation "io.branch.sdk.android:library:$branchVersion"
 
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
 
-
+    implementation group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.

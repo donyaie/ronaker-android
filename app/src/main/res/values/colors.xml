@@ -18,6 +18,7 @@
 
     <color name="colorTextDark">#3D424D</color>
     <color name="colorTextLink">#145066</color>
+    <color name="colorTextLinkLight">#4A90E2</color>
     <color name="colorTextLight">#FFFFFF</color>
     <color name="colorTextGreyLight">#9398A3</color>
 

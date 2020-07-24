@@ -17,6 +17,11 @@ data class OrderResponseModel(
     @SerializedName("rejection_reason") val rejection_reason: String,
     @SerializedName("address") val address: String,
     @SerializedName("instruction") val instruction: String,
-    @SerializedName("is_archived") val is_archived: Boolean = false
+    @SerializedName("is_archived") val is_archived: Boolean = false,
+    @SerializedName("smart_id_owner_session_id") val smart_id_owner_session_id: String ?,
+    @SerializedName("smart_id_creator_session_id") val smart_id_creator_session_id: String?,
+    @SerializedName("sign_pdf") val sign_pdf: String?
+
+
 
 )

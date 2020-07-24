@@ -34,5 +34,5 @@ fun Double.toCurrencyFormat(prefix: String?): String {
 
 
 
-    return (if (prefix == null) "" else "$prefix ") + "€ ${format.format(this)}"
+    return (if (prefix == null) "" else "$prefix ") + "€${format.format(this)}"
 }

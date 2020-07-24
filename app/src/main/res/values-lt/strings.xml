@@ -220,4 +220,11 @@
     <string name="text_rate_it">Įvertink</string>
     <string name="text_archive_it">Archyvuoti</string>
     <string name="text_near_me">Šalia manęs</string>
+    <string name="text_you_will_sign_this_contract_with_your_smart_id">Jūs pasirašysite šią sutartį su savo „Smart ID“</string>
+    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Patikrinkite pateiktą valdymo kodą telefone. Patvirtinkite įvesdami PIN2 kodą:</string>
+    <string name="text_view_the_contract">Peržiūrėti sutartį</string>
+    <string name="text_contract">Sutartis</string>
+    <string name="text_please_sign_the_contract">Prašau pasirašyti sutartį</string>
+    <string name="text_sign_the_contract">Pasirašykite sutartį</string>
+    <string name="text_please_read_and_sign_the_contract">Prašau perskaityti ir pasirašyti sutartį</string>
 </resources>

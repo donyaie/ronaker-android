@@ -151,7 +151,8 @@
 
 
         <TextView
-            android:visibility="visible"
+            android:visibility="gone"
+
             android:id="@+id/rate"
             mutableFastVisibility="@{viewModel.getRateVisibility()}"
             android:clickable="true"
@@ -171,7 +172,7 @@
 
 
         <TextView
-            android:visibility="visible"
+            android:visibility="gone"
             android:text="@string/text_archive_it"
             android:layout_marginTop="12dp"
 

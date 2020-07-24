@@ -35,5 +35,20 @@ interface OrderRepository {
     ): Observable<Result<Boolean>>
 
     fun getOrderDetail(token: String?, suid: String): Observable<Result<Order>>
+
+
+    fun startSmartIDAuth(
+        user_token: String?,
+        orderSuid: String,
+        national_code: String,
+        personal_code: String
+    ): Observable<Result<Boolean>>
+
+
+    fun checkSmartIDSession(user_token: String?, orderSuid: String): Observable<Result<Boolean>>
+    fun getSmartIDVerificationCode(
+        user_token: String?,
+        orderSuid: String
+    ): Observable<Result<String>>
 }
 

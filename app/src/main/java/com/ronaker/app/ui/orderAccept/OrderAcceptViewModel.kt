@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.orderAcceptIntro
+package com.ronaker.app.ui.orderAccept
 
 
 import android.app.Application

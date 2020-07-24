@@ -6,6 +6,7 @@ import com.ronaker.app.data.network.OrderApi
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.request.ProductRateRequestModel
+import com.ronaker.app.data.network.request.UserSmartIdVerificationCodeRequestModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
@@ -114,6 +115,67 @@ class DefaultOrderRepository(private val api: OrderApi) :
             .map { true }.toResult()
 
     }
+
+
+
+
+
+    override fun getSmartIDVerificationCode(
+
+        user_token: String?,
+        orderSuid: String
+    ): Observable<Result<String>> {
+
+        return api.getSmartIDVerificationCode("Token $user_token",orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.verification_code
+            }
+            .toResult()
+
+    }
+
+
+    override fun startSmartIDAuth(
+
+        user_token: String?,
+        orderSuid: String,
+        national_code: String,
+        personal_code: String
+    ): Observable<Result<Boolean>> {
+
+        val request =
+            UserSmartIdVerificationCodeRequestModel(
+                national_code,
+                personal_code
+            )
+        return api.startSmartIDAuth("Token $user_token",orderSuid, request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+    override fun checkSmartIDSession(
+        user_token: String?,
+        orderSuid: String
+
+    ): Observable<Result<Boolean>> {
+        return api.checkSmartIDSession("Token $user_token",orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
 
 
 }

@@ -141,11 +141,11 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             if (value == true) {
 
                 binding.authLayout.isClickable = true
-                binding.authLayout.setEndDrawableRes(R.drawable.ic_complete)
+                binding.authImage.setImageResource(R.drawable.ic_complete)
             } else {
 
                 binding.authLayout.isClickable = true
-                binding.authLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+                binding.authImage.setImageResource(R.drawable.ic_chevron_right)
             }
         })
 
