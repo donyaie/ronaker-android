@@ -2,8 +2,9 @@ package com.ronaker.app.ui.loginForget
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +15,7 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.KeyboardManager
 
-class LoginForgetActivity :BaseActivity() {
+class LoginForgetActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginForgetBinding
     private lateinit var viewModel: LoginForgetViewModel
@@ -26,7 +27,7 @@ class LoginForgetActivity :BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_forget)
         viewModel = ViewModelProvider(this).get(LoginForgetViewModel::class.java)
-        binding.viewModel=viewModel
+        binding.viewModel = viewModel
 
         viewModel.goNext.observe(this, Observer { value ->
             if (value == true) {
@@ -38,7 +39,7 @@ class LoginForgetActivity :BaseActivity() {
         })
 
 
-        binding.toolbar.cancelClickListener= View.OnClickListener {
+        binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finish()
         }
@@ -58,11 +59,42 @@ class LoginForgetActivity :BaseActivity() {
         })
 
 
+        binding.passwordInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                binding.nextButton.isEnabled=viewModel.validatePassword(p0?.toString(),(binding.repeatPasswordInput.text?:""))
+            }
+
+        })
+
+
+        binding.repeatPasswordInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                binding.nextButton.isEnabled=viewModel.validatePassword(binding.passwordInput.text,(p0?.toString()?:""))
+            }
+
+        })
+
+        binding.nextButton.isEnabled=false
+
+
         handleIntent(intent)
 
 
     }
-
 
 
     override fun onNewIntent(intent: Intent?) {
@@ -75,9 +107,8 @@ class LoginForgetActivity :BaseActivity() {
     private fun handleIntent(intent: Intent) {
 
 
-
         intent.data?.encodedQuery?.let {
-           val token= it.replace("token=","").trim()
+            val token = it.replace("token=", "").trim()
 
 
             viewModel.setToken(token)

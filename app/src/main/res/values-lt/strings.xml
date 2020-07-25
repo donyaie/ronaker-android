@@ -227,4 +227,10 @@
     <string name="text_please_sign_the_contract">Prašau pasirašyti sutartį</string>
     <string name="text_sign_the_contract">Pasirašykite sutartį</string>
     <string name="text_please_read_and_sign_the_contract">Prašau perskaityti ir pasirašyti sutartį</string>
+    <string name="text_send_activation_success">Siunčiame jums suaktyvinimo el. Laišką</string>
+    <string name="text_this_password_is_too_short_it_must_contain_at_least_8_characters">Šis slaptažodis per trumpas. Jame turi būti ne mažiau kaip 8 simboliai.</string>
+    <string name="text_this_password_is_entirely_numeric">Šis slaptažodis yra visiškai skaitinis.</string>
+    <string name="text_choose_new_password_to_reset_password">Pasirinkite naują slaptažodį, jei norite iš naujo nustatyti slaptažodį</string>
+    <string name="text_the_password_and_repeat_password_must_same">Slaptažodis ir pakartotinis slaptažodis turi sutapti.</string>
+    <string name="text_reset_password">Atstatyti slaptažodį</string>
 </resources>

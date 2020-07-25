@@ -57,7 +57,7 @@
                     android:layout_marginTop="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:gravity="start"
-                    android:text="Choose new password to reset password"
+                    android:text="@string/text_choose_new_password_to_reset_password"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextLight"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
 
+                    app:input_is_alert="false"
                     android:layout_marginTop="40dp"
                     android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="password"
@@ -76,31 +77,86 @@
                     android:inputType="textPassword"
                     app:input_hint="@string/password_hint"
 
-                    app:input_regex="^.{6,}$"
+                    app:input_regex="^.{8,}$"
                     app:input_title="@string/password_title"
                     app:input_transparent="true"
                     app:layout_constraintTop_toBottomOf="@id/title"
                     tools:ignore="UnusedAttribute" />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    android:textAppearance="@style/TextAppearance.Small.SB"
+                    app:layout_constraintTop_toBottomOf="@id/password_input"
+                    android:id="@+id/password_length_error"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginEnd="@dimen/margin_default"
+                    app:mutableVisibility="@{viewModel.getPasswordLengthVisibility()}"
+                    android:textColor="@color/colorTextLight"
+                    android:text="@string/text_this_password_is_too_short_it_must_contain_at_least_8_characters"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:textAppearance="@style/TextAppearance.Small.SB"
+                    app:layout_constraintTop_toBottomOf="@id/password_length_error"
+                    android:id="@+id/password_alphabet_error"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginEnd="@dimen/margin_default"
+                    android:layout_marginTop="4dp"
+                    app:mutableVisibility="@{viewModel.getPasswordAlphabetVisibility()}"
+                    android:textColor="@color/colorTextLight"
+                    android:text="@string/text_this_password_is_entirely_numeric"
+                    android:layout_height="wrap_content"/>
+
                 <com.ronaker.app.utils.view.InputComponent
                     android:id="@+id/repeat_password_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_half"
 
                     android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="password"
+                    app:input_is_alert="false"
 
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     app:input_hint="@string/text_repeat_your_password"
 
-                    app:input_regex="^.{6,}$"
+                    app:input_regex="^.{8,}$"
                     app:input_title="@string/text_repeat"
                     app:input_transparent="true"
-                    app:layout_constraintTop_toBottomOf="@id/password_input"
+                    app:layout_constraintTop_toBottomOf="@id/password_alphabet_error"
                     tools:ignore="UnusedAttribute" />
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/repeat_password_input"
+                    android:id="@+id/password_match_error"
+
+                    android:visibility="gone"
+                    app:mutableVisibility="@{viewModel.getPasswordMatchVisibility()}"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginEnd="@dimen/margin_default"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextAppearance.Small.SB"
+                    android:textColor="@color/colorTextLight"
+                    android:text="@string/text_the_password_and_repeat_password_must_same"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+
+
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -115,7 +171,7 @@
 
             android:layout_marginBottom="16dp"
             android:onClick="@{()->viewModel.onClickResetPassword(passwordInput.getText().toString(),passwordInput.checkValid(),repeatPasswordInput.getText().toString())}"
-            android:text="Reset password"
+            android:text="@string/text_reset_password"
             app:buttonType="Text"
 
             app:layout_constraintBottom_toBottomOf="parent"

@@ -243,7 +243,12 @@
     <string name="text_please_sign_the_contract">Please sign the contract</string>
     <string name="text_sign_the_contract">Sign the contract</string>
     <string name="text_please_read_and_sign_the_contract">Please Read and Sign the contract</string>
-    <string name="text_send_activation_success">\"We send an activation email \"</string>
+    <string name="text_send_activation_success">We send to you an activation email </string>
+    <string name="text_this_password_is_too_short_it_must_contain_at_least_8_characters">This password is too short. It must contain at least 8 characters.</string>
+    <string name="text_this_password_is_entirely_numeric">This password is entirely numeric.</string>
+    <string name="text_choose_new_password_to_reset_password">Choose new password to reset password</string>
+    <string name="text_the_password_and_repeat_password_must_same">The password and repeat password must same.</string>
+    <string name="text_reset_password">Reset password</string>
 
 
 </resources>

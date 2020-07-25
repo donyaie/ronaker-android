@@ -227,4 +227,10 @@
     <string name="text_please_sign_the_contract">Onderteken het contract</string>
     <string name="text_sign_the_contract">Teken Het contract</string>
     <string name="text_please_read_and_sign_the_contract">Lees en onderteken het contract</string>
+    <string name="text_send_activation_success">We sturen u een activeringse-mail</string>
+    <string name="text_this_password_is_too_short_it_must_contain_at_least_8_characters">Dit wachtwoord is te kort. Het moet minimaal 8 karakters bevatten.</string>
+    <string name="text_this_password_is_entirely_numeric">Dit wachtwoord is volledig numeriek.</string>
+    <string name="text_choose_new_password_to_reset_password">Kies een nieuw wachtwoord om het wachtwoord opnieuw in te stellen</string>
+    <string name="text_the_password_and_repeat_password_must_same">Het wachtwoord en het herhaalwachtwoord moeten hetzelfde zijn.</string>
+    <string name="text_reset_password">Wachtwoord resetten</string>
 </resources>

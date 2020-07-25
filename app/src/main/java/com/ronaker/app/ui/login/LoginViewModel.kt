@@ -8,10 +8,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.utils.AnalyticsManager
-import com.ronaker.app.utils.AppDebug
-import com.ronaker.app.utils.actionLogin
-import com.ronaker.app.utils.actionSignUp
+import com.ronaker.app.utils.*
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -30,6 +27,11 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var forgetSubscription:Disposable?=null
     val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
     val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
+
+
+    val passwordLengthVisibility: MutableLiveData<Int> = MutableLiveData()
+    val passwordAlphabetVisibility: MutableLiveData<Int> = MutableLiveData()
+    val passwordMatchVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
     @Inject
@@ -253,6 +255,34 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
         actionState.value = LoginActionEnum.register
         viewState.value = LoginStateEnum.email
+    }
+
+
+    fun validatePassword(password: String?, repeat: String): Boolean {
+        var isValid = true
+
+        if (password.isNullOrBlank() || password.length < 8) {
+            passwordLengthVisibility.postValue(View.VISIBLE)
+            isValid = false
+        } else
+            passwordLengthVisibility.postValue(View.GONE)
+
+        if (password?.trim()?.isNumeric() == true) {
+            passwordAlphabetVisibility.postValue(View.VISIBLE)
+            isValid = false
+        } else
+            passwordAlphabetVisibility.postValue(View.GONE)
+
+        if (password?.compareTo(repeat) != 0) {
+            passwordMatchVisibility.postValue(View.VISIBLE)
+            isValid = false
+        } else
+            passwordMatchVisibility.postValue(View.GONE)
+
+
+        AppDebug.log("validatePassword","password: $password , repeat: $repeat isValid: $isValid")
+
+        return isValid
     }
 
 
