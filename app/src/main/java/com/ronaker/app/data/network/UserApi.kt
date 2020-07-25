@@ -103,4 +103,26 @@ interface UserApi {
     @GET("/api/v1/users/smart-id/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun checkSmartIDSession(@Header("Authorization") authToken: String): Observable<FreeResponseModel>
+
+
+
+    /**
+     * Forget password
+     */
+    @POST("/api/v1/users/password_reset/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun forgetPassword(
+        @Body request: UserForgetPasswordRequestModel
+    ): Observable<FreeResponseModel>
+
+
+
+    /**
+     * Forget password confirm
+     */
+    @POST("/api/v1/users/password_reset/confirm/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun forgetPasswordConfirm(
+        @Body request: UserForgetPasswordConfirmRequestModel
+    ): Observable<FreeResponseModel>
 }

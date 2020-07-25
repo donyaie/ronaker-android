@@ -187,9 +187,35 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
+
+        <activity
+            android:name=".ui.loginForget.LoginForgetActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginForgetTheme"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="api.ronaker.com"
+                    android:pathPrefix="/api/v1/users/email-reset"
+                    android:scheme="https" />
+            </intent-filter>
+
+
+        </activity>
+
 
 
         <activity

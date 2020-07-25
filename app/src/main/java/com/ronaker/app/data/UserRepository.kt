@@ -45,5 +45,8 @@ interface UserRepository {
         national_code: String,
         personal_code: String
     ): Observable<Result<Boolean>>
+
+    fun forgetPassword(email: String): Observable<Result<Boolean>>
+    fun forgetPasswordConfirm(token: String, password: String): Observable<Result<Boolean>>
 }
 

@@ -3,6 +3,8 @@ package com.ronaker.app.ui.explore
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -187,6 +189,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             viewModel.clearSearch()
         }
+        Handler(Looper.getMainLooper()).postDelayed({ binding.header.elevation = 0f }, 100)
 
 
 //

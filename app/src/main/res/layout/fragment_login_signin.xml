@@ -91,6 +91,21 @@
                     app:input_transparent="true"
                     app:layout_constraintTop_toBottomOf="@id/email_input"
                     tools:ignore="UnusedAttribute" />
+
+
+                <TextView
+
+                    android:onClick="@{()->viewModel.onClickGotoForget()}"
+                    android:padding="6dp"
+                    app:layout_constraintStart_toStartOf="@id/password_input"
+                    app:layout_constraintTop_toBottomOf="@id/password_input"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                    android:text="Forget password"
+                    android:textColor="@color/colorTextLight"
+                    android:layout_height="wrap_content"/>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -143,6 +158,7 @@
                 android:textColor="@color/colorTextLight"
                 android:textAppearance="@style/TextAppearance.Medium.SB"
                 android:text="@string/text_sign_up"
+                android:layout_marginStart="4dp"
                 android:layout_height="wrap_content"/>
 
 

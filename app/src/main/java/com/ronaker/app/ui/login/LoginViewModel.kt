@@ -26,10 +26,19 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     private var signUpSubscription: Disposable? = null
     private var emailVerificationSubscription: Disposable? = null
 
+
+    var forgetSubscription:Disposable?=null
+    val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
+    val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
+
+
     @Inject
     lateinit var context: Context
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val successMessage: MutableLiveData<String> = MutableLiveData()
+
+    
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
@@ -57,7 +66,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         email(1),
         info(2),
         password(3),
-        login(4);
+        login(4),
+        forget(5);
 
         var position: Int = 0
             internal set
@@ -174,8 +184,38 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+    fun onClickLoginResetPassword(
+        email: String?,
+        emailIsValid: Boolean){
+        
+        if(emailIsValid && email!=null){
+            forgetSubscription =
+                userRepository.forgetPassword(email).doOnSubscribe { loadingButton.postValue(true) }
+                    .doOnTerminate { loadingButton.postValue(false) }
+                    .subscribe { result ->
+                        loading.postValue(false)
+                        if (result.isSuccess()) {
+
+                            
+                            viewState.postValue(LoginStateEnum.home)
+                            
+                            successMessage.postValue(context.getString(R.string.text_send_activation_success))
+                            
+
+                        } else {
+                            errorMessage.postValue(result.error?.message)
+                        }
+                    }
+        }
+
+    }
+
     fun onClickGotoSignUp() {
         gotoSignUp.postValue(true)
+    }
+    fun onClickGotoForget(){
+
+        viewState.value = LoginStateEnum.forget
     }
 
     fun onClickGotoSignIn() {
@@ -201,9 +241,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 }
     }
 
-
-    val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
-    val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
 
     val loginClickListener = View.OnClickListener {
 

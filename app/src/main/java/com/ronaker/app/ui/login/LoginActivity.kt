@@ -27,7 +27,7 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
-    private val Max_size = 5
+    private val Max_size = 6
 
     private lateinit var screenLibrary: ScreenCalculator
 
@@ -76,6 +76,10 @@ class LoginActivity : BaseActivity() {
 
                     currentPosition = LoginViewModel.LoginStateEnum.password.position
                 }
+                LoginViewModel.LoginStateEnum.forget -> {
+
+                    currentPosition = LoginViewModel.LoginStateEnum.forget.position
+                }
             }
 
         }
@@ -92,8 +96,6 @@ class LoginActivity : BaseActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         setSwipeCloseDisable()
         enableKeyboardAnimator()
@@ -135,6 +137,11 @@ class LoginActivity : BaseActivity() {
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Alert.makeTextError(this, errorMessage)
+        })
+
+
+        viewModel.successMessage.observe(this, Observer { errorMessage ->
+            Alert.makeTextSuccess(this, errorMessage)
         })
 
         viewModel.goNext.observe(this, Observer { value ->
@@ -219,6 +226,7 @@ class LoginActivity : BaseActivity() {
             LoginViewModel.LoginStateEnum.password -> LoginPasswordFragment()
             LoginViewModel.LoginStateEnum.info -> LoginNameFragment()
             LoginViewModel.LoginStateEnum.login -> LoginSignInFragment()
+            LoginViewModel.LoginStateEnum.forget -> LoginForgetFragment()
         }
     }
 

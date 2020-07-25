@@ -243,6 +243,7 @@
     <string name="text_please_sign_the_contract">Please sign the contract</string>
     <string name="text_sign_the_contract">Sign the contract</string>
     <string name="text_please_read_and_sign_the_contract">Please Read and Sign the contract</string>
+    <string name="text_send_activation_success">\"We send an activation email \"</string>
 
 
 </resources>

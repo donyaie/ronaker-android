@@ -216,6 +216,40 @@ class DefaultUserRepository(
     }
 
 
+
+    override fun forgetPassword(
+        email: String
+    ): Observable<Result<Boolean>> {
+        val request=UserForgetPasswordRequestModel(email)
+
+        return userApi.forgetPassword(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+    override fun forgetPasswordConfirm(
+        token: String,
+        password: String
+    ): Observable<Result<Boolean>> {
+        val request=UserForgetPasswordConfirmRequestModel(token,password)
+
+        return userApi.forgetPasswordConfirm(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+
     override fun checkSmartIDSession(
         user_token: String?
     ): Observable<Result<Boolean>> {
