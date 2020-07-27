@@ -1,20 +1,23 @@
 package com.ronaker.app.ui.orderAuthorization
 
 import android.os.Bundle
+import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener
-import com.github.barteksc.pdfviewer.util.FitPolicy
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.model.Order
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.IPagerFragment
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_order_smartid_personal_code.*
+import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
-class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment, OnLoadCompleteListener {
+class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrderSmartidPersonalCodeBinding
@@ -43,25 +46,82 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment, OnLoadComple
 
 
         }
-        binding.view = this
+//        binding.view = this
 
-        binding.pdfView.fromAsset("contract.pdf")
-            .enableSwipe(true) // allows to block changing pages using swipe
-            .swipeHorizontal(true)
-            .enableDoubletap(true)
-            .defaultPage(0)
-            .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
-            .password(null)
-            .scrollHandle(null)
-            .enableAntialiasing(true) // improve rendering a little bit on low-res screens
-            // spacing between pages in dp. To define spacing color, set view background
-            .spacing(0)
-            .pageFitPolicy(FitPolicy.WIDTH)
-            .load()
+//        binding.webView.loadUrl("file:///android_asset/contract.html");
+
+        AppDebug.log("Show Order","order : "+getOrder().toString())
+          getOrder()?.let {order->
+
+                val input: InputStream = requireContext().assets.open("contract.html")
+                val size: Int = input.available()
+
+                val buffer = ByteArray(size)
+                input.read(buffer)
+                input.close()
+
+                val str = String(buffer)
+                    .replace(
+                        "[INCLUDE RENTER NAME]",
+                        "${order.orderUser?.first_name} ${order.orderUser?.last_name}"
+                    )
+                    .replace(
+                        "[INCLUDE LISTER NAME]",
+                        "${order.productOwner?.first_name} ${order.productOwner?.last_name}"
+                    )
+
+                    .replace(
+                        "[INCLUDE DATE]",
+                        String.format(
+                            "from %s to %s",
+                            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(order.fromDate),
+                            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(order.toDate))
+
+                    )
+//                    .replace(
+//                        "[TRANSACTION NUMBER]",
+//                       ""
+//
+//                    )
+
+
+
+
+
+
+              AppDebug.log("Show Order","buffer size : "+buffer.size)
+
+              AppDebug.log("Show Order", "html : \n$str")
+//                .replace("[INCLUDE TRANSACTION NUMBER]", "new string")
+//                .replace("[INCLUDE DATE]", "new string")
+
+              binding.webView.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null);
+//                binding.webView.loadData(str, "text/html", "utf-8")
+            }
+
+
+
+
+//        binding.pdfView.fromAsset("contract.pdf")
+//            .enableSwipe(true) // allows to block changing pages using swipe
+//            .swipeHorizontal(true)
+//            .enableDoubletap(true)
+//            .defaultPage(0)
+//            .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
+//            .password(null)
+//            .scrollHandle(null)
+//            .enableAntialiasing(true) // improve rendering a little bit on low-res screens
+//            // spacing between pages in dp. To define spacing color, set view background
+//            .spacing(0)
+//            .pageFitPolicy(FitPolicy.WIDTH)
+//            .load()
 
 
         return binding.root
     }
+
+
+
 
 
     companion object {
@@ -75,13 +135,20 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment, OnLoadComple
 
     }
 
+    private fun getOrder(): Order? {
+        if (requireActivity().intent.hasExtra(OrderAuthorizationActivity.Order_KEY)) {
+
+            return requireActivity().intent.getParcelableExtra<Order?>(OrderAuthorizationActivity.Order_KEY)
+
+        }
+        return null
+    }
+
+
     override fun onDestroy() {
         disposable?.dispose()
         super.onDestroy()
     }
 
-    override fun loadComplete(nbPages: Int) {
-
-    }
 
 }

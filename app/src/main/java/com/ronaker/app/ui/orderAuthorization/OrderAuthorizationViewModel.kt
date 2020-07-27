@@ -27,6 +27,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
 
     val authPinCode: MutableLiveData<String> = MutableLiveData()
+    val orderContract: MutableLiveData<Order> = MutableLiveData()
 
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
@@ -246,6 +247,8 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     fun setOrder(order: Order?) {
         mOrder = order
+
+        orderContract.postValue(order)
     }
 
 
