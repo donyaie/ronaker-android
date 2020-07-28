@@ -3,26 +3,17 @@ package com.ronaker.app.data.network
 import com.ronaker.app.data.network.response.ContentImageResponseModel
 import com.ronaker.app.data.network.response.FreeResponseModel
 import io.reactivex.Observable
-import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
+
 
 /**
  * The interface which provides methods to get result of webservices
  */
 interface ContentApi {
-    /**
-     * upload  new Image
-     */
-    @POST("/api/v1/contents/images/")
-    @Multipart
-    fun uploadImage(
-        @Header("Authorization") authToken: String?,
-        @Part file: MultipartBody.Part
-    ): Single<ResponseBody>
-
 
     /**
      * delete Image
@@ -45,14 +36,15 @@ interface ContentApi {
     ): Observable<ContentImageResponseModel>
 
 
+
     /**
-     * upload  new Image
+     * download
      */
-    @POST("/api/v1/contents/images/")
-    @Multipart
-    fun uploadImageWithoutProgressr(
+    @GET
+    @Streaming
+    fun download(
         @Header("Authorization") authToken: String?,
-        @Part file: MultipartBody.Part
-    ): Call<ContentImageResponseModel>
+        @Url fileUrl: String
+    ): Observable<Response<ResponseBody>>
 
 }

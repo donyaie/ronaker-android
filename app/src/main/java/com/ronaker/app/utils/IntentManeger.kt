@@ -1,11 +1,18 @@
 package com.ronaker.app.utils
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.provider.Settings
+import androidx.core.content.FileProvider
+import com.ronaker.app.ui.imagePicker.ImagePickerActivity
+import java.io.File
 
 
 object IntentManeger {
@@ -108,6 +115,70 @@ object IntentManeger {
             AppDebug.log(TAG, ex)
         }
     }
+
+
+    fun pickImage(context: Activity,req:Int){
+        val pickPhoto = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        context. startActivityForResult(pickPhoto,req)
+    }
+
+
+    fun takePicture(context:Activity,fileName:String,req:Int){
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        takePictureIntent.putExtra(
+            MediaStore.EXTRA_OUTPUT,
+            FileUtils.getCacheCameraPath(context, fileName)
+        )
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            takePictureIntent.clipData =
+                ClipData.newRawUri("",
+                    FileUtils.getCacheCameraPath(
+                        context,
+                        fileName
+                    )
+                )
+            takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        if (takePictureIntent.resolveActivity(context.packageManager) != null) {
+            context.startActivityForResult(takePictureIntent, req)
+        }
+
+
+    }
+
+
+
+
+    fun openPDF(context: Activity,file: File){
+
+        val target = Intent(Intent.ACTION_VIEW)
+//        target.setDataAndType(Uri.fromFile(file), "application/pdf")
+
+
+        val apkURI = FileProvider.getUriForFile(
+            context, context.applicationContext
+                .packageName.toString() + ".provider", file
+        )
+
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+        target.setDataAndType(apkURI, "application/pdf")
+
+
+
+        val intent = Intent.createChooser(target, "Open File")
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Instruct the user to install a PDF reader here, or something
+        }
+    }
+
+
 
 
 }

@@ -23,6 +23,8 @@ import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.FileUtils
+import com.ronaker.app.utils.IntentManeger
 
 class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -94,6 +96,10 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
     }
+
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -173,6 +179,17 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
                 OrderAuthorizationActivity.REQUEST_CODE
             )
         })
+
+
+        viewModel.previewContractShow.observe(this, Observer {file->
+
+            file?.let {
+
+                IntentManeger.openPDF(this,it)
+            }
+
+        })
+
 
 
 

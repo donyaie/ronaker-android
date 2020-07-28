@@ -2,18 +2,12 @@ package com.ronaker.app.ui.imagePicker
 
 import android.Manifest
 import android.app.Activity
-import android.content.ClipData
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.provider.OpenableColumns
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider.getUriForFile
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -21,6 +15,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.FileUtils
+import com.ronaker.app.utils.FileUtils.getCacheCameraPath
+import com.ronaker.app.utils.IntentManeger
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
@@ -88,20 +85,9 @@ class ImagePickerActivity : BaseActivity() {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
                         fileName = System.currentTimeMillis().toString() + ".jpg"
-                        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        takePictureIntent.putExtra(
-                            MediaStore.EXTRA_OUTPUT,
-                            getCacheImagePath(fileName)
-                        )
 
-                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-                            takePictureIntent.clipData =
-                                ClipData.newRawUri("", getCacheImagePath(fileName))
-                            takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        }
-                        if (takePictureIntent.resolveActivity(packageManager) != null) {
-                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                        }
+                        IntentManeger.takePicture(this@ImagePickerActivity,fileName,REQUEST_IMAGE_CAPTURE)
+
                     }
                 }
 
@@ -122,11 +108,10 @@ class ImagePickerActivity : BaseActivity() {
 
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
-                        val pickPhoto = Intent(
-                            Intent.ACTION_PICK,
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                        )
-                        startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE)
+
+
+                        IntentManeger.pickImage(this@ImagePickerActivity,REQUEST_GALLERY_IMAGE)
+
                     }
                 }
 
@@ -138,7 +123,7 @@ class ImagePickerActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> if (resultCode == Activity.RESULT_OK) {
-                cropImage(getCacheImagePath(fileName))
+                cropImage(getCacheCameraPath(this@ImagePickerActivity,fileName))
             } else {
                 setResultCancelled()
             }
@@ -166,7 +151,7 @@ class ImagePickerActivity : BaseActivity() {
     }
 
     private fun cropImage(sourceUri: Uri) {
-        val destinationUri = Uri.fromFile(File(cacheDir, queryName(contentResolver, sourceUri)))
+        val destinationUri = Uri.fromFile(File(cacheDir, FileUtils.queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
         options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -206,12 +191,7 @@ class ImagePickerActivity : BaseActivity() {
         finish()
     }
 
-    private fun getCacheImagePath(fileName: String): Uri {
-        val path = File(externalCacheDir, "camera")
-        if (!path.exists()) path.mkdirs()
-        val image = File(path, fileName)
-        return getUriForFile(this@ImagePickerActivity, "$packageName.provider", image)
-    }
+
 
     companion object {
         private val TAG = ImagePickerActivity::class.java.simpleName
@@ -269,33 +249,7 @@ class ImagePickerActivity : BaseActivity() {
             dialog.show()
         }
 
-        private fun queryName(resolver: ContentResolver, uri: Uri): String {
-            var name = ""
 
-            val returnCursor = resolver.query(uri, null, null, null, null)
-            val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            returnCursor?.moveToFirst()
-            if (nameIndex != null)
-                name = returnCursor.getString(nameIndex)
-            returnCursor?.close()
-            return name
-        }
 
-        /**
-         * Calling this will delete the images from cache directory
-         * useful to clear some memory
-         */
-        fun clearCache(context: Context) {
-            val path = File(context.externalCacheDir, "camera")
-            if (path.exists() && path.isDirectory) {
-                path.listFiles()?.let {
-
-                    for (child: File? in it) {
-                        child?.delete()
-                    }
-                }
-
-            }
-        }
     }
 }

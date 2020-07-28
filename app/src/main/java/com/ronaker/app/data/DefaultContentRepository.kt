@@ -1,5 +1,6 @@
 package com.ronaker.app.data
 
+import android.content.Context
 import android.net.Uri
 import androidx.core.net.toFile
 import com.ronaker.app.base.Result
@@ -7,16 +8,21 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.ContentApi
 import com.ronaker.app.model.Media
 import com.ronaker.app.model.toMediaModel
+import com.ronaker.app.utils.FileUtils
 import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okio.BufferedSink
+import okio.Okio
 import java.io.File
+import java.io.IOException
 
 
-class DefaultContentRepository(private val contentApi: ContentApi) : ContentRepository {
+class DefaultContentRepository(private val contentApi: ContentApi ,private val context: Context) : ContentRepository {
 
 
     override fun uploadImageWithoutProgress(
@@ -32,6 +38,53 @@ class DefaultContentRepository(private val contentApi: ContentApi) : ContentRepo
             }
             .toResult()
     }
+
+    override fun downloadFile(
+         token: String?,
+        downloadLink: String,
+         fileName: String
+    ): Observable<Result<File?>> {
+        return contentApi.download("Token $token", downloadLink)
+            .flatMap {responseBodyResponse->
+                Observable.create(ObservableOnSubscribe<File?> {subscriber->
+
+
+                    try {
+                        // you can access headers of response
+//                        val header: String? = responseBodyResponse.headers().get("Content-Disposition")
+                        // this is specific case, it's up to you how you want to save your file
+                        // if you are not downloading file from direct link, you might be lucky to obtain file name from header
+//                        val fileName = header?.replace("attachment; filename=", "")
+                        // will create file in global Music directory, can be any other directory, just don't forget to handle permissions
+
+//File()
+                        val file = FileUtils.getCacheContractFile(context,fileName)
+
+                        if(file.exists())
+                            file.delete()
+
+                        val sink: BufferedSink = Okio.buffer(Okio.sink(file))
+                        // you can access body of response
+
+                        responseBodyResponse.body()?.source()?.let {
+                            sink.writeAll(it)
+                        }
+                        sink.close()
+                        subscriber.onNext(file)
+                        subscriber.onComplete()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        subscriber.onError(e)
+                    }
+
+
+                })
+
+
+
+            }.toResult()
+    }
+
 
 
     override fun deleteImage(token: String?, suid: String): Observable<Result<Boolean>> {
@@ -54,86 +107,6 @@ class DefaultContentRepository(private val contentApi: ContentApi) : ContentRepo
     private fun createRequestBody(file: File): RequestBody {
         return file.let { RequestBody.create(MediaType.parse("image/*"), it) }
     }
-
-//    override fun uploadImage(token: String?, filePath: String): Flowable<Double> {
-//        return Flowable.create({ emitter ->
-//            try {
-//                contentApi.run {
-//                    uploadImage(
-//                        "Token $token",
-//                        createMultipartBody(filePath, emitter)
-//                    ).blockingGet()
-//                }
-//
-//                emitter.onComplete()
-//            } catch (e: Exception) {
-//                emitter.tryOnError(e)
-//            }
-//        }, BackpressureStrategy.LATEST)
-//    }
-
-//    fun createMultipartBody(
-//        filePath: String,
-//        emitter: FlowableEmitter<Double>
-//    ): MultipartBody.Part {
-//        val file = File(filePath)
-//        return MultipartBody.Part.createFormData(
-//            "content",
-//            file.name,
-//            createCountingRequestBody(file, emitter)
-//        )
-//    }
-
-//    fun createCountingRequestBody(file: File, emitter: FlowableEmitter<Double>): RequestBody {
-//        val requestBody = createRequestBody(file)
-//        return requestBody.let {
-//            CountingRequestBody(it, object : CountingRequestBody.Listener {
-//                override fun onRequestProgress(bytesWritten: Long, contentLength: Long) {
-//                    val progress = 1.0 * bytesWritten / contentLength
-//                    emitter.onNext(progress)
-//                }
-//
-//            })
-//        }
-//    }
-
-
-//    override fun uploadImageAsync(
-//        token: String?,
-//        filePath: Uri,
-//        callback: ContentRepository.FileUploadListener
-//    ): Call<ContentImageResponceModel>? {
-//        val file = filePath.toFile()
-//        var call: Call<ContentImageResponceModel>? = null
-//        //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//        val mFile = RequestBody.create(MediaType.parse("Image/*"), file)
-//        val fileToUpload = MultipartBody.Part.createFormData("content", file.name, mFile)
-////        val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
-//
-//        try {
-//            call = contentApi.uploadImageWithoutProgressr("Token $token", fileToUpload)
-//            call.enqueue(
-//                object : retrofit2.Callback<ContentImageResponceModel> {
-//                    override fun onFailure(call: Call<ContentImageResponceModel>, t: Throwable) {
-//                        callback.onFailure(NetworkError(t))
-//                    }
-//
-//                    override fun onResponse(
-//                        call: Call<ContentImageResponceModel>,
-//                        response: Response<ContentImageResponceModel>
-//                    ) {
-//
-//                        if (response.isSuccessful)
-//                            callback.onSuccess(response.body())
-//                    }
-//
-//                })
-//        } catch (e: java.lang.Exception) {
-//            callback.onFailure(NetworkError(e))
-//        }
-//        return call
-//
-//    }
 
 
 }

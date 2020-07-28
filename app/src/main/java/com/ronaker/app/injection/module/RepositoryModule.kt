@@ -145,9 +145,9 @@ class RepositoryModule(private val app: Application) {
 
     @Provides
     @Singleton
-    internal fun provideContentRepository(api: ContentApi): ContentRepository {
+    internal fun provideContentRepository(api: ContentApi,context: Context): ContentRepository {
 
-        return DefaultContentRepository(api)
+        return DefaultContentRepository(api,context)
     }
 
     @Provides

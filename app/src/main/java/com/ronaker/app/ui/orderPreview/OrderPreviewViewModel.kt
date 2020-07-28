@@ -7,6 +7,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
@@ -15,6 +16,7 @@ import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -30,6 +32,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
+
+    @Inject
+    lateinit
+    var contentRepository: ContentRepository
 
 
     @Inject
@@ -75,7 +82,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
     val signContractShow: MutableLiveData<Boolean> = MutableLiveData()
-    val previewContractShow: MutableLiveData<Boolean> = MutableLiveData()
+    val previewContractShow: MutableLiveData<File> = MutableLiveData()
 
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -121,12 +128,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
     private var subscription: Disposable? = null
-
-    private var acceptSubscription: Disposable? = null
-
-    private var declineSubscription: Disposable? = null
-    private var cancelSubscription: Disposable? = null
-    private var finishSubscription: Disposable? = null
+    private var fileSubscription: Disposable? = null
 
 
     init {
@@ -138,10 +140,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
-        acceptSubscription?.dispose()
-        declineSubscription?.dispose()
-        cancelSubscription?.dispose()
-        finishSubscription?.dispose()
+        fileSubscription?.dispose()
     }
 
 
@@ -233,6 +232,34 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+
+   private fun getPDF(name:String){
+        fileSubscription?.dispose()
+        fileSubscription = contentRepository
+            .downloadFile(userRepository.getUserToken(),"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                "$name-contract.pdf"
+            )
+
+            .doOnSubscribe {
+            }
+            .doOnTerminate {
+
+            }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+                    previewContractShow.postValue(result.data)
+
+
+
+                } else {
+                    errorMessage.value = result.error?.message
+                }
+            }
+    }
+
+
+
     fun fillView(order: Order) {
         mOrder = order
 
@@ -283,10 +310,9 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
         )
 
 
-
         order.signPdf?.let { contractPreviewVisibility.postValue(View.VISIBLE) }
             .run { contractPreviewVisibility.postValue(View.GONE) }
-
+//        contractPreviewVisibility.postValue(View.VISIBLE)
 
         when (Order.OrderTypeEnum[order.orderType]) {
 
@@ -743,8 +769,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun onViewContract() {
-
-        previewContractShow.postValue(true)
+//        getPDF(mOrder.suid)
 
     }
 
