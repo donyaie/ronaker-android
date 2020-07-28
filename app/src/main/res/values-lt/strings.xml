@@ -239,4 +239,7 @@
     <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">Mes pasikeisime jūsų kontaktais netrukus po nuomos. Susisiekite su savininku ir susitarkite dėl susitikimo. Po susitikimo su savininku mėgaukitės savo daiktu!</string>
     <string name="text_return_and_evaluate">Grįžkite ir įvertinkite</string>
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">Kai baigiasi jūsų nuomos laikotarpis, viskas, ką jums reikia padaryti, tai grąžinti prekę savininkui. Įvertinimai yra labai svarbūs visuomenės saugumui.</string>
+    <string name="text_we_will_send_a_reset_password_link_to_your_email">Į jūsų el. Pašto adresą atsiųsime slaptažodžio nustatymo iš naujo nuorodą</string>
+    <string name="text_forget_password">Pamiršti slaptažodį</string>
+    <string name="text_reset_may_password">Iš naujo nustatyti slaptažodį</string>
 </resources>

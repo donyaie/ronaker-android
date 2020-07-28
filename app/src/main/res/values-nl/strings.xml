@@ -239,4 +239,7 @@
     <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">We wisselen uw contacten kort na de verhuur uit. Neem contact op met de eigenaar en maak een afspraak. Na een ontmoeting met de eigenaar, geniet van je item!</string>
     <string name="text_return_and_evaluate">Keer terug en evalueer</string>
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">Wanneer uw huurperiode afloopt, hoeft u alleen maar het item terug te sturen naar de eigenaar. Evaluaties zijn erg belangrijk voor de veiligheid in de gemeenschap.</string>
+    <string name="text_we_will_send_a_reset_password_link_to_your_email">We sturen een link voor het opnieuw instellen van het wachtwoord naar uw e-mailadres</string>
+    <string name="text_forget_password">Wachtwoord vergeten</string>
+    <string name="text_reset_may_password">Reset wachtwoord</string>
 </resources>

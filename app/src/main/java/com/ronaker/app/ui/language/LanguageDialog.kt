@@ -33,11 +33,11 @@ class LanguageDialog {
                 mAlertDialog.dismiss()
                 context.startActivity(DashboardActivity.newInstance(context))
             }
-            mDialogView.DutchLan.setOnClickListener {
-                LocaleHelper.setLocale(context, "nl")
-                mAlertDialog.dismiss()
-                context.startActivity(DashboardActivity.newInstance(context))
-            }
+//            mDialogView.DutchLan.setOnClickListener {
+//                LocaleHelper.setLocale(context, "nl")
+//                mAlertDialog.dismiss()
+//                context.startActivity(DashboardActivity.newInstance(context))
+//            }
 
 
             return mAlertDialog

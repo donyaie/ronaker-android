@@ -46,7 +46,7 @@
                     android:layout_marginTop="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:gravity="start"
-                    android:text="We will send a reset password link to your email"
+                    android:text="@string/text_we_will_send_a_reset_password_link_to_your_email"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextLight"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +84,7 @@
             android:layout_marginRight="@dimen/margin_default"
 
             android:onClick="@{()->viewModel.onClickLoginResetPassword(emailResetInput.getText().toString(),emailResetInput.checkValid())}"
-            android:text="Reset may password"
+            android:text="@string/text_reset_may_password"
 
 
             app:buttonType="Text"

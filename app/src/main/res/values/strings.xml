@@ -255,6 +255,9 @@
     <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">We\'ll exchange your contacts soon after the rental. Contact the owner and arrange the meeting. After meeting with the owner enjoy your item!</string>
     <string name="text_return_and_evaluate">Return and Evaluate</string>
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">When your rental period comes to an end all you need to do is return the item to the owner. Evaluations are very important for community safety.</string>
+    <string name="text_we_will_send_a_reset_password_link_to_your_email">We will send a reset password link to your email</string>
+    <string name="text_forget_password">Forget password</string>
+    <string name="text_reset_may_password">Reset may password</string>
 
 
 </resources>
