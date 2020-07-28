@@ -233,4 +233,10 @@
     <string name="text_choose_new_password_to_reset_password">Pasirinkite naują slaptažodį, jei norite iš naujo nustatyti slaptažodį</string>
     <string name="text_the_password_and_repeat_password_must_same">Slaptažodis ir pakartotinis slaptažodis turi sutapti.</string>
     <string name="text_reset_password">Atstatyti slaptažodį</string>
+    <string name="text_explore_items">Naršyti elementus</string>
+    <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Saugiai ir lengvai išsinuomokite bet kurį jums reikalingą daiktą tiesiai iš jo savininko. Pasirinkite nuomos pradžios ir pabaigos datas, kad patikrintumėte, ar daiktas yra prieinamas. Jei įmanoma, užsisakykite!</string>
+    <string name="text_rent">Nuoma</string>
+    <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">Mes pasikeisime jūsų kontaktais netrukus po nuomos. Susisiekite su savininku ir susitarkite dėl susitikimo. Po susitikimo su savininku mėgaukitės savo daiktu!</string>
+    <string name="text_return_and_evaluate">Grįžkite ir įvertinkite</string>
+    <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">Kai baigiasi jūsų nuomos laikotarpis, viskas, ką jums reikia padaryti, tai grąžinti prekę savininkui. Įvertinimai yra labai svarbūs visuomenės saugumui.</string>
 </resources>

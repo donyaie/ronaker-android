@@ -353,7 +353,7 @@ class LoginActivity : BaseActivity() {
             binding.overlayLayout.animate().alpha(0.8f).setDuration(500).start()
 
         } else {
-            binding.overlayLayout.animate().alpha(0.2f).setDuration(500).start()
+            binding.overlayLayout.animate().alpha(0.6f).setDuration(500).start()
 
         }
     }

@@ -34,7 +34,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
     private lateinit var dots: Array<ImageView?>
 
 
-    private var screenLibrary: ScreenCalculator
+//    private var screenLibrary: ScreenCalculator
 
 
     private var containerLayout: ConstraintLayout
@@ -57,7 +57,6 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
         countDots = findViewById(R.id.countDots)
         adapter = ImagePagerAdapter(context, dataList)
 
-        screenLibrary = ScreenCalculator(context)
         viewPager.adapter = adapter
 
         viewPager.addOnPageChangeListener(this)
@@ -92,8 +91,8 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
                 )
 
                 val params = LinearLayout.LayoutParams(
-                    screenLibrary.convertDPtoPixel(9),
-                    screenLibrary.convertDPtoPixel(9)
+                    context.resources.getDimensionPixelSize(R.dimen.dot_size),
+                    context.resources.getDimensionPixelSize(R.dimen.dot_size)
                 )
 
                 params.setMargins(21, 0, 21, 0)

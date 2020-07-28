@@ -249,6 +249,12 @@
     <string name="text_choose_new_password_to_reset_password">Choose new password to reset password</string>
     <string name="text_the_password_and_repeat_password_must_same">The password and repeat password must same.</string>
     <string name="text_reset_password">Reset password</string>
+    <string name="text_explore_items">Explore Items</string>
+    <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Rent any item you need straight from its Owner safely and easily, Select the rental start and end dates to check rhe availability of the item. If available, Book it!</string>
+    <string name="text_rent">Rent</string>
+    <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">We\'ll exchange your contacts soon after the rental. Contact the owner and arrange the meeting. After meeting with the owner enjoy your item!</string>
+    <string name="text_return_and_evaluate">Return and Evaluate</string>
+    <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">When your rental period comes to an end all you need to do is return the item to the owner. Evaluations are very important for community safety.</string>
 
 
 </resources>

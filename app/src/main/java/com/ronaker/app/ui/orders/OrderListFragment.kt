@@ -13,7 +13,9 @@ import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.BottomOffsetDecoration
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
+
 
 class OrderListFragment : BaseFragment() {
 
@@ -38,7 +40,11 @@ class OrderListFragment : BaseFragment() {
         val mnager = LinearLayoutManager(context).apply {
         }
         binding.recycler.layoutManager = mnager
+        binding.recycler.setHasFixedSize(false)
 
+        val offsetPx = resources.getDimension(R.dimen.bottom_offset_dp)
+        val bottomOffsetDecoration = BottomOffsetDecoration(offsetPx.toInt())
+        binding.recycler.addItemDecoration(bottomOffsetDecoration)
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
