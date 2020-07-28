@@ -14,7 +14,7 @@ object FileUtils{
         val path = File(context.externalCacheDir, "camera")
         if (!path.exists()) path.mkdirs()
         val image = File(path, fileName)
-        return FileProvider.getUriForFile(context, "$context.packageName.provider", image)
+        return FileProvider.getUriForFile(context, "${context.packageName}.provider", image)
     }
 
 
@@ -51,7 +51,7 @@ object FileUtils{
         val path = File(context.externalCacheDir, "contract")
         if (!path.exists()) path.mkdirs()
         val image = File(path, fileName)
-        return FileProvider.getUriForFile(context, "$context.packageName.provider", image)
+        return FileProvider.getUriForFile(context, "${context.packageName}.provider", image)
     }
     fun getCacheContractFile(context: Context, fileName: String): File {
         val path = File(context.externalCacheDir, "contract")

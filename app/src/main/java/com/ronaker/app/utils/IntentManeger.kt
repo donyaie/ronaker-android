@@ -160,8 +160,7 @@ object IntentManeger {
 
 
         val apkURI = FileProvider.getUriForFile(
-            context, context.applicationContext
-                .packageName.toString() + ".provider", file
+            context, "${context.applicationContext.packageName}.provider", file
         )
 
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
