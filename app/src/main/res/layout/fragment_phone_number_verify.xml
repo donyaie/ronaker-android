@@ -103,7 +103,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:mutableText="@{viewModel.getTimerValue()}"
+                app:mutableTextFade="@{viewModel.getTimerValue()}"
                 app:mutableVisibility="@{viewModel.getTimerVisibility()}"
                 tools:ignore="HardcodedText" />
 

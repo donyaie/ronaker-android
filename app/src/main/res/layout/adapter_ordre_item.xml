@@ -150,11 +150,11 @@
 
 
 
+
         <TextView
             android:visibility="gone"
-
-            android:id="@+id/rate"
             mutableFastVisibility="@{viewModel.getRateVisibility()}"
+            android:id="@+id/rate"
             android:clickable="true"
             android:text="@string/text_rate_it"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,11 +178,11 @@
 
             app:layout_constraintStart_toEndOf="@id/rate"
 
+                mutableFastVisibility="@{viewModel.getArchiveVisibility()}"
 
             app:layout_constraintTop_toBottomOf="@id/status_image"
             android:clickable="true"
 
-            mutableFastVisibility="@{viewModel.getArchiveVisibility()}"
             android:focusable="true"
 
             android:onClick="@{()->viewModel.onArchiveClick()}"

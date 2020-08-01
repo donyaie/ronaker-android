@@ -41,7 +41,7 @@
                 android:text="location"
 
                 android:textColor="@color/colorTextDark"
-                app:mutableText="@{viewModel.getProductTitle()}"
+                app:mutableTextFade="@{viewModel.getProductTitle()}"
                 tools:ignore="HardcodedText" />
 
 

@@ -131,7 +131,7 @@
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark"
 
-                            app:mutableText="@{viewModel.getUserName()}" />
+                            app:mutableTextFade="@{viewModel.getUserName()}" />
 
                     </LinearLayout>
 
@@ -197,7 +197,7 @@
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark"
 
-                            app:mutableText="@{viewModel.getUserNumber()}" />
+                            app:mutableTextFade="@{viewModel.getUserNumber()}" />
 
                     </LinearLayout>
 
@@ -263,7 +263,7 @@
 
                             android:textColor="@color/colorTextDark"
 
-                            app:mutableText="@{viewModel.getUserEmail()}" />
+                            app:mutableTextFade="@{viewModel.getUserEmail()}" />
 
                     </LinearLayout>
 

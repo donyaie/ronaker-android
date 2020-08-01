@@ -6,5 +6,7 @@ import io.reactivex.Observable
 
 interface CategoryRepository {
     fun getCategories(token: String?): Observable<Result<List<Category>?>>
+    fun saveCategories(value: List<Category>?)
+    fun getCategories(): List<Category>?
 }
 

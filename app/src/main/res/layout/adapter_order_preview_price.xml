@@ -31,7 +31,7 @@
             android:textAppearance="@style/TextAppearance.Medium.Regular"
             android:textColor="@color/colorTextDark"
             app:layout_constraintTop_toBottomOf="@id/image"
-            app:mutableText="@{viewModel.getTitle()}" />
+            app:mutableTextFade="@{viewModel.getTitle()}" />
 
 
         <RelativeLayout
@@ -51,7 +51,7 @@
             android:minWidth="40dp"
             android:textAppearance="@style/TextAppearance.Medium.SB"
             android:textColor="@color/colorTextDark"
-            app:mutableText="@{viewModel.getPrice()}" />
+            app:mutableTextFade="@{viewModel.getPrice()}" />
 
 
     </LinearLayout>

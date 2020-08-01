@@ -38,7 +38,7 @@
                 android:textAppearance="@style/TextAppearance.Heading.2"
                 android:textColor="@color/colorTextDark"
                 app:layout_constraintTop_toTopOf="parent"
-                app:mutableText="@{viewModel.getTitle()}" />
+                app:mutableTextFade="@{viewModel.getTitle()}" />
 
 
             <RelativeLayout

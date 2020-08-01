@@ -9,6 +9,8 @@ const val FONT_PATH: String = "fonts/regular.otf"
 
 
 const val SUPPORT_URL: String = "support@ronaker.com"
+
+const val SUPPORT_PHONE: String = "+37062457924"
 //const val SUPPORT_URL: String = "ronaker.app@gmail.com"
 
 const val TERM_URL: String = "https://ronaker.com/terms.html"

@@ -41,7 +41,7 @@
                 android:text="item"
 
                 android:textColor="@color/colorTextDark"
-                app:mutableText="@{viewModel.getTitle()}"
+                app:mutableTextFade="@{viewModel.getTitle()}"
                 tools:ignore="HardcodedText" />
 
 

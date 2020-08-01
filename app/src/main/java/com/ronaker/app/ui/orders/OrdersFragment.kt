@@ -6,14 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
+import com.ronaker.app.utils.enforceSingleScrollDirection
+import com.ronaker.app.utils.extension.recyclerView
 
 class OrdersFragment : BaseFragment() {
 
@@ -56,7 +60,7 @@ class OrdersFragment : BaseFragment() {
 
 
 //        initNavigation(savedInstanceState)
-        binding.viewpager.isUserInputEnabled = false
+//        binding.viewpager.isUserInputEnabled = false
 
         initViewPager()
 
@@ -122,6 +126,7 @@ class OrdersFragment : BaseFragment() {
 
         adapter = ViewPagerAdapter(this)
 
+        binding.viewpager.recyclerView.enforceSingleScrollDirection()
 
 
         binding.viewpager.adapter = adapter

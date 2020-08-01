@@ -162,7 +162,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         viewModel.childCategory.observe(this, Observer { category ->
 
-            category.sub_categories?.let {
+            category?.sub_categories?.let {
                 AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
                     .setParent(category).setCategories(it).show()
             }

@@ -60,7 +60,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     val isFavorite: MutableLiveData<Boolean> = MutableLiveData()
-
+    val stratTransition: MutableLiveData<Boolean> = MutableLiveData()
 
     val checkout: MutableLiveData<String> = MutableLiveData()
 
@@ -216,6 +216,8 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     private fun fillProduct(product: Product) {
+
+        stratTransition.postValue(true)
 
         getAnalytics()?.actionOpenProduct(
             product.suid,

@@ -77,7 +77,7 @@
                     android:text="name"
                     android:textAppearance="@style/TextAppearance.Heading.2"
                     android:textColor="@color/colorTextDark"
-                    app:mutableText="@{viewModel.getUserName()}"
+                    app:mutableTextFade="@{viewModel.getUserName()}"
                     tools:ignore="HardcodedText" />
 
 
@@ -179,7 +179,7 @@
                             android:textAppearance="@style/TextAppearance.Small.SB"
 
                             android:textColor="@color/colorTextLight"
-                            app:mutableText="@{viewModel.getUserStep()}"
+                            app:mutableTextFade="@{viewModel.getUserStep()}"
 
                             tools:ignore="HardcodedText" />
 
@@ -246,12 +246,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:layout_marginLeft="@dimen/margin_default"
                 android:layout_marginRight="@dimen/margin_default"
                 android:background="@color/colorPlatinGrey" />
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/paymentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
@@ -318,9 +320,8 @@
 
                     android:layout_marginEnd="@dimen/margin_default"
                     android:contentDescription="@string/title_favorites"
-                    android:padding="6dp"
-                    android:tint="@color/colorTextDark"
-                    app:srcCompat="@drawable/ic_fave_white" />
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_favorite" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -370,9 +371,8 @@
 
                     android:layout_marginEnd="@dimen/margin_default"
                     android:contentDescription="@string/title_support"
-                    android:padding="6dp"
-                    android:tint="@color/colorTextDark"
-                    app:srcCompat="@drawable/ic_tab_inbox" />
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_support_call" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -398,6 +398,59 @@
 
 
             <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginRight="@dimen/margin_default"
+                android:background="@color/colorPlatinGrey" />
+            <LinearLayout
+                android:visibility="gone"
+
+                android:id="@+id/support_call_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:background="?attr/selectableItemBackground"
+
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="@dimen/margin_default"
+
+                    android:layout_marginEnd="@dimen/margin_default"
+                    android:contentDescription="@string/title_support"
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_support_call" />
+
+                <TextView
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".95"
+                    android:text="@string/title_support"
+                    android:textAppearance="@style/TextAppearance.Large.Light"
+
+                    android:textColor="@color/colorTextDark" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:contentDescription="@string/title_button_next"
+                    android:padding="3dp"
+                    app:srcCompat="@drawable/ic_chevron_right" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/margin_default"

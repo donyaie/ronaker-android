@@ -9,6 +9,8 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
 fun View.getParentActivity(): AppCompatActivity? {
@@ -34,6 +36,11 @@ fun Button.setEndDrawableRes(res: Int) {
 
 
 }
+
+val ViewPager2.recyclerView: RecyclerView
+    get() {
+        return this[0] as RecyclerView
+    }
 
 
 fun ViewPager2.setCurrentItem(

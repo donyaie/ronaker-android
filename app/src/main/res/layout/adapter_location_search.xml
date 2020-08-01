@@ -40,7 +40,7 @@
 
                 android:textColor="@color/colorTextDark"
                 android:textSize="@dimen/text_size_medium"
-                app:mutableText="@{viewModel.getProductTitle()}"
+                app:mutableTextFade="@{viewModel.getProductTitle()}"
                 tools:ignore="HardcodedText" />
 
 

@@ -114,7 +114,7 @@
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
                         app:layout_constraintTop_toBottomOf="@id/avatar_layout"
-                        app:mutableText="@{viewModel.getProductTitle()}" />
+                        app:mutableTextFade="@{viewModel.getProductTitle()}" />
 
 
                     <LinearLayout

@@ -22,6 +22,7 @@ interface OrderApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getOrders(
         @Header("Authorization") authToken: String,
+        @Query("page") page: Int,
         @Query("filter") filter: String?
     ): Observable<ListResponseModel<OrderResponseModel>>
 

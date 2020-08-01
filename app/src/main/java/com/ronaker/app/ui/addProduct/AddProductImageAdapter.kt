@@ -77,19 +77,33 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     }
 
     fun addLocalImage(uri: Uri?) {
+
+
+        var selected = false
+        list.forEach { if (it.isSelected) selected = true }
+
         list.add(
             Image(
-                null,
-                null,
-                uri,
-                true
+                url = null,
+                suid = null,
+                uri = uri,
+                isLocal = true,
+                isSelected = !selected
             )
         )
-        notifyDataSetChanged()
+
+
+
+        notifyItemInserted(list.size-1)
+
+//        notifyDataSetChanged()
     }
 
 
     fun addRemoteImage(imageList: List<Image>) {
+        list.clear()
+
+        list.add(Image())
         list.addAll(imageList)
         notifyDataSetChanged()
     }
@@ -98,6 +112,11 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
 
         list.remove(image)
+
+        if(image.isSelected && list.size>1){
+            list[1].isSelected=true
+        }
+
         notifyDataSetChanged()
     }
 
@@ -122,6 +141,19 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
         list.removeAt(0)
 
         return list
+    }
+
+    fun selectImage(image: Image) {
+        var lastSelected: Image? = null
+        this.list.forEach { if (it.isSelected) lastSelected = it }
+        lastSelected?.let {
+
+            it.isSelected = false
+            notifyItemChanged(list.indexOf(it))
+        }
+        image.isSelected = true
+        notifyItemChanged(list.indexOf(image))
+
     }
 
 

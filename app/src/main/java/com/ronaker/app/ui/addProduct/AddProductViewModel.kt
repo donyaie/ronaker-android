@@ -422,6 +422,16 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+
+    fun onClickSelectImage(image: Image) {
+
+        if (!image.isSelected) {
+            adapter.selectImage(image)
+        }
+
+
+    }
+
     fun onClickAddImage() {
         showImagePicker.value = true
     }
@@ -475,8 +485,17 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         if (resault && !imagesTemp.isNullOrEmpty()) {
 
-            product.avatar = imagesTemp[0].url
-            product.avatar_suid = imagesTemp[0].suid
+            imagesTemp.forEach {
+                if (it.isSelected) {
+
+
+                    product.avatar = it.url
+                    product.avatar_suid = it.suid
+                }
+            }
+//            product.avatar = imagesTemp[0].url
+//            product.avatar_suid = imagesTemp[0].suid
+//
             product.images = imagesTemp
 
 
@@ -566,7 +585,23 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                     if (result.isSuccess()) {
                         when (state) {
                             StateEnum.Image -> {
-                                result.data?.images?.let { adapter.addRemoteImage(it) }
+
+
+                                result.data?.images?.let { imageList ->
+
+                                    result.data.avatar?.let { url ->
+
+                                        imageList.forEach { image ->
+                                            if (image.url?.compareTo(url) == 0)
+                                                image.isSelected = true
+                                        }
+
+                                    }
+
+
+                                    adapter.addRemoteImage(imageList)
+                                }
+
 
                             }
                             StateEnum.Price -> {
@@ -598,26 +633,43 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
                             StateEnum.Category -> {
 
+
                                 result.data?.categories?.let {
 
-                                    categories.clear()
-                                    categories.addAll(it)
+
+//                                    val allCategory = categoryRepository.getCategories()
+//
+//                                    if (!allCategory.isNullOrEmpty()) {
+//
+//                                        if(it.isNotEmpty()){
+//                                            allCategory.forEach {  }
+//                                        }
+//
+//
+//
+//
+//                                    } else {
 
 
-                                    if (categories.size > 1) {
-                                        categories[0].sub_categories = listOf(categories[1])
-                                        categories.removeAt(1)
+                                        categories.clear()
+                                        categories.addAll(it)
+
+                                        if (categories.size > 1) {
+                                            categories[0].sub_categories = listOf(categories[1])
+                                            categories.removeAt(1)
+                                        }
                                     }
+//
+//                                }
 
-
-                                }
 
 
                                 productSubCategoryVisibility.value = View.GONE
                                 productSubCategoryTitle.value = ""
 
-
                                 if (categories.isNotEmpty()) {
+
+
                                     productCategoryTitle.value = categories[0].title
 
 

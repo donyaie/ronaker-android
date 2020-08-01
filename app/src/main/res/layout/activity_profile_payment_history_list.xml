@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_default"
 
-                    app:mutableText="@{viewModel.getWalletBalance()}"
+                    app:mutableTextFade="@{viewModel.getWalletBalance()}"
                     android:layout_marginRight="@dimen/margin_default"
                     android:layout_marginBottom="@dimen/margin_default"
                     android:gravity="center"

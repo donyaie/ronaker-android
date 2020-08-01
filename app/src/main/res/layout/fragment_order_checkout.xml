@@ -29,13 +29,13 @@
 
                     <TextView android:id="@+id/dayFirst_text"
                               app:mutableVisibility="@{viewModel.getFirstDayVisibility()}"
-                              app:mutableText="@{viewModel.getFirstDay()}" android:text="@string/caption_title"
+                              app:mutableTextFade="@{viewModel.getFirstDay()}" android:text="@string/caption_title"
                               android:layout_marginBottom="4dp"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
                     <TextView android:text="@string/caption_title" android:id="@+id/dateFirst_text"
-                              app:mutableText="@{viewModel.getFirstDate()}"
+                              app:mutableTextFade="@{viewModel.getFirstDate()}"
                               android:textAppearance="@style/TextAppearance.Large.SB"
                               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
@@ -47,12 +47,12 @@
 
                     <TextView android:text="@string/caption_title" android:id="@+id/dayLast_text"
                               app:mutableVisibility="@{viewModel.getLastDayVisibility()}"
-                              app:mutableText="@{viewModel.getLastDay()}" android:layout_marginBottom="4dp"
+                              app:mutableTextFade="@{viewModel.getLastDay()}" android:layout_marginBottom="4dp"
                               android:textAppearance="@style/TextAppearance.Small.Regular"
                               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
                     <TextView android:text="@string/caption_title" android:id="@+id/dateLast_text"
-                              app:mutableText="@{viewModel.getLastDate()}"
+                              app:mutableTextFade="@{viewModel.getLastDate()}"
                               android:textAppearance="@style/TextAppearance.Large.SB"
                               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 

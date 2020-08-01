@@ -60,7 +60,7 @@
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextDark"
                     app:layout_constraintTop_toBottomOf="@id/description"
-                    app:mutableText="@{viewModel.getAuthPinCode()}" />
+                    app:mutableTextFade="@{viewModel.getAuthPinCode()}" />
 
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/code_text"
 
-                    app:mutableText="@{viewModel.getErrorMessageFinal()}"
+                    app:mutableTextFade="@{viewModel.getErrorMessageFinal()}"
                     app:mutableVisibility="@{viewModel.getErrorMessageVisibility()}" />
 
                 <com.wang.avi.AVLoadingIndicatorView
@@ -150,7 +150,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:mutableText="@{viewModel.getTimerValue()}"
+                app:mutableTextFade="@{viewModel.getTimerValue()}"
                 app:mutableVisibility="@{viewModel.getTimerVisibility()}" />
 
             <TextView

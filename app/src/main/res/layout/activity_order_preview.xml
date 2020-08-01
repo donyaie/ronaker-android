@@ -81,7 +81,7 @@
                         android:text="Lend | Canceled order"
                         android:textAppearance="@style/TextAppearance.Medium.SB"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:mutableText="@{viewModel.getOrderStatus()}"
+                        app:mutableTextFade="@{viewModel.getOrderStatus()}"
                         tools:ignore="HardcodedText" />
 
 
@@ -127,7 +127,7 @@
                             android:text="sample product"
                             android:textAppearance="@style/TextAppearance.Small.SB"
                             android:textColor="@color/colorTextDark"
-                            app:mutableText="@{viewModel.getProductTitle()}"
+                            app:mutableTextFade="@{viewModel.getProductTitle()}"
                             tools:ignore="HardcodedText" />
 
 
@@ -140,7 +140,7 @@
                             android:text="$124 for 2 day"
                             android:textAppearance="@style/TextAppearance.Large.Regular"
                             android:textColor="@color/colorTextDark"
-                            app:mutableText="@{viewModel.getDayNumber()}"
+                            app:mutableTextFade="@{viewModel.getDayNumber()}"
                             tools:ignore="HardcodedText" />
 
 
@@ -201,7 +201,7 @@
                             android:layout_marginBottom="4dp"
                             android:text="Monday"
                             android:textAppearance="@style/TextAppearance.Small.Regular"
-                            app:mutableText="@{viewModel.getStartDayName()}"
+                            app:mutableTextFade="@{viewModel.getStartDayName()}"
                             tools:ignore="HardcodedText" />
 
                         <TextView
@@ -210,7 +210,7 @@
 
                             android:text="21 May"
                             android:textAppearance="@style/TextAppearance.Large.Regular"
-                            app:mutableText="@{viewModel.getFirstDayMonth()}"
+                            app:mutableTextFade="@{viewModel.getFirstDayMonth()}"
                             tools:ignore="HardcodedText" />
 
 
@@ -238,7 +238,7 @@
                             android:layout_marginBottom="4dp"
                             android:text="Friday"
                             android:textAppearance="@style/TextAppearance.Small.Regular"
-                            app:mutableText="@{viewModel.getEndDayName()}"
+                            app:mutableTextFade="@{viewModel.getEndDayName()}"
                             tools:ignore="HardcodedText" />
 
                         <TextView
@@ -247,7 +247,7 @@
 
                             android:text="23 May"
                             android:textAppearance="@style/TextAppearance.Large.Regular"
-                            app:mutableText="@{viewModel.getEndDayMonth()}"
+                            app:mutableTextFade="@{viewModel.getEndDayMonth()}"
                             tools:ignore="HardcodedText" />
 
 
@@ -310,7 +310,7 @@
 
                             android:text="David"
                             android:textAppearance="@style/TextAppearance.Large.SB"
-                            app:mutableText="@{viewModel.getUserName()}"
+                            app:mutableTextFade="@{viewModel.getUserName()}"
                             tools:ignore="HardcodedText" />
 
 
@@ -459,7 +459,7 @@
                         app:layout_constraintStart_toEndOf="@id/renter_sign_state_image"
 
                         app:layout_constraintTop_toTopOf="@id/renter_sign_state_image"
-                        app:mutableText="@{viewModel.getRenterSignText()}" />
+                        app:mutableTextFade="@{viewModel.getRenterSignText()}" />
 
 
                     <TextView
@@ -507,7 +507,7 @@
                         app:layout_constraintStart_toEndOf="@id/lister_sign_state_image"
 
                         app:layout_constraintTop_toTopOf="@id/lister_sign_state_image"
-                        app:mutableText="@{viewModel.getListerSignText()}" />
+                        app:mutableTextFade="@{viewModel.getListerSignText()}" />
 
 
                     <TextView
@@ -566,7 +566,7 @@
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="decline"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderCancelRes()}"
+                    app:mutableTextFade="@{viewModel.getOrderCancelRes()}"
                     app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}"
                     tools:ignore="HardcodedText" />
 
@@ -604,7 +604,7 @@
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="Address"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderAddress()}"
+                    app:mutableTextFade="@{viewModel.getOrderAddress()}"
                     app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}"
                     tools:ignore="HardcodedText" />
 
@@ -641,7 +641,7 @@
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="Introduction"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderIntroduction()}"
+                    app:mutableTextFade="@{viewModel.getOrderIntroduction()}"
                     app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}"
                     tools:ignore="HardcodedText" />
 
@@ -679,7 +679,7 @@
                     android:layout_marginRight="@dimen/margin_default"
                     android:text="Message"
                     android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderDescription()}"
+                    app:mutableTextFade="@{viewModel.getOrderDescription()}"
                     app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
                     tools:ignore="HardcodedText" />
 

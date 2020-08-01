@@ -117,7 +117,7 @@
                         android:textColor="@color/colorTextDark"
                         android:textColorHint="@color/colorTextGreyLight"
 
-                        app:mutableText="@{viewModel.getCardNumberText()}"
+                        app:mutableTextFade="@{viewModel.getCardNumberText()}"
                         tools:ignore="UnusedAttribute" />
 
 

@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:maxLines="2"
-
             android:text="@string/caption_title"
             android:textAppearance="@style/TextAppearance.Medium.SB"
             android:textColor="@color/colorTextDark"

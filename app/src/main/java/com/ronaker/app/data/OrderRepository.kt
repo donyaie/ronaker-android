@@ -7,7 +7,14 @@ import io.reactivex.Observable
 import java.util.*
 
 interface OrderRepository {
-    fun getOrders(token: String?, filter: String?): Observable<Result<ListResponseModel<Order>>>
+
+
+    fun getOrders(
+        token: String?,
+        page: Int,
+        filter: String?
+    ): Observable<Result<ListResponseModel<Order>>>
+
     fun createOrder(
         token: String?,
         product_suid: String,
@@ -50,5 +57,6 @@ interface OrderRepository {
         user_token: String?,
         orderSuid: String
     ): Observable<Result<String>>
+
 }
 

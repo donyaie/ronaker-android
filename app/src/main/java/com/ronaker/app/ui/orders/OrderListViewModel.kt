@@ -58,6 +58,7 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
     private var mFilter: String? = null
     private var subscription: Disposable? = null
+    private var archiveSubscription: Disposable? = null
 
     fun getData(filter: String?) {
 
@@ -66,53 +67,87 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
         }
     }
 
+     fun reset() {
+
+        page = 0
+        hasNextPage = true
+        dataList.clear()
+//        productListAdapter.updateList(dataList)
+        resetList.postValue(true)
+    }
+
     suspend fun loadData(filter: String?) =
         withContext(Dispatchers.IO) {
 
-            mFilter = filter
+            if (hasNextPage) {
+                page++
+                subscription?.dispose()
 
-            subscription?.dispose()
-            subscription = orderRepository
-                .getOrders(userRepository.getUserToken(), filter)
+                mFilter = filter
 
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doOnSubscribe {
-                    retry.postValue(null)
-                    loading.postValue(true)
+                subscription?.dispose()
+                subscription = orderRepository
+                    .getOrders(userRepository.getUserToken(), page, filter)
 
-                }
-                .doOnTerminate {
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .doOnSubscribe {
 
-                    loading.postValue(false)
+                        retry.postValue(null)
+                        if (page <= 1) {
+                            loading.postValue(true)
 
-
-                }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-
-
-                        dataList.clear()
-                        result.data?.results?.let { dataList.addAll(it) }
-                        productListAdapter.updateList(dataList)
-
-                        if (!result.data?.results.isNullOrEmpty()) {
                             emptyVisibility.postValue(View.GONE)
+
                         }
+                        errorMessage.postValue(null)
 
-                        if (result.data?.next == null)
-                            hasNextPage = false
+//
+//
+//                        retry.postValue(null)
+//                        loading.postValue(true)
 
-                        if (dataList.isEmpty())
-                            emptyVisibility.postValue(View.VISIBLE)
-
-
-                    } else {
-
-                        retry.postValue(result.error?.message)
                     }
-                }
+                    .doOnTerminate {
 
+                        loading.postValue(false)
+
+
+                    }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
+
+
+//                            dataList.clear()
+                            result.data?.results?.let { dataList.addAll(it) }
+                            productListAdapter.updateList(dataList)
+
+                            if (!result.data?.results.isNullOrEmpty()) {
+                                emptyVisibility.postValue(View.GONE)
+                            }
+
+                            if (result.data?.next == null)
+                                hasNextPage = false
+
+                            if (dataList.isEmpty())
+                                emptyVisibility.postValue(View.VISIBLE)
+
+
+
+
+
+
+
+                        } else {
+
+                            if (page <= 1)
+                                retry.postValue(result.error?.message)
+                            else
+                                errorMessage.postValue(result.error?.message)
+
+                        }
+                    }
+            }
 
         }
 
@@ -120,8 +155,8 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
     suspend fun doArchive(suid: String) =
         withContext(Dispatchers.IO) {
 
-            subscription?.dispose()
-            subscription = orderRepository
+            archiveSubscription?.dispose()
+            archiveSubscription = orderRepository
                 .updateOrderStatus(
                     token = userRepository.getUserToken(),
                     suid = suid,
@@ -151,12 +186,14 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
+        archiveSubscription?.dispose()
     }
 
 
     fun retry() {
 
         uiScope.launch {
+            reset()
             loadData(mFilter)
         }
 

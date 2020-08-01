@@ -17,6 +17,8 @@ class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app)
     lateinit var imageModel: Image
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val selectDefaultVisibility: MutableLiveData<Int> = MutableLiveData()
+
 
     fun bind(
         post: Image,
@@ -31,7 +33,8 @@ class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app)
 
         baseActivity?.let {
             imageModel.progress.observe(it, Observer { state ->
-                if (state) loadingVisibility.value = View.VISIBLE
+                if (state)
+                    loadingVisibility.value = View.VISIBLE
                 else
                     loadingVisibility.value = View.GONE
 
@@ -39,10 +42,23 @@ class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app)
         }
 
 
+        if(imageModel.isSelected)
+            selectDefaultVisibility.postValue(View.VISIBLE)
+        else
+            selectDefaultVisibility.postValue(View.GONE)
+
+
+
+
+
+
+
+
+
     }
 
 
-    fun getImage(): Image? {
+    fun getImage(): Image {
         return imageModel
     }
 

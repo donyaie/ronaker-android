@@ -161,9 +161,11 @@ class RepositoryModule(private val app: Application) {
     @Provides
     @Singleton
     internal fun provideCategoryRepository(
-        api: CategoryApi
+        api: CategoryApi,
+        preferencesProvider: PreferencesProvider
     ): CategoryRepository {
-        return DefaultCategoryRepository(api)
+        return DefaultCategoryRepository(api,
+            preferencesProvider)
     }
 
 
@@ -200,8 +202,8 @@ class RepositoryModule(private val app: Application) {
 //            .serializeNulls()
             .create()
 
-
-        val clientBuilder = SslUtils.getUnsafeOkHttpClient(context)
+        val clientBuilder = OkHttpClient.Builder()
+//        val clientBuilder = SslUtils.getUnsafeOkHttpClient(context)
         clientBuilder.addInterceptor(HttpLoggingInterceptor().apply {
             level =
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE

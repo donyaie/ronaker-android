@@ -148,7 +148,7 @@
                                 app:layout_constraintLeft_toLeftOf="parent"
 
                                 app:layout_constraintRight_toLeftOf="@id/search_icon"
-                                app:mutableText="@{viewModel.getPlaceName()}" />
+                                app:mutableTextFade="@{viewModel.getPlaceName()}" />
 
                             <ImageView
                                 android:id="@+id/search_icon"
