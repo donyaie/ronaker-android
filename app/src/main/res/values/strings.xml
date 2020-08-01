@@ -258,6 +258,9 @@
     <string name="text_we_will_send_a_reset_password_link_to_your_email">We will send a reset password link to your email</string>
     <string name="text_forget_password">Forget password</string>
     <string name="text_reset_may_password">Reset may password</string>
+    <string name="text_you_signed_the_contract">You signed the contract</string>
+    <string name="text_signed_the_contract" formatted="true">%1$s signed the contract</string>
+    <string name="text_waite_for_sign" formatted="true">Waite for %1$s sign</string>
 
 
 </resources>

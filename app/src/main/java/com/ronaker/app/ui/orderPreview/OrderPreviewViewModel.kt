@@ -233,10 +233,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-   private fun getPDF(name:String){
+   private fun getPDF(url:String,name:String){
         fileSubscription?.dispose()
         fileSubscription = contentRepository
-            .downloadFile(userRepository.getUserToken(),"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            .downloadFile(userRepository.getUserToken(),url,
                 "$name-contract.pdf"
             )
 
@@ -310,8 +310,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
         )
 
 
-        order.signPdf?.let { contractPreviewVisibility.postValue(View.VISIBLE) }
-            .run { contractPreviewVisibility.postValue(View.GONE) }
+        order.signPdf?.let {
+            contractPreviewVisibility.postValue(View.VISIBLE)
+        }?:run {
+                contractPreviewVisibility.postValue(View.GONE)
+            }
 //        contractPreviewVisibility.postValue(View.VISIBLE)
 
         when (Order.OrderTypeEnum[order.orderType]) {
@@ -350,14 +353,14 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignImage.postValue(R.drawable.ic_guide_red)
 
-                    renterSignText.postValue("Please sign the contract")
+                    renterSignText.postValue(context.getString(R.string.text_please_sign_the_contract))
 
                     renterSignVisibility.postValue(View.VISIBLE)
 
                 } else {
 
                     renterSignVisibility.postValue(View.GONE)
-                    renterSignText.postValue("you signed the contract")
+                    renterSignText.postValue(context.getString(R.string.text_you_signed_the_contract))
                     renterSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
@@ -366,7 +369,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     listerSignText.postValue(
                         String.format(
-                            "Waite for %s sign",
+                            context.getString(R.string.text_waite_for_sign),
                             order.productOwner?.first_name
                         )
                     )
@@ -375,7 +378,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     listerSignText.postValue(
                         String.format(
-                            "%s signed the contract",
+                            context.getString(R.string.text_signed_the_contract),
                             order.productOwner?.first_name
                         )
                     )
@@ -492,14 +495,14 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     lenderSignImage.postValue(R.drawable.ic_guide_red)
 
-                    listerSignText.postValue("Please sign the contract")
+                    listerSignText.postValue(context.getString(R.string.text_please_sign_the_contract))
 
                     listerSignVisibility.postValue(View.VISIBLE)
 
                 } else {
 
                     listerSignVisibility.postValue(View.GONE)
-                    listerSignText.postValue("you signed the contract")
+                    listerSignText.postValue(context.getString(R.string.text_you_signed_the_contract))
                     lenderSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
@@ -508,7 +511,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignText.postValue(
                         String.format(
-                            "Waite for %s sign",
+                            context.getString(R.string.text_waite_for_sign),
                             order.orderUser?.first_name
                         )
                     )
@@ -517,7 +520,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignText.postValue(
                         String.format(
-                            "%s signed the contract",
+                          context.getString(R.string.text_signed_the_contract),
                             order.orderUser?.first_name
                         )
                     )
@@ -769,7 +772,14 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun onViewContract() {
-//        getPDF(mOrder.suid)
+
+
+        mOrder.signPdf?.let {
+
+            getPDF(BASE_URL+ it.replace("/media/","/media/sign_"),mOrder.suid)
+
+
+        }
 
     }
 

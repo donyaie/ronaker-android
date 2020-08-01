@@ -242,4 +242,7 @@
     <string name="text_we_will_send_a_reset_password_link_to_your_email">We sturen een link voor het opnieuw instellen van het wachtwoord naar uw e-mailadres</string>
     <string name="text_forget_password">Wachtwoord vergeten</string>
     <string name="text_reset_may_password">Reset wachtwoord</string>
+    <string name="text_you_signed_the_contract">Je hebt het contract ondertekend</string>
+    <string name="text_signed_the_contract">%1$s heeft het contract ondertekend</string>
+    <string name="text_waite_for_sign">Wacht op %1$s teken</string>
 </resources>

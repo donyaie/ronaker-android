@@ -3,11 +3,12 @@
 package com.ronaker.app.utils
 
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Build
 import androidx.preference.PreferenceManager
-import java.util.*
-
+import java.util.Locale
 
 object LocaleHelper {
 
@@ -27,7 +28,23 @@ object LocaleHelper {
         return getPersistedData(context, Locale.getDefault().language)
     }
 
-    fun setLocale(context: Context, language: String): Context {
+    fun setLocale(context: Activity, language: String): Context {
+        persist(context, language)
+
+        val local= Locale(language)
+        val configuration=Configuration(context.resources.configuration)
+        Locale.setDefault(local)
+        configuration.setLocale(local)
+        context.baseContext.resources.updateConfiguration(configuration,context.baseContext.resources.displayMetrics)
+
+        context.applicationContext.resources.updateConfiguration(configuration,context.applicationContext.resources.displayMetrics)
+
+        return context
+
+
+    }
+
+   private fun setLocale(context: Context, language: String): Context {
         persist(context, language)
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -35,7 +52,11 @@ object LocaleHelper {
         } else
             updateResourcesLegacy(context, language)
 
+
+
     }
+
+
 
     private fun getPersistedData(context: Context, defaultLanguage: String): String? {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)

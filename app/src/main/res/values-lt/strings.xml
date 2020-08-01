@@ -242,4 +242,7 @@
     <string name="text_we_will_send_a_reset_password_link_to_your_email">Į jūsų el. Pašto adresą atsiųsime slaptažodžio nustatymo iš naujo nuorodą</string>
     <string name="text_forget_password">Pamiršti slaptažodį</string>
     <string name="text_reset_may_password">Iš naujo nustatyti slaptažodį</string>
+    <string name="text_you_signed_the_contract">Jūs pasirašėte sutartį</string>
+    <string name="text_signed_the_contract">%1$s pasirašė sutartį</string>
+    <string name="text_waite_for_sign">Palaukite %1$s ženklo</string>
 </resources>
