@@ -138,17 +138,10 @@ class DefaultOrderRepository(private val api: OrderApi) :
     override fun startSmartIDAuth(
 
         user_token: String?,
-        orderSuid: String,
-        national_code: String,
-        personal_code: String
+        orderSuid: String
     ): Observable<Result<Boolean>> {
 
-        val request =
-            UserSmartIdVerificationCodeRequestModel(
-                national_code,
-                personal_code
-            )
-        return api.startSmartIDAuth("Token $user_token", orderSuid, request)
+        return api.startSmartIDAuth("Token $user_token", orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -165,6 +158,39 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
     ): Observable<Result<Boolean>> {
         return api.checkSmartIDSession("Token $user_token", orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+
+    override fun startSmartIDCert(
+
+        user_token: String?,
+        orderSuid: String
+    ): Observable<Result<Boolean>> {
+
+        return api.startSmartIDCert("Token $user_token", orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+    override fun checkSmartIDSessionCert(
+        user_token: String?,
+        orderSuid: String
+    ): Observable<Result<Boolean>> {
+        return api.checkSmartIDSessionCert("Token $user_token", orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

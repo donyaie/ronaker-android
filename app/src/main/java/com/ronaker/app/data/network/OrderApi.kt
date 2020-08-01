@@ -90,8 +90,7 @@ interface OrderApi {
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun startSmartIDAuth(
         @Header("Authorization") authToken: String,
-        @Path("order_suid") suid: String,
-        @Body request: UserSmartIdVerificationCodeRequestModel
+        @Path("order_suid") suid: String
     ): Observable<FreeResponseModel>
 
     /**
@@ -103,6 +102,32 @@ interface OrderApi {
         @Header("Authorization") authToken: String,
         @Path("order_suid") suid: String
     ): Observable<FreeResponseModel>
+
+
+
+    /**
+     * Start SmartID Auth
+     */
+    @POST("/api/v1/orders/{order_suid}/smart-id/cert/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun startSmartIDCert(
+        @Header("Authorization") authToken: String,
+        @Path("order_suid") suid: String
+    ): Observable<FreeResponseModel>
+
+    /**
+     * Check smart-id session
+     */
+    @GET("/api/v1/orders/{order_suid}/smart-id/cert/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun checkSmartIDSessionCert(
+        @Header("Authorization") authToken: String,
+        @Path("order_suid") suid: String
+    ): Observable<FreeResponseModel>
+
+
+
+
 
 
 }
