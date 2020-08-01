@@ -23,7 +23,6 @@ import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.FileUtils
 import com.ronaker.app.utils.IntentManeger
 
 class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
@@ -98,10 +97,6 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
     }
 
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -125,13 +120,17 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         })
 
 
+        binding.refreshLayout.setOnRefreshListener {
+
+            getCurrentOrderId(intent)?.let {
+                viewModel.getOrder(it)
+            }
+        }
+
 
         viewModel.showProduct.observe(this, Observer { product ->
             startActivityForResult(
-                ExploreProductActivity.newInstance(this, product)
-
-                ,
-
+                ExploreProductActivity.newInstance(this, product),
                 ExploreProductActivity.REQUEST_CODE
             )
 
@@ -143,8 +142,10 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
-            } else
+            } else {
                 binding.loading.hideLoading()
+                binding.refreshLayout.isRefreshing=false
+            }
         })
 
 
@@ -181,11 +182,11 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         })
 
 
-        viewModel.previewContractShow.observe(this, Observer {file->
+        viewModel.previewContractShow.observe(this, Observer { file ->
 
             file?.let {
 
-                IntentManeger.openPDF(this,it)
+                IntentManeger.openPDF(this, it)
             }
 
         })
@@ -231,13 +232,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        getOrder()?.let { viewModel.load(it) }
-
-//            ?: kotlin.run {
-//
-//            getOrderId()?.let{ ordreId->viewModel.getOrder(ordreId) }
-//
-//        }
+//        getOrder()?.let { viewModel.load(it) }
 
 
     }
@@ -246,7 +241,13 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         super.onStart()
 
         if (isFistStart() && getOrder() != null) {
-            getOrder()?.let { viewModel.load(it) }
+            getOrder()?.let {
+
+                viewModel.load(it)
+                viewModel.getOrder(it.suid)
+
+            }
+
         } else {
             getCurrentOrderId(intent)?.let {
                 viewModel.getOrder(it)
@@ -261,16 +262,6 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         if (intent.hasExtra(Order_KEY)) {
 
             return intent.getParcelableExtra<Order?>(Order_KEY)
-
-        }
-        return null
-    }
-
-
-    private fun getOrderId(): String? {
-        if (intent.hasExtra(OrderId_KEY)) {
-
-            return intent.getStringExtra(OrderId_KEY)
 
         }
         return null
