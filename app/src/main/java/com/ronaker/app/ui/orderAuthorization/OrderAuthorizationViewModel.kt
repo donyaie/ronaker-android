@@ -27,7 +27,6 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
 
     val authPinCode: MutableLiveData<String> = MutableLiveData()
-    val orderContract: MutableLiveData<Order> = MutableLiveData()
 
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
@@ -57,7 +56,9 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     var context: Context
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    private var subscription: Disposable? = null
+    private var subscriptionVerificationCode: Disposable? = null
+    private var startCertSubscription: Disposable? = null
+    private var checkCertSubscription: Disposable? = null
     private var startSubscription: Disposable? = null
     private var checkSubscription: Disposable? = null
 
@@ -85,23 +86,93 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         }
     }
 
-    lateinit var mNationalCode: String
-    lateinit var mPersonalCode: String
-
-
     fun onPersonalCodeNext() {
 
-
-        val userInfo = userRepository.getUserInfo()
-
-        userInfo?.smart_id_national_code?.let { mNationalCode = it }
+        startCert()
 
 
-        userInfo?.smart_id_personal_code?.let { mPersonalCode = it }
+    }
+
+    var isStartCert=false
+    var isCheckCert=false
+
+
+    private fun startCert(){
+
+        if(isStartCert){
+            startCheckCert()
+            return
+        }
 
 
 
-        subscription = mOrder?.suid?.let {
+
+        startCertSubscription?.dispose()
+        startCertSubscription = mOrder?.suid?.let {
+            orderRepository.startSmartIDCert(
+                orderSuid = it,
+                user_token = userRepository.getUserToken()
+            )
+                .doOnSubscribe { codeLoadingButton.postValue(true) }
+                .doOnTerminate {}
+                .subscribe { result ->
+                    if (result.isSuccess() || result.isAcceptable()) {
+                        isStartCert=true
+                        startCheckCert()
+
+
+                    } else {
+                        isStartCert=false
+                        codeLoadingButton.postValue(false)
+                        errorMessage.postValue(result.error?.message)
+                    }
+                }
+        }
+    }
+
+
+
+    private fun startCheckCert(){
+
+        if(isCheckCert){
+            sendVerificationCode()
+            return
+        }
+
+
+        checkCertSubscription?.dispose()
+        checkCertSubscription = mOrder?.suid?.let {
+            orderRepository.checkSmartIDSessionCert(
+                orderSuid = it,
+                user_token = userRepository.getUserToken()
+            )
+                .doOnSubscribe { codeLoadingButton.postValue(true) }
+                .doOnTerminate {  }
+                .subscribe { result ->
+                    if (result.isSuccess() || result.isAcceptable()) {
+                        isCheckCert=true
+                        sendVerificationCode()
+
+
+                    } else {
+                        isCheckCert=false
+                        codeLoadingButton.postValue(false)
+                        errorMessage.postValue(result.error?.message)
+                    }
+                }
+        }
+    }
+
+
+
+
+
+    private fun sendVerificationCode(){
+
+
+
+        subscriptionVerificationCode?.dispose()
+        subscriptionVerificationCode = mOrder?.suid?.let {
             orderRepository.getSmartIDVerificationCode(
                 orderSuid = it,
                 user_token = userRepository.getUserToken()
@@ -110,6 +181,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
                 .doOnTerminate { codeLoadingButton.postValue(false) }
                 .subscribe { result ->
                     if (result.isSuccess() || result.isAcceptable()) {
+
                         authPinCode.postValue(result.data)
 
                         viewState.postValue(StateEnum.Auth)
@@ -118,25 +190,26 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
 
                     } else {
+
                         errorMessage.postValue(result.error?.message)
                     }
                 }
         }
-
-
     }
 
 
-    fun startAuth() {
+
+
+
+
+    private fun startAuth() {
         errorMessageVisibility.postValue(View.GONE)
         checkSubscription?.dispose()
         startSubscription?.dispose()
         startSubscription = mOrder?.suid?.let {
             orderRepository.startSmartIDAuth(
                 user_token = userRepository.getUserToken(),
-                orderSuid = it,
-                national_code = mNationalCode,
-                personal_code = mPersonalCode
+                orderSuid = it
             )
                 .doOnSubscribe { }
                 .doOnTerminate { }
@@ -164,7 +237,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun startCheck() {
+    private fun startCheck() {
         checkSubscription?.dispose()
         checkSubscription =
             mOrder?.suid?.let {
@@ -240,15 +313,16 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     override fun onCleared() {
         super.onCleared()
         startSubscription?.dispose()
-        subscription?.dispose()
+        subscriptionVerificationCode?.dispose()
         checkSubscription?.dispose()
         countDounTimer?.cancel()
+        startCertSubscription?.dispose()
+        checkCertSubscription?.dispose()
     }
 
     fun setOrder(order: Order?) {
         mOrder = order
 
-        orderContract.postValue(order)
     }
 
 
