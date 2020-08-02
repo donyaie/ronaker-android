@@ -41,7 +41,7 @@ class ProfilePaymentListViewModel(app: Application) : BaseViewModel(app) {
     fun loadData() {
 
         subscription = paymentInfoRepository
-            .getPaymentInfoList(userRepository.getUserToken())
+            .getPaymentInfoList()
 
             .doOnSubscribe {
                 retry.value = null

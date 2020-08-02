@@ -89,7 +89,7 @@ class ProfileAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         mNationalCode = code
         mPersonalCode = personalCode
         subscription = userRepository.getSmartIDVerificationCode(
-            userRepository.getUserToken(),
+
             code,
             personalCode
         )
@@ -118,7 +118,7 @@ class ProfileAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         checkSubscription?.dispose()
         startSubscription?.dispose()
         startSubscription = userRepository.startSmartIDAuth(
-            userRepository.getUserToken(),
+
             mNationalCode,
             mPersonalCode
         )
@@ -149,7 +149,7 @@ class ProfileAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     fun startCheck() {
         checkSubscription?.dispose()
-        checkSubscription = userRepository.checkSmartIDSession(userRepository.getUserToken())
+        checkSubscription = userRepository.checkSmartIDSession()
             .doOnSubscribe { }
             .doOnTerminate { }
             .delay(5, TimeUnit.SECONDS)

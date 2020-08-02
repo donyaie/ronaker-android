@@ -57,7 +57,7 @@ class ProfileNameEditViewModel(app: Application) : BaseViewModel(app) {
 
         subscription?.dispose()
         subscription = userRepository
-            .updateUserInfo(userRepository.getUserToken(), user)
+            .updateUserInfo( user)
 
             .doOnSubscribe {
                 loadingButton.value = true

@@ -68,7 +68,6 @@ class OrderDeclineViewModel(app: Application) : BaseViewModel(app) {
 
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            token = userRepository.getUserToken(),
             suid = mOrder.suid,
             status = "rejected",
             reason = reason

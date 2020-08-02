@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Category
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -15,9 +14,6 @@ class AddProductCategorySelectViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductCategorySelectViewModel::class.java.name
 
-
-    @Inject
-    lateinit var userRepository: UserRepository
 
 
     @Inject

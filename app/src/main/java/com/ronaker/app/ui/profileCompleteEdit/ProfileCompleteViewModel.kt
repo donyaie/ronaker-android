@@ -42,7 +42,7 @@ class ProfileCompleteViewModel(app: Application) : BaseViewModel(app) {
     fun loadData() {
 
         subscription = userRepository
-            .getUserInfo(userRepository.getUserToken())
+            .getUserInfo(userRepository.getUserAuthorization())
 
             .doOnSubscribe {
                 retry.value = null

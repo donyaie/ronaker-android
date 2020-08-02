@@ -12,17 +12,17 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-
 class DefaultCategoryRepository(
     private val api: CategoryApi,
-    private val preferencesProvider: PreferencesDataSource
+    private val preferencesProvider: PreferencesDataSource,
+    private val userRepository: UserRepository
 ) : CategoryRepository {
 
     private val CategoryKey = "category_key"
 
-    override fun getCategories(token: String?): Observable<Result<List<Category>?>> {
+    override fun getCategories(): Observable<Result<List<Category>?>> {
 
-        return api.getCategories("Token $token")
+        return api.getCategories(userRepository.getUserAuthorization(),userRepository.getUserLanguage())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -38,15 +38,13 @@ class DefaultCategoryRepository(
     }
 
 
-
     override fun saveCategories(value: List<Category>?) {
         preferencesProvider.putObject(CategoryKey, value)
     }
 
-    override fun getCategories(): List<Category>? {
+    override fun getCategoriesLocal(): List<Category>? {
         return preferencesProvider.getObject(CategoryKey, User::class.java)
     }
-
 
 
 }

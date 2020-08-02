@@ -244,7 +244,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         categorySubscription?.dispose()
 
         categorySubscription = categoryRepository.getCategories(
-            userRepository.getUserToken()
         )
             .doOnSubscribe { }
             .doOnTerminate { }
@@ -358,7 +357,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         createPostSubscription?.dispose()
 
         createPostSubscription = productRepository.productCreate(
-            userRepository.getUserToken(),
             product
         )
             .doOnSubscribe { loadingButton.value = true }
@@ -384,7 +382,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         deleteImageSubscription =
             image.suid?.let {
                 contentRepository.deleteImage(
-                    userRepository.getUserToken(),
                     it
                 )
                     .doOnSubscribe {
@@ -528,7 +525,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 //
         uploadSubscriptionList.add(model.uri?.let {
             contentRepository.uploadImageWithoutProgress(
-                userRepository.getUserToken(),
                 it
             )
                 .doOnSubscribe { model.progress.value = true }
@@ -553,7 +549,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         updateproductSubscription?.dispose()
         updateproductSubscription =
             updateSuid?.let {
-                productRepository.productUpdate(userRepository.getUserToken(), it, product)
+                productRepository.productUpdate( it, product)
                     .doOnSubscribe { loadingButton.value = true }
                     .doOnTerminate { loadingButton.value = false }
                     .subscribe { result ->
@@ -578,7 +574,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         getproductSubscription?.dispose()
         getproductSubscription =
-            productRepository.getProduct(userRepository.getUserToken(), suid)
+            productRepository.getProduct( suid)
                 .doOnSubscribe { loading.value = true }
                 .doOnTerminate { loading.value = false }
                 .subscribe { result ->

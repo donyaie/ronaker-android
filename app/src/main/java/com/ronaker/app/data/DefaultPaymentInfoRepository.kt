@@ -10,12 +10,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class DefaultPaymentInfoRepository(private val api: PaymentInfoApi) : PaymentInfoRepository {
+class DefaultPaymentInfoRepository(
+    private val api: PaymentInfoApi,
+    private val userRepository: UserRepository
+) : PaymentInfoRepository {
 
 
-    override fun getPaymentInfoList(token: String?): Observable<Result<List<PaymentCard>?>> {
+    override fun getPaymentInfoList(): Observable<Result<List<PaymentCard>?>> {
 
-        return api.getPaymentInfoList("Token $token")
+        return api.getPaymentInfoList(userRepository.getUserAuthorization())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -25,9 +28,9 @@ class DefaultPaymentInfoRepository(private val api: PaymentInfoApi) : PaymentInf
     }
 
 
-    override fun addPaymentInfo(token: String?, payment: PaymentCard): Observable<Result<Boolean>> {
+    override fun addPaymentInfo(payment: PaymentCard): Observable<Result<Boolean>> {
 
-        return api.addPaymentInfo("Token $token", payment.toPaymentCardCreateModel())
+        return api.addPaymentInfo(userRepository.getUserAuthorization(), payment.toPaymentCardCreateModel())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -37,9 +40,9 @@ class DefaultPaymentInfoRepository(private val api: PaymentInfoApi) : PaymentInf
     }
 
 
-    override fun getFinancialTransactions(token: String?): Observable<Result<List<Transaction>?>> {
+    override fun getFinancialTransactions(): Observable<Result<List<Transaction>?>> {
 
-        return api.getFinancialTransactions("Token $token")
+        return api.getFinancialTransactions(userRepository.getUserAuthorization())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

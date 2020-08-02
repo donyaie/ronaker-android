@@ -16,5 +16,5 @@ interface CategoryApi {
      */
     @GET("/api/v1/categories/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getCategories(@Header("Authorization") authToken: String): Observable<ListResponseModel<CategoriesResponseModel>>
+    fun getCategories(@Header("Authorization") authToken: String,@Header("Accept-Language") language: String): Observable<ListResponseModel<CategoriesResponseModel>>
 }

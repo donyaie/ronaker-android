@@ -150,7 +150,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
         mProduct.suid?.let {
             subscription =
                 orderRepository.createOrder(
-                    userRepository.getUserToken(),
+
                     it,
                     startDate!!,
                     endDate!!,

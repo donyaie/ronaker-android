@@ -207,7 +207,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
         subscription?.dispose()
         subscription = orderRepository
-            .getOrderDetail(userRepository.getUserToken(), suid)
+            .getOrderDetail( suid)
 
             .doOnSubscribe {
 //                retry.value = null
@@ -236,7 +236,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
    private fun getPDF(url:String,name:String){
         fileSubscription?.dispose()
         fileSubscription = contentRepository
-            .downloadFile(userRepository.getUserToken(),url,
+            .downloadFile(url,
                 "$name-contract.pdf"
             )
 

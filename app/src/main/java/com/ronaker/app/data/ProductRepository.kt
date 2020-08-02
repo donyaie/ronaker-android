@@ -9,7 +9,6 @@ import io.reactivex.Observable
 
 interface ProductRepository {
     fun productSearch(
-        token: String?,
         query: String?,
         page: Int,
         location: LatLng?,
@@ -18,16 +17,15 @@ interface ProductRepository {
         categorySiud: String? = null
     ): Observable<Result<ListResponseModel<Product>>>
 
-    fun getMyProduct(token: String?, page: Int): Observable<Result<ListResponseModel<Product>>>
-    fun productCreate(token: String?, product: Product): Observable<Result<String?>>
-    fun productUpdate(token: String?, suid: String, product: Product): Observable<Result<String?>>
-    fun getProduct(token: String?, suid: String): Observable<Result<Product>>
+    fun getMyProduct( page: Int): Observable<Result<ListResponseModel<Product>>>
+    fun productCreate( product: Product): Observable<Result<String?>>
+    fun productUpdate( suid: String, product: Product): Observable<Result<String?>>
+    fun getProduct(suid: String): Observable<Result<Product>>
     fun getProductRating(
-        token: String?,
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>>
 
-    fun productSavedRemove(token: String?, suid: String): Observable<Result<Boolean>>
-    fun productSave(token: String?, suid: String): Observable<Result<Boolean>>
+    fun productSavedRemove( suid: String): Observable<Result<Boolean>>
+    fun productSave( suid: String): Observable<Result<Boolean>>
 }
 

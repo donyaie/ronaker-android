@@ -5,8 +5,8 @@ import com.ronaker.app.model.Category
 import io.reactivex.Observable
 
 interface CategoryRepository {
-    fun getCategories(token: String?): Observable<Result<List<Category>?>>
+    fun getCategories(): Observable<Result<List<Category>?>>
     fun saveCategories(value: List<Category>?)
-    fun getCategories(): List<Category>?
+    fun getCategoriesLocal(): List<Category>?
 }
 

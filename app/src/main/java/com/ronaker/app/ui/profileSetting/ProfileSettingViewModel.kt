@@ -31,7 +31,7 @@ class ProfileSettingViewModel(app: Application) : BaseViewModel(app) {
     fun loadData() {
 
 //        subscription = userRepository
-//            .getUserInfo(userRepository.getUserToken())
+//            .getUserInfo()
 //
 //            .doOnSubscribe {
 //                retry.value = null

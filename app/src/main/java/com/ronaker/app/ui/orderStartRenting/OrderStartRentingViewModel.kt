@@ -107,7 +107,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
         cardListAdapter.notifyDataSetChanged()
         subscription?.dispose()
         subscription = paymentInfoRepository.getPaymentInfoList(
-            userRepository.getUserToken()
+
         )
             .doOnSubscribe { loading.value = true }
             .doOnTerminate { loading.value = false }
@@ -134,7 +134,6 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
     fun onClickAccept() {
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            token = userRepository.getUserToken(),
             suid = mOrder.suid,
             status = "started"
         )

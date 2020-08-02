@@ -54,7 +54,6 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
 
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.orderRate(
-            token = userRepository.getUserToken(),
             orderSuid = mOrder.suid,
             comment = comment,
             stars = rate.toDouble()

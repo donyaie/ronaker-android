@@ -12,12 +12,14 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DefaultProductRepository(private val productApi: ProductApi) :
+class DefaultProductRepository(
+    private val productApi: ProductApi,
+    private val userRepository: UserRepository
+) :
     ProductRepository {
 
 
     override fun productSearch(
-        token: String?,
         query: String?,
         page: Int,
         location: LatLng?,
@@ -44,7 +46,7 @@ class DefaultProductRepository(private val productApi: ProductApi) :
 
 
 
-        return productApi.productSearch("Token $token", page, request)
+        return productApi.productSearch(userRepository.getUserAuthorization(), page, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -55,11 +57,10 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
     override fun getMyProduct(
-        token: String?,
         page: Int
     ): Observable<Result<ListResponseModel<Product>>> {
 
-        return productApi.getMyProduct("Token $token", page)
+        return productApi.getMyProduct(userRepository.getUserAuthorization(), page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -70,10 +71,9 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
     override fun productCreate(
-        token: String?,
         product: Product
     ): Observable<Result<String?>> {
-        return productApi.productCreate("Token $token", product.toProductCreateModel())
+        return productApi.productCreate(userRepository.getUserAuthorization(), product.toProductCreateModel())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.suid }
@@ -82,12 +82,11 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
     override fun productUpdate(
-        token: String?,
         suid: String,
         product: Product
     ): Observable<Result<String?>> {
 
-        return productApi.productUpdate("Token $token", suid, product.toProductCreateModel())
+        return productApi.productUpdate(userRepository.getUserAuthorization(), suid, product.toProductCreateModel())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.suid }
@@ -96,10 +95,9 @@ class DefaultProductRepository(private val productApi: ProductApi) :
     }
 
     override fun getProduct(
-        token: String?,
         suid: String
     ): Observable<Result<Product>> {
-        return productApi.getProduct("Token $token", suid)
+        return productApi.getProduct(userRepository.getUserAuthorization(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 //            .observeOn(AndroidSchedulers.mainThread())
@@ -109,10 +107,9 @@ class DefaultProductRepository(private val productApi: ProductApi) :
 
 
     override fun getProductRating(
-        token: String?,
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>> {
-        return productApi.getProductRate("Token $token", suid)
+        return productApi.getProductRate(userRepository.getUserAuthorization(), suid)
 
             .map {
                 ListResponseModel(it.count, it.next, it.previous, it.results?.toProductRateList())
@@ -122,10 +119,9 @@ class DefaultProductRepository(private val productApi: ProductApi) :
 
 
     override fun productSave(
-        token: String?,
         suid: String
     ): Observable<Result<Boolean>> {
-        return productApi.productSave("Token $token", suid)
+        return productApi.productSave(userRepository.getUserAuthorization(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -136,10 +132,9 @@ class DefaultProductRepository(private val productApi: ProductApi) :
 
 
     override fun productSavedRemove(
-        token: String?,
         suid: String
     ): Observable<Result<Boolean>> {
-        return productApi.productSavedRemove("Token $token", suid)
+        return productApi.productSavedRemove(userRepository.getUserAuthorization(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

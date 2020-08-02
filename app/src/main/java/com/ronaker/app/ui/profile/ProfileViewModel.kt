@@ -56,7 +56,7 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
     private suspend fun getUserData() =
         withContext(Dispatchers.IO) {
             subscription = userRepository
-                .getUserInfo(userRepository.getUserToken())
+                .getUserInfo(userRepository.getUserAuthorization())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe {

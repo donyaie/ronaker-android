@@ -22,14 +22,20 @@ import java.io.File
 import java.io.IOException
 
 
-class DefaultContentRepository(private val contentApi: ContentApi ,private val context: Context) : ContentRepository {
+class DefaultContentRepository(
+    private val contentApi: ContentApi, private val context: Context,
+    private val userRepository: UserRepository
+) : ContentRepository {
 
 
     override fun uploadImageWithoutProgress(
-        token: String?,
+        
         filePath: Uri
     ): Observable<Result<Media>> {
-        return contentApi.uploadImageWithoutProgress("Token $token", createMultipartBody(filePath))
+        return contentApi.uploadImageWithoutProgress(
+            userRepository.getUserAuthorization(),
+            createMultipartBody(filePath)
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -40,13 +46,13 @@ class DefaultContentRepository(private val contentApi: ContentApi ,private val c
     }
 
     override fun downloadFile(
-         token: String?,
+        
         downloadLink: String,
-         fileName: String
+        fileName: String
     ): Observable<Result<File?>> {
-        return contentApi.download("Token $token", downloadLink)
-            .flatMap {responseBodyResponse->
-                Observable.create(ObservableOnSubscribe<File?> {subscriber->
+        return contentApi.download(userRepository.getUserAuthorization(), downloadLink)
+            .flatMap { responseBodyResponse ->
+                Observable.create(ObservableOnSubscribe<File?> { subscriber ->
 
 
                     try {
@@ -58,9 +64,9 @@ class DefaultContentRepository(private val contentApi: ContentApi ,private val c
                         // will create file in global Music directory, can be any other directory, just don't forget to handle permissions
 
 //File()
-                        val file = FileUtils.getCacheContractFile(context,fileName)
+                        val file = FileUtils.getCacheContractFile(context, fileName)
 
-                        if(file.exists())
+                        if (file.exists())
                             file.delete()
 
                         val sink: BufferedSink = Okio.buffer(Okio.sink(file))
@@ -81,14 +87,12 @@ class DefaultContentRepository(private val contentApi: ContentApi ,private val c
                 })
 
 
-
             }.toResult()
     }
 
 
-
-    override fun deleteImage(token: String?, suid: String): Observable<Result<Boolean>> {
-        return contentApi.deleteImage("Token $token", suid)
+    override fun deleteImage( suid: String): Observable<Result<Boolean>> {
+        return contentApi.deleteImage(userRepository.getUserAuthorization(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

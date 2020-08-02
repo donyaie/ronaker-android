@@ -56,7 +56,7 @@ class ManageProductViewModel(app: Application) : BaseViewModel(app) {
         mSuid = suid
         subscription?.dispose()
         subscription = productRepository
-            .getProduct(userRepository.getUserToken(), suid)
+            .getProduct( suid)
 
             .doOnSubscribe { //retry.value = null;
                 loading.value = true
@@ -131,7 +131,7 @@ class ManageProductViewModel(app: Application) : BaseViewModel(app) {
             if (active) Product.ActiveStatusEnum.Active.key else Product.ActiveStatusEnum.Deactive.key
 
         updateActivesubscription = productRepository
-            .productUpdate(userRepository.getUserToken(), mSuid ?: "", product)
+            .productUpdate( mSuid ?: "", product)
 
             .doOnSubscribe { loadingAction.value = true }
             .doOnTerminate { loadingAction.value = false }

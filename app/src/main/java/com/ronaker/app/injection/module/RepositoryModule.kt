@@ -11,7 +11,6 @@ import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
-import com.ronaker.app.utils.SslUtils
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -136,45 +135,54 @@ class RepositoryModule(private val app: Application) {
     @Provides
     @Singleton
     internal fun providePaymentInfoRepository(
-        api: PaymentInfoApi
+        api: PaymentInfoApi,
+        userRepository: UserRepository
     ): PaymentInfoRepository {
 
-        return DefaultPaymentInfoRepository(api)
+        return DefaultPaymentInfoRepository(api,userRepository)
     }
 
 
     @Provides
     @Singleton
-    internal fun provideContentRepository(api: ContentApi,context: Context): ContentRepository {
+    internal fun provideContentRepository(api: ContentApi,context: Context,
+                                          userRepository: UserRepository): ContentRepository {
 
-        return DefaultContentRepository(api,context)
+        return DefaultContentRepository(api,context,
+            userRepository)
     }
 
     @Provides
     @Singleton
     internal fun provideProductRepository(
-        productApi: ProductApi
+        productApi: ProductApi,
+        userRepository: UserRepository
     ): ProductRepository {
-        return DefaultProductRepository(productApi)
+        return DefaultProductRepository(productApi,
+            userRepository)
     }
 
     @Provides
     @Singleton
     internal fun provideCategoryRepository(
         api: CategoryApi,
-        preferencesProvider: PreferencesProvider
+        preferencesProvider: PreferencesProvider,
+        userRepository: UserRepository
     ): CategoryRepository {
         return DefaultCategoryRepository(api,
-            preferencesProvider)
+            preferencesProvider,
+            userRepository)
     }
 
 
     @Provides
     @Singleton
     internal fun provideOrderRepository(
-        api: OrderApi
+        api: OrderApi,
+        userRepository: UserRepository
     ): OrderRepository {
-        return DefaultOrderRepository(api)
+        return DefaultOrderRepository(api,
+            userRepository)
     }
 
 
@@ -194,11 +202,11 @@ class RepositoryModule(private val app: Application) {
      */
     @Provides
     @Singleton
-    internal fun provideRetrofitInterface(context: Context): Retrofit {
-        val JSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
+    internal fun provideRetrofitInterface(): Retrofit {
+        val jsonFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
-        val GSON = GsonBuilder()
-            .setDateFormat(JSON_DATE_FORMAT)
+        val gson = GsonBuilder()
+            .setDateFormat(jsonFormat)
 //            .serializeNulls()
             .create()
 
@@ -218,7 +226,7 @@ class RepositoryModule(private val app: Application) {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create(GSON))
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
     }

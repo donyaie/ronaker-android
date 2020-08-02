@@ -110,8 +110,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         startCertSubscription?.dispose()
         startCertSubscription = mOrder?.suid?.let {
             orderRepository.startSmartIDCert(
-                orderSuid = it,
-                user_token = userRepository.getUserToken()
+                orderSuid = it
             )
                 .doOnSubscribe { codeLoadingButton.postValue(true) }
                 .doOnTerminate {}
@@ -143,8 +142,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         checkCertSubscription?.dispose()
         checkCertSubscription = mOrder?.suid?.let {
             orderRepository.checkSmartIDSessionCert(
-                orderSuid = it,
-                user_token = userRepository.getUserToken()
+                orderSuid = it
             )
                 .doOnSubscribe { codeLoadingButton.postValue(true) }
                 .doOnTerminate {  }
@@ -174,8 +172,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         subscriptionVerificationCode?.dispose()
         subscriptionVerificationCode = mOrder?.suid?.let {
             orderRepository.getSmartIDVerificationCode(
-                orderSuid = it,
-                user_token = userRepository.getUserToken()
+                orderSuid = it
             )
                 .doOnSubscribe { codeLoadingButton.postValue(true) }
                 .doOnTerminate { codeLoadingButton.postValue(false) }
@@ -208,7 +205,6 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         startSubscription?.dispose()
         startSubscription = mOrder?.suid?.let {
             orderRepository.startSmartIDAuth(
-                user_token = userRepository.getUserToken(),
                 orderSuid = it
             )
                 .doOnSubscribe { }
@@ -241,7 +237,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         checkSubscription?.dispose()
         checkSubscription =
             mOrder?.suid?.let {
-                orderRepository.checkSmartIDSession(userRepository.getUserToken(), it)
+                orderRepository.checkSmartIDSession( it)
                     .doOnSubscribe { }
                     .doOnTerminate { }
                     .delay(5, TimeUnit.SECONDS)

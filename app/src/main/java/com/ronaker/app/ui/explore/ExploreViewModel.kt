@@ -102,7 +102,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
             categorySubscription?.dispose()
             categorySubscription = categoryRepository
-                .getCategories(userRepository.getUserToken())
+                .getCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe { }
@@ -154,7 +154,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
                 subscription = productRepository
                     .productSearch(
-                        userRepository.getUserToken(),
+
                         searchValue,
                         page,
                         null,

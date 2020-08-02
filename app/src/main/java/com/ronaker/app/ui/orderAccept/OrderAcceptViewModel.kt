@@ -72,7 +72,6 @@ class OrderAcceptViewModel(app: Application) : BaseViewModel(app) {
 
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            token = userRepository.getUserToken(),
             suid = mOrder.suid,
             status = "accepted",
             address = address,

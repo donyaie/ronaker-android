@@ -153,8 +153,8 @@
     <string name="text_finish_order">Finish Order</string>
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please make sure your product is functioning properly and delivered to you without damage</string>
     <string name="text_start_renting_instruction">Start Renting instruction</string>
-    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please ensure that the rented goods are functioning properly</string>
-    <string name="text_accept_and_start_renting">Accept &amp; Continue</string>
+    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please Pickup the item at provided address and ensure that the rented goods are functioning properly.\nFees for the Item shuod be paid before pressed “start renting” button</string>
+    <string name="text_accept_and_start_renting">Next Step</string>
     <string name="text_version" translatable="false">Version</string>
     <string name="text_try_again">Try Again</string>
     <string name="text_rate_product">Rate Product</string>
@@ -249,6 +249,7 @@
     <string name="text_choose_new_password_to_reset_password">Choose new password to reset password</string>
     <string name="text_the_password_and_repeat_password_must_same">The password and repeat password must same.</string>
     <string name="text_reset_password">Reset password</string>
+
     <string name="text_explore_items">Explore Items</string>
     <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Rent any item you need straight from its Owner safely and easily, Select the rental start and end dates to check rhe availability of the item. If available, Book it!</string>
     <string name="text_rent">Rent</string>
@@ -257,7 +258,9 @@
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">When your rental period comes to an end all you need to do is return the item to the owner. Evaluations are very important for community safety.</string>
     <string name="text_we_will_send_a_reset_password_link_to_your_email">We will send a reset password link to your email</string>
     <string name="text_forget_password">Forget password</string>
-    <string name="text_reset_may_password">Reset may password</string>
+    <string name="text_reset_may_password">Reset my password</string>
+
+
     <string name="text_you_signed_the_contract">You signed the contract</string>
     <string name="text_signed_the_contract" formatted="true">%1$s signed the contract</string>
     <string name="text_waite_for_sign" formatted="true">Waite for %1$s sign</string>

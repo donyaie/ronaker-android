@@ -152,7 +152,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     fun sendVerificationEmail() {
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken())
+            userRepository.sendEmailVerification()
                 .doOnSubscribe { loadingButton.postValue(true) }
                 .doOnTerminate { loadingButton.postValue(false) }
                 .subscribe {

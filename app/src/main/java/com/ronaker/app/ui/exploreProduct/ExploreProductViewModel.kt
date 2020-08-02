@@ -131,7 +131,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             subscription?.dispose()
 
             subscription = productRepository
-                .getProduct(userRepository.getUserToken(), id)
+                .getProduct( id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
 
@@ -177,7 +177,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
             commentSubscription?.dispose()
             commentSubscription = productRepository
-                .getProductRating(userRepository.getUserToken(), suid)
+                .getProductRating( suid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe {
@@ -343,7 +343,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         if (mProduct?.isFavourite != null && mProduct?.isFavourite == true) {
 
             faveSubscription = productRepository
-                .productSavedRemove(userRepository.getUserToken(), suid)
+                .productSavedRemove( suid)
 
                 .doOnSubscribe {
 
@@ -368,7 +368,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
         } else {
             faveSubscription = productRepository
-                .productSave(userRepository.getUserToken(), suid)
+                .productSave( suid)
 
                 .doOnSubscribe {
 

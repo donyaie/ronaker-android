@@ -61,7 +61,6 @@ class OrderFinishViewModel(app: Application) : BaseViewModel(app) {
     fun onClickAccept() {
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            token = userRepository.getUserToken(),
             suid = mOrder.suid,
             status = "finished"
         )

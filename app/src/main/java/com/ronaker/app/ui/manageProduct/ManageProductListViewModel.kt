@@ -65,7 +65,7 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
                 page++
                 subscription?.dispose()
                 subscription = productRepository
-                    .getMyProduct(userRepository.getUserToken(), page)
+                    .getMyProduct( page)
 
                     .doOnSubscribe {
                         retry.postValue(null)

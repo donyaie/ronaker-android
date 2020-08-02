@@ -49,7 +49,7 @@ class ProfileEditViewModel(app: Application) : BaseViewModel(app) {
     fun loadData() {
         subscription?.dispose()
         subscription = userRepository
-            .getUserInfo(userRepository.getUserToken())
+            .getUserInfo(userRepository.getUserAuthorization())
 
             .doOnSubscribe {
 //                loading.value = true

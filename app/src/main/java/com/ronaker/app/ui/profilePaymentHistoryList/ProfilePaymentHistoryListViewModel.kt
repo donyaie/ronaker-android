@@ -52,7 +52,7 @@ class ProfilePaymentHistoryListViewModel(app: Application) : BaseViewModel(app) 
 
 
         subscription = paymentInfoRepository
-            .getFinancialTransactions(userRepository.getUserToken())
+            .getFinancialTransactions()
 
             .doOnSubscribe {
                 retry.value = null

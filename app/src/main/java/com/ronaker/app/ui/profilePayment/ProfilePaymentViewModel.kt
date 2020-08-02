@@ -66,7 +66,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     fun loadData() {
 
 //        subscription = userRepository
-//            .getUserInfo(userRepository.getUserToken())
+//            .getUserInfo()
 //
 //            .doOnSubscribe {
 //                retry.value = false
@@ -146,7 +146,7 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
 
 
         subscription = paymentInfoRepository
-            .addPaymentInfo(userRepository.getUserToken(), payment)
+            .addPaymentInfo( payment)
 
             .doOnSubscribe {
                 loadingButton.value = true

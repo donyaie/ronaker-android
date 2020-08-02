@@ -108,7 +108,7 @@ class ProfileImageViewModel(app: Application) : BaseViewModel(app) {
 
         uploadSubscription = contentRepository
             .uploadImageWithoutProgress(
-                userRepository.getUserToken(),
+
                 mUri
             )
 
@@ -145,7 +145,7 @@ class ProfileImageViewModel(app: Application) : BaseViewModel(app) {
 
         identitySubscription = userRepository
             .updateUserInfo(
-                userRepository.getUserToken(),
+
                 user
             )
 

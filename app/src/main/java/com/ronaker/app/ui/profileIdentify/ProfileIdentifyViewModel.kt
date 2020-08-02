@@ -98,7 +98,7 @@ class ProfileIdentifyViewModel(app: Application) : BaseViewModel(app) {
 
         uploadSubscription = contentRepository
             .uploadImageWithoutProgress(
-                userRepository.getUserToken(),
+
                 mUri
             )
 
@@ -141,7 +141,7 @@ class ProfileIdentifyViewModel(app: Application) : BaseViewModel(app) {
 
         identitySubscription = userRepository
             .addDocument(
-                userRepository.getUserToken(),
+
                 imageSuid,
                 selectedDocument ?: DocumentTypeEnum.None
             )

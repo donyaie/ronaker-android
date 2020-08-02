@@ -64,7 +64,7 @@ class General : MultiDexApplication() {
 
     override fun attachBaseContext(base: Context) {
         MultiDex.install(this)
-        super.attachBaseContext(LocaleHelper.onAttach(base, "lt"))
+        super.attachBaseContext(LocaleHelper.onAttach(base))
 
 
     }

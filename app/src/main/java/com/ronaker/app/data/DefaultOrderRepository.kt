@@ -16,16 +16,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class DefaultOrderRepository(private val api: OrderApi) :
+class DefaultOrderRepository(private val api: OrderApi,
+                             private val userRepository: UserRepository) :
     OrderRepository {
 
     override fun getOrders(
-        token: String?,
         page: Int,
         filter: String?
     ): Observable<Result<ListResponseModel<Order>>> {
 
-        return api.getOrders("Token $token", page, filter)
+        return api.getOrders(userRepository.getUserAuthorization(), page, filter)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -36,9 +36,9 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
     }
 
-    override fun getOrderDetail(token: String?, suid: String): Observable<Result<Order>> {
+    override fun getOrderDetail( suid: String): Observable<Result<Order>> {
 
-        return api.getOrderDetail("Token $token", suid)
+        return api.getOrderDetail(userRepository.getUserAuthorization(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -51,7 +51,6 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun createOrder(
-        token: String?,
         product_suid: String,
         stateDate: Date,
         endDate: Date,
@@ -68,7 +67,7 @@ class DefaultOrderRepository(private val api: OrderApi) :
                 price
             )
 
-        return api.createOrder("Token $token", request)
+        return api.createOrder(userRepository.getUserAuthorization(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -81,7 +80,6 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun updateOrderStatus(
-        token: String?,
         suid: String,
         status: String?,
         address: String?,
@@ -93,7 +91,7 @@ class DefaultOrderRepository(private val api: OrderApi) :
         val request =
             OrderUpdateRequestModel(status, address, instruction, reason, isArchived)
 
-        return api.updateOrderStatus("Token $token", suid, request)
+        return api.updateOrderStatus(userRepository.getUserAuthorization(), suid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
@@ -101,7 +99,6 @@ class DefaultOrderRepository(private val api: OrderApi) :
     }
 
     override fun orderRate(
-        token: String?,
         orderSuid: String,
         comment: String,
         stars: Double
@@ -110,7 +107,7 @@ class DefaultOrderRepository(private val api: OrderApi) :
         val request =
             ProductRateRequestModel(stars, comment)
 
-        return api.orderRate("Token $token", orderSuid, request)
+        return api.orderRate(userRepository.getUserAuthorization(), orderSuid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
@@ -119,12 +116,10 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun getSmartIDVerificationCode(
-
-        user_token: String?,
         orderSuid: String
     ): Observable<Result<String>> {
 
-        return api.getSmartIDVerificationCode("Token $user_token", orderSuid)
+        return api.getSmartIDVerificationCode(userRepository.getUserAuthorization(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -136,12 +131,10 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun startSmartIDAuth(
-
-        user_token: String?,
         orderSuid: String
     ): Observable<Result<Boolean>> {
 
-        return api.startSmartIDAuth("Token $user_token", orderSuid)
+        return api.startSmartIDAuth(userRepository.getUserAuthorization(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -153,11 +146,10 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun checkSmartIDSession(
-        user_token: String?,
         orderSuid: String
 
     ): Observable<Result<Boolean>> {
-        return api.checkSmartIDSession("Token $user_token", orderSuid)
+        return api.checkSmartIDSession(userRepository.getUserAuthorization(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -171,11 +163,10 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
     override fun startSmartIDCert(
 
-        user_token: String?,
         orderSuid: String
     ): Observable<Result<Boolean>> {
 
-        return api.startSmartIDCert("Token $user_token", orderSuid)
+        return api.startSmartIDCert(userRepository.getUserAuthorization(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -187,10 +178,9 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun checkSmartIDSessionCert(
-        user_token: String?,
         orderSuid: String
     ): Observable<Result<Boolean>> {
-        return api.checkSmartIDSessionCert("Token $user_token", orderSuid)
+        return api.checkSmartIDSessionCert(userRepository.getUserAuthorization(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

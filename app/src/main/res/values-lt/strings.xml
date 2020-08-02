@@ -133,9 +133,9 @@
     <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo atvaizdą, kad galėtumėte jus atpažinti</string>
     <string name="text_your_request_sent">Jūsų prašymas išsiųstas.</string>
     <string name="text_are_you_sure">Ar tu tuo tikras?</string>
-    <string name="text_accept_and_start_renting">Priimti ir tęsti</string>
+    <string name="text_accept_and_start_renting">Kitas žingsnis</string>
     <string name="text_finish_order">Baigti užsakymą</string>
-    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Įsitikinkite, kad išsinuomotos prekės veikia tinkamai</string>
+    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Paimkite prekę nurodytu adresu ir įsitikinkite, kad išsinuomotos prekės veikia tinkamai. Mokesčiai už prekę turi būti sumokėti prieš paspaudžiant mygtuką „pradėti nuomoti“</string>
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Įsitikinkite, kad jūsų produktas veikia tinkamai ir yra pristatytas jums be žalos</string>
     <string name="text_send_a_instruction_to_who_rent_your_item">Nusiųskite nurodymą tam, kas nuomoja jūsų daiktą</string>
     <string name="text_start_renting_instruction">Pradėkite nuomos instrukcijas</string>

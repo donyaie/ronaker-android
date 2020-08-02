@@ -69,7 +69,7 @@ class PhoneNumberViewModel(app: Application) : BaseViewModel(app) {
     fun onClickPhoneNext(phone: String) {
 
         addPhoneSubscription =
-            userRepository.addUserPhoneNumber(userRepository.getUserToken(), phone)
+            userRepository.addUserPhoneNumber( phone)
                 .doOnSubscribe { loadingButton.value = true }
                 .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->
@@ -88,7 +88,7 @@ class PhoneNumberViewModel(app: Application) : BaseViewModel(app) {
 
     fun resend() {
         resendSubscription =
-            userRepository.addUserPhoneNumber(userRepository.getUserToken(), mNumber)
+            userRepository.addUserPhoneNumber( mNumber)
                 .doOnSubscribe { loadingButton.value = true }
                 .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->
@@ -125,7 +125,7 @@ class PhoneNumberViewModel(app: Application) : BaseViewModel(app) {
     fun onClickValidNext(pin: String) {
 
         verifyPhoneSubscription =
-            userRepository.activeUserPhoneNumber(userRepository.getUserToken(), mNumber, pin)
+            userRepository.activeUserPhoneNumber( mNumber, pin)
                 .doOnSubscribe { loadingButton.value = true }
                 .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->

@@ -87,7 +87,7 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
                 subscription?.dispose()
                 subscription = orderRepository
-                    .getOrders(userRepository.getUserToken(), page, filter)
+                    .getOrders( page, filter)
 
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
@@ -158,7 +158,6 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
             archiveSubscription?.dispose()
             archiveSubscription = orderRepository
                 .updateOrderStatus(
-                    token = userRepository.getUserToken(),
                     suid = suid,
                     isArchived = true
                 )

@@ -7,25 +7,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
-import androidx.preference.PreferenceManager
+import com.ronaker.app.data.DefaultUserRepository.Companion.USER_LANGUAGE_KEY
+import com.ronaker.app.data.local.PreferencesProvider
 import java.util.Locale
 
 object LocaleHelper {
 
-    private const val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
     fun onAttach(context: Context): Context {
-        val lang = getPersistedData(context, Locale.getDefault().language) ?: "lt"
+        val lang = getPersistedData(context)
         return setLocale(context, lang)
-    }
-
-    fun onAttach(context: Context, defaultLanguage: String): Context {
-        val lang = getPersistedData(context, defaultLanguage) ?: defaultLanguage
-        return setLocale(context, lang)
-    }
-
-    fun getLanguage(context: Context): String? {
-        return getPersistedData(context, Locale.getDefault().language)
     }
 
     fun setLocale(context: Activity, language: String): Context {
@@ -58,17 +49,14 @@ object LocaleHelper {
 
 
 
-    private fun getPersistedData(context: Context, defaultLanguage: String): String? {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return preferences.getString(SELECTED_LANGUAGE, defaultLanguage)
+    private fun getPersistedData(context: Context, defaultLanguage: String?=null): String {
+        val preferences = PreferencesProvider(context)
+        return preferences.getString(USER_LANGUAGE_KEY, defaultLanguage)?: LANGUAGE_DEFAULT
     }
 
-    private fun persist(context: Context, language: String?) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = preferences.edit()
-
-        editor.putString(SELECTED_LANGUAGE, language)
-        editor.apply()
+    private fun persist(context: Context, language: String) {
+        val preferences = PreferencesProvider(context)
+        preferences.putString(USER_LANGUAGE_KEY, language)
     }
 
     @TargetApi(Build.VERSION_CODES.N)

@@ -34,8 +34,7 @@ class ProfileEmailVerifyViewModel(val app: Application) : BaseViewModel(app) {
     fun loadData() {
         subscription?.dispose()
         subscription = userRepository
-            .getUserInfo(userRepository.getUserToken())
-
+            .getUserInfo(userRepository.getUserAuthorization())
             .doOnSubscribe {
             }
             .doOnTerminate {
@@ -60,7 +59,7 @@ class ProfileEmailVerifyViewModel(val app: Application) : BaseViewModel(app) {
     private fun sendVerificationEmail() {
         emailVerificationSubscription?.dispose()
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken())
+            userRepository.sendEmailVerification()
                 .doOnSubscribe { loadingButton.value = true }
                 .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->

@@ -69,7 +69,7 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
             page++
             subscription?.dispose()
             subscription = productRepository
-                .productSearch(userRepository.getUserToken(), query, page, null, null, true)
+                .productSearch( query, page, null, null, true)
 
                 .doOnSubscribe { onRetrieveProductListStart() }
                 .doOnTerminate { onRetrieveProductListFinish() }

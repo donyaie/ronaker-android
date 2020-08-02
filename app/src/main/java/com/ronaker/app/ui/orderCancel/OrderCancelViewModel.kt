@@ -67,7 +67,6 @@ class OrderCancelViewModel(app: Application) : BaseViewModel(app) {
 
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.updateOrderStatus(
-            token = userRepository.getUserToken(),
             suid = mOrder.suid,
             status = "canceled",
             reason = reason
