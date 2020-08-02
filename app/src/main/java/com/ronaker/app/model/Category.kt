@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Category(
     var suid: String
-    , var title: String
+    , var title: String?
     , var avatar: String
     , var sub_categories: List<Category>?=null
 ) : Parcelable {

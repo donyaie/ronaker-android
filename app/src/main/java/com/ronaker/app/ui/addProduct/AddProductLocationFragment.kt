@@ -120,10 +120,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
 
-
-
-        binding.scrollView.setOnTouchListener { _, _ -> true }
-
         activity?.let {
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
         }

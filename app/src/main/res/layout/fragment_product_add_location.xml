@@ -168,37 +168,39 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/current_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="16dp"
-                    android:contentDescription="@string/text_content"
-                    app:layout_constraintBottom_toTopOf="@id/next_button"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:srcCompat="@drawable/ic_current_location_back"
-
-                    />
-
-                <com.ronaker.app.utils.view.ButtonComponent
-                    android:id="@+id/next_button"
-                    style="@style/Button.accent"
-                    android:layout_width="160dp"
-                    android:layout_marginEnd="@dimen/margin_default"
-                    android:layout_marginBottom="16dp"
-                    android:onClick="@{()->parentViewModel.onClickLocationNext(viewModel.getPlace())}"
-                    android:text="@string/title_button_set_location"
-                    app:buttonType="Text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:loadingColor="@color/white"
-                    app:mutableButtonLoading="@{parentViewModel.getLoadingButton()}" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </ScrollView>
+
+
+        <ImageView
+            android:id="@+id/current_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/text_content"
+            app:layout_constraintBottom_toTopOf="@id/next_button"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_current_location_back"
+
+            />
+
+        <com.ronaker.app.utils.view.ButtonComponent
+            android:id="@+id/next_button"
+            style="@style/Button.accent"
+            android:layout_width="160dp"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{()->parentViewModel.onClickLocationNext(viewModel.getPlace())}"
+            android:text="@string/title_button_set_location"
+            app:buttonType="Text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:loadingColor="@color/white"
+            app:mutableButtonLoading="@{parentViewModel.getLoadingButton()}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
