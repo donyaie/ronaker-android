@@ -53,6 +53,10 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
         AppDebug.log("Show Order","order : "+getOrder().toString())
           getOrder()?.let {order->
 
+
+              if(!isCanSign())
+                  binding.nextButton.visibility=View.GONE
+
                 val input: InputStream = requireContext().assets.open("contract.html")
                 val size: Int = input.available()
 
@@ -84,20 +88,23 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 //
 //                    )
 
-
-
-
-
-
               AppDebug.log("Show Order","buffer size : "+buffer.size)
 
               AppDebug.log("Show Order", "html : \n$str")
 //                .replace("[INCLUDE TRANSACTION NUMBER]", "new string")
 //                .replace("[INCLUDE DATE]", "new string")
 
-              binding.webView.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null);
+              binding.webView.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null)
 //                binding.webView.loadData(str, "text/html", "utf-8")
-            }
+
+
+
+
+
+
+            }?:run{
+              requireActivity().finish()
+          }
 
 
 
@@ -134,6 +141,17 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
     override fun onSelect() {
 
     }
+
+
+    private fun isCanSign(): Boolean {
+        if (requireActivity().intent.hasExtra(OrderAuthorizationActivity.CANSIGN_KEY)) {
+
+            return requireActivity().intent.getBooleanExtra(OrderAuthorizationActivity.CANSIGN_KEY,true)
+
+        }
+        return true
+    }
+
 
     private fun getOrder(): Order? {
         if (requireActivity().intent.hasExtra(OrderAuthorizationActivity.Order_KEY)) {

@@ -45,11 +45,18 @@
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="@dimen/margin_default"
-                    android:text="@string/text_you_will_sign_this_contract_with_your_smart_id"
-                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                    android:text="@string/text_you_must_sign_the_contract_exactly_before_start_renting"
+                    android:textAppearance="@style/TextAppearance.Medium.SB"
                     android:textColor="@color/colorTextDark"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/title" />
+        <RelativeLayout
+            app:layout_constraintTop_toBottomOf="@id/description"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:id="@+id/div"
+            android:background="@color/colorPlatinGrey"/>
 
 
                 <!--                <com.github.barteksc.pdfviewer.PDFView-->
@@ -65,9 +72,8 @@
                     android:id="@+id/webView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/margin_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title" />
+                    app:layout_constraintTop_toBottomOf="@id/div" />
 
 
 <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->

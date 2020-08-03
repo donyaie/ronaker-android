@@ -141,11 +141,9 @@
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="40dp"
                     android:orientation="horizontal"
                     >
                     <CheckBox
-                        android:id="@+id/accept_term"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTextLink"
@@ -162,10 +160,47 @@
 
                         android:visibility="visible"
 
+                        android:text="@string/text_payments_terms"
+                        android:textColor="@color/colorTextLinkLight"
+                        android:textAppearance="@style/TextAppearance.Medium.SB"
+                        android:gravity="start"
+
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="40dp"
+                    android:orientation="horizontal"
+                    >
+                    <CheckBox
+                        android:id="@+id/accept_term"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextLinkLight"
+
+                        android:padding="4dp"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+
+                        />
+                    <TextView
+                        android:padding="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+
+                        android:visibility="visible"
+
                         android:id="@+id/privecy_text"
                         android:text="@string/text_payments_terms"
                         android:onClick="@{()->viewModel.onClickTerms()}"
-                        android:textColor="@color/colorTextLink"
+                        android:textColor="@color/colorTextLinkLight"
                         android:textAppearance="@style/TextAppearance.Medium.SB"
                         android:gravity="start"
 

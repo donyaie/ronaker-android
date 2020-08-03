@@ -82,9 +82,13 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
     val signContractShow: MutableLiveData<Boolean> = MutableLiveData()
+    val contractPreview: MutableLiveData<Boolean> = MutableLiveData()
+
     val previewContractShow: MutableLiveData<File> = MutableLiveData()
 
+    val contractViewVisibility: MutableLiveData<Int> = MutableLiveData()
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
+
 
     val orderCancelRes: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
@@ -99,7 +103,8 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
     val contractVisibility: MutableLiveData<Int> = MutableLiveData()
-    val renterSignVisibility: MutableLiveData<Int> = MutableLiveData()
+
+    //    val renterSignVisibility: MutableLiveData<Int> = MutableLiveData()
     val listerSignVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -207,7 +212,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
         subscription?.dispose()
         subscription = orderRepository
-            .getOrderDetail( suid)
+            .getOrderDetail(suid)
 
             .doOnSubscribe {
 //                retry.value = null
@@ -233,10 +238,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-   private fun getPDF(url:String,name:String){
+    private fun getPDF(url: String, name: String) {
         fileSubscription?.dispose()
         fileSubscription = contentRepository
-            .downloadFile(url,
+            .downloadFile(
+                url,
                 "$name-contract.pdf"
             )
 
@@ -251,13 +257,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     previewContractShow.postValue(result.data)
 
 
-
                 } else {
                     errorMessage.value = result.error?.message
                 }
             }
     }
-
 
 
     fun fillView(order: Order) {
@@ -311,10 +315,12 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
         order.signPdf?.let {
+            contractViewVisibility.postValue(View.VISIBLE)
+            contractPreviewVisibility.postValue(View.GONE)
+        } ?: run {
+            contractViewVisibility.postValue(View.GONE)
             contractPreviewVisibility.postValue(View.VISIBLE)
-        }?:run {
-                contractPreviewVisibility.postValue(View.GONE)
-            }
+        }
 //        contractPreviewVisibility.postValue(View.VISIBLE)
 
         when (Order.OrderTypeEnum[order.orderType]) {
@@ -355,11 +361,9 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignText.postValue(context.getString(R.string.text_please_sign_the_contract))
 
-                    renterSignVisibility.postValue(View.VISIBLE)
 
                 } else {
 
-                    renterSignVisibility.postValue(View.GONE)
                     renterSignText.postValue(context.getString(R.string.text_you_signed_the_contract))
                     renterSignImage.postValue(R.drawable.ic_guide_success)
                 }
@@ -506,7 +510,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     lenderSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
-                renterSignVisibility.postValue(View.GONE)
                 if (order.smart_id_creator_session_id.isNullOrBlank()) {
 
                     renterSignText.postValue(
@@ -520,7 +523,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignText.postValue(
                         String.format(
-                          context.getString(R.string.text_signed_the_contract),
+                            context.getString(R.string.text_signed_the_contract),
                             order.orderUser?.first_name
                         )
                     )
@@ -766,9 +769,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun onRenterSign() {
 
-        signContractShow.postValue(true)
+    fun onContractPreview() {
+
+        contractPreview.postValue(true)
     }
 
     fun onViewContract() {
@@ -776,7 +780,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
         mOrder.signPdf?.let {
 
-            getPDF(BASE_URL+ it.replace("/media/","/media/sign_"),mOrder.suid)
+            getPDF(BASE_URL + it.replace("/media/", "/media/sign_"), mOrder.suid)
 
 
         }

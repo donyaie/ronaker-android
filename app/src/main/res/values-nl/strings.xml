@@ -245,4 +245,6 @@
     <string name="text_you_signed_the_contract">Je hebt het contract ondertekend</string>
     <string name="text_signed_the_contract">%1$s heeft het contract ondertekend</string>
     <string name="text_waite_for_sign">Wacht op %1$s teken</string>
+    <string name="text_you_must_sign_the_contract_exactly_before_start_renting">U moet het contract precies tekenen voordat u begint met huren en goederenruil</string>
+    <string name="text_contract_preview">Contractvoorbeeld</string>
 </resources>

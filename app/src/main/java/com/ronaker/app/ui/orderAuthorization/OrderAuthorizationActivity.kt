@@ -14,7 +14,6 @@ import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
@@ -58,13 +57,15 @@ class OrderAuthorizationActivity : BaseActivity() {
         const val REQUEST_CODE = 364
 
         var Order_KEY = "order"
+        var CANSIGN_KEY = "can_sign"
 
         fun newInstance(
-            context: Context,order: Order
+            context: Context,order: Order,canSign:Boolean=true
         ): Intent {
             val intent = Intent(context, OrderAuthorizationActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
+            boundle.putBoolean(CANSIGN_KEY,canSign)
             intent.putExtras(boundle)
 
             return intent

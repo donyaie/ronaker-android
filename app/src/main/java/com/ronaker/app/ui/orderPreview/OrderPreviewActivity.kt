@@ -181,6 +181,15 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
             )
         })
 
+        viewModel.contractPreview.observe(this, Observer {
+
+            startActivityForResult(
+                OrderAuthorizationActivity.newInstance(this, viewModel.getOrder(),false),
+                OrderAuthorizationActivity.REQUEST_CODE
+            )
+        })
+
+
 
         viewModel.previewContractShow.observe(this, Observer { file ->
 

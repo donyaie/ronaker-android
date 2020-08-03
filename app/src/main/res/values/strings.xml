@@ -240,7 +240,7 @@
     <string name="text_you_will_sign_this_contract_with_your_smart_id">You will sign this contract with your Smart ID</string>
     <string name="text_view_the_contract">View the Contract</string>
     <string name="text_contract">Contract</string>
-    <string name="text_please_sign_the_contract">Please sign the contract</string>
+    <string name="text_please_sign_the_contract">Please sign the contract before start renting</string>
     <string name="text_sign_the_contract">Sign the contract</string>
     <string name="text_please_read_and_sign_the_contract">Please Read and Sign the contract</string>
     <string name="text_send_activation_success">We send to you an activation email </string>
@@ -264,6 +264,8 @@
     <string name="text_you_signed_the_contract">You signed the contract</string>
     <string name="text_signed_the_contract" formatted="true">%1$s signed the contract</string>
     <string name="text_waite_for_sign" formatted="true">Waite for %1$s sign</string>
+    <string name="text_you_must_sign_the_contract_exactly_before_start_renting">You must sign the contract exactly before start Renting and goods exchange</string>
+    <string name="text_contract_preview">Contract Preview</string>
 
 
 </resources>
