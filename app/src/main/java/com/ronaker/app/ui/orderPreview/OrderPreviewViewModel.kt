@@ -323,6 +323,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
         }
 //        contractPreviewVisibility.postValue(View.VISIBLE)
 
+
+
+
+        listerSignVisibility.postValue(View.GONE)
+
         when (Order.OrderTypeEnum[order.orderType]) {
 
             Order.OrderTypeEnum.Lending -> {
@@ -353,8 +358,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     days
                 )
 
-
-
                 if (order.smart_id_creator_session_id.isNullOrBlank()) {
 
                     renterSignImage.postValue(R.drawable.ic_guide_red)
@@ -368,7 +371,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     renterSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
-                listerSignVisibility.postValue(View.GONE)
                 if (order.smart_id_owner_session_id.isNullOrBlank()) {
 
                     listerSignText.postValue(
@@ -569,18 +571,22 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
+                        listerSignVisibility.postValue(View.GONE)
 
                     }
                     Order.OrderStatusEnum.Finished -> {
 
+                        listerSignVisibility.postValue(View.GONE)
                         contractVisibility.postValue(View.VISIBLE)
 
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
+                        listerSignVisibility.postValue(View.GONE)
                     }
                     Order.OrderStatusEnum.Pending -> {
 
+                        listerSignVisibility.postValue(View.GONE)
                         actionVisibility.value = View.VISIBLE
 
                         acceptVisibility.value = View.VISIBLE

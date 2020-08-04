@@ -247,4 +247,6 @@
     <string name="text_waite_for_sign">Wacht op %1$s teken</string>
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">U moet het contract precies tekenen voordat u begint met huren en goederenruil</string>
     <string name="text_contract_preview">Contractvoorbeeld</string>
+    <string name="text_make_sure_sign_the_contract">Zorg ervoor dat u beiden het digitale contract heeft ondertekend</string>
+    <string name="text_i_agree_to_the_contract">Ik ga akkoord met het contract</string>
 </resources>

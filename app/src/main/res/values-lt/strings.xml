@@ -247,4 +247,6 @@
     <string name="text_waite_for_sign">Palaukite %1$s ženklo</string>
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">Prieš pradėdami nuomą ir prekių mainus, turite tiksliai pasirašyti sutartį</string>
     <string name="text_contract_preview">Sutarties peržiūra</string>
+    <string name="text_make_sure_sign_the_contract">Įsitikinkite, kad abu pasirašėte skaitmeninę sutartį</string>
+    <string name="text_i_agree_to_the_contract">Aš sutinku su sutartimi</string>
 </resources>

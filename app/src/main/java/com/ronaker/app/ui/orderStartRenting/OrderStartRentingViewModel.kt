@@ -3,7 +3,9 @@ package com.ronaker.app.ui.orderStartRenting
 
 import android.app.Application
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.PaymentInfoRepository
@@ -43,9 +45,17 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
     val doSignContract: MutableLiveData<Boolean> = MutableLiveData()
+    val contractPreview: MutableLiveData<Boolean> = MutableLiveData()
 
     val instruction: MutableLiveData<String> = MutableLiveData()
-    val orderAddress: MutableLiveData<String> = MutableLiveData()
+
+
+    val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
+    val renterSignImage: MutableLiveData<Int> = MutableLiveData()
+    val renterSignText: MutableLiveData<String> = MutableLiveData()
+    val lenderSignImage: MutableLiveData<Int> = MutableLiveData()
+    val listerSignText: MutableLiveData<String> = MutableLiveData()
+    val renterSignCheck: MutableLiveData<Boolean> = MutableLiveData()
 
 
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
@@ -63,6 +73,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
     private var subscription: Disposable? = null
+    private var orderSubscription: Disposable? = null
 
     private var acceptSubscription: Disposable? = null
 
@@ -78,6 +89,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
         super.onCleared()
         subscription?.dispose()
         acceptSubscription?.dispose()
+        orderSubscription?.dispose()
     }
 
 
@@ -85,7 +97,30 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
         IntentManeger.openUrl(context, TERM_URL)
     }
 
-    fun load(order: Order) {
+
+    fun loadData(suid: String) {
+
+        orderSubscription?.dispose()
+        orderSubscription = orderRepository.getOrderDetail(
+            suid = suid
+        )
+            .doOnSubscribe { }
+            .doOnTerminate { }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+                    result.data?.let { loadData(it) }
+
+                } else {
+
+                    errorMessage.postValue(result.error?.message)
+                }
+            }
+
+
+    }
+
+
+    fun loadData(order: Order) {
         mOrder = order
 
         order.price?.let {
@@ -95,6 +130,47 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
             dataList.removeAll { price -> Order.OrderPriceEnum[price.key] == Order.OrderPriceEnum.InsuranceFee }
             priceListAdapter.notifyDataSetChanged()
         }
+
+
+
+
+        renterSignText.postValue(context.getString(R.string.text_i_agree_to_the_contract))
+
+        if (order.smart_id_creator_session_id.isNullOrBlank()) {
+            renterSignCheck.postValue(false)
+
+        } else {
+            renterSignCheck.postValue(true)
+        }
+
+        if (order.smart_id_owner_session_id.isNullOrBlank()) {
+
+            listerSignText.postValue(
+                String.format(
+                    context.getString(R.string.text_waite_for_sign),
+                    ( order.productOwner?.first_name?:"")  + (order.productOwner?.last_name?:"")
+                )
+            )
+            lenderSignImage.postValue(R.drawable.ic_guide_red)
+        } else {
+
+            listerSignText.postValue(
+                String.format(
+                    context.getString(R.string.text_signed_the_contract),
+                    "${order.productOwner?.first_name?:""} ${order.productOwner?.last_name?:""}"
+                )
+            )
+            lenderSignImage.postValue(R.drawable.ic_guide_success)
+        }
+
+
+
+
+
+
+
+        contractPreviewVisibility.postValue(View.VISIBLE)
+
 
         cardDataList.clear()
 
@@ -147,14 +223,23 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
                     if (result.error?.responseCode == 406) {
 
+                        errorMessage.postValue(context.getString(R.string.text_make_sure_sign_the_contract))
 
-                        doSignContract.postValue(true)
                     } else
                         errorMessage.postValue(result.error?.message)
                 }
             }
 
+    }
 
+
+    fun onContractPreview() {
+        contractPreview.postValue(true)
+    }
+
+    fun onRenterSign() {
+        if (mOrder.smart_id_creator_session_id.isNullOrBlank())
+            doSignContract.postValue(true)
     }
 
 

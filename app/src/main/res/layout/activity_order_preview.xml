@@ -493,8 +493,8 @@
                             android:layout_marginStart="8dp"
                             android:text="@string/text_please_sign_the_contract"
 
-                            android:textAppearance="@style/TextAppearance.Small.SB"
 
+                            android:textAppearance="@style/TextAppearance.Medium.SB"
                             android:textColor="@color/colorTextDark"
                             app:layout_constraintBottom_toBottomOf="@id/renter_sign_state_image"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -524,8 +524,8 @@
                             android:layout_marginStart="8dp"
 
                             android:text="@string/text_please_sign_the_contract"
-                            android:textAppearance="@style/TextAppearance.Small.SB"
 
+                            android:textAppearance="@style/TextAppearance.Medium.SB"
                             android:textColor="@color/colorTextDark"
                             app:layout_constraintBottom_toBottomOf="@id/lister_sign_state_image"
                             app:layout_constraintEnd_toEndOf="parent"

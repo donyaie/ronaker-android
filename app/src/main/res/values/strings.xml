@@ -266,6 +266,8 @@
     <string name="text_waite_for_sign" formatted="true">Waite for %1$s sign</string>
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">You must sign the contract exactly before start Renting and goods exchange</string>
     <string name="text_contract_preview">Contract Preview</string>
+    <string name="text_make_sure_sign_the_contract">Make sure You both signed the digital contract</string>
+    <string name="text_i_agree_to_the_contract">I agree to the contract</string>
 
 
 </resources>

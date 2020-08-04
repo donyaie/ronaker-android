@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,7 +17,7 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
 import com.ronaker.app.utils.Alert
 
-class OrderStartRentingActivity : BaseActivity() {
+class OrderStartRentingActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderStartRentingBinding
@@ -37,6 +38,10 @@ class OrderStartRentingActivity : BaseActivity() {
             return intent
         }
     }
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -74,13 +79,36 @@ class OrderStartRentingActivity : BaseActivity() {
             finish()
         })
 
+        viewModel.renterSignCheck.observe(this, Observer { isChecked ->
+
+            binding.renterSignStateImage.setOnCheckedChangeListener(null)
+            binding.renterSignStateImage.isChecked=isChecked
+            binding.renterSignStateImage.setOnCheckedChangeListener(this)
+
+        })
+
+
+        binding.renterSignStateImage.setOnCheckedChangeListener(this)
+
 
 
         viewModel.doSignContract.observe(this, Observer { _ ->
 
             startActivity(getOrder()?.let {
-                OrderAuthorizationActivity.newInstance(this@OrderStartRentingActivity,
+                OrderAuthorizationActivity.newInstance(
+                    this@OrderStartRentingActivity,
                     it
+                )
+            })
+        })
+
+
+        viewModel.contractPreview.observe(this, Observer { _ ->
+
+            startActivity(getOrder()?.let {
+                OrderAuthorizationActivity.newInstance(
+                    this@OrderStartRentingActivity,
+                    it, true
                 )
             })
         })
@@ -88,6 +116,8 @@ class OrderStartRentingActivity : BaseActivity() {
 
         binding.acceptButton.isEnabled = false
         binding.acceptTerm.setOnCheckedChangeListener { _, isChecked ->
+
+
             binding.acceptButton.isEnabled = isChecked
         }
 
@@ -98,7 +128,19 @@ class OrderStartRentingActivity : BaseActivity() {
         }
 
 
-        getOrder()?.let { viewModel.load(it) }
+
+
+        getOrder()?.let { viewModel.loadData(it) } ?: run { finish() }
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getOrder()?.suid?.let {
+
+            viewModel.loadData(it)
+        }
 
 
     }
@@ -111,6 +153,16 @@ class OrderStartRentingActivity : BaseActivity() {
 
         }
         return null
+    }
+
+    override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+
+        binding.renterSignStateImage.setOnCheckedChangeListener(null)
+        binding.renterSignStateImage.isChecked=!p1
+        binding.renterSignStateImage.setOnCheckedChangeListener(this)
+
+
+
     }
 
 
