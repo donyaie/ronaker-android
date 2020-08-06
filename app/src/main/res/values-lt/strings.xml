@@ -249,4 +249,5 @@
     <string name="text_contract_preview">Sutarties peržiūra</string>
     <string name="text_make_sure_sign_the_contract">Įsitikinkite, kad abu pasirašėte skaitmeninę sutartį</string>
     <string name="text_i_agree_to_the_contract">Aš sutinku su sutartimi</string>
+    <string name="error_login_email_or_password_wrong">neteisingas jūsų el. pašto adresas arba slaptažodis. Prašau, pabandykite dar kartą</string>
 </resources>

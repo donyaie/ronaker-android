@@ -48,6 +48,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
     private lateinit var viewModel: DashboardViewModel
 
+
+    var inviteCode: String? = null
+
+
     var savedInstanceState: Bundle? = null
 
 
@@ -75,7 +79,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         viewModel.goLogin.observe(this, Observer { value ->
             if (value == true) {
 
-                startActivity(LoginActivity.newInstance(this@DashboardActivity))
+                startActivity(LoginActivity.newInstance(this@DashboardActivity,inviteCode))
                 AnimationHelper.setFadeTransition(this)
                 finish()
 
@@ -118,6 +122,14 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
                 }
 
+
+
+                if (referringParams?.has("invite-code") == true) {
+                    inviteCode = referringParams.getString("invite-code")
+
+
+                }
+
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
@@ -125,6 +137,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     }
+
 
     override fun onStart() {
         super.onStart()

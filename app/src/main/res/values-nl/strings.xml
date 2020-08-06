@@ -249,4 +249,5 @@
     <string name="text_contract_preview">Contractvoorbeeld</string>
     <string name="text_make_sure_sign_the_contract">Zorg ervoor dat u beiden het digitale contract heeft ondertekend</string>
     <string name="text_i_agree_to_the_contract">Ik ga akkoord met het contract</string>
+    <string name="error_login_email_or_password_wrong">Uw e-mailadres of wachtwoord is onjuist. probeer het alstublieft opnieuw</string>
 </resources>

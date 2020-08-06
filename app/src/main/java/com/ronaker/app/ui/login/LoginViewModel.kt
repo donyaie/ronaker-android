@@ -24,10 +24,12 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     private var emailVerificationSubscription: Disposable? = null
 
 
-    var forgetSubscription:Disposable?=null
+    var forgetSubscription: Disposable? = null
     val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
     val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
 
+
+    val inviteCodeText: MutableLiveData<String> = MutableLiveData()
 
     val passwordLengthVisibility: MutableLiveData<Int> = MutableLiveData()
     val passwordAlphabetVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -40,7 +42,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val successMessage: MutableLiveData<String> = MutableLiveData()
 
-    
+
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
@@ -180,7 +182,11 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                         goNext.postValue(true)
 
                     } else {
-                        errorMessage.postValue(result.error?.message)
+
+                        if (result?.error?.responseCode == 406) {
+                            errorMessage.postValue(context.getString(R.string.error_login_email_or_password_wrong))
+                        } else
+                            errorMessage.postValue(result.error?.message)
                     }
                 }
 
@@ -188,9 +194,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickLoginResetPassword(
         email: String?,
-        emailIsValid: Boolean){
-        
-        if(emailIsValid && email!=null){
+        emailIsValid: Boolean
+    ) {
+
+        if (emailIsValid && email != null) {
             forgetSubscription =
                 userRepository.forgetPassword(email).doOnSubscribe { loadingButton.postValue(true) }
                     .doOnTerminate { loadingButton.postValue(false) }
@@ -198,11 +205,11 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                         loading.postValue(false)
                         if (result.isSuccess()) {
 
-                            
+
                             viewState.postValue(LoginStateEnum.home)
-                            
+
                             successMessage.postValue(context.getString(R.string.text_send_activation_success))
-                            
+
 
                         } else {
                             errorMessage.postValue(result.error?.message)
@@ -213,9 +220,13 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun onClickGotoSignUp() {
+        if (!mInviteCode.isNullOrBlank())
+            inviteCodeText.postValue(mInviteCode)
         gotoSignUp.postValue(true)
+
     }
-    fun onClickGotoForget(){
+
+    fun onClickGotoForget() {
 
         viewState.value = LoginStateEnum.forget
     }
@@ -280,7 +291,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             passwordMatchVisibility.postValue(View.GONE)
 
 
-        AppDebug.log("validatePassword","password: $password , repeat: $repeat isValid: $isValid")
+        AppDebug.log("validatePassword", "password: $password , repeat: $repeat isValid: $isValid")
 
         return isValid
     }
@@ -290,6 +301,16 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         super.onCleared()
         signUpSubscription?.dispose()
         signinSubscription?.dispose()
+    }
+
+
+    var mInviteCode: String? = null
+
+    fun setInviteCode(inviteCode: String) {
+
+        mInviteCode = inviteCode
+
+
     }
 
 }

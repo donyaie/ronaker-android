@@ -44,7 +44,7 @@
                     android:layout_height="800dp"
                     android:id="@+id/bgCon"
 
-                    android:gravity="start">
+                    android:gravity="center">
 
                     <ImageView
                         android:layout_height="800dp"
@@ -57,7 +57,7 @@
 
                         android:gravity="top"
 
-                        app:srcCompat="@drawable/bg_login" />
+                        app:srcCompat="@drawable/backgroung_bg" />
 
                 </RelativeLayout>
 

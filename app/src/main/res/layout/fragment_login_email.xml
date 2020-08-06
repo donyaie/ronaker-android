@@ -91,6 +91,8 @@
                     app:input_title="@string/text_invite_code"
                     app:input_transparent="true"
                     app:input_validation_mode="AUTO"
+
+                    app:inputMutableText="@{viewModel.getInviteCodeText()}"
                     app:layout_constraintTop_toBottomOf="@id/email_input"
                     tools:ignore="UnusedAttribute"
                     tools:layout_editor_absoluteX="@dimen/margin_default" />

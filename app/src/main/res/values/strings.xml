@@ -268,6 +268,7 @@
     <string name="text_contract_preview">Contract Preview</string>
     <string name="text_make_sure_sign_the_contract">Make sure You both signed the digital contract</string>
     <string name="text_i_agree_to_the_contract">I agree to the contract</string>
+    <string name="error_login_email_or_password_wrong">your email or password is incorrect. please try again</string>
 
 
 </resources>
