@@ -15,7 +15,7 @@ object LocaleHelper {
 
 
     fun onAttach(context: Context): Context {
-        return setLocale(context, Locale.getDefault().language)
+        return setLocale(context, getPersistedData(context, Locale.getDefault().language) )
     }
 
     fun setLocale(context: Activity, language: String): Context {
@@ -29,7 +29,13 @@ object LocaleHelper {
 
         context.applicationContext.resources.updateConfiguration(configuration,context.applicationContext.resources.displayMetrics)
 
-        return context
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            updateResources(context, language)
+        } else
+            updateResourcesLegacy(context, language)
+
+//        return context
 
 
     }
