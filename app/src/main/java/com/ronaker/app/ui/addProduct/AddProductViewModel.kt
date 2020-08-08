@@ -300,7 +300,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
         try {
-
             product.price_per_day = dayPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_day = 0.0
@@ -322,10 +321,17 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             product.price_per_month = 0.0
             AppDebug.log(TAG, e)
         }
-        if (!updateSuid.isNullOrEmpty()) {
+        if (!updateSuid.isNullOrEmpty() && (product.price_per_day ?: 0.toDouble()) > 0) {
 
             updateProduct(product)
-        } else if (product.price_per_day ?: 0.toDouble() > 0 || product.price_per_week ?: 0.toDouble() > 0 || product.price_per_month ?: 0.toDouble() > 0)
+        } else if (
+            (product.price_per_day ?: 0.0) > 0
+//            ||
+//            (product.price_per_week ?: 0.toDouble()) > 0 ||
+//            (product.price_per_month ?: 0.toDouble()) > 0
+
+
+        )
             viewState.value = StateEnum.Location
         else
             errorMessage.value = context.getString(R.string.error_set_price)
@@ -549,7 +555,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         updateproductSubscription?.dispose()
         updateproductSubscription =
             updateSuid?.let {
-                productRepository.productUpdate( it, product)
+                productRepository.productUpdate(it, product)
                     .doOnSubscribe { loadingButton.value = true }
                     .doOnTerminate { loadingButton.value = false }
                     .subscribe { result ->
@@ -574,7 +580,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         getproductSubscription?.dispose()
         getproductSubscription =
-            productRepository.getProduct( suid)
+            productRepository.getProduct(suid)
                 .doOnSubscribe { loading.value = true }
                 .doOnTerminate { loading.value = false }
                 .subscribe { result ->
@@ -647,17 +653,16 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 //                                    } else {
 
 
-                                        categories.clear()
-                                        categories.addAll(it)
+                                    categories.clear()
+                                    categories.addAll(it)
 
-                                        if (categories.size > 1) {
-                                            categories[0].sub_categories = listOf(categories[1])
-                                            categories.removeAt(1)
-                                        }
+                                    if (categories.size > 1) {
+                                        categories[0].sub_categories = listOf(categories[1])
+                                        categories.removeAt(1)
                                     }
+                                }
 //
 //                                }
-
 
 
                                 productSubCategoryVisibility.value = View.GONE
