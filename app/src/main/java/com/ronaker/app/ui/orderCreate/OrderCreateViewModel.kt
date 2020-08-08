@@ -267,5 +267,11 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
         subscription?.dispose()
     }
 
+    fun clearSelection() {
+
+        setDatesVisibility.value = View.GONE
+
+    }
+
 
 }

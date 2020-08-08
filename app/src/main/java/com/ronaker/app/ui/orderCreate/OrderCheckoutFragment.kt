@@ -43,6 +43,8 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
 
         viewModel.clearData.observe(viewLifecycleOwner, Observer {
             binding.calendarView.clearSelectedDates()
+
+            viewModel.clearSelection()
         })
 
 
