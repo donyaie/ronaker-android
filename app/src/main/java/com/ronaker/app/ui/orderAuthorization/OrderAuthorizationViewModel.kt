@@ -10,6 +10,7 @@ import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -31,12 +32,15 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
+    val language: MutableLiveData<String> = MutableLiveData()
+
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
     val codeLoadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val timerVisibility: MutableLiveData<Int> = MutableLiveData()
     val resendVisibility: MutableLiveData<Int> = MutableLiveData()
+
     val timerValue: MutableLiveData<String> = MutableLiveData()
 
 
@@ -61,6 +65,15 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     private var checkCertSubscription: Disposable? = null
     private var startSubscription: Disposable? = null
     private var checkSubscription: Disposable? = null
+
+
+    var defaultLanguage: String
+
+
+    init {
+        defaultLanguage = userRepository.getUserLanguage()
+        language.postValue(defaultLanguage)
+    }
 
 
     enum class StateEnum constructor(position: Int) {
@@ -93,13 +106,13 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    var isStartCert=false
-    var isCheckCert=false
+    var isStartCert = false
+    var isCheckCert = false
 
 
-    private fun startCert(){
+    private fun startCert() {
 
-        if(isStartCert){
+        if (isStartCert) {
             startCheckCert()
             return
         }
@@ -116,12 +129,12 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
                 .doOnTerminate {}
                 .subscribe { result ->
                     if (result.isSuccess() || result.isAcceptable()) {
-                        isStartCert=true
+                        isStartCert = true
                         startCheckCert()
 
 
                     } else {
-                        isStartCert=false
+                        isStartCert = false
                         codeLoadingButton.postValue(false)
                         errorMessage.postValue(result.error?.message)
                     }
@@ -130,10 +143,9 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
+    private fun startCheckCert() {
 
-    private fun startCheckCert(){
-
-        if(isCheckCert){
+        if (isCheckCert) {
             sendVerificationCode()
             return
         }
@@ -145,15 +157,15 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
                 orderSuid = it
             )
                 .doOnSubscribe { codeLoadingButton.postValue(true) }
-                .doOnTerminate {  }
+                .doOnTerminate { }
                 .subscribe { result ->
                     if (result.isSuccess() || result.isAcceptable()) {
-                        isCheckCert=true
+                        isCheckCert = true
                         sendVerificationCode()
 
 
                     } else {
-                        isCheckCert=false
+                        isCheckCert = false
                         codeLoadingButton.postValue(false)
                         errorMessage.postValue(result.error?.message)
                     }
@@ -162,11 +174,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-
-
-
-    private fun sendVerificationCode(){
-
+    private fun sendVerificationCode() {
 
 
         subscriptionVerificationCode?.dispose()
@@ -193,10 +201,6 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
                 }
         }
     }
-
-
-
-
 
 
     private fun startAuth() {
@@ -237,7 +241,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         checkSubscription?.dispose()
         checkSubscription =
             mOrder?.suid?.let {
-                orderRepository.checkSmartIDSession( it)
+                orderRepository.checkSmartIDSession(it)
                     .doOnSubscribe { }
                     .doOnTerminate { }
                     .delay(5, TimeUnit.SECONDS)
@@ -318,6 +322,18 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     fun setOrder(order: Order?) {
         mOrder = order
+
+
+    }
+
+    fun changeLanguage() {
+
+        defaultLanguage = if (defaultLanguage.toLowerCase(Locale.ROOT).trim().compareTo("lt") == 0) {
+            "en"
+        } else {
+            "lt"
+        }
+        language.postValue(defaultLanguage)
 
     }
 

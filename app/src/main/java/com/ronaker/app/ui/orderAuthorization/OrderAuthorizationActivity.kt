@@ -18,6 +18,8 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class OrderAuthorizationActivity : BaseActivity() {
@@ -60,12 +62,12 @@ class OrderAuthorizationActivity : BaseActivity() {
         var CANSIGN_KEY = "can_sign"
 
         fun newInstance(
-            context: Context,order: Order,canSign:Boolean=true
+            context: Context, order: Order, canSign: Boolean = true
         ): Intent {
             val intent = Intent(context, OrderAuthorizationActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
-            boundle.putBoolean(CANSIGN_KEY,canSign)
+            boundle.putBoolean(CANSIGN_KEY, canSign)
             intent.putExtras(boundle)
 
             return intent
@@ -100,6 +102,20 @@ class OrderAuthorizationActivity : BaseActivity() {
         viewModel.setOrder(getOrder())
 
         fragmentState = OrderAuthorizationViewModel.StateEnum.PersonalCode
+
+
+        viewModel.language.observe(this, Observer {
+            if (it.trim().toLowerCase(Locale.ROOT).compareTo("lt") == 0)
+                binding.toolbar.action2Src = R.drawable.ic_en_text
+            else
+                binding.toolbar.action2Src = R.drawable.ic_lt_text
+        })
+
+
+
+        binding.toolbar.action2BouttonClickListener=View.OnClickListener { viewModel.changeLanguage() }
+
+
 
 
     }
@@ -223,7 +239,6 @@ class OrderAuthorizationActivity : BaseActivity() {
         }
         return null
     }
-
 
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(

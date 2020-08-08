@@ -1,16 +1,17 @@
 package com.ronaker.app.ui.orderAuthorization
 
 import android.os.Bundle
-import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.AppDebug
+import com.ronaker.app.utils.toCurrencyFormat
 import com.ronaker.app.utils.view.IPagerFragment
 import io.reactivex.disposables.Disposable
 import java.io.InputStream
@@ -43,92 +44,86 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
         activity?.let {
             viewModel = ViewModelProvider(it).get(OrderAuthorizationViewModel::class.java)
             binding.viewModel = viewModel
-
-
         }
-//        binding.view = this
-
-//        binding.webView.loadUrl("file:///android_asset/contract.html");
-
-        AppDebug.log("Show Order","order : "+getOrder().toString())
-          getOrder()?.let {order->
-
-
-              if(!isCanSign())
-                  binding.nextButton.visibility=View.GONE
-
-                val input: InputStream = requireContext().assets.open("contract.html")
-                val size: Int = input.available()
-
-                val buffer = ByteArray(size)
-                input.read(buffer)
-                input.close()
-
-                val str = String(buffer)
-                    .replace(
-                        "[INCLUDE RENTER NAME]",
-                        "${order.orderUser?.first_name} ${order.orderUser?.last_name}"
-                    )
-                    .replace(
-                        "[INCLUDE LISTER NAME]",
-                        "${order.productOwner?.first_name} ${order.productOwner?.last_name}"
-                    )
-
-                    .replace(
-                        "[INCLUDE DATE]",
-                        String.format(
-                            "from %s to %s",
-                            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(order.fromDate),
-                            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(order.toDate))
-
-                    )
-//                    .replace(
-//                        "[TRANSACTION NUMBER]",
-//                       ""
-//
-//                    )
-
-              AppDebug.log("Show Order","buffer size : "+buffer.size)
-
-              AppDebug.log("Show Order", "html : \n$str")
-//                .replace("[INCLUDE TRANSACTION NUMBER]", "new string")
-//                .replace("[INCLUDE DATE]", "new string")
-
-              binding.webView.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null)
-//                binding.webView.loadData(str, "text/html", "utf-8")
 
 
 
 
+        viewModel.language.observe(viewLifecycleOwner, Observer {
+            viewContract(it)
 
-
-            }?:run{
-              requireActivity().finish()
-          }
-
-
-
-
-//        binding.pdfView.fromAsset("contract.pdf")
-//            .enableSwipe(true) // allows to block changing pages using swipe
-//            .swipeHorizontal(true)
-//            .enableDoubletap(true)
-//            .defaultPage(0)
-//            .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
-//            .password(null)
-//            .scrollHandle(null)
-//            .enableAntialiasing(true) // improve rendering a little bit on low-res screens
-//            // spacing between pages in dp. To define spacing color, set view background
-//            .spacing(0)
-//            .pageFitPolicy(FitPolicy.WIDTH)
-//            .load()
+        })
 
 
         return binding.root
     }
 
 
+    private fun viewContract(language: String) {
+        getOrder()?.let { order ->
 
+
+            if (!isCanSign())
+                binding.nextButton.visibility = View.GONE
+
+
+            val filename = "contract-${if (language.trim().toLowerCase(Locale.ROOT)
+                    .compareTo("lt") == 0
+            ) "lt" else "en"}.html"
+
+            val input: InputStream =
+                requireContext().assets.open(filename)
+            val size: Int = input.available()
+
+            val buffer = ByteArray(size)
+            input.read(buffer)
+            input.close()
+
+            var totalPrice = 0.0
+            order.price?.forEach {
+                if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.Total)
+                    totalPrice = if (it.price == 0.0) 0.0 else it.price / 100.0
+            }
+
+            val str = String(buffer)
+                .replace(
+                    "[INCLUDE RENTER NAME]",
+                    "${order.orderUser?.first_name} ${order.orderUser?.last_name}"
+                )
+                .replace(
+                    "[INCLUDE LISTER NAME]",
+                    "${order.productOwner?.first_name} ${order.productOwner?.last_name}"
+                )
+//                    .replace(
+//                        "[INCLUDE SIGN DATE]",
+//                        String.format(
+//                            "from %s to %s",
+//                            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(order.fromDate),
+//                            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(order.toDate))
+//
+//                    )
+                .replace(
+                    "[INSERT STARTING DATE]",
+                    SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag(language)).format(order.fromDate)
+
+                ).replace(
+                    "[INSERT ENDING DATE]",
+                    SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag(language)).format(order.toDate)
+
+                ).replace(
+                    "[RENT FEE]",
+                    totalPrice.toCurrencyFormat(null, false)
+
+                )
+
+            binding.webView.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null)
+//                binding.webView.loadData(str, "text/html", "utf-8")
+
+
+        } ?: run {
+            requireActivity().finish()
+        }
+    }
 
 
     companion object {
@@ -146,7 +141,10 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
     private fun isCanSign(): Boolean {
         if (requireActivity().intent.hasExtra(OrderAuthorizationActivity.CANSIGN_KEY)) {
 
-            return requireActivity().intent.getBooleanExtra(OrderAuthorizationActivity.CANSIGN_KEY,true)
+            return requireActivity().intent.getBooleanExtra(
+                OrderAuthorizationActivity.CANSIGN_KEY,
+                true
+            )
 
         }
         return true

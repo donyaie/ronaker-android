@@ -20,6 +20,7 @@ import com.ronaker.app.utils.FileUtils.getCacheCameraPath
 import com.ronaker.app.utils.IntentManeger
 import com.yalantis.ucrop.UCrop
 import java.io.File
+import kotlin.random.Random
 
 
 class ImagePickerActivity : BaseActivity() {
@@ -84,7 +85,10 @@ class ImagePickerActivity : BaseActivity() {
 
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
-                        fileName = System.currentTimeMillis().toString() + ".jpg"
+                        fileName ="capture-${System.currentTimeMillis()}-${Random.nextInt()}.jpg"
+
+
+
 
                         IntentManeger.takePicture(this@ImagePickerActivity,fileName,REQUEST_IMAGE_CAPTURE)
 
@@ -151,7 +155,10 @@ class ImagePickerActivity : BaseActivity() {
     }
 
     private fun cropImage(sourceUri: Uri) {
-        val destinationUri = Uri.fromFile(File(cacheDir, FileUtils.queryName(contentResolver, sourceUri)))
+
+
+
+        val destinationUri = Uri.fromFile(File(cacheDir, System.currentTimeMillis().toString()+FileUtils.queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
         options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))

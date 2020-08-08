@@ -13,7 +13,7 @@ fun Double.toCurrencyFormat(): String {
 
 fun byteArrayOfInts(vararg ints: Int) = ByteArray(ints.size) { pos -> ints[pos].toByte() }
 
-fun Double.toCurrencyFormat(prefix: String?): String {
+fun Double.toCurrencyFormat(prefix: String?,includeSymbol:Boolean=true): String {
 
     val format: NumberFormat = NumberFormat.getCurrencyInstance()
 
@@ -34,5 +34,5 @@ fun Double.toCurrencyFormat(prefix: String?): String {
 
 
 
-    return (if (prefix == null) "" else "$prefix ") + "€${format.format(this)}"
+    return "${if (prefix == null) "" else "$prefix "}${if(includeSymbol)"€" else "" }${format.format(this)}"
 }

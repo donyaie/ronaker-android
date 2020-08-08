@@ -487,14 +487,14 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
                 .getResourceId(
                     R.styleable
                         .ToolbarComponent_toolbar_component_action1src,
-                    R.drawable.ic_share_white
+                    0
                 )
 
             action2Src = typedArray
                 .getResourceId(
                     R.styleable
                         .ToolbarComponent_toolbar_component_action2src,
-                    R.drawable.ic_fave_white
+                    0
                 )
 
             dotCount = typedArray

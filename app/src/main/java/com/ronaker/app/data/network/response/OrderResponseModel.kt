@@ -20,7 +20,7 @@ data class OrderResponseModel(
     @SerializedName("is_archived") val is_archived: Boolean = false,
     @SerializedName("smart_id_owner_session_id") val smart_id_owner_session_id: String ?,
     @SerializedName("smart_id_creator_session_id") val smart_id_creator_session_id: String?,
-    @SerializedName("sign_pdf") val sign_pdf: String?
+    @SerializedName("sign_pdf") val sign_pdf: OrderResponsePDFSignModel?
 
 
 

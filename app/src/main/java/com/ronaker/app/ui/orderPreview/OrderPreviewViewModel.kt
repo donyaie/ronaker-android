@@ -86,7 +86,8 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     val previewContractShow: MutableLiveData<File> = MutableLiveData()
 
-    val contractViewVisibility: MutableLiveData<Int> = MutableLiveData()
+    val contractViewENVisibility: MutableLiveData<Int> = MutableLiveData()
+    val contractViewLTVisibility: MutableLiveData<Int> = MutableLiveData()
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -314,13 +315,28 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
         )
 
 
-        order.signPdf?.let {
-            contractViewVisibility.postValue(View.VISIBLE)
-            contractPreviewVisibility.postValue(View.GONE)
+
+        order.signPdf_EN?.let {
+            contractViewENVisibility.postValue(View.VISIBLE)
         } ?: run {
-            contractViewVisibility.postValue(View.GONE)
-            contractPreviewVisibility.postValue(View.VISIBLE)
+            contractViewENVisibility.postValue(View.GONE)
         }
+
+
+
+        order.signPdf_LT?.let {
+            contractViewLTVisibility.postValue(View.VISIBLE)
+        } ?: run {
+            contractViewLTVisibility.postValue(View.GONE)
+        }
+
+        if(order.signPdf_LT.isNullOrEmpty()  && order.signPdf_EN.isNullOrEmpty() )
+            contractPreviewVisibility.postValue(View.VISIBLE)
+        else
+            contractPreviewVisibility.postValue(View.GONE)
+
+
+
 //        contractPreviewVisibility.postValue(View.VISIBLE)
 
 
@@ -781,12 +797,24 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
         contractPreview.postValue(true)
     }
 
-    fun onViewContract() {
+    fun onViewContractEN() {
 
 
-        mOrder.signPdf?.let {
+        mOrder.signPdf_EN?.let {
 
-            getPDF(BASE_URL + it.replace("/media/", "/media/sign_"), mOrder.suid)
+            getPDF(BASE_URL + it, mOrder.suid)
+
+
+        }
+
+    }
+
+    fun onViewContractLT() {
+
+
+        mOrder.signPdf_LT?.let {
+
+            getPDF(BASE_URL + it, mOrder.suid)
 
 
         }
