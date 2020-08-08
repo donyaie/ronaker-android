@@ -47,7 +47,7 @@
                     android:layout_height="120dp"
                     android:scaleType="fitCenter"
                     android:contentDescription="@string/text_content"
-                    android:tint="@color/colorIconDark"
+                    app:tint="@color/colorIconDark"
                     app:srcCompat="@drawable/ic_email_large" />
 
 

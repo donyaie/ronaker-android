@@ -54,8 +54,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="120dp"
                         android:contentDescription="@string/text_content"
-                        android:tint="@color/colorIconDark"
-                        app:srcCompat="@drawable/ic_email_large" />
+                        app:srcCompat="@drawable/ic_email_large"
+                        app:tint="@color/colorIconDark" />
 
 
                     <TextView

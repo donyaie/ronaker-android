@@ -145,7 +145,7 @@
 
             app:layout_constraintRight_toRightOf="parent"
             android:padding="4dp"
-            android:tint="@color/colorAshGrey"
+            app:tint="@color/colorAshGrey"
             app:srcCompat="@drawable/ic_chevron_right" />
 
 

@@ -45,7 +45,7 @@
                 android:padding="16dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp"
-                android:tint="@color/colorIconDark"
+                app:tint="@color/colorIconDark"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_back_white" />
 
@@ -59,7 +59,7 @@
                 android:padding="16dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp"
-                android:tint="@color/colorIconLight"
+                app:tint="@color/colorIconLight"
                 app:srcCompat="@drawable/ic_back_white" />
         </RelativeLayout>
 
@@ -113,7 +113,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:contentDescription="@string/text_content"
                     android:padding="15dp"
-                    android:tint="@color/colorIconLight"
+                    app:tint="@color/colorIconLight"
                     app:srcCompat="@drawable/ic_share_white" />
 
                 <ImageView
@@ -124,7 +124,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:contentDescription="@string/text_content"
                     android:padding="15dp"
-                    android:tint="@color/colorIconDark"
+                    app:tint="@color/colorIconDark"
                     app:srcCompat="@drawable/ic_share_white" />
             </RelativeLayout>
 
@@ -146,7 +146,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:contentDescription="@string/text_content"
                     android:padding="15dp"
-                    android:tint="@color/colorIconLight"
+                    app:tint="@color/colorIconLight"
                     app:srcCompat="@drawable/ic_fave_white" />
 
 
@@ -157,7 +157,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:contentDescription="@string/text_content"
                     android:padding="15dp"
-                    android:tint="@color/colorIconDark"
+                    app:tint="@color/colorIconDark"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_fave_white" />
             </RelativeLayout>

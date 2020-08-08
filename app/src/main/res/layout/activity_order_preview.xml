@@ -171,7 +171,7 @@
 
                             android:contentDescription="@string/text_content"
                             android:padding="4dp"
-                            android:tint="@color/colorAshGrey"
+                            app:tint="@color/colorAshGrey"
                             app:srcCompat="@drawable/ic_chevron_right" />
 
                     </LinearLayout>
@@ -227,7 +227,7 @@
                             android:layout_width="@dimen/margin_default"
                             android:layout_height="@dimen/margin_default"
                             android:contentDescription="@string/text_content"
-                            android:tint="@color/colorIconDark"
+                            app:tint="@color/colorIconDark"
                             app:srcCompat="@drawable/ic_chevron_right" />
 
 
@@ -347,7 +347,7 @@
                                     android:onClick="@{()->viewModel.onClickSendMail()}"
                                     android:padding="14dp"
                                     android:scaleType="fitCenter"
-                                    android:tint="@color/white"
+                                    app:tint="@color/white"
 
                                     android:visibility="visible"
                                     app:srcCompat="@drawable/ic_message" />
@@ -370,7 +370,7 @@
 
                                     android:padding="14dp"
                                     android:scaleType="fitCenter"
-                                    android:tint="@color/white"
+                                    app:tint="@color/white"
                                     android:visibility="visible"
                                     app:srcCompat="@drawable/ic_telephone" />
 
@@ -410,7 +410,7 @@
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
 
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:mutableVisibility="@{viewModel.getContractVisibility()}">
 
                         <TextView

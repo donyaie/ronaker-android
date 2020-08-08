@@ -107,7 +107,7 @@
                         android:contentDescription="@string/text_content"
                         android:padding="8dp"
                         android:scaleType="fitCenter"
-                        android:tint="@color/colorTextDark"
+                        app:tint="@color/colorTextDark"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_edit"

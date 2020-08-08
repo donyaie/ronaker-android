@@ -83,10 +83,10 @@
 
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:tint="@color/colorTextDark"
 
                         app:srcCompat="@drawable/ic_edit"
-                        android:contentDescription="@string/text_content" />
+                        android:contentDescription="@string/text_content"
+                        app:tint="@color/colorTextDark" />
                 </RelativeLayout>
 
 
@@ -144,8 +144,8 @@
                         android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
 
@@ -211,8 +211,8 @@
                         android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
 
@@ -285,8 +285,8 @@
                         android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
 
@@ -339,8 +339,8 @@
                         android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
 

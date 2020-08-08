@@ -3,7 +3,7 @@
     <string name="text_lend_request_accepted" formatted="true">By %1$s patvirtino Jūsų užklausą</string>
     <string name="text_lend_request_started" formatted="true">Jūs pradedate %1$s daikto nuomą</string>
     <string name="text_rent_request_accepted" formatted="true">Jūs patvirtinote %1$s užklausą</string>
-    <string name="text_rent_request_started" formatted="true">Pradėtas progresas</string>
+    <string name="text_rent_request_started" formatted="true"> %1$s Pradėtas progresas</string>
     <string name="text_lend_request_pending" formatted="true">Laukiama %1$s patvirtinimo</string>
     <string name="text_rent_request_pending">Gavote užklausą išnuomoti savo daiktą</string>
     <string name="text_order_message" formatted="true">Sveiki, aš\&apos;m %1$s %2$s\n norėčiau išsinuomoti Jūsų %3$s %4$s %4$s dienoms. Ačiū.</string>
@@ -132,7 +132,6 @@
     <string name="text_start_renting_instruction">Kaip išsinuomoti ?</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Patvirtinkite, kad daiktas atitinka aprašymą ir yra tinkamas naudoti </string>
     <string name="text_accept_and_start_renting">Sekantis</string>
-    <string name="text_version" translatable="false">Versija</string>
     <string name="text_try_again">Bandykite dar kartą</string>
     <string name="text_rate_product">Įvertinkite daiktą</string>
     <string name="text_user_request">Užklausa</string>
