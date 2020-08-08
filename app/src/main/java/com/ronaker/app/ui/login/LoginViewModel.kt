@@ -14,8 +14,6 @@ import javax.inject.Inject
 
 class LoginViewModel(app: Application) : BaseViewModel(app) {
 
-    private val TAG = LoginViewModel::class.java.name
-
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -68,10 +66,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     enum class LoginStateEnum constructor(position: Int) {
         home(0),
         email(1),
-        info(2),
-        password(3),
-        login(4),
-        forget(5);
+//        info(2),
+        password(2),
+        login(3),
+        forget(4);
 
         var position: Int = 0
             internal set
@@ -99,7 +97,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             userInfo.email = email
             userInfo.promotionCode = if (inviteCode.isNotBlank()) inviteCode else null
 
-            viewState.value = LoginStateEnum.info
+            viewState.value = LoginStateEnum.password
         }
 
     }

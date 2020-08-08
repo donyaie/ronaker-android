@@ -133,8 +133,8 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         orderMessage.value = context.getString(
             R.string.text_order_message,
-            user?.first_name,
-            user?.last_name,
+            (user?.first_name?:""),
+            ( user?.last_name?:""),
             mProduct.name,
             days.toString()
         )

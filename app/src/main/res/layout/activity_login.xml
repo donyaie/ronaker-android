@@ -107,7 +107,7 @@
             app:toolbar_component_bottom_line="false"
             app:toolbar_component_cancel_container="NONE"
             app:toolbar_component_center_container="NONE"
-            app:toolbar_component_dot_count="3"
+            app:toolbar_component_dot_count="2"
             app:toolbar_component_title="@string/app_name"
             app:toolbar_component_transparent="true" />
 

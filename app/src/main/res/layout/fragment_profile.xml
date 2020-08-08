@@ -12,456 +12,457 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    <androidx.core.widget.NestedScrollView
-
-        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.core.widget.NestedScrollView
 
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/profile_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:minHeight="132dp"
-                android:orientation="horizontal"
-                android:paddingTop="20dp">
+                android:orientation="vertical"
+
+                app:layout_constraintTop_toTopOf="parent">
 
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="72dp"
-
-
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_height="72dp"
-                    android:layout_marginStart="@dimen/margin_default"
-                    android:id="@+id/profile_image"
-                    android:scaleType="fitCenter"
-
-                    android:background="@drawable/ic_profile"
-                    app:mutableImage="@{viewModel.getUserAvatar()}"
-
-                    app:riv_corner_radius="36dp" />
-
-
-                <TextView
-                    app:layout_constraintLeft_toRightOf="@id/profile_image"
-
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="0dp"
-                    app:layout_constraintRight_toLeftOf="@id/edit_image"
-
-
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/profile_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profile_name"
-
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-
-
-                    android:text="name"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
-                    android:textColor="@color/colorTextDark"
-                    app:mutableTextFade="@{viewModel.getUserName()}"
-                    tools:ignore="HardcodedText" />
-
-
-                <TextView
-                    app:layout_constraintTop_toBottomOf="@id/profile_name"
-
-
-                    app:layout_constraintLeft_toRightOf="@id/profile_image"
-
-                    android:layout_width="0dp"
-
-                    android:id="@+id/edit_text"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="8dp"
-                    android:text="@string/title_edit_profile"
-                    android:textAppearance="@style/TextAppearance.Medium.Regular"
-                    android:textColor="@color/colorTextDark"
-                    app:mutableVisibility="@{viewModel.getEditVisibility()}" />
-
-                <ImageButton
-                    android:id="@+id/edit_image"
-                    android:layout_width="40dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="@string/text_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:padding="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:tint="@color/colorTextDark"
-                    android:layout_height="40dp"
-                    app:srcCompat="@drawable/ic_edit"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-
-                    />
-
-
-                <LinearLayout
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintLeft_toRightOf="@id/profile_image"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edit_text"
-                    android:id="@+id/profile_complete_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="?attr/selectableItemBackground"
+                    android:layout_marginTop="20dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:orientation="vertical"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="22dp"
-                    android:paddingBottom="8dp">
+                    android:gravity="center"
+                    android:minHeight="132dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp">
 
-                    <ProgressBar
 
-                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/profile_image"
+
+
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:background="@drawable/ic_profile"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintLeft_toLeftOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:mutableImage="@{viewModel.getUserAvatar()}"
+
+                        app:riv_corner_radius="36dp" />
+
+
+                    <TextView
+                        android:id="@+id/profile_name"
+
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:max="5"
-                        android:progress="0"
-                        app:mutableProgress="@{viewModel.getCompleteProgress()}"
+                        android:layout_marginStart="16dp"
 
-                        app:mutableVisibility="@{viewModel.getCompleteProgressVisibility()}" />
+                        android:layout_marginEnd="8dp"
+                        android:singleLine="true"
+                        android:text="name"
+
+                        android:textAppearance="@style/TextAppearance.Heading.2"
+                        android:textColor="@color/colorTextDark"
+
+
+                        app:layout_constraintLeft_toRightOf="@id/profile_image"
+                        app:layout_constraintRight_toLeftOf="@id/edit_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:mutableTextFade="@{viewModel.getUserName()}"
+                        tools:ignore="HardcodedText" />
+
+
+                    <TextView
+                        android:id="@+id/edit_text"
+
+
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="8dp"
+                        android:padding="8dp"
+                        android:text="@string/title_edit_profile"
+                        android:textAppearance="@style/TextAppearance.Medium.Regular"
+                        android:textColor="@color/colorTextDark"
+                        app:layout_constraintLeft_toRightOf="@id/profile_image"
+                        app:layout_constraintTop_toBottomOf="@id/profile_name"
+                        app:mutableVisibility="@{viewModel.getEditVisibility()}" />
+
+                    <ImageButton
+                        android:id="@+id/edit_image"
+                        app:mutableVisibility="@{viewModel.getEditVisibility()}"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:contentDescription="@string/text_content"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:tint="@color/colorTextDark"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_edit"
+
+                        />
 
 
                     <LinearLayout
-                        android:id="@+id/complete_layout"
-                        android:layout_width="match_parent"
+                        android:id="@+id/profile_complete_layout"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="22dp"
+                        android:paddingBottom="8dp"
+                        app:layout_constraintLeft_toRightOf="@id/profile_image"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edit_text">
 
-                        android:orientation="horizontal"
-                        app:mutableVisibility="@{viewModel.getCompleteVisibility()}">
+                        <ProgressBar
 
-
-                        <TextView
-
-                            android:id="@+id/complete_text"
-
-                            android:layout_width="0dp"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".95"
-                            android:text="@string/title_complete_profile"
-                            android:textAppearance="@style/TextAppearance.Medium.Regular"
-                            android:textColor="@color/colorTextDark" />
+                            android:layout_marginTop="8dp"
+                            android:max="5"
+                            android:progress="0"
+                            app:mutableProgress="@{viewModel.getCompleteProgress()}"
+
+                            app:mutableVisibility="@{viewModel.getCompleteProgressVisibility()}" />
 
 
-                        <TextView
-
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/complete_layout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/background_oval_green"
-                            android:gravity="center"
-                            android:minWidth="16dp"
-                            android:text="1"
+                            android:layout_marginTop="6dp"
 
-                            android:textAppearance="@style/TextAppearance.Small.SB"
+                            android:orientation="horizontal"
+                            app:mutableVisibility="@{viewModel.getCompleteVisibility()}">
 
-                            android:textColor="@color/colorTextLight"
-                            app:mutableTextFade="@{viewModel.getUserStep()}"
 
-                            tools:ignore="HardcodedText" />
+                            <TextView
 
-                        <TextView
+                                android:id="@+id/complete_text"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_of_5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".95"
+                                android:text="@string/title_complete_profile"
+                                android:textAppearance="@style/TextAppearance.Medium.Regular"
+                                android:textColor="@color/colorTextDark" />
 
-                            android:textAppearance="@style/TextAppearance.Small.SB"
 
-                            android:textColor="@color/colorTextDark" />
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_oval_green"
+                                android:gravity="center"
+                                android:minWidth="16dp"
+                                android:text="1"
+
+                                android:textAppearance="@style/TextAppearance.Small.SB"
+
+                                android:textColor="@color/colorTextLight"
+                                app:mutableTextFade="@{viewModel.getUserStep()}"
+
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_of_5"
+
+                                android:textAppearance="@style/TextAppearance.Small.SB"
+
+                                android:textColor="@color/colorTextDark" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/settingLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:contentDescription="@string/title_setting"
+                        android:padding="6dp"
+                        app:srcCompat="@drawable/ic_settings" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/title_setting"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
 
                 </LinearLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:id="@+id/settingLayout"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/margin_default"
-                    android:layout_marginEnd="@dimen/margin_default"
-                    android:contentDescription="@string/title_setting"
-                    android:padding="6dp"
-                    app:srcCompat="@drawable/ic_settings" />
-
-                <TextView
-                    android:layout_width="0dp"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".95"
-                    android:text="@string/title_setting"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
-
-                    android:textColor="@color/colorTextDark" />
-
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
-                    android:contentDescription="@string/title_button_next"
-                    android:padding="3dp"
-                    app:srcCompat="@drawable/ic_chevron_right" />
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:id="@+id/paymentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:contentDescription="@string/title_setting"
+                        android:padding="6dp"
+                        app:srcCompat="@drawable/ic_credit" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/text_payment_history"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
+
+                    android:id="@+id/fave_Layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="@dimen/margin_default"
+
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:contentDescription="@string/title_favorites"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_favorite" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/title_favorites"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
+
+                    android:id="@+id/support_Layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
+
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="@dimen/margin_default"
+
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:contentDescription="@string/title_support"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_support_call" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/title_support"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+                <LinearLayout
+                    android:id="@+id/support_call_Layout"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="@dimen/margin_default"
+
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:contentDescription="@string/title_support"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_support_call" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/title_support"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone" />
+
 
             </LinearLayout>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginRight="@dimen/margin_default"
-                android:background="@color/colorPlatinGrey" />
-
-
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/paymentLayout"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/margin_default"
-                    android:layout_marginEnd="@dimen/margin_default"
-                    android:contentDescription="@string/title_setting"
-                    android:padding="6dp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:layout_width="0dp"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".95"
-                    android:text="@string/text_payment_history"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
-
-                    android:textColor="@color/colorTextDark" />
-
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:contentDescription="@string/title_button_next"
-                    android:padding="3dp"
-                    app:srcCompat="@drawable/ic_chevron_right" />
-
-            </LinearLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginRight="@dimen/margin_default"
-                android:background="@color/colorPlatinGrey" />
-
-
-            <LinearLayout
-
-                android:id="@+id/fave_Layout"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/margin_default"
-
-                    android:layout_marginEnd="@dimen/margin_default"
-                    android:contentDescription="@string/title_favorites"
-                    android:padding="4dp"
-                    app:srcCompat="@drawable/ic_favorite" />
-
-                <TextView
-                    android:layout_width="0dp"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".95"
-                    android:text="@string/title_favorites"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
-
-                    android:textColor="@color/colorTextDark" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:contentDescription="@string/title_button_next"
-                    android:padding="3dp"
-                    app:srcCompat="@drawable/ic_chevron_right" />
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginRight="@dimen/margin_default"
-                android:background="@color/colorPlatinGrey" />
-
-
-            <LinearLayout
-
-                android:id="@+id/support_Layout"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:background="?attr/selectableItemBackground"
-
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/margin_default"
-
-                    android:layout_marginEnd="@dimen/margin_default"
-                    android:contentDescription="@string/title_support"
-                    android:padding="4dp"
-                    app:srcCompat="@drawable/ic_support_call" />
-
-                <TextView
-                    android:layout_width="0dp"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".95"
-                    android:text="@string/title_support"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
-
-                    android:textColor="@color/colorTextDark" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:contentDescription="@string/title_button_next"
-                    android:padding="3dp"
-                    app:srcCompat="@drawable/ic_chevron_right" />
-
-            </LinearLayout>
-
-
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginRight="@dimen/margin_default"
-                android:background="@color/colorPlatinGrey" />
-            <LinearLayout
-                android:visibility="gone"
-
-                android:id="@+id/support_call_Layout"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:background="?attr/selectableItemBackground"
-
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/margin_default"
-
-                    android:layout_marginEnd="@dimen/margin_default"
-                    android:contentDescription="@string/title_support"
-                    android:padding="4dp"
-                    app:srcCompat="@drawable/ic_support_call" />
-
-                <TextView
-                    android:layout_width="0dp"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".95"
-                    android:text="@string/title_support"
-                    android:textAppearance="@style/TextAppearance.Large.Light"
-
-                    android:textColor="@color/colorTextDark" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:contentDescription="@string/title_button_next"
-                    android:padding="3dp"
-                    app:srcCompat="@drawable/ic_chevron_right" />
-
-            </LinearLayout>
-
-
-            <RelativeLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginRight="@dimen/margin_default"
-                android:background="@color/colorPlatinGrey" />
-
-
-        </LinearLayout>
-
-
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

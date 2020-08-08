@@ -96,7 +96,6 @@
                     android:layout_height="76dp"
                     android:layout_marginTop="20dp"
 
-                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
@@ -139,6 +138,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:visibility="gone"
 
                         android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginRight="@dimen/margin_default"
@@ -148,6 +148,81 @@
                         app:srcCompat="@drawable/ic_edit" />
 
                 </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
+                    android:id="@+id/mail_layout"
+                    android:layout_width="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_height="76dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_email"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+
+                            android:layout_marginTop="5dp"
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+
+                            android:textColor="@color/colorTextDark"
+
+                            app:mutableTextFade="@{viewModel.getUserEmail()}" />
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:visibility="gone"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        android:tint="@color/colorTextDark"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
 
 
                 <RelativeLayout
@@ -214,74 +289,6 @@
                         app:srcCompat="@drawable/ic_edit" />
 
                 </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:background="@color/colorPlatinGrey" />
-
-
-                <LinearLayout
-                    android:id="@+id/mail_layout"
-                    android:layout_width="match_parent"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_height="76dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_default"
-                        android:layout_weight=".95"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_email"
-                            android:textAppearance="@style/TextAppearance.Large.SB"
-
-                            android:textColor="@color/colorTextDark" />
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-
-                            android:layout_marginTop="5dp"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-
-                            android:textColor="@color/colorTextDark"
-
-                            app:mutableTextFade="@{viewModel.getUserEmail()}" />
-
-                    </LinearLayout>
-
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:visibility="gone"
-
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:contentDescription="@string/title_button_next"
-                        android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
-
-                </LinearLayout>
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -80,7 +80,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.paymentLayout.setOnClickListener {
 
-            startActivity(ProfilePaymentListActivity.newInstance(this))
+//            startActivity(ProfilePaymentListActivity.newInstance(this))
 
         }
         binding.numberLayout.setOnClickListener {
@@ -91,7 +91,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.nameLayout.setOnClickListener {
 
-            startActivity(ProfileNameEditActivity.newInstance(this))
+//            startActivity(ProfileNameEditActivity.newInstance(this))
 
         }
 

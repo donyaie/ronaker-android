@@ -85,14 +85,17 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
 
         var complete = 0
 
-        userName.postValue("${user.first_name} ${user.last_name}")
+        if (user.first_name.isNullOrEmpty()) {
+            userName.postValue("${user.email}")
+        } else
+            userName.postValue("${user.first_name} ${user.last_name}")
 
         user.avatar?.let {
             userAvatar.postValue(BASE_URL + it)
             complete++
         }
 
-//        if (user.smart_id_personal_code != null) complete++
+        if (user.smart_id_personal_code != null) complete++
 
         if (user.is_email_verified) complete++
         if (user.is_phone_number_verified) complete++
