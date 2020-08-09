@@ -1,11 +1,11 @@
 package com.ronaker.app.ui.loginForget
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.isNumeric
@@ -16,7 +16,7 @@ class LoginForgetViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
-    lateinit var context: Context
+    lateinit var resourcesRepository: ResourcesRepository
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -60,7 +60,7 @@ class LoginForgetViewModel(app: Application) : BaseViewModel(app) {
 
 
             } else {
-                errorMessage.postValue(context.getString(R.string.text_repeated_password_not_match))
+                errorMessage.postValue(resourcesRepository.getString(R.string.text_repeated_password_not_match))
             }
         }
 

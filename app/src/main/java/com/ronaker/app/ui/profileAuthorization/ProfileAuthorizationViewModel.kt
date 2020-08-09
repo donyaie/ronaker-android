@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.profileAuthorization
 
 import android.app.Application
-import android.content.Context
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -49,9 +48,6 @@ class ProfileAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     private var countDounTimer: CountDownTimer? = null
 
-    @Inject
-    lateinit
-    var context: Context
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     private var subscription: Disposable? = null

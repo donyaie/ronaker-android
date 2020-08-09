@@ -81,12 +81,29 @@ class ManageProductAdapter : RecyclerView.Adapter<ManageProductAdapter.ViewHolde
 
     class ViewHolder(
         private val binding: AdapterManageProductBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder( binding.root) {
 
         private val viewModel = ManageProductAdapterViewModel(binding.root.getApplication())
 
         fun bind(product: Product) {
-            viewModel.bind(product, binding.root.getParentActivity())
+            viewModel.bind(product)
+
+
+            binding.root.setOnClickListener {
+
+                binding.root.getParentActivity()?.let {activity->
+
+                    activity.startActivity(ManageProductActivity.newInstance(activity, product))
+
+                }
+
+
+            }
+
+
+
+
+
             binding.viewModel = viewModel
         }
     }

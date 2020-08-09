@@ -1,10 +1,10 @@
 package com.ronaker.app.ui.orderPreview
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.toCurrencyFormat
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class OrderPreviewPriceViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
-    var context: Context
+    var resourcesRepository: ResourcesRepository
 
 
     fun bind(
@@ -38,19 +38,19 @@ class OrderPreviewPriceViewModel(app: Application) : BaseViewModel(app) {
         when (Order.OrderPriceEnum[data.key]) {
             Order.OrderPriceEnum.ServiceFee -> {
 
-                title.value = context.getString(R.string.text_service_fee)
+                title.value = resourcesRepository.getString(R.string.text_service_fee)
             }
             Order.OrderPriceEnum.InsuranceFee -> {
 
-                title.value = context.getString(R.string.text_insurance_fee)
+                title.value = resourcesRepository.getString(R.string.text_insurance_fee)
             }
             Order.OrderPriceEnum.ProductFee -> {
 
-                title.value = context.getString(R.string.text_product_fee)
+                title.value = resourcesRepository.getString(R.string.text_product_fee)
             }
             Order.OrderPriceEnum.Total -> {
 
-                title.value = context.getString(R.string.text_total_fee)
+                title.value = resourcesRepository.getString(R.string.text_total_fee)
             }
             else -> {
 

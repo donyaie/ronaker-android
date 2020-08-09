@@ -19,7 +19,6 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_half">12dp</dimen>
     <dimen name="dot_size">9dp</dimen>
-    <dimen name="bottom_offset_dp">80dp</dimen>
 
 
 </resources>

@@ -14,7 +14,6 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.injection.module.GlideApp
-import com.ronaker.app.utils.ScreenCalculator
 import java.util.*
 
 
@@ -55,7 +54,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
         viewPager = findViewById(R.id.viewpager)
 
         countDots = findViewById(R.id.countDots)
-        adapter = ImagePagerAdapter(context, dataList)
+        adapter = ImagePagerAdapter( dataList)
 
         viewPager.adapter = adapter
 
@@ -132,7 +131,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
     }
 
 
-    private inner class ImagePagerAdapter(var context: Context, val dataList: ArrayList<String>) :
+    private inner class ImagePagerAdapter( val dataList: ArrayList<String>) :
         PagerAdapter() {
 
 

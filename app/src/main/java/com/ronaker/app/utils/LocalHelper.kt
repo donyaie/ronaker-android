@@ -9,25 +9,35 @@ import android.content.res.Configuration
 import android.os.Build
 import com.ronaker.app.data.DefaultUserRepository.Companion.USER_LANGUAGE_KEY
 import com.ronaker.app.data.local.PreferencesProvider
-import java.util.Locale
+import java.util.*
 
 object LocaleHelper {
 
+    private val TAG = LocaleHelper::class.java.simpleName
 
     fun onAttach(context: Context): Context {
-        return setLocale(context, getPersistedData(context, Locale.getDefault().language) )
+
+
+        AppDebug.log(TAG,"onAttach "+ Locale.getDefault().language)
+        return setLocale(context, getPersistedData(context, Locale.getDefault().language))
     }
 
     fun setLocale(context: Activity, language: String): Context {
         persist(context, language)
 
-        val local= Locale(language)
-        val configuration=Configuration(context.resources.configuration)
+        val local = Locale(language)
+        val configuration = Configuration(context.resources.configuration)
         Locale.setDefault(local)
         configuration.setLocale(local)
-        context.baseContext.resources.updateConfiguration(configuration,context.baseContext.resources.displayMetrics)
+        context.baseContext.resources.updateConfiguration(
+            configuration,
+            context.baseContext.resources.displayMetrics
+        )
 
-        context.applicationContext.resources.updateConfiguration(configuration,context.applicationContext.resources.displayMetrics)
+        context.applicationContext.resources.updateConfiguration(
+            configuration,
+            context.applicationContext.resources.displayMetrics
+        )
 
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -40,7 +50,7 @@ object LocaleHelper {
 
     }
 
-   private fun setLocale(context: Context, language: String): Context {
+    private fun setLocale(context: Context, language: String): Context {
         persist(context, language)
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -49,14 +59,12 @@ object LocaleHelper {
             updateResourcesLegacy(context, language)
 
 
-
     }
 
 
-
-    private fun getPersistedData(context: Context, defaultLanguage: String?=null): String {
+    private fun getPersistedData(context: Context, defaultLanguage: String? = null): String {
         val preferences = PreferencesProvider(context)
-        return preferences.getString(USER_LANGUAGE_KEY, defaultLanguage)?: LANGUAGE_DEFAULT
+        return preferences.getString(USER_LANGUAGE_KEY, defaultLanguage) ?: LANGUAGE_DEFAULT
     }
 
     private fun persist(context: Context, language: String) {
@@ -68,9 +76,23 @@ object LocaleHelper {
     private fun updateResources(context: Context, language: String): Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
-        val configuration = context.resources.configuration
+        val configuration = Configuration(context.resources.configuration)
         configuration.setLocale(locale)
         configuration.setLayoutDirection(locale)
+
+
+        Locale.setDefault(locale)
+        configuration.setLocale(locale)
+
+        context.resources?.updateConfiguration(configuration, context.resources.displayMetrics)
+
+        context.applicationContext?.resources?.updateConfiguration(
+            configuration,
+            context.applicationContext.resources.displayMetrics
+        )
+
+
+
         return context.createConfigurationContext(configuration)
     }
 

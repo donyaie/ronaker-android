@@ -2,7 +2,6 @@ package com.ronaker.app.ui.orderDecline
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
@@ -21,10 +20,6 @@ class OrderDeclineViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
-
-    @Inject
-    lateinit
-    var context: Context
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()

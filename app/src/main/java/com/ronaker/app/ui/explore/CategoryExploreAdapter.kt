@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.explore
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -11,7 +10,6 @@ import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterExploreCategoryBinding
 import com.ronaker.app.model.Category
 import com.ronaker.app.utils.extension.getApplication
-import com.ronaker.app.utils.extension.getParentActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -20,9 +18,6 @@ class CategoryExploreAdapter(
     private val dataList: ArrayList<Category>,
     val listener: AdapterListener?
 ) : RecyclerView.Adapter<CategoryExploreAdapter.ViewHolder>() {
-//    private var dataList: ArrayList<Category> = dataList
-
-    lateinit var context: Context
     private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +27,6 @@ class CategoryExploreAdapter(
             parent,
             false
         )
-        context = parent.context
 
         return ViewHolder(binding, listener)
     }
@@ -45,7 +39,7 @@ class CategoryExploreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val animation: Animation = AnimationUtils.loadAnimation(
-            context,
+            holder.itemView.context,
             if (position > lastPosition) android.R.anim.fade_in else android.R.anim.fade_in
         )
         holder.itemView.startAnimation(animation)
@@ -110,7 +104,7 @@ class CategoryExploreAdapter(
         private val viewModel = CategoryExploreViewModel(binding.root.getApplication())
 
         fun bind(product: Category) {
-            viewModel.bind(product, binding, binding.root.getParentActivity())
+            viewModel.bind(product, binding)
             binding.viewModel = viewModel
 
 

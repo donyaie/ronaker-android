@@ -6,6 +6,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.*
 import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.network.*
@@ -130,6 +131,16 @@ class RepositoryModule(private val app: Application) {
     ): UserRepository {
 
         return DefaultUserRepository(userApi, preferencesProvider)
+    }
+
+
+    @Provides
+    @Singleton
+    internal fun provideResourceRepository(
+        context: Context
+    ): ResourcesRepository {
+
+        return ResourcesRepository(context)
     }
 
     @Provides

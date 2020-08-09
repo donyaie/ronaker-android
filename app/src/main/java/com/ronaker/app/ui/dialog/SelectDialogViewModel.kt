@@ -1,19 +1,14 @@
 package com.ronaker.app.ui.dialog
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import javax.inject.Inject
-
 
 class SelectDialogViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = SelectDialogViewModel::class.java.name
 
 
-    @Inject
-    lateinit var context: Context
 
 
     val title: MutableLiveData<String> = MutableLiveData()

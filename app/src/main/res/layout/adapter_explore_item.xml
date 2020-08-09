@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
 
-        android:onClick="@{()->viewModel.onClickProduct()}"
 
         android:orientation="vertical"
         android:padding="8dp">

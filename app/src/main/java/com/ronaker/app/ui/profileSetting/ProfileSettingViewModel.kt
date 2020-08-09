@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profileSetting
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
@@ -15,10 +14,6 @@ class ProfileSettingViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
-
-    @Inject
-    lateinit
-    var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

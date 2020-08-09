@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.*
@@ -35,7 +36,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
-    lateinit var context: Context
+    lateinit var resourcesRepository: ResourcesRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val successMessage: MutableLiveData<String> = MutableLiveData()
@@ -125,7 +126,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 userInfo.password = password
                 signUp()
             } else {
-                errorMessage.value = context.getString(R.string.text_repeated_password_not_match)
+                errorMessage.value = resourcesRepository.getString(R.string.text_repeated_password_not_match)
             }
         }
 
@@ -182,7 +183,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     } else {
 
                         if (result?.error?.responseCode == 406) {
-                            errorMessage.postValue(context.getString(R.string.error_login_email_or_password_wrong))
+                            errorMessage.postValue(resourcesRepository.getString(R.string.error_login_email_or_password_wrong))
                         } else
                             errorMessage.postValue(result.error?.message)
                     }
@@ -206,7 +207,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
                             viewState.postValue(LoginStateEnum.home)
 
-                            successMessage.postValue(context.getString(R.string.text_send_activation_success))
+                            successMessage.postValue(resourcesRepository.getString(R.string.text_send_activation_success))
 
 
                         } else {

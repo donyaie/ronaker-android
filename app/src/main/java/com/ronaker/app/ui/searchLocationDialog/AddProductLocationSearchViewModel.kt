@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.searchLocationDialog
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.GoogleMapRepository
@@ -19,9 +18,6 @@ class AddProductLocationSearchViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit var userRepository: UserRepository
 
-
-    @Inject
-    lateinit var context: Context
 
     @Inject
     lateinit var googleMapRepository: GoogleMapRepository

@@ -137,6 +137,19 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         })
 
+        viewModel.makeCall.observe(this, Observer { value ->
+
+            IntentManeger.makeCall(this@OrderPreviewActivity, value)
+
+
+        })
+
+        viewModel.sendEmail.observe(this, Observer { value ->
+
+            IntentManeger.sendMail(this@OrderPreviewActivity, value)
+
+        })
+
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {

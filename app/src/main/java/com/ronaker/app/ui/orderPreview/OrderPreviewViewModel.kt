@@ -2,18 +2,17 @@ package com.ronaker.app.ui.orderPreview
 
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.io.File
@@ -41,7 +40,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
-    var context: Context
+    var resourcesRepository: ResourcesRepository
 
 
     val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -125,6 +124,12 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     val orderCancelResVisibility: MutableLiveData<Int> = MutableLiveData()
     val orderAddressVisibility: MutableLiveData<Int> = MutableLiveData()
 
+
+
+
+    val makeCall: MutableLiveData<String> = MutableLiveData()
+    val sendEmail: MutableLiveData<String> = MutableLiveData()
+
     val userContactVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -158,7 +163,9 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.phone_number?.let { value -> IntentManeger.makeCall(context, value) }
+                    it.phone_number?.let { value -> makeCall.postValue(value)}
+
+
                 }
             }
 
@@ -167,7 +174,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.phone_number?.let { value -> IntentManeger.makeCall(context, value) }
+                    it.phone_number?.let { value ->  makeCall.postValue(value) }
                 }
             }
             else -> {
@@ -183,7 +190,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.email?.let { value -> IntentManeger.sendMail(context, value) }
+                    it.email?.let { value -> sendEmail.postValue(value)}
                 }
             }
 
@@ -192,7 +199,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.email?.let { value -> IntentManeger.sendMail(context, value) }
+                    it.email?.let { value -> sendEmail.postValue(value) }
                 }
             }
             else -> {
@@ -369,7 +376,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
                 dayNumber.value = String.format(
-                    context.getString(R.string.format_you_will_pay),
+                    resourcesRepository.getString(R.string.format_you_will_pay),
                     total.toCurrencyFormat(),
                     days
                 )
@@ -378,12 +385,12 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignImage.postValue(R.drawable.ic_guide_red)
 
-                    renterSignText.postValue(context.getString(R.string.text_please_sign_the_contract))
+                    renterSignText.postValue(resourcesRepository.getString(R.string.text_please_sign_the_contract))
 
 
                 } else {
 
-                    renterSignText.postValue(context.getString(R.string.text_you_signed_the_contract))
+                    renterSignText.postValue(resourcesRepository.getString(R.string.text_you_signed_the_contract))
                     renterSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
@@ -391,7 +398,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     listerSignText.postValue(
                         String.format(
-                            context.getString(R.string.text_waite_for_sign),
+                            resourcesRepository.getString(R.string.text_waite_for_sign),
                             order.productOwner?.first_name
                         )
                     )
@@ -400,7 +407,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     listerSignText.postValue(
                         String.format(
-                            context.getString(R.string.text_signed_the_contract),
+                            resourcesRepository.getString(R.string.text_signed_the_contract),
                             order.productOwner?.first_name
                         )
                     )
@@ -504,7 +511,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 dayNumber.value = String.format(
                     "%s %s for %d days",
-                    context.getString(R.string.text_you_earn),
+                    resourcesRepository.getString(R.string.text_you_earn),
                     total.toCurrencyFormat(),
                     days
                 )
@@ -517,14 +524,14 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     lenderSignImage.postValue(R.drawable.ic_guide_red)
 
-                    listerSignText.postValue(context.getString(R.string.text_please_sign_the_contract))
+                    listerSignText.postValue(resourcesRepository.getString(R.string.text_please_sign_the_contract))
 
                     listerSignVisibility.postValue(View.VISIBLE)
 
                 } else {
 
                     listerSignVisibility.postValue(View.GONE)
-                    listerSignText.postValue(context.getString(R.string.text_you_signed_the_contract))
+                    listerSignText.postValue(resourcesRepository.getString(R.string.text_you_signed_the_contract))
                     lenderSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
@@ -532,7 +539,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignText.postValue(
                         String.format(
-                            context.getString(R.string.text_waite_for_sign),
+                            resourcesRepository.getString(R.string.text_waite_for_sign),
                             order.orderUser?.first_name
                         )
                     )
@@ -541,7 +548,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                     renterSignText.postValue(
                         String.format(
-                            context.getString(R.string.text_signed_the_contract),
+                            resourcesRepository.getString(R.string.text_signed_the_contract),
                             order.orderUser?.first_name
                         )
                     )
@@ -639,11 +646,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        context.getString(R.string.text_rent_request_accepted, orderedUserName)
+                        resourcesRepository.getString(R.string.text_rent_request_accepted, orderedUserName)
                 } else {
 
                     orderStatus.value =
-                        context.getString(R.string.text_lend_request_accepted, ownerName)
+                        resourcesRepository.getString(R.string.text_lend_request_accepted, ownerName)
                 }
 
 
@@ -656,11 +663,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        context.getString(R.string.text_rent_request_started, orderedUserName)
+                        resourcesRepository.getString(R.string.text_rent_request_started, orderedUserName)
                 } else {
 
                     orderStatus.value =
-                        context.getString(R.string.text_lend_request_started, ownerName)
+                        resourcesRepository.getString(R.string.text_lend_request_started, ownerName)
                 }
 
 
@@ -671,10 +678,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = context.getString(R.string.text_rent_canceled)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_canceled)
                 } else {
 
-                    orderStatus.value = context.getString(R.string.text_lend_canceled)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_lend_canceled)
                 }
 
 
@@ -686,10 +693,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = context.getString(R.string.text_rent_complete)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_complete)
                 } else {
 
-                    orderStatus.value = context.getString(R.string.text_lend_complete)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_lend_complete)
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -699,10 +706,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = context.getString(R.string.text_rent_request_pending)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_request_pending)
                 } else {
                     orderStatus.value =
-                        context.getString(R.string.text_lend_request_pending, ownerName)
+                        resourcesRepository.getString(R.string.text_lend_request_pending, ownerName)
                 }
 
             }
@@ -714,10 +721,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = context.getString(R.string.text_rent_rejected)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_rejected)
                 } else {
 
-                    orderStatus.value = context.getString(R.string.text_lend_rejected)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_lend_rejected)
                 }
 
             }

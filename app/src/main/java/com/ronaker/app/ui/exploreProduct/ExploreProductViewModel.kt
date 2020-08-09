@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
@@ -40,9 +41,11 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     lateinit
     var userRepository: UserRepository
 
+
     @Inject
     lateinit
-    var context: Context
+    var resourcesRepository: ResourcesRepository
+
 
 
     init {
@@ -284,19 +287,19 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             product.price_per_day != 0.0 -> {
 
                 productPrice.postValue(product.price_per_day?.toCurrencyFormat())
-                productPriceTitle.postValue(context.getString(R.string.title_per_day))
+                productPriceTitle.postValue(resourcesRepository.getString(R.string.title_per_day))
             }
             product.price_per_week != 0.0 -> {
 
                 productPrice.postValue(product.price_per_week?.toCurrencyFormat())
 
-                productPriceTitle.postValue(context.getString(R.string.title_per_week))
+                productPriceTitle.postValue(resourcesRepository.getString(R.string.title_per_week))
             }
             product.price_per_month != 0.0 -> {
 
                 productPrice.postValue(product.price_per_month?.toCurrencyFormat())
 
-                productPriceTitle.postValue(context.getString(R.string.title_per_month))
+                productPriceTitle.postValue(resourcesRepository.getString(R.string.title_per_month))
             }
         }
 

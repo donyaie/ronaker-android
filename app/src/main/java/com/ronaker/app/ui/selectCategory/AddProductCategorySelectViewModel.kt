@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.selectCategory
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
@@ -15,9 +14,6 @@ class AddProductCategorySelectViewModel(app: Application) : BaseViewModel(app) {
     internal val TAG = AddProductCategorySelectViewModel::class.java.name
 
 
-
-    @Inject
-    lateinit var context: Context
 
     @Inject
     lateinit var categoryRepository: CategoryRepository

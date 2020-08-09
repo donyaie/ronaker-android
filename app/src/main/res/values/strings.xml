@@ -220,8 +220,6 @@
     <string name="text_rate_it">Rate it</string>
     <string name="text_archive_it">Archive it</string>
     <string name="text_near_me">Near me</string>
-    <string name="text_you_will_sign_this_contract_with_your_smart_id">You will sign this contract with your Smart ID</string>
-    <string name="text_view_the_contract">View the Contract</string>
     <string name="text_contract">Contract</string>
     <string name="text_please_sign_the_contract">Please sign the contract before start renting</string>
     <string name="text_sign_the_contract">Sign the contract</string>

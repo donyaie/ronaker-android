@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.explore
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.DiffUtils
 import com.ronaker.app.utils.DiffUtils.createCombinedPayload
 import com.ronaker.app.utils.extension.getApplication
@@ -22,7 +22,6 @@ class ItemExploreAdapter : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>()
     val dataList = ArrayList<Product>()
 
 
-    lateinit var context: Context
     private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +31,6 @@ class ItemExploreAdapter : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>()
             parent,
             false
         )
-        context = parent.context
 
         return ViewHolder(binding)
     }
@@ -102,8 +100,24 @@ class ItemExploreAdapter : RecyclerView.Adapter<ItemExploreAdapter.ViewHolder>()
         private val viewModel = ItemExploreViewModel(binding.root.getApplication())
 
         fun bind(product: Product) {
-            viewModel.bind(product, binding, binding.root.getParentActivity())
+            viewModel.bind(product)
             binding.viewModel = viewModel
+
+            binding.root.setOnClickListener {
+                binding.root.getParentActivity()?.let {activity->
+
+                    activity.startActivityForResult(
+                        ExploreProductActivity.newInstance(activity,product ),
+                        ExploreProductActivity.REQUEST_CODE
+                    )
+
+                }
+            }
+
+
+
+
+
         }
 
         fun onViewRecycled() {

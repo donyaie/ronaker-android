@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.orderAuthorization
 
 import android.app.Application
-import android.content.Context
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -55,9 +54,6 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     private var countDounTimer: CountDownTimer? = null
 
-    @Inject
-    lateinit
-    var context: Context
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     private var subscriptionVerificationCode: Disposable? = null

@@ -2,11 +2,11 @@ package com.ronaker.app.ui.orderStartRenting
 
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
@@ -14,8 +14,6 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
-import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.TERM_URL
 import io.reactivex.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
@@ -39,7 +37,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
-    var context: Context
+    var resourcesRepository: ResourcesRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -51,11 +49,13 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
-    val renterSignImage: MutableLiveData<Int> = MutableLiveData()
     val renterSignText: MutableLiveData<String> = MutableLiveData()
     val lenderSignImage: MutableLiveData<Int> = MutableLiveData()
     val listerSignText: MutableLiveData<String> = MutableLiveData()
     val renterSignCheck: MutableLiveData<Boolean> = MutableLiveData()
+
+
+    val openTerm: MutableLiveData<Boolean> = MutableLiveData()
 
 
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
@@ -94,7 +94,9 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
     fun onClickTerms() {
-        IntentManeger.openUrl(context, TERM_URL)
+
+        openTerm.postValue(true)
+
     }
 
 
@@ -134,7 +136,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
 
-        renterSignText.postValue(context.getString(R.string.text_i_agree_to_the_contract))
+        renterSignText.postValue(resourcesRepository.getString(R.string.text_i_agree_to_the_contract))
 
         if (order.smart_id_creator_session_id.isNullOrBlank()) {
             renterSignCheck.postValue(false)
@@ -147,7 +149,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
             listerSignText.postValue(
                 String.format(
-                    context.getString(R.string.text_waite_for_sign),
+                    resourcesRepository.getString(R.string.text_waite_for_sign),
                     ( order.productOwner?.first_name?:"")  + (order.productOwner?.last_name?:"")
                 )
             )
@@ -156,7 +158,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
             listerSignText.postValue(
                 String.format(
-                    context.getString(R.string.text_signed_the_contract),
+                    resourcesRepository.getString(R.string.text_signed_the_contract),
                     "${order.productOwner?.first_name?:""} ${order.productOwner?.last_name?:""}"
                 )
             )
@@ -223,7 +225,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
                     if (result.error?.responseCode == 406) {
 
-                        errorMessage.postValue(context.getString(R.string.text_make_sure_sign_the_contract))
+                        errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
 
                     } else
                         errorMessage.postValue(result.error?.message)

@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profileImage
 
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -32,9 +31,6 @@ class ProfileImageViewModel(app: Application) : BaseViewModel(app) {
     var contentRepository: ContentRepository
 
 
-    @Inject
-    lateinit
-    var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

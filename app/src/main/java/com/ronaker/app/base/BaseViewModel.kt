@@ -11,7 +11,9 @@ import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
 import com.ronaker.app.ui.addProduct.AddProductLocationViewModel
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardViewModel
+import com.ronaker.app.ui.explore.CategoryExploreViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
+import com.ronaker.app.ui.explore.ItemExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.inbox.InboxViewModel
 import com.ronaker.app.ui.login.LoginViewModel
@@ -146,7 +148,9 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
             is OrderPreviewPriceViewModel -> injector.inject(this)
             is ManageProductAdapterViewModel -> injector.inject(this)
             is OrderAuthorizationViewModel -> injector.inject(this)
-            is LoginForgetViewModel ->injector.inject(this)
+            is LoginForgetViewModel -> injector.inject(this)
+            is ItemExploreViewModel -> injector.inject(this)
+            is CategoryExploreViewModel -> injector.inject(this)
         }
 
     }

@@ -1,11 +1,11 @@
 package com.ronaker.app.ui.orders
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
@@ -21,7 +21,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
-    var context: Context
+    var resourcesRepository: ResourcesRepository
 
 
     @Inject
@@ -127,7 +127,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.postValue(
-                        context.getString(
+                        resourcesRepository.getString(
                             R.string.text_rent_request_accepted,
                             userName
                         )
@@ -135,7 +135,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
                 } else {
 
                     orderStatus.postValue(
-                        context.getString(R.string.text_lend_request_accepted, ownerName)
+                        resourcesRepository.getString(R.string.text_lend_request_accepted, ownerName)
                     )
                 }
 
@@ -151,7 +151,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.postValue(
-                        context.getString(
+                        resourcesRepository.getString(
                             R.string.text_rent_request_started,
                             userName
                         )
@@ -159,7 +159,7 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
                 } else {
 
                     orderStatus.postValue(
-                        context.getString(
+                        resourcesRepository.getString(
                             R.string.text_lend_request_started,
                             ownerName
                         )
@@ -176,10 +176,10 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.postValue(context.getString(R.string.text_rent_canceled))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_canceled))
                 } else {
 
-                    orderStatus.postValue(context.getString(R.string.text_lend_canceled))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_lend_canceled))
                 }
 
 
@@ -201,11 +201,11 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
 
-                    orderStatus.postValue(context.getString(R.string.text_rent_complete))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_complete))
                 } else {
                     rateVisibility.postValue(View.VISIBLE)
 
-                    orderStatus.postValue(context.getString(R.string.text_lend_complete))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_lend_complete))
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -217,10 +217,10 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.postValue(context.getString(R.string.text_rent_request_pending))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_request_pending))
                 } else {
                     orderStatus.postValue(
-                        context.getString(
+                        resourcesRepository.getString(
                             R.string.text_lend_request_pending,
                             ownerName
                         )
@@ -238,10 +238,10 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.postValue(context.getString(R.string.text_rent_rejected))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_rejected))
                 } else {
 
-                    orderStatus.postValue(context.getString(R.string.text_lend_rejected))
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_lend_rejected))
                 }
 
                 if (!item.isArchived)

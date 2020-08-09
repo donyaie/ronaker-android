@@ -16,6 +16,8 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.TERM_URL
 
 class OrderStartRentingActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener {
 
@@ -38,6 +40,9 @@ class OrderStartRentingActivity : BaseActivity(), CompoundButton.OnCheckedChange
             return intent
         }
     }
+
+
+
 
 
 
@@ -73,6 +78,14 @@ class OrderStartRentingActivity : BaseActivity(), CompoundButton.OnCheckedChange
             } else
                 binding.loading.hideLoading()
         })
+
+
+        viewModel.openTerm.observe(this, Observer {
+            IntentManeger.openUrl(this@OrderStartRentingActivity, TERM_URL)
+        })
+
+
+
 
         viewModel.finish.observe(this, Observer { _ ->
             setResult(Activity.RESULT_OK)

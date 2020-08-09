@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profilePaymentList
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
@@ -22,9 +21,6 @@ class ProfilePaymentListViewModel(app: Application) : BaseViewModel(app) {
     lateinit
     var paymentInfoRepository: PaymentInfoRepository
 
-    @Inject
-    lateinit
-    var context: Context
 
     var dataList = ArrayList<PaymentCard>()
 

@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profileIdentify
 
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -27,9 +26,6 @@ class ProfileIdentifyViewModel(app: Application) : BaseViewModel(app) {
     var contentRepository: ContentRepository
 
 
-    @Inject
-    lateinit
-    var context: Context
 
 
     var selectedDocument: DocumentTypeEnum? = null

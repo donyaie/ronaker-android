@@ -1,11 +1,11 @@
 package com.ronaker.app.ui.orderCreate
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
@@ -39,7 +39,8 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
-    var context: Context
+    var resourceRepository: ResourcesRepository
+
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -131,7 +132,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         val user = userRepository.getUserInfo()
 
-        orderMessage.value = context.getString(
+        orderMessage.value = resourceRepository.getString(
             R.string.text_order_message,
             (user?.first_name?:""),
             ( user?.last_name?:""),
@@ -195,7 +196,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         firstDayVisibility.value = View.GONE
 
-        firstDate.value = context.getString(R.string.title_borrow_day)
+        firstDate.value = resourceRepository.getString(R.string.title_borrow_day)
 
     }
 
@@ -204,7 +205,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         lastDayVisibility.value = View.GONE
 
-        lastDate.value = context.getString(R.string.title_return_day)
+        lastDate.value = resourceRepository.getString(R.string.title_return_day)
 
         setDatesVisibility.value = View.GONE
 

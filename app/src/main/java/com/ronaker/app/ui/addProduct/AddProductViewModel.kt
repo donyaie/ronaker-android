@@ -1,13 +1,13 @@
 package com.ronaker.app.ui.addProduct
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
@@ -30,7 +30,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
-    lateinit var context: Context
+    lateinit var resourcesRepository: ResourcesRepository
 
     @Inject
     lateinit var productRepository: ProductRepository
@@ -151,7 +151,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
             checkNextSelectImage()
 
-        } else errorMessage.value = context.getString(R.string.error_add_image)
+        } else errorMessage.value = resourcesRepository.getString(R.string.error_add_image)
 
 
     }
@@ -334,7 +334,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         )
             viewState.value = StateEnum.Location
         else
-            errorMessage.value = context.getString(R.string.error_set_price)
+            errorMessage.value = resourcesRepository.getString(R.string.error_set_price)
 
     }
 
@@ -352,7 +352,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             } else
                 createProduct()
         } else
-            errorMessage.value = context.getString(R.string.error_set_location)
+            errorMessage.value = resourcesRepository.getString(R.string.error_set_location)
 
 
     }
