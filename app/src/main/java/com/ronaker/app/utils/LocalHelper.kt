@@ -14,7 +14,6 @@ object LocaleHelper {
     private val TAG = LocaleHelper::class.java.simpleName
 
     fun onAttach(context: Context): Context {
-        AppDebug.log(TAG, "onAttach " + Locale.getDefault().language)
         return setLocale(context, getPersistedData(context, Locale.getDefault().language))
     }
 
