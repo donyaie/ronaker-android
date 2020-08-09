@@ -14,7 +14,7 @@ class LanguageDialog {
     companion object {
         fun showDialog(context: Activity): AlertDialog? {
 
-            val mDialogView =  View.inflate(context, R.layout.dialog_language, null)
+            val mDialogView = View.inflate(context, R.layout.dialog_language, null)
             //AlertDialogBuilder
             val mBuilder = AlertDialog.Builder(context)
                 .setView(mDialogView)
@@ -33,11 +33,11 @@ class LanguageDialog {
                 mAlertDialog.dismiss()
                 context.startActivity(DashboardActivity.newInstance(context))
             }
-            mDialogView.DutchLan.setOnClickListener {
-                LocaleHelper.setLocale(context, "nl")
-                mAlertDialog.dismiss()
-                context.startActivity(DashboardActivity.newInstance(context))
-            }
+//            mDialogView.DutchLan.setOnClickListener {
+//                LocaleHelper.setLocale(context, "nl")
+//                mAlertDialog.dismiss()
+//                context.startActivity(DashboardActivity.newInstance(context))
+//            }
 
 
             return mAlertDialog

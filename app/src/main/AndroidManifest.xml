@@ -27,9 +27,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="android:allowBackup,android:supportsRtl">
 
+        <!--        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"-->
 
         <!--        <meta-data-->
         <!--            android:name="firebase_crashlytics_collection_enabled"-->
@@ -87,6 +87,8 @@
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
 
         </activity>
+
+
 
 
         <activity
@@ -176,9 +178,48 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
+
+        <activity
+            android:name=".ui.loginForget.LoginForgetActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginForgetTheme"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="api.ronaker.com"
+                    android:pathPrefix="/api/v1/users/email-reset"
+                    android:scheme="https" />
+            </intent-filter>
+
+
+        </activity>
+
+
+
+        <activity
+            android:name=".ui.orderAuthorization.OrderAuthorizationActivity"
+
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/phoneNumberTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
+
 
         <activity
             android:name=".ui.search.SearchActivity"
@@ -279,7 +320,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:name=".ui.orderAcceptIntro.OrderAcceptActivity"
+            android:name=".ui.orderAccept.OrderAcceptActivity"
             android:launchMode="singleTask"
 
             android:screenOrientation="portrait"

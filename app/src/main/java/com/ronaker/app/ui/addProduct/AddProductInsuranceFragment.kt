@@ -17,9 +17,18 @@ class AddProductInsuranceFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: AddProductViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_add_insurance, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_product_add_insurance,
+            container,
+            false
+        )
         activity?.let {
             viewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
             binding.viewModel = viewModel

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.orderAuthorization.OrderAuthorizationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="80dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:gravity="start"
+                    android:text="@string/text_check_the_provided_control_code"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:text="@string/text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2"
+                    android:textAppearance="@style/TextAppearance.Medium.Regular"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toBottomOf="@id/title" />
+
+
+                <TextView
+                    android:id="@+id/code_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toBottomOf="@id/description"
+                    app:mutableTextFade="@{viewModel.getAuthPinCode()}" />
+
+
+                <TextView
+
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.Large.SB"
+                    android:textColor="@color/colorTextDark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/code_text"
+
+                    app:mutableTextFade="@{viewModel.getErrorMessageFinal()}"
+                    app:mutableVisibility="@{viewModel.getErrorMessageVisibility()}" />
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/progress"
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    app:indicatorColor="@color/colorNavy"
+                    app:indicatorName="BallPulseIndicator"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/code_text"
+
+                    app:mutableVisibility="@{viewModel.getLoadingVisibility()}" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintVertical_bias="0.8">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:contentDescription="@string/caption_title"
+                        android:src="@drawable/ic_smart_id_logo" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="12dp"
+                        android:contentDescription="@string/caption_title"
+                        android:src="@drawable/ic_smart_id_logo_text" />
+
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPlatinGrey"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_default"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.Large.Regular"
+                android:textColor="@color/colorTextDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableTextFade="@{viewModel.getTimerValue()}"
+                app:mutableVisibility="@{viewModel.getTimerVisibility()}" />
+
+            <TextView
+                android:id="@+id/timer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/text_time_remaining"
+
+                android:textAppearance="@style/TextAppearance.Medium.Light"
+                android:textColor="@color/colorTextDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/timer_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.getTimerVisibility()}" />
+
+
+            <TextView
+                android:id="@+id/resend_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_default"
+                android:text="@string/title_did_not_get_the_code_yet"
+                android:textAppearance="@style/TextAppearance.Medium.Light"
+                android:textColor="@color/colorTextDark"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.getResendVisibility()}" />
+
+            <TextView
+                android:id="@+id/resend_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:onClick="@{()->viewModel.resend()}"
+                android:text="@string/title_resend"
+                android:textAppearance="@style/TextAppearance.Medium.SB"
+
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/resend_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.getResendVisibility()}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

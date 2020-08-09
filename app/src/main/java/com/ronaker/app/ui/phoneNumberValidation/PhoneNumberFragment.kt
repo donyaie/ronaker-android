@@ -29,18 +29,23 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
     private var inPhoneChange = false
 
-    var disposable:Disposable?=null
+    var disposable: Disposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_phone_numbre, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_phone_numbre, container, false)
 
 
         activity?.let {
             viewModel = ViewModelProvider(it).get(PhoneNumberViewModel::class.java)
             binding.viewModel = viewModel
 
-            binding.view=this@PhoneNumberFragment
+            binding.view = this@PhoneNumberFragment
         }
 
 
@@ -60,7 +65,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         }
 
 
-      disposable=   RxTextView.textChanges(binding.phoneEditText).subscribe {
+        disposable = RxTextView.textChanges(binding.phoneEditText).subscribe {
 
             if (it.isNotEmpty())
                 showClear(true)
@@ -83,8 +88,8 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         return binding.root
     }
 
-    fun onClickNext(){
-        viewModel.onClickPhoneNext(getPreCode()+getNumber())
+    fun onClickNext() {
+        viewModel.onClickPhoneNext(getPreCode() + getNumber())
     }
 
     private fun getPreCode(): String {
@@ -94,7 +99,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
     }
 
     private fun getNumber(): String? {
-           return validNumber?.let {it.nationalNumber.toString() + ""  }
+        return validNumber?.let { it.nationalNumber.toString() + "" }
 
     }
 
@@ -212,7 +217,7 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
     }
 
     override fun onDestroy() {
-         disposable?.dispose()
+        disposable?.dispose()
         super.onDestroy()
     }
 }

@@ -6,12 +6,13 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
-import com.ronaker.app.data.local.PreferencesProvider
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.*
+import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
-import com.ronaker.app.utils.SslUtils
+import com.ronaker.app.utils.LocaleHelper
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -28,7 +29,7 @@ import javax.inject.Singleton
 @Module
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
- class RepositoryModule(private val app: Application) {
+class RepositoryModule(private val app: Application) {
 
 
     /**
@@ -105,7 +106,7 @@ import javax.inject.Singleton
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
             .apply {
-                if (BuildConfig.DEBUG)  addNetworkInterceptor( StethoInterceptor())
+                if (BuildConfig.DEBUG) addNetworkInterceptor(StethoInterceptor())
             }
 
             .build()
@@ -133,53 +134,76 @@ import javax.inject.Singleton
         return DefaultUserRepository(userApi, preferencesProvider)
     }
 
+
+    @Provides
+    @Singleton
+    internal fun provideResourceRepository(
+        context: Context
+    ): ResourcesRepository {
+
+        return ResourcesRepository(context)
+    }
+
     @Provides
     @Singleton
     internal fun providePaymentInfoRepository(
-        api: PaymentInfoApi
+        api: PaymentInfoApi,
+        userRepository: UserRepository
     ): PaymentInfoRepository {
 
-        return DefaultPaymentInfoRepository(api)
+        return DefaultPaymentInfoRepository(api,userRepository)
     }
-
 
 
     @Provides
     @Singleton
-    internal fun provideContentRepository(api: ContentApi): ContentRepository {
+    internal fun provideContentRepository(api: ContentApi,context: Context,
+                                          userRepository: UserRepository): ContentRepository {
 
-        return DefaultContentRepository(api)
+        return DefaultContentRepository(api,context,
+            userRepository)
     }
 
     @Provides
     @Singleton
     internal fun provideProductRepository(
-        productApi: ProductApi
+        productApi: ProductApi,
+        userRepository: UserRepository
     ): ProductRepository {
-        return DefaultProductRepository(productApi)
+        return DefaultProductRepository(productApi,
+            userRepository)
     }
 
     @Provides
     @Singleton
     internal fun provideCategoryRepository(
-        api: CategoryApi
+        api: CategoryApi,
+        preferencesProvider: PreferencesProvider,
+        userRepository: UserRepository
     ): CategoryRepository {
-        return DefaultCategoryRepository(api)
+        return DefaultCategoryRepository(api,
+            preferencesProvider,
+            userRepository)
     }
 
 
     @Provides
     @Singleton
     internal fun provideOrderRepository(
-        api: OrderApi
+        api: OrderApi,
+        userRepository: UserRepository
     ): OrderRepository {
-        return DefaultOrderRepository(api)
+        return DefaultOrderRepository(api,
+            userRepository)
     }
 
 
     @Provides
     @Singleton
-    internal fun provideGoogleMapRepository(api: GoogleMapApi ,context:Context): GoogleMapRepository {
+    internal fun provideGoogleMapRepository(
+        api: GoogleMapApi,
+        context: Context
+    ): GoogleMapRepository {
         return DefaultGoogleMapRepository(api, context.getString(R.string.google_api_key_me))
     }
 
@@ -190,24 +214,22 @@ import javax.inject.Singleton
      */
     @Provides
     @Singleton
-    internal fun provideRetrofitInterface(context: Context): Retrofit {
-        val JSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
+    internal fun provideRetrofitInterface(): Retrofit {
+        val jsonFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
-        val GSON = GsonBuilder()
-            .setDateFormat(JSON_DATE_FORMAT)
+        val gson = GsonBuilder()
+            .setDateFormat(jsonFormat)
 //            .serializeNulls()
             .create()
 
-
-        val clientBuilder = SslUtils.getUnsafeOkHttpClient(context)
+        val clientBuilder = OkHttpClient.Builder()
+//        val clientBuilder = SslUtils.getUnsafeOkHttpClient(context)
         clientBuilder.addInterceptor(HttpLoggingInterceptor().apply {
             level =
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         })
         if (BuildConfig.DEBUG)
-            clientBuilder.addNetworkInterceptor( StethoInterceptor())
-
-
+            clientBuilder.addNetworkInterceptor(StethoInterceptor())
 
 
         val client = clientBuilder.build()
@@ -216,7 +238,7 @@ import javax.inject.Singleton
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create(GSON))
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
     }
@@ -242,7 +264,7 @@ import javax.inject.Singleton
     @Singleton
     internal fun provideContext(): Context {
 
-        return app
+        return  LocaleHelper.onAttach(app.baseContext)
     }
 
 

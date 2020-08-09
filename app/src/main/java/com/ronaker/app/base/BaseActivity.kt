@@ -1,11 +1,9 @@
 package com.ronaker.app.base
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -13,19 +11,18 @@ import com.ronaker.app.General
 import com.ronaker.app.R
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.LocaleHelper
-
 import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
 import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import io.fabric.sdk.android.Fabric
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
 
 
-abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
+abstract class BaseActivity : SwipeBackActivity() {
 
 
     fun getAnalytics(): FirebaseAnalytics? {
-
 
 
         return if (applicationContext is General)
@@ -33,9 +30,6 @@ abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
         else
             null
     }
-
-
-
 
 
     private val animator: BaseKeyboardAnimator by lazy(LazyThreadSafetyMode.NONE) {
@@ -57,14 +51,14 @@ abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
 
 
     fun enableKeyboardAnimator() {
-            animator.start()
+        animator.start()
 
     }
 
 //    var activityTag: String? = null
 
     fun setSwipeCloseDisable() {
-//       swipeBackLayout.setEnableGesture(false)
+        swipeBackLayout.setEnableGesture(false)
 
 
     }
@@ -73,7 +67,7 @@ abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
 
         super.onCreate(savedInstanceState)
 //        addActivityStack(this)
-//        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
+        swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
         Fabric.with(this, Crashlytics())
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
@@ -155,8 +149,6 @@ abstract class BaseActivity : AppCompatActivity()/*SwipeBackActivity() */{
 
 
     }
-
-
 
 
     fun isFistStart(): Boolean {

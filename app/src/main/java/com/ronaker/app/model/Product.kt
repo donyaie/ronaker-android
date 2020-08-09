@@ -9,45 +9,34 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Product(
-    var suid: String?
-    , var name: String?
-    , var price_per_day: Double?
-    , var price_per_week: Double?
-    , var price_per_month: Double?
-    , var description: String?
-    , var avatar: String?
-    , var images: List<Image>?
-    , var categories: List<Category>?
-    , var location: LatLng?
-    , var address: String?
+    var suid: String? = null
+    , var name: String? = null
+    , var price_per_day: Double? = null
+    , var price_per_week: Double? = null
+    , var price_per_month: Double? = null
+    , var description: String? = null
+    , var avatar: String? = null
+    , var images: List<Image> = ArrayList()
+    , var categories: List<Category>? = null
+    , var location: LatLng? = null
+    , var address: String? = null
+    , var insurance_image: String? = null
     , var avatar_suid: String? = null
-    , var new_categories: ArrayList<String>? = null
+    , var new_categories: ArrayList<String> = ArrayList()
+    , var new_insurance_image_suid: String? = null
     , var review_status: String? = null
     , var user_status: String? = null
     , var rate: Double? = null
     , var owner: User? = null
-    , var isFavourite: Boolean? = null
+    , var isFavourite: Boolean = false
 
 
 ) : Parcelable {
-    constructor() : this(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    )
 
     override fun equals(other: Any?): Boolean {
 
-        if(other is Product){
-            return this.hashCode()==other.hashCode()
+        if (other is Product) {
+            return this.hashCode() == other.hashCode()
         }
 
         return super.equals(other)
@@ -56,22 +45,22 @@ data class Product(
     override fun hashCode(): Int {
         var result = suid?.hashCode() ?: 0
         result = 31 * result + (name?.hashCode() ?: 0)
-        result = 31 * result + (price_per_day?.hashCode() ?: 0)
-        result = 31 * result + (price_per_week?.hashCode() ?: 0)
-        result = 31 * result + (price_per_month?.hashCode() ?: 0)
+        result = 31 * result + (price_per_day.hashCode())
+        result = 31 * result + (price_per_week.hashCode())
+        result = 31 * result + (price_per_month.hashCode())
         result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (avatar?.hashCode() ?: 0)
-        result = 31 * result + (images?.hashCode() ?: 0)
+        result = 31 * result + (images.hashCode())
         result = 31 * result + (categories?.hashCode() ?: 0)
         result = 31 * result + (location?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (avatar_suid?.hashCode() ?: 0)
-        result = 31 * result + (new_categories?.hashCode() ?: 0)
+        result = 31 * result + (new_categories.hashCode())
         result = 31 * result + (review_status?.hashCode() ?: 0)
         result = 31 * result + (user_status?.hashCode() ?: 0)
-        result = 31 * result + (rate?.hashCode() ?: 0)
+        result = 31 * result + (rate.hashCode())
         result = 31 * result + (owner?.hashCode() ?: 0)
-        result = 31 * result + (isFavourite?.hashCode() ?: 0)
+        result = 31 * result + (isFavourite.hashCode())
         return result
     }
 
@@ -156,7 +145,7 @@ fun List<ProductRatingResponceModel>.toProductRateList(): List<Product.ProductRa
 }
 
 
-fun List<ProductItemResponceModel>.toProductList(): List<Product> {
+fun List<ProductItemResponseModel>.toProductList(): List<Product> {
 
 
     val list: ArrayList<Product> = ArrayList()
@@ -173,41 +162,39 @@ fun List<ProductItemResponceModel>.toProductList(): List<Product> {
 }
 
 
-fun ProductItemResponceModel.toProduct(): Product {
+fun ProductItemResponseModel.toProduct(): Product {
 
 
     return Product(
-        suid,
-        name,
-        price_per_day,
-        price_per_week,
-        price_per_month,
-        description,
-        avatar,
-        images?.toProductImage() ?: ArrayList(),
-        categories?.toCategoryList() ?: ArrayList(),
-        if (location != null) LatLng(location.lat, location.lng) else null,
-        address,
-        null,
-        null,
-        review_status,
-        user_status,
-        rating
+        suid = suid,
+        name = name,
+        price_per_day = price_per_day,
+        price_per_week = price_per_week,
+        price_per_month = price_per_month,
+        description = description,
+        avatar = avatar,
+        images = images?.toProductImage() ?: ArrayList(),
+        categories = categories?.toCategoryList() ?: ArrayList(),
+        location = if (location != null) LatLng(location.lat, location.lng) else null,
+        address = address,
+        review_status = review_status,
+        user_status = user_status,
+        rate = rating,
+        isFavourite = is_favourite
     )
 
 }
 
-fun ProductDetailResponceModel.toProductDetail(): Product {
-
+fun ProductDetailResponseModel.toProductDetail(): Product {
 
     return Product(
-        suid,
-        name,
-        price_per_day,
-        price_per_week,
-        price_per_month,
-        description,
-        avatar,
+        suid = suid,
+        name = name,
+        price_per_day = price_per_day,
+        price_per_week = price_per_week,
+        price_per_month = price_per_month,
+        description = description,
+        avatar = avatar,
         images = images?.toProductImage() ?: ArrayList(),
         categories = categories?.toCategoryList() ?: ArrayList(),
         location = location?.let { LatLng(location.lat, location.lng) },
@@ -216,7 +203,8 @@ fun ProductDetailResponceModel.toProductDetail(): Product {
         review_status = review_status,
         rate = rating,
         owner = this.owner?.toUserModel(),
-        isFavourite = this.is_favourite
+        isFavourite = this.is_favourite,
+        insurance_image = this.insurance_image
 
     )
 
@@ -247,33 +235,33 @@ fun Product.toProductCreateModel(): ProductCreateRequestModel {
     var imageList: ArrayList<String>? = ArrayList()
 
 
-    if (this.images != null) {
-        this.images?.forEach { it.suid?.let { suid -> imageList?.add(suid) } }
+    this.images.forEach { it.suid?.let { suid -> imageList?.add(suid) } }
 
-    }
 
-    if (imageList?.size == 0) {
+
+    if (imageList.isNullOrEmpty()) {
         imageList = null
     }
 
 
     return ProductCreateRequestModel(
-        name,
-        price_per_day,
-        price_per_week,
-        price_per_month,
-        description,
-        avatar_suid,
-        imageList,
-        new_categories,
-        location?.let {
+        name = name,
+        price_per_day = price_per_day,
+        price_per_week = price_per_week,
+        price_per_month = price_per_month,
+        description = description,
+        new_avatar_suid = avatar_suid,
+        new_images = imageList,
+        new_categories = new_categories,
+        location = location?.let {
             LocationResponseModel(
                 it.latitude,
                 it.longitude
             )
         },
-        address,
-        user_status
+        address = address,
+        user_status = user_status,
+        new_insurance_image_suid = new_insurance_image_suid
 
     )
 

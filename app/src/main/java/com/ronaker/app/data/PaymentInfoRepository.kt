@@ -7,7 +7,7 @@ import io.reactivex.Observable
 
 
 interface PaymentInfoRepository {
-    fun getPaymentInfoList(token: String?): Observable<Result<List<PaymentCard>?>>
-    fun addPaymentInfo(token: String?, payment: PaymentCard): Observable<Result<Boolean>>
-    fun getFinancialTransactions(token: String?): Observable<Result<List<Transaction>?>>
+    fun getPaymentInfoList(): Observable<Result<List<PaymentCard>?>>
+    fun addPaymentInfo( payment: PaymentCard): Observable<Result<Boolean>>
+    fun getFinancialTransactions(): Observable<Result<List<Transaction>?>>
 }

@@ -40,16 +40,16 @@
                 android:scrollbars="none">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="800dp"
                     android:layout_height="800dp"
                     android:id="@+id/bgCon"
 
-                    android:gravity="top">
+                    android:gravity="center">
 
                     <ImageView
                         android:layout_height="800dp"
                         android:id="@+id/background"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:contentDescription="@string/text_content"
                         android:minWidth="500dp"
                         android:scaleType="centerCrop"
@@ -57,7 +57,7 @@
 
                         android:gravity="top"
 
-                        app:srcCompat="@drawable/bg_login" />
+                        app:srcCompat="@drawable/backgroung_bg" />
 
                 </RelativeLayout>
 
@@ -68,6 +68,7 @@
             <LinearLayout
                 android:id="@+id/overlay_layout"
                 android:layout_width="match_parent"
+                android:visibility="visible"
 
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
@@ -106,7 +107,7 @@
             app:toolbar_component_bottom_line="false"
             app:toolbar_component_cancel_container="NONE"
             app:toolbar_component_center_container="NONE"
-            app:toolbar_component_dot_count="3"
+            app:toolbar_component_dot_count="2"
             app:toolbar_component_title="@string/app_name"
             app:toolbar_component_transparent="true" />
 
@@ -118,6 +119,7 @@
 
 
             <FrameLayout
+
                 android:id="@+id/frame_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
+import com.ronaker.app.utils.Alert
 
 
 class ProfilePaymentListActivity : BaseActivity() {
@@ -47,9 +47,10 @@ class ProfilePaymentListActivity : BaseActivity() {
         binding.viewModel = viewModel
 
 
-        ViewCompat.setNestedScrollingEnabled(binding.recycler,false)
+        ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
-        binding.recycler.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.recycler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
 
@@ -67,8 +68,8 @@ class ProfilePaymentListActivity : BaseActivity() {
 
 
         viewModel.retry.observe(this, Observer { value ->
-            
-            value?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+
+            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
         binding.loading.oClickRetryListener = View.OnClickListener {
@@ -88,8 +89,6 @@ class ProfilePaymentListActivity : BaseActivity() {
         }
 
 
-
-
     }
 
     override fun onStart() {
@@ -98,15 +97,13 @@ class ProfilePaymentListActivity : BaseActivity() {
 //
 //        if (isFistStart()) {
 
-           viewModel.loadData()
+        viewModel.loadData()
 
 
 //        }
 
 
     }
-
-
 
 
 }

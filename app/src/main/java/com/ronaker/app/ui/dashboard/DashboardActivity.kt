@@ -48,6 +48,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
     private lateinit var viewModel: DashboardViewModel
 
+
+    var inviteCode: String? = null
+
+
     var savedInstanceState: Bundle? = null
 
 
@@ -58,8 +62,16 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         setSwipeCloseDisable()
 
 
+
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
+
+        binding.root.setBackgroundResource(R.color.white)
+//        ( window.decorView.findViewById<View>(Window.ID_ANDROID_CONTENT)?.parent as? ViewGroup)?.setBackgroundResource(R.color.white)
+//        window.setBackgroundDrawableResource(R.color.white)
+//
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         binding.viewModel = viewModel
@@ -67,7 +79,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         viewModel.goLogin.observe(this, Observer { value ->
             if (value == true) {
 
-                startActivity(LoginActivity.newInstance(this@DashboardActivity))
+                startActivity(LoginActivity.newInstance(this@DashboardActivity,inviteCode))
                 AnimationHelper.setFadeTransition(this)
                 finish()
 
@@ -110,6 +122,14 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
                 }
 
+
+
+                if (referringParams?.has("invite-code") == true) {
+                    inviteCode = referringParams.getString("invite-code")
+
+
+                }
+
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
@@ -117,6 +137,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -254,7 +275,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         when (requestCode) {
             ExploreProductActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    binding.navigation.postDelayed({ binding.navigation.select(1) },50)
+                    binding.navigation.postDelayed({ binding.navigation.select(1) }, 50)
                 }
             }
         }

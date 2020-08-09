@@ -6,33 +6,46 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
-import com.ronaker.app.utils.AnalyticsManager
-import com.ronaker.app.utils.AppDebug
-import com.ronaker.app.utils.actionLogin
-import com.ronaker.app.utils.actionSignUp
+import com.ronaker.app.utils.*
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class LoginViewModel(app: Application) : BaseViewModel(app) {
-
-    private val TAG = LoginViewModel::class.java.name
 
 
     @Inject
     lateinit var userRepository: UserRepository
     private var signinSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
-    private  var emailVerificationSubscription:Disposable?=null
+    private var emailVerificationSubscription: Disposable? = null
+
+
+    var forgetSubscription: Disposable? = null
+    val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
+    val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
+
+
+    val inviteCodeText: MutableLiveData<String> = MutableLiveData()
+
+    val passwordLengthVisibility: MutableLiveData<Int> = MutableLiveData()
+    val passwordAlphabetVisibility: MutableLiveData<Int> = MutableLiveData()
+    val passwordMatchVisibility: MutableLiveData<Int> = MutableLiveData()
+
 
     @Inject
-    lateinit var context: Context
+    lateinit var resourcesRepository: ResourcesRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val successMessage: MutableLiveData<String> = MutableLiveData()
+
+
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
+    val keyboardDown: MutableLiveData<Boolean> = MutableLiveData()
 
     enum class LoginActionEnum {
         login,
@@ -54,9 +67,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     enum class LoginStateEnum constructor(position: Int) {
         home(0),
         email(1),
-        info(2),
-        password(3),
-        login(4);
+//        info(2),
+        password(2),
+        login(3),
+        forget(4);
 
         var position: Int = 0
             internal set
@@ -84,7 +98,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             userInfo.email = email
             userInfo.promotionCode = if (inviteCode.isNotBlank()) inviteCode else null
 
-            viewState.value = LoginStateEnum.info
+            viewState.value = LoginStateEnum.password
         }
 
     }
@@ -105,13 +119,14 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickLoginPassword(password: String, isValid: Boolean, repeat: String) {
 
+        keyboardDown.postValue(true)
         if (isValid) {
             if (password.compareTo(repeat) == 0) {
 
                 userInfo.password = password
                 signUp()
             } else {
-                errorMessage.value = context.getString(R.string.text_repeated_password_not_match)
+                errorMessage.value = resourcesRepository.getString(R.string.text_repeated_password_not_match)
             }
         }
 
@@ -123,6 +138,9 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         password: String?,
         passwordValid: Boolean
     ) {
+
+        keyboardDown.postValue(true)
+
         if (passwordValid && emailIsValid) {
 
             userInfo.password = password
@@ -133,16 +151,16 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun sendVerificationEmail(){
+    fun sendVerificationEmail() {
         emailVerificationSubscription =
-            userRepository.sendEmailVerification(userRepository.getUserToken()).doOnSubscribe { loadingButton.value = true }
-                .doOnTerminate { loadingButton.value = false }
+            userRepository.sendEmailVerification()
+                .doOnSubscribe { loadingButton.postValue(true) }
+                .doOnTerminate { loadingButton.postValue(false) }
                 .subscribe {
 
 
-
-                    loading.value = false
-                    goNext.value = true
+                    loading.postValue(false)
+                    goNext.postValue(true)
 
                 }
     }
@@ -150,32 +168,71 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun signin() {
         signinSubscription =
-            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.value = true }
-                .doOnTerminate { loadingButton.value = false }
+            userRepository.loginUser(userInfo).doOnSubscribe { loadingButton.postValue(true) }
+                .doOnTerminate { loadingButton.postValue(false) }
                 .subscribe { result ->
-                    loading.value = false
+                    loading.postValue(false)
                     if (result.isSuccess()) {
 
-                        AppDebug.log("Login",result?.data.toString())
+                        AppDebug.log("Login", result?.data.toString())
 
 
                         getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
-                        goNext.value = true
+                        goNext.postValue(true)
 
                     } else {
-                        errorMessage.value = result.error?.message
+
+                        if (result?.error?.responseCode == 406) {
+                            errorMessage.postValue(resourcesRepository.getString(R.string.error_login_email_or_password_wrong))
+                        } else
+                            errorMessage.postValue(result.error?.message)
                     }
                 }
 
     }
 
+    fun onClickLoginResetPassword(
+        email: String?,
+        emailIsValid: Boolean
+    ) {
+
+        if (emailIsValid && email != null) {
+            forgetSubscription =
+                userRepository.forgetPassword(email).doOnSubscribe { loadingButton.postValue(true) }
+                    .doOnTerminate { loadingButton.postValue(false) }
+                    .subscribe { result ->
+                        loading.postValue(false)
+                        if (result.isSuccess()) {
+
+
+                            viewState.postValue(LoginStateEnum.home)
+
+                            successMessage.postValue(resourcesRepository.getString(R.string.text_send_activation_success))
+
+
+                        } else {
+                            errorMessage.postValue(result.error?.message)
+                        }
+                    }
+        }
+
+    }
+
     fun onClickGotoSignUp() {
-        gotoSignUp.value = true
+        if (!mInviteCode.isNullOrBlank())
+            inviteCodeText.postValue(mInviteCode)
+        gotoSignUp.postValue(true)
+
+    }
+
+    fun onClickGotoForget() {
+
+        viewState.value = LoginStateEnum.forget
     }
 
     fun onClickGotoSignIn() {
 
-        gotoSignIn.value = true
+        gotoSignIn.postValue(true)
     }
 
 
@@ -187,18 +244,15 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     if (result.isSuccess()) {
                         getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
 
-                        AppDebug.log("Login",result?.data.toString())
+                        AppDebug.log("Login", result?.data.toString())
 
-                         sendVerificationEmail()
+                        sendVerificationEmail()
                     } else {
                         errorMessage.value = result.error?.message
                     }
                 }
     }
 
-
-    val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
-    val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
 
     val loginClickListener = View.OnClickListener {
 
@@ -214,10 +268,48 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
+    fun validatePassword(password: String?, repeat: String): Boolean {
+        var isValid = true
+
+        if (password.isNullOrBlank() || password.length < 8) {
+            passwordLengthVisibility.postValue(View.VISIBLE)
+            isValid = false
+        } else
+            passwordLengthVisibility.postValue(View.GONE)
+
+        if (password?.trim()?.isNumeric() == true) {
+            passwordAlphabetVisibility.postValue(View.VISIBLE)
+            isValid = false
+        } else
+            passwordAlphabetVisibility.postValue(View.GONE)
+
+        if (password?.compareTo(repeat) != 0) {
+            passwordMatchVisibility.postValue(View.VISIBLE)
+            isValid = false
+        } else
+            passwordMatchVisibility.postValue(View.GONE)
+
+
+        AppDebug.log("validatePassword", "password: $password , repeat: $repeat isValid: $isValid")
+
+        return isValid
+    }
+
+
     override fun onCleared() {
         super.onCleared()
         signUpSubscription?.dispose()
         signinSubscription?.dispose()
+    }
+
+
+    var mInviteCode: String? = null
+
+    fun setInviteCode(inviteCode: String) {
+
+        mInviteCode = inviteCode
+
+
     }
 
 }

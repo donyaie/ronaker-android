@@ -8,17 +8,21 @@ import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterProductCommentBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.extension.getApplication
-import com.ronaker.app.utils.extension.getParentActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ProductCommentAdapter(
     dataList: ArrayList<Product.ProductRate>
 ) : RecyclerView.Adapter<ProductCommentAdapter.ViewHolder>() {
-    private  var productList:List<Product.ProductRate> = dataList
+    private var productList: List<Product.ProductRate> = dataList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterProductCommentBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_product_comment, parent, false)
+        val binding: AdapterProductCommentBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.adapter_product_comment,
+            parent,
+            false
+        )
 
 
         return ViewHolder(binding)
@@ -29,10 +33,10 @@ class ProductCommentAdapter(
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return productList.size
     }
 
-    fun updateList(){
+    fun updateList() {
         MainScope().launch {
 
             notifyDataSetChanged()
@@ -42,19 +46,15 @@ class ProductCommentAdapter(
 
     class ViewHolder(
         private val binding: AdapterProductCommentBinding
-    ):RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = ProductCommentViewModel(binding.root.getApplication())
 
-        fun bind(product:Product.ProductRate){
-            viewModel.bind(product,binding)
+        fun bind(product: Product.ProductRate) {
+            viewModel.bind(product, binding)
             binding.viewModel = viewModel
         }
     }
-
-
-
-
 
 
 }

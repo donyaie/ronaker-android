@@ -21,7 +21,7 @@ class SimpleKeyboardAnimator(window: Window) : BaseKeyboardAnimator(window) {
         get() = View.OnApplyWindowInsetsListener { view, insets ->
 
 
-            val transition= ChangeBounds()
+            val transition = ChangeBounds()
             sceneRoot?.let { TransitionManager.beginDelayedTransition(it, transition) }
             return@OnApplyWindowInsetsListener view.onApplyWindowInsets(insets)
         }

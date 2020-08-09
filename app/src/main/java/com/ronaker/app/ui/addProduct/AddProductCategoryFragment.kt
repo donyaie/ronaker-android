@@ -17,9 +17,18 @@ class AddProductCategoryFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: AddProductViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_product_add_category,container , false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_product_add_category,
+            container,
+            false
+        )
 
 
         activity?.let {
@@ -39,6 +48,7 @@ class AddProductCategoryFragment : BaseFragment(), IPagerFragment {
             return AddProductCategoryFragment()
         }
     }
+
     override fun onSelect() {
 
     }

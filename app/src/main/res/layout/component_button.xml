@@ -29,7 +29,7 @@
 
         android:visibility="gone"
         app:srcCompat="@drawable/ic_next_white"
-        android:tint="@color/white"
+        app:tint="@color/white"
 
         android:contentDescription="@string/text_content" />
 

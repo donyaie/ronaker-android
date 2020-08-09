@@ -4,17 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
-import com.ronaker.app.ui.profileEmailEdit.ProfileEmailEditActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
+import com.ronaker.app.utils.Alert
 
 
 class ProfileEditActivity : BaseActivity() {
@@ -58,7 +57,7 @@ class ProfileEditActivity : BaseActivity() {
 
         viewModel.loading.observe(this, Observer { value ->
             if (value == true) {
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
             } else
                 binding.loading.hideLoading()
@@ -81,7 +80,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.paymentLayout.setOnClickListener {
 
-            startActivity(ProfilePaymentListActivity.newInstance(this))
+//            startActivity(ProfilePaymentListActivity.newInstance(this))
 
         }
         binding.numberLayout.setOnClickListener {
@@ -92,15 +91,15 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.nameLayout.setOnClickListener {
 
-            startActivity(ProfileNameEditActivity.newInstance(this))
+//            startActivity(ProfileNameEditActivity.newInstance(this))
 
         }
 
-        binding.mailLayout.setOnClickListener {
-
-            startActivity(ProfileEmailEditActivity.newInstance(this))
-
-        }
+//        binding.mailLayout.setOnClickListener {
+//
+//            startActivity(ProfileEmailEditActivity.newInstance(this))
+//
+//        }
 
 
     }
@@ -112,8 +111,6 @@ class ProfileEditActivity : BaseActivity() {
 
 
     }
-
-
 
 
 }

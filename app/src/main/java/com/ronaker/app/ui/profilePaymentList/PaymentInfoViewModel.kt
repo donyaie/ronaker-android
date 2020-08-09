@@ -11,40 +11,35 @@ class PaymentInfoViewModel(val app: Application) : BaseViewModel(app) {
     val title = MutableLiveData<String>()
 
 
-    val verifyImage= MutableLiveData<Int>()
+    val verifyImage = MutableLiveData<Int>()
 
     fun bind(
         data: PaymentCard
     ) {
         data.cardNumber?.let {
-            PaymentCard.CardType.detectFast(it) .apply { cardTypeImage.value=this.resource }
+            PaymentCard.CardType.detectFast(it).apply { cardTypeImage.value = this.resource }
         }
 
-       if( data.isVerified==true){
-           verifyImage.value= R.drawable.ic_guide_success
-       }else{
-           verifyImage.value= R.drawable.ic_field_empty
-       }
+        if (data.isVerified == true) {
+            verifyImage.value = R.drawable.ic_guide_success
+        } else {
+            verifyImage.value = R.drawable.ic_field_empty
+        }
 
 
-
-        val name= StringBuilder ()
+        val name = StringBuilder()
         data.cardNumber?.let {
 
 
-            name.append(it.substring(0,4))
+            name.append(it.substring(0, 4))
 
-            name.append("*".repeat(it.length-8))
+            name.append("*".repeat(it.length - 8))
 
-            name.append(it.substring(it.length-5,it.length-1))
+            name.append(it.substring(it.length - 5, it.length - 1))
 
 
         }
-        title.value=name.toString()
-
-
-
-
+        title.value = name.toString()
 
 
     }

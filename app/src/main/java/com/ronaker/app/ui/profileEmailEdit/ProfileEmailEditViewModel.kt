@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profileEmailEdit
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
@@ -16,9 +15,7 @@ class ProfileEmailEditViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
-    @Inject
-    lateinit
-    var context: Context
+
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -54,7 +51,7 @@ class ProfileEmailEditViewModel(app: Application) : BaseViewModel(app) {
 
         subscription?.dispose()
         subscription = userRepository
-            .updateUserInfo(userRepository.getUserToken(), user)
+            .updateUserInfo( user)
 
             .doOnSubscribe {
                 loadingButton.value = true
@@ -66,7 +63,7 @@ class ProfileEmailEditViewModel(app: Application) : BaseViewModel(app) {
             .subscribe { result ->
                 if (result.isSuccess()) {
 
-                    goNext.value=true
+                    goNext.value = true
 
                 } else {
                     errorMessage.value = result.error?.message
@@ -75,7 +72,7 @@ class ProfileEmailEditViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-   private fun fillUser(user: User) {
+    private fun fillUser(user: User) {
 
         mUser = user
 
@@ -94,7 +91,6 @@ class ProfileEmailEditViewModel(app: Application) : BaseViewModel(app) {
         super.onCleared()
         subscription?.dispose()
     }
-
 
 
 }

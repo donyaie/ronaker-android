@@ -82,10 +82,6 @@ class EmailVerifyDialog : BaseDialog() {
 //        binding.containerLayout.setOnClickListener { dismiss() }
 
 
-
-
-
-
         return rootView
     }
 
@@ -198,8 +194,6 @@ class EmailVerifyDialog : BaseDialog() {
 
 
     }
-
-
 
 
 }

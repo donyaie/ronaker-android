@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class OrderListViewModel(app: Application) : BaseViewModel(app) {
+class OrderListViewModel(app: Application) : BaseViewModel(app),
+    OrderItemAdapter.OrderItemListener {
 
     @Inject
     lateinit
@@ -40,10 +41,16 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
     var dataList: ArrayList<Order> = ArrayList()
 
 
-    var productListAdapter: OrderItemAdapter
+    var productListAdapter: OrderItemAdapter = OrderItemAdapter(this)
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
+
+
+    val launchOrderDetail: MutableLiveData<Order> = MutableLiveData()
+    val launchOrderRateDetail: MutableLiveData<Order> = MutableLiveData()
+
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -51,12 +58,7 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
 
     private var mFilter: String? = null
     private var subscription: Disposable? = null
-
-    init {
-        productListAdapter = OrderItemAdapter()
-
-
-    }
+    private var archiveSubscription: Disposable? = null
 
     fun getData(filter: String?) {
 
@@ -65,51 +67,114 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
         }
     }
 
+     fun reset() {
+
+        page = 0
+        hasNextPage = true
+        dataList.clear()
+//        productListAdapter.updateList(dataList)
+        resetList.postValue(true)
+    }
+
     suspend fun loadData(filter: String?) =
         withContext(Dispatchers.IO) {
 
-            mFilter = filter
+            if (hasNextPage) {
+                page++
+                subscription?.dispose()
 
-            subscription?.dispose()
-            subscription = orderRepository
-                .getOrders(userRepository.getUserToken(), filter)
+                mFilter = filter
+
+                subscription?.dispose()
+                subscription = orderRepository
+                    .getOrders( page, filter)
+
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .doOnSubscribe {
+
+                        retry.postValue(null)
+                        if (page <= 1) {
+                            loading.postValue(true)
+
+                            emptyVisibility.postValue(View.GONE)
+
+                        }
+                        errorMessage.postValue(null)
+
+//
+//
+//                        retry.postValue(null)
+//                        loading.postValue(true)
+
+                    }
+                    .doOnTerminate {
+
+                        loading.postValue(false)
+
+
+                    }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
+
+
+//                            dataList.clear()
+                            result.data?.results?.let { dataList.addAll(it) }
+                            productListAdapter.updateList(dataList)
+
+                            if (!result.data?.results.isNullOrEmpty()) {
+                                emptyVisibility.postValue(View.GONE)
+                            }
+
+                            if (result.data?.next == null)
+                                hasNextPage = false
+
+                            if (dataList.isEmpty())
+                                emptyVisibility.postValue(View.VISIBLE)
+
+
+
+
+
+
+
+                        } else {
+
+                            if (page <= 1)
+                                retry.postValue(result.error?.message)
+                            else
+                                errorMessage.postValue(result.error?.message)
+
+                        }
+                    }
+            }
+
+        }
+
+
+    suspend fun doArchive(suid: String) =
+        withContext(Dispatchers.IO) {
+
+            archiveSubscription?.dispose()
+            archiveSubscription = orderRepository
+                .updateOrderStatus(
+                    suid = suid,
+                    isArchived = true
+                )
 
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe {
-                    retry.postValue(null)
-                    loading.postValue(true)
-
                 }
                 .doOnTerminate {
-
-                    loading.postValue(false)
-
-
                 }
                 .subscribe { result ->
-                    if (result.isSuccess()) {
+                    if (!result.isAcceptable()) {
 
 
-                        dataList.clear()
-                        result.data?.results?.let { dataList.addAll(it) }
-                        productListAdapter.updateList(dataList)
-
-                       if( !result.data?.results.isNullOrEmpty()){
-                           emptyVisibility.postValue(View.GONE)
-                       }
-
-                        if (result.data?.next == null)
-                            hasNextPage = false
-
-                        if(dataList.isEmpty())
-                            emptyVisibility.postValue(View.VISIBLE)
+                        errorMessage.postValue(result.error?.message)
 
 
-
-                    } else {
-
-                        retry.postValue(result.error?.message)
                     }
                 }
 
@@ -120,15 +185,39 @@ class OrderListViewModel(app: Application) : BaseViewModel(app) {
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
+        archiveSubscription?.dispose()
     }
 
 
     fun retry() {
 
         uiScope.launch {
+            reset()
             loadData(mFilter)
         }
 
+    }
+
+    override fun onClickItem(order: Order) {
+
+        launchOrderDetail.postValue(order)
+    }
+
+    override fun onClickItemArchive(order: Order) {
+
+        uiScope.launch {
+            doArchive(order.suid)
+        }
+
+        dataList.remove(order)
+        productListAdapter.updateList(dataList)
+
+
+    }
+
+    override fun onClickItemRate(order: Order) {
+
+        launchOrderRateDetail.postValue(order)
     }
 
 

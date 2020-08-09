@@ -16,7 +16,7 @@ import com.ronaker.app.utils.ShapeDrawableHelper
 class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs) {
 
-    val screenCalculator= ScreenCalculator(context)
+    val screenCalculator = ScreenCalculator(context)
 
     enum class CenterContainer {
         NONE, DOTS, TITLE
@@ -229,7 +229,7 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
                 )
 
                 containerLayout.setBackgroundResource(
-                  R.drawable.background_gradient_transparent_bottom
+                    R.drawable.background_gradient_transparent_bottom
                 )
 
 
@@ -272,18 +272,18 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     var action1Src: Int = 0
         set(value) {
 
-                ShapeDrawableHelper.changeSvgDrawableColor(
-                    context,
-                    value,
-                    R.color.colorIconLight,
-                    action1LightImage
-                )
-                ShapeDrawableHelper.changeSvgDrawableColor(
-                    context,
-                    value,
-                    R.color.colorIconDark,
-                    action1DarkImage
-                )
+            ShapeDrawableHelper.changeSvgDrawableColor(
+                context,
+                value,
+                R.color.colorIconLight,
+                action1LightImage
+            )
+            ShapeDrawableHelper.changeSvgDrawableColor(
+                context,
+                value,
+                R.color.colorIconDark,
+                action1DarkImage
+            )
 
 
             field = value
@@ -292,18 +292,18 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     var action2Src: Int = 0
         set(value) {
 
-                ShapeDrawableHelper.changeSvgDrawableColor(
-                    context,
-                    value,
-                    R.color.colorIconLight,
-                    action2LightImage
-                )
-                ShapeDrawableHelper.changeSvgDrawableColor(
-                    context,
-                    value,
-                    R.color.colorIconDark,
-                    action2DarkImage
-                )
+            ShapeDrawableHelper.changeSvgDrawableColor(
+                context,
+                value,
+                R.color.colorIconLight,
+                action2LightImage
+            )
+            ShapeDrawableHelper.changeSvgDrawableColor(
+                context,
+                value,
+                R.color.colorIconDark,
+                action2DarkImage
+            )
 
 
             field = value
@@ -487,14 +487,14 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
                 .getResourceId(
                     R.styleable
                         .ToolbarComponent_toolbar_component_action1src,
-                    R.drawable.ic_share_white
+                    0
                 )
 
             action2Src = typedArray
                 .getResourceId(
                     R.styleable
                         .ToolbarComponent_toolbar_component_action2src,
-                    R.drawable.ic_fave_white
+                    0
                 )
 
             dotCount = typedArray
@@ -525,8 +525,8 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
                 )
 
                 val params = LayoutParams(
-                    screenLibrary.DP2Pixel(9),
-                    screenLibrary.DP2Pixel(9)
+                    screenLibrary.convertDPtoPixel(9),
+                    screenLibrary.convertDPtoPixel(9)
                 )
 
                 params.setMargins(21, 0, 21, 0)

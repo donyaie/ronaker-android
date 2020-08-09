@@ -8,17 +8,14 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.utils.AppDebug
-import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.actionOpenProduct
-import com.ronaker.app.utils.toCurrencyFormat
+import com.ronaker.app.utils.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -41,9 +38,11 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     lateinit
     var userRepository: UserRepository
 
+
     @Inject
     lateinit
-    var context: Context
+    var resourcesRepository: ResourcesRepository
+
 
 
     init {
@@ -61,7 +60,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     val isFavorite: MutableLiveData<Boolean> = MutableLiveData()
-
+    val stratTransition: MutableLiveData<Boolean> = MutableLiveData()
 
     val checkout: MutableLiveData<String> = MutableLiveData()
 
@@ -96,7 +95,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     private var commentSubscription: Disposable? = null
     private var faveSubscription: Disposable? = null
 
-    fun loadProduct(suid: String){
+    fun loadProduct(suid: String) {
         uiScope.launch {
             loadProduct(suid, true)
         }
@@ -132,7 +131,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             subscription?.dispose()
 
             subscription = productRepository
-                .getProduct(userRepository.getUserToken(), id)
+                .getProduct( id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
 
@@ -178,7 +177,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
             commentSubscription?.dispose()
             commentSubscription = productRepository
-                .getProductRating(userRepository.getUserToken(), suid)
+                .getProductRating( suid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe {
@@ -218,6 +217,8 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     private fun fillProduct(product: Product) {
 
+        stratTransition.postValue(true)
+
         getAnalytics()?.actionOpenProduct(
             product.suid,
             product.name,
@@ -225,7 +226,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         )
 
         val images = ArrayList<String>()
-        product.images?.forEach {
+        product.images.forEach {
             images.add(BASE_URL + it.url)
         }
         imageList.postValue(images)
@@ -240,7 +241,8 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
             }
 
-            userName.postValue((it.first_name ?: "") + " " + (it.last_name ?: ""))
+            userName.postValue(
+                nameFormat( it.first_name ,it.last_name))
 
             userRepository.getUserInfo()?.let { info ->
                 if (it.suid?.compareTo(info.suid ?: "") == 0)
@@ -252,7 +254,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         }
         //title_positive_rate
 
-        isFavorite.postValue(product.isFavourite != null && product.isFavourite == true)
+        isFavorite.postValue(product.isFavourite)
 
         product.rate?.let { rate ->
 
@@ -283,19 +285,19 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             product.price_per_day != 0.0 -> {
 
                 productPrice.postValue(product.price_per_day?.toCurrencyFormat())
-                productPriceTitle.postValue(context.getString(R.string.title_per_day))
+                productPriceTitle.postValue(resourcesRepository.getString(R.string.title_per_day))
             }
             product.price_per_week != 0.0 -> {
 
                 productPrice.postValue(product.price_per_week?.toCurrencyFormat())
 
-                productPriceTitle.postValue(context.getString(R.string.title_per_week))
+                productPriceTitle.postValue(resourcesRepository.getString(R.string.title_per_week))
             }
             product.price_per_month != 0.0 -> {
 
                 productPrice.postValue(product.price_per_month?.toCurrencyFormat())
 
-                productPriceTitle.postValue(context.getString(R.string.title_per_month))
+                productPriceTitle.postValue(resourcesRepository.getString(R.string.title_per_month))
             }
         }
 
@@ -342,7 +344,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         if (mProduct?.isFavourite != null && mProduct?.isFavourite == true) {
 
             faveSubscription = productRepository
-                .productSavedRemove(userRepository.getUserToken(), suid)
+                .productSavedRemove( suid)
 
                 .doOnSubscribe {
 
@@ -367,7 +369,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
         } else {
             faveSubscription = productRepository
-                .productSave(userRepository.getUserToken(), suid)
+                .productSave( suid)
 
                 .doOnSubscribe {
 

@@ -12,8 +12,6 @@ import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_profile_payment.*
-import kotlinx.android.synthetic.main.fragment_smartid_personal_code.view.*
 
 class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
@@ -73,7 +71,10 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
 
     fun onPersonalCodeNext() {
-        viewModel.onNextPersonalCode(binding.ccp.selectedCountryNameCode,binding.codeEditText.text.toString().trim())
+        viewModel.onNextPersonalCode(
+            binding.ccp.selectedCountryNameCode,
+            binding.codeEditText.text.toString().trim()
+        )
 
     }
 

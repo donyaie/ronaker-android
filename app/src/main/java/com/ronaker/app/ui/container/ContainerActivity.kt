@@ -7,13 +7,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.utils.AnimationHelper
 
 class ContainerActivity : BaseActivity() {
 
 
-
-  lateinit var fragment:Fragment
+    lateinit var fragment: Fragment
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityContainerBinding
@@ -24,9 +22,9 @@ class ContainerActivity : BaseActivity() {
 
         getClassName()?.let {
 
-            fragment= supportFragmentManager.fragmentFactory.instantiate(classLoader,it)
+            fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, it)
 
-            fragment.arguments=intent.extras
+            fragment.arguments = intent.extras
 
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
@@ -34,7 +32,6 @@ class ContainerActivity : BaseActivity() {
         }
 
     }
-
 
 
     private fun getClassName(): String? {
@@ -46,14 +43,18 @@ class ContainerActivity : BaseActivity() {
 
 
     companion object {
-        val FragmentKey="fragmentName"
-        fun <T> newInstance(context: Context,className: Class<T>, inputBoundle:Bundle?=null): Intent {
+        val FragmentKey = "fragmentName"
+        fun <T> newInstance(
+            context: Context,
+            className: Class<T>,
+            inputBoundle: Bundle? = null
+        ): Intent {
             val intent = Intent(context, ContainerActivity::class.java)
             val boundle = Bundle()
-            inputBoundle?.let {   boundle.putAll(it) }
+            inputBoundle?.let { boundle.putAll(it) }
 
 
-            boundle.putString(FragmentKey,className.name)
+            boundle.putString(FragmentKey, className.name)
             intent.putExtras(boundle)
             return intent
         }

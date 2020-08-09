@@ -15,13 +15,15 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
-import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptActivity
+import com.ronaker.app.ui.orderAccept.OrderAcceptActivity
+import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
 import com.ronaker.app.ui.orderCancel.OrderCancelActivity
 import com.ronaker.app.ui.orderDecline.OrderDeclineActivity
 import com.ronaker.app.ui.orderFinish.OrderFinishActivity
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.IntentManeger
 
 class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -118,16 +120,33 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         })
 
 
+        binding.refreshLayout.setOnRefreshListener {
+
+            getCurrentOrderId(intent)?.let {
+                viewModel.getOrder(it)
+            }
+        }
+
 
         viewModel.showProduct.observe(this, Observer { product ->
             startActivityForResult(
-                ExploreProductActivity.newInstance(this, product)
-
-                ,
-
+                ExploreProductActivity.newInstance(this, product),
                 ExploreProductActivity.REQUEST_CODE
             )
 
+
+        })
+
+        viewModel.makeCall.observe(this, Observer { value ->
+
+            IntentManeger.makeCall(this@OrderPreviewActivity, value)
+
+
+        })
+
+        viewModel.sendEmail.observe(this, Observer { value ->
+
+            IntentManeger.sendMail(this@OrderPreviewActivity, value)
 
         })
 
@@ -136,8 +155,10 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
-            } else
+            } else {
                 binding.loading.hideLoading()
+                binding.refreshLayout.isRefreshing=false
+            }
         })
 
 
@@ -163,6 +184,36 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
                 OrderCancelActivity.REQUEST_CODE
             )
         })
+
+
+        viewModel.signContractShow.observe(this, Observer {
+
+            startActivityForResult(
+                OrderAuthorizationActivity.newInstance(this, viewModel.getOrder()),
+                OrderAuthorizationActivity.REQUEST_CODE
+            )
+        })
+
+        viewModel.contractPreview.observe(this, Observer {
+
+            startActivityForResult(
+                OrderAuthorizationActivity.newInstance(this, viewModel.getOrder(),false),
+                OrderAuthorizationActivity.REQUEST_CODE
+            )
+        })
+
+
+
+        viewModel.previewContractShow.observe(this, Observer { file ->
+
+            file?.let {
+
+                IntentManeger.openPDF(this, it)
+            }
+
+        })
+
+
 
 
 
@@ -203,13 +254,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        getOrder()?.let { viewModel.load(it) }
-
-//            ?: kotlin.run {
-//
-//            getOrderId()?.let{ ordreId->viewModel.getOrder(ordreId) }
-//
-//        }
+//        getOrder()?.let { viewModel.load(it) }
 
 
     }
@@ -218,13 +263,18 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         super.onStart()
 
         if (isFistStart() && getOrder() != null) {
-            getOrder()?.let { viewModel.load(it) }
+            getOrder()?.let {
+
+                viewModel.load(it)
+                viewModel.getOrder(it.suid)
+
+            }
+
         } else {
             getCurrentOrderId(intent)?.let {
                 viewModel.getOrder(it)
             }
         }
-
 
 
     }
@@ -234,16 +284,6 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         if (intent.hasExtra(Order_KEY)) {
 
             return intent.getParcelableExtra<Order?>(Order_KEY)
-
-        }
-        return null
-    }
-
-
-    private fun getOrderId(): String? {
-        if (intent.hasExtra(OrderId_KEY)) {
-
-            return intent.getStringExtra(OrderId_KEY)
 
         }
         return null

@@ -37,6 +37,7 @@ class NetworkError(error: Throwable) {
     }
 
     var message = "An error occurred"
+    var password :Array<String>?=null
     var responseCode: Int? = null
     var code: String? = null
     var httpError: HttpError? = null
@@ -74,6 +75,21 @@ class NetworkError(error: Throwable) {
                     } catch (e: Exception) {
                         AppDebug.log(TAG, e)
                     }
+
+
+                    try {
+                        if ( json.has("password")) {
+                            val passwordJson = json["password"].asJsonArray
+                           password = Array(passwordJson.size()) {
+                               passwordJson.get(it).asString
+                            }
+
+                        }
+                    } catch (e: Exception) {
+                        AppDebug.log(TAG, e)
+                    }
+
+
                 } catch (ex: Exception) {
                     AppDebug.log(TAG, ex)
                 }

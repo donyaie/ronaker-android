@@ -10,18 +10,12 @@ import com.ronaker.app.data.network.response.UserInfoResponceModel
 import com.ronaker.app.data.network.response.UserRegisterResponseModel
 import com.ronaker.app.model.User
 import io.reactivex.Observable
-import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.observers.TestObserver
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
-import org.junit.runner.Description
-import org.junit.runners.model.Statement
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnit
@@ -30,7 +24,7 @@ class UserRepositoryTest {
 
     @Rule
     @JvmField
-    val rule = MockitoJUnit.rule()!!
+    val rule = MockitoJUnit.rule()
 
     @Rule
     @JvmField
@@ -58,43 +52,41 @@ class UserRepositoryTest {
     fun registerUser_newUser() {
 
 
-        var user = User(
-            null,
-            "test@test.com",
-            null,
-            "testName",
-            "testLast",
-            null,
-            null,
-            null,
-            null,
-            null,
-            "testPass"
+        val user = User(
+            suid = null,
+          email =   "test@test.com",
+
+           first_name =  "testName",
+           last_name =  "testLast",
+          password =   "testPass"
         )
 
-        var request =
+        val request =
             UserRegisterRequestModel(user.email, user.password, user.first_name, user.last_name,null)
 
-        var responce = UserRegisterResponseModel(
+        val responce = UserRegisterResponseModel(
             "gfgfg",
             UserInfoResponceModel(
-                "ddsf",
-                user.email,
-                false,
-                user.first_name,
-                user.last_name,
-                null,
-                false,
-                null,
-                false,
-                false,
-                0.0
+               suid =  "ddsf",
+              email =   user.email,
+              first_name =   user.first_name,
+             last_name =    user.last_name,
+                     is_email_verified =   false,
+                is_identity_info_verified = false,
+                is_payment_info_verified = false,
+                is_phone_number_verified = false,
+                smart_id_national_code = null,
+                smart_id_personal_code = null,
+                phone_number = null,
+                avatar = null,
+                balance = 0.0
+
             )
         )
 
         Mockito.`when`(userApi.registerUser(request)).thenReturn(Observable.just(responce))
 
-        var result = userRepository.registerUser(user)
+        val result = userRepository.registerUser(user)
 
 
         val testObserver = TestObserver<Result<User>>()

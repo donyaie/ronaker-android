@@ -3,6 +3,7 @@ package com.ronaker.app.utils
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
+import java.util.*
 
 
 fun Double.toCurrencyFormat(): String {
@@ -11,9 +12,26 @@ fun Double.toCurrencyFormat(): String {
 }
 
 
+fun nameFormat(firstName: String?, lastName: String?): String {
+    return "${firstName?.toLowerCase(Locale.ROOT)?.capitalize() ?: ""} ${lastName?.toLowerCase(
+        Locale.ROOT
+    )?.capitalize() ?: ""}"
+
+
+}
+
+
+fun String.capitalize(): String {
+
+
+  return  this.split(" ").filter { it.isNotEmpty() }.joinToString(separator = " "){ "${it[0].toUpperCase()}${it.substring(1).toLowerCase(Locale.ROOT)}"}
+
+}
+
+
 fun byteArrayOfInts(vararg ints: Int) = ByteArray(ints.size) { pos -> ints[pos].toByte() }
 
-fun Double.toCurrencyFormat(prefix:String?): String {
+fun Double.toCurrencyFormat(prefix: String?, includeSymbol: Boolean = true): String {
 
     val format: NumberFormat = NumberFormat.getCurrencyInstance()
 
@@ -22,17 +40,19 @@ fun Double.toCurrencyFormat(prefix:String?): String {
 
     val decimalFormatSymbols: DecimalFormatSymbols =
         (format as DecimalFormat).decimalFormatSymbols
-    decimalFormatSymbols.currencySymbol=""
+    decimalFormatSymbols.currencySymbol = ""
 
-    format.decimalFormatSymbols=decimalFormatSymbols
+    format.decimalFormatSymbols = decimalFormatSymbols
 
-    if((this*100.0)%100.0==0.0){
-        format.maximumFractionDigits=0
-    }else
-        format.minimumFractionDigits=2
-
-
+    if ((this * 100.0) % 100.0 == 0.0) {
+        format.maximumFractionDigits = 0
+    } else
+        format.minimumFractionDigits = 2
 
 
-    return   (if(prefix==null) "" else "$prefix ") +"${format.format(this)} €"
+
+
+    return "${if (prefix == null) "" else "$prefix "}${if (includeSymbol) "€" else ""}${format.format(
+        this
+    )}"
 }

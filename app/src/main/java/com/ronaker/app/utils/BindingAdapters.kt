@@ -2,8 +2,9 @@ package com.ronaker.app.utils
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
-import android.graphics.drawable.Drawable
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,14 +12,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
-import com.makeramen.roundedimageview.RoundedImageView
 import com.ronaker.app.injection.module.GlideApp
 import com.ronaker.app.utils.extension.getParentActivity
 
@@ -30,73 +24,47 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
     if (parentActivity != null && visibility != null) {
         visibility.observe(parentActivity, Observer { value ->
 
-
             when (value) {
-
                 View.GONE -> {
                     view.animate().alpha(0f).setDuration(duration).setListener(object :
                         AnimatorListener {
-                        override fun onAnimationRepeat(animation: Animator?) {
-                        }
-
+                        override fun onAnimationRepeat(animation: Animator?) {}
                         override fun onAnimationEnd(animation: Animator?) {
                             view.visibility = View.GONE
                         }
 
-                        override fun onAnimationCancel(animation: Animator?) {
-                        }
-
-                        override fun onAnimationStart(animation: Animator?) {
-                        }
-
-                    })
-                        .start()
+                        override fun onAnimationCancel(animation: Animator?) {}
+                        override fun onAnimationStart(animation: Animator?) {}
+                    }).start()
                 }
                 View.VISIBLE -> {
-
                     view.animate().alpha(1f).setDuration(duration).setListener(object :
                         AnimatorListener {
-                        override fun onAnimationRepeat(animation: Animator?) {
-                        }
-
-                        override fun onAnimationEnd(animation: Animator?) {
-
-                        }
-
-                        override fun onAnimationCancel(animation: Animator?) {
-                        }
-
+                        override fun onAnimationRepeat(animation: Animator?) {}
+                        override fun onAnimationEnd(animation: Animator?) {}
+                        override fun onAnimationCancel(animation: Animator?) {}
                         override fun onAnimationStart(animation: Animator?) {
                             view.visibility = View.VISIBLE
                         }
-
-                    })
-                        .start()
+                    }).start()
 
                 }
                 View.INVISIBLE -> {
                     view.animate().alpha(0f).setDuration(duration).setListener(object :
                         AnimatorListener {
-                        override fun onAnimationRepeat(animation: Animator?) {
-                        }
-
+                        override fun onAnimationRepeat(animation: Animator?) {}
                         override fun onAnimationEnd(animation: Animator?) {
                             try {
                                 view.visibility = View.INVISIBLE
                             } catch (ex: Exception) {
                                 AppDebug.log("setMutableVisibility", ex)
                             }
-
                         }
 
-                        override fun onAnimationCancel(animation: Animator?) {
-                        }
+                        override fun onAnimationCancel(animation: Animator?) {}
+                        override fun onAnimationStart(animation: Animator?) {}
 
-                        override fun onAnimationStart(animation: Animator?) {
-                        }
-
-                    })
-                        .start()
+                    }).start()
                 }
                 else -> {
                     view.visibility = value ?: View.VISIBLE
@@ -109,12 +77,69 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
     }
 }
 
+
+@BindingAdapter("mutableFastVisibility")
+fun setMutableFastVisibility(view: View, visibility: MutableLiveData<Int>?) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && visibility != null) {
+        visibility.observe(parentActivity, Observer { value ->
+            view.visibility = value
+
+        })
+    }
+}
+
+
 @BindingAdapter("mutableText")
 fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && text != null) {
-        text.observe(parentActivity, Observer { value -> view.text = value ?: "" })
+        text.observe(parentActivity, Observer { value ->
+            view.text = value ?: ""
+
+        })
+    }
+}
+
+
+@BindingAdapter("mutableTextFade")
+fun setMutableTextFade(view: TextView, text: MutableLiveData<String>?) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value ->
+
+
+            val lastText = view.text.toString()
+
+
+            if (value.compareTo(lastText) == 0)
+                view.text = value
+            else {
+
+                if(lastText.isEmpty())
+                    view.text=" "
+
+                val anim = AlphaAnimation(1.0f, 0.0f)
+                anim.duration = 200
+                anim.repeatCount = 1
+                anim.repeatMode = Animation.REVERSE
+
+                anim.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationEnd(animation: Animation?) {}
+                    override fun onAnimationStart(animation: Animation?) {}
+                    override fun onAnimationRepeat(animation: Animation?) {
+                        view.text = value ?: ""
+                    }
+                })
+
+                view.startAnimation(anim)
+            }
+
+
+        })
     }
 }
 

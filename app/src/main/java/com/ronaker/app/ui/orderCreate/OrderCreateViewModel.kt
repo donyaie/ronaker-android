@@ -1,14 +1,15 @@
 package com.ronaker.app.ui.orderCreate
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
@@ -34,13 +35,13 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
     val goValidate: MutableLiveData<Boolean> = MutableLiveData()
 
 
-
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
     @Inject
     lateinit
-    var context: Context
+    var resourceRepository: ResourcesRepository
+
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -132,10 +133,12 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         val user = userRepository.getUserInfo()
 
-        orderMessage.value = context.getString(
-            R.string.text_order_message,
-            user?.first_name,
-            user?.last_name,
+        orderMessage.value = String.format(
+            resourceRepository.getString(
+                R.string.text_order_message
+            ),
+            nameFormat(user?.first_name, user?.last_name),
+
             mProduct.name,
             days.toString()
         )
@@ -147,12 +150,11 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
     fun checkOut(message: String) {
 
 
-
         subscription?.dispose()
         mProduct.suid?.let {
             subscription =
                 orderRepository.createOrder(
-                    userRepository.getUserToken(),
+
                     it,
                     startDate!!,
                     endDate!!,
@@ -197,7 +199,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         firstDayVisibility.value = View.GONE
 
-        firstDate.value = context.getString(R.string.title_borrow_day)
+        firstDate.value = resourceRepository.getString(R.string.title_borrow_day)
 
     }
 
@@ -206,7 +208,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         lastDayVisibility.value = View.GONE
 
-        lastDate.value = context.getString(R.string.title_return_day)
+        lastDate.value = resourceRepository.getString(R.string.title_return_day)
 
         setDatesVisibility.value = View.GONE
 
@@ -258,7 +260,7 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
     fun clearDates() {
         updateDate(ArrayList())
-        clearData.value=true
+        clearData.value = true
 
     }
 
@@ -267,6 +269,12 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
         super.onCleared()
 
         subscription?.dispose()
+    }
+
+    fun clearSelection() {
+
+        setDatesVisibility.value = View.GONE
+
     }
 
 

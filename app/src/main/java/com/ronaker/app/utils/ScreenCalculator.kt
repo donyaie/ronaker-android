@@ -6,7 +6,7 @@ import android.content.res.TypedArray
 import android.util.DisplayMetrics
 import android.view.Display
 import android.view.Surface
-import android.view.WindowManager
+import androidx.core.hardware.display.DisplayManagerCompat
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -15,7 +15,7 @@ class ScreenCalculator(context: Context) {
 
     private val TAG = ScreenCalculator::class.java.name
 
-    private var display: Display
+    private var display: Display?
     private var displayMetrics: DisplayMetrics
 
     // ====== Inner Methods ====== //
@@ -28,14 +28,14 @@ class ScreenCalculator(context: Context) {
 
     val screenHeightPixel: Float
         get() {
-            display.getMetrics(displayMetrics)
+            display?.getRealMetrics(displayMetrics)
             return displayMetrics.heightPixels.toFloat()
         }
 
 
     val screenWidthPixel: Float
         get() {
-            display.getMetrics(displayMetrics)
+            display?.getRealMetrics(displayMetrics)
             return displayMetrics.widthPixels.toFloat()
         }
 
@@ -56,8 +56,8 @@ class ScreenCalculator(context: Context) {
     val aspectRation: Float
         get() = screenHeightDP / screenWidthDP
 
-    val rotation: Int
-        get() = display.rotation
+    val rotation: Int?
+        get() = display?.rotation
 
     val isLandScape: Boolean
         get() {
@@ -66,19 +66,21 @@ class ScreenCalculator(context: Context) {
 
         }
 
+
     init {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        this.display = wm.defaultDisplay
+        val displayManager = DisplayManagerCompat.getInstance(context)
+        this.display = displayManager.getDisplay(displayManager.displays[0].displayId)
         this.displayMetrics = context.resources.displayMetrics
+
 
     }
 
-    fun Pixel2DP(Pixel: Float): Float {
+    fun convertPixeltoDP(Pixel: Float): Float {
         return Pixel / screenDensity
 
     }
 
-    fun DP2Pixel(DP: Int): Int {
+    fun convertDPtoPixel(DP: Int): Int {
         return (screenDensity * DP).toInt()
     }
 
@@ -97,7 +99,7 @@ class ScreenCalculator(context: Context) {
         fun getActionBarBarSize(activity: Activity): Int {
             val styledAttributes: TypedArray = activity.theme
                 .obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
-            val  actionBarHeight = styledAttributes.getDimension(0, 0f).toInt()
+            val actionBarHeight = styledAttributes.getDimension(0, 0f).toInt()
 
             styledAttributes.recycle()
             return actionBarHeight

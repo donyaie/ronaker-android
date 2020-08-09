@@ -10,109 +10,113 @@
             type="com.ronaker.app.ui.login.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:focusable="true"
-            android:id="@+id/touch"
-            android:focusableInTouchMode="true"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|top"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="5dp"
-                android:contentDescription="@string/text_content"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/logo_ronaker_white" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="28dp"
-                android:layout_marginTop="24dp"
-                android:contentDescription="@string/text_content"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_ronaker_text" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center"
-                android:text="@string/title_login_home"
-                android:textAppearance="@style/TextAppearance.Large.Light"
-                android:textColor="@color/white_opacity_75" />
-
-
-        </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/logo_image"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="5dp"
+
+                android:background="@drawable/background_circul_white"
+
+                android:contentDescription="@string/text_content"
+                android:padding="16dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_luncher_transparent" />
+
+
+            <ImageView
+                android:id="@+id/logo_text_image"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginTop="12dp"
+                android:contentDescription="@string/text_content"
+                android:scaleType="fitCenter"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo_image"
+                app:srcCompat="@drawable/ic_ronaker_text" />
+
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toTopOf="@id/countDots"
+                app:layout_constraintTop_toBottomOf="@id/logo_text_image"
+                app:layout_constraintVertical_bias="1" />
+
+            <LinearLayout
+                android:id="@+id/countDots"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_size"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin_half"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/register_button" />
 
 
             <Button
-
                 android:id="@+id/register_button"
+
                 style="@style/Button.accent"
                 android:layout_width="0dp"
                 android:layout_marginStart="32dp"
                 android:onClick="@{viewModel.signupClickListener}"
                 android:text="@string/title_button_create_account"
+                app:layout_constraintBottom_toTopOf="@id/languageChange"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent=".4" />
 
 
             <Button
-
                 android:id="@+id/login_button"
+
                 style="@style/Button.transparent.dark"
                 android:layout_width="0dp"
-
                 android:onClick="@{viewModel.loginClickListener}"
+
                 android:text="@string/titile_button_login"
+                app:layout_constraintBottom_toTopOf="@id/languageChange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/register_button"
-                app:layout_constraintTop_toTopOf="parent"
+
 
                 app:layout_constraintWidth_percent=".4" />
 
+            <TextView
+                android:id="@+id/languageChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_default"
+                android:paddingTop="16dp"
+                android:text="Change Language"
+                android:textAppearance="@style/TextAppearance.Medium.Light"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:ignore="HardcodedText" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/languageChange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Change Language"
-            android:textAppearance="@style/TextAppearance.Medium.Light"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_layout"
-            tools:ignore="HardcodedText" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.core.widget.NestedScrollView>
 </layout>

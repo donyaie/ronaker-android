@@ -101,7 +101,7 @@
                         android:background="@drawable/background_accent_corner"
                         android:gravity="center"
 
-                        android:minHeight="24dp"
+                        android:minHeight="@dimen/margin_default"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:singleLine="true"

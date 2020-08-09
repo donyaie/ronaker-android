@@ -1,21 +1,30 @@
 package com.ronaker.app.injection.component
 
 import com.ronaker.app.injection.module.RepositoryModule
-import com.ronaker.app.ui.addProduct.*
+import com.ronaker.app.ui.addProduct.AddProductImageAdapterViewModel
+import com.ronaker.app.ui.addProduct.AddProductLocationViewModel
+import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.dashboard.DashboardViewModel
+import com.ronaker.app.ui.explore.CategoryExploreViewModel
 import com.ronaker.app.ui.explore.ExploreViewModel
+import com.ronaker.app.ui.explore.ItemExploreViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductViewModel
 import com.ronaker.app.ui.inbox.InboxViewModel
 import com.ronaker.app.ui.login.LoginViewModel
+import com.ronaker.app.ui.loginForget.LoginForgetViewModel
+import com.ronaker.app.ui.manageProduct.ManageProductAdapterViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductListViewModel
 import com.ronaker.app.ui.manageProduct.ManageProductViewModel
-import com.ronaker.app.ui.orderAcceptIntro.OrderAcceptViewModel
+import com.ronaker.app.ui.orderAccept.OrderAcceptViewModel
+import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationViewModel
 import com.ronaker.app.ui.orderCancel.OrderCancelViewModel
 import com.ronaker.app.ui.orderCreate.OrderCreateViewModel
 import com.ronaker.app.ui.orderDecline.OrderDeclineViewModel
 import com.ronaker.app.ui.orderFinish.OrderFinishViewModel
+import com.ronaker.app.ui.orderPreview.OrderPreviewPriceViewModel
 import com.ronaker.app.ui.orderPreview.OrderPreviewViewModel
 import com.ronaker.app.ui.orderStartRenting.OrderStartRentingViewModel
+import com.ronaker.app.ui.orders.OrderItemViewModel
 import com.ronaker.app.ui.orders.OrderListViewModel
 import com.ronaker.app.ui.orders.OrdersViewModel
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberViewModel
@@ -86,7 +95,13 @@ interface ViewModelInjector {
     fun inject(viewModel: ProfilePaymentHistoryListViewModel)
     fun inject(viewModel: OrderCreateViewModel)
     fun inject(viewModel: ProfileAuthorizationViewModel)
-
+    fun inject(viewModel: OrderPreviewPriceViewModel)
+    fun inject(viewModel: ManageProductAdapterViewModel)
+    fun inject(viewModel: OrderItemViewModel)
+    fun inject(viewModel: OrderAuthorizationViewModel)
+    fun inject(viewModel: LoginForgetViewModel)
+    fun inject(viewModel: ItemExploreViewModel)
+    fun inject(viewModel: CategoryExploreViewModel)
 
 
     @Component.Builder

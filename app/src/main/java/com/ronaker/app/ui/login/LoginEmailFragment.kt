@@ -17,7 +17,11 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: LoginViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_email, container, false)
         activity?.let {
@@ -25,8 +29,8 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
             binding.viewModel = viewModel
         }
 
-        viewModel.emailError.observe(viewLifecycleOwner, Observer {
-                errorMessage-> if (errorMessage!=null)binding.emailInput.showNotValidAlert()else binding.emailInput.hideAlert()
+        viewModel.emailError.observe(viewLifecycleOwner, Observer { errorMessage ->
+            if (errorMessage != null) binding.emailInput.showNotValidAlert() else binding.emailInput.hideAlert()
         })
 
 

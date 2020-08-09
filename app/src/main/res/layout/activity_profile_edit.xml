@@ -47,10 +47,10 @@
                     android:id="@+id/title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_edit_profile"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextDark"
@@ -83,10 +83,10 @@
 
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:tint="@color/colorTextDark"
 
                         app:srcCompat="@drawable/ic_edit"
-                        android:contentDescription="@string/text_content" />
+                        android:contentDescription="@string/text_content"
+                        app:tint="@color/colorTextDark" />
                 </RelativeLayout>
 
 
@@ -96,7 +96,6 @@
                     android:layout_height="76dp"
                     android:layout_marginTop="20dp"
 
-                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
@@ -105,7 +104,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginStart="@dimen/margin_default"
                         android:layout_weight=".95"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -131,7 +130,7 @@
                             android:textAppearance="@style/TextAppearance.Large.Light"
                             android:textColor="@color/colorTextDark"
 
-                            app:mutableText="@{viewModel.getUserName()}" />
+                            app:mutableTextFade="@{viewModel.getUserName()}" />
 
                     </LinearLayout>
 
@@ -139,88 +138,24 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:visibility="gone"
 
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
+
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
-
-
-                <LinearLayout
-                    android:id="@+id/number_layout"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="76dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="24dp"
-                        android:layout_weight=".95"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_number"
-                            android:textAppearance="@style/TextAppearance.Large.SB"
-
-                            android:textColor="@color/colorTextDark" />
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-
-                            android:layout_marginTop="5dp"
-
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark"
-
-                            app:mutableText="@{viewModel.getUserNumber()}" />
-
-                    </LinearLayout>
-
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
-                        android:contentDescription="@string/title_button_next"
-                        android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
@@ -230,14 +165,13 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_height="76dp"
-                    android:background="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginStart="@dimen/margin_default"
                         android:layout_weight=".95"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -263,7 +197,7 @@
 
                             android:textColor="@color/colorTextDark"
 
-                            app:mutableText="@{viewModel.getUserEmail()}" />
+                            app:mutableTextFade="@{viewModel.getUserEmail()}" />
 
                     </LinearLayout>
 
@@ -271,13 +205,14 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:visibility="gone"
 
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
 
@@ -285,13 +220,21 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
                 <LinearLayout
-                    android:id="@+id/payment_layout"
+                    android:id="@+id/number_layout"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_width="match_parent"
@@ -303,7 +246,73 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_number"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+
+                            android:layout_marginTop="5dp"
+
+                            android:textAppearance="@style/TextAppearance.Large.Light"
+                            android:textColor="@color/colorTextDark"
+
+                            app:mutableTextFade="@{viewModel.getUserNumber()}" />
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+                <LinearLayout
+                    android:id="@+id/payment_layout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="76dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_default"
                         android:layout_weight=".95"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -326,21 +335,22 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
 
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:contentDescription="@string/title_button_next"
                         android:padding="3dp"
-                        android:tint="@color/colorTextDark"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
 
                 </LinearLayout>
 
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 

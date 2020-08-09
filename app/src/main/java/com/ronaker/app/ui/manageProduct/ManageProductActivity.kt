@@ -31,7 +31,6 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         var REQUEST_CODE = 349
 
 
-
         fun newInstance(context: Context, product: Product?): Intent {
             val intent = Intent(context, ManageProductActivity::class.java)
             val boundle = Bundle()
@@ -79,10 +78,9 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
 
             if (loading) {
-                binding.loading.visibility=View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
-            }
-            else
+            } else
                 binding.loading.hideLoading()
 
         })

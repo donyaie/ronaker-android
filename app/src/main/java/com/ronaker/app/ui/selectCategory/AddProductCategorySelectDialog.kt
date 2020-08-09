@@ -22,7 +22,8 @@ class AddProductCategorySelectDialog : BaseDialog() {
     lateinit var rootView: View
 
     var dialogResultListener: OnDialogResultListener? = null
-    var parentCategory: Category? = null
+    lateinit var categoryList: List<Category>
+    var parent: Category? = null
 
 
     lateinit var binding: DialogAddProductSelectCategoryBinding
@@ -73,8 +74,8 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
         viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
-            location=value
-            dialogResult=
+            location = value
+            dialogResult =
                 DialogResultEnum.OK
             stop()
         })
@@ -87,7 +88,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
 
-        viewModel.searchLocation(parentCategory)
+        categoryList.let { viewModel.searchLocation(it) }
 
 
 
@@ -102,8 +103,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
     }
-
-
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -145,7 +144,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
         }
 
 
-
     }
 
 
@@ -159,7 +157,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
     override fun onDismiss(dialog: DialogInterface) {
 
-        dialogResultListener?.onDialogResult(dialogResult,parentCategory, location)
+        dialogResultListener?.onDialogResult(dialogResult,parent, location)
 
 
 
@@ -178,7 +176,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
     interface OnDialogResultListener {
-        fun onDialogResult(result: DialogResultEnum, parent: Category?, selectedCategory: Category?)
+        fun onDialogResult(result: DialogResultEnum,parent:Category?, selectedCategory: Category?)
 
     }
 
@@ -194,9 +192,17 @@ class AddProductCategorySelectDialog : BaseDialog() {
             return this
 
         }
-        fun setParent(category: Category?): DialogBuilder {
 
-            dialog.parentCategory = category
+        fun setParent(parent:Category?): DialogBuilder {
+
+            dialog.parent = parent
+            return this
+
+        }
+
+        fun setCategories(categories: List<Category>): DialogBuilder {
+
+            dialog.categoryList = categories
             return this
 
         }

@@ -9,7 +9,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Image
 import com.ronaker.app.utils.BASE_URL
 
-class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app) {
+class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app) {
 
 
     private val productImage = MutableLiveData<String>()
@@ -17,6 +17,8 @@ class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app
     lateinit var imageModel: Image
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val selectDefaultVisibility: MutableLiveData<Int> = MutableLiveData()
+
 
     fun bind(
         post: Image,
@@ -24,14 +26,15 @@ class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app
     ) {
 
         imageModel = post
-        if (post.uri!=null && post.uri.toString().isNotEmpty())
+        if (post.uri != null && post.uri.toString().isNotEmpty())
             productImage.value = post.uri?.toString()
-        else if(!post.url.isNullOrEmpty())
+        else if (!post.url.isNullOrEmpty())
             productImage.value = BASE_URL + post.url
 
         baseActivity?.let {
             imageModel.progress.observe(it, Observer { state ->
-                if (state) loadingVisibility.value = View.VISIBLE
+                if (state)
+                    loadingVisibility.value = View.VISIBLE
                 else
                     loadingVisibility.value = View.GONE
 
@@ -39,10 +42,23 @@ class AddProductImageAdapterViewModel ( val app: Application): BaseViewModel(app
         }
 
 
+        if(imageModel.isSelected)
+            selectDefaultVisibility.postValue(View.VISIBLE)
+        else
+            selectDefaultVisibility.postValue(View.GONE)
+
+
+
+
+
+
+
+
+
     }
 
 
-    fun getImage(): Image? {
+    fun getImage(): Image {
         return imageModel
     }
 

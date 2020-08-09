@@ -47,10 +47,10 @@
                     android:id="@+id/title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:text="@string/text_complete_your_profile"
                     android:textAppearance="@style/TextAppearance.Heading.1"
                     android:textColor="@color/colorTextDark"
@@ -60,11 +60,11 @@
                     android:id="@+id/description_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:layout_marginBottom="@dimen/margin_default"
                     android:text="@string/title_we_need_few_details_for_renting_or_lending_out"
                     android:textAppearance="@style/TextAppearance.Large.Regular"
 
@@ -75,99 +75,134 @@
                 <Button
                     android:id="@+id/sign_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_email_verification"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
-
 
 
                 <Button
                     android:id="@+id/image_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_add_profile_image"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
                 <Button
                     android:id="@+id/phone_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_add_and_verify_phone_number"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
-                <Button
+                <LinearLayout
+
                     android:id="@+id/auth_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/textauthorize_your_identity"
-                    android:textColor="@color/colorTextDark" />
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_default"
+                    android:paddingEnd="@dimen/margin_default"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/caption_title"
+
+                        android:src="@drawable/ic_smart_id_logo" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:singleLine="true"
+
+                        android:text="@string/textauthorize_your_identity"
+                        android:textAppearance="@style/TextAppearance.Large.Regular"
+                        android:textColor="@color/colorTextDark"
+
+                        />
+
+
+                    <ImageView
+                        android:contentDescription="@string/caption_title"
+                        android:id="@+id/auth_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
                 <Button
-                    android:visibility="gone"
                     android:id="@+id/payment_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_add_a_payment_method"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    android:visibility="gone"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone" />
 
 
                 <Button
                     android:id="@+id/identity_layout"
-                    android:visibility="gone"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_verify_your_identity"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    android:visibility="gone"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
@@ -180,7 +215,7 @@
             android:id="@+id/loading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:loading_transparent="false" />

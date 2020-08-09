@@ -8,13 +8,21 @@ import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterLocationSearchBinding
 import com.ronaker.app.model.Place
 
-class LocationSearchAdapter(dataList: ArrayList<Place>,viewModel: AddProductLocationSearchViewModel) : RecyclerView.Adapter<LocationSearchAdapter.ViewHolder>() {
-    private  var productList:List<Place> = dataList
+class LocationSearchAdapter(
+    dataList: ArrayList<Place>,
+    viewModel: AddProductLocationSearchViewModel
+) : RecyclerView.Adapter<LocationSearchAdapter.ViewHolder>() {
+    private var productList: List<Place> = dataList
 
-    private  var mViewModel: AddProductLocationSearchViewModel = viewModel
+    private var mViewModel: AddProductLocationSearchViewModel = viewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterLocationSearchBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.adapter_location_search, parent, false)
+        val binding: AdapterLocationSearchBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.adapter_location_search,
+            parent,
+            false
+        )
 
 
         return ViewHolder(
@@ -28,25 +36,25 @@ class LocationSearchAdapter(dataList: ArrayList<Place>,viewModel: AddProductLoca
     }
 
     override fun getItemCount(): Int {
-        return  productList.size
+        return productList.size
     }
 
-    fun updateproductList(){
+    fun updateproductList() {
         notifyDataSetChanged()
     }
 
     class ViewHolder(
         private val binding: AdapterLocationSearchBinding,
-       var parentViewModel: AddProductLocationSearchViewModel
-    ):RecyclerView.ViewHolder(binding.root){
+        var parentViewModel: AddProductLocationSearchViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel =
             LocationSearchViewModel(
                 parentViewModel.getApplication()
             )
 
-        fun bind(product:Place){
-            viewModel.bind(product,binding,parentViewModel)
+        fun bind(product: Place) {
+            viewModel.bind(product, binding, parentViewModel)
             binding.viewModel = viewModel
         }
     }

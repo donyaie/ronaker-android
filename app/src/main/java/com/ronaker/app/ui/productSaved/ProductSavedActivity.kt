@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 
@@ -25,6 +24,7 @@ class ProductSavedActivity : BaseActivity() {
 
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+
     companion object {
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, ProductSavedActivity::class.java)
@@ -54,14 +54,13 @@ class ProductSavedActivity : BaseActivity() {
 
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if(errorMessage!=null) Alert.makeTextError(this, errorMessage)
+            if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
 
 
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
-
 
 
         //-------------------------
@@ -76,7 +75,7 @@ class ProductSavedActivity : BaseActivity() {
 
         })
         viewModel.retry.observe(this, Observer { loading ->
-            loading?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+            loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
 
         })
 
@@ -120,10 +119,6 @@ class ProductSavedActivity : BaseActivity() {
         super.onStart()
         viewModel.retry()
     }
-
-
-
-
 
 
 }

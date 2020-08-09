@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profilePaymentList
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
@@ -11,7 +10,7 @@ import com.ronaker.app.model.PaymentCard
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
+class ProfilePaymentListViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -22,13 +21,10 @@ class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
     lateinit
     var paymentInfoRepository: PaymentInfoRepository
 
-    @Inject
-    lateinit
-    var context: Context
 
-    var dataList=ArrayList<PaymentCard>()
+    var dataList = ArrayList<PaymentCard>()
 
-    val adapter=PaymentInfoAdapter(dataList)
+    val adapter = PaymentInfoAdapter(dataList)
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -41,7 +37,7 @@ class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
     fun loadData() {
 
         subscription = paymentInfoRepository
-            .getPaymentInfoList(userRepository.getUserToken())
+            .getPaymentInfoList()
 
             .doOnSubscribe {
                 retry.value = null
@@ -78,10 +74,6 @@ class ProfilePaymentListViewModel (app: Application): BaseViewModel(app) {
         super.onCleared()
         subscription?.dispose()
     }
-
-
-
-
 
 
 }

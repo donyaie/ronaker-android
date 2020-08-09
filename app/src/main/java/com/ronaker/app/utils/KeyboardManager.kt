@@ -52,7 +52,8 @@ object KeyboardManager {
         val view = activity.view?.rootView?.windowToken
         if (view != null) {
 
-            val imm = activity.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                activity.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view, 0)
         }
 

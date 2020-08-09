@@ -65,16 +65,21 @@ class PaymentHistoryAdapter(
             viewModel.bind(item)
             binding.viewModel = viewModel
 
-            binding.container.setOnClickListener{
+            binding.container.setOnClickListener {
 
-               item.OrderSuid?.let {   binding.root.getParentActivity()?.startActivity(OrderPreviewActivity.newInstance(binding.root.getApplication(),it))}
+                item.OrderSuid?.let {
+                    binding.root.getParentActivity()?.startActivity(
+                        OrderPreviewActivity.newInstance(
+                            binding.root.getApplication(),
+                            it
+                        )
+                    )
+                }
 
             }
 
 
-
         }
-
 
 
         fun onRecycled() {
@@ -84,9 +89,6 @@ class PaymentHistoryAdapter(
 
 
     }
-
-
-
 
 
 }

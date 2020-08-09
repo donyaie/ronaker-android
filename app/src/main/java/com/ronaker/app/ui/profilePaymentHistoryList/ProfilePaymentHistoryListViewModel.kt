@@ -2,19 +2,16 @@ package com.ronaker.app.ui.profilePaymentHistoryList
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
-import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.model.Transaction
-import com.ronaker.app.ui.profilePaymentList.PaymentInfoAdapter
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) {
+class ProfilePaymentHistoryListViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -25,10 +22,6 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
     lateinit
     var paymentInfoRepository: PaymentInfoRepository
 
-    @Inject
-    lateinit
-    var context: Context
-
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
 
@@ -38,10 +31,9 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    var dataList=ArrayList<Transaction>()
+    var dataList = ArrayList<Transaction>()
 
-    val adapter= PaymentHistoryAdapter(dataList)
-
+    val adapter = PaymentHistoryAdapter(dataList)
 
 
     private var subscription: Disposable? = null
@@ -49,13 +41,13 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
     fun loadData() {
 
         userRepository.getUserInfo()?.let {
-            walletBalance.value=((it.balance?:0.0)/100).toCurrencyFormat()
+            walletBalance.value = (it.balance / 100).toCurrencyFormat()
 
         }
 
 
         subscription = paymentInfoRepository
-            .getFinancialTransactions(userRepository.getUserToken())
+            .getFinancialTransactions()
 
             .doOnSubscribe {
                 retry.value = null
@@ -91,12 +83,6 @@ class ProfilePaymentHistoryListViewModel (app: Application): BaseViewModel(app) 
         super.onCleared()
         subscription?.dispose()
     }
-
-
-    fun logout(){
-        userRepository.clearLogin()
-    }
-
 
 
 }

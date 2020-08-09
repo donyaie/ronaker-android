@@ -7,9 +7,14 @@ import io.reactivex.Observable
 import java.util.*
 
 interface OrderRepository {
-    fun getOrders(token: String?, filter: String?): Observable<Result<ListResponseModel<Order>>>
+
+
+    fun getOrders(
+        page: Int,
+        filter: String?
+    ): Observable<Result<ListResponseModel<Order>>>
+
     fun createOrder(
-        token: String?,
         product_suid: String,
         stateDate: Date,
         endDate: Date,
@@ -18,21 +23,34 @@ interface OrderRepository {
     ): Observable<Result<Boolean>>
 
     fun updateOrderStatus(
-        token: String?,
         suid: String,
-        status: String,
-        address: String?=null,
-        instruction: String?=null,
-        reason: String?=null
+        status: String? = null,
+        address: String? = null,
+        instruction: String? = null,
+        reason: String? = null,
+        isArchived: Boolean? = null
     ): Observable<Result<Boolean>>
 
     fun orderRate(
-        token: String?,
         orderSuid: String,
         comment: String,
         stars: Double
     ): Observable<Result<Boolean>>
 
-    fun getOrderDetail(token: String?, suid: String): Observable<Result<Order>>
+    fun getOrderDetail( suid: String): Observable<Result<Order>>
+
+
+    fun startSmartIDAuth(
+        orderSuid: String
+    ): Observable<Result<Boolean>>
+
+
+    fun checkSmartIDSession(orderSuid: String): Observable<Result<Boolean>>
+    fun getSmartIDVerificationCode(
+        orderSuid: String
+    ): Observable<Result<String>>
+
+    fun startSmartIDCert( orderSuid: String): Observable<Result<Boolean>>
+    fun checkSmartIDSessionCert( orderSuid: String): Observable<Result<Boolean>>
 }
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ronaker.app.utils.Alert
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
-import com.ronaker.app.utils.view.ToolbarComponent
 
 
 class ProfileAuthorizationActivity : BaseActivity() {
@@ -33,7 +32,6 @@ class ProfileAuthorizationActivity : BaseActivity() {
     private lateinit var adapter: ViewPagerAdapter
 
 
-
     internal var fragmentState = ProfileAuthorizationViewModel.StateEnum.PersonalCode
         set(value) {
             field = value
@@ -42,11 +40,13 @@ class ProfileAuthorizationActivity : BaseActivity() {
             when (fragmentState) {
 
                 ProfileAuthorizationViewModel.StateEnum.PersonalCode -> {
-                    binding.viewpager.currentItem = ProfileAuthorizationViewModel.StateEnum.PersonalCode.position
+                    binding.viewpager.currentItem =
+                        ProfileAuthorizationViewModel.StateEnum.PersonalCode.position
                 }
 
                 ProfileAuthorizationViewModel.StateEnum.Auth -> {
-                    binding.viewpager.currentItem = ProfileAuthorizationViewModel.StateEnum.Auth.position
+                    binding.viewpager.currentItem =
+                        ProfileAuthorizationViewModel.StateEnum.Auth.position
                 }
             }
 
@@ -56,9 +56,10 @@ class ProfileAuthorizationActivity : BaseActivity() {
         const val REQUEST_CODE = 360
 
 
-        fun newInstance(context: Context
+        fun newInstance(
+            context: Context
         ): Intent {
-          val  intent =Intent(context, ProfileAuthorizationActivity::class.java)
+            val intent = Intent(context, ProfileAuthorizationActivity::class.java)
             val bundle = Bundle()
 
             intent.putExtras(bundle)
@@ -85,22 +86,18 @@ class ProfileAuthorizationActivity : BaseActivity() {
         })
 
 
-        viewModel.goNext.observe(this, Observer { state ->
-           finish()
+        viewModel.goNext.observe(this, Observer {
+            finish()
 
         })
 
         fragmentState = ProfileAuthorizationViewModel.StateEnum.PersonalCode
 
 
-
-
-
     }
 
 
     private fun init() {
-
 
 
         initViewPager()
@@ -124,10 +121,6 @@ class ProfileAuthorizationActivity : BaseActivity() {
 
 
         initViewPagerRegister()
-
-
-
-
 
 
     }
@@ -156,9 +149,6 @@ class ProfileAuthorizationActivity : BaseActivity() {
     }
 
 
-
-
-
     private fun initViewPager() {
 
         binding.viewpager.setScrollDurationFactor(2.0)
@@ -172,7 +162,11 @@ class ProfileAuthorizationActivity : BaseActivity() {
         binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
 
             }
 
@@ -185,18 +179,17 @@ class ProfileAuthorizationActivity : BaseActivity() {
                 AppDebug.log(TAG, String.format("onSelect:%s", fragmentState.name))
                 (adapter.getItem(position) as IPagerFragment).onSelect()
 
-              when(fragmentState){
-                  ProfileAuthorizationViewModel.StateEnum.PersonalCode->{
+                when (fragmentState) {
+                    ProfileAuthorizationViewModel.StateEnum.PersonalCode -> {
 //                      binding.toolbar.actionContainer=ToolbarComponent.ActionContainer.TEXT
 //                      KeyboardManager.hideSoftKeyboard(this@ProfileAuthorizationActivity)
-                  }
-                  else->{
+                    }
+                    else -> {
 //                      binding.toolbar.actionContainer=ToolbarComponent.ActionContainer.NONE
 
-                      KeyboardManager.hideSoftKeyboard(this@ProfileAuthorizationActivity)
-                  }
-              }
-
+                        KeyboardManager.hideSoftKeyboard(this@ProfileAuthorizationActivity)
+                    }
+                }
 
 
             }
@@ -211,12 +204,14 @@ class ProfileAuthorizationActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-      prePage()
+        prePage()
     }
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
-        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
+        manager,
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    ) {
         private val mFragmentList = ArrayList<Fragment>()
 
         override fun getCount(): Int {
@@ -246,10 +241,6 @@ class ProfileAuthorizationActivity : BaseActivity() {
             return ""
         }
     }
-
-
-
-
 
 
 }

@@ -1,0 +1,11 @@
+<resources>
+    <string name="lbl_set_profile_photo">Pasirinkite profilio nuotrauką</string>
+    <string name="lbl_take_camera_picture">Fotografuokite</string>
+    <string name="lbl_choose_from_gallery">Pasirinkite iš galerijos</string>
+    <string name="toast_image_intent_null">Nuotraukos įkėlimo funkcija negalima</string>
+
+    <string name="dialog_permission_title">Suteikite leidimą </string>
+    <string name="dialog_permission_message">Programai reikalingas leidimas naudoti šią funkciją. Ją suteikti galite programos nustatymuose.</string>
+    <string name="go_to_settings">GEikite į nustatymus</string>
+
+</resources>

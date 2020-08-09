@@ -2,48 +2,53 @@ package com.ronaker.app.ui.manageProduct
 
 import android.app.Application
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.toCurrencyFormat
+import javax.inject.Inject
 
-class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
+class ManageProductAdapterViewModel(app: Application) : BaseViewModel(app) {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
+
+
 
     private val activeVisibility = MutableLiveData<Int>()
     private val deactiveVisibility = MutableLiveData<Int>()
 
     lateinit var data: Product
-    var activity: AppCompatActivity? = null
 
-    fun bind(post: Product, context: AppCompatActivity?) {
+    @Inject
+    lateinit var resourcesRepository: ResourcesRepository
+
+
+    fun bind(post: Product) {
         data = post
         productTitle.value = post.name
-        activity = context
         when {
             post.price_per_day ?: 0 != 0 -> productPrice.value = String.format(
                 "%s %s",
                 post.price_per_day?.toCurrencyFormat(),
-                app.getString(
+                resourcesRepository.getString(
                     R.string.title_per_day
                 )
             )
             post.price_per_week ?: 0 != 0 -> productPrice.value = String.format(
                 "%s %s",
                 post.price_per_week?.toCurrencyFormat(),
-                app.getString(
+                resourcesRepository.getString(
                     R.string.title_per_week
                 )
             )
             post.price_per_month ?: 0 != 0 -> productPrice.value = String.format(
                 "%s %s",
                 post.price_per_month?.toCurrencyFormat(),
-                app.getString(
+                resourcesRepository.getString(
                     R.string.title_per_month
                 )
             )
@@ -65,12 +70,7 @@ class ManageProductAdapterViewModel(val app: Application) : BaseViewModel(app) {
 
     }
 
-    fun onClickProduct() {
 
-        activity?.let {it.startActivity(ManageProductActivity.newInstance(it,data))  }
-
-
-    }
 
     fun getProductTitle(): MutableLiveData<String> {
         return productTitle

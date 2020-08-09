@@ -9,7 +9,7 @@ import com.ronaker.app.utils.byteArrayOfInts
 import com.securepreferences.SecurePreferences
 import java.lang.reflect.Type
 
-class PreferencesProvider(context: Context):PreferencesDataSource {
+class PreferencesProvider(context: Context) : PreferencesDataSource {
 
 
     private lateinit var preferences: SharedPreferences
@@ -27,7 +27,10 @@ class PreferencesProvider(context: Context):PreferencesDataSource {
     init {
 
         try {
-            preferences = SecurePreferences(context,byteArrayOfInts(0xA1, 0x2E, 0x39, 0xF4, 0x89, 0xC3).contentToString())
+            preferences = SecurePreferences(
+                context,
+                byteArrayOfInts(0xA1, 0x2E, 0x39, 0xF4, 0x89, 0xC3).contentToString()
+            )
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -58,7 +61,7 @@ class PreferencesProvider(context: Context):PreferencesDataSource {
         edit()?.commit()
     }
 
-    override  fun putLong(key: String, value: Long) {
+    override fun putLong(key: String, value: Long) {
         try {
             edit()?.putLong(key, value)
         } catch (e: Exception) {
@@ -92,6 +95,7 @@ class PreferencesProvider(context: Context):PreferencesDataSource {
         return preferences.getString(key, defValue)
     }
 
+
     override fun <T> getObject(key: String, type: Type): T? {
 
 
@@ -122,16 +126,16 @@ class PreferencesProvider(context: Context):PreferencesDataSource {
         return preferences.getInt(key, defValue)
     }
 
-    override  fun getLong(key: String, defValue: Long): Long {
+    override fun getLong(key: String, defValue: Long): Long {
         return preferences.getLong(key, defValue)
     }
 
-    override  fun getBoolean(key: String, defValue: Boolean): Boolean {
+    override fun getBoolean(key: String, defValue: Boolean): Boolean {
         return preferences.getBoolean(key, defValue)
     }
 
     override fun getFloat(key: String, defValue: Float): Float {
-        return  preferences.getFloat(key, defValue)
+        return preferences.getFloat(key, defValue)
     }
 
     override fun clearAll() {

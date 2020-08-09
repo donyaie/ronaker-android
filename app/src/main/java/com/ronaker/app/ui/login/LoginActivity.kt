@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.login
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -12,12 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.AnimationHelper
-import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.ScreenCalculator
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
+import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.ToolbarComponent
+import io.branch.referral.Branch
 
 
 class LoginActivity : BaseActivity() {
@@ -67,32 +68,52 @@ class LoginActivity : BaseActivity() {
                 LoginViewModel.LoginStateEnum.home -> {
                     currentPosition = LoginViewModel.LoginStateEnum.home.position
                 }
-                LoginViewModel.LoginStateEnum.info -> {
-
-                    currentPosition = LoginViewModel.LoginStateEnum.info.position
-                }
+//                LoginViewModel.LoginStateEnum.info -> {
+//
+//                    currentPosition = LoginViewModel.LoginStateEnum.info.position
+//                }
                 LoginViewModel.LoginStateEnum.password -> {
 
                     currentPosition = LoginViewModel.LoginStateEnum.password.position
+                }
+                LoginViewModel.LoginStateEnum.forget -> {
+
+                    currentPosition = LoginViewModel.LoginStateEnum.forget.position
                 }
             }
 
         }
 
     companion object {
+
+        val INVITECODE_KEY="invite-code"
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            return intent
+        }
+
+        fun newInstance(context: Context,inviteCode:String?): Intent {
+            val intent = Intent(context, LoginActivity::class.java)
+
+            val boundle = Bundle()
+            boundle.putString(INVITECODE_KEY, inviteCode)
+
+            intent.putExtras(boundle)
             intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }
     }
 
 
+    private fun getInviteCode(mIntent:Intent): String? {
+        return mIntent.getStringExtra(INVITECODE_KEY)
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         setSwipeCloseDisable()
         enableKeyboardAnimator()
@@ -122,9 +143,10 @@ class LoginActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { prePage() }
 
 
-        binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.2).toInt()
-        binding.background.layoutParams.height = (screenLibrary.screenHeightPixel ).toInt()
-        binding.bgCon.layoutParams.height = (screenLibrary.screenHeightPixel ).toInt()
+        binding.background.layoutParams.width = (screenLibrary.screenWidthPixel * 1.0).toInt()
+        binding.background.layoutParams.height = (screenLibrary.screenHeightPixel).toInt()
+        binding.bgCon.layoutParams.width = (screenLibrary.screenWidthPixel * 1.0).toInt()
+        binding.bgCon.layoutParams.height = (screenLibrary.screenHeightPixel).toInt()
 
 
 
@@ -133,6 +155,11 @@ class LoginActivity : BaseActivity() {
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             Alert.makeTextError(this, errorMessage)
+        })
+
+
+        viewModel.successMessage.observe(this, Observer { errorMessage ->
+            Alert.makeTextSuccess(this, errorMessage)
         })
 
         viewModel.goNext.observe(this, Observer { value ->
@@ -150,6 +177,16 @@ class LoginActivity : BaseActivity() {
         })
 
 
+
+        viewModel.keyboardDown.observe(this, Observer {
+
+            if (it) {
+                KeyboardManager.hideSoftKeyboard(this@LoginActivity)
+            }
+        })
+
+
+
         viewModel.gotoSignIn.observe(this, Observer {
 
             loginAction = LoginViewModel.LoginActionEnum.login
@@ -164,6 +201,7 @@ class LoginActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
+        handleIntent(intent)
 
         init()
         loginAction = LoginViewModel.LoginActionEnum.register
@@ -177,6 +215,23 @@ class LoginActivity : BaseActivity() {
         overlayShow(false)
         showBack(false)
         binding.loading.hideLoading()
+
+    }
+
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let { handleIntent(it) }
+    }
+
+
+    private fun handleIntent(intent: Intent) {
+
+
+        getInviteCode(intent)?.let {
+            viewModel.setInviteCode(it)
+        }
+
 
     }
 
@@ -205,8 +260,9 @@ class LoginActivity : BaseActivity() {
             LoginViewModel.LoginStateEnum.home -> LoginHomeFragment()
             LoginViewModel.LoginStateEnum.email -> LoginEmailFragment()
             LoginViewModel.LoginStateEnum.password -> LoginPasswordFragment()
-            LoginViewModel.LoginStateEnum.info -> LoginNameFragment()
+//            LoginViewModel.LoginStateEnum.info -> LoginNameFragment()
             LoginViewModel.LoginStateEnum.login -> LoginSignInFragment()
+            LoginViewModel.LoginStateEnum.forget -> LoginForgetFragment()
         }
     }
 
@@ -235,11 +291,10 @@ class LoginActivity : BaseActivity() {
                     value < field -> //back
                     {
 
-                        if(value== LoginViewModel.LoginStateEnum.home.position && field==LoginViewModel.LoginStateEnum.login.position ){
+                        if (value == LoginViewModel.LoginStateEnum.home.position && field == LoginViewModel.LoginStateEnum.login.position) {
                             fm.popBackStack(state.name, 0)
                             ft.commit()
-                        }
-                        else if ((field - value) > 1) {
+                        } else if ((field - value) > 1) {
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             ft.replace(R.id.frame_container, getFragment(state), state.name)
                                 .addToBackStack(state.name)
@@ -260,10 +315,15 @@ class LoginActivity : BaseActivity() {
                     }
                 }
 
-//                val x = ((binding.frameContainer.width*value) * computeFactor()).toInt()
+                val x = ((binding.frameContainer.width*value) * computeFactor()).toInt()
+
+
+                val animator =
+                    ObjectAnimator.ofInt(binding.scrollView, "scrollX", x)
+                animator.duration = 800
+                animator.start()
 
 //                    ((binding.viewpager.width * position + positionOffsetPixels) * computeFactor()).toInt()
-
 //                binding.scrollView.scrollTo(x, 0)
 
                 when (loginAction) {
@@ -329,7 +389,7 @@ class LoginActivity : BaseActivity() {
             binding.overlayLayout.animate().alpha(0.8f).setDuration(500).start()
 
         } else {
-            binding.overlayLayout.animate().alpha(0.2f).setDuration(500).start()
+            binding.overlayLayout.animate().alpha(0.5f).setDuration(500).start()
 
         }
     }

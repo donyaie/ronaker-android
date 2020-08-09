@@ -2,25 +2,27 @@ package com.ronaker.app.ui.orderPreview
 
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
+import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
+class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -30,9 +32,16 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
+
+
     @Inject
     lateinit
-    var context: Context
+    var contentRepository: ContentRepository
+
+
+    @Inject
+    lateinit
+    var resourcesRepository: ResourcesRepository
 
 
     val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -72,6 +81,16 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     val orderIntroduction: MutableLiveData<String> = MutableLiveData()
 
 
+    val signContractShow: MutableLiveData<Boolean> = MutableLiveData()
+    val contractPreview: MutableLiveData<Boolean> = MutableLiveData()
+
+    val previewContractShow: MutableLiveData<File> = MutableLiveData()
+
+    val contractViewENVisibility: MutableLiveData<Int> = MutableLiveData()
+    val contractViewLTVisibility: MutableLiveData<Int> = MutableLiveData()
+    val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
     val orderCancelRes: MutableLiveData<String> = MutableLiveData()
     val orderAddress: MutableLiveData<String> = MutableLiveData()
 
@@ -84,6 +103,19 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     val userInfoVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
+    val contractVisibility: MutableLiveData<Int> = MutableLiveData()
+
+    //    val renterSignVisibility: MutableLiveData<Int> = MutableLiveData()
+    val listerSignVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+    val renterSignImage: MutableLiveData<Int> = MutableLiveData()
+    val lenderSignImage: MutableLiveData<Int> = MutableLiveData()
+
+    val renterSignText: MutableLiveData<String> = MutableLiveData()
+    val listerSignText: MutableLiveData<String> = MutableLiveData()
+
+
     val acceptVisibility: MutableLiveData<Int> = MutableLiveData()
     val declineVisibility: MutableLiveData<Int> = MutableLiveData()
     val finishVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -92,6 +124,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
     val orderCancelResVisibility: MutableLiveData<Int> = MutableLiveData()
     val orderAddressVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+    val makeCall: MutableLiveData<String> = MutableLiveData()
+    val sendEmail: MutableLiveData<String> = MutableLiveData()
 
     val userContactVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -102,12 +138,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
     private var subscription: Disposable? = null
-
-    private var acceptSubscription: Disposable? = null
-
-    private var declineSubscription: Disposable? = null
-    private var cancelSubscription: Disposable? = null
-    private var finishSubscription: Disposable? = null
+    private var fileSubscription: Disposable? = null
 
 
     init {
@@ -119,10 +150,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
-        acceptSubscription?.dispose()
-        declineSubscription?.dispose()
-        cancelSubscription?.dispose()
-        finishSubscription?.dispose()
+        fileSubscription?.dispose()
     }
 
 
@@ -134,7 +162,9 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.phone_number?.let { value -> IntentManeger.makeCall(app, value) }
+                    it.phone_number?.let { value -> makeCall.postValue(value) }
+
+
                 }
             }
 
@@ -143,7 +173,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.phone_number?.let { value -> IntentManeger.makeCall(app, value) }
+                    it.phone_number?.let { value -> makeCall.postValue(value) }
                 }
             }
             else -> {
@@ -159,7 +189,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.email?.let { value -> IntentManeger.sendMail(app, value) }
+                    it.email?.let { value -> sendEmail.postValue(value) }
                 }
             }
 
@@ -168,7 +198,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.email?.let { value -> IntentManeger.sendMail(app, value) }
+                    it.email?.let { value -> sendEmail.postValue(value) }
                 }
             }
             else -> {
@@ -176,44 +206,70 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
         }
     }
 
-    fun load(order: Order){
+    fun load(order: Order) {
         fillView(order)
 
     }
 
-    fun getOrder():Order{
+    fun getOrder(): Order {
         return mOrder
     }
 
-    fun getOrder(suid:String){
+    fun getOrder(suid: String) {
 
         subscription?.dispose()
         subscription = orderRepository
-            .getOrderDetail(userRepository.getUserToken(), suid)
+            .getOrderDetail(suid)
 
             .doOnSubscribe {
 //                retry.value = null
 //                loading.value = true
 
-                if(!::mOrder.isInitialized)
-                    loading.value=true
+                if (!::mOrder.isInitialized)
+                    loading.value = true
 
             }
             .doOnTerminate {
-                loading.value=false
+                loading.value = false
 
 
             }
             .subscribe { result ->
                 if (result.isSuccess()) {
                     result.data?.let { fillView(it) }
-                }
-                else{
-                    errorMessage.value=result.error?.message
+                } else {
+                    errorMessage.value = result.error?.message
                 }
             }
 
     }
+
+
+    private fun getPDF(url: String, name: String) {
+        fileSubscription?.dispose()
+        fileSubscription = contentRepository
+            .downloadFile(
+                url,
+                "$name-contract.pdf"
+            )
+
+            .doOnSubscribe {
+            }
+            .doOnTerminate {
+
+            }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+                    previewContractShow.postValue(result.data)
+
+
+                } else {
+                    errorMessage.value = result.error?.message
+                }
+            }
+    }
+
 
     fun fillView(order: Order) {
         mOrder = order
@@ -251,10 +307,6 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
 
-
-
-
-
         order.price?.let {
 
             dataList.clear()
@@ -270,6 +322,30 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
 
+        order.signPdf_EN?.let {
+            contractViewENVisibility.postValue(View.VISIBLE)
+        } ?: run {
+            contractViewENVisibility.postValue(View.GONE)
+        }
+
+
+
+        order.signPdf_LT?.let {
+            contractViewLTVisibility.postValue(View.VISIBLE)
+        } ?: run {
+            contractViewLTVisibility.postValue(View.GONE)
+        }
+
+        if (order.signPdf_LT.isNullOrEmpty() && order.signPdf_EN.isNullOrEmpty())
+            contractPreviewVisibility.postValue(View.VISIBLE)
+        else
+            contractPreviewVisibility.postValue(View.GONE)
+
+
+//        contractPreviewVisibility.postValue(View.VISIBLE)
+
+
+        listerSignVisibility.postValue(View.GONE)
 
         when (Order.OrderTypeEnum[order.orderType]) {
 
@@ -277,7 +353,7 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 order.productOwner?.let {
 
-                    userName.value = it.first_name + " " + it.last_name
+                    userName.value = nameFormat(it.first_name, it.last_name)
                     it.avatar?.let { image -> userImage.value = BASE_URL + image }
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
@@ -286,10 +362,6 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
                 }
 
                 recieptVisibility.value = View.VISIBLE
-
-                startRatingVisibility.value = View.GONE
-
-
 
 
                 var total = 0.0
@@ -300,13 +372,65 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                 dayNumber.value = String.format(
-                    "%s %s for %d days",
-                    context.getString(R.string.text_you_pay),
+                    resourcesRepository.getString(R.string.format_you_will_pay),
                     total.toCurrencyFormat(),
                     days
                 )
 
+                if (order.smart_id_creator_session_id.isNullOrBlank()) {
 
+                    renterSignImage.postValue(R.drawable.ic_guide_red)
+
+                    renterSignText.postValue(resourcesRepository.getString(R.string.text_please_sign_the_contract))
+
+
+                } else {
+
+                    renterSignText.postValue(resourcesRepository.getString(R.string.text_you_signed_the_contract))
+                    renterSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+                if (order.smart_id_owner_session_id.isNullOrBlank()) {
+
+                    listerSignText.postValue(
+                        String.format(
+                            resourcesRepository.getString(R.string.text_waite_for_sign),
+                            nameFormat(
+                                order.productOwner?.first_name,
+                                order.productOwner?.last_name
+                            )
+
+                        )
+                    )
+                    lenderSignImage.postValue(R.drawable.ic_guide_red)
+                } else {
+
+                    listerSignText.postValue(
+                        String.format(
+                            resourcesRepository.getString(R.string.text_signed_the_contract),
+                            nameFormat(
+                                order.productOwner?.first_name,
+                                order.productOwner?.last_name
+                            )
+                        )
+                    )
+                    lenderSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+
+                startRatingVisibility.value = View.GONE
+
+                actionVisibility.value = View.GONE
+
+                acceptVisibility.value = View.GONE
+                declineVisibility.value = View.GONE
+                finishVisibility.value = View.GONE
+                startRentingVisibility.value = View.GONE
+                cancelVisibility.value = View.GONE
+
+                userContactVisibility.value = View.GONE
+
+                contractVisibility.postValue(View.GONE)
 
 
 
@@ -317,67 +441,53 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                         actionVisibility.value = View.VISIBLE
 
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
                         startRentingVisibility.value = View.VISIBLE
                         cancelVisibility.value = View.VISIBLE
 
                         userContactVisibility.value = View.VISIBLE
 
+                        contractVisibility.postValue(View.VISIBLE)
+
                     }
                     Order.OrderStatusEnum.Started -> {
 
-                        actionVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
 
                         userContactVisibility.value = View.VISIBLE
+
 
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
                         actionVisibility.value = View.VISIBLE
 
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
-                        cancelVisibility.value = View.GONE
+                        userContactVisibility.value = View.VISIBLE
 
                         startRatingVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
+
 
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Pending -> {
 
 
                         actionVisibility.value = View.VISIBLE
 
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
-                        actionVisibility.value = View.GONE
 
-                        userContactVisibility.value = View.GONE
                     }
                 }
 
@@ -385,7 +495,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
             Order.OrderTypeEnum.Renting -> {
                 order.orderUser?.let {
 
-                    userName.value = it.first_name + " " + it.last_name
+                    userName.value = nameFormat(it.first_name, it.last_name)
+
+
+
                     it.avatar?.let { image -> userImage.value = BASE_URL + image }
 
                     userInfoVisibility.value = View.VISIBLE
@@ -394,7 +507,6 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 }
 
-                startRatingVisibility.value = View.GONE
 
                 var total = 0.0
                 order.price?.forEach {
@@ -405,71 +517,114 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 dayNumber.value = String.format(
                     "%s %s for %d days",
-                    context.getString(R.string.text_you_earn),
+                    resourcesRepository.getString(R.string.text_you_earn),
                     total.toCurrencyFormat(),
                     days
                 )
 
 
+
+
+
+                if (order.smart_id_owner_session_id.isNullOrBlank()) {
+
+                    lenderSignImage.postValue(R.drawable.ic_guide_red)
+
+                    listerSignText.postValue(resourcesRepository.getString(R.string.text_please_sign_the_contract))
+
+                    listerSignVisibility.postValue(View.VISIBLE)
+
+                } else {
+
+                    listerSignVisibility.postValue(View.GONE)
+                    listerSignText.postValue(resourcesRepository.getString(R.string.text_you_signed_the_contract))
+                    lenderSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+                if (order.smart_id_creator_session_id.isNullOrBlank()) {
+
+                    renterSignText.postValue(
+                        String.format(
+                            resourcesRepository.getString(R.string.text_waite_for_sign),
+                            nameFormat(order.orderUser?.first_name, order.orderUser?.last_name)
+
+
+                        )
+                    )
+                    renterSignImage.postValue(R.drawable.ic_guide_red)
+                } else {
+
+                    renterSignText.postValue(
+                        String.format(
+                            resourcesRepository.getString(R.string.text_signed_the_contract),
+                            nameFormat(order.orderUser?.first_name, order.orderUser?.last_name)
+                        )
+                    )
+                    renterSignImage.postValue(R.drawable.ic_guide_success)
+                }
+
+
+
+
+
+
+
+                startRatingVisibility.value = View.GONE
+
+                actionVisibility.value = View.GONE
                 recieptVisibility.value = View.GONE
+                startRentingVisibility.value = View.GONE
+                acceptVisibility.value = View.GONE
+                declineVisibility.value = View.GONE
+                finishVisibility.value = View.GONE
+                cancelVisibility.value = View.GONE
+                userContactVisibility.value = View.GONE
+
+                contractVisibility.postValue(View.GONE)
+
                 when (Order.OrderStatusEnum[order.status]) {
                     Order.OrderStatusEnum.Accepted -> {
 
                         actionVisibility.value = View.VISIBLE
-
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
-                        finishVisibility.value = View.GONE
                         cancelVisibility.value = View.VISIBLE
 
-                        userContactVisibility.value = View.GONE
+                        contractVisibility.postValue(View.VISIBLE)
+
                     }
                     Order.OrderStatusEnum.Started -> {
 
                         actionVisibility.value = View.VISIBLE
 
-                        startRentingVisibility.value = View.GONE
-                        acceptVisibility.value = View.GONE
-                        declineVisibility.value = View.GONE
                         finishVisibility.value = View.VISIBLE
-                        cancelVisibility.value = View.GONE
-
                         userContactVisibility.value = View.VISIBLE
+
+                        contractVisibility.postValue(View.VISIBLE)
                     }
                     Order.OrderStatusEnum.Canceled -> {
 
-                        actionVisibility.value = View.GONE
+                        listerSignVisibility.postValue(View.GONE)
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Finished -> {
 
-                        actionVisibility.value = View.GONE
+                        listerSignVisibility.postValue(View.GONE)
+                        contractVisibility.postValue(View.VISIBLE)
 
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.Rejected -> {
 
-                        actionVisibility.value = View.GONE
-
-                        userContactVisibility.value = View.GONE
+                        listerSignVisibility.postValue(View.GONE)
                     }
                     Order.OrderStatusEnum.Pending -> {
 
+                        listerSignVisibility.postValue(View.GONE)
                         actionVisibility.value = View.VISIBLE
 
                         acceptVisibility.value = View.VISIBLE
                         declineVisibility.value = View.VISIBLE
-                        finishVisibility.value = View.GONE
-                        startRentingVisibility.value = View.GONE
-                        cancelVisibility.value = View.GONE
-
-                        userContactVisibility.value = View.GONE
                     }
                     Order.OrderStatusEnum.None -> {
 
-                        actionVisibility.value = View.GONE
                     }
                 }
 
@@ -483,10 +638,11 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
         val ownerName =
-            (order.productOwner?.first_name ?: "") + " " + (order.productOwner?.last_name ?: "")
+            nameFormat(order.productOwner?.first_name, order.productOwner?.last_name)
+
 
         val orderedUserName =
-            (order.orderUser?.first_name ?: "") + " " + (order.orderUser?.last_name ?: "")
+            nameFormat(order.orderUser?.first_name, order.orderUser?.last_name)
 
 
 
@@ -499,11 +655,17 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        app.getString(R.string.text_rent_request_accepted, orderedUserName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_rent_request_accepted),
+                            orderedUserName
+                        )
                 } else {
 
                     orderStatus.value =
-                        app.getString(R.string.text_lend_request_accepted, ownerName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_accepted),
+                            ownerName
+                        )
                 }
 
 
@@ -516,10 +678,17 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        app.getString(R.string.text_rent_request_started, orderedUserName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_rent_request_started),
+                            orderedUserName
+                        )
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_request_started, ownerName)
+                    orderStatus.value =
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_started),
+                            ownerName
+                        )
                 }
 
 
@@ -530,10 +699,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_canceled)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_canceled)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_canceled)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_lend_canceled)
                 }
 
 
@@ -545,10 +714,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_complete)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_complete)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_complete)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_lend_complete)
                 }
             }
             Order.OrderStatusEnum.Pending -> {
@@ -558,9 +727,14 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_request_pending)
+                    orderStatus.value =
+                        resourcesRepository.getString(R.string.text_rent_request_pending)
                 } else {
-                    orderStatus.value = app.getString(R.string.text_lend_request_pending, ownerName)
+                    orderStatus.value =
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_pending),
+                            ownerName
+                        )
                 }
 
             }
@@ -572,10 +746,10 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_rejected)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_rejected)
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_rejected)
+                    orderStatus.value = resourcesRepository.getString(R.string.text_lend_rejected)
                 }
 
             }
@@ -623,8 +797,6 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
     }
 
 
-
-
     fun onClickStartRenting() {
 
         startRenting.value = true
@@ -644,5 +816,41 @@ class OrderPreviewViewModel(val app: Application) : BaseViewModel(app) {
 
     }
 
+    fun onListerSign() {
+
+        signContractShow.postValue(true)
+
+
+    }
+
+
+    fun onContractPreview() {
+
+        contractPreview.postValue(true)
+    }
+
+    fun onViewContractEN() {
+
+
+        mOrder.signPdf_EN?.let {
+
+            getPDF(BASE_URL + it, mOrder.suid)
+
+
+        }
+
+    }
+
+    fun onViewContractLT() {
+
+
+        mOrder.signPdf_LT?.let {
+
+            getPDF(BASE_URL + it, mOrder.suid)
+
+
+        }
+
+    }
 
 }

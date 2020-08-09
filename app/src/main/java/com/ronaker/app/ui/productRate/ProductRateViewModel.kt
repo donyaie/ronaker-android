@@ -2,7 +2,6 @@ package com.ronaker.app.ui.productRate
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
@@ -20,9 +19,7 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit
     var userRepository: UserRepository
-    @Inject
-    lateinit
-    var context: Context
+
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -53,7 +50,6 @@ class ProductRateViewModel(app: Application) : BaseViewModel(app) {
 
         acceptSubscription?.dispose()
         acceptSubscription = orderRepository.orderRate(
-            token = userRepository.getUserToken(),
             orderSuid = mOrder.suid,
             comment = comment,
             stars = rate.toDouble()

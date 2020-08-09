@@ -1,79 +1,56 @@
+@file:Suppress("DEPRECATION")
+
 package com.ronaker.app.utils
 
-import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
-import android.os.Build
-import androidx.preference.PreferenceManager
+import android.content.res.Configuration
+import com.ronaker.app.data.DefaultUserRepository.Companion.USER_LANGUAGE_KEY
+import com.ronaker.app.data.local.PreferencesProvider
 import java.util.*
-
 
 object LocaleHelper {
 
-    private const val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
+    private val TAG = LocaleHelper::class.java.simpleName
 
     fun onAttach(context: Context): Context {
-        val lang = getPersistedData(context, Locale.getDefault().language) ?: "en"
-        return setLocale(context, lang)
+        return setLocale(context, getPersistedData(context, Locale.getDefault().language))
     }
 
-    fun onAttach(context: Context, defaultLanguage: String): Context {
-        val lang = getPersistedData(context, defaultLanguage) ?: defaultLanguage
-        return setLocale(context, lang)
+    fun setLocale(context: Activity, language: String): Context {
+        persist(context, language)
+        return updateResources(context.baseContext, language)
     }
 
-    fun getLanguage(context: Context): String? {
-        return getPersistedData(context, Locale.getDefault().language)
-    }
-
-    fun setLocale(context: Context, language: String): Context {
+    private fun setLocale(context: Context, language: String): Context {
         persist(context, language)
 
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            updateResources(context, language)
-        } else
-            updateResourcesLegacy(context, language)
+        return updateResources(context, language)
+
 
     }
 
-    private fun getPersistedData(context: Context, defaultLanguage: String): String? {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return preferences.getString(SELECTED_LANGUAGE, defaultLanguage)
+
+    private fun getPersistedData(context: Context, defaultLanguage: String? = null): String {
+        val preferences = PreferencesProvider(context)
+        return preferences.getString(USER_LANGUAGE_KEY, defaultLanguage) ?: LANGUAGE_DEFAULT
     }
 
-    private fun persist(context: Context, language: String?) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = preferences.edit()
-
-        editor.putString(SELECTED_LANGUAGE, language)
-        editor.apply()
+    private fun persist(context: Context, language: String) {
+        val preferences = PreferencesProvider(context)
+        preferences.putString(USER_LANGUAGE_KEY, language)
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     private fun updateResources(context: Context, language: String): Context {
         val locale = Locale(language)
+        val configuration = Configuration(context.resources.configuration)
+
         Locale.setDefault(locale)
-        val configuration = context.resources.configuration
         configuration.setLocale(locale)
-        configuration.setLayoutDirection(locale)
         return context.createConfigurationContext(configuration)
+
+
     }
-
-    @SuppressWarnings("deprecation")
-    private fun updateResourcesLegacy(context: Context, language: String): Context {
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-
-        val resources = context.resources
-
-        val configuration = resources.configuration
-        configuration.locale = locale
-        configuration.setLayoutDirection(locale)
-        resources.updateConfiguration(configuration, resources.displayMetrics)
-
-        return context
-    }
-
-
 
 
 }

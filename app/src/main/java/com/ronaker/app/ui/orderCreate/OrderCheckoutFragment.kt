@@ -23,10 +23,14 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: OrderCreateViewModel
 
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_checkout, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_order_checkout, container, false)
 
 
         activity?.let {
@@ -39,6 +43,8 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
 
         viewModel.clearData.observe(viewLifecycleOwner, Observer {
             binding.calendarView.clearSelectedDates()
+
+            viewModel.clearSelection()
         })
 
 
@@ -48,8 +54,6 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
         initCalendar()
         return binding.root
     }
-
-
 
 
     private fun initCalendar() {
@@ -94,7 +98,6 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
 
         binding.calendarView.scrollToDate(Date())
     }
-
 
 
     companion object {

@@ -6,6 +6,7 @@ import com.ronaker.app.data.network.OrderApi
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.request.ProductRateRequestModel
+import com.ronaker.app.data.network.request.UserSmartIdVerificationCodeRequestModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
@@ -15,25 +16,29 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class DefaultOrderRepository(private val api: OrderApi) :
+class DefaultOrderRepository(private val api: OrderApi,
+                             private val userRepository: UserRepository) :
     OrderRepository {
 
-    override fun getOrders(token: String?, filter:String?): Observable<Result<ListResponseModel<Order>>> {
+    override fun getOrders(
+        page: Int,
+        filter: String?
+    ): Observable<Result<ListResponseModel<Order>>> {
 
-        return api.getOrders("Token $token",filter)
+        return api.getOrders(userRepository.getUserAuthorization(), page, filter)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
             .map {
-                ListResponseModel(it.count,it.next,it.previous, it.results?.toOrderList())
+                ListResponseModel(it.count, it.next, it.previous, it.results?.toOrderList())
             }
             .toResult()
 
     }
 
-    override fun getOrderDetail(token: String?, suid:String): Observable<Result<Order>> {
+    override fun getOrderDetail( suid: String): Observable<Result<Order>> {
 
-        return api.getOrderDetail("Token $token",suid)
+        return api.getOrderDetail(userRepository.getUserAuthorization(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -45,9 +50,15 @@ class DefaultOrderRepository(private val api: OrderApi) :
     }
 
 
-    override fun createOrder(token: String?, product_suid:String, stateDate: Date, endDate: Date, message:String?, price:Double ): Observable<Result<Boolean>> {
+    override fun createOrder(
+        product_suid: String,
+        stateDate: Date,
+        endDate: Date,
+        message: String?,
+        price: Double
+    ): Observable<Result<Boolean>> {
 
-        val request=
+        val request =
             OrderCreateRequestModel(
                 product_suid,
                 stateDate,
@@ -56,7 +67,7 @@ class DefaultOrderRepository(private val api: OrderApi) :
                 price
             )
 
-        return api.createOrder("Token $token",request)
+        return api.createOrder(userRepository.getUserAuthorization(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -69,18 +80,18 @@ class DefaultOrderRepository(private val api: OrderApi) :
 
 
     override fun updateOrderStatus(
-        token: String?,
         suid: String,
-        status: String,
+        status: String?,
         address: String?,
         instruction: String?,
-        reason:String?
+        reason: String?,
+        isArchived: Boolean?
     ): Observable<Result<Boolean>> {
 
-        val request=
-            OrderUpdateRequestModel(status,address,instruction,reason)
+        val request =
+            OrderUpdateRequestModel(status, address, instruction, reason, isArchived)
 
-        return api.updateOrderStatus("Token $token",suid,request)
+        return api.updateOrderStatus(userRepository.getUserAuthorization(), suid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
@@ -88,19 +99,94 @@ class DefaultOrderRepository(private val api: OrderApi) :
     }
 
     override fun orderRate(
-        token: String?,
         orderSuid: String,
         comment: String,
         stars: Double
     ): Observable<Result<Boolean>> {
 
-        val request=
-            ProductRateRequestModel(stars,comment)
+        val request =
+            ProductRateRequestModel(stars, comment)
 
-        return api.orderRate("Token $token",orderSuid,request)
+        return api.orderRate(userRepository.getUserAuthorization(), orderSuid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
+
+    }
+
+
+    override fun getSmartIDVerificationCode(
+        orderSuid: String
+    ): Observable<Result<String>> {
+
+        return api.getSmartIDVerificationCode(userRepository.getUserAuthorization(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.verification_code
+            }
+            .toResult()
+
+    }
+
+
+    override fun startSmartIDAuth(
+        orderSuid: String
+    ): Observable<Result<Boolean>> {
+
+        return api.startSmartIDAuth(userRepository.getUserAuthorization(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+    override fun checkSmartIDSession(
+        orderSuid: String
+
+    ): Observable<Result<Boolean>> {
+        return api.checkSmartIDSession(userRepository.getUserAuthorization(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+
+    override fun startSmartIDCert(
+
+        orderSuid: String
+    ): Observable<Result<Boolean>> {
+
+        return api.startSmartIDCert(userRepository.getUserAuthorization(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+    override fun checkSmartIDSessionCert(
+        orderSuid: String
+    ): Observable<Result<Boolean>> {
+        return api.checkSmartIDSessionCert(userRepository.getUserAuthorization(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
 
     }
 

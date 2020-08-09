@@ -6,23 +6,23 @@ import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
-import java.io.InputStream
-import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.module.AppGlideModule
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.ronaker.app.BuildConfig
-import com.ronaker.app.utils.SslUtils
+import okhttp3.OkHttpClient
+import java.io.InputStream
 
 
 @GlideModule
-class CustomGlideModule : AppGlideModule(){
+class CustomGlideModule : AppGlideModule() {
 
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        val client = SslUtils.getUnsafeOkHttpClient(context)
+//        val client = SslUtils.getUnsafeOkHttpClient(context)
+        val client = OkHttpClient.Builder()
 
         if (BuildConfig.DEBUG)
-            client.addNetworkInterceptor( StethoInterceptor())
+            client.addNetworkInterceptor(StethoInterceptor())
 
         registry.replace(
             GlideUrl::class.java, InputStream::class.java,

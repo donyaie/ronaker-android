@@ -17,18 +17,27 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
     private lateinit var binding: com.ronaker.app.databinding.FragmentPhoneNumberVerifyBinding
     private lateinit var viewModel: PhoneNumberViewModel
 
-    var disposable:Disposable?=null
+    var disposable: Disposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_phone_number_verify, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_phone_number_verify,
+            container,
+            false
+        )
         activity?.let {
             viewModel = ViewModelProvider(it).get(PhoneNumberViewModel::class.java)
             binding.viewModel = viewModel
         }
 
 
-        disposable=   RxTextView.textChanges(binding.pinEditText).subscribe {
+        disposable = RxTextView.textChanges(binding.pinEditText).subscribe {
             validateCode(it.toString())
         }
 

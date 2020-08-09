@@ -2,7 +2,6 @@ package com.ronaker.app.ui.profileImage
 
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +14,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileImageViewModel (app: Application): BaseViewModel(app) {
+class ProfileImageViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -32,9 +31,6 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
     var contentRepository: ContentRepository
 
 
-    @Inject
-    lateinit
-    var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -85,7 +81,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
             imageVisibility.value = View.VISIBLE
             uploadVisibility.value = View.GONE
 
-            identifyImage.value= BASE_URL+it
+            identifyImage.value = BASE_URL + it
         }
 
     }
@@ -108,7 +104,7 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
 
         uploadSubscription = contentRepository
             .uploadImageWithoutProgress(
-                userRepository.getUserToken(),
+
                 mUri
             )
 
@@ -140,12 +136,12 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
 
         identitySubscription?.dispose()
 
-        val user= User()
-        user.avatar=imageSuid
+        val user = User()
+        user.avatar = imageSuid
 
         identitySubscription = userRepository
             .updateUserInfo(
-                userRepository.getUserToken(),
+
                 user
             )
 
@@ -172,7 +168,6 @@ class ProfileImageViewModel (app: Application): BaseViewModel(app) {
         uploadSubscription?.dispose()
         identitySubscription?.dispose()
     }
-
 
 
 }

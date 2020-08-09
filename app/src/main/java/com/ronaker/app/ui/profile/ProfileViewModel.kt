@@ -8,6 +8,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +57,7 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
     private suspend fun getUserData() =
         withContext(Dispatchers.IO) {
             subscription = userRepository
-                .getUserInfo(userRepository.getUserToken())
+                .getUserInfo(userRepository.getUserAuthorization())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe {
@@ -85,7 +86,11 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
 
         var complete = 0
 
-        userName.postValue("${user.first_name} ${user.last_name}")
+        if (user.first_name.isNullOrEmpty()) {
+            userName.postValue("${user.email}")
+        } else
+            userName.postValue(nameFormat(user.first_name,user.last_name))
+
 
         user.avatar?.let {
             userAvatar.postValue(BASE_URL + it)

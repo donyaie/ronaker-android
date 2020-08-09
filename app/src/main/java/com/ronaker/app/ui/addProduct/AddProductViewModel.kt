@@ -1,13 +1,13 @@
 package com.ronaker.app.ui.addProduct
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.ProductRepository
@@ -30,7 +30,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
-    lateinit var context: Context
+    lateinit var resourcesRepository: ResourcesRepository
 
     @Inject
     lateinit var productRepository: ProductRepository
@@ -89,7 +89,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     val insuranceMedia = Image(isLocal = true)
 
 
-    val parentCategory: MutableLiveData<Category> = MutableLiveData()
+    val parentCategory: MutableLiveData<List<Category>> = MutableLiveData()
+    val childCategory: MutableLiveData<Category> = MutableLiveData()
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -108,7 +109,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
     enum class StateEnum constructor(position: Int) {
-//        Insurance(0),
+        //        Insurance(0),
         Image(0),
         Info(1),
         Category(2),
@@ -124,7 +125,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         companion object {
             operator fun get(position: Int): StateEnum {
-                var state = StateEnum.values()[0]
+                var state = values()[0]
                 for (stateEnum in values()) {
                     if (position == stateEnum.position)
                         state = stateEnum
@@ -150,7 +151,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
             checkNextSelectImage()
 
-        } else errorMessage.value = context.getString(R.string.error_add_image)
+        } else errorMessage.value = resourcesRepository.getString(R.string.error_add_image)
 
 
     }
@@ -184,8 +185,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             errorMessage.value = "Please Select Sub-Category"
         } else {
             product.new_categories = ArrayList()
-            product.new_categories?.apply { add(categories[0].suid) }
-            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories?.add(it) }
+            product.new_categories.apply { add(categories[0].suid) }
+            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories.add(it) }
 
 
             if (!updateSuid.isNullOrEmpty()) {
@@ -204,8 +205,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         productCategoryTitle.value = category.title
         categories.clear()
-        category.sub_categories = null
-        categories.add(category)
+        categories.add(category.copy())
 
         productSubCategoryVisibility.value = View.VISIBLE
         productSubCategoryTitle.value = ""
@@ -222,13 +222,73 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         }
     }
 
-    fun onClickSelectCategory() {
-        parentCategory.value = null
+
+    private var categorySubscription: Disposable? = null
+
+
+    private var cachedCategory: List<Category>? = null
+
+    private fun getCategories(selectParent: Boolean = false, selectChild: Boolean = false) {
+
+        if (selectParent && cachedCategory != null) {
+            parentCategory.value = cachedCategory
+            return
+        }
+
+        if (selectChild && cachedCategory != null) {
+            onClickSelectSubCategory()
+            return
+        }
+
+
+        categorySubscription?.dispose()
+
+        categorySubscription = categoryRepository.getCategories(
+        )
+            .doOnSubscribe { }
+            .doOnTerminate { }
+            .subscribe { result ->
+                if (result.isSuccess()) {
+
+                    cachedCategory = result.data
+
+
+                    if (selectParent) {
+                        parentCategory.value = cachedCategory
+                    }
+
+                    if (selectChild && !cachedCategory.isNullOrEmpty()) {
+                        onClickSelectSubCategory()
+                    }
+
+                } else {
+                    errorMessage.postValue(result.error?.message)
+                }
+            }
+
     }
 
+
+    fun onClickSelectCategory() {
+
+
+        getCategories(selectParent = true)
+    }
+
+
     fun onClickSelectSubCategory() {
-        if (categories.isNotEmpty())
-            parentCategory.value = categories[0]
+
+        if (cachedCategory.isNullOrEmpty()) {
+            getCategories(selectChild = true)
+        } else if (categories.isNotEmpty()) {
+
+
+            val parent =
+                cachedCategory?.find { category -> category.suid == categories[0].suid }
+
+            childCategory.value = parent
+
+        }
     }
 
 
@@ -240,7 +300,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
 
         try {
-
             product.price_per_day = dayPrice.toDouble()
         } catch (e: Exception) {
             product.price_per_day = 0.0
@@ -262,13 +321,20 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             product.price_per_month = 0.0
             AppDebug.log(TAG, e)
         }
-        if (!updateSuid.isNullOrEmpty()) {
+        if (!updateSuid.isNullOrEmpty() && (product.price_per_day ?: 0.toDouble()) > 0) {
 
             updateProduct(product)
-        } else if (product.price_per_day ?: 0.toDouble() > 0 || product.price_per_week ?: 0.toDouble() > 0 || product.price_per_month ?: 0.toDouble() > 0)
+        } else if (
+            (product.price_per_day ?: 0.0) > 0
+//            ||
+//            (product.price_per_week ?: 0.toDouble()) > 0 ||
+//            (product.price_per_month ?: 0.toDouble()) > 0
+
+
+        )
             viewState.value = StateEnum.Location
         else
-            errorMessage.value = context.getString(R.string.error_set_price)
+            errorMessage.value = resourcesRepository.getString(R.string.error_set_price)
 
     }
 
@@ -286,7 +352,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             } else
                 createProduct()
         } else
-            errorMessage.value = context.getString(R.string.error_set_location)
+            errorMessage.value = resourcesRepository.getString(R.string.error_set_location)
 
 
     }
@@ -297,7 +363,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         createPostSubscription?.dispose()
 
         createPostSubscription = productRepository.productCreate(
-            userRepository.getUserToken(),
             product
         )
             .doOnSubscribe { loadingButton.value = true }
@@ -323,7 +388,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         deleteImageSubscription =
             image.suid?.let {
                 contentRepository.deleteImage(
-                    userRepository.getUserToken(),
                     it
                 )
                     .doOnSubscribe {
@@ -361,6 +425,16 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+
+    fun onClickSelectImage(image: Image) {
+
+        if (!image.isSelected) {
+            adapter.selectImage(image)
+        }
+
+
+    }
+
     fun onClickAddImage() {
         showImagePicker.value = true
     }
@@ -375,7 +449,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
     fun onClickAddInsuranceImage() {
 //        showPickerNext.value = true
-        showInsurancePicker.value=true
+        showInsurancePicker.value = true
     }
 
     fun onClickInsuranceNext() {
@@ -390,7 +464,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             this.suid = null
         }
 
-        insuranceImage.value=uri.toString()
+        insuranceImage.value = uri.toString()
 
 
     }
@@ -414,8 +488,17 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         if (resault && !imagesTemp.isNullOrEmpty()) {
 
-            product.avatar = imagesTemp[0].url
-            product.avatar_suid = imagesTemp[0].suid
+            imagesTemp.forEach {
+                if (it.isSelected) {
+
+
+                    product.avatar = it.url
+                    product.avatar_suid = it.suid
+                }
+            }
+//            product.avatar = imagesTemp[0].url
+//            product.avatar_suid = imagesTemp[0].suid
+//
             product.images = imagesTemp
 
 
@@ -448,7 +531,6 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 //
         uploadSubscriptionList.add(model.uri?.let {
             contentRepository.uploadImageWithoutProgress(
-                userRepository.getUserToken(),
                 it
             )
                 .doOnSubscribe { model.progress.value = true }
@@ -473,7 +555,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
         updateproductSubscription?.dispose()
         updateproductSubscription =
             updateSuid?.let {
-                productRepository.productUpdate(userRepository.getUserToken(), it, product)
+                productRepository.productUpdate(it, product)
                     .doOnSubscribe { loadingButton.value = true }
                     .doOnTerminate { loadingButton.value = false }
                     .subscribe { result ->
@@ -498,14 +580,30 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
         getproductSubscription?.dispose()
         getproductSubscription =
-            productRepository.getProduct(userRepository.getUserToken(), suid)
+            productRepository.getProduct(suid)
                 .doOnSubscribe { loading.value = true }
                 .doOnTerminate { loading.value = false }
                 .subscribe { result ->
                     if (result.isSuccess()) {
                         when (state) {
                             StateEnum.Image -> {
-                                result.data?.images?.let { adapter.addRemoteImage(it) }
+
+
+                                result.data?.images?.let { imageList ->
+
+                                    result.data.avatar?.let { url ->
+
+                                        imageList.forEach { image ->
+                                            if (image.url?.compareTo(url) == 0)
+                                                image.isSelected = true
+                                        }
+
+                                    }
+
+
+                                    adapter.addRemoteImage(imageList)
+                                }
+
 
                             }
                             StateEnum.Price -> {
@@ -537,26 +635,42 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
 
                             StateEnum.Category -> {
 
+
                                 result.data?.categories?.let {
+
+
+//                                    val allCategory = categoryRepository.getCategories()
+//
+//                                    if (!allCategory.isNullOrEmpty()) {
+//
+//                                        if(it.isNotEmpty()){
+//                                            allCategory.forEach {  }
+//                                        }
+//
+//
+//
+//
+//                                    } else {
+
 
                                     categories.clear()
                                     categories.addAll(it)
-
 
                                     if (categories.size > 1) {
                                         categories[0].sub_categories = listOf(categories[1])
                                         categories.removeAt(1)
                                     }
-
-
                                 }
+//
+//                                }
 
 
                                 productSubCategoryVisibility.value = View.GONE
                                 productSubCategoryTitle.value = ""
 
-
                                 if (categories.isNotEmpty()) {
+
+
                                     productCategoryTitle.value = categories[0].title
 
 

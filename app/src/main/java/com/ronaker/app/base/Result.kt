@@ -1,10 +1,9 @@
 package com.ronaker.app.base
 
-import com.ronaker.app.utils.AppDebug
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 
-open class Result<T>(val data: T? = null, val error: NetworkError? = null ) {
+open class Result<T>(val data: T? = null, val error: NetworkError? = null) {
     companion object {
         fun <T> fromData(data: T): Result<T> {
 //            AppDebug.log("toResult fromData",data.toString())
@@ -29,7 +28,7 @@ open class Result<T>(val data: T? = null, val error: NetworkError? = null ) {
 
 
     fun isAcceptable(): Boolean {
-        return  error?.httpError==NetworkError.HttpError.HttpResponseSuccessOK
+        return error?.httpError == NetworkError.HttpError.HttpResponseSuccessOK
     }
 
 
@@ -37,7 +36,6 @@ open class Result<T>(val data: T? = null, val error: NetworkError? = null ) {
 
 fun <T> Observable<T>.toResult(): Observable<Result<T>> {
     return map {
-
 
 
         Result.fromData(it)

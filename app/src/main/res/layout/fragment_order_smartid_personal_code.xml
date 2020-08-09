@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.orderAuthorization.OrderAuthorizationViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+<!--        <androidx.core.widget.NestedScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fillViewport="true"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:gravity="start"
+                    android:text="@string/text_please_read_and_sign_the_contract"
+                    android:textAppearance="@style/TextAppearance.Heading.2"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:text="@string/text_you_must_sign_the_contract_exactly_before_start_renting"
+                    android:textAppearance="@style/TextAppearance.Medium.SB"
+                    android:textColor="@color/colorTextDark"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@id/title" />
+        <RelativeLayout
+            app:layout_constraintTop_toBottomOf="@id/description"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:id="@+id/div"
+            android:background="@color/colorPlatinGrey"/>
+
+
+                <!--                <com.github.barteksc.pdfviewer.PDFView-->
+                <!--                    android:id="@+id/pdfView"-->
+
+                <!--                    android:layout_marginTop="@dimen/margin_medium"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/title"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="0dp"/>-->
+
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/div" />
+
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </androidx.core.widget.NestedScrollView>-->
+
+
+        <com.ronaker.app.utils.view.ButtonComponent
+            android:id="@+id/next_button"
+            style="@style/Button.circle.accent"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/title_button_next"
+
+            android:onClick="@{()->viewModel.onPersonalCodeNext()}"
+            app:buttonSrc="@drawable/ic_smart_id_logo"
+            app:buttonType="Image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:mutableButtonLoading="@{viewModel.getCodeLoadingButton()}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

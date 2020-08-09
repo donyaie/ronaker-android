@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
-import io.reactivex.disposables.Disposable
 
 class OrderMessageFragment : BaseFragment(), IPagerFragment {
 
@@ -18,9 +16,14 @@ class OrderMessageFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: OrderCreateViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_message, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_order_message, container, false)
         activity?.let {
             viewModel = ViewModelProvider(it).get(OrderCreateViewModel::class.java)
             binding.viewModel = viewModel
@@ -32,7 +35,6 @@ class OrderMessageFragment : BaseFragment(), IPagerFragment {
     }
 
 
-
     companion object {
 
         fun newInstance(): OrderMessageFragment {
@@ -41,10 +43,6 @@ class OrderMessageFragment : BaseFragment(), IPagerFragment {
     }
 
     override fun onSelect() {
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
 }

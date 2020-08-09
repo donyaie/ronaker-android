@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -66,8 +65,8 @@ class ProfileSettingActivity : BaseActivity() {
 
 
         viewModel.retry.observe(this, Observer { value ->
-            
-            value?.let {   binding.loading.showRetry(it) }?:run{binding.loading.hideRetry()}
+
+            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
 
         binding.loading.oClickRetryListener = View.OnClickListener {
@@ -77,23 +76,23 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        binding.logoutLayout.setOnClickListener{
-         showLogoutDialog()
+        binding.logoutLayout.setOnClickListener {
+            showLogoutDialog()
 
         }
-        binding.downloadLayout.setOnClickListener{
+        binding.downloadLayout.setOnClickListener {
 
         }
 
 
-        binding.languageLayout.setOnClickListener{
+        binding.languageLayout.setOnClickListener {
             LanguageDialog.showDialog(this)
         }
 
 
         binding.licenseLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this,LICENSE_URL)
+            IntentManeger.openUrl(this, TERM_URL)
         }
 
         binding.privacyLayout.setOnClickListener {
@@ -114,8 +113,10 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        binding.versionText.text = String.format(getString(R.string.versionNameFormat) ,getString(R.string.app_version))  //  "--Version V${BuildConfig.VERSION_NAME}--"
-
+        binding.versionText.text = String.format(
+            getString(R.string.versionNameFormat),
+            getString(R.string.app_version)
+        )  //  "--Version V${BuildConfig.VERSION_NAME}--"
 
 
     }
@@ -123,12 +124,10 @@ class ProfileSettingActivity : BaseActivity() {
     override fun onStart() {
 
         super.onStart()
-           viewModel.loadData()
+        viewModel.loadData()
 
 
     }
-
-
 
 
     private fun showLogoutDialog() {
@@ -140,7 +139,7 @@ class ProfileSettingActivity : BaseActivity() {
             dialog?.cancel()
             viewModel.logout()
             getAnalytics()?.actionLogout()
-            startActivity(DashboardActivity.newInstance(this) )
+            startActivity(DashboardActivity.newInstance(this))
             AnimationHelper.setFadeTransition(this)
         }
         builder.setNegativeButton(getString(android.R.string.cancel))

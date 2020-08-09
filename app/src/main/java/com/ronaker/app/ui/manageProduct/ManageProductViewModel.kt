@@ -12,7 +12,7 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ManageProductViewModel (app: Application): BaseViewModel(app) {
+class ManageProductViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -43,23 +43,24 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
     private var subscription: Disposable? = null
     private var updateActivesubscription: Disposable? = null
 
-    var  mSuid:String?=null
+    var mSuid: String? = null
 
     fun loadProduct(product: Product) {
         mProduct = product
-        mSuid=mProduct.suid
+        mSuid = mProduct.suid
         fillProduct(product)
     }
 
     fun loadProduct(suid: String) {
 
-        mSuid=suid
+        mSuid = suid
         subscription?.dispose()
         subscription = productRepository
-            .getProduct(userRepository.getUserToken(), suid)
+            .getProduct( suid)
 
             .doOnSubscribe { //retry.value = null;
-                loading.value = true }
+                loading.value = true
+            }
             .doOnTerminate { loading.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
@@ -71,7 +72,7 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
 
                 } else {
 //                    retry.value = result.error?.message
-                     errorMessage.value = result.error?.message
+                    errorMessage.value = result.error?.message
                 }
             }
 
@@ -118,7 +119,7 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    fun retry(){
+    fun retry() {
         mSuid?.let { loadProduct(it) }
     }
 
@@ -130,7 +131,7 @@ class ManageProductViewModel (app: Application): BaseViewModel(app) {
             if (active) Product.ActiveStatusEnum.Active.key else Product.ActiveStatusEnum.Deactive.key
 
         updateActivesubscription = productRepository
-            .productUpdate(userRepository.getUserToken(), mSuid ?: "", product)
+            .productUpdate( mSuid ?: "", product)
 
             .doOnSubscribe { loadingAction.value = true }
             .doOnTerminate { loadingAction.value = false }

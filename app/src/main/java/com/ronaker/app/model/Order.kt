@@ -20,14 +20,19 @@ data class Order(
     val orderUser: User?,
     val rejectionReason: String?,
     val address: String?,
-    val instruction: String?
+    val instruction: String?,
+    val isArchived: Boolean = false,
+    val smart_id_creator_session_id: String?,
+    val smart_id_owner_session_id: String?,
+    val signPdf_EN: String? ,
+    val signPdf_LT: String?
 ) : Parcelable {
 
 
     override fun equals(other: Any?): Boolean {
 
-        if(other is Order)
-            return this.hashCode()==other.hashCode()
+        if (other is Order)
+            return this.hashCode() == other.hashCode()
 
 
         return super.equals(other)
@@ -164,19 +169,25 @@ fun List<OrderResponseModel>.toOrderList(): List<Order> {
 
 fun OrderResponseModel.toOrderModel(): Order {
     return Order(
-        suid,
-        message,
-        start_date,
-        end_date,
-        prices?.toOrderPriceList(),
-        order_type,
-        status,
-        product.toProduct(),
-        product_owner?.toUserModel(),
-        order_user?.toUserModel(),
-        rejection_reason,
-        address,
-        instruction
+        suid = suid,
+        message = message,
+        fromDate = start_date,
+        toDate = end_date,
+        price = prices?.toOrderPriceList(),
+        orderType = order_type,
+        status = status,
+        product = product.toProduct(),
+        productOwner = product_owner?.toUserModel(),
+        orderUser = order_user?.toUserModel(),
+        rejectionReason = rejection_reason,
+        address = address,
+        instruction = instruction,
+        isArchived = is_archived,
+        smart_id_creator_session_id = smart_id_creator_session_id,
+        smart_id_owner_session_id = this.smart_id_owner_session_id,
+        signPdf_EN = sign_pdf?.en,
+        signPdf_LT = sign_pdf?.lt
+
     )
 
 

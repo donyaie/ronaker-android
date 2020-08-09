@@ -1,11 +1,8 @@
 package com.ronaker.app.utils.view
 
-import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.widget.RelativeLayout
-import com.ronaker.app.R
 
 class StatusBarSizeView : RelativeLayout {
 

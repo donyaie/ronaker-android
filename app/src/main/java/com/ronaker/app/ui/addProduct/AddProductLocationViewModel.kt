@@ -1,11 +1,11 @@
 package com.ronaker.app.ui.addProduct
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.GoogleMapRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -13,7 +13,7 @@ import com.ronaker.app.model.Place
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
+class AddProductLocationViewModel(app: Application) : BaseViewModel(app) {
 
     internal val TAG = AddProductLocationViewModel::class.java.name
 
@@ -28,12 +28,14 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
 
 
     @Inject
-    lateinit var context: Context
+    lateinit var productRepository: ProductRepository
 
     @Inject
-    lateinit var productRepository: ProductRepository
-    @Inject
     lateinit var googleMapRepository: GoogleMapRepository
+
+    @Inject
+    lateinit var resourcesRepository: ResourcesRepository
+
 
 
     private var getPlaceByidSubscription: Disposable? = null
@@ -42,7 +44,7 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
 
     var mPlace: Place? = null
 
-    fun getPlace():Place?{
+    fun getPlace(): Place? {
         return mPlace
     }
 
@@ -77,16 +79,15 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
 
                     result?.let {
 
-                        mPlace=it
+                        mPlace = it
                         newLocation.value = it.latLng
                         placeName.value = it.mainText
                     }
 
 
                 },
-                {error-> error.message}
+                { error -> error.message }
             )
-
 
 
     }
@@ -95,8 +96,8 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
         getPlaceWithLocationSubscription?.dispose()
 
         getPlaceWithLocationSubscription = googleMapRepository.getGeocode(target)
-            .doOnSubscribe {  }
-            .doOnTerminate {  }
+            .doOnSubscribe { }
+            .doOnTerminate { }
             .subscribe(
                 { result ->
 
@@ -107,10 +108,10 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
                         placeName.value = it.mainText
 
 
-                    }?: run{
+                    } ?: run {
 
                         mPlace = null
-                        placeName.value = context.getString(R.string.title_search_your_location)
+                        placeName.value = resourcesRepository.getString(R.string.title_search_your_location)
                     }
 
 
@@ -119,7 +120,7 @@ class AddProductLocationViewModel (app: Application): BaseViewModel(app) {
 
 
                     mPlace = null
-                    placeName.value = context.getString(R.string.title_search_your_location)
+                    placeName.value = resourcesRepository.getString(R.string.title_search_your_location)
                     error.message
 
 

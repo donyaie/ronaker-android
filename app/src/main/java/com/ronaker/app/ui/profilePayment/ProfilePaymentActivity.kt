@@ -133,8 +133,6 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             }
 
 
-
-
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -159,7 +157,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
         })
 
-        binding.expireInput.maxLength=4
+        binding.expireInput.maxLength = 4
 
 //        binding.expireInput.addTextChangedListener(object :TextWatcher{
 //            override fun afterTextChanged(s: Editable?) {
@@ -181,7 +179,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //
 //        })
 
-        binding.expireInput.addTextChangedListener(  ExpiryDateTextWatcher())
+        binding.expireInput.addTextChangedListener(ExpiryDateTextWatcher())
 
 
 
@@ -195,10 +193,10 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
-    fun save(){
+    fun save() {
         if (
             binding.expireInput.checkValid() &&
-            binding.cvvInput.checkValid()  &&
+            binding.cvvInput.checkValid() &&
             binding.nameInput.checkValid() &&
             binding.addressInput.checkValid() &&
             binding.addressLine2Input.checkValid() &&
@@ -207,10 +205,10 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             binding.addressPostalInput.checkValid()
         ) {
 
-            if( PaymentCard.CardType.detect( binding.cardEdit.text.toString())==PaymentCard.CardType.UNKNOWN){
+            if (PaymentCard.CardType.detect(binding.cardEdit.text.toString()) == PaymentCard.CardType.UNKNOWN) {
 
                 Alert.makeTextError(this, "Please inter valid card Checkout")
-            }else {
+            } else {
 
                 viewModel.save(
                     binding.cardEdit.text.toString(),
@@ -388,10 +386,6 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 //            AppDebug.Log("Card",resultDisplayStr)
 //        }
 //    }
-
-
-
-
 
 
 }

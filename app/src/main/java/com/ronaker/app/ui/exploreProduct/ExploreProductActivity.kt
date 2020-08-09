@@ -5,14 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import android.transition.ChangeBounds
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import android.transition.Fade
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -171,6 +176,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             })
 
 
+
+
             viewModel.loadingRefresh.observe(this, Observer { loading ->
                 binding.refreshLayout.isRefreshing = loading
 
@@ -315,7 +322,9 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-        Handler().postDelayed({
+
+
+        Handler(Looper.getMainLooper()).postDelayed({
             binding.scrollView.smoothScrollTo(0, 0)
             binding.toolbar.isTransparent = true
             binding.toolbar.isBottomLine = false

@@ -49,21 +49,21 @@
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
 
-                        android:layout_marginTop="24dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:text="@string/caption_title"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
                         app:layout_constraintTop_toBottomOf="@id/avatar_slide"
-                        app:mutableText="@{viewModel.getProductTitle()}" />
+                        app:mutableTextFade="@{viewModel.getProductTitle()}" />
 
 
 
 
                         <ImageView
-                            android:layout_marginStart="24dp"
+                            android:layout_marginStart="@dimen/margin_default"
                             android:layout_marginTop="10dp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
@@ -85,7 +85,7 @@
                                 android:id="@+id/rate_text"
                                 android:layout_marginStart="8dp"
                                 android:textAppearance="@style/TextAppearance.Large.SB"
-                                app:mutableText="@{viewModel.getProductRate()}"
+                                app:mutableTextFade="@{viewModel.getProductRate()}"
                               />
 
                             <TextView
@@ -98,7 +98,7 @@
                                 android:layout_marginStart="8dp"
                                 android:id="@+id/rate_title"
                                 android:textAppearance="@style/TextAppearance.Medium.Light"
-                                app:mutableText="@{viewModel.getProductRatestatus()}" />
+                                app:mutableTextFade="@{viewModel.getProductRatestatus()}" />
 
 
 
@@ -118,7 +118,7 @@
 
                             android:singleLine="true"
                             android:textAppearance="@style/TextAppearance.Large.Regular"
-                            app:mutableText="@{viewModel.getUserName()}" />
+                            app:mutableTextFade="@{viewModel.getUserName()}" />
 
 
                     <com.makeramen.roundedimageview.RoundedImageView
@@ -128,7 +128,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
 
                         android:id="@+id/userAvatar"
-                        android:layout_marginEnd="24dp"
+                        android:layout_marginEnd="@dimen/margin_default"
                         android:background="@drawable/ic_profile"
                         app:mutableImage="@{viewModel.getUserImage()}"
                         app:riv_corner_radius="21dp"
@@ -141,15 +141,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginTop="16dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:layout_marginBottom="16dp"
                         android:minLines="4"
                         android:text="@string/caption_title"
                         android:textAppearance="@style/TextAppearance.Medium.Light"
                         app:layout_constraintTop_toBottomOf="@id/userAvatar"
-                        app:mutableText="@{viewModel.getProductDescription()}" />
+                        app:mutableTextFade="@{viewModel.getProductDescription()}" />
 
 
                     <!--                    <fragment-->
@@ -174,10 +174,10 @@
                         android:layout_height="match_parent"
 
                         android:layout_gravity="center"
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginTop="16dp"
 
-                        android:layout_marginRight="24dp"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:background="@color/white"
                         android:elevation="16dp"
                         android:gravity="start|center_vertical"
@@ -191,7 +191,7 @@
                         android:textColor="@color/colorTextGreyLight"
 
                         app:layout_constraintTop_toTopOf="@id/map"
-                        app:mutableText="@{viewModel.getProductAddress()}"
+                        app:mutableTextFade="@{viewModel.getProductAddress()}"
                          />
 
 
@@ -201,9 +201,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginTop="16dp"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginRight="@dimen/margin_default"
                         android:text="@string/text_reviews"
                         android:textAppearance="@style/TextAppearance.Large.SB"
                         android:textColor="@color/colorTextDark"
@@ -283,7 +283,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
 
                 app:layout_constraintTop_toTopOf="parent"
-                app:mutableText="@{viewModel.getProductPrice()}"
+                app:mutableTextFade="@{viewModel.getProductPrice()}"
 
                 />
 
@@ -297,7 +297,7 @@
                 android:textAppearance="@style/TextAppearance.Small.Regular"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/price"
-                app:mutableText="@{viewModel.getProductPriceTitle()}"
+                app:mutableTextFade="@{viewModel.getProductPriceTitle()}"
 
                 />
 
@@ -314,7 +314,7 @@
                 style="@style/Button.accent"
                 android:layout_width="wrap_content"
 
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="@dimen/margin_default"
                 android:onClick="@{()->viewModel.checkOut()}"
                 android:text="@string/title_button_check_out"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -13,7 +13,7 @@ import com.ronaker.app.utils.extension.getParentActivity
 
 class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private  var list: ArrayList<Image> = ArrayList()
+    private var list: ArrayList<Image> = ArrayList()
 
 
     private val EmptyType = 0
@@ -61,7 +61,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return  list.size
+        return list.size
     }
 
     fun updateproductList() {
@@ -77,19 +77,33 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
     }
 
     fun addLocalImage(uri: Uri?) {
+
+
+        var selected = false
+        list.forEach { if (it.isSelected) selected = true }
+
         list.add(
             Image(
-                null,
-                null,
-                uri,
-                true
+                url = null,
+                suid = null,
+                uri = uri,
+                isLocal = true,
+                isSelected = !selected
             )
         )
-        notifyDataSetChanged()
+
+
+
+        notifyItemInserted(list.size-1)
+
+//        notifyDataSetChanged()
     }
 
 
     fun addRemoteImage(imageList: List<Image>) {
+        list.clear()
+
+        list.add(Image())
         list.addAll(imageList)
         notifyDataSetChanged()
     }
@@ -98,6 +112,11 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
 
         list.remove(image)
+
+        if(image.isSelected && list.size>1){
+            list[1].isSelected=true
+        }
+
         notifyDataSetChanged()
     }
 
@@ -112,7 +131,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
     fun getimages(): ArrayList<Image> {
 
-        val list= ArrayList<Image>()
+        val list = ArrayList<Image>()
 
         if (this.list.size <= 1)
             return list
@@ -122,6 +141,19 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
         list.removeAt(0)
 
         return list
+    }
+
+    fun selectImage(image: Image) {
+        var lastSelected: Image? = null
+        this.list.forEach { if (it.isSelected) lastSelected = it }
+        lastSelected?.let {
+
+            it.isSelected = false
+            notifyItemChanged(list.indexOf(it))
+        }
+        image.isSelected = true
+        notifyItemChanged(list.indexOf(image))
+
     }
 
 
@@ -135,7 +167,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
         fun bind(product: Image) {
             binding.viewModel = viewModel
             binding.baseViewModel = baseViewModel
-            viewModel.bind(product,binding.root.getParentActivity() )
+            viewModel.bind(product, binding.root.getParentActivity())
 
 
         }
@@ -145,7 +177,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
 
     class EmptyViewHolder(
         private val binding: AdapterProductAddImageEmptyBinding,
-        private  val baseViewModel: AddProductViewModel
+        private val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
 

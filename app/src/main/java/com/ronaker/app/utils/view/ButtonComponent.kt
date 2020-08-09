@@ -3,20 +3,16 @@ package com.ronaker.app.utils.view
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.jakewharton.rxbinding2.view.clickable
-import com.jakewharton.rxbinding2.view.enabled
 import com.ronaker.app.R
 import com.ronaker.app.utils.extension.getParentActivity
 import com.wang.avi.AVLoadingIndicatorView
@@ -27,12 +23,11 @@ import kotlinx.android.synthetic.main.component_button.view.*
 fun setMutableRadioChecked(view: ButtonComponent, url: MutableLiveData<Boolean>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && url != null) {
-        url.observe(parentActivity, Observer {value -> view.loading=value })
+    if (parentActivity != null && url != null) {
+        url.observe(parentActivity, Observer { value -> view.loading = value })
 
     }
 }
-
 
 
 class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
@@ -70,26 +65,26 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
     var loading: Boolean = false
         set(value) {
 
-            if(value){
-                this.isEnabled=false
-                this.isClickable=false
-                progress.visibility= View.VISIBLE
-                imageView.visibility= View.GONE
-                textView.visibility=View.GONE
-            }else{
-                progress.visibility= View.GONE
+            if (value) {
+                this.isEnabled = false
+                this.isClickable = false
+                progress.visibility = View.VISIBLE
+                imageView.visibility = View.GONE
+                textView.visibility = View.GONE
+            } else {
+                progress.visibility = View.GONE
 
-                this.isEnabled=true
-                this.isClickable=true
+                this.isEnabled = true
+                this.isClickable = true
 
-                when(buttonType){
-                    ButtonType.Text->{
+                when (buttonType) {
+                    ButtonType.Text -> {
 
-                        textView.visibility=View.VISIBLE
+                        textView.visibility = View.VISIBLE
                     }
-                    ButtonType.Image->{
+                    ButtonType.Image -> {
 
-                        imageView.visibility= View.VISIBLE
+                        imageView.visibility = View.VISIBLE
                     }
                 }
             }
@@ -102,21 +97,20 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
     var buttonType: ButtonType = ButtonType.Text
         set(value) {
 
-            when(value){
-                ButtonType.Text->{
-                    imageView.visibility= View.GONE
-                    textView.visibility= View.VISIBLE
+            when (value) {
+                ButtonType.Text -> {
+                    imageView.visibility = View.GONE
+                    textView.visibility = View.VISIBLE
                 }
-                ButtonType.Image->{
+                ButtonType.Image -> {
 
-                    imageView.visibility= View.VISIBLE
-                    textView.visibility= View.GONE
+                    imageView.visibility = View.VISIBLE
+                    textView.visibility = View.GONE
                 }
             }
 
             field = value
         }
-
 
 
     enum class ButtonType {
@@ -133,7 +127,7 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
             .inflate(R.layout.component_button, this, true)
 
 
-        isClickable=true
+        isClickable = true
 
         imageView = findViewById(R.id.image)
         textView = findViewById(R.id.text)
@@ -161,7 +155,8 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
             src = typedArray.getDrawable(R.styleable.ButtonComponent_buttonSrc)
 
 
-            loadingColor=typedArray.getColor(R.styleable.ButtonComponent_loadingColor,Color.WHITE)
+            loadingColor =
+                typedArray.getColor(R.styleable.ButtonComponent_loadingColor, Color.WHITE)
 
 
             buttonType = ButtonType.values()[typedArray
@@ -173,16 +168,13 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
 
 
 
-            loading=false
+            loading = false
 
 
 
             typedArray.recycle()
         }
     }
-
-
-
 
 
 }

@@ -2,8 +2,9 @@ package com.ronaker.app.ui.explore
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -38,9 +37,12 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         viewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
 
+
+        binding.viewModel = viewModel
+
         var visibleItemCount: Int
-        var totalItemCount : Int
-        var pastVisiblesItems : Int
+        var totalItemCount: Int
+        var pastVisiblesItems: Int
 
         val screenMnager = ScreenCalculator(requireContext())
 
@@ -55,9 +57,6 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             count = 2
 
 
-        binding.viewModel = viewModel
-
-
         binding.categoryRecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
@@ -66,6 +65,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
         binding.loading.hideLoading()
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
+        ViewCompat.setNestedScrollingEnabled(binding.categoryRecycler, false)
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
@@ -189,37 +189,37 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             viewModel.clearSearch()
         }
+        Handler(Looper.getMainLooper()).postDelayed({ binding.header.elevation = 0f }, 100)
 
 
-
-
-        binding.categoryRecycler.addItemDecoration(object : ItemDecoration() {
-
-            private val mEndOffset =
-                context?.resources?.getDimensionPixelSize(R.dimen.margin_default) ?: 0
-
-
-            override fun getItemOffsets(
-                outRect: Rect,
-                view: View,
-                parent: RecyclerView,
-                state: RecyclerView.State
-            ) {
-
-
-                super.getItemOffsets(outRect, view, parent, state)
-
-                val dataSize = state.itemCount
-                val position: Int = parent.getChildAdapterPosition(view)
-                if (dataSize > 0 && position == 0) {
-                    outRect.set(mEndOffset, 0, 0, 0)
-                } else {
-
-                    outRect.set(0, 0, 0, 0)
-                }
-            }
-
-        })
+//
+//        binding.categoryRecycler.addItemDecoration(object : ItemDecoration() {
+//
+//            private val mEndOffset =
+//                context?.resources?.getDimensionPixelSize(R.dimen.margin_default) ?: 0
+//
+//
+//            override fun getItemOffsets(
+//                outRect: Rect,
+//                view: View,
+//                parent: RecyclerView,
+//                state: RecyclerView.State
+//            ) {
+//
+//
+//                super.getItemOffsets(outRect, view, parent, state)
+//
+//                val dataSize = state.itemCount
+//                val position: Int = parent.getChildAdapterPosition(view)
+//                if (dataSize > 0 && position == 0) {
+//                    outRect.set(mEndOffset, 0, 0, 0)
+//                } else {
+//
+//                    outRect.set(0, 0, 0, 0)
+//                }
+//            }
+//
+//        })
 
 
         if (activity is DashboardActivity)

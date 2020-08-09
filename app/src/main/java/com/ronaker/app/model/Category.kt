@@ -9,13 +9,23 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Category(
     var suid: String
-    , var title: String
+    , var title: String?
     , var avatar: String
-    , var sub_categories: List<Category>?
-): Parcelable{
+    , var sub_categories: List<Category>?=null
+) : Parcelable {
     @IgnoredOnParcel
-    var isSelected=false
+    var isSelected = false
+
+
+
+    fun copy():Category{
+
+        return this.copy(suid= suid,title = title,avatar = avatar)
+    }
+
+
 }
+
 
 
 fun List<CategoriesResponseModel>.toCategoryList(): List<Category> {
@@ -25,11 +35,11 @@ fun List<CategoriesResponseModel>.toCategoryList(): List<Category> {
 
     this.forEach {
 
-        val value = Category(it.suid, it.title,it.avatar,ArrayList())
+        val value = Category(it.suid, it.title, it.avatar, ArrayList())
 
 
-        if(it.sub_categories!=null && it.sub_categories.isNotEmpty() )
-            value.sub_categories=it.sub_categories.toCategoryList()
+        if (it.sub_categories != null && it.sub_categories.isNotEmpty())
+            value.sub_categories = it.sub_categories.toCategoryList()
         list.add(value)
     }
 

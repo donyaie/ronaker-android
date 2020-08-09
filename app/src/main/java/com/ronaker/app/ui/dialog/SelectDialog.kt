@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,12 +31,10 @@ class SelectDialog : BaseDialog() {
 
 
     var itemList: List<SelectItem> = ArrayList()
-    var selectedItem: SelectItem ?=null
+    var selectedItem: SelectItem? = null
 
 
-
-    var title: String?=null
-
+    var title: String? = null
 
 
     private var dialogResult = DialogResultEnum.NONE
@@ -58,7 +55,7 @@ class SelectDialog : BaseDialog() {
     }
 
 
-    data class SelectItem(var id :String,var title:String)
+    data class SelectItem(var id: String, var title: String)
 
 
     override fun onCreateView(
@@ -82,8 +79,8 @@ class SelectDialog : BaseDialog() {
 
 
         viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
-            selectedItem=value
-            dialogResult= DialogResultEnum.OK
+            selectedItem = value
+            dialogResult = DialogResultEnum.OK
             stop()
         })
 
@@ -97,15 +94,11 @@ class SelectDialog : BaseDialog() {
 
         viewModel.searchLocation(itemList)
 
-        viewModel.title.value=title
+        viewModel.title.value = title
 
 
         return rootView
     }
-
-
-
-
 
 
     internal fun initilizeAdapter() {
@@ -115,8 +108,6 @@ class SelectDialog : BaseDialog() {
 
 
     }
-
-
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -158,7 +149,6 @@ class SelectDialog : BaseDialog() {
         }
 
 
-
     }
 
 
@@ -172,7 +162,7 @@ class SelectDialog : BaseDialog() {
 
     override fun onDismiss(dialog: DialogInterface) {
 
-        dialogResultListener?.onDialogResult(dialogResult,selectedItem)
+        dialogResultListener?.onDialogResult(dialogResult, selectedItem)
 
 
 
@@ -191,7 +181,7 @@ class SelectDialog : BaseDialog() {
 
 
     interface OnDialogResultListener {
-        fun onDialogResult(result: DialogResultEnum,selectedItem:SelectItem?)
+        fun onDialogResult(result: DialogResultEnum, selectedItem: SelectItem?)
 
     }
 
@@ -207,14 +197,14 @@ class SelectDialog : BaseDialog() {
 
         }
 
-        fun setTitle(title:String ): DialogBuilder {
+        fun setTitle(title: String): DialogBuilder {
 
             dialog.title = title
             return this
 
         }
 
-        fun setItems(items:List<SelectItem> ): DialogBuilder {
+        fun setItems(items: List<SelectItem>): DialogBuilder {
 
             dialog.itemList = items
             return this

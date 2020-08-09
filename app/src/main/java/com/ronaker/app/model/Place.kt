@@ -3,7 +3,7 @@ package com.ronaker.app.model
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.response.GoogleAutocompleteResponseModel
 import com.ronaker.app.data.network.response.GooglePlaceDetailResponseModel
-import com.ronaker.app.data.network.response.MapGeoCodeResponceModel
+import com.ronaker.app.data.network.response.MapGeoCodeResponseModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,8 +50,7 @@ fun GooglePlaceDetailResponseModel.GooglePlaceResultResponseModel.toPlace(): Pla
 
 }
 
-fun MapGeoCodeResponceModel.converGeoToPlace(): Place? {
-
+fun MapGeoCodeResponseModel.converGeoToPlace(): Place? {
 
 
     var country: String? = null
@@ -101,7 +100,6 @@ fun MapGeoCodeResponceModel.converGeoToPlace(): Place? {
                         }
 
                     }
-
 
 
                 }

@@ -1,33 +1,67 @@
 package com.ronaker.app.ui.orders
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
+import com.ronaker.app.data.OrderRepository
+import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
-import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
+import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
+class OrderItemViewModel(app: Application) : BaseViewModel(app) {
+
+
+    @Inject
+    lateinit
+    var resourcesRepository: ResourcesRepository
+
+
+    @Inject
+    lateinit var orderRepository: OrderRepository
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
+
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
     private val productDate = MutableLiveData<String>()
     private val orderStatus = MutableLiveData<String>()
     private val orderStatusImage = MutableLiveData<Int>()
+    private val archiveVisibility = MutableLiveData<Int>()
+    private val rateVisibility = MutableLiveData<Int>()
+
+
+    var mListener: OrderItemAdapter.OrderItemListener? = null
+
 
     lateinit var data: Order
-    var activity: AppCompatActivity? = null
 
-    fun bind(item: Order, context: AppCompatActivity?) {
+
+    public override fun onCleared() {
+
+        rateVisibility.postValue(View.GONE)
+        archiveVisibility.postValue(View.GONE)
+
+        super.onCleared()
+    }
+
+    fun bind(item: Order, listener: OrderItemAdapter.OrderItemListener) {
         data = item
-        activity = context
-        productTitle.value = item.product.name
-
+        mListener = listener
+        productTitle.postValue(
+            item.product.name
+        )
 
 //        val days = TimeUnit.DAYS.convert(
 //            data.toDate.time - data.fromDate.time,
@@ -44,10 +78,10 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
 
             data.price?.forEach {
                 if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.ProductFee)
-                    total =if (it.price == 0.0) 0.0 else it.price / 100.0
+                    total = if (it.price == 0.0) 0.0 else it.price / 100.0
             }
 
-        }else{
+        } else {
 
             data.price?.forEach {
                 if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.Total)
@@ -56,12 +90,12 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
 
         }
 
-        productPrice.value = total.toCurrencyFormat()
+        productPrice.postValue(total.toCurrencyFormat())
 
 
-//        productPrice.value = String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.Price)
-        productImage.value = BASE_URL + item.product.avatar
-        productDate.value =
+//        productPrice.postValue(  String.format("%s%.02f", context.getString(R.string.title_curency_symbol), item.Price)
+        productImage.postValue(BASE_URL + item.product.avatar)
+        productDate.postValue(
             SimpleDateFormat(
                 "dd MMM",
                 Locale.getDefault()
@@ -69,106 +103,167 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
                 "dd MMM",
                 Locale.getDefault()
             ).format(item.toDate)
+        )
 
 
-        val ownerName =
-            (item.productOwner?.first_name ?: "") + " " + (item.productOwner?.last_name ?: "")
+        val ownerName = nameFormat(item.productOwner?.first_name ,item.productOwner?.last_name )
 
-        val userName = (item.orderUser?.first_name ?: "") + " " + (item.orderUser?.last_name ?: "")
+        val userName =  nameFormat(item.orderUser?.first_name ,item.orderUser?.last_name )
+
+
+        archiveVisibility.postValue(View.GONE)
+
+
+        rateVisibility.postValue(View.GONE)
+
 
 
         when (Order.OrderStatusEnum[item.status]) {
             Order.OrderStatusEnum.Accepted -> {
 
-                orderStatusImage.value = R.drawable.ic_guide_success
+                orderStatusImage.postValue(R.drawable.ic_guide_success)
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
 
-                    orderStatus.value = app.getString(R.string.text_rent_request_accepted, userName)
+                    orderStatus.postValue(
+                        String.format(
+                            resourcesRepository.getString(
+                                R.string.text_rent_request_accepted
+                            ),
+                            userName
+                        )
+                    )
                 } else {
 
-                    orderStatus.value =
-                        app.getString(R.string.text_lend_request_accepted, ownerName)
+                    orderStatus.postValue(
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_accepted),
+                            ownerName
+                        )
+                    )
                 }
 
 
             }
             Order.OrderStatusEnum.Started -> {
 
-                orderStatusImage.value = R.drawable.ic_guide_success
+                orderStatusImage.postValue(
+                    R.drawable.ic_guide_success
+                )
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
 
-                    orderStatus.value = app.getString(R.string.text_rent_request_started, userName)
+                    orderStatus.postValue(
+                        String.format(
+                            resourcesRepository.getString(
+                                R.string.text_rent_request_started
+                            ),
+                            userName
+                        )
+                    )
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_request_started, ownerName)
+                    orderStatus.postValue(
+                        String.format(
+                            resourcesRepository.getString(
+                                R.string.text_lend_request_started
+                            ),
+                            ownerName
+                        )
+                    )
                 }
 
 
             }
             Order.OrderStatusEnum.Canceled -> {
 
-                orderStatusImage.value = R.drawable.ic_remove_red
+                orderStatusImage.postValue(
+                    R.drawable.ic_remove_red
+                )
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_canceled)
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_canceled))
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_canceled)
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_lend_canceled))
                 }
 
 
+                if (!item.isArchived)
+                    archiveVisibility.postValue(View.VISIBLE)
             }
             Order.OrderStatusEnum.Finished -> {
 
-                orderStatusImage.value = R.drawable.ic_guide_success
+                orderStatusImage.postValue(
+                    R.drawable.ic_guide_success
+                )
+
+
+                if (!item.isArchived)
+                    archiveVisibility.postValue(View.VISIBLE)
+
 
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_complete)
-                } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_complete)
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_complete))
+                } else {
+                    rateVisibility.postValue(View.VISIBLE)
+
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_lend_complete))
                 }
             }
             Order.OrderStatusEnum.Pending -> {
 
-                orderStatusImage.value = R.drawable.ic_pending
+                orderStatusImage.postValue(
+                    R.drawable.ic_pending
+                )
 
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_request_pending)
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_request_pending))
                 } else {
-                    orderStatus.value = app.getString(R.string.text_lend_request_pending, ownerName)
+                    orderStatus.postValue(
+                        String.format(
+                        resourcesRepository.getString(
+                            R.string.text_lend_request_pending),
+                            ownerName
+                        )
+                    )
                 }
 
             }
 
             Order.OrderStatusEnum.Rejected -> {
 
-                orderStatusImage.value = R.drawable.ic_remove_red
+                orderStatusImage.postValue(
+                    R.drawable.ic_remove_red
+                )
 
 
                 if (Order.OrderTypeEnum[item.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = app.getString(R.string.text_rent_rejected)
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_rejected))
                 } else {
 
-                    orderStatus.value = app.getString(R.string.text_lend_rejected)
+                    orderStatus.postValue(resourcesRepository.getString(R.string.text_lend_rejected))
                 }
 
+                if (!item.isArchived)
+                    archiveVisibility.postValue(View.VISIBLE)
             }
             else -> {
 
-                orderStatusImage.value = R.drawable.ic_remove_red
+                orderStatusImage.postValue(
+                    R.drawable.ic_remove_red
+                )
 
-                orderStatus.value = "Not Set"
+                orderStatus.postValue("Not Set")
             }
 
 
@@ -180,7 +275,24 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
     fun onClickProduct() {
 
 
-        activity?.let { it.startActivity(OrderPreviewActivity.newInstance(it, data)) }
+        mListener?.onClickItem(data)
+
+    }
+
+    var disposable: Disposable? = null
+
+    fun onArchiveClick() {
+
+        mListener?.onClickItemArchive(data)
+
+
+    }
+
+    fun onRateClick() {
+
+        mListener?.onClickItemRate(data)
+
+//        activity?.let { it.startActivity(ProductRateActivity.newInstance(it, data)) }
     }
 
     fun getProductTitle(): MutableLiveData<String> {
@@ -207,4 +319,14 @@ class OrderItemViewModel(var app: Application) : BaseViewModel(app) {
     fun getOrderStatusImage(): MutableLiveData<Int> {
         return orderStatusImage
     }
+
+    fun getRateVisibility(): MutableLiveData<Int> {
+        return rateVisibility
+    }
+
+    fun getArchiveVisibility(): MutableLiveData<Int> {
+        return archiveVisibility
+    }
+
+
 }

@@ -9,7 +9,7 @@ import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class SearchViewModel (app: Application): BaseViewModel(app) {
+class SearchViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit
@@ -23,7 +23,6 @@ class SearchViewModel (app: Application): BaseViewModel(app) {
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-
 
 
     val productPrice: MutableLiveData<String> = MutableLiveData()
@@ -45,14 +44,10 @@ class SearchViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
-
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
     }
-
-
 
 
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.orderAuthorization.OrderAuthorizationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:gravity="center"
+        android:layoutDirection="ltr">
+        <com.ronaker.app.utils.view.ToolbarComponent
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:toolbar_component_action2src="@drawable/ic_lt_text"
+            app:toolbar_component_transparent="false"
+            app:toolbar_component_bottom_line="false"
+            app:toolbar_component_action_text="@string/text_clear"
+            app:toolbar_component_center_container="NONE"
+            app:toolbar_component_action_container="TWO_BUTTON"
+            app:toolbar_component_cancel_container="CLOSE"
+            />
+
+
+        <com.ronaker.app.utils.view.ViewPagerCustom
+            android:id="@+id/viewpager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fitsSystemWindows="true" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

@@ -6,7 +6,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import javax.inject.Inject
 
-class SplashViewModel (app: Application): BaseViewModel(app) {
+class SplashViewModel(app: Application) : BaseViewModel(app) {
 
 
     val goLogin: MutableLiveData<Boolean> = MutableLiveData()
@@ -19,7 +19,7 @@ class SplashViewModel (app: Application): BaseViewModel(app) {
     init {
         if (userRepository.isLogin())
             goDashboard.value = true
-         else
+        else
             goLogin.value = true
     }
 

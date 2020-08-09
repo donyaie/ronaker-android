@@ -4,21 +4,21 @@ import android.animation.Animator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.ronaker.app.utils.ScreenCalculator
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import java.util.ArrayList
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.injection.module.GlideApp
+import java.util.*
 
 
-class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs),
+class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
+    ConstraintLayout(context, attrs),
     ViewPager.OnPageChangeListener {
 
 
@@ -33,13 +33,13 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
     private lateinit var dots: Array<ImageView?>
 
 
-    private var screenLibrary: ScreenCalculator
+//    private var screenLibrary: ScreenCalculator
 
 
     private var containerLayout: ConstraintLayout
     private var viewPager: ViewPager
 
-    private var adapter:ImagePagerAdapter
+    private var adapter: ImagePagerAdapter
 
 
     private val dataList = ArrayList<String>()
@@ -54,10 +54,9 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
         viewPager = findViewById(R.id.viewpager)
 
         countDots = findViewById(R.id.countDots)
-        adapter=ImagePagerAdapter(context,dataList)
+        adapter = ImagePagerAdapter( dataList)
 
-        screenLibrary = ScreenCalculator(context)
-        viewPager.adapter=adapter
+        viewPager.adapter = adapter
 
         viewPager.addOnPageChangeListener(this)
 
@@ -76,7 +75,6 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
     }
 
 
-
     private fun initDotCount() {
 
         if (dotCount > 1) {
@@ -92,8 +90,8 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
                 )
 
                 val params = LinearLayout.LayoutParams(
-                    screenLibrary.DP2Pixel(9),
-                    screenLibrary.DP2Pixel(9)
+                    context.resources.getDimensionPixelSize(R.dimen.dot_size),
+                    context.resources.getDimensionPixelSize(R.dimen.dot_size)
                 )
 
                 params.setMargins(21, 0, 21, 0)
@@ -113,35 +111,28 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
     }
 
 
-
 //    fun addImageUrl(image:String){
 //        dataList.add(image)
 //        adapter.notifyDataSetChanged()
 //    }
 
-    fun addImagesUrl(image:ArrayList<String>){
+    fun addImagesUrl(image: ArrayList<String>) {
 
         dataList.addAll(image)
         adapter.notifyDataSetChanged()
-        dotCount=dataList.size
+        dotCount = dataList.size
 
         showNavigator(true, viewPager.currentItem)
     }
 
-    fun clearImage(){
+    fun clearImage() {
         dataList.clear()
         adapter.notifyDataSetChanged()
     }
 
 
-
-
-
-
-
-    private inner class ImagePagerAdapter(var context: Context,val dataList :ArrayList<String>) : PagerAdapter() {
-
-
+    private inner class ImagePagerAdapter( val dataList: ArrayList<String>) :
+        PagerAdapter() {
 
 
         override fun getCount(): Int {
@@ -153,10 +144,9 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
             return view === Object
         }
 
-//        @SuppressLint("InflateParams")
+        //        @SuppressLint("InflateParams")
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val view =    View.inflate(context,R.layout.component_image_slide_item, null)
-
+            val view = View.inflate(context, R.layout.component_image_slide_item, null)
 
 
             val imageView = view.findViewById(R.id.image) as ImageView
@@ -174,11 +164,9 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
     }
 
 
-
-
     fun showNavigator(visiable: Boolean, position: Int) {
 
-        if(dotCount<=1)
+        if (dotCount <= 1)
             return
 
         if (visiable) {
@@ -262,7 +250,7 @@ class ImageSlideComponent  constructor(context: Context, attrs: AttributeSet) : 
     }
 
     override fun onPageSelected(position: Int) {
-        showNavigator(true,position )
+        showNavigator(true, position)
     }
 
 

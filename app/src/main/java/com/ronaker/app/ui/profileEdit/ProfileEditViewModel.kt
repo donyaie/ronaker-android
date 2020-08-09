@@ -2,24 +2,21 @@ package com.ronaker.app.ui.profileEdit
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEditViewModel (app: Application): BaseViewModel(app) {
+class ProfileEditViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
     lateinit
     var userRepository: UserRepository
-    @Inject
-    lateinit
-    var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -34,12 +31,9 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
     val userAvatar: MutableLiveData<String> = MutableLiveData()
 
 
-
-
-
     private var subscription: Disposable? = null
 
-    private var mUser: User?=null
+    private var mUser: User? = null
 
 
     init {
@@ -51,7 +45,7 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
     fun loadData() {
         subscription?.dispose()
         subscription = userRepository
-            .getUserInfo(userRepository.getUserToken())
+            .getUserInfo(userRepository.getUserAuthorization())
 
             .doOnSubscribe {
 //                loading.value = true
@@ -62,9 +56,9 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                   result.data?.apply {
-                       fillUser(this)
-                   }
+                    result.data?.apply {
+                        fillUser(this)
+                    }
 
 
                 } else {
@@ -76,25 +70,24 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-     fun fillUser(user: User){
+    fun fillUser(user: User) {
 
-         mUser=user
-
-
-         user.avatar?.let {
-             userAvatar.value= BASE_URL+it
-         }
-
-         userName.value=(user.first_name?:"")+" "+(user.last_name?:"")
+        mUser = user
 
 
-         userNumber.value=user.phone_number?:""
+        user.avatar?.let {
+            userAvatar.value = BASE_URL + it
+        }
 
-         userEmail.value=user.email?:""
+        userName.value = nameFormat (user.first_name ,user.last_name )
 
 
+        userNumber.value = user.phone_number ?: ""
 
-     }
+        userEmail.value = user.email ?: ""
+
+
+    }
 
 
     fun onRetry() {
@@ -108,7 +101,7 @@ class ProfileEditViewModel (app: Application): BaseViewModel(app) {
     }
 
     fun getAvatar(): String? {
-       return mUser?.avatar
+        return mUser?.avatar
 
     }
 

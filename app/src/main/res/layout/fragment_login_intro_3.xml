@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:contentDescription="@string/caption_title"
+            android:src="@drawable/ic_onboarding_3"
+            app:layout_constraintBottom_toTopOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            app:layout_constraintBottom_toTopOf="@id/description"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorTextLight"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Heading.2"
+            android:layout_height="wrap_content"
+            android:text="@string/text_return_and_evaluate"
+            />
+
+
+        <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorTextLight"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:minLines="5"
+            android:gravity="top|center_horizontal"
+            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:layout_height="wrap_content"
+            android:text="@string/text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

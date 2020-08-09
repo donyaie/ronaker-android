@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <ImageView
+            android:contentDescription="@string/caption_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:src="@drawable/ic_onboarding_2"
+            app:layout_constraintBottom_toTopOf="@id/title"
+            />
+
+
+        <TextView
+            app:layout_constraintBottom_toTopOf="@id/description"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorTextLight"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Heading.2"
+            android:layout_height="wrap_content"
+            android:text="@string/text_rent"
+            />
+
+
+        <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorTextLight"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:minLines="5"
+            android:gravity="top|center_horizontal"
+            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:layout_height="wrap_content"
+            android:text="@string/text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

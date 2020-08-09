@@ -2,22 +2,18 @@ package com.ronaker.app.ui.profileSetting
 
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileSettingViewModel (app: Application): BaseViewModel(app) {
+class ProfileSettingViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
     lateinit
     var userRepository: UserRepository
-    @Inject
-    lateinit
-    var context: Context
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -30,7 +26,7 @@ class ProfileSettingViewModel (app: Application): BaseViewModel(app) {
     fun loadData() {
 
 //        subscription = userRepository
-//            .getUserInfo(userRepository.getUserToken())
+//            .getUserInfo()
 //
 //            .doOnSubscribe {
 //                retry.value = null
@@ -73,10 +69,9 @@ class ProfileSettingViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-    fun logout(){
+    fun logout() {
         userRepository.clearLogin()
     }
-
 
 
 }

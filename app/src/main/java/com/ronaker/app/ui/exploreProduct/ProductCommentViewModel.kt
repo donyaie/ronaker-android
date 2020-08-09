@@ -6,13 +6,13 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterProductCommentBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 
-class ProductCommentViewModel (val app: Application): BaseViewModel(app) {
-     val userAvatar = MutableLiveData<String>()
-     val userName = MutableLiveData<String>()
-     val rate = MutableLiveData<Float>()
-     val comment = MutableLiveData<String>()
-
+class ProductCommentViewModel(val app: Application) : BaseViewModel(app) {
+    val userAvatar = MutableLiveData<String>()
+    val userName = MutableLiveData<String>()
+    val rate = MutableLiveData<Float>()
+    val comment = MutableLiveData<String>()
 
 
     lateinit var data: Product.ProductRate
@@ -27,18 +27,16 @@ class ProductCommentViewModel (val app: Application): BaseViewModel(app) {
         data = post
         mBinder = binder
 
-        comment.value=  data.comment
+        comment.value = data.comment
 
-        rate.value=  data.stars
+        rate.value = data.stars
 
         data.user?.let {
 
-            it.avatar?.let {avatar->userAvatar.value= BASE_URL+avatar}
-            userName.value=(it.first_name?:"")+""+(it.last_name?:"")
-            
+            it.avatar?.let { avatar -> userAvatar.value = BASE_URL + avatar }
+            userName.value = nameFormat (it.first_name ,it.last_name )
+
         }
-
-
 
 
     }

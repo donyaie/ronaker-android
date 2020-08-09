@@ -10,8 +10,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-
-class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
+class PhoneNumberViewModel(app: Application) : BaseViewModel(app) {
 
 
     @Inject
@@ -26,13 +25,12 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     val viewState: MutableLiveData<StateEnum> = MutableLiveData()
 
 
-
     val timerVisibility: MutableLiveData<Int> = MutableLiveData()
     val resendVisibility: MutableLiveData<Int> = MutableLiveData()
     val timerValue: MutableLiveData<String> = MutableLiveData()
 
 
-    private var  countDounTimer: CountDownTimer?=null
+    private var countDounTimer: CountDownTimer? = null
     private var mNumber = ""
 
 
@@ -68,55 +66,57 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
     }
 
 
-
     fun onClickPhoneNext(phone: String) {
 
-        addPhoneSubscription = userRepository.addUserPhoneNumber(userRepository.getUserToken(), phone)
-            .doOnSubscribe { loadingButton.value = true }
-            .doOnTerminate { loadingButton.value = false }
-            .subscribe { result ->
-                loadingButton.value = false
-                if (result.isSuccess()) {
-                    mNumber = phone
-                    viewState.value = StateEnum.validate
-                    startTimer()
+        addPhoneSubscription =
+            userRepository.addUserPhoneNumber( phone)
+                .doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
+                .subscribe { result ->
+                    loadingButton.value = false
+                    if (result.isSuccess()) {
+                        mNumber = phone
+                        viewState.value = StateEnum.validate
+                        startTimer()
 
-                } else {
-                    errorMessage.value = result.error?.message
+                    } else {
+                        errorMessage.value = result.error?.message
+                    }
                 }
-            }
 
     }
-    fun resend(){
-        resendSubscription = userRepository.addUserPhoneNumber(userRepository.getUserToken(), mNumber)
-            .doOnSubscribe { loadingButton.value = true }
-            .doOnTerminate { loadingButton.value = false }
-            .subscribe { result ->
-                loadingButton.value = false
-                if (result.isSuccess()) {
-                    startTimer()
 
-                } else {
-                    errorMessage.value = result.error?.message
+    fun resend() {
+        resendSubscription =
+            userRepository.addUserPhoneNumber( mNumber)
+                .doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
+                .subscribe { result ->
+                    loadingButton.value = false
+                    if (result.isSuccess()) {
+                        startTimer()
+
+                    } else {
+                        errorMessage.value = result.error?.message
+                    }
                 }
-            }
     }
 
 
-    private fun startTimer(){
-        timerValue.value="00"
-        timerVisibility.value= View.VISIBLE
-        resendVisibility.value= View.GONE
+    private fun startTimer() {
+        timerValue.value = "00"
+        timerVisibility.value = View.VISIBLE
+        resendVisibility.value = View.GONE
 
-        countDounTimer=  object : CountDownTimer(60000, 1000) {
+        countDounTimer = object : CountDownTimer(60000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                timerValue.value= (millisUntilFinished / 1000).toString()
+                timerValue.value = (millisUntilFinished / 1000).toString()
             }
 
             override fun onFinish() {
-                timerVisibility.value= View.GONE
-                resendVisibility.value= View.VISIBLE
+                timerVisibility.value = View.GONE
+                resendVisibility.value = View.VISIBLE
             }
         }.start()
 
@@ -124,21 +124,20 @@ class PhoneNumberViewModel (app: Application): BaseViewModel(app) {
 
     fun onClickValidNext(pin: String) {
 
-        verifyPhoneSubscription = userRepository.activeUserPhoneNumber(userRepository.getUserToken(), mNumber, pin)
-            .doOnSubscribe { loadingButton.value = true }
-            .doOnTerminate { loadingButton.value = false }
-            .subscribe { result ->
-                loadingButton.value = false
-                if (result.isSuccess()) {
-                    goNext.value = false
-                } else {
-                    errorMessage.value = result.error?.message
+        verifyPhoneSubscription =
+            userRepository.activeUserPhoneNumber( mNumber, pin)
+                .doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
+                .subscribe { result ->
+                    loadingButton.value = false
+                    if (result.isSuccess()) {
+                        goNext.value = false
+                    } else {
+                        errorMessage.value = result.error?.message
+                    }
                 }
-            }
 
     }
-
-
 
 
     override fun onCleared() {

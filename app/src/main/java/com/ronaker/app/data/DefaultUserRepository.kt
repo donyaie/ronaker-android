@@ -8,7 +8,7 @@ import com.ronaker.app.data.network.request.*
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUserModel
-import com.ronaker.app.utils.AppDebug
+import com.ronaker.app.utils.LANGUAGE_DEFAULT
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,8 +19,15 @@ class DefaultUserRepository(
 ) :
     UserRepository {
 
+    companion object{
+
+        val USER_LANGUAGE_KEY = "Locale.Helper.Selected.Language"
+
+
+    }
 
     private val TokenKey = "tokenKey"
+    val USER_LANGUAGE_DEFAULT = LANGUAGE_DEFAULT
 
     private val UserInfoKey = "userInfoKey"
 
@@ -74,7 +81,7 @@ class DefaultUserRepository(
     }
 
 
-    override fun updateUserInfo(user_token: String?, user: User): Observable<Result<User>> {
+    override fun updateUserInfo( user: User): Observable<Result<User>> {
         val info = UserUpdateRequestModel(
             user.first_name,
             user.last_name,
@@ -82,7 +89,7 @@ class DefaultUserRepository(
             user.avatar
         )
 
-        return userApi.updateUserInfo("Token $user_token", info)
+        return userApi.updateUserInfo(getUserAuthorization(), info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -94,8 +101,8 @@ class DefaultUserRepository(
     }
 
 
-    override fun getUserInfo(user_token: String?): Observable<Result<User>> {
-        return userApi.getUserInfo("Token $user_token")
+    override fun getUserInfo(user_auth: String): Observable<Result<User>> {
+        return userApi.getUserInfo(user_auth)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -114,9 +121,8 @@ class DefaultUserRepository(
     }
 
 
-
-    override fun sendEmailVerification(user_token: String?): Observable<Result<Boolean>> {
-        return userApi.sendEmailVerification("Token $user_token")
+    override fun sendEmailVerification(): Observable<Result<Boolean>> {
+        return userApi.sendEmailVerification(getUserAuthorization())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -131,7 +137,6 @@ class DefaultUserRepository(
     }
 
     override fun addUserPhoneNumber(
-        user_token: String?,
         phone_number: String
     ): Observable<Result<String>> {
 
@@ -139,7 +144,7 @@ class DefaultUserRepository(
             UserAddPhoneRequestModel(
                 phone_number
             )
-        return userApi.addUserPhoneNumber("Token $user_token", phone)
+        return userApi.addUserPhoneNumber(getUserAuthorization(), phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -150,7 +155,6 @@ class DefaultUserRepository(
     }
 
     override fun activeUserPhoneNumber(
-        user_token: String?,
         phone_number: String,
         code: String
     ): Observable<Result<String>> {
@@ -160,7 +164,7 @@ class DefaultUserRepository(
                 phone_number,
                 code
             )
-        return userApi.activeUserPhoneNumber("Token $user_token", phone)
+        return userApi.activeUserPhoneNumber(getUserAuthorization(), phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -174,7 +178,6 @@ class DefaultUserRepository(
 
     override fun getSmartIDVerificationCode(
 
-        user_token: String?,
         national_code: String,
         personal_code: String
     ): Observable<Result<String>> {
@@ -184,7 +187,7 @@ class DefaultUserRepository(
                 national_code,
                 personal_code
             )
-        return userApi.getSmartIDVerificationCode("Token $user_token", request)
+        return userApi.getSmartIDVerificationCode(getUserAuthorization(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -197,7 +200,6 @@ class DefaultUserRepository(
 
     override fun startSmartIDAuth(
 
-        user_token: String?,
         national_code: String,
         personal_code: String
     ): Observable<Result<Boolean>> {
@@ -207,11 +209,43 @@ class DefaultUserRepository(
                 national_code,
                 personal_code
             )
-        return userApi.startSmartIDAuth("Token $user_token", request)
+        return userApi.startSmartIDAuth(getUserAuthorization(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-               true
+                true
+            }
+            .toResult()
+
+    }
+
+
+    override fun forgetPassword(
+        email: String
+    ): Observable<Result<Boolean>> {
+        val request = UserForgetPasswordRequestModel(email)
+
+        return userApi.forgetPassword(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+    override fun forgetPasswordConfirm(
+        token: String,
+        password: String
+    ): Observable<Result<Boolean>> {
+        val request = UserForgetPasswordConfirmRequestModel(token, password)
+
+        return userApi.forgetPasswordConfirm(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
             }
             .toResult()
 
@@ -219,9 +253,8 @@ class DefaultUserRepository(
 
 
     override fun checkSmartIDSession(
-        user_token: String?
     ): Observable<Result<Boolean>> {
-        return userApi.checkSmartIDSession("Token $user_token")
+        return userApi.checkSmartIDSession(getUserAuthorization())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -233,7 +266,6 @@ class DefaultUserRepository(
 
 
     override fun addDocument(
-        userToken: String?,
         imageSuid: String,
         documentType: DocumentTypeEnum
     ): Observable<Result<Boolean>> {
@@ -243,7 +275,7 @@ class DefaultUserRepository(
                 imageSuid,
                 documentType.key
             )
-        return userApi.addDocument("Token $userToken", phone)
+        return userApi.addDocument(getUserAuthorization(), phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -269,6 +301,17 @@ class DefaultUserRepository(
     override fun clearLogin() {
         preferencesProvider.clearAll()
     }
+
+    override fun getUserAuthorization(): String {
+        return "Token ${getUserToken()}"
+    }
+
+
+    override fun getUserLanguage(): String {
+
+        return preferencesProvider.getString(USER_LANGUAGE_KEY, USER_LANGUAGE_DEFAULT)?:USER_LANGUAGE_DEFAULT
+    }
+
 
     override fun getUserToken(): String? {
         return preferencesProvider.getString(TokenKey, null)

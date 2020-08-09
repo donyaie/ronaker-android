@@ -32,330 +32,230 @@
             app:toolbar_component_title="@string/app_name"
             app:toolbar_component_transparent="false" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
+            android:id="@+id/refreshLayout"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <LinearLayout
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    app:layout_constraintTop_toBottomOf="@id/split">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/text_content"
-
-                        android:padding="4dp"
-
-                        app:mutableImageSrc="@{viewModel.getOrderStatusImage()}"
-
-                        app:srcCompat="@drawable/ic_remove_red" />
-
-                    <TextView
-                        android:id="@+id/status"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight=".95"
-
-                        android:gravity="start"
-                        android:lines="1"
-
-
-                        android:text="Lend | Canceled order"
-                        android:textAppearance="@style/TextAppearance.Medium.SB"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:mutableText="@{viewModel.getOrderStatus()}"
-                        tools:ignore="HardcodedText" />
-
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-
-
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:minHeight="112dp"
-                    android:onClick="@{()->viewModel.onClickItem()}"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        app:layout_constraintTop_toBottomOf="@id/split"
+                        tools:ignore="UseCompoundDrawables">
 
-                        android:layout_weight=".95"
-                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:contentDescription="@string/text_content"
 
+                            android:padding="4dp"
+
+                            app:mutableImageSrc="@{viewModel.getOrderStatusImage()}"
+
+                            app:srcCompat="@drawable/ic_remove_red" />
 
                         <TextView
-                            android:layout_marginTop="8dp"
-                            android:maxLines="2"
-                            android:layout_width="match_parent"
+                            android:id="@+id/status"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight=".95"
+
+                            android:gravity="start"
+                            android:lines="1"
 
 
-                            android:text="sample product"
+                            android:text="Lend | Canceled order"
                             android:textAppearance="@style/TextAppearance.Medium.SB"
-                            android:textColor="@color/colorTextDark"
-                            app:mutableText="@{viewModel.getProductTitle()}"
-                            tools:ignore="HardcodedText" />
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="$124 for 2 day"
-                            android:textAppearance="@style/TextAppearance.Large.Regular"
-                            android:textColor="@color/colorTextDark"
-                            app:mutableText="@{viewModel.getDayNumber()}"
-                            tools:ignore="HardcodedText" />
-
-
-                    </LinearLayout>
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-
-
-                        android:scaleType="fitCenter"
-                        android:src="@color/colorPlatinGrey"
-                        app:mutableImage="@{viewModel.getProductImage()}"
-                        app:riv_corner_radius="3dp"
-                        app:srcCompat="@drawable/ic_empty_product" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="24dp"
-
-                        android:contentDescription="@string/text_content"
-                        android:padding="4dp"
-                        android:tint="@color/colorAshGrey"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:gravity="center"
-                    android:minHeight="72dp"
-                    android:orientation="horizontal">
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:gravity="start"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:text="Monday"
-                            android:textAppearance="@style/TextAppearance.Small.Regular"
-                            app:mutableText="@{viewModel.getStartDayName()}"
-                            tools:ignore="HardcodedText" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:text="21 May"
-                            android:textAppearance="@style/TextAppearance.Large.Regular"
-                            app:mutableText="@{viewModel.getFirstDayMonth()}"
-                            tools:ignore="HardcodedText" />
-
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/text_content"
-                        android:tint="@color/colorIconDark"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:gravity="end"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:text="Friday"
-                            android:textAppearance="@style/TextAppearance.Small.Regular"
-                            app:mutableText="@{viewModel.getEndDayName()}"
-                            tools:ignore="HardcodedText" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:text="23 May"
-                            android:textAppearance="@style/TextAppearance.Large.Regular"
-                            app:mutableText="@{viewModel.getEndDayMonth()}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:mutableTextFade="@{viewModel.getOrderStatus()}"
                             tools:ignore="HardcodedText" />
 
 
                     </LinearLayout>
 
 
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:visibility="gone"
-                    android:background="@color/colorPlatinGrey" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-
-                    android:layout_marginBottom="16dp"
-
-
-
-                    app:adapter="@{viewModel.getPriceListAdapter()}"/>
-<!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                     />
-<!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:minHeight="112dp"
-
-                    android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp"
-                    app:mutableVisibility="@{viewModel.getUserInfoVisibility()}">
+                    <!--                <RelativeLayout-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="1dp"-->
+                    <!--                    android:layout_marginLeft="@dimen/margin_default"-->
+                    <!--                    android:layout_marginRight="@dimen/margin_default"-->
+                    <!--                    android:background="@color/colorPlatinGrey" />-->
 
 
                     <LinearLayout
-                        android:layout_width="0dp"
+
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:minHeight="112dp"
+                        android:onClick="@{()->viewModel.onClickItem()}"
+                        android:orientation="horizontal">
 
-                        android:layout_weight=".95"
-                        android:orientation="vertical">
 
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_default"
+                            android:layout_marginEnd="16dp"
 
-                            android:text="David"
-                            android:textAppearance="@style/TextAppearance.Heading.2"
-                            app:mutableText="@{viewModel.getUserName()}"
-                            tools:ignore="HardcodedText" />
+                            android:layout_weight=".95"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:maxLines="2"
+
+
+                                android:text="sample product"
+                                android:textAppearance="@style/TextAppearance.Small.SB"
+                                android:textColor="@color/colorTextDark"
+                                app:mutableTextFade="@{viewModel.getProductTitle()}"
+                                tools:ignore="HardcodedText" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="8dp"
+                                android:text="$124 for 2 day"
+                                android:textAppearance="@style/TextAppearance.Large.Regular"
+                                android:textColor="@color/colorTextDark"
+                                app:mutableTextFade="@{viewModel.getDayNumber()}"
+                                tools:ignore="HardcodedText" />
+
+
+                        </LinearLayout>
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+
+                            android:scaleType="fitCenter"
+                            android:src="@color/colorPlatinGrey"
+                            app:mutableImage="@{viewModel.getProductImage()}"
+                            app:riv_corner_radius="3dp"
+                            app:srcCompat="@drawable/ic_empty_product" />
+
+                        <ImageView
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:layout_marginEnd="@dimen/margin_default"
+
+                            android:contentDescription="@string/text_content"
+                            android:padding="4dp"
+                            app:tint="@color/colorAshGrey"
+                            app:srcCompat="@drawable/ic_chevron_right" />
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:gravity="center"
+                        android:minHeight="72dp"
+                        android:orientation="horizontal">
 
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="11dp"
+                            android:layout_weight=".50"
+                            android:gravity="start"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="Monday"
+                                android:textAppearance="@style/TextAppearance.Small.Regular"
+                                app:mutableTextFade="@{viewModel.getStartDayName()}"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="21 May"
+                                android:textAppearance="@style/TextAppearance.Large.Regular"
+                                app:mutableTextFade="@{viewModel.getFirstDayMonth()}"
+                                tools:ignore="HardcodedText" />
 
 
-                            android:orientation="horizontal"
-                            android:visibility="visible"
-                            app:mutableVisibility="@{viewModel.getUserContactVisibility()}">
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:contentDescription="@string/text_content"
+                            app:tint="@color/colorIconDark"
+                            app:srcCompat="@drawable/ic_chevron_right" />
 
 
-                            <ImageButton
-                                android:layout_width="42dp"
-                                android:layout_height="42dp"
-                                android:layout_marginEnd="8dp"
-                                android:background="@null"
-                                android:contentDescription="@string/text_content"
-                                android:onClick="@{()->viewModel.onClickSendMail()}"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".50"
+                            android:gravity="end"
+                            android:orientation="vertical">
 
-                                android:padding="10dp"
+                            <TextView
+                                android:layout_width="wrap_content"
 
-                                android:scaleType="fitCenter"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="Friday"
+                                android:textAppearance="@style/TextAppearance.Small.Regular"
+                                app:mutableTextFade="@{viewModel.getEndDayName()}"
+                                tools:ignore="HardcodedText" />
 
-                                android:tint="@color/colorTextDark"
-                                app:srcCompat="@drawable/ic_message" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
 
-
-                            <ImageButton
-                                android:layout_width="42dp"
-                                android:layout_height="42dp"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginEnd="8dp"
-                                android:background="@null"
-                                android:contentDescription="@string/text_content"
-
-                                android:onClick="@{()->viewModel.onClickMakeCall()}"
-                                android:padding="10dp"
-                                android:scaleType="fitCenter"
-                                android:tint="@color/colorTextDark"
-                                app:srcCompat="@drawable/ic_telephone" />
+                                android:text="23 May"
+                                android:textAppearance="@style/TextAppearance.Large.Regular"
+                                app:mutableTextFade="@{viewModel.getEndDayMonth()}"
+                                tools:ignore="HardcodedText" />
 
 
                         </LinearLayout>
@@ -364,163 +264,453 @@
                     </LinearLayout>
 
 
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:src="@color/colorPlatinGrey"
-                        app:mutableImage="@{viewModel.getUserImage()}"
-                        app:riv_corner_radius="32dp"
-                        tools:ignore="VectorDrawableCompat" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey"
+                        android:visibility="gone" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+
+                        android:visibility="gone"
+
+
+                        app:adapter="@{viewModel.getPriceListAdapter()}" />
+                    <!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey" />
+                    <!--                app:mutableVisibility="@{viewModel.getRecieptVisibility()}"-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="112dp"
+
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/margin_default"
+                        android:paddingRight="@dimen/margin_default"
+                        app:mutableVisibility="@{viewModel.getUserInfoVisibility()}">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+
+                            android:layout_weight=".95"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="David"
+                                android:textAppearance="@style/TextAppearance.Large.SB"
+                                app:mutableTextFade="@{viewModel.getUserName()}"
+                                tools:ignore="HardcodedText" />
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+
+
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                app:mutableVisibility="@{viewModel.getUserContactVisibility()}">
+
+
+                                <ImageButton
+                                    android:layout_width="48dp"
+
+                                    android:layout_height="48dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:background="@drawable/selector_circle_accent"
+
+                                    android:contentDescription="@string/text_content"
+                                    android:elevation="3dp"
+
+                                    android:onClick="@{()->viewModel.onClickSendMail()}"
+                                    android:padding="14dp"
+                                    android:scaleType="fitCenter"
+                                    app:tint="@color/white"
+
+                                    android:visibility="visible"
+                                    app:srcCompat="@drawable/ic_message" />
+
+
+                                <ImageButton
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+
+                                    android:layout_marginStart="30dp"
+
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:background="@drawable/selector_circle_green"
+
+                                    android:contentDescription="@string/text_content"
+                                    android:elevation="3dp"
+                                    android:onClick="@{()->viewModel.onClickMakeCall()}"
+
+                                    android:padding="14dp"
+                                    android:scaleType="fitCenter"
+                                    app:tint="@color/white"
+                                    android:visibility="visible"
+                                    app:srcCompat="@drawable/ic_telephone" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@color/colorPlatinGrey"
+                            app:mutableImage="@{viewModel.getUserImage()}"
+                            app:riv_corner_radius="32dp"
+                            tools:ignore="VectorDrawableCompat" />
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey"
+                        app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+
+                        android:visibility="gone"
+                        app:mutableVisibility="@{viewModel.getContractVisibility()}">
+
+                        <TextView
+                            android:id="@+id/contract_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_contract"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <ImageView
+                            android:visibility="gone"
+                            android:id="@+id/pdf_en"
+                            android:contentDescription="@string/caption_title"
+                            android:layout_width="40dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_pdf_en"
+                            app:mutableVisibility="@{viewModel.getContractViewENVisibility()}"
+                            android:onClick="@{()->viewModel.onViewContractEN()}"
+                            android:layout_marginEnd="4dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+
+                            />
+
+
+
+
+                        <ImageView
+                            android:id="@+id/pdf_lt"
+                            android:visibility="gone"
+                            android:contentDescription="@string/caption_title"
+                            android:layout_width="40dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_goneMarginEnd="4dp"
+                            android:src="@drawable/ic_pdf_lt"
+                            app:mutableVisibility="@{viewModel.getContractViewLTVisibility()}"
+                            android:onClick="@{()->viewModel.onViewContractLT()}"
+                            android:layout_marginEnd="4dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintEnd_toStartOf="@id/pdf_en"
+
+                            />
+
+
+
+                        <TextView
+                            android:id="@+id/contractPreview_text"
+                            android:layout_width="wrap_content"
+
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->viewModel.onContractPreview()}"
+                            android:padding="4dp"
+                            android:text="@string/text_contract_preview"
+
+                            android:textAppearance="@style/TextAppearance.Medium.SB"
+                            android:textColor="@color/colorTextLinkLight"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:mutableVisibility="@{viewModel.getContractPreviewVisibility()}" />
+
+
+                        <ImageView
+                            android:id="@+id/renter_sign_state_image"
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:contentDescription="@string/caption_title"
+                            android:padding="4dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/contract_text"
+                            app:mutableImageSrc="@{viewModel.getRenterSignImage()}" />
+
+
+                        <TextView
+                            android:id="@+id/renter_sign_state_text"
+                            android:layout_width="0dp"
+
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/text_please_sign_the_contract"
+
+
+                            android:textAppearance="@style/TextAppearance.Medium.SB"
+                            android:textColor="@color/colorTextDark"
+                            app:layout_constraintBottom_toBottomOf="@id/renter_sign_state_image"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/renter_sign_state_image"
+
+                            app:layout_constraintTop_toTopOf="@id/renter_sign_state_image"
+                            app:mutableTextFade="@{viewModel.getRenterSignText()}" />
+
+
+                        <ImageView
+                            android:id="@+id/lister_sign_state_image"
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:layout_marginTop="@dimen/margin_half"
+                            android:contentDescription="@string/caption_title"
+                            android:padding="4dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/renter_sign_state_image"
+                            app:mutableImageSrc="@{viewModel.getLenderSignImage()}" />
+
+
+                        <TextView
+                            android:id="@+id/lister_sign_state_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+
+                            android:text="@string/text_please_sign_the_contract"
+
+                            android:textAppearance="@style/TextAppearance.Medium.SB"
+                            android:textColor="@color/colorTextDark"
+                            app:layout_constraintBottom_toBottomOf="@id/lister_sign_state_image"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/lister_sign_state_image"
+
+                            app:layout_constraintTop_toTopOf="@id/lister_sign_state_image"
+                            app:mutableTextFade="@{viewModel.getListerSignText()}" />
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_half"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey"
+                        android:visibility="gone"
+                        app:mutableVisibility="@{viewModel.getContractVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="@string/text_whay_canceled"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="decline"
+                        android:textAppearance="@style/TextAppearance.Medium.Light"
+                        app:mutableTextFade="@{viewModel.getOrderCancelRes()}"
+                        app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}"
+                        tools:ignore="HardcodedText" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey"
+                        app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="@string/text_pickup_address"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="Address"
+                        android:textAppearance="@style/TextAppearance.Medium.Light"
+                        app:mutableTextFade="@{viewModel.getOrderAddress()}"
+                        app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}"
+                        tools:ignore="HardcodedText" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey"
+                        app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="@string/text_introduction"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="Introduction"
+                        android:textAppearance="@style/TextAppearance.Medium.Light"
+                        app:mutableTextFade="@{viewModel.getOrderIntroduction()}"
+                        app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}"
+                        tools:ignore="HardcodedText" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:background="@color/colorPlatinGrey"
+                        app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="@string/text_user_request"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_default"
+
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:text="Message"
+                        android:textAppearance="@style/TextAppearance.Medium.Light"
+                        app:mutableTextFade="@{viewModel.getOrderDescription()}"
+                        app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
+                        tools:ignore="HardcodedText" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:layout_marginBottom="40dp"
+                        android:background="@color/colorPlatinGrey"
+                        app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                    app:mutableVisibility="@{viewModel.getUserInfoVisibility()}" />
 
+            </androidx.core.widget.NestedScrollView>
 
-                <TextView
-                    android:layout_width="match_parent"
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
-                    android:text="@string/text_whay_canceled"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
-                    app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:text="decline"
-                    android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderCancelRes()}"
-                    app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}"
-                    tools:ignore="HardcodedText" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                    app:mutableVisibility="@{viewModel.getOrderCancelResVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
-                    android:text="@string/text_pickup_address"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
-                    app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:text="Address"
-                    android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderAddress()}"
-                    app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}"
-                    tools:ignore="HardcodedText" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                    app:mutableVisibility="@{viewModel.getOrderAddressVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
-                    android:text="@string/text_introduction"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
-                    app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:text="Introduction"
-                    android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderIntroduction()}"
-                    app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}"
-                    tools:ignore="HardcodedText" />
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@color/colorPlatinGrey"
-                    app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
-                    android:text="@string/text_user_request"
-                    android:textAppearance="@style/TextAppearance.Heading.2"
-                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:text="Message"
-                    android:textAppearance="@style/TextAppearance.Medium.Light"
-                    app:mutableText="@{viewModel.getOrderDescription()}"
-                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}"
-                    tools:ignore="HardcodedText" />
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginBottom="40dp"
-                    android:background="@color/colorPlatinGrey"
-                    app:mutableVisibility="@{viewModel.getOrderDescriptionVisibility()}" />
-
-            </LinearLayout>
-
-
-        </androidx.core.widget.NestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/footer"
@@ -548,7 +738,7 @@
 
 
                 <Button
-                    style="@style/Button.transparent"
+                    style="@style/Button.white"
                     android:layout_width="wrap_content"
 
                     android:layout_marginLeft="12dp"
@@ -563,7 +753,7 @@
                     />
 
                 <Button
-                    style="@style/Button.transparent"
+                    style="@style/Button.white"
                     android:layout_width="wrap_content"
 
                     android:layout_marginLeft="12dp"
@@ -622,7 +812,7 @@
 
                     android:onClick="@{()->viewModel.onClickStartRenting()}"
 
-                    android:text="@string/button_start_renting"
+                    android:text="@string/text_accept_and_start_renting"
                     android:visibility="gone"
                     app:mutableVisibility="@{viewModel.getStartRentingVisibility()}"
 
@@ -644,6 +834,24 @@
                     app:mutableVisibility="@{viewModel.getStartRatingVisibility()}"
 
                     />
+
+
+
+                <Button
+                    style="@style/Button.accent"
+                    android:layout_width="wrap_content"
+
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    app:mutableVisibility="@{viewModel.getListerSignVisibility()}"
+                    android:layout_weight="1"
+
+                    android:onClick="@{()->viewModel.onListerSign()}"
+                    android:text="@string/text_sign_the_contract"
+                    android:visibility="gone"
+
+                    />
+
 
 
             </LinearLayout>

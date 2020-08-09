@@ -1,6 +1,8 @@
 package com.ronaker.app.ui.login
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +19,55 @@ class LoginPasswordFragment : BaseFragment(), IPagerFragment {
     private lateinit var viewModel: LoginViewModel
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_login_password,container , false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_login_password, container, false)
         activity?.let {
             viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel
         }
+
+
+
+
+        binding.passwordInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                binding.nextButton.isEnabled=viewModel.validatePassword(p0?.toString(),(binding.repeatPasswordInput.text?:""))
+            }
+
+        })
+
+
+        binding.repeatPasswordInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                binding.nextButton.isEnabled=viewModel.validatePassword(binding.passwordInput.text,(p0?.toString()?:""))
+            }
+
+        })
+
+        binding.nextButton.isEnabled=false
+
+
+
         return binding.root
     }
 

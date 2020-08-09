@@ -42,9 +42,9 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:gravity="start"
                     android:text="@string/title_what_s_your_email_address"
                     android:textAppearance="@style/TextAppearance.Heading.1"
@@ -56,10 +56,10 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginTop="40dp"
 
-                    android:layout_marginRight="24dp"
+                    android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="emailAddress"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
@@ -74,11 +74,16 @@
 
                 <com.ronaker.app.utils.view.InputComponent
                     android:id="@+id/invite_input"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:minWidth="180dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent=".5"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginLeft="36dp"
 
-                    android:layout_marginRight="24dp"
+                    android:layout_marginRight="36dp"
                     android:imeOptions="actionNext"
                     android:inputType="textCapCharacters"
                     app:input_hint="@string/text_enter_your_invite_code"
@@ -86,9 +91,11 @@
                     app:input_title="@string/text_invite_code"
                     app:input_transparent="true"
                     app:input_validation_mode="AUTO"
+
+                    app:inputMutableText="@{viewModel.getInviteCodeText()}"
                     app:layout_constraintTop_toBottomOf="@id/email_input"
                     tools:ignore="UnusedAttribute"
-                    tools:layout_editor_absoluteX="24dp" />
+                    tools:layout_editor_absoluteX="@dimen/margin_default" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
