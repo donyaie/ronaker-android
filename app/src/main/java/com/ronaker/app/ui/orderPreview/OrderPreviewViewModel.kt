@@ -13,6 +13,7 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.io.File
@@ -125,8 +126,6 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
     val orderAddressVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-
-
     val makeCall: MutableLiveData<String> = MutableLiveData()
     val sendEmail: MutableLiveData<String> = MutableLiveData()
 
@@ -163,7 +162,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.phone_number?.let { value -> makeCall.postValue(value)}
+                    it.phone_number?.let { value -> makeCall.postValue(value) }
 
 
                 }
@@ -174,7 +173,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.orderUser?.let {
 
-                    it.phone_number?.let { value ->  makeCall.postValue(value) }
+                    it.phone_number?.let { value -> makeCall.postValue(value) }
                 }
             }
             else -> {
@@ -190,7 +189,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 mOrder.productOwner?.let {
 
-                    it.email?.let { value -> sendEmail.postValue(value)}
+                    it.email?.let { value -> sendEmail.postValue(value) }
                 }
             }
 
@@ -337,16 +336,13 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
             contractViewLTVisibility.postValue(View.GONE)
         }
 
-        if(order.signPdf_LT.isNullOrEmpty()  && order.signPdf_EN.isNullOrEmpty() )
+        if (order.signPdf_LT.isNullOrEmpty() && order.signPdf_EN.isNullOrEmpty())
             contractPreviewVisibility.postValue(View.VISIBLE)
         else
             contractPreviewVisibility.postValue(View.GONE)
 
 
-
 //        contractPreviewVisibility.postValue(View.VISIBLE)
-
-
 
 
         listerSignVisibility.postValue(View.GONE)
@@ -357,7 +353,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 order.productOwner?.let {
 
-                    userName.value = it.first_name + " " + it.last_name
+                    userName.value = nameFormat(it.first_name, it.last_name)
                     it.avatar?.let { image -> userImage.value = BASE_URL + image }
                     userInfoVisibility.value = View.VISIBLE
                 } ?: run {
@@ -399,7 +395,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     listerSignText.postValue(
                         String.format(
                             resourcesRepository.getString(R.string.text_waite_for_sign),
-                            order.productOwner?.first_name
+                            nameFormat(
+                                order.productOwner?.first_name,
+                                order.productOwner?.last_name
+                            )
+
                         )
                     )
                     lenderSignImage.postValue(R.drawable.ic_guide_red)
@@ -408,7 +408,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     listerSignText.postValue(
                         String.format(
                             resourcesRepository.getString(R.string.text_signed_the_contract),
-                            order.productOwner?.first_name
+                            nameFormat(
+                                order.productOwner?.first_name,
+                                order.productOwner?.last_name
+                            )
                         )
                     )
                     lenderSignImage.postValue(R.drawable.ic_guide_success)
@@ -492,7 +495,10 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
             Order.OrderTypeEnum.Renting -> {
                 order.orderUser?.let {
 
-                    userName.value = it.first_name + " " + it.last_name
+                    userName.value = nameFormat(it.first_name, it.last_name)
+
+
+
                     it.avatar?.let { image -> userImage.value = BASE_URL + image }
 
                     userInfoVisibility.value = View.VISIBLE
@@ -540,7 +546,9 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     renterSignText.postValue(
                         String.format(
                             resourcesRepository.getString(R.string.text_waite_for_sign),
-                            order.orderUser?.first_name
+                            nameFormat(order.orderUser?.first_name, order.orderUser?.last_name)
+
+
                         )
                     )
                     renterSignImage.postValue(R.drawable.ic_guide_red)
@@ -549,7 +557,7 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
                     renterSignText.postValue(
                         String.format(
                             resourcesRepository.getString(R.string.text_signed_the_contract),
-                            order.orderUser?.first_name
+                            nameFormat(order.orderUser?.first_name, order.orderUser?.last_name)
                         )
                     )
                     renterSignImage.postValue(R.drawable.ic_guide_success)
@@ -630,10 +638,11 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
         val ownerName =
-            (order.productOwner?.first_name ?: "") + " " + (order.productOwner?.last_name ?: "")
+            nameFormat(order.productOwner?.first_name, order.productOwner?.last_name)
+
 
         val orderedUserName =
-            (order.orderUser?.first_name ?: "") + " " + (order.orderUser?.last_name ?: "")
+            nameFormat(order.orderUser?.first_name, order.orderUser?.last_name)
 
 
 
@@ -646,11 +655,17 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        resourcesRepository.getString(R.string.text_rent_request_accepted, orderedUserName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_rent_request_accepted),
+                            orderedUserName
+                        )
                 } else {
 
                     orderStatus.value =
-                        resourcesRepository.getString(R.string.text_lend_request_accepted, ownerName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_accepted),
+                            ownerName
+                        )
                 }
 
 
@@ -663,11 +678,17 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.value =
-                        resourcesRepository.getString(R.string.text_rent_request_started, orderedUserName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_rent_request_started),
+                            orderedUserName
+                        )
                 } else {
 
                     orderStatus.value =
-                        resourcesRepository.getString(R.string.text_lend_request_started, ownerName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_started),
+                            ownerName
+                        )
                 }
 
 
@@ -706,10 +727,14 @@ class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
 
                 if (Order.OrderTypeEnum[order.orderType] == Order.OrderTypeEnum.Renting) {
 
-                    orderStatus.value = resourcesRepository.getString(R.string.text_rent_request_pending)
+                    orderStatus.value =
+                        resourcesRepository.getString(R.string.text_rent_request_pending)
                 } else {
                     orderStatus.value =
-                        resourcesRepository.getString(R.string.text_lend_request_pending, ownerName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_pending),
+                            ownerName
+                        )
                 }
 
             }

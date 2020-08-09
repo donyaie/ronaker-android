@@ -12,10 +12,7 @@ import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.utils.AppDebug
-import com.ronaker.app.utils.BASE_URL
-import com.ronaker.app.utils.actionOpenProduct
-import com.ronaker.app.utils.toCurrencyFormat
+import com.ronaker.app.utils.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
@@ -244,7 +241,8 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
             }
 
-            userName.postValue((it.first_name ?: "") + " " + (it.last_name ?: ""))
+            userName.postValue(
+                nameFormat( it.first_name ,it.last_name))
 
             userRepository.getUserInfo()?.let { info ->
                 if (it.suid?.compareTo(info.suid ?: "") == 0)

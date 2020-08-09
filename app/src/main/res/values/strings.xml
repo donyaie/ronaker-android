@@ -11,7 +11,7 @@
     <string name="text_rent_request_started" formatted="true">%1$s Started Progress</string>
     <string name="text_lend_request_pending" formatted="true">Pending To Accept From %1$s</string>
     <string name="text_rent_request_pending">Someone Requested To Rent Your Item</string>
-    <string name="text_order_message" formatted="true">Hi I\&apos;m %1$s %2$s\n I want to rent your %3$s for %4$s day\&apos;s\nthank you.</string>
+    <string name="text_order_message" formatted="true">Hi I\&apos;m %1$s\n I want to rent your %2$s for %3$s day\&apos;s\nthank you.</string>
     <string name="text_rent_canceled">Rent | Canceled Order</string>
     <string name="text_lend_canceled">List | Canceled Order</string>
     <string name="text_lend_complete">List | Completed Order</string>

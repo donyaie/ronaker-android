@@ -12,6 +12,7 @@ import com.ronaker.app.data.local.PreferencesProvider
 import com.ronaker.app.data.network.*
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.GOOGLE_URL
+import com.ronaker.app.utils.LocaleHelper
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -263,7 +264,7 @@ class RepositoryModule(private val app: Application) {
     @Singleton
     internal fun provideContext(): Context {
 
-        return app
+        return  LocaleHelper.onAttach(app.baseContext)
     }
 
 

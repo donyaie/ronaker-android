@@ -11,6 +11,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.AppDebug
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import com.ronaker.app.utils.view.IPagerFragment
 import io.reactivex.disposables.Disposable
@@ -88,11 +89,11 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
             val str = String(buffer)
                 .replace(
                     "[INCLUDE RENTER NAME]",
-                    "${order.orderUser?.first_name} ${order.orderUser?.last_name}"
+                    nameFormat(order.orderUser?.first_name,order.orderUser?.last_name)
                 )
                 .replace(
                     "[INCLUDE LISTER NAME]",
-                    "${order.productOwner?.first_name} ${order.productOwner?.last_name}"
+                    nameFormat(order.productOwner?.first_name,order.productOwner?.last_name)
                 )
 //                    .replace(
 //                        "[INCLUDE SIGN DATE]",

@@ -9,6 +9,7 @@ import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
@@ -132,10 +133,12 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
         val user = userRepository.getUserInfo()
 
-        orderMessage.value = resourceRepository.getString(
-            R.string.text_order_message,
-            (user?.first_name?:""),
-            ( user?.last_name?:""),
+        orderMessage.value = String.format(
+            resourceRepository.getString(
+                R.string.text_order_message
+            ),
+            nameFormat(user?.first_name, user?.last_name),
+
             mProduct.name,
             days.toString()
         )

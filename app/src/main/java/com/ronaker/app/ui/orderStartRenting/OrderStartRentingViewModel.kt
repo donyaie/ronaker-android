@@ -14,6 +14,7 @@ import com.ronaker.app.model.Order
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
+import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
@@ -150,7 +151,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
             listerSignText.postValue(
                 String.format(
                     resourcesRepository.getString(R.string.text_waite_for_sign),
-                    ( order.productOwner?.first_name?:"")  + (order.productOwner?.last_name?:"")
+                    nameFormat(order.productOwner?.first_name, order.productOwner?.last_name)
                 )
             )
             lenderSignImage.postValue(R.drawable.ic_guide_red)
@@ -159,7 +160,7 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
             listerSignText.postValue(
                 String.format(
                     resourcesRepository.getString(R.string.text_signed_the_contract),
-                    "${order.productOwner?.first_name?:""} ${order.productOwner?.last_name?:""}"
+                    nameFormat(order.productOwner?.first_name, order.productOwner?.last_name)
                 )
             )
             lenderSignImage.postValue(R.drawable.ic_guide_success)

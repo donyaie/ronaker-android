@@ -6,7 +6,7 @@
     <string name="text_rent_request_started" formatted="true"> %1$s Pradėtas progresas</string>
     <string name="text_lend_request_pending" formatted="true">Laukiama %1$s patvirtinimo</string>
     <string name="text_rent_request_pending">Gavote užklausą išnuomoti savo daiktą</string>
-    <string name="text_order_message" formatted="true">Sveiki, aš\&apos;m %1$s %2$s\n norėčiau išsinuomoti Jūsų %3$s %4$s %4$s dienoms. Ačiū.</string>
+    <string name="text_order_message" formatted="true">Sveiki, aš\&apos;m %1$s\n norėčiau išsinuomoti Jūsų %2$s %3$s dienoms. Ačiū.</string>
     <string name="text_rent_canceled">Išsinuomoti | Atšauktas užsakymas</string>
     <string name="text_lend_canceled">Išnuomoti |Atšauktas užsakymas</string>
     <string name="text_lend_complete">Išnuomoti | Įvykdytas užsakymas</string>

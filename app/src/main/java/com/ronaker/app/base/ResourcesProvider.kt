@@ -12,10 +12,10 @@ class ResourcesRepository (val context: Context){
         return context.getString(resID)
 
     }
-    fun getString(resId: Int, vararg formatArgs: Any?): String {
-       return context.getString(resId,formatArgs)
-
-    }
+//    fun getString(resId: Int,vararg args: Any?): String {
+//       return String.format( context.getString(resId),args)
+//
+//    }
 
     fun getColor( @ColorRes id:Int): Int {
         return ContextCompat.getColor(context, id)

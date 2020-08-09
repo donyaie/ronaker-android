@@ -10,6 +10,7 @@ import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
@@ -105,10 +106,9 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
         )
 
 
-        val ownerName =
-            (item.productOwner?.first_name ?: "") + " " + (item.productOwner?.last_name ?: "")
+        val ownerName = nameFormat(item.productOwner?.first_name ,item.productOwner?.last_name )
 
-        val userName = (item.orderUser?.first_name ?: "") + " " + (item.orderUser?.last_name ?: "")
+        val userName =  nameFormat(item.orderUser?.first_name ,item.orderUser?.last_name )
 
 
         archiveVisibility.postValue(View.GONE)
@@ -127,15 +127,20 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.postValue(
-                        resourcesRepository.getString(
-                            R.string.text_rent_request_accepted,
+                        String.format(
+                            resourcesRepository.getString(
+                                R.string.text_rent_request_accepted
+                            ),
                             userName
                         )
                     )
                 } else {
 
                     orderStatus.postValue(
-                        resourcesRepository.getString(R.string.text_lend_request_accepted, ownerName)
+                        String.format(
+                            resourcesRepository.getString(R.string.text_lend_request_accepted),
+                            ownerName
+                        )
                     )
                 }
 
@@ -151,16 +156,20 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
 
 
                     orderStatus.postValue(
-                        resourcesRepository.getString(
-                            R.string.text_rent_request_started,
+                        String.format(
+                            resourcesRepository.getString(
+                                R.string.text_rent_request_started
+                            ),
                             userName
                         )
                     )
                 } else {
 
                     orderStatus.postValue(
-                        resourcesRepository.getString(
-                            R.string.text_lend_request_started,
+                        String.format(
+                            resourcesRepository.getString(
+                                R.string.text_lend_request_started
+                            ),
                             ownerName
                         )
                     )
@@ -220,8 +229,9 @@ class OrderItemViewModel(app: Application) : BaseViewModel(app) {
                     orderStatus.postValue(resourcesRepository.getString(R.string.text_rent_request_pending))
                 } else {
                     orderStatus.postValue(
+                        String.format(
                         resourcesRepository.getString(
-                            R.string.text_lend_request_pending,
+                            R.string.text_lend_request_pending),
                             ownerName
                         )
                     )

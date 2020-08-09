@@ -7,6 +7,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -78,7 +79,7 @@ class ProfileEditViewModel(app: Application) : BaseViewModel(app) {
             userAvatar.value = BASE_URL + it
         }
 
-        userName.value = (user.first_name ?: "") + " " + (user.last_name ?: "")
+        userName.value = nameFormat (user.first_name ,user.last_name )
 
 
         userNumber.value = user.phone_number ?: ""
