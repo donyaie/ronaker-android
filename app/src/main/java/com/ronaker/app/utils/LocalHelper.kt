@@ -7,14 +7,26 @@ import android.content.Context
 import android.content.res.Configuration
 import com.ronaker.app.data.DefaultUserRepository.Companion.USER_LANGUAGE_KEY
 import com.ronaker.app.data.local.PreferencesProvider
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 object LocaleHelper {
 
     private val TAG = LocaleHelper::class.java.simpleName
 
+   private var currentLanguage:String=""
+
     fun onAttach(context: Context): Context {
-        return setLocale(context, getPersistedData(context, LANGUAGE_DEFAULT))// Locale.getDefault().language))
+//        return context
+        if(currentLanguage.isEmpty()){
+            currentLanguage=getPersistedData(context, LANGUAGE_DEFAULT)
+            AppDebug.log(TAG,"currentLanguage :$currentLanguage ")
+
+        }
+
+
+        return setLocale(context, currentLanguage)// Locale.getDefault().language))
     }
 
     fun setLocale(context: Activity, language: String): Context {
@@ -34,9 +46,13 @@ object LocaleHelper {
     }
 
     private fun persist(context: Context, language: String) {
-        val preferences = PreferencesProvider(context)
-        preferences.putString(USER_LANGUAGE_KEY, language)
+        currentLanguage=language
+        GlobalScope.launch {
+            val preferences = PreferencesProvider(context)
+            preferences.putString(USER_LANGUAGE_KEY, language)
+        }
     }
+
 
     private fun updateResources(context: Context, language: String): Context {
         val locale = Locale(language)

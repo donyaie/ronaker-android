@@ -3,6 +3,7 @@ package com.ronaker.app.data.local
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.ronaker.app.utils.byteArrayOfInts
@@ -31,6 +32,7 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
                 context,
                 byteArrayOfInts(0xA1, 0x2E, 0x39, 0xF4, 0x89, 0xC3).contentToString()
             )
+//            preferences = context.getSharedPreferences("user_data", MODE_PRIVATE)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -43,6 +45,8 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
 
     override fun putString(key: String, value: String?) {
         try {
+
+
             edit()?.putString(key, value)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -92,6 +96,8 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
     }
 
     override fun getString(key: String, defValue: String?): String? {
+
+
         return preferences.getString(key, defValue)
     }
 

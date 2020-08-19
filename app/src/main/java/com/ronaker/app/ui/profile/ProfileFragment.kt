@@ -56,7 +56,7 @@ class ProfileFragment : BaseFragment() {
         })
 
         viewModel.logOutAction.observe(viewLifecycleOwner, {
-            Branch.getInstance(getApplicationContext()).logout()
+            Branch.getInstance().logout()
             activity?.let { it.startActivity(DashboardActivity.newInstance(it)) }
         })
 
