@@ -2,6 +2,7 @@ package com.ronaker.app.ui.profileEmailVerify
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
@@ -9,16 +10,18 @@ import com.ronaker.app.utils.IntentManeger
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEmailVerifyViewModel(val app: Application) : BaseViewModel(app) {
+class ProfileEmailVerifyViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository
+)  : BaseViewModel() {
 
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
+
+    val openInbox: MutableLiveData<Boolean> = MutableLiveData()
+
+
     val successMessage: MutableLiveData<String> = MutableLiveData()
     val goNex: MutableLiveData<Boolean> = MutableLiveData()
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
@@ -72,7 +75,9 @@ class ProfileEmailVerifyViewModel(val app: Application) : BaseViewModel(app) {
 
     fun gotoMailClick() {
 
-        IntentManeger.openMailBox(app)
+
+
+        openInbox.postValue(true)
     }
 
 
@@ -91,9 +96,6 @@ class ProfileEmailVerifyViewModel(val app: Application) : BaseViewModel(app) {
     }
 
 
-    private fun logout() {
-        userRepository.clearLogin()
-    }
 
 
 }

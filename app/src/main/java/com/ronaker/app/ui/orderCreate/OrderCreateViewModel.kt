@@ -2,6 +2,7 @@ package com.ronaker.app.ui.orderCreate
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -18,14 +19,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
+class OrderCreateViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val orderRepository: OrderRepository,
+    private val  resourceRepository: ResourcesRepository
+) : BaseViewModel() {
 
 
-    @Inject
-    lateinit var userRepository: UserRepository
-
-    @Inject
-    lateinit var orderRepository: OrderRepository
 
     val viewState: MutableLiveData<StateEnum> = MutableLiveData()
 
@@ -37,10 +37,6 @@ class OrderCreateViewModel(app: Application) : BaseViewModel(app) {
 
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
-
-    @Inject
-    lateinit
-    var resourceRepository: ResourcesRepository
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

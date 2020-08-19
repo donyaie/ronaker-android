@@ -4,6 +4,7 @@ package com.ronaker.app.ui.profileImage
 import android.app.Application
 import android.net.Uri
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ContentRepository
@@ -14,21 +15,11 @@ import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileImageViewModel(app: Application) : BaseViewModel(app) {
+class ProfileImageViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val contentRepository: ContentRepository
+)  : BaseViewModel() {
 
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
-
-
-    @Inject
-    lateinit
-    var contentRepository: ContentRepository
 
 
 

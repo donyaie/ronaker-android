@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,11 +14,14 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class ProductSavedActivity : BaseActivity() {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductSavedBinding
-    private lateinit var viewModel: ProductSavedViewModel
+    private val viewModel: ProductSavedViewModel by viewModels()
 
 
 
@@ -41,8 +45,6 @@ class ProductSavedActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_saved)
-
-        viewModel = ViewModelProvider(this).get(ProductSavedViewModel::class.java)
 
         binding.viewModel = viewModel
 

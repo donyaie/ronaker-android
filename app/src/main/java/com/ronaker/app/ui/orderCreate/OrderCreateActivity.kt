@@ -5,13 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -22,14 +21,16 @@ import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class OrderCreateActivity : BaseActivity() {
 
     private val TAG = OrderCreateActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderCreateBinding
-    private lateinit var viewModel: OrderCreateViewModel
+    private val viewModel: OrderCreateViewModel by viewModels()
 
     private lateinit var checkoutFragment: OrderCheckoutFragment
     private lateinit var messageFragment: OrderMessageFragment
@@ -80,13 +81,11 @@ class OrderCreateActivity : BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_create)
 
-        viewModel = ViewModelProvider(this).get(OrderCreateViewModel::class.java)
-
         binding.viewModel = viewModel
 
         init()
 
-        viewModel.viewState.observe(this, Observer { state ->
+        viewModel.viewState.observe(this, {state ->
             fragmentState = state
 
         })
@@ -119,24 +118,24 @@ class OrderCreateActivity : BaseActivity() {
         initViewPager()
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
-        viewModel.successMessage.observe(this, Observer {
+        viewModel.successMessage.observe(this, {
             succeccSend()
         })
 
 
 
-        viewModel.goNext.observe(this, Observer {
+        viewModel.goNext.observe(this, {
             finish()
         })
 
 
-        viewModel.goValidate.observe(this, Observer {
+        viewModel.goValidate.observe(this, {
             startActivity(
                 ProfileCompleteActivity.newInstance(
                     this
@@ -234,7 +233,7 @@ class OrderCreateActivity : BaseActivity() {
     }
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
+    internal class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
         manager,
         BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
     ) {

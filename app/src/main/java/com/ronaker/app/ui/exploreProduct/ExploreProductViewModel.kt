@@ -3,11 +3,14 @@ package com.ronaker.app.ui.exploreProduct
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
+import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
@@ -20,27 +23,23 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
-class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
+class ExploreProductViewModel @ViewModelInject constructor(
+    private val productRepository:ProductRepository,
+    private val resourcesRepository:ResourcesRepository,
+    private val userRepository:UserRepository,
+    private val analytics: FirebaseAnalytics
+
+
+
+)  : BaseViewModel() {
 
     private val TAG = ExploreProductViewModel::class.java.simpleName
 
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
 
 
     var dataList: ArrayList<Product.ProductRate> = ArrayList()
 
     var rateListAdapter: ProductCommentAdapter
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-
-    @Inject
-    lateinit
-    var resourcesRepository: ResourcesRepository
 
 
     init {
@@ -217,7 +216,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
         stratTransition.postValue(true)
 
-        getAnalytics()?.actionOpenProduct(
+        analytics.actionOpenProduct(
             product.suid,
             product.name,
             if (product.categories?.size ?: 0 > 0) product.categories?.get(0)?.title else null

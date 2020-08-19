@@ -18,8 +18,10 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
 import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class OrderListFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrderListBinding

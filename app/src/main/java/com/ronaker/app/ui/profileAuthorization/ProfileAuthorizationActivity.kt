@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,14 +18,16 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class ProfileAuthorizationActivity : BaseActivity() {
 
     private val TAG = ProfileAuthorizationActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileAuthorizationBinding
-    private lateinit var viewModel: ProfileAuthorizationViewModel
+    private val viewModel: ProfileAuthorizationViewModel by viewModels()
 
     private lateinit var checkoutFragment: SmartIDPersonalCodeFragment
     private lateinit var messageFragment: SmartIDAuthFragment
@@ -74,19 +77,17 @@ class ProfileAuthorizationActivity : BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_authorization)
 
-        viewModel = ViewModelProvider(this).get(ProfileAuthorizationViewModel::class.java)
-
         binding.viewModel = viewModel
 
         init()
 
-        viewModel.viewState.observe(this, Observer { state ->
+        viewModel.viewState.observe(this, {state ->
             fragmentState = state
 
         })
 
 
-        viewModel.goNext.observe(this, Observer {
+        viewModel.goNext.observe(this, {
             finish()
 
         })
@@ -103,7 +104,7 @@ class ProfileAuthorizationActivity : BaseActivity() {
         initViewPager()
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
@@ -208,7 +209,7 @@ class ProfileAuthorizationActivity : BaseActivity() {
     }
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
+    internal class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
         manager,
         BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
     ) {

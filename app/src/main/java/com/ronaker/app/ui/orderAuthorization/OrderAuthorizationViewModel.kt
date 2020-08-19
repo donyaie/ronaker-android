@@ -1,8 +1,8 @@
 package com.ronaker.app.ui.orderAuthorization
 
-import android.app.Application
 import android.os.CountDownTimer
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -13,19 +13,19 @@ import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+
+class OrderAuthorizationViewModel @ViewModelInject constructor(
+    userRepository: UserRepository,
+    private val orderRepository: OrderRepository,
+    private val resourcesRepository: ResourcesRepository
+) : BaseViewModel() {
 
 
-class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
-
-
-    @Inject
-    lateinit var userRepository: UserRepository
-
-    @Inject
-    lateinit var orderRepository: OrderRepository
-    @Inject
-    lateinit var resourcesRepository: ResourcesRepository
+    private var isStartCert = false
+    private var isCheckCert = false
+    private var canStartRenting = false
+    private var defaultLanguage: String
+    private var firstStartRenting = true
 
     val viewState: MutableLiveData<StateEnum> = MutableLiveData()
 
@@ -71,10 +71,6 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     private var acceptSubscription: Disposable? = null
 
 
-    var canStartRenting = false
-
-    var defaultLanguage: String
-
 
     init {
         defaultLanguage = userRepository.getUserLanguage()
@@ -111,10 +107,6 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
 
     }
-
-    var isStartCert = false
-    var isCheckCert = false
-
 
     private fun startCert() {
 
@@ -283,7 +275,10 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun startRenting() {
+    private fun startRenting() {
+
+        val delay = if (firstStartRenting) 3L else 1L
+        firstStartRenting = false
 
         acceptSubscription?.dispose()
         acceptSubscription = mOrder?.suid?.let {
@@ -293,7 +288,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
             )
                 .doOnSubscribe { loadingButton.postValue(true) }
                 .doOnTerminate { loadingButton.postValue(false) }
-                .delay(3, TimeUnit.SECONDS)
+                .delay(delay, TimeUnit.SECONDS)
                 .subscribe { result ->
                     if (result.isSuccess() || result.isAcceptable()) {
 

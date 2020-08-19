@@ -2,8 +2,10 @@ package com.ronaker.app.ui.manageProduct
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
@@ -13,16 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
-
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
+class ManageProductListViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val productRepository: ProductRepository
+) : BaseViewModel() {
 
 
     private var page = 1

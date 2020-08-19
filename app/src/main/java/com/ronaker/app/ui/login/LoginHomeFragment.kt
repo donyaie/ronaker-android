@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -23,12 +24,14 @@ import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginHomeFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentLoginHomeBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by activityViewModels()
 
     private lateinit var adapter: ViewPagerAdapter
 
@@ -42,11 +45,8 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_home, container, false)
 
-
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
             binding.viewModel = viewModel
-        }
+
 
         binding.languageChange.setOnClickListener {
             activity?.let { it1 -> LanguageDialog.showDialog(it1) }

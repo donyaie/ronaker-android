@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,14 +14,17 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.utils.*
+import dagger.hilt.android.AndroidEntryPoint
+import io.branch.referral.Branch
 
 
+@AndroidEntryPoint
 class ProfileSettingActivity : BaseActivity() {
 
 //    private val TAG = ProfileSettingActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileSettingBinding
-    private lateinit var viewModel: ProfileSettingViewModel
+    private val viewModel: ProfileSettingViewModel by viewModels()
 
 
     companion object {
@@ -42,7 +46,6 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_setting)
 
-        viewModel = ViewModelProvider(this).get(ProfileSettingViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -55,7 +58,7 @@ class ProfileSettingActivity : BaseActivity() {
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -64,7 +67,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        viewModel.retry.observe(this, Observer { value ->
+        viewModel.retry.observe(this, {value ->
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
@@ -131,7 +134,8 @@ class ProfileSettingActivity : BaseActivity() {
         ) { dialog, _ ->
             dialog?.cancel()
             viewModel.logout()
-            getAnalytics()?.actionLogout()
+            Branch.getInstance(applicationContext).logout()
+
             startActivity(DashboardActivity.newInstance(this))
             AnimationHelper.setFadeTransition(this)
         }

@@ -5,20 +5,25 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.KeyboardManager
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class LoginForgetActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginForgetBinding
-    private lateinit var viewModel: LoginForgetViewModel
+    private val viewModel: LoginForgetViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +31,9 @@ class LoginForgetActivity : BaseActivity() {
         setSwipeCloseDisable()
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_forget)
-        viewModel = ViewModelProvider(this).get(LoginForgetViewModel::class.java)
         binding.viewModel = viewModel
 
-        viewModel.goNext.observe(this, Observer { value ->
+        viewModel.goNext.observe(this, {value ->
             if (value == true) {
                 startActivity(DashboardActivity.newInstance(this@LoginForgetActivity))
                 AnimationHelper.setFadeTransition(this)
@@ -45,13 +49,13 @@ class LoginForgetActivity : BaseActivity() {
         }
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
-        viewModel.keyboardDown.observe(this, Observer {
+        viewModel.keyboardDown.observe(this, {
 
             if (it) {
                 KeyboardManager.hideSoftKeyboard(this@LoginForgetActivity)

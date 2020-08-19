@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,12 +13,14 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderFinishActivity : BaseActivity() {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderFinishBinding
-    private lateinit var viewModel: OrderFinishViewModel
+    private val viewModel: OrderFinishViewModel by viewModels()
 
 
     companion object {
@@ -42,7 +45,6 @@ class OrderFinishActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_finish)
 
-        viewModel = ViewModelProvider(this).get(OrderFinishViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -51,14 +53,14 @@ class OrderFinishActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -68,7 +70,7 @@ class OrderFinishActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer {
+        viewModel.finish.observe(this, {
             setResult(Activity.RESULT_OK)
             finish()
         })

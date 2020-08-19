@@ -5,16 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InboxFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentInboxBinding
-    private lateinit var viewModel: InboxViewModel
+    private val viewModel: InboxViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,25 +26,31 @@ class InboxFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_inbox, container, false)
-        viewModel = ViewModelProvider(this).get(InboxViewModel::class.java)
 
 
-        viewModel.loading.observe(this.viewLifecycleOwner, Observer { loading ->
+
+        binding.viewModel = viewModel
+
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.loading.observe(this.viewLifecycleOwner, {loading ->
             if (loading) binding.loading.showLoading() else binding.loading.hideLoading()
         })
 
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, {errorMessage ->
             if (errorMessage != null) {
                 Alert.makeTextError(this, errorMessage)
 //                binding.loading.showRetry()
             }
         })
 
-        binding.viewModel = viewModel
 
 
-        return binding.root
     }
 
 

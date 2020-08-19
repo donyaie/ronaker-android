@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.addProduct
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
@@ -13,28 +14,18 @@ import com.ronaker.app.model.Place
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AddProductLocationViewModel(app: Application) : BaseViewModel(app) {
+class AddProductLocationViewModel @ViewModelInject constructor(
+    private val googleMapRepository: GoogleMapRepository,
+    private val resourcesRepository: ResourcesRepository
+)  : BaseViewModel() {
 
     internal val TAG = AddProductLocationViewModel::class.java.name
 
-
-    @Inject
-    lateinit var userRepository: UserRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val newLocation: MutableLiveData<LatLng> = MutableLiveData()
     val placeName: MutableLiveData<String> = MutableLiveData()
-
-
-    @Inject
-    lateinit var productRepository: ProductRepository
-
-    @Inject
-    lateinit var googleMapRepository: GoogleMapRepository
-
-    @Inject
-    lateinit var resourcesRepository: ResourcesRepository
 
 
 

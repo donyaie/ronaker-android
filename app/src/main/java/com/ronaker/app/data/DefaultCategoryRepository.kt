@@ -11,8 +11,9 @@ import com.ronaker.app.model.toCategoryList
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class DefaultCategoryRepository(
+class DefaultCategoryRepository @Inject constructor(
     private val api: CategoryApi,
     private val preferencesProvider: PreferencesDataSource,
     private val userRepository: UserRepository

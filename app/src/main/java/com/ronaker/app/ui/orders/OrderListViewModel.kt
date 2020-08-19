@@ -3,8 +3,11 @@ package com.ronaker.app.ui.orders
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
+import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
@@ -16,24 +19,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class OrderListViewModel(app: Application) : BaseViewModel(app),
+class OrderListViewModel @ViewModelInject constructor(
+    private val orderRepository: OrderRepository
+)  : BaseViewModel(),
     OrderItemAdapter.OrderItemListener {
 
 
-
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-
-    @Inject
-    lateinit
-    var orderRepository: OrderRepository
 
 
     private var page = 0

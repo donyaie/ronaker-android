@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderMessageFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrderMessageBinding
-    private lateinit var viewModel: OrderCreateViewModel
+    private val viewModel: OrderCreateViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -24,10 +26,9 @@ class OrderMessageFragment : BaseFragment(), IPagerFragment {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_order_message, container, false)
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(OrderCreateViewModel::class.java)
-            binding.viewModel = viewModel
-        }
+
+        binding.viewModel = viewModel
+
 
 
 

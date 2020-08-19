@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
@@ -29,16 +30,17 @@ import com.ronaker.app.ui.selectCategory.AddProductCategorySelectDialog
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
-
+@AndroidEntryPoint
 class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDialogResultListener {
 
 
     private val TAG = AddProductActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductAddBinding
-    private lateinit var viewModel: AddProductViewModel
+    private val viewModel: AddProductViewModel by viewModels()
 
     private lateinit var imageFragment: AddProductImageFragment
 
@@ -132,7 +134,6 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_add)
 
-        viewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -143,7 +144,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.viewState.observe(this, Observer { state ->
+        viewModel.viewState.observe(this, {state ->
 
             actionState = state
 
@@ -152,7 +153,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.parentCategory.observe(this, Observer { categoies ->
+        viewModel.parentCategory.observe(this, {categoies ->
 
             AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
                 .setParent(null).setCategories(categoies).show()
@@ -160,7 +161,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        viewModel.childCategory.observe(this, Observer { category ->
+        viewModel.childCategory.observe(this, {category ->
 
             category?.sub_categories?.let {
                 AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
@@ -171,7 +172,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.showImagePicker.observe(this, Observer { state ->
+        viewModel.showImagePicker.observe(this, {state ->
 
             if (state)
                 pickImage(REQUEST_IMAGE)
@@ -179,7 +180,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         })
 
-        viewModel.showInsurancePicker.observe(this, Observer { state ->
+        viewModel.showInsurancePicker.observe(this, {state ->
 
             if (state)
                 pickImage(REQUEST_INSURNCE)
@@ -188,13 +189,13 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
 //                binding.loading.showLoading()
@@ -210,7 +211,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.goNext.observe(this, Observer { value ->
+        viewModel.goNext.observe(this, {value ->
             if (value)
                 startActivity(ProfileCompleteActivity.newInstance(this@AddProductActivity))
             else
@@ -218,7 +219,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        viewModel.goReview.observe(this, Observer {
+        viewModel.goReview.observe(this, {
 
             showReviewDialog()
         })

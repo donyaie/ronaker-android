@@ -2,6 +2,7 @@ package com.ronaker.app.ui.orderFinish
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
@@ -10,16 +11,9 @@ import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderFinishViewModel(app: Application) : BaseViewModel(app) {
-
-    @Inject
-    lateinit
-    var orderRepository: OrderRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
+class OrderFinishViewModel @ViewModelInject constructor(
+    private val orderRepository: OrderRepository
+)  : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

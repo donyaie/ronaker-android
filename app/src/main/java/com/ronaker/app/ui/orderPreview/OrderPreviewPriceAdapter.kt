@@ -74,10 +74,10 @@ class OrderPreviewPriceAdapter(
         private val binding: AdapterOrderPreviewPriceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = OrderPreviewPriceViewModel(binding.root.getApplication())
+        private val viewModel = OrderPreviewPriceViewModel()
 
         fun bind(product: Order.OrderPrices) {
-            viewModel.bind(product)
+            viewModel.bind(product,binding.root.getApplication())
             binding.viewModel = viewModel
         }
     }
@@ -87,10 +87,10 @@ class OrderPreviewPriceAdapter(
         private val binding: AdapterOrderPreviewPriceTotalBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = OrderPreviewPriceViewModel(binding.root.getApplication())
+        private val viewModel = OrderPreviewPriceViewModel()
 
         fun bind(product: Order.OrderPrices) {
-            viewModel.bind(product)
+            viewModel.bind(product,binding.root.getApplication())
             binding.viewModel = viewModel
         }
 

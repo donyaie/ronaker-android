@@ -41,10 +41,9 @@ fun FirebaseAnalytics.actionLogin(method: String) {
 
 }
 
-fun FirebaseAnalytics.actionLogout() {
 
-    Branch.getInstance().logout()
-}
+
+
 
 fun FirebaseAnalytics.actionShareProduct(itemId: String) {
     val bundle = Bundle()

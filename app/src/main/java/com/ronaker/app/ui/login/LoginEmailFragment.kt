@@ -11,18 +11,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class LoginEmailFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentLoginEmailBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -32,10 +33,14 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_email, container, false)
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
-            binding.viewModel = viewModel
-        }
+        binding.viewModel = viewModel
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
 
         viewModel.emailError.observe(viewLifecycleOwner, { errorMessage ->
             if (errorMessage != null) binding.emailInput.showNotValidAlert() else binding.emailInput.hideAlert()
@@ -156,9 +161,6 @@ class LoginEmailFragment : BaseFragment(), IPagerFragment {
 
 
 
-
-
-        return binding.root
     }
 
 

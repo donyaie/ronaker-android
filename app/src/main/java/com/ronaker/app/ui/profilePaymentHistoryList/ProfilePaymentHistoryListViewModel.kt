@@ -2,6 +2,7 @@ package com.ronaker.app.ui.profilePaymentHistoryList
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
@@ -11,16 +12,10 @@ import com.ronaker.app.utils.toCurrencyFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfilePaymentHistoryListViewModel(app: Application) : BaseViewModel(app) {
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-    @Inject
-    lateinit
-    var paymentInfoRepository: PaymentInfoRepository
+class ProfilePaymentHistoryListViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val paymentInfoRepository: PaymentInfoRepository
+)  : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

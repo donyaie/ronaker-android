@@ -14,9 +14,10 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
+import javax.inject.Inject
 
-class DefaultOrderRepository(private val api: OrderApi,
-                             private val userRepository: UserRepository) :
+class DefaultOrderRepository @Inject constructor(private val api: OrderApi,
+                                                 private val userRepository: UserRepository) :
     OrderRepository {
 
     override fun getOrders(

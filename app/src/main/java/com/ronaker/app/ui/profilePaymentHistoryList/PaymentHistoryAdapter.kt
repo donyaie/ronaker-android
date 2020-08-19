@@ -59,7 +59,7 @@ class PaymentHistoryAdapter(
         val adapter: PaymentHistoryAdapter
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = PaymentHistoryViewModel(binding.root.getApplication())
+        private val viewModel = PaymentHistoryViewModel()
 
         fun bind(item: Transaction) {
             viewModel.bind(item)

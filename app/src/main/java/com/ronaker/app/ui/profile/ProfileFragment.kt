@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -20,8 +21,11 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.SUPPORT_URL
 import com.ronaker.app.utils.extension.setEndDrawableRes
+import dagger.hilt.android.AndroidEntryPoint
+import io.branch.referral.Branch
 
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProfileBinding
@@ -52,7 +56,7 @@ class ProfileFragment : BaseFragment() {
         })
 
         viewModel.logOutAction.observe(viewLifecycleOwner, {
-
+            Branch.getInstance(getApplicationContext()).logout()
             activity?.let { it.startActivity(DashboardActivity.newInstance(it)) }
         })
 

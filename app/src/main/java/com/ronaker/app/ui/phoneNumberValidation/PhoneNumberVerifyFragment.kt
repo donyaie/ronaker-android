@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
+@AndroidEntryPoint
 class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentPhoneNumberVerifyBinding
-    private lateinit var viewModel: PhoneNumberViewModel
+    private val viewModel: PhoneNumberViewModel by activityViewModels()
 
     var disposable: Disposable? = null
 
@@ -31,10 +33,17 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
             container,
             false
         )
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(PhoneNumberViewModel::class.java)
-            binding.viewModel = viewModel
-        }
+        binding.viewModel = viewModel
+
+
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
 
 
         disposable = RxTextView.textChanges(binding.pinEditText).subscribe {
@@ -43,7 +52,6 @@ class PhoneNumberVerifyFragment : BaseFragment(), IPagerFragment {
 
 
 
-        return binding.root
     }
 
     private fun validateCode(value: String) {

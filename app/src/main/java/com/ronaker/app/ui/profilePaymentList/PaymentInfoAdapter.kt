@@ -71,7 +71,7 @@ class PaymentInfoAdapter(
         val adapter: PaymentInfoAdapter
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        private val viewModel = PaymentInfoViewModel(binding.root.getApplication())
+        private val viewModel = PaymentInfoViewModel()
 
         fun bind(item: PaymentCard) {
             viewModel.bind(item)

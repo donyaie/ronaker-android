@@ -2,6 +2,7 @@ package com.ronaker.app.ui.loginForget
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -12,14 +13,11 @@ import com.ronaker.app.utils.isNumeric
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class LoginForgetViewModel(app: Application) : BaseViewModel(app) {
+class LoginForgetViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val resourcesRepository: ResourcesRepository
+) : BaseViewModel() {
 
-
-    @Inject
-    lateinit var resourcesRepository: ResourcesRepository
-
-    @Inject
-    lateinit var userRepository: UserRepository
 
 
     var forgetSubscription: Disposable? = null

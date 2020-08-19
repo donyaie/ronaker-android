@@ -4,9 +4,6 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.ronaker.app.ui.imagePreview.ImagePreviewViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

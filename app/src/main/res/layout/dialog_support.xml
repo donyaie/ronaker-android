@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.ronaker.app.ui.support.SupportViewModel" />
-
-        <variable
             name="dialog"
             type="com.ronaker.app.ui.support.SupportDialog" />
     </data>

@@ -3,8 +3,10 @@ package com.ronaker.app.ui.explore
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
@@ -18,22 +20,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ExploreViewModel(app: Application) : BaseViewModel(app),
+class ExploreViewModel @ViewModelInject constructor(
+    private val productRepository:ProductRepository,
+    private val categoryRepository: CategoryRepository,
+    private val analytics: FirebaseAnalytics
+) : BaseViewModel(),
     CategoryExploreAdapter.AdapterListener {
 
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
 
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-
-    @Inject
-    lateinit
-    var categoryRepository: CategoryRepository
 
     private var page = 1
     private var hasNextPage = true
@@ -260,7 +254,7 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     fun search(search: String) {
 
         if (search.isNotEmpty()) {
-            getAnalytics()?.actionSearch(search)
+            analytics.actionSearch(search)
         }
 
         reset()

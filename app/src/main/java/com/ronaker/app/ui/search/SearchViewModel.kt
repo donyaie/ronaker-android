@@ -1,24 +1,13 @@
 package com.ronaker.app.ui.search
 
 
-import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.data.ProductRepository
-import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
-class SearchViewModel(app: Application) : BaseViewModel(app) {
+class SearchViewModel @ViewModelInject constructor() : BaseViewModel() {
 
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

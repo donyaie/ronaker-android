@@ -4,19 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class ProfileEmailEditActivity : BaseActivity() {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileEmailEditBinding
-    private lateinit var viewModel: ProfileEmailEditViewModel
+    private  val viewModel: ProfileEmailEditViewModel by viewModels()
 
 
     companion object {
@@ -38,16 +41,14 @@ class ProfileEmailEditActivity : BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_email_edit)
 
-        viewModel = ViewModelProvider(this).get(ProfileEmailEditViewModel::class.java)
-
         binding.viewModel = viewModel
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
@@ -55,7 +56,7 @@ class ProfileEmailEditActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
-        viewModel.goNext.observe(this, Observer { value ->
+        viewModel.goNext.observe(this, {value ->
             if (value == true) {
                 finish()
             }

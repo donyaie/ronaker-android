@@ -6,19 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class AddProductImageFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProductAddImageBinding
-    private lateinit var viewModel: AddProductViewModel
 
+    private val viewModel: AddProductViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +31,8 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_product_add_image, container, false)
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
             binding.viewModel = viewModel
-        }
+
 
 
 

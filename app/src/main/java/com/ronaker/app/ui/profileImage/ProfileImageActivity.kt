@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
@@ -21,14 +22,16 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
 
+@AndroidEntryPoint
 class ProfileImageActivity : BaseActivity() {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileImageBinding
-    private lateinit var viewModel: ProfileImageViewModel
+    private  val viewModel: ProfileImageViewModel by viewModels()
 
 
     companion object {
@@ -58,8 +61,6 @@ class ProfileImageActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_image)
 
-        viewModel = ViewModelProvider(this).get(ProfileImageViewModel::class.java)
-
         binding.viewModel = viewModel
 
 
@@ -67,11 +68,11 @@ class ProfileImageActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -80,10 +81,10 @@ class ProfileImageActivity : BaseActivity() {
 
 
 
-        viewModel.pickImage.observe(this, Observer {
+        viewModel.pickImage.observe(this, {
             onProfileImageClick()
         })
-        viewModel.finish.observe(this, Observer {
+        viewModel.finish.observe(this, {
             finish()
         })
 

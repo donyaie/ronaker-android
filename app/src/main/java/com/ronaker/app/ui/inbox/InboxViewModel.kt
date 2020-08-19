@@ -8,12 +8,9 @@ import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class InboxViewModel(app: Application) : BaseViewModel(app) {
+class InboxViewModel : BaseViewModel() {
 
 
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()

@@ -3,6 +3,7 @@ package com.ronaker.app.ui.orderPreview
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -22,29 +23,15 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class OrderPreviewViewModel(app: Application) : BaseViewModel(app) {
-
-    @Inject
-    lateinit
-    var orderRepository: OrderRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
+class OrderPreviewViewModel @ViewModelInject constructor(
+    private val orderRepository: OrderRepository,
+    private val contentRepository: ContentRepository,
+    private val resourcesRepository: ResourcesRepository
+)   : BaseViewModel() {
 
 
-    @Inject
-    lateinit
-    var contentRepository: ContentRepository
 
-
-    @Inject
-    lateinit
-    var resourcesRepository: ResourcesRepository
-
-
-    val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
 
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
 

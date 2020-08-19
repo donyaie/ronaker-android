@@ -44,7 +44,7 @@ class SelectAdapter(
         var parentViewModel: SelectDialogViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = SelectAdapterViewModel(parentViewModel.getApplication())
+        private val viewModel = SelectAdapterViewModel()
 
         fun bind(product: SelectDialog.SelectItem) {
             viewModel.bind(product, binding, parentViewModel)

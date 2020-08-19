@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,10 +24,15 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Place
 import com.ronaker.app.ui.searchLocationDialog.AddProductLocationSearchDialog
-import com.ronaker.app.utils.*
+import com.ronaker.app.utils.DEFULT_LOCATION
+import com.ronaker.app.utils.KeyboardManager
+import com.ronaker.app.utils.MAP_ZOOM
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class AddProductLocationFragment : BaseFragment(), IPagerFragment,
     AddProductLocationSearchDialog.OnDialogResultListener, GoogleMap.OnCameraIdleListener {
 
@@ -46,8 +50,11 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 //    private lateinit var screenLibrary: ScreenCalculator
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProductAddLocationBinding
-    private lateinit var baseViewModel: AddProductViewModel
-    private lateinit var viewModel: AddProductLocationViewModel
+
+
+    private val viewModel: AddProductLocationViewModel by viewModels()
+    private val baseViewModel: AddProductViewModel by activityViewModels()
+
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     lateinit var mGoogleMap: GoogleMap
@@ -68,21 +75,31 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
             container,
             false
         )
-        activity?.let {
-            baseViewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
-            binding.parentViewModel = baseViewModel
-        }
 
-        viewModel = ViewModelProvider(this).get(AddProductLocationViewModel::class.java)
+        binding.parentViewModel = baseViewModel
+
+
         binding.viewModel = viewModel
 
 
-        var mheight=0
+
+
+
+        return binding.root
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+
+        var mheight = 0
 
         val vtObserver = binding.root.viewTreeObserver
         vtObserver.addOnGlobalLayoutListener {
 
-            if(mheight!=requireActivity().window.decorView.measuredHeight) {
+            if (mheight != requireActivity().window.decorView.measuredHeight) {
                 mheight = requireActivity().window.decorView.measuredHeight
                 val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
 
@@ -153,7 +170,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
         }
 
-//        viewModel.loading.observe(this, Observer { value ->
+//        viewModel.loading.observe(this, {value ->
 //
 //            baseViewModel.loading.value = value
 //        })
@@ -185,9 +202,8 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
 
-        return binding.root
-    }
 
+    }
 
     override fun onDialogResult(
         result: AddProductLocationSearchDialog.DialogResultEnum,
@@ -226,9 +242,6 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
     }
-
-
-
 
 
     fun chech(move: Boolean) {

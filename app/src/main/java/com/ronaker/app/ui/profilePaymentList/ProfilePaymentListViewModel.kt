@@ -2,6 +2,7 @@ package com.ronaker.app.ui.profilePaymentList
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
@@ -10,16 +11,9 @@ import com.ronaker.app.model.PaymentCard
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfilePaymentListViewModel(app: Application) : BaseViewModel(app) {
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-    @Inject
-    lateinit
-    var paymentInfoRepository: PaymentInfoRepository
+class ProfilePaymentListViewModel @ViewModelInject constructor(
+    private val paymentInfoRepository: PaymentInfoRepository
+)  : BaseViewModel() {
 
 
     var dataList = ArrayList<PaymentCard>()

@@ -7,7 +7,7 @@ import com.ronaker.app.databinding.AdapterLocationSearchBinding
 import com.ronaker.app.model.Place
 
 
-class LocationSearchViewModel(app: Application) : BaseViewModel(app) {
+class LocationSearchViewModel {
     private val productTitle = MutableLiveData<String>()
 
     lateinit var data: Place

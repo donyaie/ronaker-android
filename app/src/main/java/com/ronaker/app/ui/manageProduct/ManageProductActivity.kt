@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,12 +17,14 @@ import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityManageProductBinding
-    private lateinit var viewModel: ManageProductViewModel
+    private val viewModel: ManageProductViewModel by viewModels()
 
 
     companion object {
@@ -48,8 +51,6 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_product)
-
-        viewModel = ViewModelProvider(this).get(ManageProductViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -98,7 +99,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         })
 
 
-//        viewModel.retry.observe(this, Observer { loading ->
+//        viewModel.retry.observe(this, {loading ->
 //
 //            loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
 //        })

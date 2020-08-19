@@ -8,7 +8,7 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.nameFormat
 
-class ProductCommentViewModel(val app: Application) : BaseViewModel(app) {
+class ProductCommentViewModel{
     val userAvatar = MutableLiveData<String>()
     val userName = MutableLiveData<String>()
     val rate = MutableLiveData<Float>()

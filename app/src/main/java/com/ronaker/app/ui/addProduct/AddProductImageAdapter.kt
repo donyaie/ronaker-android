@@ -162,7 +162,7 @@ class AddProductImageAdapter(private val baseViewModel: AddProductViewModel) :
         private val baseViewModel: AddProductViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = AddProductImageAdapterViewModel(baseViewModel.getApplication())
+        private val viewModel = AddProductImageAdapterViewModel()
 
         fun bind(product: Image) {
             binding.viewModel = viewModel

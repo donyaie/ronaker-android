@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,14 +18,16 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class PhoneNumberActivity : BaseActivity() {
 
     private val TAG = PhoneNumberActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityPhoneNumberBinding
-    private lateinit var viewModel: PhoneNumberViewModel
+    private val viewModel: PhoneNumberViewModel by viewModels()
 
     private lateinit var numberFragment: PhoneNumberFragment
     private lateinit var verifyFragment: PhoneNumberVerifyFragment
@@ -63,13 +66,11 @@ class PhoneNumberActivity : BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_number)
 
-        viewModel = ViewModelProvider(this).get(PhoneNumberViewModel::class.java)
-
         binding.viewModel = viewModel
 
         init()
 
-        viewModel.viewState.observe(this, Observer { state ->
+        viewModel.viewState.observe(this, {state ->
             loginState = state
 
         })
@@ -92,13 +93,13 @@ class PhoneNumberActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener { finish() }
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
 
                 binding.loading.visibility = View.VISIBLE
@@ -109,7 +110,7 @@ class PhoneNumberActivity : BaseActivity() {
 
 
 
-        viewModel.goNext.observe(this, Observer {
+        viewModel.goNext.observe(this, {
             finish()
         })
 

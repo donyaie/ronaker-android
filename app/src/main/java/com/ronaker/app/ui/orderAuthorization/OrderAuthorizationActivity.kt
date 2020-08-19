@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -18,16 +19,17 @@ import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@AndroidEntryPoint
 class OrderAuthorizationActivity : BaseActivity() {
 
     private val TAG = OrderAuthorizationActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderAuthorizationBinding
-    private lateinit var viewModel: OrderAuthorizationViewModel
+    private val viewModel: OrderAuthorizationViewModel by viewModels()
 
     private lateinit var checkoutFragment: SmartIDPersonalCodeFragment
     private lateinit var messageFragment: SmartIDAuthFragment
@@ -83,8 +85,6 @@ class OrderAuthorizationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_authorization)
-
-        viewModel = ViewModelProvider(this).get(OrderAuthorizationViewModel::class.java)
 
         binding.viewModel = viewModel
 

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
@@ -23,14 +24,16 @@ import com.ronaker.app.ui.dialog.SelectDialog
 import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
 
+@AndroidEntryPoint
 class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileIndentifyBinding
-    private lateinit var viewModel: ProfileIdentifyViewModel
+    private val viewModel: ProfileIdentifyViewModel by viewModels()
 
 
     companion object {
@@ -54,7 +57,6 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_indentify)
 
-        viewModel = ViewModelProvider(this).get(ProfileIdentifyViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -63,11 +65,11 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -76,10 +78,10 @@ class ProfileIdentifyActivity : BaseActivity(), SelectDialog.OnDialogResultListe
 
 
 
-        viewModel.pickImage.observe(this, Observer {
+        viewModel.pickImage.observe(this, {
             onProfileImageClick()
         })
-        viewModel.finish.observe(this, Observer {
+        viewModel.finish.observe(this, {
             finish()
         })
 

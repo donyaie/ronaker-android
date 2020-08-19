@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
@@ -24,7 +23,9 @@ import com.ronaker.app.ui.orderStartRenting.OrderStartRentingActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
@@ -115,7 +116,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
@@ -128,7 +129,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        viewModel.showProduct.observe(this, Observer { product ->
+        viewModel.showProduct.observe(this, {product ->
             startActivityForResult(
                 ExploreProductActivity.newInstance(this, product),
                 ExploreProductActivity.REQUEST_CODE
@@ -137,21 +138,21 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         })
 
-        viewModel.makeCall.observe(this, Observer { value ->
+        viewModel.makeCall.observe(this, {value ->
 
             IntentManeger.makeCall(this@OrderPreviewActivity, value)
 
 
         })
 
-        viewModel.sendEmail.observe(this, Observer { value ->
+        viewModel.sendEmail.observe(this, {value ->
 
             IntentManeger.sendMail(this@OrderPreviewActivity, value)
 
         })
 
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
@@ -163,21 +164,21 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
 
-        viewModel.acceptIntro.observe(this, Observer {
+        viewModel.acceptIntro.observe(this, {
             startActivityForResult(
                 OrderAcceptActivity.newInstance(this, viewModel.getOrder()),
                 OrderAcceptActivity.REQUEST_CODE
             )
         })
 
-        viewModel.declineIntro.observe(this, Observer {
+        viewModel.declineIntro.observe(this, {
             startActivityForResult(
                 OrderDeclineActivity.newInstance(this, viewModel.getOrder()),
                 OrderDeclineActivity.REQUEST_CODE
             )
         })
 
-        viewModel.cancelDialog.observe(this, Observer {
+        viewModel.cancelDialog.observe(this, {
 
             startActivityForResult(
                 OrderCancelActivity.newInstance(this, viewModel.getOrder()),
@@ -186,7 +187,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         })
 
 
-        viewModel.signContractShow.observe(this, Observer {
+        viewModel.signContractShow.observe(this, {
 
             startActivityForResult(
                 OrderAuthorizationActivity.newInstance(this, viewModel.getOrder()),
@@ -194,7 +195,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
             )
         })
 
-        viewModel.contractPreview.observe(this, Observer {
+        viewModel.contractPreview.observe(this, {
 
             startActivityForResult(
                 OrderAuthorizationActivity.newInstance(this, viewModel.getOrder(),false),
@@ -204,7 +205,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
 
-        viewModel.previewContractShow.observe(this, Observer { file ->
+        viewModel.previewContractShow.observe(this, {file ->
 
             file?.let {
 
@@ -217,7 +218,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
 
-        viewModel.startRenting.observe(this, Observer {
+        viewModel.startRenting.observe(this, {
             startActivityForResult(
                 OrderStartRentingActivity.newInstance(this, viewModel.getOrder()),
                 OrderStartRentingActivity.REQUEST_CODE
@@ -226,7 +227,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
 
-        viewModel.startRate.observe(this, Observer {
+        viewModel.startRate.observe(this, {
             startActivityForResult(
                 ProductRateActivity.newInstance(this, viewModel.getOrder()),
                 ProductRateActivity.REQUEST_CODE
@@ -234,7 +235,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         })
 
 
-        viewModel.finishIntro.observe(this, Observer {
+        viewModel.finishIntro.observe(this, {
             startActivityForResult(
                 OrderFinishActivity.newInstance(this, viewModel.getOrder()),
                 OrderFinishActivity.REQUEST_CODE
@@ -243,7 +244,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
 
 
-        viewModel.finish.observe(this, Observer {
+        viewModel.finish.observe(this, {
             finish()
         })
 

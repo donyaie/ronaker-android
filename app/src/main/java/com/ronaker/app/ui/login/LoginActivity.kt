@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -18,15 +19,17 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.view.ToolbarComponent
+import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
 
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity() {
 
 //    private val TAG = LoginActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by viewModels()
     private val Max_size = 5
 
     private lateinit var screenLibrary: ScreenCalculator
@@ -120,18 +123,17 @@ class LoginActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         screenLibrary = ScreenCalculator(this)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         binding.viewModel = viewModel
 
 
 
-        viewModel.actionState.observe(this, Observer { action ->
+        viewModel.actionState.observe(this, {action ->
             loginAction = action
 
         })
 
-        viewModel.viewState.observe(this, Observer { state ->
+        viewModel.viewState.observe(this, {state ->
             loginState = state
 
         })
@@ -158,16 +160,16 @@ class LoginActivity : BaseActivity() {
         binding.scrollView.setOnTouchListener { _, _ -> true }
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
-        viewModel.successMessage.observe(this, Observer { errorMessage ->
+        viewModel.successMessage.observe(this, {errorMessage ->
             Alert.makeTextSuccess(this, errorMessage)
         })
 
-        viewModel.goNext.observe(this, Observer { value ->
+        viewModel.goNext.observe(this, {value ->
             if (value == true) {
                 startActivity(DashboardActivity.newInstance(this@LoginActivity))
                 AnimationHelper.setFadeTransition(this)
@@ -176,14 +178,14 @@ class LoginActivity : BaseActivity() {
             }
         })
 
-        viewModel.gotoSignUp.observe(this, Observer {
+        viewModel.gotoSignUp.observe(this, {
             loginAction = LoginViewModel.LoginActionEnum.register
             currentPosition = 1
         })
 
 
 
-        viewModel.keyboardDown.observe(this, Observer {
+        viewModel.keyboardDown.observe(this, {
 
             if (it) {
                 KeyboardManager.hideSoftKeyboard(this@LoginActivity)
@@ -192,13 +194,13 @@ class LoginActivity : BaseActivity() {
 
 
 
-        viewModel.gotoSignIn.observe(this, Observer {
+        viewModel.gotoSignIn.observe(this, {
 
             loginAction = LoginViewModel.LoginActionEnum.login
             currentPosition = 4
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()

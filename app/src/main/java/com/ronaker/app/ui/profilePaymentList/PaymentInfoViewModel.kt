@@ -6,7 +6,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.PaymentCard
 
-class PaymentInfoViewModel(val app: Application) : BaseViewModel(app) {
+class PaymentInfoViewModel {
     val cardTypeImage = MutableLiveData<Int>()
     val title = MutableLiveData<String>()
 

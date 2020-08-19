@@ -28,11 +28,15 @@ import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
+import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
 
+@AndroidEntryPoint
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     FragNavController.RootFragmentListener, EmailVerifyDialog.OnDialogResultListener {
 
+
+    private val viewModel: DashboardViewModel by viewModels()
 
     private val fragNavController: FragNavController =
         FragNavController(supportFragmentManager, R.id.container)
@@ -48,7 +52,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
 
 
-    private val viewModel: DashboardViewModel by viewModels()
+
     var inviteCode: String? = null
 
 
@@ -62,8 +66,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         setSwipeCloseDisable()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
-
-
         binding.viewModel = viewModel
         binding.root.setBackgroundResource(R.color.white)
 //        ( window.decorView.findViewById<View>(Window.ID_ANDROID_CONTENT)?.parent as? ViewGroup)?.setBackgroundResource(R.color.white)

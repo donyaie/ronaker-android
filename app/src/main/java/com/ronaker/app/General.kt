@@ -1,26 +1,27 @@
 package com.ronaker.app
 
+import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ronaker.app.utils.AppNotificationOpenedHandler
 import com.ronaker.app.utils.FONT_PATH
 import com.ronaker.app.utils.LocaleHelper
+import dagger.hilt.android.HiltAndroidApp
 import io.branch.referral.Branch
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 
 
-class General : MultiDexApplication() {
+@HiltAndroidApp
+class General : Application() {
 
 
     lateinit var analytics: FirebaseAnalytics
-
 
     override fun onCreate() {
 

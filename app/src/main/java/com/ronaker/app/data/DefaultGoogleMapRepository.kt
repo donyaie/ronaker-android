@@ -1,6 +1,8 @@
 package com.ronaker.app.data
 
 import com.google.android.gms.maps.model.LatLng
+import com.ronaker.app.R
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.network.GoogleMapApi
 import com.ronaker.app.model.Place
 import com.ronaker.app.model.converGeoToPlace
@@ -9,8 +11,9 @@ import com.ronaker.app.model.toPlaceList
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiKey: String) :
+class DefaultGoogleMapRepository @Inject constructor(private val api: GoogleMapApi, private val resourcesRepository: ResourcesRepository) :
     GoogleMapRepository {
 
     override fun getQueryAutocomplete(Query: String, latLng: LatLng?): Observable<List<Place>?> {
@@ -31,7 +34,7 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
             language,
             components,
             types,
-            apiKey
+            resourcesRepository.getString(R.string.google_api_key_me)
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -47,7 +50,7 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         val language: String? = null// "en";
 
 
-        return api.getPlaceDetails(placeId, language, apiKey)
+        return api.getPlaceDetails(placeId, language, resourcesRepository.getString(R.string.google_api_key_me))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -66,7 +69,7 @@ class DefaultGoogleMapRepository(private val api: GoogleMapApi, private val apiK
         val latlng = String.format("%s,%s", location.latitude, location.longitude)
         val types = "(regions)"
 
-        return api.getGeocode(null, latlng, null, null, language, null, types, apiKey)
+        return api.getGeocode(null, latlng, null, null, language, null, types, resourcesRepository.getString(R.string.google_api_key_me))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
