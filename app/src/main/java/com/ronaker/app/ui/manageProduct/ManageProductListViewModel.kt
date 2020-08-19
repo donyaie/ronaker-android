@@ -25,14 +25,15 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
     var userRepository: UserRepository
 
 
-    private var page = 0
+    private var page = 1
     private var hasNextPage = true
 
 
     var dataList: ArrayList<Product> = ArrayList()
 
+    var listView: MutableLiveData<ArrayList<Product>> = MutableLiveData()
 
-    var productListAdapter: ManageProductAdapter = ManageProductAdapter()
+
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
@@ -50,7 +51,7 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
 
     private fun reset() {
 
-        page = 0
+        page = 1
         hasNextPage = true
         dataList.clear()
 
@@ -62,7 +63,7 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
         withContext(Dispatchers.IO) {
 
             if (hasNextPage) {
-                page++
+
                 subscription?.dispose()
                 subscription = productRepository
                     .getMyProduct( page)
@@ -81,10 +82,10 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
                     .doOnTerminate { loading.postValue(false) }
                     .subscribe { result ->
                         if (result.isSuccess()) {
-
+                            page++
 
                             result.data?.results?.let { dataList.addAll(it) }
-                            productListAdapter.updateList(dataList)
+                            listView.postValue(dataList)
 
 
                             if (result.data?.next == null) {
@@ -139,6 +140,13 @@ class ManageProductListViewModel(app: Application) : BaseViewModel(app) {
         uiScope.launch {
             loadProduct()
         }
+    }
+
+    fun profileIsComplete(): Boolean {
+
+       return  userRepository.getUserInfo()?.isComplete()==true
+
+
     }
 
 }

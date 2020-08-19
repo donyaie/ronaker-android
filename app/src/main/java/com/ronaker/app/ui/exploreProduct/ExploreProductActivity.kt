@@ -6,18 +6,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.transition.ChangeBounds
-import android.transition.TransitionManager
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.transition.Fade
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -27,11 +24,15 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
+import com.ronaker.app.ui.imagePreview.ImagePreviewActivity
 import com.ronaker.app.ui.orderCreate.OrderCreateActivity
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.*
+import com.ronaker.app.utils.extension.setEndDrawableRes
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
+import kotlinx.android.synthetic.main.activity_image_preview.*
 import java.util.*
 import kotlin.system.measureTimeMillis
 
@@ -39,7 +40,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductExploreBinding
-    private lateinit var viewModel: ExploreProductViewModel
+
+    private val viewModel: ExploreProductViewModel by viewModels()
 
 
     private lateinit var googleMap: GoogleMap
@@ -114,17 +116,22 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
-
-        viewModel = ViewModelProvider(this).get(ExploreProductViewModel::class.java)
-
         binding.viewModel = viewModel
 
 
         val time = measureTimeMillis {
             //calcut Image height
-            val screenCalculator = ScreenCalculator(this)
-            binding.avatarSlide.layoutParams.height =
-                (screenCalculator.screenWidthPixel * 0.7).toInt()
+//            val width =  binding.container.measuredWidth
+
+
+            val vtObserver = binding.root.viewTreeObserver
+            vtObserver.addOnGlobalLayoutListener {
+
+                val width=  binding.avatarSlide.measuredWidth
+                binding.avatarSlide.layoutParams.height =
+                    ( width* 0.8).toInt()
+
+            }
 
 
 
@@ -158,6 +165,20 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                     binding.loading.showLoading()
                 } else
                     binding.loading.hideLoading()
+            })
+
+            viewModel.userVerify.observe(this, Observer { value ->
+
+                binding.userName.postDelayed({
+
+                    if (value == true)
+                        binding.userName.setEndDrawableRes(R.drawable.ic_guide_success)
+                    else
+                        binding.userName.setEndDrawableRes(0)
+
+
+                },200)
+
             })
 
             viewModel.loadingComment.observe(this, Observer { value ->
@@ -212,6 +233,13 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             }
 
 
+            binding.fullScreen.setOnClickListener {
+
+                startActivity(ImagePreviewActivity.newInstance(this,binding.avatarSlide.dataList,binding.avatarSlide.currentItem))
+
+            }
+
+
 
             binding.toolbar.action2BouttonClickListener = View.OnClickListener {
 
@@ -229,13 +257,22 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             })
 
             viewModel.checkout.observe(this, Observer { _ ->
-                viewModel.mProduct?.let {
 
 
-                    this.startActivityForResult(
-                        OrderCreateActivity.newInstance(this, it)
-                        , OrderCreateActivity.REQUEST_CODE
-                    )
+                if(viewModel.userProfileIsComplete()) {
+
+
+                    viewModel.mProduct?.let {
+
+                        this.startActivityForResult(
+                            OrderCreateActivity.newInstance(this, it)
+                            , OrderCreateActivity.REQUEST_CODE
+                        )
+
+                    }
+                }else{
+                    startActivity(ProfileCompleteActivity.newInstance(this) )
+
 
                 }
 
@@ -443,12 +480,18 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
                 binding.toolbar.isTransparent = true
                 binding.toolbar.isBottomLine = false
+               binding.statusBar.setBackgroundResource(
+                   R.color.transparent
+               )
 
 
             } else {
 
                 binding.toolbar.isTransparent = false
                 binding.toolbar.isBottomLine = true
+                binding.statusBar.setBackgroundResource(
+                    R.color.white
+                )
 
             }
 

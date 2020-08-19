@@ -7,21 +7,26 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.addProduct.AddProductActivity
+import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.ScreenCalculator
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 class ManageProductListFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductListBinding
-    private lateinit var viewModel: ManageProductListViewModel
+
+    private val viewModel: ManageProductListViewModel by viewModels()
+
+
+
+
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     override fun onCreateView(
@@ -36,31 +41,67 @@ class ManageProductListFragment : BaseFragment() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(ManageProductListViewModel::class.java)
 
         binding.viewModel = viewModel
+
+
+
+        return binding.root
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
 
         binding.loading.hideLoading()
 
 
-        val screenMnager = ScreenCalculator(requireContext())
 
 
-        val itemsize = 170
-        val screensize = screenMnager.screenWidthDP.toInt()
+        val itemsize = requireContext().resources.getDimensionPixelSize(R.dimen.adapter_width)
+        var screensize = binding.container.measuredWidth
+        AppDebug.log("mnager", "screenSize : $screensize")
         var count = screensize / itemsize
 
         if (count < 2)
             count = 2
+         val productAdapter=  ManageProductAdapter()
+        var  mnager=  GridLayoutManager(context, count)
+        binding.recycler.layoutManager = mnager
+        binding.recycler.adapter=productAdapter
+
+        val vtObserver = binding.root.viewTreeObserver
+        vtObserver.addOnGlobalLayoutListener {
+
+            if(screensize==0) {
+                screensize = binding.container.measuredWidth
+
+                AppDebug.log("mnager", "screenSize 2 : $screensize")
+                count = screensize / itemsize
+
+                if (count < 2)
+                    count = 2
+                mnager = GridLayoutManager(context, count)
+                binding.recycler.layoutManager = mnager
+            }
+
+        }
 
 
-        binding.recycler.layoutManager = GridLayoutManager(context, count)
+
+
+
+
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, { loading ->
             binding.refreshLayout.isRefreshing = loading
+        })
+        viewModel.listView.observe(viewLifecycleOwner, {
+           productAdapter.submitList(it.toList())
         })
 
 
@@ -72,14 +113,14 @@ class ManageProductListFragment : BaseFragment() {
         }
 
 
-        viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
+        viewModel.retry.observe(viewLifecycleOwner, { loading ->
             loading?.let { binding.loading.showRetry(loading) }
                 ?: run { binding.loading.hideRetry() }
 
 
         })
 
-        viewModel.emptyView.observe(viewLifecycleOwner, Observer { loading ->
+        viewModel.emptyView.observe(viewLifecycleOwner, { loading ->
             if (loading) {
                 binding.emptyLayout.visibility = View.VISIBLE
             } else {
@@ -87,7 +128,7 @@ class ManageProductListFragment : BaseFragment() {
             }
         })
 
-        viewModel.addNewView.observe(viewLifecycleOwner, Observer { loading ->
+        viewModel.addNewView.observe(viewLifecycleOwner, { loading ->
             if (loading) {
 
                 binding.addNewProductButton.visibility = View.VISIBLE
@@ -104,13 +145,26 @@ class ManageProductListFragment : BaseFragment() {
 
 
         binding.addNewProductButton.setOnClickListener {
-            activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            if(viewModel.profileIsComplete()) {
+
+                activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            }else{
+
+                activity?.startActivity(activity?.let { it1 -> ProfileCompleteActivity.newInstance(it1) })
+            }
         }
         binding.addProductButton.setOnClickListener {
-            activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+
+            if(viewModel.profileIsComplete()) {
+
+                activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
+            }else{
+
+                activity?.startActivity(activity?.let { it1 -> ProfileCompleteActivity.newInstance(it1) })
+            }
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, { errorMessage ->
             if (errorMessage != null) {
                 Alert.makeTextError(this, errorMessage)
             }
@@ -123,7 +177,7 @@ class ManageProductListFragment : BaseFragment() {
 
         }
 
-        viewModel.resetList.observe(viewLifecycleOwner, Observer {
+        viewModel.resetList.observe(viewLifecycleOwner, {
             scrollListener.resetState()
         })
 
@@ -141,10 +195,6 @@ class ManageProductListFragment : BaseFragment() {
         binding.recycler.addOnScrollListener(scrollListener)
 
 
-
-
-
-        return binding.root
     }
 
     override fun onStart() {

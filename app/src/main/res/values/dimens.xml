@@ -7,8 +7,11 @@
     <dimen name="text_size_heading2">23sp</dimen>
 
 
-    
+
     <dimen name="toolbar_size">45dp</dimen>
+
+
+    <dimen name="adapter_width">170dp</dimen>
 
 
     <!--    <dimen name="statusBarSizeMargin">-25dp</dimen>-->
@@ -19,6 +22,7 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_half">12dp</dimen>
     <dimen name="dot_size">9dp</dimen>
+    <dimen name="image_thumbnail_size">180dp</dimen>
 
 
 </resources>

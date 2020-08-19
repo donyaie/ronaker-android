@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterManageProductBinding
 import com.ronaker.app.model.Product
-import com.ronaker.app.utils.DiffUtils
-import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
-class ManageProductAdapter : RecyclerView.Adapter<ManageProductAdapter.ViewHolder>() {
-    val dataList = ArrayList<Product>()
+class ManageProductAdapter :
+    ListAdapter<Product, ManageProductAdapter.ViewHolder>(ItemDiffCallback()) {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: AdapterManageProductBinding = DataBindingUtil.inflate(
@@ -32,66 +30,23 @@ class ManageProductAdapter : RecyclerView.Adapter<ManageProductAdapter.ViewHolde
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(this.dataList[position])
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            try {
-
-
-                val combinedChange =
-                    DiffUtils.createCombinedPayload(payloads as List<DiffUtils.Change<Product>>)
-//            val oldData = combinedChange.oldData
-                val newData = combinedChange.newData
-                holder.bind(newData)
-
-            } catch (ex: Exception) {
-
-            }
-
-        }
-
-
-    }
-
-
-    override fun getItemCount(): Int {
-        return this.dataList.size
-    }
-
-    fun updateList(newItems: List<Product>) {
-
-        MainScope().launch {
-
-            val result = DiffUtil.calculateDiff(
-                DiffUtilCallback(
-                    dataList,
-                    newItems
-                )
-            )
-            dataList.clear()
-            dataList.addAll(newItems)
-            result.dispatchUpdatesTo(this@ManageProductAdapter)
-        }
+        holder.bind(getItem(position))
     }
 
 
     class ViewHolder(
         private val binding: AdapterManageProductBinding
-    ) : RecyclerView.ViewHolder( binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = ManageProductAdapterViewModel(binding.root.getApplication())
+        private val viewModel = ManageProductAdapterViewModel()
 
         fun bind(product: Product) {
-            viewModel.bind(product)
+            viewModel.bind(product, binding)
 
 
             binding.root.setOnClickListener {
 
-                binding.root.getParentActivity()?.let {activity->
+                binding.root.getParentActivity()?.let { activity ->
 
                     activity.startActivity(ManageProductActivity.newInstance(activity, product))
 
@@ -101,37 +56,18 @@ class ManageProductAdapter : RecyclerView.Adapter<ManageProductAdapter.ViewHolde
             }
 
 
-
-
-
             binding.viewModel = viewModel
         }
     }
 
 
-    class DiffUtilCallback(
-        private var oldItems: List<Product>,
-        private var newItems: List<Product>
-    ) : DiffUtil.Callback() {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean =
+            oldItem.suid == newItem.suid
 
-        override fun getOldListSize(): Int = oldItems.size
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean =
+            oldItem == newItem
 
-        override fun getNewListSize(): Int = newItems.size
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldItems[oldItemPosition].suid == newItems[newItemPosition].suid
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldItems[oldItemPosition] == newItems[newItemPosition]
-
-        override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-            val oldItem = oldItems[oldItemPosition]
-            val newItem = newItems[newItemPosition]
-
-            return DiffUtils.Change(
-                oldItem,
-                newItem
-            )
-        }
     }
+
 }

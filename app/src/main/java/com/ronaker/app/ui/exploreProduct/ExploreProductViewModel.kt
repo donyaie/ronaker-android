@@ -2,7 +2,6 @@ package com.ronaker.app.ui.exploreProduct
 
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
@@ -44,7 +43,6 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
     var resourcesRepository: ResourcesRepository
 
 
-
     init {
 
 
@@ -64,13 +62,13 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
     val checkout: MutableLiveData<String> = MutableLiveData()
 
-    val productRatestatus: MutableLiveData<String> = MutableLiveData()
     val productRate: MutableLiveData<String> = MutableLiveData()
 
 
     val checkoutVisibility: MutableLiveData<Int> = MutableLiveData()
 
     val userName: MutableLiveData<String> = MutableLiveData()
+    val userVerify: MutableLiveData<Boolean> = MutableLiveData()
     val userImage: MutableLiveData<String> = MutableLiveData()
 
 
@@ -131,7 +129,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             subscription?.dispose()
 
             subscription = productRepository
-                .getProduct( id)
+                .getProduct(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
 
@@ -177,7 +175,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
             commentSubscription?.dispose()
             commentSubscription = productRepository
-                .getProductRating( suid)
+                .getProductRating(suid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSubscribe {
@@ -242,7 +240,10 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
             }
 
             userName.postValue(
-                nameFormat( it.first_name ,it.last_name))
+                nameFormat(it.first_name, it.last_name) + " "
+            )
+
+            userVerify.postValue(true)
 
             userRepository.getUserInfo()?.let { info ->
                 if (it.suid?.compareTo(info.suid ?: "") == 0)
@@ -251,23 +252,22 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
                     checkoutVisibility.postValue(View.VISIBLE)
             }
 
+
+
         }
         //title_positive_rate
 
-        isFavorite.postValue(product.isFavourite)
+        isFavorite.postValue(product.isFavourite?:false)
 
         product.rate?.let { rate ->
 
 
             productRate.postValue(rate.toString())
 
-            productRatestatus.postValue("Positive Rate")
-
 
         } ?: run {
 
-            productRate.postValue("")
-            productRatestatus.postValue("Not Rated")
+            productRate.postValue("Not Rated")
         }
 
 
@@ -344,7 +344,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
         if (mProduct?.isFavourite != null && mProduct?.isFavourite == true) {
 
             faveSubscription = productRepository
-                .productSavedRemove( suid)
+                .productSavedRemove(suid)
 
                 .doOnSubscribe {
 
@@ -369,7 +369,7 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
 
         } else {
             faveSubscription = productRepository
-                .productSave( suid)
+                .productSave(suid)
 
                 .doOnSubscribe {
 
@@ -393,6 +393,11 @@ class ExploreProductViewModel(app: Application) : BaseViewModel(app) {
                 }
         }
 
+
+    }
+
+    fun userProfileIsComplete(): Boolean {
+        return  userRepository.getUserInfo()?.isComplete()==true
 
     }
 

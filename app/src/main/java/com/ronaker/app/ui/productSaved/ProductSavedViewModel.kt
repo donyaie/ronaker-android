@@ -9,9 +9,11 @@ import com.ronaker.app.base.NetworkError
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
-import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
@@ -27,17 +29,18 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
     var userRepository: UserRepository
 
 
-    private var page = 0
+    private var page = 1
     private var hasNextPage = true
 
 
     var dataList: ArrayList<Product> = ArrayList()
 
 
+    val listView: MutableLiveData<ArrayList<Product>> = MutableLiveData()
+
+
     private var query: String? = null
 
-
-    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter()
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
@@ -56,63 +59,67 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
 
     private fun reset() {
 
-        page = 0
+        page = 1
         hasNextPage = true
         dataList.clear()
 //        productListAdapter.updateList(dataList)
-        resetList.value = true
+        resetList.postValue(true)
     }
 
 
-    fun loadProduct() {
-        if (hasNextPage) {
-            page++
-            subscription?.dispose()
-            subscription = productRepository
-                .productSearch( query, page, null, null, true)
+    suspend fun loadProduct() =
 
-                .doOnSubscribe { onRetrieveProductListStart() }
-                .doOnTerminate { onRetrieveProductListFinish() }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-                        if ((result.data?.results?.size ?: 0) > 0) {
+        withContext(Dispatchers.Unconfined) {
+            if (hasNextPage) {
 
-                            emptyVisibility.value = View.GONE
-                            onRetrieveProductListSuccess(
-                                result.data?.results
-                            )
+                subscription?.dispose()
+                subscription = productRepository
+                    .productSearch(query, page, null, null, true)
 
-                            if (result.data?.next == null)
+                    .doOnSubscribe { onRetrieveProductListStart() }
+                    .doOnTerminate { onRetrieveProductListFinish() }
+                    .subscribe { result ->
+                        if (result.isSuccess()) {
+
+                            page++
+                            if ((result.data?.results?.size ?: 0) > 0) {
+
+                                emptyVisibility.postValue(View.GONE)
+                                onRetrieveProductListSuccess(
+                                    result.data?.results
+                                )
+
+                                if (result.data?.next == null)
+                                    hasNextPage = false
+
+                            } else {
+
+                                emptyVisibility.postValue(View.VISIBLE)
+
                                 hasNextPage = false
-
+                            }
                         } else {
 
-                            emptyVisibility.value = View.VISIBLE
-
-                            hasNextPage = false
+                            onRetrieveProductListError(result.error)
                         }
-                    } else {
-
-                        onRetrieveProductListError(result.error)
                     }
-                }
+            }
         }
-    }
 
 
     private fun onRetrieveProductListStart() {
-        retry.value = null
+        retry.postValue(null)
         if (page <= 1) {
-            loading.value = true
+            loading.postValue(true)
 
-            emptyVisibility.value = View.GONE
+            emptyVisibility.postValue(View.GONE)
 
         }
-        errorMessage.value = null
+        errorMessage.postValue(null)
     }
 
     private fun onRetrieveProductListFinish() {
-        loading.value = false
+        loading.postValue(false)
     }
 
     private fun onRetrieveProductListSuccess(productList: List<Product>?) {
@@ -120,16 +127,16 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
         if (productList != null) {
 
             dataList.addAll(productList)
-            productListAdapter.updateList(dataList)
+            listView.postValue(dataList)
         }
 
     }
 
     private fun onRetrieveProductListError(error: NetworkError?) {
         if (page <= 1)
-            retry.value = error?.message
+            retry.postValue(error?.message)
         else
-            errorMessage.value = error?.message
+            errorMessage.postValue(error?.message)
 
 
     }
@@ -141,13 +148,22 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun loadMore() {
-        loadProduct()
+
+        uiScope.launch {
+
+            loadProduct()
+        }
+
 
     }
 
     fun retry() {
         reset()
-        loadProduct()
+
+        uiScope.launch {
+
+            loadProduct()
+        }
 
     }
 
@@ -157,8 +173,10 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
 
         reset()
         query = search
-        loadProduct()
+        uiScope.launch {
 
+            loadProduct()
+        }
     }
 
 

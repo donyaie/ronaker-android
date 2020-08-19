@@ -18,7 +18,7 @@ class DefaultPaymentInfoRepository(
 
     override fun getPaymentInfoList(): Observable<Result<List<PaymentCard>?>> {
 
-        return api.getPaymentInfoList(userRepository.getUserAuthorization())
+        return api.getPaymentInfoList(userRepository.getUserAuthorization(),userRepository.getUserLanguage())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -30,7 +30,7 @@ class DefaultPaymentInfoRepository(
 
     override fun addPaymentInfo(payment: PaymentCard): Observable<Result<Boolean>> {
 
-        return api.addPaymentInfo(userRepository.getUserAuthorization(), payment.toPaymentCardCreateModel())
+        return api.addPaymentInfo(userRepository.getUserAuthorization(), userRepository.getUserLanguage(),payment.toPaymentCardCreateModel())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -42,7 +42,7 @@ class DefaultPaymentInfoRepository(
 
     override fun getFinancialTransactions(): Observable<Result<List<Transaction>?>> {
 
-        return api.getFinancialTransactions(userRepository.getUserAuthorization())
+        return api.getFinancialTransactions(userRepository.getUserAuthorization(),userRepository.getUserLanguage())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

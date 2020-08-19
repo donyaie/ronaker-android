@@ -28,6 +28,29 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
             initDotCount()
         }
 
+
+    var currentItem: Int = 0
+        set(value) {
+            field = value
+            viewPager.currentItem = field
+            adapter.notifyDataSetChanged()
+        }
+        get() {
+
+            return viewPager.currentItem
+
+        }
+
+
+     var fullScreen: Boolean = false
+        set(value) {
+            field = value
+            adapter.notifyDataSetChanged()
+
+        }
+
+
+
     private var countDots: LinearLayout
 
     private lateinit var dots: Array<ImageView?>
@@ -42,7 +65,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
     private var adapter: ImagePagerAdapter
 
 
-    private val dataList = ArrayList<String>()
+     val dataList = ArrayList<String>()
 
 
     init {
@@ -54,7 +77,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
         viewPager = findViewById(R.id.viewpager)
 
         countDots = findViewById(R.id.countDots)
-        adapter = ImagePagerAdapter( dataList)
+        adapter = ImagePagerAdapter(dataList)
 
         viewPager.adapter = adapter
 
@@ -125,13 +148,14 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
         showNavigator(true, viewPager.currentItem)
     }
 
+
     fun clearImage() {
         dataList.clear()
         adapter.notifyDataSetChanged()
     }
 
 
-    private inner class ImagePagerAdapter( val dataList: ArrayList<String>) :
+    private inner class ImagePagerAdapter(val dataList: ArrayList<String>) :
         PagerAdapter() {
 
 
@@ -150,6 +174,12 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
 
 
             val imageView = view.findViewById(R.id.image) as ImageView
+
+            if(fullScreen){
+                imageView.scaleType=ImageView.ScaleType.FIT_CENTER
+            }else
+                imageView.scaleType=ImageView.ScaleType.CENTER_CROP
+
             GlideApp.with(context).load(dataList[position]).into(imageView)
             container.addView(view)
             return view

@@ -14,7 +14,7 @@ object LocaleHelper {
     private val TAG = LocaleHelper::class.java.simpleName
 
     fun onAttach(context: Context): Context {
-        return setLocale(context, getPersistedData(context, Locale.getDefault().language))
+        return setLocale(context, getPersistedData(context, LANGUAGE_DEFAULT))// Locale.getDefault().language))
     }
 
     fun setLocale(context: Activity, language: String): Context {
@@ -24,10 +24,7 @@ object LocaleHelper {
 
     private fun setLocale(context: Context, language: String): Context {
         persist(context, language)
-
         return updateResources(context, language)
-
-
     }
 
 

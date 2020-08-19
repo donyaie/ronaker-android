@@ -51,7 +51,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
@@ -92,20 +92,13 @@ class ProfileSettingActivity : BaseActivity() {
 
         binding.licenseLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this, TERM_URL)
+            IntentManeger.openUrl(this, viewModel.getTermUrl())
         }
 
         binding.privacyLayout.setOnClickListener {
 
-            IntentManeger.openUrl(this, PRIVACY_URL)
+            IntentManeger.openUrl(this, viewModel.getPrivacyUrl())
         }
-
-
-        binding.refundLayout.setOnClickListener {
-
-            IntentManeger.openUrl(this, REFUNDS_URL)
-        }
-
 
 
 

@@ -8,10 +8,11 @@ import com.ronaker.app.data.network.request.*
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUserModel
-import com.ronaker.app.utils.LANGUAGE_DEFAULT
+import com.ronaker.app.utils.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class DefaultUserRepository(
     private val userApi: UserApi,
@@ -19,7 +20,7 @@ class DefaultUserRepository(
 ) :
     UserRepository {
 
-    companion object{
+    companion object {
 
         val USER_LANGUAGE_KEY = "Locale.Helper.Selected.Language"
 
@@ -39,7 +40,7 @@ class DefaultUserRepository(
             user.last_name,
             user.promotionCode
         )
-        return userApi.registerUser(info)
+        return userApi.registerUser(getUserLanguage(), info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -59,7 +60,7 @@ class DefaultUserRepository(
             user.email,
             user.password
         )
-        return userApi.loginUser(info)
+        return userApi.loginUser(getUserLanguage(), info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -81,7 +82,7 @@ class DefaultUserRepository(
     }
 
 
-    override fun updateUserInfo( user: User): Observable<Result<User>> {
+    override fun updateUserInfo(user: User): Observable<Result<User>> {
         val info = UserUpdateRequestModel(
             user.first_name,
             user.last_name,
@@ -89,7 +90,7 @@ class DefaultUserRepository(
             user.avatar
         )
 
-        return userApi.updateUserInfo(getUserAuthorization(), info)
+        return userApi.updateUserInfo(getUserAuthorization(), getUserLanguage(), info)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -102,7 +103,7 @@ class DefaultUserRepository(
 
 
     override fun getUserInfo(user_auth: String): Observable<Result<User>> {
-        return userApi.getUserInfo(user_auth)
+        return userApi.getUserInfo(getUserLanguage(), user_auth)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -122,7 +123,7 @@ class DefaultUserRepository(
 
 
     override fun sendEmailVerification(): Observable<Result<Boolean>> {
-        return userApi.sendEmailVerification(getUserAuthorization())
+        return userApi.sendEmailVerification(getUserAuthorization(), getUserLanguage())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -144,7 +145,7 @@ class DefaultUserRepository(
             UserAddPhoneRequestModel(
                 phone_number
             )
-        return userApi.addUserPhoneNumber(getUserAuthorization(), phone)
+        return userApi.addUserPhoneNumber(getUserAuthorization(), getUserLanguage(), phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -164,7 +165,7 @@ class DefaultUserRepository(
                 phone_number,
                 code
             )
-        return userApi.activeUserPhoneNumber(getUserAuthorization(), phone)
+        return userApi.activeUserPhoneNumber(getUserAuthorization(), getUserLanguage(), phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -187,7 +188,11 @@ class DefaultUserRepository(
                 national_code,
                 personal_code
             )
-        return userApi.getSmartIDVerificationCode(getUserAuthorization(), request)
+        return userApi.getSmartIDVerificationCode(
+            getUserAuthorization(),
+            getUserLanguage(),
+            request
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -209,7 +214,7 @@ class DefaultUserRepository(
                 national_code,
                 personal_code
             )
-        return userApi.startSmartIDAuth(getUserAuthorization(), request)
+        return userApi.startSmartIDAuth(getUserAuthorization(), getUserLanguage(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -225,7 +230,7 @@ class DefaultUserRepository(
     ): Observable<Result<Boolean>> {
         val request = UserForgetPasswordRequestModel(email)
 
-        return userApi.forgetPassword(request)
+        return userApi.forgetPassword(getUserLanguage(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -241,7 +246,7 @@ class DefaultUserRepository(
     ): Observable<Result<Boolean>> {
         val request = UserForgetPasswordConfirmRequestModel(token, password)
 
-        return userApi.forgetPasswordConfirm(request)
+        return userApi.forgetPasswordConfirm(getUserLanguage(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -254,7 +259,7 @@ class DefaultUserRepository(
 
     override fun checkSmartIDSession(
     ): Observable<Result<Boolean>> {
-        return userApi.checkSmartIDSession(getUserAuthorization())
+        return userApi.checkSmartIDSession(getUserAuthorization(), getUserLanguage())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -275,7 +280,7 @@ class DefaultUserRepository(
                 imageSuid,
                 documentType.key
             )
-        return userApi.addDocument(getUserAuthorization(), phone)
+        return userApi.addDocument(getUserAuthorization(), getUserLanguage(), phone)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -309,8 +314,34 @@ class DefaultUserRepository(
 
     override fun getUserLanguage(): String {
 
-        return preferencesProvider.getString(USER_LANGUAGE_KEY, USER_LANGUAGE_DEFAULT)?:USER_LANGUAGE_DEFAULT
+        return preferencesProvider.getString(USER_LANGUAGE_KEY, USER_LANGUAGE_DEFAULT)
+            ?: USER_LANGUAGE_DEFAULT
     }
+
+    override fun getPrivacyUrl(): String {
+
+        getUserLanguage().let {
+
+            return if (it.toLowerCase(Locale.getDefault()).compareTo("lt") == 0) {
+                PRIVACY_URL_LT
+            } else {
+                PRIVACY_URL
+            }
+
+        }
+    }
+
+    override fun getTermUrl(): String {
+
+        getUserLanguage().let {
+
+            return if (it.toLowerCase(Locale.getDefault()).compareTo("lt") == 0) {
+                TERM_URL_LT
+            } else {
+                TERM_URL
+            }
+
+        }    }
 
 
     override fun getUserToken(): String? {

@@ -51,7 +51,10 @@ abstract class BaseActivity : SwipeBackActivity() {
 
 
     fun enableKeyboardAnimator() {
-        animator.start()
+
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R)
+            animator.start()
 
     }
 
@@ -71,7 +74,7 @@ abstract class BaseActivity : SwipeBackActivity() {
         Fabric.with(this, Crashlytics())
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black))
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
 
     }
@@ -126,12 +129,6 @@ abstract class BaseActivity : SwipeBackActivity() {
 //
 //        private var activityList: ArrayList<Activity> = ArrayList()
 
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        removeActivityStack(this)
 
     }
 

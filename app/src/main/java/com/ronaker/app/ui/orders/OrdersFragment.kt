@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -22,8 +23,8 @@ import com.ronaker.app.utils.extension.recyclerView
 class OrdersFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrdersBinding
-    private lateinit var viewModel: OrdersViewModel
 
+    private val viewModel: OrdersViewModel by viewModels()
 
     private lateinit var adapter: ViewPagerAdapter
 
@@ -41,10 +42,18 @@ class OrdersFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders, container, false)
-        viewModel = ViewModelProvider(this).get(OrdersViewModel::class.java)
 
 //
         binding.viewModel = viewModel
+
+
+        return binding.root
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
 
 
         tabList.add(binding.text1)
@@ -65,7 +74,6 @@ class OrdersFragment : BaseFragment() {
         initViewPager()
 
 
-        return binding.root
     }
 
 
@@ -127,7 +135,7 @@ class OrdersFragment : BaseFragment() {
         adapter = ViewPagerAdapter(this)
 
         binding.viewpager.recyclerView.enforceSingleScrollDirection()
-
+        binding.viewpager.offscreenPageLimit=4
 
         binding.viewpager.adapter = adapter
         binding.viewpager.registerOnPageChangeCallback(viewPager2PageChangeCallback)
@@ -145,7 +153,7 @@ class OrdersFragment : BaseFragment() {
     }
 
 
-    internal inner class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(
+    internal class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(
         fragment
     ) {
         private val mFragmentList = ArrayList<Fragment>()

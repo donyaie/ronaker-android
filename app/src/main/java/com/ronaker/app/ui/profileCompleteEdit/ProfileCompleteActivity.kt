@@ -54,11 +54,11 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, { value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -90,7 +90,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
                 binding.imageLayout.isClickable = true
 //                binding.imageLayout.setText(R.string.title_add_profile_image)
-                binding.imageLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+                binding.imageLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
             }
         })
 
@@ -104,7 +104,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             } else {
 
                 binding.signLayout.isClickable = true
-                binding.signLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+                binding.signLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
             }
         })
 
@@ -119,7 +119,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
                 binding.phoneLayout.isClickable = true
 //                binding.phoneLayout.setText(R.string.title_add_and_verify_phone_number)
-                binding.phoneLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+                binding.phoneLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
             }
         })
 
@@ -132,7 +132,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             } else {
 
                 binding.identityLayout.isClickable = true
-                binding.identityLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+                binding.identityLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
             }
         })
 
@@ -140,12 +140,12 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         viewModel.smartIDComplete.observe(this, Observer { value ->
             if (value == true) {
 
-                binding.authLayout.isClickable = true
+                binding.authLayout.isClickable = false
                 binding.authImage.setImageResource(R.drawable.ic_complete)
             } else {
 
                 binding.authLayout.isClickable = true
-                binding.authImage.setImageResource(R.drawable.ic_chevron_right)
+                binding.authImage.setImageResource(R.drawable.ic_guid_warning)
             }
         })
 
@@ -156,7 +156,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
                 binding.paymentLayout.isClickable = false
 //                binding.paymentLayout.setText(R.string.title_add_a_payment_method_edit)
             } else {
-                binding.paymentLayout.setEndDrawableRes(R.drawable.ic_chevron_right)
+                binding.paymentLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
 
                 binding.paymentLayout.isClickable = true
 //                binding.paymentLayout.setText(R.string.title_add_a_payment_method)

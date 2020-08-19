@@ -96,7 +96,7 @@
     <string name="button_finish">Finish</string>
     <string name="text_per_day">Per Day</string>
     <string name="text_complete_your_profile">Complete your profile</string>
-    <string name="title_we_need_few_details_for_renting_or_lending_out">We need few details for renting or listing out.</string>
+    <string name="title_complete_profile_description">To complete your profile and start using Ronaker features, please complete the steps below.</string>
     <string name="title_add_profile_image">Add Profile Image</string>
     <string name="title_add_and_verify_phone_number">Add and verify phone number</string>
     <string name="title_add_a_payment_method">Add a payment method</string>
@@ -142,7 +142,6 @@
     <string name="text_try_again">Try Again</string>
     <string name="text_rate_product">Rate Product</string>
     <string name="text_user_request">Request</string>
-    <string name="text_introduction">Introduction</string>
     <string name="text_pickup_address">Pickup Address</string>
     <string name="text_whay_canceled">Rejected Reason</string>
     <string name="text_reviews">Reviews</string>
@@ -180,7 +179,7 @@
     <string name="text_balance">Balance :</string>
     <string name="text_add_document_image">Add document image</string>
     <string name="text_order_detail">Order Detail</string>
-    <string name="text_of_5"> of 4</string>
+    <string name="text_of_5">" of 4"</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Please, Tell us about your experience using this item</string>
     <string name="text_please_write_your_experience_here">Please write your experience here</string>
     <string name="text_title_send">Send</string>
@@ -188,20 +187,18 @@
     <string name="text_choice_payment_type">Choose Payment Type</string>
     <string name="text_nothing_saved_yet">Nothing Saved Yet</string>
     <string name="texy_you_haven_t_payment_method">You Haven\&apos;t Payment Method</string>
-    <string name="text_location_address">Location Address</string>
     <string name="text_add_insurance_of_item">Add Insurance Of Item</string>
     <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Add Insurance Image for you item. please use clear image from title and signature</string>
     <string name="text_privacy_policy">Privacy Policy</string>
-    <string name="text_returns_and_refunds_policy">Returns and Refunds Policy</string>
     <string name="text_license_agreement">Terms &amp; Conditions</string>
     <string name="text_check_the_provided_control_code">Check the provided control code</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Please check the provided control code on your phone\n\nConfirm by entering PIN1:</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Please check the provided control code on your phone\n\nConfirm by entering PIN2:</string>
     <string name="text_time_remaining">Time remaining</string>
     <string name="text_please_enter_your_personal_code">Please Enter your Personal Code</string>
-    <string name="text_we_will_authorize_you_with_your_smart_id">We will authorize you with your Smart-ID</string>
+    <string name="text_we_will_authorize_you_with_your_smart_id">To ensure your security and prevent malicious behavior, we need to verify your identity information.</string>
     <string name="text_smart_id">Smart ID</string>
-    <string name="textauthorize_your_identity">Authorize your identity</string>
+    <string name="textauthorize_your_identity">Verify your identity</string>
     <string name="text_instruction_text">Term of use item and how pick up item</string>
     <string name="text_Instruction">Instruction</string>
     <string name="text_tell_pickup_address">Enter Pickup address</string>
@@ -219,7 +216,6 @@
     <string name="format_you_will_pay" formatted="true">You will pay %1$s for %2$s days</string>
     <string name="text_rate_it">Rate it</string>
     <string name="text_archive_it">Archive it</string>
-    <string name="text_near_me">Near me</string>
     <string name="text_contract">Contract</string>
     <string name="text_please_sign_the_contract">Please sign the contract before start renting</string>
     <string name="text_sign_the_contract">Sign the contract</string>
@@ -244,7 +240,18 @@
     <string name="text_waite_for_sign" formatted="true">Wait for %1$s sign</string>
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">You must sign the contract exactly before start Renting and goods exchange</string>
     <string name="text_contract_preview">Contract Preview</string>
-    <string name="text_make_sure_sign_the_contract">Make sure You both signed the digital contract</string>
-    <string name="text_i_agree_to_the_contract">I agree to the contract</string>
+    <string name="text_make_sure_sign_the_contract">Please make sure the item owner signed the contract</string>
     <string name="error_login_email_or_password_wrong">your email or password is incorrect. please try again</string>
+    <string name="text_location_near_by">Ronaker help you find items nearby.\nyour location is required to make these work!</string>
+    <string name="text_via_facebook">Via Messenger</string>
+    <string name="text_via_call">Via Call</string>
+    <string name="text_via_mail">Via Mail</string>
+    <string name="text_contact_us">Contact us</string>
+    <string name="text_pending_message">Your item is begin reviewed. We\'ll get back to you soon!</string>
+    <string name="text_pending_dialog">Your item has been successfully submitted.\nWe will look into it and get back to you shortly!</string>
+    <string name="text_reject_message">Unfortunately, your item has been rejected. For more information, please read our terms and conditions.</string>
+    <string name="text_location_disabled">Your Location service seems to be disabled, do you want to enable it?</string>
+    <string name="text_preview">Preview</string>
+
+    <string name="button_start_renting_sign">Sign the contract &amp; Start Renting</string>
 </resources>

@@ -8,6 +8,7 @@ import android.content.ContextWrapper
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,14 @@ fun View.getApplication(): Application {
 }
 
 fun Button.setEndDrawableRes(res: Int) {
+//    this.setCompoundDrawablesRelative(null,null,ContextCompat.getDrawable(context,res),null)
+    this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, res, 0)
+
+
+}
+
+
+fun TextView.setEndDrawableRes(res: Int) {
 //    this.setCompoundDrawablesRelative(null,null,ContextCompat.getDrawable(context,res),null)
     this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, res, 0)
 

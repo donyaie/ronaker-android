@@ -102,7 +102,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
+            android:fitsSystemWindows="true"
             android:layout_gravity="top"
+
             app:toolbar_component_action_container="NONE"
             app:toolbar_component_bottom_line="false"
             app:toolbar_component_cancel_container="NONE"
@@ -115,12 +117,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:layout_below="@id/toolbar">
 
 
             <FrameLayout
 
                 android:id="@+id/frame_container"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/statusBarSizeMargin" />

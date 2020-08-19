@@ -6,24 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.BottomOffsetDecoration
+import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
+import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 
 
 class OrderListFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrderListBinding
-    private lateinit var viewModel: OrderListViewModel
 
+    private val viewModel: OrderListViewModel by viewModels()
 
     private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
@@ -32,7 +33,6 @@ class OrderListFragment : BaseFragment() {
     private var totalItemCount: Int = 0
     private var pastVisiblesItems: Int = 0
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,31 +40,35 @@ class OrderListFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_list, container, false)
-        viewModel = ViewModelProvider(this).get(OrderListViewModel::class.java)
 
-//
         binding.viewModel = viewModel
+
+        return binding.root
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         val mnager = LinearLayoutManager(context, RecyclerView.VERTICAL, false).apply {
         }
 
 
+        val orderAdapter = OrderItemAdapter(viewModel)
 
+        viewModel.setFilter(getFilter())
+
+        binding.recycler.adapter=orderAdapter
         binding.recycler.isMotionEventSplittingEnabled = true
 
         binding.recycler.layoutManager = mnager
         binding.recycler.setHasFixedSize(false)
-//        binding.recycler.enforceSingleScrollDirection()
-//        binding.recycler.setScrollingTouchSlop(RecyclerView.TOUCH_SLOP_PAGING)
-//
-//        val offsetPx = resources.getDimension(R.dimen.bottom_offset_dp)
-//        val bottomOffsetDecoration = BottomOffsetDecoration(offsetPx.toInt())
-//        binding.recycler.addItemDecoration(bottomOffsetDecoration)
+        viewModel.loading.observe(viewLifecycleOwner, { loading ->
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             binding.refreshLayout.isRefreshing = loading
         })
 
-        viewModel.retry.observe(viewLifecycleOwner, Observer { loading ->
+        viewModel.retry.observe(viewLifecycleOwner, { loading ->
 
             loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
@@ -73,12 +77,12 @@ class OrderListFragment : BaseFragment() {
 
         binding.loading.hideLoading()
 
-        viewModel.resetList.observe(viewLifecycleOwner, Observer {
+        viewModel.resetList.observe(viewLifecycleOwner, {
             scrollListener?.resetState()
         })
 
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, { errorMessage ->
             if (errorMessage != null)
                 Alert.makeTextError(this, errorMessage)
 //
@@ -90,12 +94,18 @@ class OrderListFragment : BaseFragment() {
 
         }
 
-        viewModel.launchOrderDetail.observe(viewLifecycleOwner, Observer { order ->
+        viewModel.launchOrderDetail.observe(viewLifecycleOwner, { order ->
 
             startActivity(OrderPreviewActivity.newInstance(requireContext(), order))
         })
 
-        viewModel.launchOrderRateDetail.observe(viewLifecycleOwner, Observer { order ->
+
+        viewModel.listView.observe(viewLifecycleOwner, {
+
+           orderAdapter.submitList(it.toList())
+        })
+
+        viewModel.launchOrderRateDetail.observe(viewLifecycleOwner, { order ->
 
             startActivity(ProductRateActivity.newInstance(requireContext(), order))
         })
@@ -106,6 +116,9 @@ class OrderListFragment : BaseFragment() {
 
             viewModel.retry()
         }
+
+
+
 
 
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
@@ -122,7 +135,7 @@ class OrderListFragment : BaseFragment() {
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
 
-                        viewModel.getData(getFilter())
+                        viewModel.getData()
                     }
 
                 }
@@ -133,15 +146,13 @@ class OrderListFragment : BaseFragment() {
 
         })
 
-
-        return binding.root
     }
 
 
     override fun onStart() {
         super.onStart()
-        viewModel.reset()
-        viewModel.getData(getFilter())
+
+        viewModel.retry()
 
 //        viewModel.getData(getFilter())
     }
@@ -163,13 +174,6 @@ class OrderListFragment : BaseFragment() {
             return fragment
         }
 
-
-        fun newBoundle(filter: String?): Bundle {
-
-            val bundle = Bundle()
-            bundle.putString(FILTER_KEY, filter)
-            return bundle
-        }
     }
 
 

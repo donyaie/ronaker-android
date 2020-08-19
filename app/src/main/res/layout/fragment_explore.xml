@@ -11,6 +11,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:id="@+id/container"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -123,60 +124,19 @@
             </LinearLayout>
 
 
-            <HorizontalScrollView
-                android:id="@+id/filter_recycler"
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:minHeight="55dp"
+                android:id="@+id/category_recycler"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp">
+                app:adapter="@{viewModel.getCategoryListAdapter()}"
 
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/filter_chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_default"
-                        android:layout_marginTop="4dp"
-
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="4dp"
-                        android:background="@drawable/selector_corner_dark"
-                        android:elevation="3dp"
-                        android:gravity="center"
-                        android:lines="1"
-                        android:minWidth="60dp"
-                        android:paddingLeft="12dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="12dp"
-                        android:paddingBottom="10dp"
-                        android:text="@string/text_near_me"
-
-                        android:textAppearance="@style/TextAppearance.Small.SB"
-                        android:textColor="@color/colorTextDark"
-                        android:visibility="gone" />
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/category_recycler"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_default"
-
-                        android:layout_weight=".95"
-                        app:adapter="@{viewModel.getCategoryListAdapter()}"
-
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -211,7 +171,6 @@
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
 
-                        app:adapter="@{viewModel.getProductListAdapter()}"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -249,11 +208,49 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/location_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/recycler"
+                        app:mutableVisibility="@{viewModel.getLocationVisibility()}">
+
+                        <ImageView
+                            android:id="@+id/location_image"
+                            android:layout_width="280dp"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/text_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_pin_map" />
+
+
+                        <TextView
+                            android:id="@+id/location_title"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:text="@string/text_location_near_by"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+                            app:layout_constraintTop_toBottomOf="@id/location_image" />
+
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <com.ronaker.app.utils.view.LoadingComponent
                         android:id="@+id/loading"
                         android:layout_width="match_parent"
-
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="@id/recycler"

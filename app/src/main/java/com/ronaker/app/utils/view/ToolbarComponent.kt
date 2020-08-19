@@ -9,14 +9,12 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.ronaker.app.R
-import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.ShapeDrawableHelper
 
 
 class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs) {
 
-    val screenCalculator = ScreenCalculator(context)
 
     enum class CenterContainer {
         NONE, DOTS, TITLE
@@ -210,8 +208,6 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
             }
 
         }
-
-    private var screenLibrary: ScreenCalculator
 
 
     var isTransparent: Boolean = false
@@ -413,7 +409,6 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
 
         orientation = VERTICAL
 
-        screenLibrary = ScreenCalculator(context)
 
         attrs.let {
             val typedArray = context.obtainStyledAttributes(
@@ -525,8 +520,8 @@ class ToolbarComponent constructor(context: Context, attrs: AttributeSet) :
                 )
 
                 val params = LayoutParams(
-                    screenLibrary.convertDPtoPixel(9),
-                    screenLibrary.convertDPtoPixel(9)
+                    context.resources.getDimensionPixelSize(R.dimen.dot_size),
+                    context.resources.getDimensionPixelSize(R.dimen.dot_size)
                 )
 
                 params.setMargins(21, 0, 21, 0)

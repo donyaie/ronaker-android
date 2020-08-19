@@ -46,9 +46,8 @@ class DefaultProductRepository(
 
 
 
-        return productApi.productSearch(userRepository.getUserAuthorization(), page, request)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        return productApi.productSearch(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), page, request)
+
             .map {
                 ListResponseModel(it.count, it.next, it.previous, it.results?.toProductList())
             }
@@ -60,7 +59,7 @@ class DefaultProductRepository(
         page: Int
     ): Observable<Result<ListResponseModel<Product>>> {
 
-        return productApi.getMyProduct(userRepository.getUserAuthorization(), page)
+        return productApi.getMyProduct(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -73,7 +72,7 @@ class DefaultProductRepository(
     override fun productCreate(
         product: Product
     ): Observable<Result<String?>> {
-        return productApi.productCreate(userRepository.getUserAuthorization(), product.toProductCreateModel())
+        return productApi.productCreate(userRepository.getUserAuthorization(), userRepository.getUserLanguage(),product.toProductCreateModel())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.suid }
@@ -86,7 +85,7 @@ class DefaultProductRepository(
         product: Product
     ): Observable<Result<String?>> {
 
-        return productApi.productUpdate(userRepository.getUserAuthorization(), suid, product.toProductCreateModel())
+        return productApi.productUpdate(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid, product.toProductCreateModel())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.suid }
@@ -97,7 +96,7 @@ class DefaultProductRepository(
     override fun getProduct(
         suid: String
     ): Observable<Result<Product>> {
-        return productApi.getProduct(userRepository.getUserAuthorization(), suid)
+        return productApi.getProduct(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 //            .observeOn(AndroidSchedulers.mainThread())
@@ -109,7 +108,7 @@ class DefaultProductRepository(
     override fun getProductRating(
         suid: String
     ): Observable<Result<ListResponseModel<Product.ProductRate>?>> {
-        return productApi.getProductRate(userRepository.getUserAuthorization(), suid)
+        return productApi.getProductRate(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid)
 
             .map {
                 ListResponseModel(it.count, it.next, it.previous, it.results?.toProductRateList())
@@ -121,7 +120,7 @@ class DefaultProductRepository(
     override fun productSave(
         suid: String
     ): Observable<Result<Boolean>> {
-        return productApi.productSave(userRepository.getUserAuthorization(), suid)
+        return productApi.productSave(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -134,7 +133,7 @@ class DefaultProductRepository(
     override fun productSavedRemove(
         suid: String
     ): Observable<Result<Boolean>> {
-        return productApi.productSavedRemove(userRepository.getUserAuthorization(), suid)
+        return productApi.productSavedRemove(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

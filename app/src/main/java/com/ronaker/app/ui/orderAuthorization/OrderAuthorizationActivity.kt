@@ -60,14 +60,17 @@ class OrderAuthorizationActivity : BaseActivity() {
 
         var Order_KEY = "order"
         var CANSIGN_KEY = "can_sign"
+        var START_RENTING_KEY = "start_renting"
+
 
         fun newInstance(
-            context: Context, order: Order, canSign: Boolean = true
+            context: Context, order: Order, canSign: Boolean = true, startRenting: Boolean = false
         ): Intent {
             val intent = Intent(context, OrderAuthorizationActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
             boundle.putBoolean(CANSIGN_KEY, canSign)
+            boundle.putBoolean(START_RENTING_KEY, startRenting)
             intent.putExtras(boundle)
 
             return intent
@@ -87,13 +90,19 @@ class OrderAuthorizationActivity : BaseActivity() {
 
         init()
 
-        viewModel.viewState.observe(this, Observer { state ->
+        viewModel.viewState.observe(this, { state ->
             fragmentState = state
 
         })
 
 
-        viewModel.goNext.observe(this, Observer {
+        viewModel.goNext.observe(this, {
+
+            if(it)
+                setResult(RESULT_OK)
+            else
+                setResult(RESULT_CANCELED)
+
             finish()
 
         })
@@ -104,7 +113,7 @@ class OrderAuthorizationActivity : BaseActivity() {
         fragmentState = OrderAuthorizationViewModel.StateEnum.PersonalCode
 
 
-        viewModel.language.observe(this, Observer {
+        viewModel.language.observe(this, {
             if (it.trim().toLowerCase(Locale.ROOT).compareTo("lt") == 0)
                 binding.toolbar.action2Src = R.drawable.ic_en_text
             else
@@ -116,6 +125,7 @@ class OrderAuthorizationActivity : BaseActivity() {
         binding.toolbar.action2BouttonClickListener=View.OnClickListener { viewModel.changeLanguage() }
 
 
+        viewModel.canStartRenting(canStartRenting())
 
 
     }
@@ -127,7 +137,7 @@ class OrderAuthorizationActivity : BaseActivity() {
         initViewPager()
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
@@ -231,6 +241,34 @@ class OrderAuthorizationActivity : BaseActivity() {
         prePage()
     }
 
+
+    private fun isCanSign(): Boolean {
+        if (intent.hasExtra(CANSIGN_KEY)) {
+
+            return intent.getBooleanExtra(
+                CANSIGN_KEY,
+                true
+            )
+
+        }
+        return true
+    }
+
+
+    private fun canStartRenting(): Boolean {
+        if (intent.hasExtra(START_RENTING_KEY)) {
+
+            return intent.getBooleanExtra(
+                START_RENTING_KEY,
+                false
+            )
+
+        }
+        return true
+    }
+
+
+
     private fun getOrder(): Order? {
         if (intent.hasExtra(Order_KEY)) {
 
@@ -241,7 +279,7 @@ class OrderAuthorizationActivity : BaseActivity() {
     }
 
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
+    internal class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
         manager,
         BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
     ) {

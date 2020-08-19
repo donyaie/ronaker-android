@@ -22,7 +22,6 @@ import com.ronaker.app.ui.language.LanguageDialog
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.KeyboardManager
-import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.IPagerFragment
 
 class LoginHomeFragment : BaseFragment(), IPagerFragment {
@@ -85,7 +84,7 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
 
     }
 
-    internal inner class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(
+    internal class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(
         fragment
     ) {
         private val mFragmentList = ArrayList<Fragment>()

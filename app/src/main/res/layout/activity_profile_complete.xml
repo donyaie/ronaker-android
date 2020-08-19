@@ -65,7 +65,7 @@
                     android:layout_marginTop="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:layout_marginBottom="@dimen/margin_default"
-                    android:text="@string/title_we_need_few_details_for_renting_or_lending_out"
+                    android:text="@string/title_complete_profile_description"
                     android:textAppearance="@style/TextAppearance.Large.Regular"
 
                     android:textColor="@color/colorTextDark"
@@ -76,8 +76,7 @@
                     android:id="@+id/sign_layout"
                     style="@style/Button.transparent.width"
                     android:text="@string/title_email_verification"
-                    android:textColor="@color/colorTextDark"
-                    app:drawableEndCompat="@drawable/ic_chevron_right" />
+                    android:textColor="@color/colorTextDark"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -91,8 +90,7 @@
                     android:id="@+id/image_layout"
                     style="@style/Button.transparent.width"
                     android:text="@string/title_add_profile_image"
-                    android:textColor="@color/colorTextDark"
-                    app:drawableEndCompat="@drawable/ic_chevron_right" />
+                    android:textColor="@color/colorTextDark" />
 
 
                 <RelativeLayout
@@ -107,8 +105,7 @@
                     android:id="@+id/phone_layout"
                     style="@style/Button.transparent.width"
                     android:text="@string/title_add_and_verify_phone_number"
-                    android:textColor="@color/colorTextDark"
-                    app:drawableEndCompat="@drawable/ic_chevron_right" />
+                    android:textColor="@color/colorTextDark"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -156,8 +153,7 @@
                         android:contentDescription="@string/caption_title"
                         android:id="@+id/auth_image"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chevron_right" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 

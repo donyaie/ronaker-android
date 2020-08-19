@@ -4,70 +4,30 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterOrdreItemBinding
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.DiffUtils
-import com.ronaker.app.utils.extension.getApplication
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
-@Suppress("UNCHECKED_CAST")
 class OrderItemAdapter(val listener: OrderItemListener) :
-    RecyclerView.Adapter<OrderItemAdapter.ViewHolder>() {
-    private var datalist = ArrayList<Order>()
+    ListAdapter<Order,OrderItemAdapter.ViewHolder>(ItemDiffCallback())  {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
         val binding: AdapterOrdreItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.adapter_ordre_item,
             parent,
             false
         )
-
-
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datalist[position], listener)
+        holder.bind(getItem(position), listener)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            val combinedChange =
-                DiffUtils.createCombinedPayload(payloads as List<DiffUtils.Change<Order>>)
-//            val oldData = combinedChange.oldData
-            val newData = combinedChange.newData
-            holder.bind(newData, listener)
-
-        }
-    }
-
-
-    override fun getItemCount(): Int {
-        return datalist.size
-    }
-
-
-    fun updateList(newItems: List<Order>) {
-
-        MainScope().launch {
-
-            val result = DiffUtil.calculateDiff(
-                DiffUtilCallback(
-                    datalist,
-                    newItems
-                )
-            )
-            datalist.clear()
-            datalist.addAll(newItems)
-            result.dispatchUpdatesTo(this@OrderItemAdapter)
-        }
-    }
 
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -81,7 +41,7 @@ class OrderItemAdapter(val listener: OrderItemListener) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
-        private val viewModel = OrderItemViewModel(binding.root.getApplication())
+        private val viewModel = OrderItemViewModel(binding)
 
         fun bind(item: Order, listener: OrderItemListener) {
             viewModel.bind(item, listener)
@@ -103,30 +63,14 @@ class OrderItemAdapter(val listener: OrderItemListener) :
     }
 
 
-    class DiffUtilCallback(
-        private var oldItems: List<Order>,
-        private var newItems: List<Order>
-    ) : DiffUtil.Callback() {
 
-        override fun getOldListSize(): Int = oldItems.size
 
-        override fun getNewListSize(): Int = newItems.size
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldItems[oldItemPosition].suid == newItems[newItemPosition].suid
+    class ItemDiffCallback : DiffUtil.ItemCallback<Order>() {
+        override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean = oldItem.suid == newItem.suid
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldItems[oldItemPosition] == newItems[newItemPosition]
+        override fun areContentsTheSame(oldItem: Order, newItem: Order): Boolean = oldItem == newItem
 
-        override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-            val oldItem = oldItems[oldItemPosition]
-            val newItem = newItems[newItemPosition]
-
-            return DiffUtils.Change(
-                oldItem,
-                newItem
-            )
-        }
     }
 
 

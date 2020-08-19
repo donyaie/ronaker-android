@@ -85,7 +85,6 @@
                             android:lines="1"
 
 
-                            android:text="Lend | Canceled order"
                             android:textAppearance="@style/TextAppearance.Medium.SB"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:mutableTextFade="@{viewModel.getOrderStatus()}"
@@ -131,10 +130,9 @@
                                 android:maxLines="2"
 
 
-                                android:text="sample product"
-                                android:textAppearance="@style/TextAppearance.Small.SB"
+                                android:textAppearance="@style/TextAppearance.Medium.SB"
                                 android:textColor="@color/colorTextDark"
-                                app:mutableTextFade="@{viewModel.getProductTitle()}"
+                                app:mutableText="@{viewModel.getProductTitle()}"
                                 tools:ignore="HardcodedText" />
 
 
@@ -144,10 +142,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginBottom="8dp"
-                                android:text="$124 for 2 day"
                                 android:textAppearance="@style/TextAppearance.Large.Regular"
                                 android:textColor="@color/colorTextDark"
-                                app:mutableTextFade="@{viewModel.getDayNumber()}"
+                                app:mutableText="@{viewModel.getDayNumber()}"
                                 tools:ignore="HardcodedText" />
 
 
@@ -206,18 +203,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:text="Monday"
+                                android:text=" "
                                 android:textAppearance="@style/TextAppearance.Small.Regular"
-                                app:mutableTextFade="@{viewModel.getStartDayName()}"
+                                app:mutableText="@{viewModel.getStartDayName()}"
                                 tools:ignore="HardcodedText" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="21 May"
+                                android:text=" "
                                 android:textAppearance="@style/TextAppearance.Large.Regular"
-                                app:mutableTextFade="@{viewModel.getFirstDayMonth()}"
+                                app:mutableText="@{viewModel.getFirstDayMonth()}"
                                 tools:ignore="HardcodedText" />
 
 
@@ -226,6 +223,8 @@
                         <ImageView
                             android:layout_width="@dimen/margin_default"
                             android:layout_height="@dimen/margin_default"
+                            android:padding="4dp"
+
                             android:contentDescription="@string/text_content"
                             app:tint="@color/colorIconDark"
                             app:srcCompat="@drawable/ic_chevron_right" />
@@ -243,18 +242,18 @@
 
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:text="Friday"
+                                android:text=" "
                                 android:textAppearance="@style/TextAppearance.Small.Regular"
-                                app:mutableTextFade="@{viewModel.getEndDayName()}"
+                                app:mutableText="@{viewModel.getEndDayName()}"
                                 tools:ignore="HardcodedText" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="23 May"
+                                android:text=" "
                                 android:textAppearance="@style/TextAppearance.Large.Regular"
-                                app:mutableTextFade="@{viewModel.getEndDayMonth()}"
+                                app:mutableText="@{viewModel.getEndDayMonth()}"
                                 tools:ignore="HardcodedText" />
 
 
@@ -315,7 +314,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="David"
+                                android:text=" "
                                 android:textAppearance="@style/TextAppearance.Large.SB"
                                 app:mutableTextFade="@{viewModel.getUserName()}"
                                 tools:ignore="HardcodedText" />
@@ -345,12 +344,12 @@
                                     android:elevation="3dp"
 
                                     android:onClick="@{()->viewModel.onClickSendMail()}"
-                                    android:padding="14dp"
+                                    android:padding="12dp"
                                     android:scaleType="fitCenter"
                                     app:tint="@color/white"
 
                                     android:visibility="visible"
-                                    app:srcCompat="@drawable/ic_message" />
+                                    app:srcCompat="@drawable/ic_mail" />
 
 
                                 <ImageButton
@@ -368,11 +367,11 @@
                                     android:elevation="3dp"
                                     android:onClick="@{()->viewModel.onClickMakeCall()}"
 
-                                    android:padding="14dp"
+                                    android:padding="12dp"
                                     android:scaleType="fitCenter"
                                     app:tint="@color/white"
                                     android:visibility="visible"
-                                    app:srcCompat="@drawable/ic_telephone" />
+                                    app:srcCompat="@drawable/ic_call" />
 
 
                             </LinearLayout>
@@ -387,6 +386,7 @@
                             android:src="@color/colorPlatinGrey"
                             app:mutableImage="@{viewModel.getUserImage()}"
                             app:riv_corner_radius="32dp"
+                            android:scaleType="centerCrop"
                             tools:ignore="VectorDrawableCompat" />
 
 
@@ -494,7 +494,7 @@
 
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@string/text_please_sign_the_contract"
+                            android:text=" "
 
 
                             android:textAppearance="@style/TextAppearance.Medium.SB"
@@ -525,7 +525,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
 
-                            android:text="@string/text_please_sign_the_contract"
+                            android:text=" "
 
                             android:textAppearance="@style/TextAppearance.Medium.SB"
                             android:textColor="@color/colorTextDark"
@@ -559,6 +559,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_default"
 
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
                         android:text="@string/text_whay_canceled"
@@ -573,6 +574,7 @@
                         android:layout_marginLeft="@dimen/margin_default"
 
                         android:layout_marginTop="@dimen/margin_medium"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/margin_default"
                         android:text="decline"
                         android:textAppearance="@style/TextAppearance.Medium.Light"
@@ -584,6 +586,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="@dimen/margin_default"
+                        android:visibility="gone"
 
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
@@ -597,6 +600,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_default"
 
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
                         android:text="@string/text_pickup_address"
@@ -609,6 +613,7 @@
 
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_default"
+                        android:visibility="gone"
 
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
@@ -621,6 +626,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
@@ -636,7 +642,8 @@
 
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
-                        android:text="@string/text_introduction"
+                        android:visibility="gone"
+                        android:text="@string/text_Instruction"
                         android:textAppearance="@style/TextAppearance.Large.SB"
                         app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
 
@@ -648,6 +655,7 @@
                         android:layout_marginLeft="@dimen/margin_default"
 
                         android:layout_marginTop="@dimen/margin_medium"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/margin_default"
                         android:text="Introduction"
                         android:textAppearance="@style/TextAppearance.Medium.Light"
@@ -662,6 +670,7 @@
                         android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
+                        android:visibility="gone"
                         android:background="@color/colorPlatinGrey"
                         app:mutableVisibility="@{viewModel.getOrderIntroductionVisibility()}" />
 
@@ -673,6 +682,7 @@
                         android:layout_marginLeft="@dimen/margin_default"
 
                         android:layout_marginTop="@dimen/margin_medium"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/margin_default"
                         android:text="@string/text_user_request"
                         android:textAppearance="@style/TextAppearance.Large.SB"
@@ -687,6 +697,7 @@
 
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
+                        android:visibility="gone"
                         android:text="Message"
                         android:textAppearance="@style/TextAppearance.Medium.Light"
                         app:mutableTextFade="@{viewModel.getOrderDescription()}"
@@ -698,6 +709,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="@dimen/margin_default"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginRight="@dimen/margin_default"
                         android:layout_marginBottom="40dp"

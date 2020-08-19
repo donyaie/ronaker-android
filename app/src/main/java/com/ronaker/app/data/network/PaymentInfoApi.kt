@@ -17,7 +17,7 @@ interface PaymentInfoApi {
      */
     @GET("/api/v1/payment_info/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getPaymentInfoList(@Header("Authorization") authToken: String): Observable<ListResponseModel<PaymentInfoListResponseModel>>
+    fun getPaymentInfoList(@Header("Authorization") authToken: String,@Header("Accept-Language") language: String): Observable<ListResponseModel<PaymentInfoListResponseModel>>
 
     /**
      * get Payment Info List
@@ -25,7 +25,7 @@ interface PaymentInfoApi {
     @POST("/api/v1/payment_info/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun addPaymentInfo(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body request: PaymentInfoCreateRequestModel
     ): Observable<FreeResponseModel>
 
@@ -35,7 +35,7 @@ interface PaymentInfoApi {
      */
     @GET("/api/v1/financial_transactions/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getFinancialTransactions(@Header("Authorization") authToken: String): Observable<ListResponseModel<FinancialTransactionsResponseModel>>
+    fun getFinancialTransactions(@Header("Authorization") authToken: String,@Header("Accept-Language") language: String): Observable<ListResponseModel<FinancialTransactionsResponseModel>>
 
 
 }

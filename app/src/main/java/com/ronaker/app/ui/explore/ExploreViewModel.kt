@@ -4,6 +4,7 @@ package com.ronaker.app.ui.explore
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
@@ -12,7 +13,6 @@ import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,24 +35,28 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     lateinit
     var categoryRepository: CategoryRepository
 
-
-    private var page = 0
+    private var page = 1
     private var hasNextPage = true
 
+    private var location: LatLng? = null
 
     private var selectedCategory: Category? = null
 
 
     var dataList: ArrayList<Product> = ArrayList()
 
+    var listView: MutableLiveData<ArrayList<Product>> = MutableLiveData()
+
+
     private var categoryList: ArrayList<Category> = ArrayList()
     private var cachCategoryList: ArrayList<Category> = ArrayList()
 
 
+
+
+
     private var query: String = ""
 
-
-    var productListAdapter: ItemExploreAdapter = ItemExploreAdapter()
 
 
     var categoryListAdapter: CategoryExploreAdapter = CategoryExploreAdapter(categoryList, this)
@@ -60,11 +64,17 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
-    val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
     val searchText: MutableLiveData<String> = MutableLiveData()
 
+
+    val findNearBy: MutableLiveData<Boolean> = MutableLiveData()
+
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
+    val locationVisibility: MutableLiveData<Int> = MutableLiveData()
+    val locationCheck: MutableLiveData<Boolean> = MutableLiveData()
+
+
     val scrollCategoryPosition: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -73,12 +83,9 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     private fun reset() {
 
-        page = 0
-        productListAdapter.reset()
+        page = 1
         hasNextPage = true
         dataList.clear()
-//        productListAdapter.updateList(dataList)
-        resetList.postValue(true)
     }
 
     private var subscription: Disposable? = null
@@ -94,17 +101,16 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
                 loadCategory()
         }
 
+
     }
 
 
     private suspend fun loadCategory() =
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.Unconfined) {
 
             categorySubscription?.dispose()
             categorySubscription = categoryRepository
                 .getCategories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
                 .doOnSubscribe { }
                 .doOnTerminate { }
                 .subscribe { result ->
@@ -138,12 +144,20 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
         }
 
-    var incriment = 1
-
     suspend fun loadProduct() =
-        withContext(Dispatchers.IO) {
+
+        withContext(Dispatchers.Unconfined) {
+
+            if (location == null) {
+//                emptyVisibility.postValue(View.VISIBLE)
+
+                loading.postValue(false)
+                locationCheck.postValue(true)
+                return@withContext
+            }
+
             if (hasNextPage) {
-                page++
+
                 subscription?.dispose()
 
 
@@ -152,17 +166,16 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
                 if (searchValue.isNullOrBlank())
                     searchValue = null
 
+
                 subscription = productRepository
                     .productSearch(
 
-                        searchValue,
-                        page,
-                        null,
-                        null,
+                        query = searchValue,
+                        page = page,
+                        location = location,
+                        radius = 50,
                         categorySiud = selectedCategory?.suid
                     )
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
                     .doOnSubscribe {
                         retry.postValue(null)
                         if (page <= 1) {
@@ -178,10 +191,10 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
                     }
                     .subscribe { result ->
                         if (result.isSuccess()) {
-
+                            page++
                             result.data?.results?.let { dataList.addAll(it) }
 
-                            productListAdapter.updateList(dataList)
+                            listView.postValue(dataList)
 
                             if (!result.data?.results.isNullOrEmpty()) {
                                 emptyVisibility.postValue(View.GONE)
@@ -224,10 +237,11 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
 
     fun loadMore() {
 
-        uiScope.launch {
 
-            loadProduct()
-        }
+            uiScope.launch {
+
+                loadProduct()
+            }
 
     }
 
@@ -348,6 +362,15 @@ class ExploreViewModel(app: Application) : BaseViewModel(app),
         }
 
         return handle
+    }
+
+
+    fun setLocation(lastLocation: LatLng?) {
+
+        location = lastLocation
+        retry()
+
+
     }
 
 }

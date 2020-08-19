@@ -139,21 +139,6 @@
                     android:textColor="@color/colorTextDark" />
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:background="@color/colorPlatinGrey" />
-
-                <Button
-                    android:id="@+id/refund_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:lines="1"
-                    android:text="@string/text_returns_and_refunds_policy"
-                    android:textColor="@color/colorTextDark" />
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"

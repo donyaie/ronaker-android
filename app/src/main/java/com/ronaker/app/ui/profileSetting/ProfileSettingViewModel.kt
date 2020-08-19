@@ -73,5 +73,16 @@ class ProfileSettingViewModel(app: Application) : BaseViewModel(app) {
         userRepository.clearLogin()
     }
 
+    fun getTermUrl(): String {
+
+
+        return userRepository.getTermUrl()
+    }
+
+    fun getPrivacyUrl(): String {
+
+       return userRepository.getPrivacyUrl()
+    }
+
 
 }

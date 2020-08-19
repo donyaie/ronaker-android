@@ -1,24 +1,19 @@
 package com.ronaker.app.ui.explore
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.databinding.AdapterExploreCategoryBinding
 import com.ronaker.app.model.Category
 import com.ronaker.app.utils.BASE_URL
-import javax.inject.Inject
 
-
-class CategoryExploreViewModel( app: Application) : BaseViewModel(app) {
+class CategoryExploreViewModel {
     private val productTitle = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
 
     lateinit var data: Category
-
-    @Inject
-    lateinit var resourcesRepository: ResourcesRepository
+//
+//    @Inject
+//    lateinit var resourcesRepository: ResourcesRepository
 
 
     private lateinit var mBinder: AdapterExploreCategoryBinding
@@ -36,18 +31,24 @@ class CategoryExploreViewModel( app: Application) : BaseViewModel(app) {
 
 
         if (data.isSelected) {
-
-            binder.title.setBackgroundResource(R.drawable.selector_corner_accent_fill)
-
-
-            binder.title.setTextColor( resourcesRepository.getColor(R.color.colorTextLight))
-
+//
+            binder.shadow.setBackgroundResource(R.drawable.selector_corner_accent_transparent)
+//
+//
+//            binder.title.setTextColor( resourcesRepository.getColor(R.color.colorTextLight))
+//
+//
+//
+//            ShapeDrawableHelper.changeSvgDrawableColor(binder.root.context,R.color.colorTextLight,binder.image)
 
 
         } else {
-
-            binder.title.setBackgroundResource(R.drawable.selector_corner_white_accent)
-            binder.title.setTextColor( resourcesRepository.getColor(R.color.colorTextDark))
+//
+            binder.shadow.setBackgroundResource(R.drawable.selector_corner_black_transparent)
+//            binder.title.setTextColor( resourcesRepository.getColor(R.color.colorTextDark))
+//
+//
+//            ShapeDrawableHelper.changeSvgDrawableColor(binder.root.context,R.color.colorTextDark,binder.image)
         }
 
 
