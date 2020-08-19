@@ -35,6 +35,12 @@ class ProfileCompleteViewModel(app: Application) : BaseViewModel(app) {
 
     private var mUser: User? = null
 
+
+    init {
+
+        userRepository.getUserInfo()?.let { fillView(it) }
+    }
+
     fun loadData() {
 
         subscription = userRepository
@@ -50,24 +56,29 @@ class ProfileCompleteViewModel(app: Application) : BaseViewModel(app) {
 
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    mUser = result.data
-                    signComplete.value = result.data?.is_email_verified
-
-                    phoneComplete.value = result.data?.is_phone_number_verified
-
-//                    peymentComplete.value = result.data?.is_payment_info_verified
-//                    identityComplete.value = result.data?.is_identity_info_verified
-
-                    imageComplete.value = !result.data?.avatar.isNullOrEmpty()
-
-
-                    smartIDComplete.value = !result.data?.smart_id_personal_code.isNullOrEmpty()
-
+                    result.data?.let { fillView(it) }
                 } else {
                     retry.value = result.error?.message
                 }
             }
 
+
+    }
+
+
+    fun fillView(user: User){
+        mUser = user
+        signComplete.value = user.is_email_verified
+
+        phoneComplete.value = user.is_phone_number_verified
+
+//                    peymentComplete.value = result.data?.is_payment_info_verified
+//                    identityComplete.value = result.data?.is_identity_info_verified
+
+        imageComplete.value = !user.avatar.isNullOrEmpty()
+
+
+        smartIDComplete.value = !user.smart_id_personal_code.isNullOrEmpty()
 
     }
 

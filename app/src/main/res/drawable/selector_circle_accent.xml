@@ -5,6 +5,11 @@
             <solid android:color="@color/colorAccent_opacity_75"/>
         </shape>
     </item>
+    <item android:state_enabled="false">
+        <shape android:shape="oval">
+            <solid android:color="@color/colorTextGreyLight"/>
+        </shape>
+    </item>
     <item>
         <shape android:shape="oval">
             <solid android:color="@color/colorAccent"/>

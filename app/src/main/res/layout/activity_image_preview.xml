@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ronaker.app.ui.imagePreview.ImagePreviewViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:gravity="center"
+        android:layoutDirection="ltr">
+
+
+        <com.ronaker.app.utils.view.ImageSlideComponent
+
+            android:id="@+id/avatar_slide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+
+
+            />
+
+        <com.ronaker.app.utils.view.ToolbarComponent
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_bottom_line="false"
+            app:toolbar_component_cancel_container="CLOSE"
+            app:toolbar_component_center_container="NONE"
+            app:toolbar_component_dot_count="3"
+            app:toolbar_component_transparent="true"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

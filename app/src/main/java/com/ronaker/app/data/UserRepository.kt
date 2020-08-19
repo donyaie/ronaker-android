@@ -46,5 +46,7 @@ interface UserRepository {
     fun forgetPasswordConfirm(token: String, password: String): Observable<Result<Boolean>>
     fun getUserAuthorization(): String
     fun getUserLanguage(): String
+    fun getPrivacyUrl(): String
+    fun getTermUrl(): String
 }
 

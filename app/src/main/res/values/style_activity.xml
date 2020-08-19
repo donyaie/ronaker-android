@@ -19,6 +19,8 @@
 <!--        <item name="android:windowContentOverlay">@null</item>-->
 
 <!--        <item name="android:windowTranslucentNavigation" >true</item>-->
+<!--        <item name="android:windowFullscreen" >true</item>-->
+
 
 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -63,6 +65,21 @@
         <item name="android:windowBackground">@drawable/launch_screen_light</item>
 
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+
+
+    <style name="ExploreTheme" parent="AppTheme">
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
 
     </style>
 

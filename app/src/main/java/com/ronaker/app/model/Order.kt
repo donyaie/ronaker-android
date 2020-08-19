@@ -47,6 +47,7 @@ data class Order(
         result = 31 * result + orderType.hashCode()
         result = 31 * result + status.hashCode()
         result = 31 * result + product.hashCode()
+        result = 31 * result + isArchived.hashCode()
         result = 31 * result + (productOwner?.hashCode() ?: 0)
         result = 31 * result + (orderUser?.hashCode() ?: 0)
         result = 31 * result + (rejectionReason?.hashCode() ?: 0)

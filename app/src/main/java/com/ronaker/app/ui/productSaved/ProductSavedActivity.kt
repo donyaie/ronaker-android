@@ -5,22 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
-
-
 class ProductSavedActivity : BaseActivity() {
 
-    private val TAG = ProductSavedActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductSavedBinding
     private lateinit var viewModel: ProductSavedViewModel
+
 
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
@@ -53,7 +51,7 @@ class ProductSavedActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
 
@@ -68,13 +66,16 @@ class ProductSavedActivity : BaseActivity() {
 
         val mnager = GridLayoutManager(this, 2)
         binding.recycler.layoutManager = mnager
+
+         val productAdapter=  ItemExploreAdapter()
+        binding.recycler.adapter=productAdapter
         binding.loading.hideLoading()
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(this, { loading ->
             binding.refreshLayout.isRefreshing = loading
 
         })
-        viewModel.retry.observe(this, Observer { loading ->
+        viewModel.retry.observe(this, { loading ->
             loading?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
 
         })
@@ -87,10 +88,13 @@ class ProductSavedActivity : BaseActivity() {
         }
 
 
-        viewModel.resetList.observe(this, Observer {
+        viewModel.resetList.observe(this, {
             scrollListener.resetState()
         })
 
+        viewModel.listView.observe(this, {
+           productAdapter.submitList(it.toList())
+        })
 
 
 

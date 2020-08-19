@@ -38,7 +38,7 @@
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.Large.Light"
 
-                android:text="location"
+                android:text=" "
 
                 android:textColor="@color/colorTextDark"
                 app:mutableTextFade="@{viewModel.getProductTitle()}"

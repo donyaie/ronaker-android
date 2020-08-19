@@ -11,7 +11,6 @@ import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
-import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import java.io.File
 
 
@@ -82,6 +81,49 @@ object IntentManeger {
     }
 
 
+    fun openFacebook(context: Context, Id: String, Name: String) {
+        val intent = try {
+            context.packageManager
+                .getPackageInfo("com.facebook.orca", 0) //Checks if FB is even installed.
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://m.me/$Name")
+            ) .apply { setPackage("com.facebook.orca") }
+
+            //Trys to make intent with FB's URI
+        } catch (e: java.lang.Exception) {
+
+            try {
+                context.packageManager
+                    .getPackageInfo("com.facebook.katana", 0) //Checks if FB is even installed.
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("fb://page/$Id")
+                ) .apply { setPackage("com.facebook.katana") }
+
+                //Trys to make intent with FB's URI
+            } catch (e: java.lang.Exception) {
+
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://m.me/$Name")
+                ) //catches and opens a url to the desired page
+            }
+        }
+
+        try {
+            context.startActivity(intent)
+
+        } catch (ex: Exception) {
+
+            AppDebug.log(TAG,ex)
+
+        }
+
+
+    }
+
+
     fun openMailBox(context: Context) {
         try {
 //
@@ -117,16 +159,16 @@ object IntentManeger {
     }
 
 
-    fun pickImage(context: Activity,req:Int){
+    fun pickImage(context: Activity, req: Int) {
         val pickPhoto = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        context. startActivityForResult(pickPhoto,req)
+        context.startActivityForResult(pickPhoto, req)
     }
 
 
-    fun takePicture(context:Activity,fileName:String,req:Int){
+    fun takePicture(context: Activity, fileName: String, req: Int) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         takePictureIntent.putExtra(
             MediaStore.EXTRA_OUTPUT,
@@ -135,7 +177,8 @@ object IntentManeger {
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
             takePictureIntent.clipData =
-                ClipData.newRawUri("",
+                ClipData.newRawUri(
+                    "",
                     FileUtils.getCacheCameraPath(
                         context,
                         fileName
@@ -151,9 +194,7 @@ object IntentManeger {
     }
 
 
-
-
-    fun openPDF(context: Activity,file: File){
+    fun openPDF(context: Activity, file: File) {
 
         val target = Intent(Intent.ACTION_VIEW)
 //        target.setDataAndType(Uri.fromFile(file), "application/pdf")
@@ -168,7 +209,6 @@ object IntentManeger {
         target.setDataAndType(apkURI, "application/pdf")
 
 
-
         val intent = Intent.createChooser(target, "Open File")
         try {
             context.startActivity(intent)
@@ -176,8 +216,6 @@ object IntentManeger {
             // Instruct the user to install a PDF reader here, or something
         }
     }
-
-
 
 
 }

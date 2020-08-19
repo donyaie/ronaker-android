@@ -31,7 +31,7 @@
     <string name="title_button_check_out">Atlikti mokėjimą</string>
     <string name="title_your_inbox">Jūsų žinutės</string>
     <string name="title_what_s_your_email_address">Koks Jūsų el. pašto adresas ?</string>
-    <string name="title_button_create_account">Susikurkite paskyrą</string>
+    <string name="title_button_create_account">Susikurti paskyrą</string>
     <string name="titile_button_login">Prisijungti</string>
     <string name="title_and_what_s_your_name">Koks Jūsų vardas?</string>
     <string name="title_done_njust_choice_a_password">Susikurkite slaptažodį</string>
@@ -90,7 +90,7 @@
     <string name="button_finish">Baigti</string>
     <string name="text_per_day">Per dieną</string>
     <string name="text_complete_your_profile">Užbaikite savo profilį</string>
-    <string name="title_we_need_few_details_for_renting_or_lending_out">Reikalinga informacija, norint pradėti nuomą</string>
+    <string name="title_complete_profile_description">Atlik visus veiksmus ir užpildyk anketą, kad galėtum naudotis Ronaker.</string>
     <string name="title_add_profile_image">Įkelkite profilio nuotrauką</string>
     <string name="title_add_and_verify_phone_number">Įrašykite ir patvirtinkite savo telefono numerį</string>
     <string name="title_add_a_payment_method">Pasirinkite apmokėjimo būdą</string>
@@ -135,7 +135,6 @@
     <string name="text_try_again">Bandykite dar kartą</string>
     <string name="text_rate_product">Įvertinkite daiktą</string>
     <string name="text_user_request">Užklausa</string>
-    <string name="text_introduction">Instrukcija</string>
     <string name="text_pickup_address">Atsiėmimo adresas</string>
     <string name="text_whay_canceled">Atmetimo priežastis</string>
     <string name="text_reviews">Įvertinimai</string>
@@ -178,21 +177,19 @@
     <string name="text_please_write_your_experience_here">Įvertinimą rašykite čia</string>
     <string name="text_title_send">Išsiųsti</string>
     <string name="text_title_save">Išsaugoti</string>
-    <string name="text_choice_payment_type">Pasirinkite amokėjimo būdą</string>
+    <string name="text_choice_payment_type">Pasirinkite apmokėjimo būdą</string>
     <string name="text_nothing_saved_yet">Nėra įsimintų daiktų</string>
     <string name="texy_you_haven_t_payment_method">Jūs nepasirinkote apmokėjimo būdo</string>
-    <string name="text_location_address">Buvimo vieta</string>
     <string name="text_add_insurance_of_item">Pridėti prekės draudimą</string>
     <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Pridėkite savo daikto draudimo vaizdą. naudokite aiškų vaizdą iš pavadinimo ir parašo</string>
     <string name="text_privacy_policy">Privatumo politika</string>
-    <string name="text_returns_and_refunds_policy">Grąžinimo ir grąžinimo politika</string>
     <string name="text_license_agreement">Naudojimosi sąlygos</string>
     <string name="text_check_the_provided_control_code">Patikrinkite Smart-ID programėlės pranešimus</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Patikrinkite Smart-ID programėlės pranešimus telefone \n\n ir įveskite PIN1:</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Patikrinkite Smart-ID programėlės pranešimus telefone \n\n ir įveskite PIN2:</string>
     <string name="text_time_remaining">Liko laiko</string>
     <string name="text_please_enter_your_personal_code">Įrašykite savo asmens kodą</string>
-    <string name="text_we_will_authorize_you_with_your_smart_id">Mes patvirtinsime Jūsų tapatybę su Smart-ID</string>
+    <string name="text_we_will_authorize_you_with_your_smart_id">Norime užtikrinti saugumą ir išvengti nesklandumų, todėl mums reikia patvirtinti tavo tapatybę.</string>
     <string name="text_smart_id">Smart ID</string>
     <string name="textauthorize_your_identity">Patvirtinkite savo tapatybę</string>
     <string name="text_instruction_text">Nuomos laikotarpis ir daikto paėmimas</string>
@@ -212,7 +209,6 @@
     <string name="format_you_will_pay" formatted="true">Jūs sumokėsite %1$s už %2$s dienas</string>
     <string name="text_rate_it">Įvertinkite</string>
     <string name="text_archive_it">Archyvuoti</string>
-    <string name="text_near_me">Arčiausiai Jūsų</string>
     <string name="text_contract">Sutartis</string>
     <string name="text_please_sign_the_contract">Pasirašykite sutartį prieš pradedant nuomą</string>
     <string name="text_sign_the_contract">Pasirašykite sutartį</string>
@@ -237,7 +233,18 @@
     <string name="text_waite_for_sign" formatted="true">Laukiama %1$s parašo</string>
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">Prieš pradėdami nuomą ir daikto perdavimą, Jūs turite pasirašyti sutartį</string>
     <string name="text_contract_preview">Sutarties peržiūra</string>
-    <string name="text_make_sure_sign_the_contract">Įsitikinkite, kad abi šalys pasirašė sutartį</string>
-    <string name="text_i_agree_to_the_contract">Sutinku su sutarties sąlygomis</string>
+    <string name="text_make_sure_sign_the_contract">Įsitikinkite, kad daikto savininkas pasirašė sutartį.</string>
     <string name="error_login_email_or_password_wrong">Įvestas neteisingas slaptažodis. Pabandykite dar kartą</string>
+    <string name="text_location_near_by">Ronaker pagalba rasite Jums reikalingus daiktus visai netoliese, tereikia nustatyti vietą</string>
+    <string name="text_via_facebook">Per Žinutė</string>
+    <string name="text_via_call">Per Skambutis</string>
+    <string name="text_via_mail">Per El. paštas</string>
+    <string name="text_contact_us">Susisiekite su mumis</string>
+    <string name="text_pending_message">Tavo įkeltas daiktas yra peržiūrimas. Netrukus susisieksime!</string>
+    <string name="text_pending_dialog">Tavo daiktas sėkmingai įkeltas. Mes jį touj pat peržiūrėsime ir susisieksime</string>
+    <string name="text_reject_message">Deja, tavo daikto įkėlimas buvo atmestas. Daugiau informacijos rasi sąlygose.</string>
+    <string name="text_location_disabled">Tavo lokacija atrodo išjungta. Ar norėtum įjungti?</string>
+    <string name="text_preview">Peržiūra</string>
+
+    <string name="button_start_renting_sign">Pasirašykite sutartį ir pradedant nuomą</string>
 </resources>

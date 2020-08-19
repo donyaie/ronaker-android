@@ -4,7 +4,9 @@ import android.app.Application
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
@@ -22,6 +24,8 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     @Inject
     lateinit var orderRepository: OrderRepository
+    @Inject
+    lateinit var resourcesRepository: ResourcesRepository
 
     val viewState: MutableLiveData<StateEnum> = MutableLiveData()
 
@@ -34,6 +38,9 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     val language: MutableLiveData<String> = MutableLiveData()
 
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+    val startRentVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
     val codeLoadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -61,7 +68,10 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
     private var checkCertSubscription: Disposable? = null
     private var startSubscription: Disposable? = null
     private var checkSubscription: Disposable? = null
+    private var acceptSubscription: Disposable? = null
 
+
+    var canStartRenting = false
 
     var defaultLanguage: String
 
@@ -240,10 +250,13 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
                 orderRepository.checkSmartIDSession(it)
                     .doOnSubscribe { }
                     .doOnTerminate { }
-                    .delay(5, TimeUnit.SECONDS)
+                    .delay(3, TimeUnit.SECONDS)
                     .subscribe { result ->
                         if (result.isSuccess() || result.isAcceptable()) {
-                            goNext.postValue(true)
+                            if (canStartRenting) {
+                                startRenting()
+                            } else
+                                goNext.postValue(false)
                         } else {
 
                             if (result.error?.responseCode == 406) {
@@ -263,6 +276,42 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
             }
 
 
+    }
+
+    fun onClickStartRent() {
+        startRenting()
+    }
+
+
+    fun startRenting() {
+
+        acceptSubscription?.dispose()
+        acceptSubscription = mOrder?.suid?.let {
+            orderRepository.updateOrderStatus(
+                suid = it,
+                status = "started"
+            )
+                .doOnSubscribe { loadingButton.postValue(true) }
+                .doOnTerminate { loadingButton.postValue(false) }
+                .delay(3, TimeUnit.SECONDS)
+                .subscribe { result ->
+                    if (result.isSuccess() || result.isAcceptable()) {
+
+                        startRentVisibility.postValue(View.GONE)
+                        goNext.postValue(true)
+
+                    } else {
+
+                        if (result.error?.responseCode == 406)
+                            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
+                        else
+                            errorMessage.postValue(result.error?.message)
+
+
+                        startRentVisibility.postValue(View.VISIBLE)
+                    }
+                }
+        }
     }
 
 
@@ -314,6 +363,7 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
         countDounTimer?.cancel()
         startCertSubscription?.dispose()
         checkCertSubscription?.dispose()
+        acceptSubscription?.dispose()
     }
 
     fun setOrder(order: Order?) {
@@ -324,13 +374,19 @@ class OrderAuthorizationViewModel(app: Application) : BaseViewModel(app) {
 
     fun changeLanguage() {
 
-        defaultLanguage = if (defaultLanguage.toLowerCase(Locale.ROOT).trim().compareTo("lt") == 0) {
-            "en"
-        } else {
-            "lt"
-        }
+        defaultLanguage =
+            if (defaultLanguage.toLowerCase(Locale.ROOT).trim().compareTo("lt") == 0) {
+                "en"
+            } else {
+                "lt"
+            }
         language.postValue(defaultLanguage)
 
+    }
+
+
+    fun canStartRenting(canStartRenting: Boolean) {
+        this.canStartRenting = canStartRenting
     }
 
 

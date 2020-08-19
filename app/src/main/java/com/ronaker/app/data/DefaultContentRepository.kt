@@ -33,7 +33,7 @@ class DefaultContentRepository(
         filePath: Uri
     ): Observable<Result<Media>> {
         return contentApi.uploadImageWithoutProgress(
-            userRepository.getUserAuthorization(),
+            userRepository.getUserAuthorization(),userRepository.getUserLanguage(),
             createMultipartBody(filePath)
         )
             .subscribeOn(Schedulers.io())
@@ -50,7 +50,7 @@ class DefaultContentRepository(
         downloadLink: String,
         fileName: String
     ): Observable<Result<File?>> {
-        return contentApi.download(userRepository.getUserAuthorization(), downloadLink)
+        return contentApi.download(userRepository.getUserAuthorization(), userRepository.getUserLanguage(),downloadLink)
             .flatMap { responseBodyResponse ->
                 Observable.create(ObservableOnSubscribe<File?> { subscriber ->
 
@@ -92,7 +92,7 @@ class DefaultContentRepository(
 
 
     override fun deleteImage( suid: String): Observable<Result<Boolean>> {
-        return contentApi.deleteImage(userRepository.getUserAuthorization(), suid)
+        return contentApi.deleteImage(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

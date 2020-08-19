@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -15,16 +15,18 @@ import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
 import com.ronaker.app.ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
+import com.ronaker.app.ui.support.SupportDialog
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.IntentManeger
 import com.ronaker.app.utils.SUPPORT_URL
+import com.ronaker.app.utils.extension.setEndDrawableRes
 
 
 class ProfileFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProfileBinding
-    private lateinit var viewModel: ProfileViewModel
 
+    private val viewModel: ProfileViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,46 +34,67 @@ class ProfileFragment : BaseFragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        binding.viewModel = viewModel
+
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
 
 
-
-
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, { errorMessage ->
             if (errorMessage != null) {
                 Alert.makeTextError(this, errorMessage)
             }
         })
 
-        viewModel.logOutAction.observe(viewLifecycleOwner, Observer {
+        viewModel.logOutAction.observe(viewLifecycleOwner, {
 
             activity?.let { it.startActivity(DashboardActivity.newInstance(it)) }
         })
 
 
 
-        binding.editImage.setOnClickListener {
-            activity?.let { it.startActivity(ProfileEditActivity.newInstance(it)) }
+        viewModel.userProfileComplete.observe(viewLifecycleOwner, {
+
+
+            if (it) {
+                binding.profileName.setEndDrawableRes(   R.drawable.ic_guide_success)
+
+            } else {
+                binding.profileName.setEndDrawableRes(0)
+            }
+
+        })
+
+
+
+
+        binding.profileLayout.setOnClickListener {
+
+
+            if (viewModel.isComplete) {
+                requireActivity().startActivity(ProfileEditActivity.newInstance(requireContext()))
+
+            } else {
+
+                requireActivity().startActivity(ProfileCompleteActivity.newInstance(requireContext()))
+
+            }
         }
 
-
-
-        binding.editText.setOnClickListener {
-            requireActivity().startActivity(ProfileEditActivity.newInstance(requireContext()))
-        }
-
-        binding.profileCompleteLayout.setOnClickListener {
-
-            activity?.let { it.startActivity(ProfileCompleteActivity.newInstance(it)) }
-        }
-
-
-        binding.viewModel = viewModel
 
 
         binding.supportLayout.setOnClickListener {
-            activity?.let { it1 -> IntentManeger.sendMail(it1, SUPPORT_URL) }
+
+
+
+            SupportDialog.DialogBuilder(childFragmentManager).show()
+
+
         }
 
 
@@ -100,7 +123,7 @@ class ProfileFragment : BaseFragment() {
 
 
 
-        return binding.root
+
     }
 
     override fun onStart() {

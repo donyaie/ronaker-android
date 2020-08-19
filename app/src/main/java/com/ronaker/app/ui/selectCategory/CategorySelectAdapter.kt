@@ -50,7 +50,7 @@ class CategorySelectAdapter(
 
         private val viewModel =
             CategorySelectViewModel(
-                parentViewModel.getApplication()
+
             )
 
         fun bind(product: Category) {

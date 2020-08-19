@@ -50,13 +50,10 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
-    val renterSignText: MutableLiveData<String> = MutableLiveData()
     val lenderSignImage: MutableLiveData<Int> = MutableLiveData()
     val listerSignText: MutableLiveData<String> = MutableLiveData()
-    val renterSignCheck: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    val openTerm: MutableLiveData<Boolean> = MutableLiveData()
 
 
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
@@ -94,11 +91,6 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
     }
 
 
-    fun onClickTerms() {
-
-        openTerm.postValue(true)
-
-    }
 
 
     fun loadData(suid: String) {
@@ -136,15 +128,6 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
 
-
-        renterSignText.postValue(resourcesRepository.getString(R.string.text_i_agree_to_the_contract))
-
-        if (order.smart_id_creator_session_id.isNullOrBlank()) {
-            renterSignCheck.postValue(false)
-
-        } else {
-            renterSignCheck.postValue(true)
-        }
 
         if (order.smart_id_owner_session_id.isNullOrBlank()) {
 
@@ -211,27 +194,14 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
     fun onClickAccept() {
-        acceptSubscription?.dispose()
-        acceptSubscription = orderRepository.updateOrderStatus(
-            suid = mOrder.suid,
-            status = "started"
-        )
-            .doOnSubscribe { loadingButton.postValue(true) }
-            .doOnTerminate { loadingButton.postValue(false) }
-            .subscribe { result ->
-                if (result.isSuccess() || result.isAcceptable()) {
-                    finish.postValue(true)
+        if (!mOrder.smart_id_owner_session_id.isNullOrBlank()) {
 
-                } else {
+            doSignContract.postValue(true)
+        } else {
+            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
+            loadData(mOrder.suid)
+        }
 
-                    if (result.error?.responseCode == 406) {
-
-                        errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
-
-                    } else
-                        errorMessage.postValue(result.error?.message)
-                }
-            }
 
     }
 
@@ -240,10 +210,6 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
         contractPreview.postValue(true)
     }
 
-    fun onRenterSign() {
-        if (mOrder.smart_id_creator_session_id.isNullOrBlank())
-            doSignContract.postValue(true)
-    }
 
 
 }

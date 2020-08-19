@@ -199,6 +199,34 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:mutableVisibility="@{viewModel.getResendVisibility()}" />
 
+
+            <com.ronaker.app.utils.view.ButtonComponent
+                android:id="@+id/accept_button"
+                style="@style/Button.accent"
+
+
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginRight="@dimen/margin_default"
+                android:onClick="@{()->viewModel.onClickStartRent()}"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="@string/button_start_renting"
+
+                app:buttonType="Text"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:layout_constraintWidth_percent=".5"
+
+                android:visibility="gone"
+                app:mutableButtonLoading="@{viewModel.getLoadingButton()}"
+                app:mutableVisibility="@{viewModel.getStartRentVisibility()}"
+
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

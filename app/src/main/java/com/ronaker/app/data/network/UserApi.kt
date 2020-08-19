@@ -14,21 +14,21 @@ interface UserApi {
      */
     @POST("/api/v1/users/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun registerUser(@Body user: UserRegisterRequestModel): Observable<UserRegisterResponseModel>
+    fun registerUser(@Header("Accept-Language") language: String,@Body user: UserRegisterRequestModel): Observable<UserRegisterResponseModel>
 
     /**
      * log in user with user and password
      */
     @POST("/api/v1/users/token_auth/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun loginUser(@Body user: UserLoginRequestModel): Observable<UserRegisterResponseModel>
+    fun loginUser(@Header("Accept-Language") language: String,@Body user: UserLoginRequestModel): Observable<UserRegisterResponseModel>
 
     /**
      * get user Info with token
      */
     @GET("/api/v1/users/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun getUserInfo(@Header("Authorization") authToken: String): Observable<UserInfoResponceModel>
+    fun getUserInfo(@Header("Accept-Language") language: String,@Header("Authorization") authToken: String): Observable<UserInfoResponceModel>
 
     /**
      * add phone Checkout to user and recive otp
@@ -36,7 +36,7 @@ interface UserApi {
     @POST("/api/v1/users/phone_number/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun addUserPhoneNumber(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body user: UserAddPhoneRequestModel
     ): Observable<UserAddPhoneResponceModel>
 
@@ -46,7 +46,7 @@ interface UserApi {
     @PUT("/api/v1/users/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun updateUserInfo(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body user: UserUpdateRequestModel
     ): Observable<UserInfoResponceModel>
 
@@ -56,7 +56,7 @@ interface UserApi {
     @POST("/api/v1/users/phone_number/activation/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun activeUserPhoneNumber(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body user: UserActivePhoneRequestModel
     ): Observable<UserAddPhoneResponceModel>
 
@@ -66,7 +66,7 @@ interface UserApi {
     @POST("/api/v1/documents/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun addDocument(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body request: UserIdentifyRequestModel
     ): Observable<FreeResponseModel>
 
@@ -75,7 +75,7 @@ interface UserApi {
      */
     @GET("/api/v1/users/email-verification/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun sendEmailVerification(@Header("Authorization") authToken: String): Observable<FreeResponseModel>
+    fun sendEmailVerification(@Header("Authorization") authToken: String,@Header("Accept-Language") language: String): Observable<FreeResponseModel>
 
     /**
      * Get SmartID Verification Code
@@ -83,7 +83,7 @@ interface UserApi {
     @POST("/api/v1/users/smart-id/code/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getSmartIDVerificationCode(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body request: UserSmartIdVerificationCodeRequestModel
     ): Observable<UserSmartIdVerificationResponseModel>
 
@@ -93,7 +93,7 @@ interface UserApi {
     @POST("/api/v1/users/smart-id/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun startSmartIDAuth(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Body request: UserSmartIdVerificationCodeRequestModel
     ): Observable<FreeResponseModel>
 
@@ -102,7 +102,7 @@ interface UserApi {
      */
     @GET("/api/v1/users/smart-id/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun checkSmartIDSession(@Header("Authorization") authToken: String): Observable<FreeResponseModel>
+    fun checkSmartIDSession(@Header("Authorization") authToken: String,@Header("Accept-Language") language: String): Observable<FreeResponseModel>
 
 
 
@@ -111,7 +111,7 @@ interface UserApi {
      */
     @POST("/api/v1/users/password_reset/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun forgetPassword(
+    fun forgetPassword(@Header("Accept-Language") language: String,
         @Body request: UserForgetPasswordRequestModel
     ): Observable<FreeResponseModel>
 
@@ -122,7 +122,7 @@ interface UserApi {
      */
     @POST("/api/v1/users/password_reset/confirm/")
     @Headers("Content-Type:application/json; charset=UTF-8")
-    fun forgetPasswordConfirm(
+    fun forgetPasswordConfirm(@Header("Accept-Language") language: String,
         @Body request: UserForgetPasswordConfirmRequestModel
     ): Observable<FreeResponseModel>
 }

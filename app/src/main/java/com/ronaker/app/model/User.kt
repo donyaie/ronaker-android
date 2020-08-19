@@ -42,6 +42,30 @@ data class User(
     var accessToken: String? = null
 
 
+    fun isComplete(): Boolean {
+        complete = 0
+
+
+        if (!avatar.isNullOrBlank())
+            complete++
+
+        if (!smart_id_personal_code.isNullOrBlank())
+            complete++
+
+        if (is_email_verified) complete++
+        if (is_phone_number_verified) complete++
+//        user.is_payment_info_verified?.let { if (it) complete++ }
+//        user.is_identity_info_verified?.let { if (it) complete++ }
+
+
+        return complete == 4
+    }
+
+
+    @IgnoredOnParcel
+    var complete = 0
+
+
 }
 
 

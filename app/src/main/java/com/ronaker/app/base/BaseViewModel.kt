@@ -115,7 +115,6 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
 
             is OrderPreviewViewModel -> injector.inject(this)
 
-            is OrderItemViewModel -> injector.inject(this)
 
             is AddProductLocationViewModel -> injector.inject(this)
             is AddProductLocationSearchViewModel -> injector.inject(this)
@@ -146,11 +145,8 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
             is ProfilePaymentHistoryListViewModel -> injector.inject(this)
             is ProfileAuthorizationViewModel -> injector.inject(this)
             is OrderPreviewPriceViewModel -> injector.inject(this)
-            is ManageProductAdapterViewModel -> injector.inject(this)
             is OrderAuthorizationViewModel -> injector.inject(this)
             is LoginForgetViewModel -> injector.inject(this)
-            is ItemExploreViewModel -> injector.inject(this)
-            is CategoryExploreViewModel -> injector.inject(this)
         }
 
     }

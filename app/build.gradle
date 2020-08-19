@@ -17,15 +17,20 @@ apply plugin: 'com.google.gms.google-services'
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 2
+def versionPatch = 3
 android {
 
 
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion 30
     buildToolsVersion = '29.0.3'
 
@@ -100,7 +105,7 @@ android {
 
     buildTypes {
         release {
-
+            buildConfigField "String", "hostAPI", "\"https://api.ronaker.com\""
 
             resValue "string", "app_version", "${defaultConfig.versionName}"
 
@@ -110,8 +115,24 @@ android {
 
         }
 
+
+        robo {
+
+            buildConfigField "String", "hostAPI", "\"https://api.ronaker.com\""
+            versionNameSuffix ".robo"
+            resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
+
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+
+        }
+
+
         debug {
 
+            buildConfigField "String", "hostAPI", "\"https://api.ronaker.com\""
             versionNameSuffix ".debug"
             resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
 
@@ -121,6 +142,24 @@ android {
 
 
         }
+
+
+        staging {
+            initWith debug
+
+            buildConfigField "String", "hostAPI", "\"https://staging.ronaker.com\""
+
+            versionNameSuffix ".staging"
+            resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
+
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+
+
+        }
+
     }
 
 
@@ -209,6 +248,9 @@ dependencies {
 
     //Image Loader
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+//    implementation 'jp.wasabeef:glide-transformations:4.1.0'
+    // If you want to use the GPU Filters
+//    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 

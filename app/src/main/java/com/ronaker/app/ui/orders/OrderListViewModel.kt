@@ -19,6 +19,8 @@ import javax.inject.Inject
 class OrderListViewModel(app: Application) : BaseViewModel(app),
     OrderItemAdapter.OrderItemListener {
 
+
+
     @Inject
     lateinit
     var productRepository: ProductRepository
@@ -41,12 +43,14 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
     var dataList: ArrayList<Order> = ArrayList()
 
 
-    var productListAdapter: OrderItemAdapter = OrderItemAdapter(this)
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
 
+
+
+    val listView: MutableLiveData<List<Order>> = MutableLiveData()
 
     val launchOrderDetail: MutableLiveData<Order> = MutableLiveData()
     val launchOrderRateDetail: MutableLiveData<Order> = MutableLiveData()
@@ -60,10 +64,10 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
     private var subscription: Disposable? = null
     private var archiveSubscription: Disposable? = null
 
-    fun getData(filter: String?) {
+    fun getData() {
 
         uiScope.launch {
-            loadData(filter)
+            loadData()
         }
     }
 
@@ -76,18 +80,16 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
         resetList.postValue(true)
     }
 
-    suspend fun loadData(filter: String?) =
+    suspend fun loadData() =
         withContext(Dispatchers.IO) {
 
             if (hasNextPage) {
                 page++
                 subscription?.dispose()
 
-                mFilter = filter
-
                 subscription?.dispose()
                 subscription = orderRepository
-                    .getOrders( page, filter)
+                    .getOrders( page, mFilter)
 
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
@@ -120,7 +122,8 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
 //                            dataList.clear()
                             result.data?.results?.let { dataList.addAll(it) }
-                            productListAdapter.updateList(dataList)
+
+                            listView.postValue(dataList)
 
                             if (!result.data?.results.isNullOrEmpty()) {
                                 emptyVisibility.postValue(View.GONE)
@@ -193,7 +196,7 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
 
         uiScope.launch {
             reset()
-            loadData(mFilter)
+            loadData()
         }
 
     }
@@ -210,7 +213,10 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
         }
 
         dataList.remove(order)
-        productListAdapter.updateList(dataList)
+
+
+
+        listView.postValue(dataList)
 
 
     }
@@ -218,6 +224,11 @@ class OrderListViewModel(app: Application) : BaseViewModel(app),
     override fun onClickItemRate(order: Order) {
 
         launchOrderRateDetail.postValue(order)
+    }
+
+    fun setFilter(filter: String?) {
+
+        mFilter=filter
     }
 
 

@@ -65,6 +65,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:layout_marginTop="8dp"
+                                android:visibility="gone"
                                 android:background="@drawable/background_accent"
                                 android:clickable="false"
                                 android:gravity="center"
@@ -81,6 +82,7 @@
 
                             <TextView
                                 android:id="@+id/pending"
+                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
@@ -102,6 +104,76 @@
 
                     </RelativeLayout>
 
+
+
+                    <LinearLayout
+                        app:layout_constraintTop_toBottomOf="@id/avatar_layout"
+                        android:id="@+id/pending_message_layout"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+
+                        app:mutableVisibility="@{viewModel.getPendingVisibility()}"                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:layout_marginTop="4dp"
+                            android:contentDescription="@string/text_content"
+                            android:padding="4dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:srcCompat="@drawable/ic_guid_warning" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_weight=".96"
+                            android:gravity="top|start"
+                            android:text="@string/text_pending_message"
+                            android:textAppearance="@style/TextAppearance.Medium.Regular"
+                            android:textColor="@color/colorTextDark" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        app:layout_constraintTop_toBottomOf="@id/pending_message_layout"
+                        android:id="@+id/reject_message_layout"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        app:mutableVisibility="@{viewModel.getRegectedVisibility()}"
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/margin_default"
+                            android:layout_height="@dimen/margin_default"
+                            android:layout_marginTop="4dp"
+                            android:contentDescription="@string/text_content"
+                            android:padding="0dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:srcCompat="@drawable/ic_guide_red" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_weight=".96"
+                            android:gravity="top|start"
+                            android:text="@string/text_reject_message"
+                            android:textAppearance="@style/TextAppearance.Medium.Regular"
+                            android:textColor="@color/colorTextDark" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
@@ -113,7 +185,7 @@
                         android:text="@string/caption_title"
                         android:textAppearance="@style/TextAppearance.Heading.1"
                         android:textColor="@color/colorTextDark"
-                        app:layout_constraintTop_toBottomOf="@id/avatar_layout"
+                        app:layout_constraintTop_toBottomOf="@id/reject_message_layout"
                         app:mutableTextFade="@{viewModel.getProductTitle()}" />
 
 
@@ -277,8 +349,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_action_container="TEXT"
             app:toolbar_component_bottom_line="false"
+            app:toolbar_component_action_text="@string/text_preview"
             app:toolbar_component_cancel_container="BACK"
             app:toolbar_component_center_container="NONE"
             app:toolbar_component_dot_count="3"

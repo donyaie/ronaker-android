@@ -37,9 +37,13 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
 
 
     val logOutAction: MutableLiveData<Boolean> = MutableLiveData()
+    val userProfileComplete: MutableLiveData<Boolean> = MutableLiveData()
 
 
     private var subscription: Disposable? = null
+
+
+     var isComplete=false
 
     init {
 
@@ -73,6 +77,11 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
                         }
 
                     } else {
+
+                        if(result?.error?.responseCode==401){
+                            logOut()
+                        }
+
                         errorMessage.postValue(result.error?.message)
                     }
 
@@ -82,42 +91,49 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
         }
 
 
+   fun logOut(){
+
+       userRepository.clearLogin()
+       logOutAction.postValue(true)
+
+    }
+
     private fun fillUser(user: User) {
 
-        var complete = 0
 
         if (user.first_name.isNullOrEmpty()) {
             userName.postValue("${user.email}")
         } else
-            userName.postValue(nameFormat(user.first_name,user.last_name))
+            userName.postValue(nameFormat(user.first_name,user.last_name)+"  ")
 
 
         user.avatar?.let {
             userAvatar.postValue(BASE_URL + it)
-            complete++
         }
 
-        if (user.smart_id_personal_code != null) complete++
 
-        if (user.is_email_verified) complete++
-        if (user.is_phone_number_verified) complete++
-//        user.is_payment_info_verified?.let { if (it) complete++ }
-//        user.is_identity_info_verified?.let { if (it) complete++ }
-
-
-        if (complete == 4) {
+        if (user.isComplete()) {
             completeProgressVisibility.postValue(View.GONE)
             completeVisibility.postValue(View.GONE)
             editVisibility.postValue(View.VISIBLE)
+
+            isComplete=true
+
+            userProfileComplete.postValue(true)
         } else {
+            isComplete=false
 
             completeProgressVisibility.postValue(View.VISIBLE)
-            completeProgress.postValue(complete)
-            userStep.postValue(complete.toString())
+            completeProgress.postValue(user.complete)
+            userStep.postValue(user.complete.toString())
 
             completeVisibility.postValue(View.VISIBLE)
             editVisibility.postValue(View.GONE)
+            userProfileComplete.postValue(false)
         }
+
+
+
 
 
     }

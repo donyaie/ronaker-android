@@ -50,7 +50,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
     private lateinit var adapter: ViewPagerAdapter
 
-    private lateinit var screenLibrary: ScreenCalculator
+//    private lateinit var screenLibrary: ScreenCalculator
 
 
     private val REQUEST_IMAGE = 1233
@@ -137,7 +137,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         binding.viewModel = viewModel
 
 
-        screenLibrary = ScreenCalculator(this)
+//        screenLibrary = ScreenCalculator(this)
 
         UpdateMode = getSuid() != null
 
@@ -217,6 +217,11 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
                 finish()
         })
 
+
+        viewModel.goReview.observe(this, Observer {
+
+            showReviewDialog()
+        })
 
 //        binding.viewpager.setScrollDurationFactor(2.0)
 
@@ -577,6 +582,27 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+
+
+
+
+    private fun showReviewDialog( ) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage( getString(R.string.text_pending_dialog))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog?.cancel()
+            finish()
+        }
+        builder.setOnDismissListener {
+            finish()
+        }
+
+        builder.show()
+    }
+
 
 
     private fun showSettingsDialog() {

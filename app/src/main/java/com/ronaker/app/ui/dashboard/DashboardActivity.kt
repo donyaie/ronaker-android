@@ -6,10 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -36,19 +36,19 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
     private val fragNavController: FragNavController =
         FragNavController(supportFragmentManager, R.id.container)
-    override val numberOfRootFragments: Int = 5
+    override val numberOfRootFragments: Int = 4
 
 
     private val INDEX_EXPLORE = FragNavController.TAB1
     private val INDEX_ORDERS = FragNavController.TAB2
     private val INDEX_ITEMADD = FragNavController.TAB3
-    private val INDEX_INBOX = FragNavController.TAB4
-    private val INDEX_PROFILE = FragNavController.TAB5
+    private val INDEX_INBOX = FragNavController.TAB5
+    private val INDEX_PROFILE = FragNavController.TAB4
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
-    private lateinit var viewModel: DashboardViewModel
 
 
+    private val viewModel: DashboardViewModel by viewModels()
     var inviteCode: String? = null
 
 
@@ -61,25 +61,20 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         setSwipeCloseDisable()
 
-
-
-
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
 
+        binding.viewModel = viewModel
         binding.root.setBackgroundResource(R.color.white)
 //        ( window.decorView.findViewById<View>(Window.ID_ANDROID_CONTENT)?.parent as? ViewGroup)?.setBackgroundResource(R.color.white)
 //        window.setBackgroundDrawableResource(R.color.white)
 //
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        binding.viewModel = viewModel
 
-        viewModel.goLogin.observe(this, Observer { value ->
+        viewModel.goLogin.observe(this, { value ->
             if (value == true) {
 
-                startActivity(LoginActivity.newInstance(this@DashboardActivity,inviteCode))
+                startActivity(LoginActivity.newInstance(this@DashboardActivity, inviteCode))
                 AnimationHelper.setFadeTransition(this)
                 finish()
 
@@ -87,7 +82,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         })
 
 
-        viewModel.goEmail.observe(this, Observer { value ->
+        viewModel.goEmail.observe(this, { value ->
             if (value == true) {
 
 //                startActivity(ProfileEmailVerifyActivity.newInstance(this@DashboardActivity))
@@ -99,6 +94,16 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         })
 
 
+        window.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+
+
+        if(viewModel.islogin) {
+
+            initNavigation(savedInstanceState)
+
+
+            handleIntent(intent)
+        }
     }
 
 
@@ -134,22 +139,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                 AppDebug.log("BRANCH SDK", error.message)
             }
         }.withData(intent.data).init()
-
-
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        if (isFistStart() && viewModel.islogin) {
-
-            window.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-
-
-            initNavigation(savedInstanceState)
-        }
-
-        handleIntent(intent)
 
 
     }

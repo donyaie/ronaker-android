@@ -16,7 +16,7 @@ interface ProductApi {
     @POST("/api/v1/products/search")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSearch(
-        @Header("Authorization") authToken: String?,
+        @Header("Authorization") authToken: String?,@Header("Accept-Language") language: String,
         @Query("page") page: Int,
         @Body request: ProductSearchRequestModel?
     ): Observable<ListResponseModel<ProductItemResponseModel>>
@@ -27,7 +27,7 @@ interface ProductApi {
     @GET("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getMyProduct(
-        @Header("Authorization") authToken: String?,
+        @Header("Authorization") authToken: String?,@Header("Accept-Language") language: String,
         @Query("page") page: Int
     ): Observable<ListResponseModel<ProductItemResponseModel>>
 
@@ -37,7 +37,7 @@ interface ProductApi {
     @POST("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productCreate(
-        @Header("Authorization") authToken: String?,
+        @Header("Authorization") authToken: String?,@Header("Accept-Language") language: String,
         @Body request: ProductCreateRequestModel
     ): Observable<ProductCreateResponseModel>
 
@@ -48,7 +48,7 @@ interface ProductApi {
     @PATCH("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productUpdate(
-        @Header("Authorization") authToken: String?,
+        @Header("Authorization") authToken: String?,@Header("Accept-Language") language: String,
         @Path("suid") suid: String,
         @Body request: ProductCreateRequestModel
     ): Observable<ProductCreateResponseModel>
@@ -59,7 +59,7 @@ interface ProductApi {
     @GET("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getProduct(
-        @Header("Authorization") authToken: String?,
+        @Header("Authorization") authToken: String?,@Header("Accept-Language") language: String,
         @Path("suid") suid: String
     ): Observable<ProductDetailResponseModel>
 
@@ -69,7 +69,7 @@ interface ProductApi {
     @GET("/api/v1/products/{product_suid}/ratings")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getProductRate(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Path("product_suid") suid: String
     ): Observable<ListResponseModel<ProductRatingResponceModel>>
 
@@ -79,7 +79,7 @@ interface ProductApi {
     @POST("/api/v1/products/{product_suid}/favourite")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSave(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Path("product_suid") suid: String
     ): Observable<FreeResponseModel>
 
@@ -89,7 +89,7 @@ interface ProductApi {
     @DELETE("/api/v1/products/{product_suid}/favourite")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSavedRemove(
-        @Header("Authorization") authToken: String,
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Path("product_suid") suid: String
     ): Observable<FreeResponseModel>
 }

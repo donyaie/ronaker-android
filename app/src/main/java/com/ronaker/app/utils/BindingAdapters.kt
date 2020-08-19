@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.ronaker.app.R
 import com.ronaker.app.injection.module.GlideApp
 import com.ronaker.app.utils.extension.getParentActivity
 
@@ -151,7 +152,7 @@ fun setMutableTextRes(view: TextView, text: MutableLiveData<Int>?) {
     if (parentActivity != null && text != null) {
         text.observe(
             parentActivity,
-            Observer { value -> view.text = parentActivity.getString(value) })
+            Observer { value -> view.text = parentActivity.applicationContext.getString(value) })
     }
 }
 
@@ -162,7 +163,7 @@ fun setMutableTextColorRes(view: TextView, text: MutableLiveData<Int>?) {
     if (parentActivity != null && text != null) {
         text.observe(
             parentActivity,
-            Observer { value -> view.setTextColor(ContextCompat.getColor(parentActivity, value)) })
+            Observer { value -> view.setTextColor(ContextCompat.getColor(parentActivity.applicationContext, value)) })
     }
 }
 
@@ -203,9 +204,32 @@ fun setMutableImage(view: ImageView, url: MutableLiveData<String>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && url != null) {
         url.observe(parentActivity, Observer { value ->
-            GlideApp.with(parentActivity)
+            GlideApp.with(parentActivity.applicationContext)
                 .load(value)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(view)
+        })
+
+    }
+}
+
+
+@BindingAdapter("mutableImageThumbnail")
+fun setMutableImageThumbnail(view: ImageView, url: MutableLiveData<String>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && url != null) {
+
+//        val radius = parentActivity.resources.getDimensionPixelSize(R.dimen.image_corner_radius)
+        val size = parentActivity.resources.getDimensionPixelSize(R.dimen.image_thumbnail_size)
+        url.observe(parentActivity, Observer { value ->
+            GlideApp.with(parentActivity.applicationContext)
+                .load(value)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .transform( RoundedCornersTransformation(radius,0,RoundedCornersTransformation.CornerType.ALL))
+                .override(size,size)
+
+//                .transform( RoundedCornersTransformation(radius,1,RoundedCornersTransformation.CornerType.ALL))
+
                 .into(view)
         })
 

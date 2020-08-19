@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
-import com.ronaker.app.utils.ScreenCalculator
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.IPagerFragment
 
 
@@ -34,21 +34,34 @@ class AddProductImageFragment : BaseFragment(), IPagerFragment {
         }
 
 
-        val screenMnager = ScreenCalculator(requireContext())
 
-
-        val itemsize = 170
-        val screensize = screenMnager.screenWidthDP.toInt()
-
-
+        val itemsize = requireContext().resources.getDimensionPixelSize(R.dimen.adapter_width)
+        var screensize = binding.container.measuredWidth
+        AppDebug.log("mnager", "screenSize : $screensize")
         var count = screensize / itemsize
 
         if (count < 2)
             count = 2
 
+        var  mnager=  GridLayoutManager(context, count)
+        binding.recycler.layoutManager = mnager
 
+        val vtObserver = binding.root.viewTreeObserver
+        vtObserver.addOnGlobalLayoutListener {
 
-        binding.recycler.layoutManager = GridLayoutManager(context, count)
+            if(screensize==0) {
+                screensize = binding.container.measuredWidth
+
+                AppDebug.log("mnager", "screenSize 2 : $screensize")
+                count = screensize / itemsize
+
+                if (count < 2)
+                    count = 2
+                mnager = GridLayoutManager(context, count)
+                binding.recycler.layoutManager = mnager
+            }
+
+        }
 
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)

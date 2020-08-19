@@ -101,7 +101,7 @@ class CategoryExploreAdapter(
 
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = CategoryExploreViewModel(binding.root.getApplication())
+        private val viewModel = CategoryExploreViewModel()
 
         fun bind(product: Category) {
             viewModel.bind(product, binding)

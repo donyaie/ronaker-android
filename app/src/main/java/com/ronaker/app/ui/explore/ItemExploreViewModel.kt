@@ -1,66 +1,67 @@
 package com.ronaker.app.ui.explore
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.base.ResourcesRepository
+import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
+import com.ronaker.app.utils.extension.getApplication
+import com.ronaker.app.utils.extension.getParentActivity
 import com.ronaker.app.utils.toCurrencyFormat
-import javax.inject.Inject
 
 
-class ItemExploreViewModel( app: Application) : BaseViewModel(app) {
+class ItemExploreViewModel {
     private val productTitle = MutableLiveData<String>()
     private val productPrice = MutableLiveData<String>()
+    private val productPricePostfix = MutableLiveData<String>()
+
+
     private val productImage = MutableLiveData<String>()
-    @Inject
-    lateinit var resourcesRepository: ResourcesRepository
+    private val productAddress = MutableLiveData<String>()
 
     lateinit var data: Product
 
 
     fun bind(
-        post: Product
+        post: Product, binding: AdapterExploreItemBinding
     ) {
         data = post
 
         productTitle.value = post.name
 
+        productAddress.postValue(post.address)
+
+        val context = binding.root.getParentActivity()?.baseContext?: binding.root.getApplication()
+
         when {
             post.price_per_day ?: 0 != 0 -> {
-                productPrice.value = String.format(
-                    "%s %s",
-                    post.price_per_day?.toCurrencyFormat(),
-                    resourcesRepository.getString(
-                        R.string.title_per_day
-                    )
-                )
+
+                productPrice.value = post.price_per_day?.toCurrencyFormat()
+                productPricePostfix.value = context.getString(R.string.title_per_day)
+
             }
             post.price_per_week ?: 0 != 0 -> {
 
-                productPrice.value = String.format(
-                    "%s %s",
-                    post.price_per_week?.toCurrencyFormat(),
-                    resourcesRepository.getString(
-                        R.string.title_per_week
-                    )
-                )
+
+                productPrice.value = post.price_per_week?.toCurrencyFormat()
+                productPricePostfix.value = context.getString(R.string.title_per_week)
+
             }
             post.price_per_month ?: 0 != 0 -> {
 
-                productPrice.value = String.format(
-                    "%s %s",
-                    post.price_per_month?.toCurrencyFormat(),
-                    resourcesRepository.getString(
-                        R.string.title_per_month
-                    )
-                )
+
+                productPrice.value = post.price_per_month?.toCurrencyFormat()
+                productPricePostfix.value = context.getString(R.string.title_per_month)
+
+
             }
             else -> {
                 productPrice.value = ""
+
+                productPricePostfix.value =""
             }
+
+
         }
 
         productImage.value = BASE_URL + post.avatar
@@ -69,6 +70,9 @@ class ItemExploreViewModel( app: Application) : BaseViewModel(app) {
     }
 
 
+    fun getProductPricePostfix(): MutableLiveData<String> {
+        return productPricePostfix
+    }
 
     fun getProductTitle(): MutableLiveData<String> {
         return productTitle
@@ -76,6 +80,10 @@ class ItemExploreViewModel( app: Application) : BaseViewModel(app) {
 
     fun getProductPrice(): MutableLiveData<String> {
         return productPrice
+    }
+
+    fun getProductAddress(): MutableLiveData<String> {
+        return productAddress
     }
 
     fun getProductImage(): MutableLiveData<String> {

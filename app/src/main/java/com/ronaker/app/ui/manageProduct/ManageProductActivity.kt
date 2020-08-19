@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +14,8 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.ScreenCalculator
 
 class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -53,7 +54,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         binding.viewModel = viewModel
 
 
-        viewModel.activeState.observe(this, Observer { active ->
+        viewModel.activeState.observe(this, { active ->
 
             unregisterActiveListener()
             binding.activeSwitch.isChecked = active
@@ -61,7 +62,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
         })
 
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(this, { loading ->
 
             binding.refreshLayout.isRefreshing = loading
 
@@ -74,7 +75,18 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         }
 
 
-        viewModel.loadingAction.observe(this, Observer { loading ->
+        binding.toolbar.actionTextClickListener=View.OnClickListener {
+
+            getCurrentSuid()?.let {
+
+                startActivity(ExploreProductActivity.newInstance(this,suid = it))
+
+            }
+
+        }
+
+
+        viewModel.loadingAction.observe(this, { loading ->
 
 
             if (loading) {
@@ -102,7 +114,7 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
             onBackPressed()
         }
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
 
             Alert.makeTextError(this, errorMessage)
 
@@ -179,11 +191,17 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
 
         }
 
+        val vtObserver = binding.root.viewTreeObserver
+        vtObserver.addOnGlobalLayoutListener {
 
-        val screenCalculator = ScreenCalculator(this)
+            val width=  binding.root.measuredWidth
+
+            binding.avatarLayout.layoutParams.height = (width * 0.8).toInt()
+
+        }
 
 
-        binding.avatarLayout.layoutParams.height = (screenCalculator.screenWidthPixel * 0.7).toInt()
+
 
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
@@ -214,6 +232,11 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         }
 
     }
+
+
+
+
+
 
     private fun unregisterActiveListener() {
         binding.activeSwitch.setOnCheckedChangeListener(null)

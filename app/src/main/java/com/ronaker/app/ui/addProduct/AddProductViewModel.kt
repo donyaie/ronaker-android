@@ -93,6 +93,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
     val childCategory: MutableLiveData<Category> = MutableLiveData()
 
     val goNext: MutableLiveData<Boolean> = MutableLiveData()
+    val goReview: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val showImagePicker: MutableLiveData<Boolean> = MutableLiveData()
@@ -185,8 +186,8 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             errorMessage.value = "Please Select Sub-Category"
         } else {
             product.new_categories = ArrayList()
-            product.new_categories.apply { add(categories[0].suid) }
-            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories.add(it) }
+            product.new_categories?.apply { add(categories[0].suid) }
+            categories[0].sub_categories?.get(0)?.suid?.let { product.new_categories?.add(it) }
 
 
             if (!updateSuid.isNullOrEmpty()) {
@@ -369,7 +370,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
             .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
                 if (result.isSuccess()) {
-                    goNext.value = false
+                    goReview.value = true
                 } else {
                     if (result.error?.responseCode == 406)
                         goNext.value = true
@@ -561,7 +562,7 @@ class AddProductViewModel(app: Application) : BaseViewModel(app) {
                     .subscribe { result ->
                         if (result.isSuccess()) {
 
-                            goNext.value = false
+                            goReview.value = true
                         } else {
                             errorMessage.value = result.error?.message
 

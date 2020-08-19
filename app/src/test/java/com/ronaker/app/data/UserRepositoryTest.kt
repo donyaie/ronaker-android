@@ -84,7 +84,7 @@ class UserRepositoryTest {
             )
         )
 
-        Mockito.`when`(userApi.registerUser(request)).thenReturn(Observable.just(responce))
+        Mockito.`when`(userApi.registerUser("en",request)).thenReturn(Observable.just(responce))
 
         val result = userRepository.registerUser(user)
 

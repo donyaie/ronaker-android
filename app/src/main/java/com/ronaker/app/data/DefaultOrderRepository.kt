@@ -6,7 +6,6 @@ import com.ronaker.app.data.network.OrderApi
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.request.ProductRateRequestModel
-import com.ronaker.app.data.network.request.UserSmartIdVerificationCodeRequestModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
@@ -25,7 +24,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         filter: String?
     ): Observable<Result<ListResponseModel<Order>>> {
 
-        return api.getOrders(userRepository.getUserAuthorization(), page, filter)
+        return api.getOrders(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), page, filter)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -38,7 +37,7 @@ class DefaultOrderRepository(private val api: OrderApi,
 
     override fun getOrderDetail( suid: String): Observable<Result<Order>> {
 
-        return api.getOrderDetail(userRepository.getUserAuthorization(), suid)
+        return api.getOrderDetail(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), suid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -67,7 +66,7 @@ class DefaultOrderRepository(private val api: OrderApi,
                 price
             )
 
-        return api.createOrder(userRepository.getUserAuthorization(), request)
+        return api.createOrder(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -91,7 +90,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         val request =
             OrderUpdateRequestModel(status, address, instruction, reason, isArchived)
 
-        return api.updateOrderStatus(userRepository.getUserAuthorization(), suid, request)
+        return api.updateOrderStatus(userRepository.getUserAuthorization(), userRepository.getUserLanguage(),suid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
@@ -107,7 +106,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         val request =
             ProductRateRequestModel(stars, comment)
 
-        return api.orderRate(userRepository.getUserAuthorization(), orderSuid, request)
+        return api.orderRate(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid, request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { true }.toResult()
@@ -119,7 +118,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         orderSuid: String
     ): Observable<Result<String>> {
 
-        return api.getSmartIDVerificationCode(userRepository.getUserAuthorization(), orderSuid)
+        return api.getSmartIDVerificationCode(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -134,7 +133,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         orderSuid: String
     ): Observable<Result<Boolean>> {
 
-        return api.startSmartIDAuth(userRepository.getUserAuthorization(), orderSuid)
+        return api.startSmartIDAuth(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -149,7 +148,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         orderSuid: String
 
     ): Observable<Result<Boolean>> {
-        return api.checkSmartIDSession(userRepository.getUserAuthorization(), orderSuid)
+        return api.checkSmartIDSession(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -166,7 +165,7 @@ class DefaultOrderRepository(private val api: OrderApi,
         orderSuid: String
     ): Observable<Result<Boolean>> {
 
-        return api.startSmartIDCert(userRepository.getUserAuthorization(), orderSuid)
+        return api.startSmartIDCert(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -180,7 +179,7 @@ class DefaultOrderRepository(private val api: OrderApi,
     override fun checkSmartIDSessionCert(
         orderSuid: String
     ): Observable<Result<Boolean>> {
-        return api.checkSmartIDSessionCert(userRepository.getUserAuthorization(), orderSuid)
+        return api.checkSmartIDSessionCert(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {

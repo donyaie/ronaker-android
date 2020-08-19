@@ -56,6 +56,8 @@ fun MapGeoCodeResponseModel.converGeoToPlace(): Place? {
     var country: String? = null
     var city: String? = null
     var route: String? = null
+    var admin_l1: String? = null
+    var admin_l2: String? = null
 
 
     val stringBuilder = StringBuilder()
@@ -80,21 +82,36 @@ fun MapGeoCodeResponseModel.converGeoToPlace(): Place? {
 
                                 if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
 
-                                    country = mapGeoCodeAddress.long_name
+                                    country = mapGeoCodeAddress.short_name
                                 }
                             }
                             type.contains("locality", true) -> {
 
                                 if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
 
-                                    city = mapGeoCodeAddress.long_name
+                                    city = mapGeoCodeAddress.short_name
                                 }
 
                             }
                             type.contains("route", true) -> {
                                 if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
 
-                                    route = mapGeoCodeAddress.long_name
+                                    route = mapGeoCodeAddress.short_name
+                                }
+                            }
+
+                            type.contains("administrative_area_level_1", true) -> {
+                                if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
+
+                                    admin_l1 = mapGeoCodeAddress.short_name
+                                }
+                            }
+
+
+                            type.contains("administrative_area_level_2", true) -> {
+                                if (!mapGeoCodeAddress.long_name.contains("unnamed", true)) {
+
+                                    admin_l2 = mapGeoCodeAddress.short_name
                                 }
                             }
                         }
@@ -110,16 +127,29 @@ fun MapGeoCodeResponseModel.converGeoToPlace(): Place? {
 
     }
 
-    if (!country.isNullOrEmpty()) {
-        stringBuilder.append(country)
-    }
-    if (!city.isNullOrEmpty()) {
-        stringBuilder.append(", ")
+
+    if (!city.isNullOrBlank()) {
+//        stringBuilder.append(", ")
         stringBuilder.append(city)
+    } else if (!admin_l1.isNullOrBlank()) {
+        stringBuilder.append(admin_l1)
     }
-    if (!route.isNullOrEmpty()) {
-        stringBuilder.append(", ")
+
+
+
+    if (!route.isNullOrBlank()) {
+        if (!stringBuilder.isBlank())
+            stringBuilder.append(", ")
         stringBuilder.append(route)
+    } else if (!admin_l2.isNullOrBlank()) {
+        if (!stringBuilder.isBlank())
+            stringBuilder.append(", ")
+        stringBuilder.append(admin_l2)
+    }
+
+
+    if (!country.isNullOrBlank() && stringBuilder.isBlank()) {
+        stringBuilder.append(country)
     }
 
 
