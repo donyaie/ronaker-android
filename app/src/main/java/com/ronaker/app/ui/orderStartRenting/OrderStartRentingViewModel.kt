@@ -1,15 +1,14 @@
 package com.ronaker.app.ui.orderStartRenting
 
 
-import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.PaymentInfoRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
@@ -17,28 +16,13 @@ import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
 import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
 import java.util.*
-import javax.inject.Inject
 
-class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
+class OrderStartRentingViewModel @ViewModelInject constructor(
+    private val orderRepository: OrderRepository,
+    private val  paymentInfoRepository: PaymentInfoRepository,
+    private val  resourcesRepository: ResourcesRepository
+)  : BaseViewModel() {
 
-    @Inject
-    lateinit
-    var orderRepository: OrderRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-
-    @Inject
-    lateinit
-    var paymentInfoRepository: PaymentInfoRepository
-
-
-    @Inject
-    lateinit
-    var resourcesRepository: ResourcesRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -194,16 +178,48 @@ class OrderStartRentingViewModel(val app: Application) : BaseViewModel(app) {
 
 
     fun onClickAccept() {
-        if (!mOrder.smart_id_owner_session_id.isNullOrBlank()) {
+
+        if (mOrder.smart_id_creator_session_id.isNullOrBlank()) {
 
             doSignContract.postValue(true)
-        } else {
+        }  else if(mOrder.smart_id_owner_session_id.isNullOrBlank()) {
             errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
             loadData(mOrder.suid)
+        }else{
+            startRenting()
         }
 
 
     }
+
+
+
+    private fun startRenting() {
+
+        acceptSubscription?.dispose()
+        acceptSubscription = mOrder.suid.let {
+            orderRepository.updateOrderStatus(
+                suid = it,
+                status = "started"
+            )
+                .doOnSubscribe { loadingButton.postValue(true) }
+                .doOnTerminate { loadingButton.postValue(false) }
+                .subscribe { result ->
+                    if (result.isSuccess() || result.isAcceptable()) {
+                        finish.postValue(true)
+                    } else {
+
+                        if (result.error?.responseCode == 406)
+                            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
+                        else
+                            errorMessage.postValue(result.error?.message)
+
+
+                    }
+                }
+        }
+    }
+
 
 
     fun onContractPreview() {

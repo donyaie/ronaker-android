@@ -9,11 +9,9 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -29,13 +27,14 @@ import com.ronaker.app.ui.orderCreate.OrderCreateActivity
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.setEndDrawableRes
+import dagger.hilt.android.AndroidEntryPoint
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
-import kotlinx.android.synthetic.main.activity_image_preview.*
 import java.util.*
 import kotlin.system.measureTimeMillis
 
+@AndroidEntryPoint
 class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
@@ -127,15 +126,15 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             val vtObserver = binding.root.viewTreeObserver
             vtObserver.addOnGlobalLayoutListener {
 
-                val width=  binding.avatarSlide.measuredWidth
+                val width = binding.avatarSlide.measuredWidth
                 binding.avatarSlide.layoutParams.height =
-                    ( width* 0.8).toInt()
+                    (width * 0.8).toInt()
 
             }
 
 
 
-            viewModel.errorMessage.observe(this, Observer { errorMessage ->
+            viewModel.errorMessage.observe(this, { errorMessage ->
                 Alert.makeTextError(this, errorMessage)
             })
 
@@ -149,17 +148,17 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 viewModel.onRefresh()
             }
 
-            viewModel.errorMessage.observe(this, Observer { errorMessage ->
+            viewModel.errorMessage.observe(this, { errorMessage ->
                 if (errorMessage != null) Alert.makeTextError(this, errorMessage)
             })
 
-            viewModel.imageList.observe(this, Observer { images ->
+            viewModel.imageList.observe(this, { images ->
 
                 binding.avatarSlide.clearImage()
                 binding.avatarSlide.addImagesUrl(images)
             })
 
-            viewModel.loading.observe(this, Observer { value ->
+            viewModel.loading.observe(this, { value ->
                 if (value == true) {
                     binding.loading.visibility = View.VISIBLE
                     binding.loading.showLoading()
@@ -167,7 +166,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                     binding.loading.hideLoading()
             })
 
-            viewModel.userVerify.observe(this, Observer { value ->
+            viewModel.userVerify.observe(this, { value ->
 
                 binding.userName.postDelayed({
 
@@ -177,11 +176,11 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                         binding.userName.setEndDrawableRes(0)
 
 
-                },200)
+                }, 200)
 
             })
 
-            viewModel.loadingComment.observe(this, Observer { value ->
+            viewModel.loadingComment.observe(this, { value ->
                 if (value == true) {
                     binding.commentLoading.visibility = View.VISIBLE
                     binding.commentLoading.showLoading()
@@ -189,7 +188,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                     binding.commentLoading.hideLoading()
             })
 
-            viewModel.isFavorite.observe(this, Observer { value ->
+            viewModel.isFavorite.observe(this, { value ->
                 if (value == true) {
                     binding.toolbar.action2Src = R.drawable.ic_fave_primery
                 } else
@@ -199,12 +198,12 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-            viewModel.loadingRefresh.observe(this, Observer { loading ->
+            viewModel.loadingRefresh.observe(this, { loading ->
                 binding.refreshLayout.isRefreshing = loading
 
             })
 
-            viewModel.retry.observe(this, Observer { value ->
+            viewModel.retry.observe(this, { value ->
 
                 value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
 
@@ -235,7 +234,13 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
             binding.fullScreen.setOnClickListener {
 
-                startActivity(ImagePreviewActivity.newInstance(this,binding.avatarSlide.dataList,binding.avatarSlide.currentItem))
+                startActivity(
+                    ImagePreviewActivity.newInstance(
+                        this,
+                        binding.avatarSlide.dataList,
+                        binding.avatarSlide.currentItem
+                    )
+                )
 
             }
 
@@ -251,27 +256,27 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
-            viewModel.productLocation.observe(this, Observer { location ->
+            viewModel.productLocation.observe(this, { location ->
                 if (location != null)
                     addMarker(location)
             })
 
-            viewModel.checkout.observe(this, Observer { _ ->
+            viewModel.checkout.observe(this, { _ ->
 
 
-                if(viewModel.userProfileIsComplete()) {
+                if (viewModel.userProfileIsComplete()) {
 
 
                     viewModel.mProduct?.let {
 
                         this.startActivityForResult(
-                            OrderCreateActivity.newInstance(this, it)
-                            , OrderCreateActivity.REQUEST_CODE
+                            OrderCreateActivity.newInstance(this, it),
+                            OrderCreateActivity.REQUEST_CODE
                         )
 
                     }
-                }else{
-                    startActivity(ProfileCompleteActivity.newInstance(this) )
+                } else {
+                    startActivity(ProfileCompleteActivity.newInstance(this))
 
 
                 }
@@ -285,7 +290,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-        Thread(Runnable {
+        Thread {
             try {
                 val mv =
                     MapView(applicationContext)
@@ -294,7 +299,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 mv.onDestroy()
             } catch (ignored: Exception) {
             }
-        }).start()
+        }.start()
 
 
         val time2 = measureTimeMillis {
@@ -480,9 +485,9 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
                 binding.toolbar.isTransparent = true
                 binding.toolbar.isBottomLine = false
-               binding.statusBar.setBackgroundResource(
-                   R.color.transparent
-               )
+                binding.statusBar.setBackgroundResource(
+                    R.color.transparent
+                )
 
 
             } else {

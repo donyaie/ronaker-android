@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
@@ -14,16 +15,18 @@ import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrderSmartidPersonalCodeBinding
-    private lateinit var viewModel: OrderAuthorizationViewModel
+    private val viewModel: OrderAuthorizationViewModel by activityViewModels()
 
     var disposable: Disposable? = null
 
@@ -42,21 +45,26 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
         )
 
 
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(OrderAuthorizationViewModel::class.java)
             binding.viewModel = viewModel
-        }
 
 
 
 
-        viewModel.language.observe(viewLifecycleOwner, Observer {
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+
+
+        viewModel.language.observe(viewLifecycleOwner, {
             viewContract(it)
 
         })
 
-
-        return binding.root
     }
 
 

@@ -5,7 +5,7 @@ import android.app.Application
 import com.ronaker.app.base.BaseViewModel
 import io.reactivex.disposables.Disposable
 
-class OrdersViewModel(app: Application) : BaseViewModel(app) {
+class OrdersViewModel : BaseViewModel() {
 
 
     private var subscription: Disposable? = null

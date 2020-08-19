@@ -11,8 +11,9 @@ import com.ronaker.app.model.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class DefaultProductRepository(
+class DefaultProductRepository @Inject constructor(
     private val productApi: ProductApi,
     private val userRepository: UserRepository
 ) :

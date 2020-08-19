@@ -33,7 +33,9 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.search.SearchActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding

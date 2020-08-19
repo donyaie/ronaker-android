@@ -8,9 +8,10 @@ import com.ronaker.app.model.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 
-class DefaultPaymentInfoRepository(
+class DefaultPaymentInfoRepository @Inject constructor(
     private val api: PaymentInfoApi,
     private val userRepository: UserRepository
 ) : PaymentInfoRepository {

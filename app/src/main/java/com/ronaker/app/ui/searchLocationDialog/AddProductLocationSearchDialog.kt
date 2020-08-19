@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,10 +15,12 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
 import com.ronaker.app.databinding.DialogAddProductLocationSearchBinding
 import com.ronaker.app.model.Place
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class AddProductLocationSearchDialog : BaseDialog() {
 
     //region field
@@ -41,7 +44,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
 
     var location: Place? = null
 
-    lateinit var viewModel: AddProductLocationSearchViewModel
+    val viewModel: AddProductLocationSearchViewModel by viewModels()
 
 
     //endregion field
@@ -67,7 +70,6 @@ class AddProductLocationSearchDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(AddProductLocationSearchViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -80,7 +82,7 @@ class AddProductLocationSearchDialog : BaseDialog() {
         binding.containerLayout.setOnClickListener { dismiss() }
 
         initilizeAdapter()
-        viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.selectedPlace.observe(viewLifecycleOwner, {value ->
             location = value
             dialogResult =
                 DialogResultEnum.OK

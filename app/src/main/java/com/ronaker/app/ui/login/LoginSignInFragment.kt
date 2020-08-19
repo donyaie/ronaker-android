@@ -10,7 +10,9 @@ import com.ronaker.app.BuildConfig
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginSignInFragment : BaseFragment(), IPagerFragment {
 
 

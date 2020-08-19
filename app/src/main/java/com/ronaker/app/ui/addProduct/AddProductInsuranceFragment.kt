@@ -5,16 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class AddProductInsuranceFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentProductAddInsuranceBinding
-    private lateinit var viewModel: AddProductViewModel
+    private val viewModel: AddProductViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -29,10 +32,8 @@ class AddProductInsuranceFragment : BaseFragment(), IPagerFragment {
             container,
             false
         )
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(AddProductViewModel::class.java)
             binding.viewModel = viewModel
-        }
+
 
 
 

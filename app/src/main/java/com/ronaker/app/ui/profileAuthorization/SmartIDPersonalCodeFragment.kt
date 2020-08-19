@@ -5,19 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
+@AndroidEntryPoint
 class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentSmartidPersonalCodeBinding
-    private lateinit var viewModel: ProfileAuthorizationViewModel
+    private val viewModel: ProfileAuthorizationViewModel by activityViewModels()
 
     var disposable: Disposable? = null
 
@@ -35,16 +37,21 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
             false
         )
 
-
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(ProfileAuthorizationViewModel::class.java)
-            binding.viewModel = viewModel
+        binding.viewModel = viewModel
 
 
-        }
+
         binding.view = this
 
 
+
+
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
 
         binding.ccp.setOnCountryChangeListener {
@@ -66,7 +73,7 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
         binding.codeValidate.setOnClickListener { binding.codeEditText.setText("") }
 
-        return binding.root
+
     }
 
 

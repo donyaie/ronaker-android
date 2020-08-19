@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +14,9 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
 import com.ronaker.app.databinding.DialogAddProductSelectCategoryBinding
 import com.ronaker.app.model.Category
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddProductCategorySelectDialog : BaseDialog() {
 
     //region field
@@ -39,7 +42,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
     var location: Category? = null
 
-    lateinit var viewModel: AddProductCategorySelectViewModel
+    val viewModel: AddProductCategorySelectViewModel by viewModels()
 
 
     //endregion field
@@ -64,8 +67,6 @@ class AddProductCategorySelectDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(AddProductCategorySelectViewModel::class.java)
-
         binding.viewModel = viewModel
 
         rootView = binding.root
@@ -73,7 +74,7 @@ class AddProductCategorySelectDialog : BaseDialog() {
 
 
 
-        viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.selectedPlace.observe(viewLifecycleOwner, {value ->
             location = value
             dialogResult =
                 DialogResultEnum.OK

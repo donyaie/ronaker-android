@@ -4,6 +4,7 @@ package com.ronaker.app.ui.profileIdentify
 import android.app.Application
 import android.net.Uri
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ContentRepository
@@ -13,18 +14,10 @@ import com.ronaker.app.ui.dialog.SelectDialog
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileIdentifyViewModel(app: Application) : BaseViewModel(app) {
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-
-    @Inject
-    lateinit
-    var contentRepository: ContentRepository
-
+class ProfileIdentifyViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val contentRepository: ContentRepository
+)  : BaseViewModel() {
 
 
 

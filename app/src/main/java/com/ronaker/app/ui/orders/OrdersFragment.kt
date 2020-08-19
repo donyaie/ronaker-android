@@ -19,7 +19,9 @@ import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.enforceSingleScrollDirection
 import com.ronaker.app.utils.extension.recyclerView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrdersFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrdersBinding

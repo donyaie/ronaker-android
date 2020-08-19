@@ -6,18 +6,18 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
 import com.ronaker.app.databinding.DialogEmailVerifyBinding
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.IntentManeger
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
+@AndroidEntryPoint
 class EmailVerifyDialog : BaseDialog() {
 
-    //region field
-    private val TAG = EmailVerifyDialog::class.java.simpleName
 
     lateinit var rootView: View
 
@@ -34,7 +34,7 @@ class EmailVerifyDialog : BaseDialog() {
     private var dialogResult = DialogResultEnum.NONE
 
 
-    lateinit var viewModel: ProfileEmailVerifyViewModel
+   val viewModel: ProfileEmailVerifyViewModel by viewModels()
 
 
     //endregion field
@@ -61,7 +61,6 @@ class EmailVerifyDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(ProfileEmailVerifyViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -70,16 +69,21 @@ class EmailVerifyDialog : BaseDialog() {
 
 
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, {errorMessage ->
             if (errorMessage != null) Alert.makeTextError(this, errorMessage)
         })
-        viewModel.goNex.observe(viewLifecycleOwner, Observer {
+        viewModel.goNex.observe(viewLifecycleOwner, {
 
             dialogResult = DialogResultEnum.OK
             stop()
         })
 
-//        binding.containerLayout.setOnClickListener { dismiss() }
+        viewModel.openInbox.observe(viewLifecycleOwner, {
+
+            context?.let { it1 -> IntentManeger.openMailBox(it1) }
+        })
+
+
 
 
         return rootView

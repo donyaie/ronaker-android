@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,13 +18,15 @@ import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.extension.setEndDrawableRes
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResultListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfileCompleteBinding
-    private lateinit var viewModel: ProfileCompleteViewModel
+    private val viewModel: ProfileCompleteViewModel by viewModels()
 
 
     companion object {
@@ -45,8 +48,6 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_complete)
 
-        viewModel = ViewModelProvider(this).get(ProfileCompleteViewModel::class.java)
-
         binding.viewModel = viewModel
 
 
@@ -67,7 +68,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
 
 
-        viewModel.retry.observe(this, Observer { value ->
+        viewModel.retry.observe(this, {value ->
 
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
@@ -80,7 +81,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
 
 
-        viewModel.imageComplete.observe(this, Observer { value ->
+        viewModel.imageComplete.observe(this, {value ->
             if (value == true) {
 //                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
 
@@ -94,7 +95,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             }
         })
 
-        viewModel.signComplete.observe(this, Observer { value ->
+        viewModel.signComplete.observe(this, {value ->
             if (value == true) {
 
 
@@ -109,7 +110,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         })
 
 
-        viewModel.phoneComplete.observe(this, Observer { value ->
+        viewModel.phoneComplete.observe(this, {value ->
             if (value == true) {
 
                 binding.phoneLayout.isClickable = false
@@ -124,7 +125,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         })
 
 
-        viewModel.identityComplete.observe(this, Observer { value ->
+        viewModel.identityComplete.observe(this, {value ->
             if (value == true) {
 
                 binding.identityLayout.isClickable = false
@@ -137,7 +138,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         })
 
 
-        viewModel.smartIDComplete.observe(this, Observer { value ->
+        viewModel.smartIDComplete.observe(this, {value ->
             if (value == true) {
 
                 binding.authLayout.isClickable = false
@@ -149,7 +150,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             }
         })
 
-        viewModel.peymentComplete.observe(this, Observer { value ->
+        viewModel.peymentComplete.observe(this, {value ->
             if (value == true) {
                 binding.paymentLayout.setEndDrawableRes(R.drawable.ic_complete)
 

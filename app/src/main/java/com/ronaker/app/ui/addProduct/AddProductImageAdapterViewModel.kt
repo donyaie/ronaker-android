@@ -9,7 +9,7 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Image
 import com.ronaker.app.utils.BASE_URL
 
-class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app) {
+class AddProductImageAdapterViewModel {
 
 
     private val productImage = MutableLiveData<String>()
@@ -32,7 +32,7 @@ class AddProductImageAdapterViewModel(val app: Application) : BaseViewModel(app)
             productImage.value = BASE_URL + post.url
 
         baseActivity?.let {
-            imageModel.progress.observe(it, Observer { state ->
+            imageModel.progress.observe(it, { state ->
                 if (state)
                     loadingVisibility.value = View.VISIBLE
                 else

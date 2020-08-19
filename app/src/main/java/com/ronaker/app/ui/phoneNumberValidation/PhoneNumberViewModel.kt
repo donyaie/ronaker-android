@@ -3,18 +3,20 @@ package com.ronaker.app.ui.phoneNumberValidation
 import android.app.Application
 import android.os.CountDownTimer
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.OrderRepository
+import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class PhoneNumberViewModel(app: Application) : BaseViewModel(app) {
+class PhoneNumberViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository
+): BaseViewModel() {
 
-
-    @Inject
-    lateinit var userRepository: UserRepository
 
 
     private var addPhoneSubscription: Disposable? = null

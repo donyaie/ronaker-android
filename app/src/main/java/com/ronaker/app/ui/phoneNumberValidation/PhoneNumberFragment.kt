@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber
@@ -14,13 +14,15 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
+@AndroidEntryPoint
 class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentPhoneNumbreBinding
-    private lateinit var viewModel: PhoneNumberViewModel
+    private val viewModel: PhoneNumberViewModel by activityViewModels()
 
 
     private lateinit var phoneNumberUtil: PhoneNumberUtil
@@ -40,14 +42,20 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_phone_numbre, container, false)
 
+        binding.viewModel = viewModel
 
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(PhoneNumberViewModel::class.java)
-            binding.viewModel = viewModel
+        binding.view = this@PhoneNumberFragment
 
-            binding.view = this@PhoneNumberFragment
-        }
 
+
+
+
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         phoneNumberUtil = PhoneNumberUtil.getInstance()
 
@@ -84,8 +92,6 @@ class PhoneNumberFragment : BaseFragment(), IPagerFragment {
 
 
 
-
-        return binding.root
     }
 
     fun onClickNext() {

@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup,android:supportsRtl">
+        tools:replace="android:allowBackup,android:supportsRtl"
+        >
 
         <!--        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"-->
 
@@ -162,19 +163,6 @@
 
 
 
-
-
-
-
-
-        <activity
-            android:name=".ui.container.ContainerActivity"
-
-            android:screenOrientation="portrait"
-            android:theme="@style/PopTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-
-        </activity>
 
 
         <activity
@@ -409,14 +397,6 @@
 
 
         <activity
-            android:name=".ui.profileEmailVerify.ProfileEmailVerifyActivity"
-            android:launchMode="singleTask"
-
-            android:screenOrientation="portrait"
-            android:theme="@style/Transparent"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
             android:name=".ui.orderCancel.OrderCancelActivity"
             android:launchMode="singleTask"
 
@@ -456,15 +436,6 @@
             android:screenOrientation="portrait" />
 
 
-        <activity
-            android:name=".ui.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="stateAlwaysHidden">
-
-
-        </activity>
-
         <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -489,10 +460,11 @@
         <meta-data
             android:name="io.branch.sdk.BranchKey"
             android:value="key_live_pnSHm0Vi1768h8kzrkl3ciacqCm89MHa" />
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_ngTMl9Op4988m1iyyegG9glbsymXWQuY" />
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
         <meta-data
             android:name="io.branch.sdk.TestMode"
-            android:value="true" />
+            android:value="false" />
 
 
         <!--        &lt;!&ndash; Branch install referrer tracking &ndash;&gt;-->

@@ -5,16 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginForgetFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentLoginForgetBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -25,10 +28,9 @@ class LoginForgetFragment : BaseFragment(), IPagerFragment {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login_forget, container, false)
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(LoginViewModel::class.java)
+
             binding.viewModel = viewModel
-        }
+
 
         return binding.root
     }

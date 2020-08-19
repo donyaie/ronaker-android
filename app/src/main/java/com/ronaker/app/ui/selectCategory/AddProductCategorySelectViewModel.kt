@@ -9,14 +9,12 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
-class AddProductCategorySelectViewModel(app: Application) : BaseViewModel(app) {
+class AddProductCategorySelectViewModel : BaseViewModel() {
 
     internal val TAG = AddProductCategorySelectViewModel::class.java.name
 
 
 
-    @Inject
-    lateinit var categoryRepository: CategoryRepository
 
 
     private var searchSubscription: Disposable? = null

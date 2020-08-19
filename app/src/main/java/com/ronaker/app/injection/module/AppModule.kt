@@ -1,11 +1,11 @@
 package com.ronaker.app.injection.module
 
-import android.app.Application
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.GsonBuilder
 import com.ronaker.app.BuildConfig
-import com.ronaker.app.R
+import com.ronaker.app.General
 import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.*
 import com.ronaker.app.data.local.PreferencesProvider
@@ -15,6 +15,9 @@ import com.ronaker.app.utils.GOOGLE_URL
 import com.ronaker.app.utils.LocaleHelper
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,13 +26,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-/**
- * Module which provides all required dependencies about Repository
- */
 @Module
-// Safe here as we are dealing with a Dagger 2 module
-@Suppress("unused")
-class RepositoryModule(private val app: Application) {
+@InstallIn(ApplicationComponent::class)
+object AppModule {
 
 
     /**
@@ -138,10 +137,21 @@ class RepositoryModule(private val app: Application) {
     @Provides
     @Singleton
     internal fun provideResourceRepository(
-        context: Context
+        @ApplicationContext context: Context
     ): ResourcesRepository {
 
-        return ResourcesRepository(context)
+        return ResourcesRepository(LocaleHelper.onAttach(context))
+    }
+
+
+    @Provides
+    @Singleton
+    internal fun provideAnalytics(
+        @ApplicationContext context: Context
+    ): FirebaseAnalytics {
+
+      return  (context.applicationContext as General).analytics
+
     }
 
     @Provides
@@ -151,17 +161,21 @@ class RepositoryModule(private val app: Application) {
         userRepository: UserRepository
     ): PaymentInfoRepository {
 
-        return DefaultPaymentInfoRepository(api,userRepository)
+        return DefaultPaymentInfoRepository(api, userRepository)
     }
 
 
     @Provides
     @Singleton
-    internal fun provideContentRepository(api: ContentApi,context: Context,
-                                          userRepository: UserRepository): ContentRepository {
+    internal fun provideContentRepository(
+        api: ContentApi, @ApplicationContext context: Context,
+        userRepository: UserRepository
+    ): ContentRepository {
 
-        return DefaultContentRepository(api,context,
-            userRepository)
+        return DefaultContentRepository(
+            api, context,
+            userRepository
+        )
     }
 
     @Provides
@@ -170,8 +184,10 @@ class RepositoryModule(private val app: Application) {
         productApi: ProductApi,
         userRepository: UserRepository
     ): ProductRepository {
-        return DefaultProductRepository(productApi,
-            userRepository)
+        return DefaultProductRepository(
+            productApi,
+            userRepository
+        )
     }
 
     @Provides
@@ -181,9 +197,11 @@ class RepositoryModule(private val app: Application) {
         preferencesProvider: PreferencesProvider,
         userRepository: UserRepository
     ): CategoryRepository {
-        return DefaultCategoryRepository(api,
+        return DefaultCategoryRepository(
+            api,
             preferencesProvider,
-            userRepository)
+            userRepository
+        )
     }
 
 
@@ -193,18 +211,19 @@ class RepositoryModule(private val app: Application) {
         api: OrderApi,
         userRepository: UserRepository
     ): OrderRepository {
-        return DefaultOrderRepository(api,
-            userRepository)
+        return DefaultOrderRepository(
+            api,
+            userRepository
+        )
     }
 
 
     @Provides
     @Singleton
     internal fun provideGoogleMapRepository(
-        api: GoogleMapApi,
-        context: Context
+        api: GoogleMapApi, resourcesRepository: ResourcesRepository
     ): GoogleMapRepository {
-        return DefaultGoogleMapRepository(api, context.getString(R.string.google_api_key_me))
+        return DefaultGoogleMapRepository(api, resourcesRepository)
     }
 
 
@@ -250,21 +269,9 @@ class RepositoryModule(private val app: Application) {
      */
     @Provides
     @Singleton
-    internal fun providePreferencesInterface(context: Context): PreferencesProvider {
+    internal fun providePreferencesInterface(@ApplicationContext context: Context): PreferencesProvider {
 
         return PreferencesProvider(context)
-    }
-
-
-    /**
-     * Provides the Context object.
-     * @return the Context object
-     */
-    @Provides
-    @Singleton
-    internal fun provideContext(): Context {
-
-        return  LocaleHelper.onAttach(app.baseContext)
     }
 
 

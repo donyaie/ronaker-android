@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 
-class SelectDialogViewModel(app: Application) : BaseViewModel(app) {
+class SelectDialogViewModel {
 
     internal val TAG = SelectDialogViewModel::class.java.name
 

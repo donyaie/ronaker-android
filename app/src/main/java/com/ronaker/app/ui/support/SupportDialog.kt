@@ -35,8 +35,6 @@ class SupportDialog : BaseDialog() {
     private var dialogResult =
         DialogResultEnum.NONE
 
-    lateinit var viewModel: SupportViewModel
-
 
     //endregion field
 
@@ -60,9 +58,7 @@ class SupportDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(SupportViewModel::class.java)
 
-        binding.viewModel = viewModel
 
         rootView = binding.root
         binding.dialog = this

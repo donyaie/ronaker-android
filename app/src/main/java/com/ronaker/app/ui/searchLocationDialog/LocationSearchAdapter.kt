@@ -50,7 +50,7 @@ class LocationSearchAdapter(
 
         private val viewModel =
             LocationSearchViewModel(
-                parentViewModel.getApplication()
+
             )
 
         fun bind(product: Place) {

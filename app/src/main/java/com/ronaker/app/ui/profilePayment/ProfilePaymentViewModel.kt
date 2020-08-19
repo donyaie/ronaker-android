@@ -2,6 +2,7 @@ package com.ronaker.app.ui.profilePayment
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
@@ -11,17 +12,12 @@ import com.ronaker.app.utils.IntentManeger
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
+class ProfilePaymentViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val paymentInfoRepository: PaymentInfoRepository
+)  : BaseViewModel() {
 
 
-    @Inject
-    lateinit
-    var userRepository: UserRepository
-
-
-    @Inject
-    lateinit
-    var paymentInfoRepository: PaymentInfoRepository
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -46,14 +42,12 @@ class ProfilePaymentViewModel(val app: Application) : BaseViewModel(app) {
     val addressText: MutableLiveData<String> = MutableLiveData()
     val fullNameText: MutableLiveData<String> = MutableLiveData()
 
-    val postalCodeText: MutableLiveData<String> = MutableLiveData()
 
 
     private var subscription: Disposable? = null
 
 
     fun onClickTerms() {
-        IntentManeger.openUrl(app, getTermUrl())
     }
 
 

@@ -3,8 +3,10 @@ package com.ronaker.app.ui.profile
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
+import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
@@ -16,12 +18,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ProfileViewModel(app: Application) : BaseViewModel(app) {
+class ProfileViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository
+)  : BaseViewModel() {
 
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

@@ -3,21 +3,26 @@ package com.ronaker.app.ui.login
 import android.app.Application
 import android.content.Context
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
+import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.*
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class LoginViewModel(app: Application) : BaseViewModel(app) {
+class LoginViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val resourcesRepository: ResourcesRepository,
+    private val analytics: FirebaseAnalytics
+)  : BaseViewModel() {
 
 
-    @Inject
-    lateinit var userRepository: UserRepository
     private var signinSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
     private var emailVerificationSubscription: Disposable? = null
@@ -34,9 +39,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     val passwordAlphabetVisibility: MutableLiveData<Int> = MutableLiveData()
     val passwordMatchVisibility: MutableLiveData<Int> = MutableLiveData()
 
-
-    @Inject
-    lateinit var resourcesRepository: ResourcesRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val successMessage: MutableLiveData<String> = MutableLiveData()
@@ -177,7 +179,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                         AppDebug.log("Login", result?.data.toString())
 
 
-                        getAnalytics()?.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
+                        analytics.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
                         goNext.postValue(true)
 
                     } else {
@@ -242,7 +244,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 .doOnTerminate { loadingButton.value = false }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        getAnalytics()?.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
+                        analytics.actionSignUp(AnalyticsManager.Param.LOGIN_METHOD_NORMAL)
 
                         AppDebug.log("Login", result?.data.toString())
 

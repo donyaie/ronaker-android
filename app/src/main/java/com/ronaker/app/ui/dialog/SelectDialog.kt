@@ -70,7 +70,7 @@ class SelectDialog : BaseDialog() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(SelectDialogViewModel::class.java)
+        viewModel =SelectDialogViewModel()
 
         binding.viewModel = viewModel
 
@@ -78,7 +78,7 @@ class SelectDialog : BaseDialog() {
 
 
 
-        viewModel.selectedPlace.observe(viewLifecycleOwner, Observer { value ->
+        viewModel.selectedPlace.observe(viewLifecycleOwner, {value ->
             selectedItem = value
             dialogResult = DialogResultEnum.OK
             stop()

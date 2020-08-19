@@ -5,22 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
 import com.savvi.rangedatepicker.CalendarPickerView
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@AndroidEntryPoint
 class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
 
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentOrderCheckoutBinding
-    private lateinit var viewModel: OrderCreateViewModel
+    private val viewModel: OrderCreateViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -32,16 +34,16 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_order_checkout, container, false)
 
+        binding.viewModel = viewModel
 
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(OrderCreateViewModel::class.java)
-            binding.viewModel = viewModel
+        return binding.root
+    }
 
-        }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-//
 
-        viewModel.clearData.observe(viewLifecycleOwner, Observer {
+        viewModel.clearData.observe(viewLifecycleOwner, {
             binding.calendarView.clearSelectedDates()
 
             viewModel.clearSelection()
@@ -52,7 +54,8 @@ class OrderCheckoutFragment : BaseFragment(), IPagerFragment {
 
 
         initCalendar()
-        return binding.root
+
+
     }
 
 

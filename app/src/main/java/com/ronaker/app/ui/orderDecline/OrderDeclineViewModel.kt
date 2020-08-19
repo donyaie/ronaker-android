@@ -1,25 +1,18 @@
 package com.ronaker.app.ui.orderDecline
 
 
-import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class OrderDeclineViewModel(app: Application) : BaseViewModel(app) {
+class OrderDeclineViewModel @ViewModelInject constructor(
+    private val orderRepository: OrderRepository
+) : BaseViewModel() {
 
-    @Inject
-    lateinit
-    var orderRepository: OrderRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()

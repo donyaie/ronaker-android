@@ -22,7 +22,6 @@ class ImagePreviewActivity : BaseActivity() {
     private val TAG = ImagePreviewActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityImagePreviewBinding
-    private lateinit var viewModel: ImagePreviewViewModel
 
 
     companion object {
@@ -46,10 +45,6 @@ class ImagePreviewActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_preview)
-
-        viewModel = ViewModelProvider(this).get(ImagePreviewViewModel::class.java)
-
-        binding.viewModel = viewModel
 
 
         binding.toolbar.cancelClickListener= View.OnClickListener {

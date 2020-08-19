@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,11 +13,13 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductRateActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProductRateBinding
-    private lateinit var viewModel: ProductRateViewModel
+    private val viewModel: ProductRateViewModel by viewModels()
 
     companion object {
 
@@ -41,8 +44,6 @@ class ProductRateActivity : BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_rate)
 
-        viewModel = ViewModelProvider(this).get(ProductRateViewModel::class.java)
-
         binding.viewModel = viewModel
         binding.starRate.rating
 
@@ -50,14 +51,14 @@ class ProductRateActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -67,7 +68,7 @@ class ProductRateActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer {
+        viewModel.finish.observe(this, {
             setResult(Activity.RESULT_OK)
             finish()
         })

@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.utils.view.IPagerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SmartIDAuthFragment : BaseFragment(), IPagerFragment {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentSmartidAuthBinding
-    private lateinit var viewModel: ProfileAuthorizationViewModel
+    private val viewModel: ProfileAuthorizationViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -24,10 +26,9 @@ class SmartIDAuthFragment : BaseFragment(), IPagerFragment {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_smartid_auth, container, false)
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(ProfileAuthorizationViewModel::class.java)
-            binding.viewModel = viewModel
-        }
+
+        binding.viewModel = viewModel
+
 
 
 

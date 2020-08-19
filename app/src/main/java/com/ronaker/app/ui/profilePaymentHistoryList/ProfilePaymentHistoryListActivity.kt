@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -12,14 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfilePaymentHistoryListActivity : BaseActivity() {
 
 //    private val TAG = ProfileSettingActivity::class.java.simpleName
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfilePaymentHistoryListBinding
-    private lateinit var viewModel: ProfilePaymentHistoryListViewModel
+    private val viewModel: ProfilePaymentHistoryListViewModel by viewModels()
 
 
     companion object {
@@ -42,8 +44,6 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
         binding =
             DataBindingUtil.setContentView(this, R.layout.activity_profile_payment_history_list)
 
-        viewModel = ViewModelProvider(this).get(ProfilePaymentHistoryListViewModel::class.java)
-
         binding.viewModel = viewModel
 
 
@@ -55,11 +55,11 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -68,7 +68,7 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
 
 
-        viewModel.retry.observe(this, Observer { value ->
+        viewModel.retry.observe(this, {value ->
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })

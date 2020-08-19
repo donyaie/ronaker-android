@@ -11,9 +11,6 @@ class CategoryExploreViewModel {
     private val productImage = MutableLiveData<String>()
 
     lateinit var data: Category
-//
-//    @Inject
-//    lateinit var resourcesRepository: ResourcesRepository
 
 
     private lateinit var mBinder: AdapterExploreCategoryBinding

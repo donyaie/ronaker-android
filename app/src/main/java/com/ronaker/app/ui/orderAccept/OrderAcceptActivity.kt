@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,11 +13,13 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderAcceptActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderAcceptIntroBinding
-    private lateinit var viewModel: OrderAcceptViewModel
+    private  val viewModel: OrderAcceptViewModel by viewModels()
 
     companion object {
 
@@ -41,7 +44,6 @@ class OrderAcceptActivity : BaseActivity() {
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_accept_intro)
 
-        viewModel = ViewModelProvider(this).get(OrderAcceptViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -50,14 +52,14 @@ class OrderAcceptActivity : BaseActivity() {
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -67,7 +69,7 @@ class OrderAcceptActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, Observer {
+        viewModel.finish.observe(this, {
             setResult(Activity.RESULT_OK)
             finish()
         })
@@ -83,6 +85,8 @@ class OrderAcceptActivity : BaseActivity() {
 
 
     }
+
+
 
 
     private fun getOrder(): Order? {

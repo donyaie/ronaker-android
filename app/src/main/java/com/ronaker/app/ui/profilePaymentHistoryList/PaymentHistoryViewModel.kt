@@ -11,7 +11,7 @@ import com.ronaker.app.utils.toCurrencyFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PaymentHistoryViewModel(val app: Application) : BaseViewModel(app) {
+class PaymentHistoryViewModel{
     val amount = MutableLiveData<String>()
     val transactionType = MutableLiveData<Int>()
     val transactionStatus = MutableLiveData<Int>()

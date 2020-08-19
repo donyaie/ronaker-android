@@ -17,7 +17,9 @@ import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ManageProductListFragment : BaseFragment() {
 
     private lateinit var binding: com.ronaker.app.databinding.FragmentManageProductListBinding

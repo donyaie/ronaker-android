@@ -3,9 +3,12 @@ package com.ronaker.app.ui.productSaved
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
+import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
@@ -16,17 +19,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
+class ProductSavedViewModel @ViewModelInject constructor(
+    private val productRepository: ProductRepository,
+    private val analytics: FirebaseAnalytics
+)  : BaseViewModel() {
 
 
-    @Inject
-    lateinit
-    var productRepository: ProductRepository
-
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
 
     private var page = 1
@@ -169,7 +167,7 @@ class ProductSavedViewModel(app: Application) : BaseViewModel(app) {
 
     fun search(search: String?) {
 
-        search?.let { getAnalytics()?.actionSearch(it) }
+        search?.let { analytics.actionSearch(it) }
 
         reset()
         query = search

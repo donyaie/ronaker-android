@@ -2,6 +2,7 @@ package com.ronaker.app.ui.profileEdit
 
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
@@ -11,12 +12,10 @@ import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ProfileEditViewModel(app: Application) : BaseViewModel(app) {
+class ProfileEditViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository
+) : BaseViewModel() {
 
-
-    @Inject
-    lateinit
-    var userRepository: UserRepository
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()

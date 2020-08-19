@@ -20,9 +20,10 @@ import okio.BufferedSink
 import okio.Okio
 import java.io.File
 import java.io.IOException
+import javax.inject.Inject
 
 
-class DefaultContentRepository(
+class DefaultContentRepository @Inject constructor(
     private val contentApi: ContentApi, private val context: Context,
     private val userRepository: UserRepository
 ) : ContentRepository {

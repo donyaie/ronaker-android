@@ -48,7 +48,7 @@ class ProductCommentAdapter(
         private val binding: AdapterProductCommentBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = ProductCommentViewModel(binding.root.getApplication())
+        private val viewModel = ProductCommentViewModel()
 
         fun bind(product: Product.ProductRate) {
             viewModel.bind(product, binding)

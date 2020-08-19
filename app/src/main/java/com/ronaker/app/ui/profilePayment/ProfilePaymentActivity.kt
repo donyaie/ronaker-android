@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.text.style.ReplacementSpan
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.activity.viewModels
 import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -27,16 +28,18 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.utils.Alert
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
 
+@AndroidEntryPoint
 class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedListener {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityProfilePaymentBinding
-    private lateinit var viewModel: ProfilePaymentViewModel
+    private val viewModel: ProfilePaymentViewModel by viewModels()
 
     var disposable: Disposable? = null
 
@@ -61,8 +64,6 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         enableKeyboardAnimator()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_payment)
 
-        viewModel = ViewModelProvider(this).get(ProfilePaymentViewModel::class.java)
-
         binding.viewModel = viewModel
 
 
@@ -70,11 +71,11 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
 
-        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+        viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, Observer { value ->
+        viewModel.loading.observe(this, {value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -82,14 +83,14 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         })
 
 
-        viewModel.goNext.observe(this, Observer {
+        viewModel.goNext.observe(this, {
             finish()
         })
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener(this)
 
 
-        viewModel.retry.observe(this, Observer { value ->
+        viewModel.retry.observe(this, {value ->
 
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
@@ -234,7 +235,7 @@ class ProfilePaymentActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
-    inner class SpaceSpan : ReplacementSpan() {
+    class SpaceSpan : ReplacementSpan() {
 
 
         override fun getSize(

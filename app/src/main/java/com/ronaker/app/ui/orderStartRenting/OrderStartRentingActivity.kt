@@ -11,6 +11,7 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -20,12 +21,14 @@ import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
 import com.ronaker.app.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderStartRentingActivity : BaseActivity() {
 
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderStartRentingBinding
-    private lateinit var viewModel: OrderStartRentingViewModel
+    private val viewModel: OrderStartRentingViewModel by viewModels()
 
 
     companion object {
@@ -50,8 +53,6 @@ class OrderStartRentingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_start_renting)
-
-        viewModel = ViewModelProvider(this).get(OrderStartRentingViewModel::class.java)
 
         binding.viewModel = viewModel
 

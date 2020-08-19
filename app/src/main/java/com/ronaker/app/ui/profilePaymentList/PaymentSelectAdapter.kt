@@ -71,7 +71,7 @@ class PaymentSelectAdapter(
         val adapter: PaymentSelectAdapter
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        private val viewModel = PaymentSelectViewModel(binding.root.getApplication())
+        private val viewModel = PaymentSelectViewModel()
 
         fun bind(item: PaymentCard) {
             binding.viewModel = viewModel
