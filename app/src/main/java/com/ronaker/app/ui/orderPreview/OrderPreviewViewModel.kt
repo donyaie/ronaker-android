@@ -503,7 +503,7 @@ class OrderPreviewViewModel @ViewModelInject constructor(
 
 
                 dayNumber.value = String.format(
-                    "%s %s for %d days",
+                    resourcesRepository.getString(R.string.text_for_day),
                     resourcesRepository.getString(R.string.text_you_earn),
                     total.toCurrencyFormat(),
                     days

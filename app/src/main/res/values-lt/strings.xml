@@ -6,7 +6,7 @@
     <string name="text_rent_request_started" formatted="true"> %1$s Pradėtas progresas</string>
     <string name="text_lend_request_pending" formatted="true">Laukiama %1$s patvirtinimo</string>
     <string name="text_rent_request_pending">Gavote užklausą išnuomoti savo daiktą</string>
-    <string name="text_order_message" formatted="true">Sveiki, aš\&apos;m %1$s\n norėčiau išsinuomoti Jūsų %2$s %3$s dienoms. Ačiū.</string>
+    <string name="text_order_message" formatted="true">Sveiki, aš, %1$s,\n norėčiau išsinuomoti Jūsų %2$s %3$s dienoms.\n Ačiū.</string>
     <string name="text_rent_canceled">Išsinuomoti | Atšauktas užsakymas</string>
     <string name="text_lend_canceled">Išnuomoti |Atšauktas užsakymas</string>
     <string name="text_lend_complete">Išnuomoti | Įvykdytas užsakymas</string>
@@ -28,7 +28,7 @@
     <string name="title_menu_profile">Profilis</string>
     <string name="title_button_set_dates">Pasirinkite datas</string>
     <string name="title_search_here">Ieškokite čia</string>
-    <string name="title_button_check_out">Atlikti mokėjimą</string>
+    <string name="title_button_check_out">Užsakyti</string>
     <string name="title_your_inbox">Jūsų žinutės</string>
     <string name="title_what_s_your_email_address">Koks Jūsų el. pašto adresas ?</string>
     <string name="title_button_create_account">Susikurti paskyrą</string>
@@ -247,4 +247,5 @@
     <string name="text_preview">Peržiūra</string>
 
     <string name="button_start_renting_sign">Pasirašykite sutartį ir pradedant nuomą</string>
+    <string name="text_for_day">%1$s %2$s už %3$d dienas</string>
 </resources>

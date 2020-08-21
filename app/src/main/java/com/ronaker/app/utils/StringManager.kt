@@ -13,9 +13,11 @@ fun Double.toCurrencyFormat(): String {
 
 
 fun nameFormat(firstName: String?, lastName: String?): String {
-    return "${firstName?.toLowerCase(Locale.ROOT)?.capitalize() ?: ""} ${lastName?.toLowerCase(
-        Locale.ROOT
-    )?.capitalize() ?: ""}"
+    return "${firstName?.toLowerCase(Locale.ROOT)?.capitalize() ?: ""} ${
+        lastName?.toLowerCase(
+            Locale.ROOT
+        )?.capitalize() ?: ""
+    }"
 
 
 }
@@ -24,7 +26,24 @@ fun nameFormat(firstName: String?, lastName: String?): String {
 fun String.capitalize(): String {
 
 
-  return  this.split(" ").filter { it.isNotEmpty() }.joinToString(separator = " "){ "${it[0].toUpperCase()}${it.substring(1).toLowerCase(Locale.ROOT)}"}
+    return this.split(" ").filter { it.isNotEmpty() }.joinToString(separator = " ") {
+        if (it.contains("-")) {
+            it.split("-").filter { name -> name.isNotEmpty() }
+                .joinToString(separator = "-") { name ->
+                    "${name[0].toUpperCase()}${
+                        name.substring(1).toLowerCase(Locale.getDefault())
+                    }"
+                }
+
+
+        } else {
+            "${it[0].toUpperCase()}${
+                it.substring(1).toLowerCase(Locale.getDefault())
+            }"
+        }
+
+
+    }
 
 }
 
@@ -52,7 +71,9 @@ fun Double.toCurrencyFormat(prefix: String?, includeSymbol: Boolean = true): Str
 
 
 
-    return "${if (prefix == null) "" else "$prefix "}${if (includeSymbol) "€" else ""}${format.format(
-        this
-    )}"
+    return "${if (prefix == null) "" else "$prefix "}${if (includeSymbol) "€" else ""}${
+        format.format(
+            this
+        )
+    }"
 }
