@@ -276,9 +276,9 @@ class OrderAuthorizationViewModel @ViewModelInject constructor(
 
 
     private fun startRenting() {
-
-        val delay = if (firstStartRenting) 3L else 1L
-        firstStartRenting = false
+//
+//        val delay = if (firstStartRenting) 3L else 1L
+//        firstStartRenting = false
 
         acceptSubscription?.dispose()
         acceptSubscription = mOrder?.suid?.let {
@@ -288,7 +288,7 @@ class OrderAuthorizationViewModel @ViewModelInject constructor(
             )
                 .doOnSubscribe { loadingButton.postValue(true) }
                 .doOnTerminate { loadingButton.postValue(false) }
-                .delay(delay, TimeUnit.SECONDS)
+                .delay(8L, TimeUnit.SECONDS)
                 .subscribe { result ->
                     if (result.isSuccess() || result.isAcceptable()) {
 

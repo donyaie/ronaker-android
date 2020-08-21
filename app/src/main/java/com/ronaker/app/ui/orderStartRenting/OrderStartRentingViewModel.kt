@@ -133,12 +133,6 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
             lenderSignImage.postValue(R.drawable.ic_guide_success)
         }
 
-
-
-
-
-
-
         contractPreviewVisibility.postValue(View.VISIBLE)
 
 
@@ -179,14 +173,14 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
 
     fun onClickAccept() {
 
-        if (mOrder.smart_id_creator_session_id.isNullOrBlank()) {
+        if (mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()) {
 
             doSignContract.postValue(true)
-        }  else if(mOrder.smart_id_owner_session_id.isNullOrBlank()) {
+        }  else if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
+            startRenting()
+        }else{
             errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
             loadData(mOrder.suid)
-        }else{
-            startRenting()
         }
 
 

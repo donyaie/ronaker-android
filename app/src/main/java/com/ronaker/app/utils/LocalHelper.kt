@@ -1,4 +1,3 @@
-@file:Suppress("DEPRECATION")
 
 package com.ronaker.app.utils
 
@@ -13,15 +12,22 @@ import java.util.*
 
 object LocaleHelper {
 
-    private val TAG = LocaleHelper::class.java.simpleName
+    private var currentLanguage: String = ""
 
-   private var currentLanguage:String=""
+  fun  getCurrentLanguage():String{
+     return currentLanguage
+  }
+
+    fun clear() {
+        currentLanguage = ""
+    }
+
 
     fun onAttach(context: Context): Context {
 //        return context
-        if(currentLanguage.isEmpty()){
-            currentLanguage=getPersistedData(context, LANGUAGE_DEFAULT)
-            AppDebug.log(TAG,"currentLanguage :$currentLanguage ")
+        if (currentLanguage.isEmpty()) {
+            currentLanguage = getPersistedData(context, LANGUAGE_DEFAULT)
+//            AppDebug.log(TAG,"currentLanguage :$currentLanguage ")
 
         }
 
@@ -46,7 +52,7 @@ object LocaleHelper {
     }
 
     private fun persist(context: Context, language: String) {
-        currentLanguage=language
+        currentLanguage = language
         GlobalScope.launch {
             val preferences = PreferencesProvider(context)
             preferences.putString(USER_LANGUAGE_KEY, language)

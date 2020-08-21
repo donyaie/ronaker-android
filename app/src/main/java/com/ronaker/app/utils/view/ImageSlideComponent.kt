@@ -28,6 +28,8 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
             initDotCount()
         }
 
+    var transitionImageName:String?=null
+
 
     var currentItem: Int = 0
         set(value) {
@@ -141,6 +143,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
 
     fun addImagesUrl(image: ArrayList<String>) {
 
+
         dataList.addAll(image)
         adapter.notifyDataSetChanged()
         dotCount = dataList.size
@@ -174,6 +177,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
 
 
             val imageView = view.findViewById(R.id.image) as ImageView
+
 
             if(fullScreen){
                 imageView.scaleType=ImageView.ScaleType.FIT_CENTER

@@ -23,12 +23,15 @@ class LanguageDialog {
             val mAlertDialog = mBuilder.show()
             //login button click of custom layout
             mDialogView.englishLan.setOnClickListener {
+                LocaleHelper.clear()
                 LocaleHelper.setLocale(context, "en")
+
                 mAlertDialog.dismiss()
 
                 context.startActivity(DashboardActivity.newInstance(context))
             }
             mDialogView.lithuaniaLan.setOnClickListener {
+                LocaleHelper.clear()
                 LocaleHelper.setLocale(context, "lt")
                 mAlertDialog.dismiss()
                 context.startActivity(DashboardActivity.newInstance(context))

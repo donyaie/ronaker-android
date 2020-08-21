@@ -315,8 +315,13 @@ class DefaultUserRepository @Inject constructor(
 
     override fun getUserLanguage(): String {
 
-        return preferencesProvider.getString(USER_LANGUAGE_KEY, USER_LANGUAGE_DEFAULT)
-            ?: USER_LANGUAGE_DEFAULT
+        return if (LocaleHelper.getCurrentLanguage().isEmpty()) {
+            preferencesProvider.getString(
+                USER_LANGUAGE_KEY,
+                USER_LANGUAGE_DEFAULT
+            ) ?: USER_LANGUAGE_DEFAULT
+        } else LocaleHelper.getCurrentLanguage()
+
     }
 
     override fun getPrivacyUrl(): String {
@@ -342,7 +347,8 @@ class DefaultUserRepository @Inject constructor(
                 TERM_URL
             }
 
-        }    }
+        }
+    }
 
 
     override fun getUserToken(): String? {
