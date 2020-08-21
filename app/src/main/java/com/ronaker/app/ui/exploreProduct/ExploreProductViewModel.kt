@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.exploreProduct
 
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
-import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
@@ -20,21 +18,18 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
 class ExploreProductViewModel @ViewModelInject constructor(
-    private val productRepository:ProductRepository,
-    private val resourcesRepository:ResourcesRepository,
-    private val userRepository:UserRepository,
+    private val productRepository: ProductRepository,
+    private val resourcesRepository: ResourcesRepository,
+    private val userRepository: UserRepository,
     private val analytics: FirebaseAnalytics
 
 
-
-)  : BaseViewModel() {
+) : BaseViewModel() {
 
     private val TAG = ExploreProductViewModel::class.java.simpleName
-
 
 
     var dataList: ArrayList<Product.ProductRate> = ArrayList()
@@ -223,9 +218,14 @@ class ExploreProductViewModel @ViewModelInject constructor(
         )
 
         val images = ArrayList<String>()
+
+        images.add(BASE_URL + product.avatar)
+
         product.images.forEach {
-            images.add(BASE_URL + it.url)
+            if (it.url?.equals(product.avatar, true) != true)
+                images.add(BASE_URL + it.url)
         }
+
         imageList.postValue(images)
 
         productImage.postValue(BASE_URL + product.avatar)
@@ -252,11 +252,10 @@ class ExploreProductViewModel @ViewModelInject constructor(
             }
 
 
-
         }
         //title_positive_rate
 
-        isFavorite.postValue(product.isFavourite?:false)
+        isFavorite.postValue(product.isFavourite ?: false)
 
         product.rate?.let { rate ->
 
@@ -396,7 +395,7 @@ class ExploreProductViewModel @ViewModelInject constructor(
     }
 
     fun userProfileIsComplete(): Boolean {
-        return  userRepository.getUserInfo()?.isComplete()==true
+        return userRepository.getUserInfo()?.isComplete() == true
 
     }
 

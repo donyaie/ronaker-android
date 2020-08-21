@@ -68,7 +68,8 @@
                     android:layout_marginTop="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:gravity="start"
-                    android:text="@string/text_please_ensure_that_the_rented_goods_are_functioning_properly"
+                    android:text="@string/text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage"
+
                     android:textAppearance="@style/TextAppearance.Large.Regular"
                     android:textColor="@color/colorTextDark" />
 

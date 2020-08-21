@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,9 +29,11 @@ class ManageProductListFragment : BaseFragment() {
 
 
 
+    private var visibleItemCount: Int = 0
+    private var totalItemCount: Int = 0
+    private var pastVisiblesItems: Int = 0
 
 
-    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -180,21 +183,36 @@ class ManageProductListFragment : BaseFragment() {
         }
 
         viewModel.resetList.observe(viewLifecycleOwner, {
-            scrollListener.resetState()
+
         })
 
 
-        scrollListener = object :
-            EndlessRecyclerViewScrollListener(binding.recycler.layoutManager as GridLayoutManager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
 
-                viewModel.loadMore()
+
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
+
+
+            if (v.getChildAt(v.childCount - 1) != null) {
+                if (scrollY >= v.getChildAt(v.childCount - 1)
+                        .measuredHeight - v.measuredHeight &&
+                    scrollY > oldScrollY
+                ) {
+                    visibleItemCount = mnager.childCount
+                    totalItemCount = mnager.itemCount
+                    pastVisiblesItems = mnager.findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+
+                        viewModel.loadMore()
+                    }
+
+                }
 
 
             }
 
-        }
-        binding.recycler.addOnScrollListener(scrollListener)
+
+        })
 
 
     }
@@ -205,12 +223,7 @@ class ManageProductListFragment : BaseFragment() {
     }
 
     override fun onDetach() {
-        try {
-            binding.recycler.viewTreeObserver
-                .removeOnScrollChangedListener(scrollListener as ViewTreeObserver.OnScrollChangedListener)
-        } catch (e: Exception) {
 
-        }
         super.onDetach()
     }
 

@@ -135,7 +135,6 @@ object AppModule {
 
 
     @Provides
-    @Singleton
     internal fun provideResourceRepository(
         @ApplicationContext context: Context
     ): ResourcesRepository {

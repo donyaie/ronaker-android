@@ -6,9 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.transition.Explode
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.Window
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -112,7 +114,15 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
+//
+//        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+//// set an enter transition
+//// set an enter transition
+//        window.enterTransition =  android.transition.Fade()
+//
+//// set an exit transition
+//// set an exit transition
+//        window.exitTransition = android.transition.Fade()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
         binding.viewModel = viewModel
@@ -307,6 +317,14 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
         }
         AppDebug.log(TAG, "map time : $time2")
 //        getData()
+//        window.sharedElementEnterTransition = TransitionInflater.from(this).inflateTransition(android.R.transition.)
+//        window.sharedElementReturnTransition=TransitionInflater.from(this).inflateTransition(android.R.transition.fade)
+
+        getProduct()?.let {
+            binding.avatarSlide.transitionName = it.avatar
+//            binding.titleText.transitionName = it.name
+        }
+//
 
 
     }
@@ -486,7 +504,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
                 binding.toolbar.isTransparent = true
                 binding.toolbar.isBottomLine = false
                 binding.statusBar.setBackgroundResource(
-                    R.color.transparent
+                    R.color.topg
                 )
 
 

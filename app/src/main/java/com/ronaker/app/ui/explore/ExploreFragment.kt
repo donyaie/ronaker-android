@@ -322,7 +322,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             viewModel.clearSearch()
         }
-        Handler(Looper.getMainLooper()).postDelayed({ binding.header.elevation = 0f }, 20)
+        Handler(Looper.getMainLooper()).postDelayed({ binding.header.elevation = 0f }, 16)
 
 
         activity?.let {

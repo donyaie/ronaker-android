@@ -155,6 +155,7 @@ abstract class BaseActivity : SwipeBackActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(LocaleHelper.onAttach(newBase)))
+//        super.attachBaseContext(newBase)
     }
 
 

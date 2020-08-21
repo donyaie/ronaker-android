@@ -134,7 +134,7 @@ class ProfileSettingActivity : BaseActivity() {
         ) { dialog, _ ->
             dialog?.cancel()
             viewModel.logout()
-            Branch.getInstance(applicationContext).logout()
+            Branch.getInstance().logout()
 
             startActivity(DashboardActivity.newInstance(this))
             AnimationHelper.setFadeTransition(this)
