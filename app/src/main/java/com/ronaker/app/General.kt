@@ -45,8 +45,6 @@ class General : Application() {
             .init()
 
 
-
-
         ViewPump.init(
             ViewPump.builder()
                 .addInterceptor(
