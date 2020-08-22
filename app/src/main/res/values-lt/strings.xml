@@ -248,4 +248,5 @@
 
     <string name="button_start_renting_sign">Pasirašykite sutartį ir pradedant nuomą</string>
     <string name="text_for_day">%1$s %2$s už %3$d dienas</string>
+    <string name="text_notification_history">Notification History</string>
 </resources>

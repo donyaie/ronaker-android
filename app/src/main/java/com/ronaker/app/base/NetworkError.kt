@@ -110,7 +110,7 @@ class NetworkError(error: Throwable) {
             }
             is SocketTimeoutException -> {
 
-                message = "Network Timeout"
+                message = "Please check your connection! Timeout"
                 responseCode = null
                 code = "HttpResponseNetworkTimeout"
                 httpError = HttpError.HttpResponseNetworkTimeout
@@ -118,7 +118,7 @@ class NetworkError(error: Throwable) {
             }
             is ConnectException -> {
 
-                message = "Connection Failure"
+                message = "Please check your connection! Failure"
                 responseCode = null
                 code = "HttpResponseConnectionFailure"
                 httpError = HttpError.HttpResponseConnectionFailure
@@ -126,7 +126,7 @@ class NetworkError(error: Throwable) {
             }
             is IOException -> {
 
-                message = "Network Error"
+                message = "Please check your connection! Network"
                 responseCode = null
                 code = "HttpResponseNetworkError"
                 httpError = HttpError.HttpResponseNetworkError

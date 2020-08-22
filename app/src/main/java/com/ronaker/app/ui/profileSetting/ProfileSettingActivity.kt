@@ -13,9 +13,11 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
+import com.ronaker.app.ui.notificationHistory.NotificationHistoryActivity
 import com.ronaker.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
+import kotlinx.android.synthetic.main.activity_profile_setting.*
 
 
 @AndroidEntryPoint
@@ -78,6 +80,11 @@ class ProfileSettingActivity : BaseActivity() {
         }
 
 
+        binding.notificationLayout.setOnClickListener {
+
+
+            startActivity(NotificationHistoryActivity.newInstance(this))
+        }
 
         binding.logoutLayout.setOnClickListener {
             showLogoutDialog()

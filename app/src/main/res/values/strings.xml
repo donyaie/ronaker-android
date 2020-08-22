@@ -255,4 +255,5 @@
 
     <string name="button_start_renting_sign">Sign the contract &amp; Start Renting</string>
     <string name="text_for_day" formatted="true">%1$s %2$s for %3$d days</string>
+    <string name="text_notification_history">Notification History</string>
 </resources>

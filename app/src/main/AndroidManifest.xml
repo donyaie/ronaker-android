@@ -111,6 +111,18 @@
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
+        <activity
+            android:name=".ui.notificationHistory.NotificationHistoryActivity"
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
+
+
+
 
         <activity
             android:name=".ui.orderPreview.OrderPreviewActivity"

@@ -1,8 +1,6 @@
 package com.onesignal
 
-import android.app.NotificationManager
 import android.database.Cursor
-import com.onesignal.OneSignal.LOG_LEVEL
 import com.onesignal.OneSignalDbContract.NotificationTable
 import com.ronaker.app.utils.AppDebug
 
@@ -10,8 +8,7 @@ object OneSignalHelper {
 
 
     /**
-     * Removes all OneSignal notifications from the Notification Shade. If you just use
-     * [NotificationManager.cancelAll], OneSignal notifications will be restored when
+     * Get all OneSignal notifications from the Notification Shade.  OneSignal notifications will be restored when
      * your app is restarted.
      */
     fun getOneSignalNotifications(): List<Notifications> {
@@ -22,7 +19,22 @@ object OneSignalHelper {
         var cursor: Cursor? = null
         try {
             val readableDb = dbHelper.sqLiteDatabaseWithRetries
-            val retColumn = arrayOf(NotificationTable.COLUMN_NAME_ANDROID_NOTIFICATION_ID)
+            val retColumn = arrayOf(
+                NotificationTable.COLUMN_NAME_NOTIFICATION_ID,
+                NotificationTable.COLUMN_NAME_ANDROID_NOTIFICATION_ID,
+                NotificationTable.COLUMN_NAME_GROUP_ID,
+                NotificationTable.COLUMN_NAME_COLLAPSE_ID,
+                NotificationTable.COLUMN_NAME_IS_SUMMARY,
+                NotificationTable.COLUMN_NAME_OPENED,
+                NotificationTable.COLUMN_NAME_DISMISSED,
+                NotificationTable.COLUMN_NAME_TITLE,
+                NotificationTable.COLUMN_NAME_MESSAGE,
+                NotificationTable.COLUMN_NAME_FULL_DATA,
+                NotificationTable.COLUMN_NAME_CREATED_TIME,
+                NotificationTable.COLUMN_NAME_EXPIRE_TIME
+
+
+            )
             cursor = readableDb.query(
                 NotificationTable.TABLE_NAME,
                 retColumn,
@@ -34,7 +46,10 @@ object OneSignalHelper {
             )
             if (cursor.moveToFirst()) {
                 do {
+                    cursor.toString()
 
+
+                    AppDebug.log("OneSignalHelper", "cursor: $cursor")
                     cursor.toNotifications()?.let {
 
 
@@ -47,7 +62,7 @@ object OneSignalHelper {
 
 
         } catch (t: Throwable) {
-            OneSignal.Log(LOG_LEVEL.ERROR, "Error canceling all notifications! ", t)
+            AppDebug.log("OneSignalHelper", "Error get all notifications! ", t)
         } finally {
             cursor?.close()
         }

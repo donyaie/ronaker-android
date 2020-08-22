@@ -78,9 +78,9 @@ class ProfileViewModel @ViewModelInject constructor(
 
                     } else {
 
-                        if(result?.error?.responseCode==401){
-                            logOut()
-                        }
+//                        if(result?.error?.responseCode==401){
+//                            logOut()
+//                        }
 
                         errorMessage.postValue(result.error?.message)
                     }
