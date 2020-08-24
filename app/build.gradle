@@ -18,7 +18,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 8
+def versionPatch = 11
 android {
 
 
@@ -120,6 +120,7 @@ android {
         robo {
 
             buildConfigField "String", "hostAPI", "\"https://api.ronaker.com\""
+
             versionNameSuffix ".robo"
             resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
 

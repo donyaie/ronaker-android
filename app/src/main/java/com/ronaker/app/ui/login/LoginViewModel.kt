@@ -22,6 +22,7 @@ class LoginViewModel @ViewModelInject constructor(
     private val analytics: FirebaseAnalytics
 )  : BaseViewModel() {
 
+    var mInviteCode: String? = null
 
     private var signinSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
@@ -48,6 +49,9 @@ class LoginViewModel @ViewModelInject constructor(
     val gotoSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
     val keyboardDown: MutableLiveData<Boolean> = MutableLiveData()
+
+
+    val checkInviteCode: MutableLiveData<Boolean> = MutableLiveData()
 
     enum class LoginActionEnum {
         login,
@@ -221,9 +225,13 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun onClickGotoSignUp() {
-        if (!mInviteCode.isNullOrBlank())
-            inviteCodeText.postValue(mInviteCode)
+
+
+
+
         gotoSignUp.postValue(true)
+
+        checkInviteCode.postValue(true)
 
     }
 
@@ -267,6 +275,7 @@ class LoginViewModel @ViewModelInject constructor(
 
         actionState.value = LoginActionEnum.register
         viewState.value = LoginStateEnum.email
+        checkInviteCode.postValue(true)
     }
 
 
@@ -305,12 +314,12 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
 
-    var mInviteCode: String? = null
 
     fun setInviteCode(inviteCode: String) {
 
         mInviteCode = inviteCode
-
+        if (!mInviteCode.isNullOrBlank())
+            inviteCodeText.postValue(mInviteCode)
 
     }
 

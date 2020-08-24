@@ -6,6 +6,6 @@
 
     <string name="dialog_permission_title">Suteikite leidimą </string>
     <string name="dialog_permission_message">Programai reikalingas leidimas naudoti šią funkciją. Ją suteikti galite programos nustatymuose.</string>
-    <string name="go_to_settings">GEikite į nustatymus</string>
+    <string name="go_to_settings">Eikite į nustatymus</string>
 
 </resources>

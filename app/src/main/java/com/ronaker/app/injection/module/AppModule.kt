@@ -24,6 +24,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -250,12 +251,13 @@ object AppModule {
             clientBuilder.addNetworkInterceptor(StethoInterceptor())
 
 
-        val client = clientBuilder.build()
+        val client = clientBuilder.connectTimeout(30,TimeUnit.SECONDS).build()
 
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
+
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()

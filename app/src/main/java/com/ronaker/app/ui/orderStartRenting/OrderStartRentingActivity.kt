@@ -12,6 +12,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -79,9 +80,14 @@ class OrderStartRentingActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, { _ ->
-            setResult(Activity.RESULT_OK)
-            finish()
+        viewModel.finish.observe(this, {
+
+            if(it){
+                succeccSend()
+            }else {
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }
         })
 
 
@@ -92,7 +98,7 @@ class OrderStartRentingActivity : BaseActivity() {
                     OrderAuthorizationActivity.newInstance(
                         this@OrderStartRentingActivity,
                         it,
-                        canSign = true,startRenting = true
+                        canSign = true,startRenting = false
                     ), OrderAuthorizationActivity.REQUEST_CODE
                 )
             }
@@ -114,6 +120,13 @@ class OrderStartRentingActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finish()
+        }
+
+
+        binding.signButton.setOnClickListener {
+
+            viewModel.onClickSign()
+
         }
 
         initLink()
@@ -289,6 +302,26 @@ class OrderStartRentingActivity : BaseActivity() {
 
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+    private fun succeccSend() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage(getString(R.string.text_success_sign_and_start_renting))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.cancel()
+            this.setResult(Activity.RESULT_OK)
+            this.finish()
+
+
+        }
+        builder.setCancelable(false)
+
+        builder.show()
+    }
+
 
 
 

@@ -72,8 +72,18 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
         getOrder()?.let { order ->
 
 
-            if (!isCanSign())
+            if (!isCanSign()) {
                 binding.nextButton.visibility = View.GONE
+                activity?.let {
+                    binding.title.text=it.baseContext.getString(R.string.text_please_read_the_contract)
+                }
+
+            }else{
+                binding.nextButton.visibility = View.VISIBLE
+                activity?.let {
+                    binding.title.text=it.baseContext.getString(R.string.text_please_read_and_sign_the_contract)
+                }
+            }
 
 
             val filename = "contract-${if (language.trim().toLowerCase(Locale.ROOT)

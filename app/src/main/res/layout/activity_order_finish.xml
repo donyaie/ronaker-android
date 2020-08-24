@@ -87,7 +87,7 @@
                 android:layout_marginLeft="@dimen/margin_default"
                 android:layout_marginRight="@dimen/margin_default"
                 android:onClick="@{()->viewModel.onClickAccept()}"
-                android:text="@string/button_finish"
+                android:text="@string/button_confirm"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -9,7 +9,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -30,6 +29,8 @@ import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
+import io.branch.referral.Branch.BranchReferralInitListener
+
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -52,10 +53,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
 
 
-
-    var inviteCode: String? = null
-
-
     var savedInstanceState: Bundle? = null
 
 
@@ -76,7 +73,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         viewModel.goLogin.observe(this, { value ->
             if (value == true) {
 
-                startActivity(LoginActivity.newInstance(this@DashboardActivity, inviteCode))
+                startActivity(LoginActivity.newInstance(this@DashboardActivity))
                 AnimationHelper.setFadeTransition(this)
                 finish()
 
@@ -99,40 +96,49 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         window.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
 
-        if(viewModel.islogin) {
+        if (viewModel.checklogin()) {
 
             initNavigation(savedInstanceState)
 
-
-            handleIntent(intent)
         }
     }
 
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-
-        intent?.let { handleIntent(it) }
+        viewModel.checklogin()
+        Branch.sessionBuilder(this).withCallback(branchReferralInitListener).reInit()
     }
 
 
-    private fun handleIntent(intent: Intent) {
 
-        Branch.sessionBuilder(this).withCallback { referringParams, error ->
+
+
+    override fun onStart() {
+        super.onStart()
+        Branch.sessionBuilder(this).withCallback(branchReferralInitListener)
+            .withData(if (intent != null) intent.data else null).init()
+
+
+    }
+
+
+
+    private val branchReferralInitListener =
+        BranchReferralInitListener { linkProperties, error ->
             if (error == null) {
-                AppDebug.log("BRANCH SDK", referringParams.toString())
+                AppDebug.log("BRANCH SDK", linkProperties.toString())
 
-                if (referringParams?.has("product") == true) {
-                    val suid = referringParams.getString("product")
-                    if (suid.isNotBlank() && viewModel.islogin)
+                if (linkProperties?.has("product") == true) {
+                    val suid = linkProperties.getString("product")
+                    if (suid.isNotBlank() && viewModel.islogin) {
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+                    }
 
                 }
 
-
-
-                if (referringParams?.has("invite-code") == true) {
-                    inviteCode = referringParams.getString("invite-code")
+                if (linkProperties?.has("invite-code") == true) {
+                    LoginActivity.inviteCode = linkProperties.getString("invite-code")
 
 
                 }
@@ -140,10 +146,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
-        }.withData(intent.data).init()
-
-
-    }
+        }
 
 
     override fun getRootFragment(index: Int): Fragment {

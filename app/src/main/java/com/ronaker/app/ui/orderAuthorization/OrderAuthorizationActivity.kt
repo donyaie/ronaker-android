@@ -1,16 +1,16 @@
 package com.ronaker.app.ui.orderAuthorization
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -98,12 +98,12 @@ class OrderAuthorizationActivity : BaseActivity() {
 
         viewModel.goNext.observe(this, {
 
-            if(it)
-                setResult(RESULT_OK)
-            else
+            if (it) {
+                succeccSend()
+            } else {
                 setResult(RESULT_CANCELED)
-
-            finish()
+                finish()
+            }
 
         })
 
@@ -122,7 +122,8 @@ class OrderAuthorizationActivity : BaseActivity() {
 
 
 
-        binding.toolbar.action2BouttonClickListener=View.OnClickListener { viewModel.changeLanguage() }
+        binding.toolbar.action2BouttonClickListener =
+            View.OnClickListener { viewModel.changeLanguage() }
 
 
         viewModel.canStartRenting(canStartRenting())
@@ -268,7 +269,6 @@ class OrderAuthorizationActivity : BaseActivity() {
     }
 
 
-
     private fun getOrder(): Order? {
         if (intent.hasExtra(Order_KEY)) {
 
@@ -311,6 +311,26 @@ class OrderAuthorizationActivity : BaseActivity() {
         override fun getPageTitle(position: Int): CharSequence {
             return ""
         }
+    }
+
+
+    private fun succeccSend() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage(getString(R.string.text_success_sign_and_start_renting))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.cancel()
+            this.setResult(Activity.RESULT_OK)
+            this.finish()
+
+
+        }
+        builder.setCancelable(false)
+
+        builder.show()
     }
 
 

@@ -34,8 +34,16 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
 
 
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
-    val lenderSignImage: MutableLiveData<Int> = MutableLiveData()
+    val listerSignImage: MutableLiveData<Int> = MutableLiveData()
     val listerSignText: MutableLiveData<String> = MutableLiveData()
+    val renterSignImage: MutableLiveData<Int> = MutableLiveData()
+    val renterSignText: MutableLiveData<String> = MutableLiveData()
+    val contractSignVisibility: MutableLiveData<Int> = MutableLiveData()
+    val contractSignMessageVisibility: MutableLiveData<Int> = MutableLiveData()
+
+
+
+
 
 
 
@@ -121,7 +129,7 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
                     nameFormat(order.productOwner?.first_name, order.productOwner?.last_name)
                 )
             )
-            lenderSignImage.postValue(R.drawable.ic_guide_red)
+            listerSignImage.postValue(R.drawable.ic_guide_red)
         } else {
 
             listerSignText.postValue(
@@ -130,8 +138,33 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
                     nameFormat(order.productOwner?.first_name, order.productOwner?.last_name)
                 )
             )
-            lenderSignImage.postValue(R.drawable.ic_guide_success)
+            listerSignImage.postValue(R.drawable.ic_guide_success)
         }
+
+
+
+        if (order.smart_id_creator_session_id.isNullOrBlank()) {
+
+
+            contractSignVisibility.postValue(View.VISIBLE)
+            contractSignMessageVisibility.postValue(View.GONE)
+            renterSignText.postValue("")
+            renterSignImage.postValue(R.drawable.ic_guide_red)
+
+
+        } else {
+            contractSignVisibility.postValue(View.GONE)
+
+            renterSignText.postValue(resourcesRepository.getString(R.string.text_you_signed_the_contract))
+
+            renterSignImage.postValue(R.drawable.ic_guide_success)
+
+            contractSignMessageVisibility.postValue(View.VISIBLE)
+
+        }
+
+
+
 
         contractPreviewVisibility.postValue(View.VISIBLE)
 
@@ -162,7 +195,7 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
                     }
 
                 } else {
-                    finish.value = true
+                    finish.value = false
                     errorMessage.value = "Successfully Send"
                 }
             }
@@ -172,16 +205,13 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
 
 
     fun onClickAccept() {
-
-        if (mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()) {
-
-            doSignContract.postValue(true)
-        }  else if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
-            startRenting()
-        }else{
-            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
-            loadData(mOrder.suid)
-        }
+        startRenting()
+//        if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
+//            startRenting()
+//        }else{
+//            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
+//            loadData(mOrder.suid)
+//        }
 
 
     }
@@ -215,9 +245,13 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
     }
 
 
-
     fun onContractPreview() {
         contractPreview.postValue(true)
+    }
+
+    fun onClickSign() {
+
+        doSignContract.postValue(true)
     }
 
 

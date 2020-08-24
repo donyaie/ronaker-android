@@ -15,7 +15,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class DashboardViewModel @ViewModelInject constructor(
-    userRepository: UserRepository,analytics: FirebaseAnalytics
+   val userRepository: UserRepository,val analytics: FirebaseAnalytics
 )  : BaseViewModel() {
 
     private var subscription: Disposable? = null
@@ -25,20 +25,30 @@ class DashboardViewModel @ViewModelInject constructor(
 
     val goEmail: MutableLiveData<Boolean> = MutableLiveData()
 
-    var islogin = false
 
     init {
+//        islogin ()
+
+
+    }
+
+    var islogin=false
+
+    fun checklogin ():Boolean{
+
+         islogin=false
+
         if (!userRepository.isLogin()) {
-            islogin = false
             goLogin.value = true
+            islogin = false
         } else {
-            islogin = true
+
             userRepository.getUserInfo()?.let {
                 it.suid?.let { suid ->
                     analytics.setUserId(suid)
                     AnalyticsManager.setUserId(suid)
                 }
-                if (it.is_email_verified != true) {
+                if (!it.is_email_verified) {
                     goEmail.value = true
                 }
 
@@ -46,9 +56,12 @@ class DashboardViewModel @ViewModelInject constructor(
             }
 
 
+            islogin = true
+
+
+
         }
-
-
+        return islogin
     }
 
 
