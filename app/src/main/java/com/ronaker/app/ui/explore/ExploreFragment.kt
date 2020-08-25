@@ -448,9 +448,15 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
                             }
 
 
+                        }.addOnCanceledListener {
+                            viewModel.emptyVisibility.postValue(View.VISIBLE)
+
                         }
 
 
+                    }
+                    else{
+                        viewModel.emptyVisibility.postValue(View.VISIBLE)
                     }
                 }
 
