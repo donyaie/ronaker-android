@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.onesignal.OSNotificationAction
+import com.onesignal.OneSignal
 import com.onesignal.OneSignalHelper
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterNotificationHistoryBinding
-import com.ronaker.app.databinding.AdapterPaymentHistoryBinding
-import com.ronaker.app.model.Transaction
-import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
+import org.json.JSONObject
 
 class NotificationHistoryAdapter(
     dataList: ArrayList<OneSignalHelper.Notifications>
@@ -64,19 +64,38 @@ class NotificationHistoryAdapter(
         private val viewModel = NotificationHistoryAdapterViewModel()
 
         fun bind(item: OneSignalHelper.Notifications) {
-            viewModel.bind(item)
+            viewModel.bind(item, binding)
             binding.viewModel = viewModel
 
             binding.container.setOnClickListener {
 
-//                item.OrderSuid?.let {
-//                    binding.root.getParentActivity()?.startActivity(
-//                        OrderPreviewActivity.newInstance(
-//                            binding.root.getApplication(),
-//                            it
-//                        )
-//                    )
-//                }
+                item.ANDROID_NOTIFICATION_ID?.let { it1 -> OneSignal.cancelNotification(it1) };
+                val data = try {
+
+
+                    val custom=JSONObject(item.FULL_DATA).getString("custom")
+                    JSONObject(custom).getJSONObject("a")
+                } catch (ex: Exception) {
+                    null
+                }
+                binding.container.getParentActivity()?.let {activity->
+
+                    data?.let {
+
+                        OneSignalHelper.handleNotificationClick(
+                            context = activity,
+                            data = it,
+                            OSNotificationAction.ActionType.Opened,
+                            isLogin = true
+                        )
+
+                    }
+
+
+
+                }
+
+
 
             }
 

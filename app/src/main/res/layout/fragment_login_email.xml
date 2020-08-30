@@ -92,6 +92,7 @@
                     app:input_title="@string/text_invite_code"
                     app:input_transparent="true"
                     app:input_validation_mode="AUTO"
+                    android:visibility="gone"
 
                     app:inputMutableText="@{viewModel.getInviteCodeText()}"
                     app:layout_constraintTop_toBottomOf="@id/email_input"

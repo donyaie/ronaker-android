@@ -30,10 +30,7 @@ class NotificationHistoryViewModel @ViewModelInject constructor(
     private var subscription: Disposable? = null
 
     init {
-        uiScope.launch {
 
-            loadData()
-        }
     }
 
     private suspend fun loadData() =
@@ -45,6 +42,8 @@ class NotificationHistoryViewModel @ViewModelInject constructor(
             dataList.clear()
 
             dataList.addAll(notifications)
+            dataList.sortByDescending { it.CREATED_TIME }
+
 
             MainScope().launch {
 

@@ -18,7 +18,7 @@ interface OrderRepository {
         product_suid: String,
         stateDate: Date,
         endDate: Date,
-        message: String?,
+        message: String,
         price: Double
     ): Observable<Result<Boolean>>
 

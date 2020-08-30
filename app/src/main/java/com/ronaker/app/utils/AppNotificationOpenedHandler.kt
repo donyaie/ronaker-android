@@ -2,10 +2,11 @@ package com.ronaker.app.utils
 
 import android.app.Application
 import android.util.Log
-import com.onesignal.OSNotificationAction.ActionType
 import com.onesignal.OSNotificationOpenResult
 import com.onesignal.OneSignal
-import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
+import com.onesignal.OneSignalHelper
+import com.ronaker.app.data.UserRepository
+import com.ronaker.app.data.local.PreferencesProvider
 
 
 class AppNotificationOpenedHandler(private val app: Application) :
@@ -25,26 +26,15 @@ class AppNotificationOpenedHandler(private val app: Application) :
                     .toString()
             )
 
+            val isLogin=! (PreferencesProvider(app).getString("tokenKey",null)?.isNullOrEmpty()?:true)
 
-            if (data != null && data.has("order_suid")) {
-                val orderId: String? = data.optString("order_suid")
 
-                if (orderId != null) {
 
-                    //TODO check user Login
-                    app.startActivity(OrderPreviewActivity.newInstance(app, orderId))
 
-                    Log.i(
-                        "OneSignalExample",
-                        "customkey set with value: $orderId"
-                    )
-                }
-            }
+            OneSignalHelper.handleNotificationClick(app,data,actionType, isLogin,result)
 
-            if (actionType == ActionType.ActionTaken) Log.i(
-                "OneSignalExample",
-                "Button pressed with id: " + result.action.actionID
-            )
+
+
 
         }
 

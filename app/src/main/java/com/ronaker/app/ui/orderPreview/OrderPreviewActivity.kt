@@ -1,5 +1,6 @@
 package com.ronaker.app.ui.orderPreview
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -47,7 +48,7 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
         }
 
 
-        fun newInstance(context: Context, orderId: String): Intent {
+        fun newInstance(context: Activity, orderId: String): Intent {
             val intent = Intent(context, OrderPreviewActivity::class.java)
             val boundle = Bundle()
             boundle.putString(OrderId_KEY, orderId)

@@ -97,11 +97,11 @@
                     android:text="@string/title_notification"
 
                     android:textColor="@color/colorTextDark"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:drawableEndCompat="@drawable/ic_chevron_right" />
 
                 <RelativeLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"

@@ -142,13 +142,13 @@ class ExploreViewModel @ViewModelInject constructor(
 
         withContext(Dispatchers.Unconfined) {
 
-            if (location == null) {
-//                emptyVisibility.postValue(View.VISIBLE)
-
-                loading.postValue(false)
-                locationCheck.postValue(true)
-                return@withContext
-            }
+//            if (location == null) {
+////                emptyVisibility.postValue(View.VISIBLE)
+//
+//                loading.postValue(false)
+//                locationCheck.postValue(true)
+//                return@withContext
+//            }
 
             if (hasNextPage) {
 

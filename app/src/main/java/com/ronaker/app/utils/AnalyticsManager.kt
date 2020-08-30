@@ -1,8 +1,8 @@
 package com.ronaker.app.utils
 
 import android.os.Bundle
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.onesignal.OneSignal
 import com.ronaker.app.utils.AnalyticsManager.Param.PRODUCT
 import io.branch.referral.Branch
@@ -18,7 +18,8 @@ object AnalyticsManager {
 
     fun setUserId(userId: String) {
         OneSignal.sendTag("user_id", userId)
-        Crashlytics.setUserIdentifier(userId)
+
+        FirebaseCrashlytics.getInstance().setUserId(userId)
         Branch.getInstance().setIdentity(userId)
     }
 }

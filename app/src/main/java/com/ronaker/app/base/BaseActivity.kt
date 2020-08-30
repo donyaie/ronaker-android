@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.General
 import com.ronaker.app.R
@@ -13,7 +12,6 @@ import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.LocaleHelper
 import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
 import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
-import io.fabric.sdk.android.Fabric
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity
@@ -71,7 +69,7 @@ abstract class BaseActivity : SwipeBackActivity() {
         super.onCreate(savedInstanceState)
 //        addActivityStack(this)
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
-        Fabric.with(this, Crashlytics())
+
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
             window.statusBarColor = ContextCompat.getColor(this, R.color.black)

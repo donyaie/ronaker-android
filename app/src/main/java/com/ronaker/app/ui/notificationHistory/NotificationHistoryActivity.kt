@@ -84,5 +84,16 @@ class NotificationHistoryActivity : BaseActivity() {
     }
 
 
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.onRetry()
+
+    }
+
+
 
 }
+
+
+
