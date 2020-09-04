@@ -9,6 +9,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -24,6 +27,7 @@ import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
+import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
@@ -43,6 +47,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         FragNavController(supportFragmentManager, R.id.container)
     override val numberOfRootFragments: Int = 4
 
+    private val UPDATE_REQUEST_CODE=645
 
     private val INDEX_EXPLORE = FragNavController.TAB1
     private val INDEX_ORDERS = FragNavController.TAB2
@@ -101,6 +106,9 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             initNavigation(savedInstanceState)
 
         }
+
+
+        checkForUpdate()
     }
 
 
@@ -111,9 +119,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
 
-
-
-
     override fun onStart() {
         super.onStart()
         Branch.sessionBuilder(this).withCallback(branchReferralInitListener)
@@ -121,7 +126,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
 
     }
-
 
 
     private val branchReferralInitListener =
@@ -272,7 +276,20 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                     binding.navigation.postDelayed({ binding.navigation.select(1) }, 50)
                 }
             }
+            UPDATE_REQUEST_CODE ->{
+                if (resultCode == RESULT_CANCELED) {
+
+                    viewModel.setSkipVersion(availableVersionCode)
+
+                }
+
+            }
+
+
         }
+
+
+
 
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -332,4 +349,47 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     interface MainaAtivityListener {
         fun onBackPressed(): Boolean
     }
+
+
+    var availableVersionCode=0
+
+
+    fun checkForUpdate() {
+
+        // Creates instance of the manager.
+        val appUpdateManager = AppUpdateManagerFactory.create(this)
+
+        // Returns an intent object that you use to check for an update.
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                // For a flexible update, use AppUpdateType.FLEXIBLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+            ) {
+
+
+                availableVersionCode=appUpdateInfo.availableVersionCode()
+
+              if( ! viewModel.isSkipVersion(appUpdateInfo.availableVersionCode())) {
+
+
+                  appUpdateManager.startUpdateFlowForResult(
+                      // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                      appUpdateInfo,
+                      // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                      AppUpdateType.FLEXIBLE,
+                      // The current activity making the update request.
+                      this,
+                      // Include a request code to later monitor this update request.
+                      UPDATE_REQUEST_CODE
+                  )
+
+              }
+            }
+        }
+
+    }
+
 }

@@ -1,14 +1,28 @@
 package com.ronaker.app.ui.profileAuthorization
 
+import android.animation.Animator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
+import com.ronaker.app.ui.intro.Intro1Fragment
+import com.ronaker.app.ui.intro.Intro2Fragment
+import com.ronaker.app.ui.intro.Intro3Fragment
+import com.ronaker.app.ui.login.LoginHomeFragment
+import com.ronaker.app.ui.orders.OrdersFragment
+import com.ronaker.app.ui.smartIdIntro.SmartIDIntro1Fragment
+import com.ronaker.app.ui.smartIdIntro.SmartIDIntro2Fragment
+import com.ronaker.app.ui.smartIdIntro.SmartIDIntro3Fragment
 import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +36,17 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
     private val viewModel: ProfileAuthorizationViewModel by activityViewModels()
 
     var disposable: Disposable? = null
+
+
+
+    private lateinit var adapter: ViewPagerAdapter
+
+
+
+    private lateinit var dots: Array<ImageView?>
+
+
+    private val dotCount: Int = 3
 
 
     override fun onCreateView(
@@ -46,6 +71,7 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
 
 
 
+        initViewPager()
 
         return binding.root
     }
@@ -162,5 +188,160 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
         disposable?.dispose()
         super.onDestroy()
     }
+
+
+
+
+
+    private fun initViewPager() {
+        initDotCount()
+
+        adapter = ViewPagerAdapter(this)
+        binding.viewpager.adapter = adapter
+
+        binding.viewpager.registerOnPageChangeCallback(viewPager2PageChangeCallback)
+        binding.viewpager.currentItem = 0
+//        showNavigator(0)
+
+
+    }
+
+    internal class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(
+        fragment
+    ) {
+        private val mFragmentList = ArrayList<Fragment>()
+
+        val dataList = ArrayList<Fragment>()
+
+
+        init {
+            dataList.clear()
+
+
+            dataList.add(SmartIDIntro1Fragment.newInstance())
+            dataList.add(SmartIDIntro2Fragment.newInstance())
+            dataList.add(SmartIDIntro3Fragment.newInstance())
+
+
+        }
+
+        fun clear() {
+            mFragmentList.clear()
+        }
+
+
+        override fun getItemCount(): Int {
+            return 3
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            return dataList[position]
+        }
+    }
+
+
+
+    private val viewPager2PageChangeCallback =
+        OrdersFragment.ViewPager2PageChangeCallback { position ->
+
+
+            showNavigator(position)
+
+        }
+
+
+
+
+    private fun initDotCount() {
+
+        dots = arrayOfNulls(dotCount)
+        binding.countDots.removeAllViewsInLayout()
+        for (i in 0 until dotCount) {
+            dots[i] = ImageView(context)
+            dots[i]?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.navigate_dot_normal
+                )
+            )
+
+            val params = LinearLayout.LayoutParams(
+                requireContext().resources.getDimensionPixelSize(R.dimen.dot_size),
+                requireContext().resources.getDimensionPixelSize(R.dimen.dot_size)
+            )
+
+            params.setMargins(21, 0, 21, 0)
+
+            dots[i]?.scaleType = ImageView.ScaleType.FIT_CENTER
+
+            binding.countDots.addView(dots[i], params)
+        }
+
+        dots[0]?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.navigate_dot_select
+            )
+        )
+    }
+
+
+
+
+
+    fun showNavigator(position: Int) {
+
+
+        for (i in 0 until dotCount) {
+            if (i == position) {
+
+
+                dots[position]?.animate()?.scaleX(0f)?.scaleY(0f)?.setDuration(100)
+                    ?.setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animation: Animator) {
+
+                        }
+
+                        override fun onAnimationEnd(animation: Animator) {
+
+                            dots[position]?.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    requireContext(),
+                                    R.drawable.navigate_dot_select
+                                )
+                            )
+                            dots[position]?.setPadding(0, 0, 0, 0)
+                            dots[position]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)
+                                ?.setListener(null)
+                                ?.start()
+                        }
+
+                        override fun onAnimationCancel(animation: Animator) {
+
+                        }
+
+                        override fun onAnimationRepeat(animation: Animator) {
+
+                        }
+                    })?.start()
+            } else {
+                dots[i]?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.navigate_dot_normal
+                    )
+                )
+                dots[i]?.setPadding(3, 3, 3, 3)
+                dots[i]?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.setListener(null)
+                    ?.start()
+
+            }
+
+
+        }
+
+
+    }
+
 
 }

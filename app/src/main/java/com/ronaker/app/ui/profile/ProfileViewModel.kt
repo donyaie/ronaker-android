@@ -91,12 +91,6 @@ class ProfileViewModel @ViewModelInject constructor(
         }
 
 
-   fun logOut(){
-
-       userRepository.clearLogin()
-       logOutAction.postValue(true)
-
-    }
 
     private fun fillUser(user: User) {
 

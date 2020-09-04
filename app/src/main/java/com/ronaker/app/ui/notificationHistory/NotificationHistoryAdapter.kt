@@ -64,17 +64,19 @@ class NotificationHistoryAdapter(
         private val viewModel = NotificationHistoryAdapterViewModel()
 
         fun bind(item: OneSignalHelper.Notifications) {
-            viewModel.bind(item, binding)
+            viewModel.bind(item)
             binding.viewModel = viewModel
 
             binding.container.setOnClickListener {
 
                 item.ANDROID_NOTIFICATION_ID?.let { it1 -> OneSignal.cancelNotification(it1) };
                 val data = try {
+                    item.FULL_DATA?.let {
 
+                        val custom=JSONObject(item.FULL_DATA).getString("custom")
+                        JSONObject(custom).getJSONObject("a")
+                    }
 
-                    val custom=JSONObject(item.FULL_DATA).getString("custom")
-                    JSONObject(custom).getJSONObject("a")
                 } catch (ex: Exception) {
                     null
                 }

@@ -264,4 +264,9 @@
     <string name="text_notification_history">Notification History</string>
     <string name="text_success_sign_and_start_renting">Done. Reach out to owner and enjoy your item.</string>
     <string name="button_confirm">Confirm</string>
+    <string name="text_or">or</string>
+    <string name="text_signin_with_google">Sign in with Google</string>
+    <string name="text_smart_id_intro_1">Smart ID helps people to deal in the secure &amp; safe environment.</string>
+    <string name="text_smart_id_intro_2">Smart-ID works in Latvia, Estonia &amp; Lithuania for users who live or have business in these countries.</string>
+    <string name="text_smart_id_intro_3">Using Smart-ID is very easy:\nget started by downloading the Smart-ID app.</string>
 </resources>

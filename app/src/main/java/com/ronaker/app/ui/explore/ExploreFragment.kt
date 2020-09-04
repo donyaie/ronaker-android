@@ -38,13 +38,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
+    private val TAG=ExploreFragment::class.java.simpleName
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     private val viewModel: ExploreViewModel by viewModels()
-
-
 
 
     private var visibleItemCount: Int = 0
@@ -86,10 +85,10 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         var mnager = GridLayoutManager(context, count)
 
-         val productAdapter=  ItemExploreAdapter()
+        val productAdapter = ItemExploreAdapter()
         binding.recycler.layoutManager = mnager
 
-        binding.recycler.adapter=  productAdapter
+        binding.recycler.adapter = productAdapter
 
         val vtObserver = binding.root.viewTreeObserver
         vtObserver.addOnGlobalLayoutListener {
@@ -130,6 +129,21 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
         })
+
+
+        viewModel.loadingEnd.observe(viewLifecycleOwner, { loading ->
+
+
+            if (loading) {
+                if (binding.loadingEnd.visibility == View.GONE)
+                    binding.loadingEnd.visibility = View.VISIBLE
+            } else
+                if (binding.loadingEnd.visibility == View.VISIBLE)
+                    binding.loadingEnd.visibility = View.GONE
+
+        })
+
+
 
         viewModel.listView.observe(viewLifecycleOwner, {
             productAdapter.submitList(it.toList())
@@ -209,7 +223,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
 
-        viewModel.findNearBy.observe(viewLifecycleOwner,  {
+        viewModel.findNearBy.observe(viewLifecycleOwner, {
 
             if (lastLocation != null)
                 viewModel.setLocation(lastLocation)
@@ -233,18 +247,30 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         }
 
+
+
+
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
+
+            visibleItemCount = mnager.childCount
+            totalItemCount = mnager.itemCount
+            pastVisiblesItems = mnager.findFirstVisibleItemPosition()
+            AppDebug.log(TAG,"visibleItemCount: $visibleItemCount, totalItemCount: $totalItemCount , pastVisiblesItems: $pastVisiblesItems ")
+
+
             if (v.getChildAt(v.childCount - 1) != null) {
+                AppDebug.log(TAG,"scrollY: $scrollY, current: ${v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight} ")
+
+
                 if (scrollY >= v.getChildAt(v.childCount - 1)
                         .measuredHeight - v.measuredHeight &&
                     scrollY > oldScrollY
                 ) {
 
-                    visibleItemCount = mnager.childCount
-                    totalItemCount = mnager.itemCount
-                    pastVisiblesItems = mnager.findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+
+                        AppDebug.log(TAG,"loadMore")
 
                         viewModel.loadMore()
                     }
@@ -375,7 +401,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             getString(android.R.string.ok)
         ) { dialog, _ ->
             dialog?.cancel()
-            startActivity( Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         }
         builder.setOnDismissListener {
 
@@ -454,8 +480,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
                         }
 
 
-                    }
-                    else{
+                    } else {
                         viewModel.emptyVisibility.postValue(View.VISIBLE)
                     }
                 }

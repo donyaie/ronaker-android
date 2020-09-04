@@ -48,5 +48,8 @@ interface UserRepository {
     fun getUserLanguage(): String
     fun getPrivacyUrl(): String
     fun getTermUrl(): String
+    fun loginUserWithGoogle(token: String): Observable<Result<User>>
+    fun saveUpdateSkipVersion(updateVersion: Int)
+    fun getUpdateSkipVersion(): Int
 }
 

@@ -1,6 +1,7 @@
 package com.ronaker.app.ui.notificationHistory
 
 
+import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.onesignal.OneSignalHelper
@@ -20,7 +21,7 @@ class NotificationHistoryViewModel @ViewModelInject constructor(
 
     val retry: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-
+    val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
 
     var dataList = ArrayList<OneSignalHelper.Notifications>()
 
@@ -40,6 +41,11 @@ class NotificationHistoryViewModel @ViewModelInject constructor(
             val notifications = OneSignalHelper.getOneSignalNotifications()
 
             dataList.clear()
+
+            if(notifications.isEmpty())
+                emptyVisibility.postValue(View.VISIBLE)
+            else
+                emptyVisibility.postValue(View.GONE)
 
             dataList.addAll(notifications)
             dataList.sortByDescending { it.CREATED_TIME }

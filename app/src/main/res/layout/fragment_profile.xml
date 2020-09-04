@@ -308,6 +308,63 @@
                     android:background="@color/colorPlatinGrey" />
 
 
+
+                <LinearLayout
+                    android:id="@+id/notification"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="@dimen/margin_default"
+
+
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:contentDescription="@string/title_support"
+                        android:padding="6dp"
+                        app:srcCompat="@drawable/ic_notification" />
+
+                    <TextView
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/title_notification"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+
+                        android:textColor="@color/colorTextDark" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_chevron_right" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="visible" />
+
+
+
                 <LinearLayout
 
                     android:id="@+id/fave_Layout"
@@ -409,59 +466,6 @@
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
-
-                <LinearLayout
-                    android:id="@+id/support_call_Layout"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="@dimen/margin_default"
-
-                        android:layout_marginEnd="@dimen/margin_default"
-                        android:contentDescription="@string/title_support"
-                        android:padding="4dp"
-                        app:srcCompat="@drawable/ic_support_call" />
-
-                    <TextView
-                        android:layout_width="0dp"
-
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".95"
-                        android:text="@string/title_support"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-
-                        android:textColor="@color/colorTextDark" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:contentDescription="@string/title_button_next"
-                        android:padding="3dp"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:background="@color/colorPlatinGrey"
-                    android:visibility="gone" />
 
 
             </LinearLayout>

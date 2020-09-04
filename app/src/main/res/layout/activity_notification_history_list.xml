@@ -1,96 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.notificationHistory.NotificationHistoryViewModel" />
+            name="viewModel"
+            type="com.ronaker.app.ui.notificationHistory.NotificationHistoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-            android:gravity="center"
-            android:layoutDirection="ltr">
+        android:gravity="center"
+        android:layoutDirection="ltr">
 
 
         <com.ronaker.app.utils.view.ToolbarComponent
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:toolbar_component_action_container="NONE"
-                app:toolbar_component_bottom_line="false"
-                app:toolbar_component_cancel_container="BACK"
-                app:toolbar_component_center_container="NONE"
-                app:toolbar_component_dot_count="3"
-                app:toolbar_component_transparent="false" />
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_bottom_line="false"
+            app:toolbar_component_cancel_container="BACK"
+            app:toolbar_component_center_container="NONE"
+            app:toolbar_component_dot_count="3"
+            app:toolbar_component_transparent="false" />
 
         <androidx.core.widget.NestedScrollView
 
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
                 <TextView
-                        android:id="@+id/title_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_default"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                        android:layout_marginTop="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:layout_marginBottom="@dimen/margin_default"
-                        android:text="@string/text_notification_history"
-                        android:textAppearance="@style/TextAppearance.Heading.1"
-                        android:textColor="@color/colorTextDark"
-                        app:layout_constraintTop_toBottomOf="@id/avatar_image" />
-
-
-
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:layout_marginBottom="@dimen/margin_default"
+                    android:text="@string/title_notification"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
+                    app:layout_constraintTop_toBottomOf="@id/title_text"
+                    android:id="@+id/recycler"
+
                     android:layout_width="match_parent"
 
-                    app:adapter="@{viewModel.getAdapter()}"
-
-                    android:id="@+id/recycler"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:adapter="@{viewModel.getAdapter()}" />
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/empty_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/recycler"
+                    app:mutableVisibility="@{viewModel.getEmptyVisibility()}">
+
+                    <ImageView
+                        android:id="@+id/empty_image"
+                        android:layout_width="280dp"
+                        android:layout_height="180dp"
+                        android:contentDescription="@string/text_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_empty_product" />
 
 
+                    <TextView
+                        android:id="@+id/empty_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/text_not_found_item"
+                        android:textAppearance="@style/TextAppearance.Large.SB"
+                        app:layout_constraintTop_toBottomOf="@id/empty_image" />
 
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
 
 
         <com.ronaker.app.utils.view.LoadingComponent
 
 
-                android:id="@+id/loading"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                android:layout_width="match_parent"
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:loading_transparent="false" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:loading_transparent="false" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

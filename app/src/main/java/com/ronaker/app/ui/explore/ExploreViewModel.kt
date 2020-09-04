@@ -57,6 +57,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingEnd: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
 
     val searchText: MutableLiveData<String> = MutableLiveData()
@@ -76,7 +77,6 @@ class ExploreViewModel @ViewModelInject constructor(
 
 
     private fun reset() {
-
         page = 1
         hasNextPage = true
         dataList.clear()
@@ -177,10 +177,14 @@ class ExploreViewModel @ViewModelInject constructor(
 
                             emptyVisibility.postValue(View.GONE)
 
+                        }else{
+                            loadingEnd.postValue(true)
                         }
+
                         errorMessage.postValue(null)
                     }
                     .doOnTerminate {
+                        loadingEnd.postValue(false)
                         loading.postValue(false)
                     }
                     .subscribe { result ->
@@ -201,6 +205,11 @@ class ExploreViewModel @ViewModelInject constructor(
 
                             if (dataList.isEmpty()) {
                                 emptyVisibility.postValue(View.VISIBLE)
+                            }
+
+
+                            if(page==2 && hasNextPage){
+                                loadMore()
                             }
 
                         } else {
@@ -366,5 +375,8 @@ class ExploreViewModel @ViewModelInject constructor(
 
 
     }
+
+
+
 
 }

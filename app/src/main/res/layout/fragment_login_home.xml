@@ -65,41 +65,115 @@
             <LinearLayout
                 android:id="@+id/countDots"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_size"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/margin_half"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/register_button" />
+                app:layout_constraintBottom_toTopOf="@id/sign_in_button" />
+
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+
+                android:elevation="0dp"
+
+                app:layout_constraintStart_toStartOf="@id/register_button"
+                app:layout_constraintEnd_toEndOf="@id/login_button"
+                app:layout_constraintBottom_toTopOf="@id/or_seprate"
+                android:layout_marginBottom="4dp"
+ />
+
+
+          <TextView
+              android:id="@+id/or_seprate"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/text_or"
+              android:textColor="@color/colorTextLight"
+              android:textAppearance="@style/TextAppearance.Medium.SB"
+              android:layout_marginBottom="6dp"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintBottom_toTopOf="@id/register_button"
+
+              />
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/login_button"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/or_seprate"
+
+                app:layout_constraintTop_toTopOf="@id/or_seprate"
+                app:layout_constraintBottom_toBottomOf="@id/or_seprate"
+                />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/or_seprate"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="@id/register_button"
+
+                app:layout_constraintTop_toTopOf="@id/or_seprate"
+                app:layout_constraintBottom_toBottomOf="@id/or_seprate"
+                />
 
 
             <Button
                 android:id="@+id/register_button"
 
+                app:layout_constraintHorizontal_bias="1.0"
                 style="@style/Button.accent"
                 android:layout_width="0dp"
-                android:layout_marginStart="32dp"
+                app:layout_constraintWidth_max="200dp"
+                android:maxWidth="200dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="12dp"
+
                 android:onClick="@{viewModel.signupClickListener}"
                 android:text="@string/title_button_create_account"
                 app:layout_constraintBottom_toTopOf="@id/languageChange"
+                app:layout_constraintEnd_toStartOf="@id/guid_center"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent=".4" />
+ />
+
+            <RelativeLayout
+                android:id="@+id/guid_center"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
 
             <Button
+
                 android:id="@+id/login_button"
 
                 style="@style/Button.transparent.dark"
                 android:layout_width="0dp"
+                android:layout_marginStart="12dp"
                 android:onClick="@{viewModel.loginClickListener}"
 
+                app:layout_constraintHorizontal_bias="0.0"
                 android:text="@string/titile_button_login"
+                android:maxWidth="200dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintWidth_max="200dp"
                 app:layout_constraintBottom_toTopOf="@id/languageChange"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/register_button"
+                app:layout_constraintStart_toEndOf="@+id/guid_center"
 
-
-                app:layout_constraintWidth_percent=".4" />
+ />
 
             <TextView
                 android:id="@+id/languageChange"

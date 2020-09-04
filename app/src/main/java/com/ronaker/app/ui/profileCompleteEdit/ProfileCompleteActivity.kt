@@ -85,7 +85,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             if (value == true) {
 //                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
 
-                binding.imageLayout.isClickable = false
+                binding.imageLayout.isClickable = true
                 binding.imageLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else {
 

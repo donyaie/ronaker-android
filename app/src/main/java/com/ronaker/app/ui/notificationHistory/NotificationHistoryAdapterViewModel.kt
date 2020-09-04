@@ -14,7 +14,7 @@ class NotificationHistoryAdapterViewModel{
 
 
     fun bind(
-        data: OneSignalHelper.Notifications,  binding: AdapterNotificationHistoryBinding
+        data: OneSignalHelper.Notifications
 
 
     ) {

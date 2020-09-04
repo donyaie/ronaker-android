@@ -7,17 +7,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
-import com.ronaker.app.ui.notificationHistory.NotificationHistoryActivity
 import com.ronaker.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
-import kotlinx.android.synthetic.main.activity_profile_setting.*
 
 
 @AndroidEntryPoint
@@ -80,11 +76,6 @@ class ProfileSettingActivity : BaseActivity() {
         }
 
 
-        binding.notificationLayout.setOnClickListener {
-
-
-            startActivity(NotificationHistoryActivity.newInstance(this))
-        }
 
         binding.logoutLayout.setOnClickListener {
             showLogoutDialog()
@@ -141,6 +132,7 @@ class ProfileSettingActivity : BaseActivity() {
         ) { dialog, _ ->
             dialog?.cancel()
             viewModel.logout()
+            GoogleSignManger.getClient(this).signOut()
             Branch.getInstance().logout()
             startActivity(DashboardActivity.newInstance(this))
             AnimationHelper.setFadeTransition(this)
