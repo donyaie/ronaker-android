@@ -6,14 +6,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseDialog
-import com.ronaker.app.databinding.DialogAddProductSelectCategoryBinding
 import com.ronaker.app.databinding.DialogSupportBinding
-import com.ronaker.app.model.Category
 import com.ronaker.app.utils.*
 
 class SupportDialog : BaseDialog() {

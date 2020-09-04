@@ -8,8 +8,6 @@ import android.transition.Fade
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.Alert

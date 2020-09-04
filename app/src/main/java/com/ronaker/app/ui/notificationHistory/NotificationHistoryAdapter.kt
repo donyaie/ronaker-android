@@ -9,7 +9,6 @@ import com.onesignal.OneSignal
 import com.onesignal.OneSignalHelper
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterNotificationHistoryBinding
-import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.extension.getParentActivity
 import org.json.JSONObject
 
@@ -69,7 +68,7 @@ class NotificationHistoryAdapter(
 
             binding.container.setOnClickListener {
 
-                item.ANDROID_NOTIFICATION_ID?.let { it1 -> OneSignal.cancelNotification(it1) };
+                item.ANDROID_NOTIFICATION_ID?.let { it1 -> OneSignal.cancelNotification(it1) }
                 val data = try {
                     item.FULL_DATA?.let {
 

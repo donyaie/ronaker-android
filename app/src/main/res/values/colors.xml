@@ -6,6 +6,7 @@
 
 
     <color name="colorAccent">#FF4C6A</color>
+    <color name="colorAccent_80">#CCFF4C6A</color>
 
     <color name="colorPlatinGrey">#DFE1E6</color>
     <color name="colorAshGrey">#9398A3</color>

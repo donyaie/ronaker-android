@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.profileIdentify
 
 
-import android.app.Application
 import android.net.Uri
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
@@ -12,7 +11,6 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.ui.dialog.SelectDialog
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class ProfileIdentifyViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,

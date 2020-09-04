@@ -4,6 +4,9 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.onesignal.OneSignal
+import com.ronaker.app.model.Category
+import com.ronaker.app.model.Product
+import com.ronaker.app.utils.AnalyticsManager.EVENT.SELECT_CATEGORY
 import com.ronaker.app.utils.AnalyticsManager.Param.PRODUCT
 import io.branch.referral.Branch
 
@@ -14,6 +17,13 @@ object AnalyticsManager {
         const val LOGIN_METHOD_NORMAL = "normal"
         const val LOGIN_METHOD_GOOGLE= "normal"
         const val LOGIN_METHOD_FACEBOOK = "facebook"
+        const val NAME= "name"
+        const val SUID= "suid"
+    }
+    object EVENT {
+
+        const val SELECT_CATEGORY= "select_category"
+        const val SELECT_ITEM= "select_item"
     }
 
 
@@ -60,6 +70,22 @@ fun FirebaseAnalytics.actionShare(contentType: String, itemId: String) {
     bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType)
     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
     logEvent(FirebaseAnalytics.Event.SHARE, bundle)
+
+}
+
+fun FirebaseAnalytics.categorySelect(category: Category) {
+    val bundle = Bundle()
+    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, category.title)
+    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, category.suid)
+    logEvent(SELECT_CATEGORY, bundle)
+
+}
+
+fun FirebaseAnalytics.itemSelect(item: Product) {
+    val bundle = Bundle()
+    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.name)
+    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, item.suid)
+    logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
 
 }
 

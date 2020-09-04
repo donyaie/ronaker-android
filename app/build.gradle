@@ -18,7 +18,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 15
+def versionPatch = 17
 android {
 
 
@@ -204,7 +204,7 @@ dependencies {
 
 
     implementation "com.google.android.material:material:$materialVersion"
-    implementation 'com.google.android.play:core-ktx:1.6.4'
+    implementation 'com.google.android.play:core-ktx:1.8.1'
 
     // Data binding
     kapt "com.android.databinding:compiler:$databindingVersion"

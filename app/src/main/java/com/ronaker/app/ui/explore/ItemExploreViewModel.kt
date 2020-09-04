@@ -37,21 +37,21 @@ class ItemExploreViewModel {
             post.price_per_day ?: 0 != 0 -> {
 
                 productPrice.value = post.price_per_day?.toCurrencyFormat()
-                productPricePostfix.value = context.getString(R.string.title_per_day)
+                productPricePostfix.value = context.getString(R.string.title_pers_day)
 
             }
             post.price_per_week ?: 0 != 0 -> {
 
 
                 productPrice.value = post.price_per_week?.toCurrencyFormat()
-                productPricePostfix.value = context.getString(R.string.title_per_week)
+                productPricePostfix.value = context.getString(R.string.title_pers_week)
 
             }
             post.price_per_month ?: 0 != 0 -> {
 
 
                 productPrice.value = post.price_per_month?.toCurrencyFormat()
-                productPricePostfix.value = context.getString(R.string.title_per_month)
+                productPricePostfix.value = context.getString(R.string.title_pers_month)
 
 
             }

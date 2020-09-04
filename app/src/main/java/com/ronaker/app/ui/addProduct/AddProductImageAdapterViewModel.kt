@@ -1,11 +1,8 @@
 package com.ronaker.app.ui.addProduct
 
-import android.app.Application
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.Image
 import com.ronaker.app.utils.BASE_URL
 

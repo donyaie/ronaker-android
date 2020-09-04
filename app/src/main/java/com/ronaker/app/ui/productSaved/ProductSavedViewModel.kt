@@ -1,23 +1,19 @@
 package com.ronaker.app.ui.productSaved
 
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.NetworkError
-import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.ProductRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class ProductSavedViewModel @ViewModelInject constructor(
     private val productRepository: ProductRepository,

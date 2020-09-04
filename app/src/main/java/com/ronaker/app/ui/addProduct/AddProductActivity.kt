@@ -12,8 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -27,7 +25,10 @@ import com.ronaker.app.ui.imagePicker.ImagePickerActivity
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.ui.selectCategory.AddProductCategorySelectDialog
-import com.ronaker.app.utils.*
+import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.AppDebug
+import com.ronaker.app.utils.IntentManeger
+import com.ronaker.app.utils.KeyboardManager
 import com.ronaker.app.utils.view.IPagerFragment
 import com.ronaker.app.utils.view.ToolbarComponent
 import dagger.hilt.android.AndroidEntryPoint

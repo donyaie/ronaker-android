@@ -11,8 +11,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken

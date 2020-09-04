@@ -9,8 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity

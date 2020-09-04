@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterPaymentInfoBinding
 import com.ronaker.app.model.PaymentCard
-import com.ronaker.app.utils.extension.getApplication
 
 class PaymentInfoAdapter(
     dataList: ArrayList<PaymentCard>

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterProductCommentBinding
 import com.ronaker.app.model.Product
-import com.ronaker.app.utils.extension.getApplication
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 

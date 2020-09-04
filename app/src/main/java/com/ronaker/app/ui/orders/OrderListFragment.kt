@@ -11,12 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
-import com.ronaker.app.model.Order
 import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.ui.productRate.ProductRateActivity
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.kayboardAnimator.BaseKeyboardAnimator
-import com.ronaker.app.utils.kayboardAnimator.SimpleKeyboardAnimator
 import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 

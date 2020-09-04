@@ -7,7 +7,6 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.model.Order
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class OrderAcceptViewModel @ViewModelInject constructor(
     private val orderRepository: OrderRepository

@@ -27,7 +27,6 @@ import com.ronaker.app.ui.manageProduct.ManageProductListFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.profile.ProfileFragment
 import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
-import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent

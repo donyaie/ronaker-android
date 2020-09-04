@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import com.ronaker.app.utils.view.IPagerFragment

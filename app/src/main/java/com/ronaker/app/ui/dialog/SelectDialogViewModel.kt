@@ -1,8 +1,6 @@
 package com.ronaker.app.ui.dialog
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.base.BaseViewModel
 
 class SelectDialogViewModel {
 

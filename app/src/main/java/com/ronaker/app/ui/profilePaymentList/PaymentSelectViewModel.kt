@@ -1,9 +1,7 @@
 package com.ronaker.app.ui.profilePaymentList
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.PaymentCard
 
 class PaymentSelectViewModel {

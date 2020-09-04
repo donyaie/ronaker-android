@@ -6,14 +6,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
-import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
-import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.Alert
 import dagger.hilt.android.AndroidEntryPoint
 

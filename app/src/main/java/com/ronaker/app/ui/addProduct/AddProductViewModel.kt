@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.addProduct
 
-import android.app.Application
 import android.net.Uri
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
@@ -9,14 +8,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
-import com.ronaker.app.data.*
+import com.ronaker.app.data.CategoryRepository
+import com.ronaker.app.data.ContentRepository
+import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.Image
 import com.ronaker.app.model.Place
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.AppDebug
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class AddProductViewModel @ViewModelInject constructor(
     private val productRepository: ProductRepository,

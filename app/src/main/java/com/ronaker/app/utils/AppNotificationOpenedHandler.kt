@@ -5,7 +5,6 @@ import android.util.Log
 import com.onesignal.OSNotificationOpenResult
 import com.onesignal.OneSignal
 import com.onesignal.OneSignalHelper
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.data.local.PreferencesProvider
 
 

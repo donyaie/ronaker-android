@@ -9,7 +9,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.ronaker.app.R
-import com.ronaker.app.utils.extension.getApplication
 
 object GoogleSignManger{
 

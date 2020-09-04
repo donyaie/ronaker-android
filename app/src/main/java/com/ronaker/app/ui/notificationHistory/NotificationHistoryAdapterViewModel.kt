@@ -3,7 +3,6 @@ package com.ronaker.app.ui.notificationHistory
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.onesignal.OneSignalHelper
-import com.ronaker.app.databinding.AdapterNotificationHistoryBinding
 
 class NotificationHistoryAdapterViewModel{
     val title = MutableLiveData<String>()

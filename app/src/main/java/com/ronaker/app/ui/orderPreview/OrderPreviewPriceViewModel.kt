@@ -3,9 +3,7 @@ package com.ronaker.app.ui.orderPreview
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
-import com.ronaker.app.databinding.AdapterOrderPreviewPriceTotalBinding
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.extension.getApplication
 import com.ronaker.app.utils.toCurrencyFormat
 
 class OrderPreviewPriceViewModel {

@@ -7,8 +7,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity

@@ -15,10 +15,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
-import com.ronaker.app.ui.intro.Intro1Fragment
-import com.ronaker.app.ui.intro.Intro2Fragment
-import com.ronaker.app.ui.intro.Intro3Fragment
-import com.ronaker.app.ui.login.LoginHomeFragment
 import com.ronaker.app.ui.orders.OrdersFragment
 import com.ronaker.app.ui.smartIdIntro.SmartIDIntro1Fragment
 import com.ronaker.app.ui.smartIdIntro.SmartIDIntro2Fragment

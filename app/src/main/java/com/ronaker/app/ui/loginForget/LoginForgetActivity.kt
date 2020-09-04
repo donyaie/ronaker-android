@@ -7,12 +7,9 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.login.LoginViewModel
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import com.ronaker.app.utils.KeyboardManager

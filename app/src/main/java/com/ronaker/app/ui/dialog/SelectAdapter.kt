@@ -35,10 +35,6 @@ class SelectAdapter(
         return productList.size
     }
 
-    fun updateproductList() {
-        notifyDataSetChanged()
-    }
-
     class ViewHolder(
         private val binding: AdapterSelectBinding,
         var parentViewModel: SelectDialogViewModel

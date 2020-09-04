@@ -29,12 +29,8 @@ import com.ronaker.app.utils.*
 import com.ronaker.app.utils.extension.setEndDrawableRes
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.indexing.BranchUniversalObject
-import io.branch.referral.Branch
-import io.branch.referral.Branch.BranchReferralInitListener
-import io.branch.referral.BranchError
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
-import org.json.JSONObject
 import java.util.*
 import kotlin.system.measureTimeMillis
 

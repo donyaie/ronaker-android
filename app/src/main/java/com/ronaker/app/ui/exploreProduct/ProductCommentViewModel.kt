@@ -1,8 +1,6 @@
 package com.ronaker.app.ui.exploreProduct
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterProductCommentBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL

@@ -2,18 +2,11 @@ package com.ronaker.app.ui.imagePreview
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.transition.Fade
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.model.Image
-import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 
 

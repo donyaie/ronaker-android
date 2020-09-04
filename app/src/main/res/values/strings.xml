@@ -86,6 +86,11 @@
     <string name="title_per_day">Per day</string>
     <string name="title_per_week">Per week</string>
     <string name="title_per_month">Per month</string>
+
+
+    <string name="title_pers_day">/ day</string>
+    <string name="title_pers_week">/ week</string>
+    <string name="title_pers_month">/ month</string>
     <string name="title_add_images_of_item">Add Images of item</string>
     <string name="title_add_new_image">Add new image</string>
     <string name="title_phone_number">Phone Number</string>
@@ -261,7 +266,6 @@
 
     <string name="button_start_renting_sign">Start Renting</string>
     <string name="text_for_day" formatted="true">%1$s %2$s for %3$d days</string>
-    <string name="text_notification_history">Notification History</string>
     <string name="text_success_sign_and_start_renting">Done. Reach out to owner and enjoy your item.</string>
     <string name="button_confirm">Confirm</string>
     <string name="text_or">or</string>

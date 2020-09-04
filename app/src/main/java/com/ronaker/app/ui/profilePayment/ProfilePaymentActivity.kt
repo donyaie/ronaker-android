@@ -17,8 +17,6 @@ import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport

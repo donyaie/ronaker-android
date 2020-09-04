@@ -224,14 +224,6 @@ class LoginActivity : BaseActivity() {
     }
 
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-    }
-
-
-
-
-
     private fun prePage() {
 
         if (currentPosition - 1 == LoginViewModel.LoginStateEnum.home.position)

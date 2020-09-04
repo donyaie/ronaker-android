@@ -249,7 +249,6 @@
 
     <string name="button_start_renting_sign">Pradėti nuomą</string>
     <string name="text_for_day">%1$s %2$s už %3$d dienas</string>
-    <string name="text_notification_history">Notification History</string>
     <string name="text_please_read_the_contract">Perskaitykite sutartį</string>
     <string name="text_success_sign_and_start_renting">Baigta! Susisiekite su savininku ir sėkmingai naudokitės daiktu.</string>
     <string name="button_confirm">Patvirtinti</string>
@@ -258,4 +257,7 @@
     <string name="text_smart_id_intro_1">Smart ID užtikrina žmonėms saugią ir patikimą internetinę aplinką.</string>
     <string name="text_smart_id_intro_2">Smart-ID, veikiančia Latvijoje, Estijoje bei Lietuvoje, naudojasi šių šalių gyventojai  ir verslininkai.</string>
     <string name="text_smart_id_intro_3">Naudotis Smart-ID yra labai paprasta:\npirmiausia, atsisiųskite Smart-ID programėlę.</string>
+    <string name="title_pers_day">/ dieną</string>
+    <string name="title_pers_week">/ savaitę</string>
+    <string name="title_pers_month">/ mėnesį</string>
 </resources>

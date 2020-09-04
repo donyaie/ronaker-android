@@ -8,17 +8,13 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.addProduct.AddProductViewModel
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
-import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.utils.Alert
 import dagger.hilt.android.AndroidEntryPoint
 

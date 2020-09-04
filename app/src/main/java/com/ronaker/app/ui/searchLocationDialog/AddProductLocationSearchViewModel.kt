@@ -4,10 +4,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.GoogleMapRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Place
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 
 class AddProductLocationSearchViewModel @ViewModelInject constructor(

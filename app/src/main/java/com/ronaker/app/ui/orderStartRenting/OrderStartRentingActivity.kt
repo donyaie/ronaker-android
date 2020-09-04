@@ -15,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity

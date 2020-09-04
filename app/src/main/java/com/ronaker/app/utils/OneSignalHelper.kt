@@ -25,7 +25,7 @@ object OneSignalHelper {
         val dbHelper = OneSignalDbHelper.getInstance(OneSignal.appContext)
         var cursor: Cursor? = null
         try {
-            val readableDb = dbHelper.sqLiteDatabaseWithRetries
+            val readableDb = dbHelper.readableDatabase
             val retColumn = arrayOf(
                 NotificationTable.COLUMN_NAME_NOTIFICATION_ID,
                 NotificationTable.COLUMN_NAME_ANDROID_NOTIFICATION_ID,
@@ -141,12 +141,9 @@ object OneSignalHelper {
             val FULL_DATA: String?,
             val CREATED_TIME: Long?,
             val EXPIRE_TIME: Long?,
-        ) {
+        )
 
-
-        }
-
-        private fun Cursor.toNotifications(): Notifications? {
+    private fun Cursor.toNotifications(): Notifications? {
             return try {
                 Notifications(
                     NOTIFICATION_ID = this.getString(this.getColumnIndex(NotificationTable.COLUMN_NAME_NOTIFICATION_ID)),
