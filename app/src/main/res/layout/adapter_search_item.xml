@@ -6,14 +6,17 @@
 
         <variable
             name="viewModel"
-            type="com.ronaker.app.ui.explore.ItemExploreViewModel" />
+            type="com.ronaker.app.ui.search.ItemSearchViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp"
-        android:layout_margin="8dp"
+
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
         android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,8 +28,10 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="60dp"
             android:background="@drawable/background_image_corner"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,8 +40,12 @@
 
 
         <LinearLayout
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/price_layout"
 
             android:layout_gravity="bottom"
             android:background="@drawable/background_accent_corner_small"
@@ -44,17 +53,17 @@
 
             android:orientation="horizontal"
             android:padding="4dp"
-            app:layout_constraintStart_toStartOf="@id/image"
-            app:layout_constraintTop_toTopOf="@id/image">
+            app:layout_constraintStart_toEndOf="@id/image">
 
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
                 android:lines="1"
-                android:text="@string/title_defult_price"
 
+                android:text="@string/caption_title"
                 android:textAppearance="@style/TextAppearance.Medium.SB"
                 android:textColor="@color/colorTextLight"
                 app:layout_constraintTop_toBottomOf="@id/title"
@@ -66,7 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="@string/title_pers_day"
+
+                android:text="@string/caption_title"
                 android:textAppearance="@style/TextAppearance.Small.Regular"
                 android:textColor="@color/colorTextLight"
                 app:mutableText="@{viewModel.getProductPricePostfix()}" />
@@ -75,12 +85,15 @@
         </LinearLayout>
 
         <TextView
+            app:layout_constraintTop_toTopOf="@id/image"
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:lines="2"
-            android:maxLines="2"
+            android:lines="1"
+            android:maxLines="1"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="@string/caption_title"
@@ -91,10 +104,13 @@
 
 
         <LinearLayout
-            android:paddingBottom="8dp"
-            android:layout_width="match_parent"
+
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/price_layout"
+            app:layout_constraintTop_toTopOf="@id/price_layout"
+            app:layout_constraintBottom_toBottomOf="@id/price_layout"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
 
             android:paddingLeft="8dp"
             android:paddingRight="8dp"

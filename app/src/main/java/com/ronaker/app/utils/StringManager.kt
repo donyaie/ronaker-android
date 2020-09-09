@@ -71,9 +71,6 @@ fun Double.toCurrencyFormat(prefix: String?, includeSymbol: Boolean = true): Str
 
 
 
-    return "${if (prefix == null) "" else "$prefix "}${if (includeSymbol) "€" else ""}${
-        format.format(
-            this
-        )
+    return "${if (prefix == null) "" else "$prefix "}${if (includeSymbol) "€" else ""}${format.format(this)
     }"
 }

@@ -239,7 +239,6 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun onClickGotoSignIn() {
-
         gotoSignIn.postValue(true)
     }
 
@@ -263,8 +262,6 @@ class LoginViewModel @ViewModelInject constructor(
 
 
     val loginClickListener = View.OnClickListener {
-
-
         actionState.value = LoginActionEnum.login
         viewState.value = LoginStateEnum.login
     }
@@ -321,7 +318,7 @@ class LoginViewModel @ViewModelInject constructor(
 
     }
 
-    fun loginGoogle(userId: String, avatar: String?) {
+    fun loginGoogle(userId: String) {
 
         signinGoogleSubscription?.dispose()
         signinGoogleSubscription =

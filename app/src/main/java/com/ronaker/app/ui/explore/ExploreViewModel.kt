@@ -18,12 +18,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ExploreViewModel @ViewModelInject constructor(
-    private val productRepository:ProductRepository,
+    private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
     private val analytics: FirebaseAnalytics
 ) : BaseViewModel(),
     CategoryExploreAdapter.AdapterListener {
-
 
 
     private var page = 1
@@ -43,11 +42,7 @@ class ExploreViewModel @ViewModelInject constructor(
     private var cachCategoryList: ArrayList<Category> = ArrayList()
 
 
-
-
-
     private var query: String = ""
-
 
 
     var categoryListAdapter: CategoryExploreAdapter = CategoryExploreAdapter(categoryList, this)
@@ -65,6 +60,7 @@ class ExploreViewModel @ViewModelInject constructor(
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
     val locationVisibility: MutableLiveData<Int> = MutableLiveData()
     val locationCheck: MutableLiveData<Boolean> = MutableLiveData()
+    val nearByChecked: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val scrollCategoryPosition: MutableLiveData<Int> = MutableLiveData()
@@ -163,7 +159,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
                         query = searchValue,
                         page = page,
-                        location = location,
+                        location = if (isNearBy) location else null,
                         radius = 50,
                         categorySiud = selectedCategory?.suid
                     )
@@ -174,7 +170,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
                             emptyVisibility.postValue(View.GONE)
 
-                        }else{
+                        } else {
                             loadingEnd.postValue(true)
                         }
 
@@ -205,7 +201,7 @@ class ExploreViewModel @ViewModelInject constructor(
                             }
 
 
-                            if(page==2 && hasNextPage){
+                            if (page == 2 && hasNextPage) {
                                 loadMore()
                             }
 
@@ -238,10 +234,10 @@ class ExploreViewModel @ViewModelInject constructor(
     fun loadMore() {
 
 
-            uiScope.launch {
+        uiScope.launch {
 
-                loadProduct()
-            }
+            loadProduct()
+        }
 
     }
 
@@ -365,15 +361,47 @@ class ExploreViewModel @ViewModelInject constructor(
     }
 
 
-    fun setLocation(lastLocation: LatLng?) {
+    fun onClickNearBy() {
 
-        location = lastLocation
-        retry()
+        if (isNearBy) {
+
+            nearByChecked.postValue(false)
+            isNearBy = false
+
+            retry()
+
+        } else if (location != null) {
+            isNearBy = true
+            nearByChecked.postValue(true)
+            locationCheck.postValue(true)
+            retry()
+        } else {
+            locationCheck.postValue(true)
+        }
 
 
     }
 
 
+    var isNearBy = false
+
+
+    fun setLocation(lastLocation: LatLng?) {
+
+
+        if (lastLocation != null && location == null) {
+            location = lastLocation
+            isNearBy = true
+            nearByChecked.postValue(true)
+            retry()
+
+
+        } else if (lastLocation != null) {
+            location = lastLocation
+        }
+
+
+    }
 
 
 }

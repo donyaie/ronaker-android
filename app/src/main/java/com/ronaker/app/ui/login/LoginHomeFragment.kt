@@ -137,7 +137,7 @@ class LoginHomeFragment : BaseFragment(), IPagerFragment {
             AppDebug.log(TAG, "idToken : $idToken")
 
 
-            idToken?.let { viewModel.loginGoogle(it, account.photoUrl?.toString()) }
+            idToken?.let { viewModel.loginGoogle(it) }
 
 //            account?.let {firebaseAuthWithGoogle(it)  }
             // Signed in successfully, show authenticated UI.

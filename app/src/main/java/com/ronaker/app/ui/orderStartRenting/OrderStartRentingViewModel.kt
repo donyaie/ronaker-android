@@ -28,6 +28,10 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
     val doSignContract: MutableLiveData<Boolean> = MutableLiveData()
+    val startRentingConfirm: MutableLiveData<String> = MutableLiveData()
+
+
+
     val contractPreview: MutableLiveData<Boolean> = MutableLiveData()
 
     val instruction: MutableLiveData<String> = MutableLiveData()
@@ -204,8 +208,15 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
     }
 
 
+    fun checkedAgreement(){
+        mOrder.address?.let { startRentingConfirm.postValue(it) }
+    }
+
     fun onClickAccept() {
-        startRenting()
+
+
+
+
 //        if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
 //            startRenting()
 //        }else{
@@ -213,7 +224,7 @@ class OrderStartRentingViewModel @ViewModelInject constructor(
 //            loadData(mOrder.suid)
 //        }
 
-
+        startRenting()
     }
 
 

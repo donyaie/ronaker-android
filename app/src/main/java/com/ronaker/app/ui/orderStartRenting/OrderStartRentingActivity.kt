@@ -104,6 +104,12 @@ class OrderStartRentingActivity : BaseActivity() {
         })
 
 
+
+        viewModel.startRentingConfirm.observe(this, {
+            startRentingConfirmation(it)
+        })
+
+
         viewModel.contractPreview.observe(this, { _ ->
 
             startActivity(getOrder()?.let {
@@ -272,6 +278,9 @@ class OrderStartRentingActivity : BaseActivity() {
             binding.acceptButton.isEnabled = isChecked
 
 
+            if(isChecked){
+                viewModel.checkedAgreement()
+            }
 
 
         }
@@ -310,13 +319,34 @@ class OrderStartRentingActivity : BaseActivity() {
             getString(android.R.string.ok)
 
         ) { dialog, _ ->
-            dialog?.cancel()
+            this.setResult(Activity.RESULT_OK)
+            dialog?.dismiss()
+        }
+
+
+        builder.setOnDismissListener {
             this.setResult(Activity.RESULT_OK)
             this.finish()
-
-
         }
-        builder.setCancelable(false)
+
+        builder.setCancelable(true)
+
+        builder.show()
+    }
+
+
+    private fun startRentingConfirmation(address:String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage(String.format( getString(R.string.text_confirm_start_renting),address))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.dismiss()
+        }
+
+        builder.setCancelable(true)
 
         builder.show()
     }

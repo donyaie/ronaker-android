@@ -215,18 +215,18 @@
     <string name="text_sign_the_contract">Pasirašykite sutartį</string>
     <string name="text_please_read_and_sign_the_contract">Perskaitykite ir pasirašykite sutartį</string>
     <string name="text_send_activation_success">Išsiųsime Jums aktyvacijos laišką el. paštu.</string>
-    <string name="text_this_password_is_too_short_it_must_contain_at_least_8_characters">Slaptažodis per trumpas, jį turi sudaryti mažiausiai 8 simboliai</string>
+    <string name="text_this_password_is_too_short_it_must_contain_at_least_8_characters">Slaptažodis per trumpas, jį turi sudaryti mažiausiai 8 simboliai.</string>
     <string name="text_this_password_is_entirely_numeric">Slaptažodžio negali sudaryti vien skaitmenys</string>
-    <string name="text_choose_new_password_to_reset_password">Pasirinkite naują slaptažodį</string>
-    <string name="text_the_password_and_repeat_password_must_same">Slaptažodžiai nesutampa</string>
+    <string name="text_choose_new_password_to_reset_password">Pasirinkite naują slaptažodį.</string>
+    <string name="text_the_password_and_repeat_password_must_same">Slaptažodžiai nesutampa.</string>
     <string name="text_reset_password">Pakeisti slaptažodį</string>
     <string name="text_explore_items">Ieškoti daiktų</string>
     <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Saugiai ir paprastai išsinuomokite Jums reikalingą daiktą tiesiai iš savininko. Pasirinkite nuomos laikotarpį ir jei daiktas laisvas - rezervuokite jį.</string>
     <string name="text_rent">Is it noun or verb ?</string>
-    <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">Pasidalinsime kontaktais su Jumis, kad galėtumėte susisiekti su savininku, atsiimti daiktą ir juo naudotis !</string>
+    <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">Pasidalinsime kontaktais su Jumis, kad galėtumėte susisiekti su savininku, atsiimti daiktą ir juo naudotis!</string>
     <string name="text_return_and_evaluate">Grąžinimas ir įvertinimas</string>
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">Pasibaigus nuomos laikotarpiui prašome įvertinti daiktą - tai labai svarbu bendruomenės saugumui.</string>
-    <string name="text_we_will_send_a_reset_password_link_to_your_email">El. paštu išsiųsime Jums slaptažodžio pakeitimo nuorodą</string>
+    <string name="text_we_will_send_a_reset_password_link_to_your_email">El. paštu išsiųsime Jums slaptažodžio pakeitimo nuorodą.</string>
     <string name="text_forget_password">Pamiršote slaptažodį ?</string>
     <string name="text_reset_may_password">Pakeisti slaptažodį</string>
     <string name="text_you_signed_the_contract">Jūs pasirašėte sutartį</string>
@@ -235,14 +235,14 @@
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">Prieš pradėdami nuomą ir daikto perdavimą, Jūs turėsite pasirašyti sutartį.</string>
     <string name="text_contract_preview">Sutarties peržiūra</string>
     <string name="text_make_sure_sign_the_contract">Įsitikinkite, kad daikto savininkas pasirašė sutartį.</string>
-    <string name="error_login_email_or_password_wrong">Įvestas neteisingas slaptažodis. Pabandykite dar kartą</string>
-    <string name="text_location_near_by">Ronaker pagalba rasite Jums reikalingus daiktus visai netoliese, tereikia nustatyti vietą</string>
+    <string name="error_login_email_or_password_wrong">Įvestas neteisingas slaptažodis. Pabandykite dar kartą.</string>
+    <string name="text_location_near_by">Ronaker pagalba rasite Jums reikalingus daiktus visai netoliese, tereikia nustatyti vietą.</string>
     <string name="text_via_facebook">Per Žinutė</string>
     <string name="text_via_call">Per Skambutis</string>
     <string name="text_via_mail">Per El. paštas</string>
     <string name="text_contact_us">Susisiekite su mumis</string>
     <string name="text_pending_message">Tavo įkeltas daiktas yra peržiūrimas. Netrukus susisieksime!</string>
-    <string name="text_pending_dialog">Tavo daiktas sėkmingai įkeltas. Mes jį netrukus peržiūrėsime ir susisieksime</string>
+    <string name="text_pending_dialog">Tavo daiktas sėkmingai įkeltas. Mes jį netrukus peržiūrėsime ir susisieksime.</string>
     <string name="text_reject_message">Deja, tavo daikto įkėlimas buvo atmestas. Daugiau informacijos rasi sąlygose.</string>
     <string name="text_location_disabled">Tavo lokacija atrodo išjungta. Ar norėtum įjungti?</string>
     <string name="text_preview">Peržiūra</string>
@@ -257,7 +257,8 @@
     <string name="text_smart_id_intro_1">Smart ID užtikrina žmonėms saugią ir patikimą internetinę aplinką.</string>
     <string name="text_smart_id_intro_2">Smart-ID, veikiančia Latvijoje, Estijoje bei Lietuvoje, naudojasi šių šalių gyventojai  ir verslininkai.</string>
     <string name="text_smart_id_intro_3">Naudotis Smart-ID yra labai paprasta:\npirmiausia, atsisiųskite Smart-ID programėlę.</string>
-    <string name="title_pers_day">/ dieną</string>
-    <string name="title_pers_week">/ savaitę</string>
-    <string name="title_pers_month">/ mėnesį</string>
+    <string name="title_pers_day">/d</string>
+    <string name="title_pers_week">/sav.</string>
+    <string name="title_pers_month">/m</string>
+    <string name="text_confirm_start_renting" formatted="true">Pasiimkite daiktą adresu \"%1$s\" ir patikrinę, kad daiktas atitinka aprašymą ir yra tinkamas naudoti, paspauskite mygtuką  \"Pradėti nuomą\".</string>
 </resources>
