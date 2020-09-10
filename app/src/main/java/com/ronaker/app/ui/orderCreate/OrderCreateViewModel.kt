@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.orderCreate
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +15,6 @@ import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 
 class OrderCreateViewModel @ViewModelInject constructor(

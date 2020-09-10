@@ -33,18 +33,18 @@ import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.search.SearchActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
+import com.ronaker.app.utils.ShapeDrawableHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
+    private val TAG=ExploreFragment::class.java.simpleName
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     private val viewModel: ExploreViewModel by viewModels()
-
-
 
 
     private var visibleItemCount: Int = 0
@@ -78,7 +78,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         val itemsize = requireContext().resources.getDimensionPixelSize(R.dimen.adapter_width)
         var screensize = binding.container.measuredWidth
-        AppDebug.log("mnager", "screenSize : $screensize")
+        AppDebug.log("manager", "screenSize : $screensize")
         var count = screensize / itemsize
 
         if (count < 2)
@@ -86,10 +86,10 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         var mnager = GridLayoutManager(context, count)
 
-         val productAdapter=  ItemExploreAdapter()
+        val productAdapter = ItemExploreAdapter()
         binding.recycler.layoutManager = mnager
 
-        binding.recycler.adapter=  productAdapter
+        binding.recycler.adapter = productAdapter
 
         val vtObserver = binding.root.viewTreeObserver
         vtObserver.addOnGlobalLayoutListener {
@@ -97,7 +97,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             if (screensize == 0) {
                 screensize = binding.container.measuredWidth
 
-                AppDebug.log("mnager", "screenSize 2 : $screensize")
+                AppDebug.log("manager", "screenSize 2 : $screensize")
                 count = screensize / itemsize
 
                 if (count < 2)
@@ -131,6 +131,21 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         })
 
+
+        viewModel.loadingEnd.observe(viewLifecycleOwner, { loading ->
+
+
+            if (loading) {
+                if (binding.loadingEnd.visibility == View.GONE)
+                    binding.loadingEnd.visibility = View.VISIBLE
+            } else
+                if (binding.loadingEnd.visibility == View.VISIBLE)
+                    binding.loadingEnd.visibility = View.GONE
+
+        })
+
+
+
         viewModel.listView.observe(viewLifecycleOwner, {
             productAdapter.submitList(it.toList())
         })
@@ -144,6 +159,18 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         viewModel.locationCheck.observe(viewLifecycleOwner, {
             chech()
+
+        })
+
+
+        viewModel.nearByChecked.observe(viewLifecycleOwner, {
+           if(it){
+
+               ShapeDrawableHelper.changeSvgDrawableColor(requireContext(),R.color.colorAccent, binding.nearByImage)
+           }else{
+
+               ShapeDrawableHelper.changeSvgDrawableColor(requireContext(),R.color.colorTextGreyLight, binding.nearByImage)
+           }
 
         })
 
@@ -164,13 +191,16 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             if (text.isNullOrBlank()) {
 
                 binding.searchText.text = getString(R.string.title_search_here)
-                binding.backImage.visibility = View.GONE
-                binding.searchImage.visibility = View.VISIBLE
+                binding.backImage.visibility = View.VISIBLE
+                binding.backImage.isClickable=false
+                binding.backImage.setImageResource(R.drawable.ic_search_white)
 
             } else {
                 binding.searchText.text = text
+                binding.backImage.isClickable=true
+
                 binding.backImage.visibility = View.VISIBLE
-                binding.searchImage.visibility = View.GONE
+                binding.backImage.setImageResource(R.drawable.ic_back_white)
             }
 
         })
@@ -188,9 +218,9 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             val p1 =
                 androidx.core.util.Pair<View, String>(binding.searchLayout, "search")
-            val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
+//            val p2 = androidx.core.util.Pair<View, String>(binding.cancelSearch, "searchCancel")
             val options =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1, p2)
+                ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, p1)//, p2)
 
 
 
@@ -209,13 +239,16 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
 
-        viewModel.findNearBy.observe(viewLifecycleOwner,  {
+        viewModel.findNearBy.observe(viewLifecycleOwner, {
 
             if (lastLocation != null)
                 viewModel.setLocation(lastLocation)
             else
                 chech()
         })
+
+
+
 
 
 
@@ -233,18 +266,30 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         }
 
+
+
+
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
+
+            visibleItemCount = mnager.childCount
+            totalItemCount = mnager.itemCount
+            pastVisiblesItems = mnager.findFirstVisibleItemPosition()
+            AppDebug.log(TAG,"visibleItemCount: $visibleItemCount, totalItemCount: $totalItemCount , pastVisiblesItems: $pastVisiblesItems ")
+
+
             if (v.getChildAt(v.childCount - 1) != null) {
+                AppDebug.log(TAG,"scrollY: $scrollY, current: ${v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight} ")
+
+
                 if (scrollY >= v.getChildAt(v.childCount - 1)
                         .measuredHeight - v.measuredHeight &&
                     scrollY > oldScrollY
                 ) {
 
-                    visibleItemCount = mnager.childCount
-                    totalItemCount = mnager.itemCount
-                    pastVisiblesItems = mnager.findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+
+                        AppDebug.log(TAG,"loadMore")
 
                         viewModel.loadMore()
                     }
@@ -266,26 +311,9 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
         })
 
-//        viewModel.loadMore()
 
-//        binding.nextCategory.visibility = View.GONE
-//
-//        binding.filterRecycler.viewTreeObserver.addOnScrollChangedListener {
-//
-//
-//            val totalItemCount = managerCategory.itemCount
-//            val pastVisiblesItems = managerCategory.findLastVisibleItemPosition()
-//
-//            if (pastVisiblesItems < totalItemCount) {
-//
-//                binding.nextCategory.visibility = View.VISIBLE
-//            } else {
-//
-//                binding.nextCategory.visibility = View.GONE
-//            }
-//
-//
-//        }
+
+
 
 
         binding.categoryRecycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
@@ -375,7 +403,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             getString(android.R.string.ok)
         ) { dialog, _ ->
             dialog?.cancel()
-            startActivity( Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         }
         builder.setOnDismissListener {
 
@@ -448,9 +476,14 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
                             }
 
 
+                        }.addOnCanceledListener {
+                            viewModel.emptyVisibility.postValue(View.VISIBLE)
+
                         }
 
 
+                    } else {
+                        viewModel.emptyVisibility.postValue(View.VISIBLE)
                     }
                 }
 

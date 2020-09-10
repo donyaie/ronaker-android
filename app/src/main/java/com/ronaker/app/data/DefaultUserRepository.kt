@@ -5,6 +5,7 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.network.request.*
+import com.ronaker.app.data.network.response.UserGoogleLoginResponseModel
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import com.ronaker.app.model.toUserModel
@@ -29,6 +30,7 @@ class DefaultUserRepository @Inject constructor(
     }
 
     private val TokenKey = "tokenKey"
+    private val SkipKey = "skipVersion"
     val USER_LANGUAGE_DEFAULT = LANGUAGE_DEFAULT
 
     private val UserInfoKey = "userInfoKey"
@@ -72,6 +74,26 @@ class DefaultUserRepository @Inject constructor(
                 it.user.toUserModel().apply {
 
 
+                    accessToken = it.token
+                    saveUserInfo(this)
+                    saveUserToken(it.token)
+                }
+            }
+
+            .toResult()
+
+    }
+
+
+    override fun loginUserWithGoogle(token:String): Observable<Result<User>> {
+        val info = UserGoogleLoginResponseModel(
+            token
+        )
+        return userApi.loginGoogle(getUserLanguage(), info)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.user.toUserModel().apply {
                     accessToken = it.token
                     saveUserInfo(this)
                     saveUserToken(it.token)
@@ -292,6 +314,17 @@ class DefaultUserRepository @Inject constructor(
     }
 
 
+
+
+
+    override fun saveUpdateSkipVersion(updateVersion: Int) {
+        preferencesProvider.putInt(SkipKey, updateVersion)
+    }
+
+    override fun getUpdateSkipVersion(): Int {
+        return preferencesProvider.getInt(SkipKey, 0)
+    }
+
     override fun saveUserInfo(info: User?) {
         preferencesProvider.putObject(UserInfoKey, info)
     }
@@ -349,6 +382,8 @@ class DefaultUserRepository @Inject constructor(
 
         }
     }
+
+
 
 
     override fun getUserToken(): String? {

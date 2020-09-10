@@ -1,17 +1,14 @@
 package com.ronaker.app.ui.manageProduct
 
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class ManageProductViewModel @ViewModelInject constructor(
     private val productRepository: ProductRepository

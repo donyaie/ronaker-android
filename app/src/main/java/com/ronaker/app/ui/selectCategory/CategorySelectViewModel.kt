@@ -1,8 +1,6 @@
 package com.ronaker.app.ui.selectCategory
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.databinding.AdapterCategorySelectBinding
 import com.ronaker.app.model.Category
 

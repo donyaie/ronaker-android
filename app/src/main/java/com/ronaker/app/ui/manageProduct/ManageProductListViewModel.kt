@@ -100,6 +100,10 @@ class ManageProductListViewModel @ViewModelInject constructor(
                             }
 
 
+                            if(hasNextPage && page==2){
+                                loadMore()
+                            }
+
                         } else {
 
                             if (page <= 1)

@@ -6,18 +6,21 @@
     <string name="google_api_key_me" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
     <string name="versionNameFormat" formatted="true" translatable="false">--Version V%1$s--</string>
     <string name="text_lend_request_accepted" formatted="true">Your Request Accepted By %1$s</string>
-    <string name="text_lend_request_started" formatted="true">You Start Renting %1$s Item</string>
+    <string name="text_lend_request_started" formatted="true">You Started Renting %1$s Item</string>
     <string name="text_rent_request_accepted" formatted="true">You Accepted %1$s Request</string>
-    <string name="text_rent_request_started" formatted="true">%1$s Started Progress</string>
+    <string name="text_rent_request_started" formatted="true">%1$s Started Renting Your Item</string>
     <string name="text_lend_request_pending" formatted="true">Pending To Accept From %1$s</string>
     <string name="text_rent_request_pending">Someone Requested To Rent Your Item</string>
-    <string name="text_order_message" formatted="true">Hi I\&apos;m %1$s\n I want to rent your %2$s for %3$s day\&apos;s\nthank you.</string>
-    <string name="text_rent_canceled">Rent | Canceled Order</string>
-    <string name="text_lend_canceled">List | Canceled Order</string>
-    <string name="text_lend_complete">List | Completed Order</string>
-    <string name="text_rent_complete">Rent | Completed Order</string>
-    <string name="text_lend_rejected">List | Rejected Order</string>
-    <string name="text_rent_rejected">Rent | Rejected Order</string>
+    <string name="text_order_message" formatted="true">Hi I\'m %1$s\n I want to rent your %2$s for %3$s day\'s.\nThank you.</string>
+    <string name="text_rent_canceled">List | Canceled Order</string>
+    <string name="text_rent_complete">List | Completed Order</string>
+    <string name="text_rent_rejected">List | Rejected Order</string>
+
+    <string name="text_lend_canceled">Rent | Canceled Order</string>
+    <string name="text_lend_complete">Rent | Completed Order</string>
+    <string name="text_lend_rejected">Rent | Rejected Order</string>
+
+
     <string name="hint_0000_0000_0000_0000" translatable="false">0000 0000 0000 0000</string>
     <string name="email">Email</string>
     <string name="email_hint">Enter your email</string>
@@ -66,7 +69,7 @@
     <string name="title_did_not_get_the_code_yet">Did not get the code yet?</string>
     <string name="title_resend">Resend</string>
     <string name="title_please_enter_your_phone">Please Enter Your Phone</string>
-    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to verify your phone number</string>
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to verify your phone number.</string>
     <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your item. please use good quality and clear image…</string>
     <string name="title_button_next">Next</string>
     <string name="title_tell_about_your_item">Tell about your item</string>
@@ -83,6 +86,9 @@
     <string name="title_per_day">Per day</string>
     <string name="title_per_week">Per week</string>
     <string name="title_per_month">Per month</string>
+    <string name="title_pers_day">/d</string>
+    <string name="title_pers_week">/w</string>
+    <string name="title_pers_month">/m</string>
     <string name="title_add_images_of_item">Add Images of item</string>
     <string name="title_add_new_image">Add new image</string>
     <string name="title_phone_number">Phone Number</string>
@@ -134,9 +140,9 @@
     <string name="text_send_a_instruction_to_who_rent_your_item">Send a Instruction to who rent your item</string>
     <string name="text_why_decline_this_order">Why decline this order?</string>
     <string name="text_finish_order">Finish Order</string>
-    <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please Pickup the item at provided address and ensure that the rented goods are functioning properly.\nFees for the Item shuold be paid before pressed “start renting” button</string>
+    <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please Pickup the item at provided address and ensure that the rented goods are functioning properly.\nFees for the Item shuold be paid before pressed “Start renting” button.</string>
     <string name="text_start_renting_instruction">Renting instruction</string>
-    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please ensure that the rented goods are functioning properly</string>
+    <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please confirm, that the rented item is functioning properly.</string>
     <string name="text_accept_and_start_renting">Next Step</string>
     <string name="text_version" translatable="false">Version</string>
     <string name="text_try_again">Try Again</string>
@@ -188,7 +194,7 @@
     <string name="text_nothing_saved_yet">Nothing Saved Yet</string>
     <string name="texy_you_haven_t_payment_method">You Haven\&apos;t Payment Method</string>
     <string name="text_add_insurance_of_item">Add Insurance Of Item</string>
-    <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Add Insurance Image for you item. please use clear image from title and signature</string>
+    <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Add Insurance Image for you item. please use clear image from title and signature.</string>
     <string name="text_privacy_policy">Privacy Policy</string>
     <string name="text_license_agreement">Terms &amp; Conditions</string>
     <string name="text_check_the_provided_control_code">Check the provided control code</string>
@@ -199,7 +205,7 @@
     <string name="text_we_will_authorize_you_with_your_smart_id">To ensure your security and prevent malicious behavior, we need to verify your identity information.</string>
     <string name="text_smart_id">Smart ID</string>
     <string name="textauthorize_your_identity">Verify your identity</string>
-    <string name="text_instruction_text">Term of use item and how pick up item</string>
+    <string name="text_instruction_text">Instruction how to pick up and use item</string>
     <string name="text_Instruction">Instruction</string>
     <string name="text_tell_pickup_address">Enter Pickup address</string>
     <string name="text_explan_why_decline">Explain why decline</string>
@@ -232,16 +238,16 @@
     <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">We\&apos;ll exchange your contacts soon. You can contact the owner, pick-up and enjoy your item!</string>
     <string name="text_return_and_evaluate">Return and Evaluate</string>
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">Please evaluate item when rental period is over - this is very important for community safety.</string>
-    <string name="text_we_will_send_a_reset_password_link_to_your_email">We will send a reset password link to your email</string>
+    <string name="text_we_will_send_a_reset_password_link_to_your_email">We will send a reset password link to your email.</string>
     <string name="text_forget_password">Forget password</string>
     <string name="text_reset_may_password">Reset my password</string>
     <string name="text_you_signed_the_contract">You signed the contract</string>
     <string name="text_signed_the_contract" formatted="true">%1$s signed the contract</string>
     <string name="text_waite_for_sign" formatted="true">Wait for %1$s sign</string>
-    <string name="text_you_must_sign_the_contract_exactly_before_start_renting">You must sign the contract exactly before start Renting and goods exchange</string>
+    <string name="text_you_must_sign_the_contract_exactly_before_start_renting">You must sign the contract exactly before start Renting and goods exchange.</string>
     <string name="text_contract_preview">Contract Preview</string>
-    <string name="text_make_sure_sign_the_contract">Please make sure the item owner signed the contract</string>
-    <string name="error_login_email_or_password_wrong">your email or password is incorrect. please try again</string>
+    <string name="text_make_sure_sign_the_contract">Please make sure the item owner signed the contract.</string>
+    <string name="error_login_email_or_password_wrong">your email or password is incorrect. please try again.</string>
     <string name="text_location_near_by">Ronaker help you find items nearby.\nyour location is required to make these work!</string>
     <string name="text_via_facebook">Via Messenger</string>
     <string name="text_via_call">Via Call</string>
@@ -253,5 +259,17 @@
     <string name="text_location_disabled">Your Location service seems to be disabled, do you want to enable it?</string>
     <string name="text_preview">Preview</string>
 
-    <string name="button_start_renting_sign">Sign the contract &amp; Start Renting</string>
+    <string name="text_please_read_the_contract">Please Read the contract</string>
+
+
+    <string name="button_start_renting_sign">Start Renting</string>
+    <string name="text_for_day" formatted="true">%1$s %2$s for %3$d days</string>
+    <string name="text_success_sign_and_start_renting">Done. Reach out to owner and enjoy your item.</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="text_or">or</string>
+    <string name="text_signin_with_google">Sign in with Google</string>
+    <string name="text_smart_id_intro_1">Smart ID helps people to deal in the secure &amp; safe environment.</string>
+    <string name="text_smart_id_intro_2">Smart-ID works in Latvia, Estonia &amp; Lithuania for users who live or have business in these countries.</string>
+    <string name="text_smart_id_intro_3">Using Smart-ID is very easy:\nget started by downloading the Smart-ID app.</string>
+    <string name="text_confirm_start_renting" formatted="true">For picking up the item, you should go to this address:\n\"%1$s\"\nand after check the item you can push the \"start renting\" button.</string>
 </resources>

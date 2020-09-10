@@ -9,7 +9,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -30,6 +32,8 @@ import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.view.TabNavigationComponent
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
+import io.branch.referral.Branch.BranchReferralInitListener
+
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
@@ -42,6 +46,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         FragNavController(supportFragmentManager, R.id.container)
     override val numberOfRootFragments: Int = 4
 
+    private val UPDATE_REQUEST_CODE=645
 
     private val INDEX_EXPLORE = FragNavController.TAB1
     private val INDEX_ORDERS = FragNavController.TAB2
@@ -50,10 +55,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     private val INDEX_PROFILE = FragNavController.TAB4
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityDashboardBinding
-
-
-
-    var inviteCode: String? = null
 
 
     var savedInstanceState: Bundle? = null
@@ -76,7 +77,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         viewModel.goLogin.observe(this, { value ->
             if (value == true) {
 
-                startActivity(LoginActivity.newInstance(this@DashboardActivity, inviteCode))
+                startActivity(LoginActivity.newInstance(this@DashboardActivity))
                 AnimationHelper.setFadeTransition(this)
                 finish()
 
@@ -99,40 +100,48 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         window.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
 
-        if(viewModel.islogin) {
+        if (viewModel.checklogin()) {
 
             initNavigation(savedInstanceState)
 
-
-            handleIntent(intent)
         }
+
+
+        checkForUpdate()
     }
 
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-
-        intent?.let { handleIntent(it) }
+        viewModel.checklogin()
+        Branch.sessionBuilder(this).withCallback(branchReferralInitListener).reInit()
     }
 
 
-    private fun handleIntent(intent: Intent) {
+    override fun onStart() {
+        super.onStart()
+        Branch.sessionBuilder(this).withCallback(branchReferralInitListener)
+            .withData(if (intent != null) intent.data else null).init()
 
-        Branch.sessionBuilder(this).withCallback { referringParams, error ->
+
+    }
+
+
+    private val branchReferralInitListener =
+        BranchReferralInitListener { linkProperties, error ->
             if (error == null) {
-                AppDebug.log("BRANCH SDK", referringParams.toString())
+                AppDebug.log("BRANCH SDK", linkProperties.toString())
 
-                if (referringParams?.has("product") == true) {
-                    val suid = referringParams.getString("product")
-                    if (suid.isNotBlank() && viewModel.islogin)
+                if (linkProperties?.has("product") == true) {
+                    val suid = linkProperties.getString("product")
+                    if (suid.isNotBlank() && viewModel.islogin) {
                         startActivity(ExploreProductActivity.newInstance(this, suid.trim()))
+                    }
 
                 }
 
-
-
-                if (referringParams?.has("invite-code") == true) {
-                    inviteCode = referringParams.getString("invite-code")
+                if (linkProperties?.has("invite-code") == true) {
+                    LoginActivity.inviteCode = linkProperties.getString("invite-code")
 
 
                 }
@@ -140,10 +149,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             } else {
                 AppDebug.log("BRANCH SDK", error.message)
             }
-        }.withData(intent.data).init()
-
-
-    }
+        }
 
 
     override fun getRootFragment(index: Int): Fragment {
@@ -269,7 +275,20 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
                     binding.navigation.postDelayed({ binding.navigation.select(1) }, 50)
                 }
             }
+            UPDATE_REQUEST_CODE ->{
+                if (resultCode == RESULT_CANCELED) {
+
+                    viewModel.setSkipVersion(availableVersionCode)
+
+                }
+
+            }
+
+
         }
+
+
+
 
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -329,4 +348,47 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     interface MainaAtivityListener {
         fun onBackPressed(): Boolean
     }
+
+
+    var availableVersionCode=0
+
+
+    fun checkForUpdate() {
+
+        // Creates instance of the manager.
+        val appUpdateManager = AppUpdateManagerFactory.create(this)
+
+        // Returns an intent object that you use to check for an update.
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                // For a flexible update, use AppUpdateType.FLEXIBLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+            ) {
+
+
+                availableVersionCode=appUpdateInfo.availableVersionCode()
+
+              if( ! viewModel.isSkipVersion(appUpdateInfo.availableVersionCode())) {
+
+
+                  appUpdateManager.startUpdateFlowForResult(
+                      // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                      appUpdateInfo,
+                      // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                      AppUpdateType.FLEXIBLE,
+                      // The current activity making the update request.
+                      this,
+                      // Include a request code to later monitor this update request.
+                      UPDATE_REQUEST_CODE
+                  )
+
+              }
+            }
+        }
+
+    }
+
 }

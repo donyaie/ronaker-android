@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
@@ -85,7 +83,7 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
             if (value == true) {
 //                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
 
-                binding.imageLayout.isClickable = false
+                binding.imageLayout.isClickable = true
                 binding.imageLayout.setEndDrawableRes(R.drawable.ic_complete)
             } else {
 

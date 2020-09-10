@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.explore
 
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
@@ -18,15 +16,13 @@ import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class ExploreViewModel @ViewModelInject constructor(
-    private val productRepository:ProductRepository,
+    private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
     private val analytics: FirebaseAnalytics
 ) : BaseViewModel(),
     CategoryExploreAdapter.AdapterListener {
-
 
 
     private var page = 1
@@ -46,17 +42,14 @@ class ExploreViewModel @ViewModelInject constructor(
     private var cachCategoryList: ArrayList<Category> = ArrayList()
 
 
-
-
-
     private var query: String = ""
-
 
 
     var categoryListAdapter: CategoryExploreAdapter = CategoryExploreAdapter(categoryList, this)
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingEnd: MutableLiveData<Boolean> = MutableLiveData()
     val retry: MutableLiveData<String> = MutableLiveData()
 
     val searchText: MutableLiveData<String> = MutableLiveData()
@@ -67,6 +60,7 @@ class ExploreViewModel @ViewModelInject constructor(
     val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
     val locationVisibility: MutableLiveData<Int> = MutableLiveData()
     val locationCheck: MutableLiveData<Boolean> = MutableLiveData()
+    val nearByChecked: MutableLiveData<Boolean> = MutableLiveData()
 
 
     val scrollCategoryPosition: MutableLiveData<Int> = MutableLiveData()
@@ -76,7 +70,6 @@ class ExploreViewModel @ViewModelInject constructor(
 
 
     private fun reset() {
-
         page = 1
         hasNextPage = true
         dataList.clear()
@@ -142,13 +135,13 @@ class ExploreViewModel @ViewModelInject constructor(
 
         withContext(Dispatchers.Unconfined) {
 
-            if (location == null) {
-//                emptyVisibility.postValue(View.VISIBLE)
-
-                loading.postValue(false)
-                locationCheck.postValue(true)
-                return@withContext
-            }
+//            if (location == null) {
+////                emptyVisibility.postValue(View.VISIBLE)
+//
+//                loading.postValue(false)
+//                locationCheck.postValue(true)
+//                return@withContext
+//            }
 
             if (hasNextPage) {
 
@@ -166,7 +159,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
                         query = searchValue,
                         page = page,
-                        location = location,
+                        location = if (isNearBy) location else null,
                         radius = 50,
                         categorySiud = selectedCategory?.suid
                     )
@@ -177,10 +170,14 @@ class ExploreViewModel @ViewModelInject constructor(
 
                             emptyVisibility.postValue(View.GONE)
 
+                        } else {
+                            loadingEnd.postValue(true)
                         }
+
                         errorMessage.postValue(null)
                     }
                     .doOnTerminate {
+                        loadingEnd.postValue(false)
                         loading.postValue(false)
                     }
                     .subscribe { result ->
@@ -201,6 +198,11 @@ class ExploreViewModel @ViewModelInject constructor(
 
                             if (dataList.isEmpty()) {
                                 emptyVisibility.postValue(View.VISIBLE)
+                            }
+
+
+                            if (page == 2 && hasNextPage) {
+                                loadMore()
                             }
 
                         } else {
@@ -232,10 +234,10 @@ class ExploreViewModel @ViewModelInject constructor(
     fun loadMore() {
 
 
-            uiScope.launch {
+        uiScope.launch {
 
-                loadProduct()
-            }
+            loadProduct()
+        }
 
     }
 
@@ -359,12 +361,47 @@ class ExploreViewModel @ViewModelInject constructor(
     }
 
 
-    fun setLocation(lastLocation: LatLng?) {
+    fun onClickNearBy() {
 
-        location = lastLocation
-        retry()
+        if (isNearBy) {
+
+            nearByChecked.postValue(false)
+            isNearBy = false
+
+            retry()
+
+        } else if (location != null) {
+            isNearBy = true
+            nearByChecked.postValue(true)
+            locationCheck.postValue(true)
+            retry()
+        } else {
+            locationCheck.postValue(true)
+        }
 
 
     }
+
+
+    var isNearBy = false
+
+
+    fun setLocation(lastLocation: LatLng?) {
+
+
+        if (lastLocation != null && location == null) {
+            location = lastLocation
+            isNearBy = true
+            nearByChecked.postValue(true)
+            retry()
+
+
+        } else if (lastLocation != null) {
+            location = lastLocation
+        }
+
+
+    }
+
 
 }

@@ -3,7 +3,6 @@ package com.ronaker.app.data.local
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.ronaker.app.utils.byteArrayOfInts

@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.profileEdit
 
 
-import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
@@ -10,7 +9,6 @@ import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.nameFormat
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class ProfileEditViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository

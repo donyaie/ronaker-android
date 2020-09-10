@@ -8,13 +8,18 @@ import android.transition.Fade
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.explore.ItemExploreAdapter
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
@@ -27,19 +32,20 @@ class SearchActivity : BaseActivity() {
 
 
     companion object {
-        const val SUID_KEY = "suid"
         const val ResultCode = 333
         const val Search_KEY = "searchValue"
 
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, SearchActivity::class.java)
             val boundle = Bundle()
-//            boundle.putString(SUID_KEY, suid)
             intent.putExtras(boundle)
 
             return intent
         }
     }
+
+
+    var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -77,7 +83,7 @@ class SearchActivity : BaseActivity() {
         })
 
 
-        binding.cancelSearch.setOnClickListener {
+        binding.backImage.setOnClickListener {
             finishAfterTransition()
         }
 
@@ -98,11 +104,33 @@ class SearchActivity : BaseActivity() {
         }
 
 
+
+//
+//        disposable = RxTextView.textChanges(binding.searchEdit)
+//            .debounce(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+//            .subscribe {
+//
+//                viewModel.search(it.toString())
+//            }
+//
+
+
         binding.clearText.setOnClickListener {
             binding.searchEdit.text.clear()
         }
 
 
+        val mnager = LinearLayoutManager(this)
+
+        val productAdapter = ItemSearchAdapter()
+        binding.itemRecycler.layoutManager = mnager
+
+        binding.itemRecycler.adapter = productAdapter
+
+
+        viewModel.listView.observe(this, {
+            productAdapter.submitList(it.toList())
+        })
     }
 
     override fun onBackPressed() {
@@ -123,5 +151,9 @@ class SearchActivity : BaseActivity() {
         return null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.dispose()
+    }
 
 }

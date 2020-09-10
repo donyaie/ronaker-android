@@ -8,17 +8,17 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.google.firebase.crashlytics'
 
 apply plugin: 'com.google.firebase.firebase-perf'
-
-apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'dagger.hilt.android.plugin'
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 7
+def versionPatch = 18
 android {
 
 
@@ -119,7 +119,9 @@ android {
 
         robo {
 
-            buildConfigField "String", "hostAPI", "\"https://api.ronaker.com\""
+            buildConfigField "String", "hostAPI", "\"https://staging.ronaker.com\""
+//            buildConfigField "String", "hostAPI", "\"https://api.ronaker.com\""
+
             versionNameSuffix ".robo"
             resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
 
@@ -202,6 +204,7 @@ dependencies {
 
 
     implementation "com.google.android.material:material:$materialVersion"
+    implementation 'com.google.android.play:core-ktx:1.8.1'
 
     // Data binding
     kapt "com.android.databinding:compiler:$databindingVersion"
@@ -302,8 +305,10 @@ dependencies {
     implementation "com.google.firebase:firebase-invites:$firebaseInvitesVersion"
     implementation "com.google.firebase:firebase-perf:$firebasePerf"
 
-    // Add dependency
-    implementation "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion"
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
     
     //Alert
     implementation "com.irozon.sneaker:sneaker:$sneakerVersion"

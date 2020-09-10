@@ -6,11 +6,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ronaker.app.General
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterExploreItemBinding
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.extension.getParentActivity
+import com.ronaker.app.utils.itemSelect
 
 
 class ItemExploreAdapter :
@@ -74,6 +76,9 @@ class ItemExploreAdapter :
 //                           // ,pair2
 //                        )
 //                    activity.startActivityForResult( ExploreProductActivity.newInstance(activity, product), ExploreProductActivity.REQUEST_CODE, optionsCompat.toBundle(),)
+
+                    (activity.application as General).analytics.itemSelect(product)
+
                     activity.startActivityForResult(
                         ExploreProductActivity.newInstance(
                             activity,

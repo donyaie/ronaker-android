@@ -3,7 +3,6 @@ package com.ronaker.app.data.network
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.request.ProductRateRequestModel
-import com.ronaker.app.data.network.request.UserSmartIdVerificationCodeRequestModel
 import com.ronaker.app.data.network.response.FreeResponseModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.data.network.response.OrderResponseModel

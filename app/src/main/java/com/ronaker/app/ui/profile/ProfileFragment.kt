@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.dashboard.DashboardActivity
+import com.ronaker.app.ui.notificationHistory.NotificationHistoryActivity
 import com.ronaker.app.ui.productSaved.ProductSavedActivity
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.ui.profileEdit.ProfileEditActivity
@@ -18,8 +17,6 @@ import com.ronaker.app.ui.profilePaymentHistoryList.ProfilePaymentHistoryListAct
 import com.ronaker.app.ui.profileSetting.ProfileSettingActivity
 import com.ronaker.app.ui.support.SupportDialog
 import com.ronaker.app.utils.Alert
-import com.ronaker.app.utils.IntentManeger
-import com.ronaker.app.utils.SUPPORT_URL
 import com.ronaker.app.utils.extension.setEndDrawableRes
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
@@ -90,6 +87,11 @@ class ProfileFragment : BaseFragment() {
             }
         }
 
+        binding.notification.setOnClickListener {
+
+
+            startActivity(NotificationHistoryActivity.newInstance(requireContext()))
+        }
 
 
         binding.supportLayout.setOnClickListener {

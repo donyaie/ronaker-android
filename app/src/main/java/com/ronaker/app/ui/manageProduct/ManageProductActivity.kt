@@ -1,15 +1,14 @@
 package com.ronaker.app.ui.manageProduct
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Product
@@ -35,14 +34,34 @@ class ManageProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLi
         var REQUEST_CODE = 349
 
 
-        fun newInstance(context: Context, product: Product?): Intent {
+        fun newInstance(context: Context, product: Product): Intent {
             val intent = Intent(context, ManageProductActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(PRODUCT_KEY, product)
             intent.putExtras(boundle)
+            return intent
+        }
+
+
+        fun newInstance(context: Activity, suid: String): Intent {
+            val intent = Intent(context, ManageProductActivity::class.java)
+            val boundle = Bundle()
+            boundle.putString(SUID_KEY, suid)
+            intent.putExtras(boundle)
 
             return intent
         }
+
+
+        fun newInstance(context: Application, suid: String): Intent {
+            val intent = Intent(context, ManageProductActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK
+            val boundle = Bundle()
+            boundle.putString(SUID_KEY, suid)
+            intent.putExtras(boundle)
+            return intent
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

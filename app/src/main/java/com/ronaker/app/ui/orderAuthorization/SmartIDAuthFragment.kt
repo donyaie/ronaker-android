@@ -34,9 +34,6 @@ class SmartIDAuthFragment : BaseFragment(), IPagerFragment {
 
         binding.viewModel = viewModel
 
-
-
-
         return binding.root
     }
 

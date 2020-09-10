@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.loginForget
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +10,6 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.isNumeric
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class LoginForgetViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,

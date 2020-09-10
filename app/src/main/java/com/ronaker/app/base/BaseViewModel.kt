@@ -1,7 +1,6 @@
 package com.ronaker.app.base
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

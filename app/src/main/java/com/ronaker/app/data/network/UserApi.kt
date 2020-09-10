@@ -117,6 +117,15 @@ interface UserApi {
 
 
 
+
+    /**
+     * Login with google
+     */
+    @POST("/api/v1/users/google-login/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+     fun loginGoogle(@Header("Accept-Language") language: String,@Body user: UserGoogleLoginResponseModel): Observable< UserRegisterResponseModel>
+
+
     /**
      * Forget password confirm
      */

@@ -7,8 +7,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
@@ -134,8 +132,8 @@ class ProfileSettingActivity : BaseActivity() {
         ) { dialog, _ ->
             dialog?.cancel()
             viewModel.logout()
+            GoogleSignManger.getClient(this).signOut()
             Branch.getInstance().logout()
-
             startActivity(DashboardActivity.newInstance(this))
             AnimationHelper.setFadeTransition(this)
         }

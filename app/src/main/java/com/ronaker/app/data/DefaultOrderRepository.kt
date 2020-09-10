@@ -13,6 +13,7 @@ import com.ronaker.app.model.toOrderModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -54,15 +55,19 @@ class DefaultOrderRepository @Inject constructor(private val api: OrderApi,
         product_suid: String,
         stateDate: Date,
         endDate: Date,
-        message: String?,
+        message: String,
         price: Double
     ): Observable<Result<Boolean>> {
+
+
+
+
 
         val request =
             OrderCreateRequestModel(
                 product_suid,
-                stateDate,
-                endDate,
+                SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(stateDate)+"T21:00:00Z",
+                SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(endDate)+"T21:00:00Z",
                 message,
                 price
             )

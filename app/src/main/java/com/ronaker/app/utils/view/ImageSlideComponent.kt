@@ -182,7 +182,7 @@ class ImageSlideComponent constructor(context: Context, attrs: AttributeSet) :
             if(fullScreen){
                 imageView.scaleType=ImageView.ScaleType.FIT_CENTER
             }else
-                imageView.scaleType=ImageView.ScaleType.CENTER_CROP
+                imageView.scaleType=ImageView.ScaleType.FIT_CENTER
 
             GlideApp.with(context).load(dataList[position]).into(imageView)
             container.addView(view)

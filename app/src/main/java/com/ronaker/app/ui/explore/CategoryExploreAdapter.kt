@@ -6,9 +6,11 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ronaker.app.General
 import com.ronaker.app.R
 import com.ronaker.app.databinding.AdapterExploreCategoryBinding
 import com.ronaker.app.model.Category
+import com.ronaker.app.utils.categorySelect
 import com.ronaker.app.utils.extension.getApplication
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -109,6 +111,11 @@ class CategoryExploreAdapter(
 
 
             binding.root.setOnClickListener {
+
+
+                (binding.root.getApplication() as General).analytics.categorySelect(product)
+
+
                 listener?.onSelectCategory(product)
             }
 

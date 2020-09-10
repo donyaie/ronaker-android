@@ -1,7 +1,7 @@
 package com.ronaker.app.utils
 
 import android.util.Log
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.ronaker.app.BuildConfig
 
 object AppDebug {
@@ -13,7 +13,10 @@ object AppDebug {
             if (BuildConfig.DEBUG)
                 Log.d(TAG, it)
             else
-                Crashlytics.log(Log.DEBUG, TAG, it)
+                FirebaseCrashlytics.getInstance().log( it)
+
+
+
         }
     }
 
@@ -24,7 +27,7 @@ object AppDebug {
             if (BuildConfig.DEBUG)
                 Log.e(TAG, it)
             else
-                Crashlytics.log(Log.ERROR, TAG, it)
+                FirebaseCrashlytics.getInstance().log("$TAG $it")
         }
     }
 
@@ -48,7 +51,7 @@ object AppDebug {
         if (BuildConfig.DEBUG)
             ex.printStackTrace()
         else
-            Crashlytics.logException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
 
 
     }

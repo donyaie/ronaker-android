@@ -1,143 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.ronaker.app.ui.profileSetting.ProfileSettingViewModel" />
+            name="viewModel"
+            type="com.ronaker.app.ui.profileSetting.ProfileSettingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-            android:gravity="center"
-            android:layoutDirection="ltr">
+        android:gravity="center"
+        android:layoutDirection="ltr">
 
 
         <com.ronaker.app.utils.view.ToolbarComponent
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:toolbar_component_action_container="NONE"
-                app:toolbar_component_bottom_line="false"
-                app:toolbar_component_cancel_container="BACK"
-                app:toolbar_component_center_container="NONE"
-                app:toolbar_component_dot_count="3"
-                app:toolbar_component_transparent="false" />
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbar_component_action_container="NONE"
+            app:toolbar_component_bottom_line="false"
+            app:toolbar_component_cancel_container="BACK"
+            app:toolbar_component_center_container="NONE"
+            app:toolbar_component_dot_count="3"
+            app:toolbar_component_transparent="false" />
 
         <androidx.core.widget.NestedScrollView
 
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
                 <TextView
-                        android:id="@+id/title_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_default"
+                    android:id="@+id/title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_default"
 
-                        android:layout_marginTop="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:layout_marginBottom="40dp"
-                        android:text="@string/title_setting"
-                        android:textAppearance="@style/TextAppearance.Heading.1"
-                        android:textColor="@color/colorTextDark"
-                        app:layout_constraintTop_toBottomOf="@id/avatar_image" />
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/title_setting"
+                    android:textAppearance="@style/TextAppearance.Heading.1"
+                    android:textColor="@color/colorTextDark"
+                    app:layout_constraintTop_toBottomOf="@id/avatar_image" />
 
 
                 <LinearLayout
-                        android:id="@+id/sign_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="66dp"
+                    android:id="@+id/sign_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
 
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/margin_default"
-                        android:paddingRight="@dimen/margin_default">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_default"
+                    android:paddingRight="@dimen/margin_default"
+                    android:visibility="gone">
 
 
                     <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".95"
-                            android:text="@string/title_notification"
-                            android:textAppearance="@style/TextAppearance.Large.Light"
-                            android:textColor="@color/colorTextDark" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:text="@string/title_notification"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+                        android:textColor="@color/colorTextDark" />
 
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/notification_switch"
 
-
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:checked="true"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
 
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:background="@color/colorPlatinGrey" />
 
 
 
                 <Button
-                    android:visibility="gone"
                     android:id="@+id/download_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_download_user_data"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    android:visibility="gone"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
 
                 <RelativeLayout
-                    android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:background="@color/colorPlatinGrey" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    android:visibility="gone" />
 
 
                 <Button
                     android:id="@+id/license_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/text_license_agreement"
-                    android:textColor="@color/colorTextDark" />
-
-
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:background="@color/colorPlatinGrey" />
-
-
-                <Button
-                    android:id="@+id/privacy_layout"
-                    style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
-                    android:text="@string/text_privacy_policy"
-                    android:textColor="@color/colorTextDark" />
-
+                    android:textColor="@color/colorTextDark"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
 
                 <RelativeLayout
@@ -148,22 +127,36 @@
                     android:background="@color/colorPlatinGrey" />
 
 
+                <Button
+                    android:id="@+id/privacy_layout"
+                    style="@style/Button.transparent.width"
+                    android:text="@string/text_privacy_policy"
+                    android:textColor="@color/colorTextDark"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
 
                 <Button
                     android:id="@+id/language_layout"
                     style="@style/Button.transparent.width"
-                    app:drawableEndCompat="@drawable/ic_chevron_right"
                     android:text="@string/title_change_language"
-                    android:textColor="@color/colorTextDark" />
+                    android:textColor="@color/colorTextDark"
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
 
 
                 <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:background="@color/colorPlatinGrey" />
-
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
 
 
                 <Button
@@ -171,46 +164,40 @@
                     style="@style/Button.transparent.width"
                     android:text="@string/title_logout"
                     android:textColor="@color/colorTextDark" />
+
                 <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:layout_marginRight="@dimen/margin_default"
-                        android:background="@color/colorPlatinGrey" />
-
-
-
-
-
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
 
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
 
-
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/version_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="40dp"
             android:gravity="center"
-            android:textAppearance="@style/TextAppearance.Small.SB"
             android:text="@string/text_version"
-            />
+            android:textAppearance="@style/TextAppearance.Small.SB"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <com.ronaker.app.utils.view.LoadingComponent
 
 
-                android:id="@+id/loading"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                android:layout_width="match_parent"
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:loading_transparent="false" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:loading_transparent="false" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

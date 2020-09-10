@@ -1,12 +1,10 @@
 package com.ronaker.app.ui.profile
 
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
@@ -16,7 +14,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class ProfileViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository
@@ -78,9 +75,9 @@ class ProfileViewModel @ViewModelInject constructor(
 
                     } else {
 
-                        if(result?.error?.responseCode==401){
-                            logOut()
-                        }
+//                        if(result?.error?.responseCode==401){
+//                            logOut()
+//                        }
 
                         errorMessage.postValue(result.error?.message)
                     }
@@ -91,12 +88,6 @@ class ProfileViewModel @ViewModelInject constructor(
         }
 
 
-   fun logOut(){
-
-       userRepository.clearLogin()
-       logOutAction.postValue(true)
-
-    }
 
     private fun fillUser(user: User) {
 

@@ -23,6 +23,7 @@ class General : Application() {
 
     lateinit var analytics: FirebaseAnalytics
 
+
     override fun onCreate() {
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
@@ -43,8 +44,6 @@ class General : Application() {
             .unsubscribeWhenNotificationsAreDisabled(true)
             .setNotificationOpenedHandler(AppNotificationOpenedHandler(this))
             .init()
-
-
 
 
         ViewPump.init(

@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.model.Order
-import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
 import com.ronaker.app.utils.view.IPagerFragment
@@ -72,8 +69,18 @@ class SmartIDPersonalCodeFragment : BaseFragment(), IPagerFragment {
         getOrder()?.let { order ->
 
 
-            if (!isCanSign())
+            if (!isCanSign()) {
                 binding.nextButton.visibility = View.GONE
+                activity?.let {
+                    binding.title.text=it.baseContext.getString(R.string.text_please_read_the_contract)
+                }
+
+            }else{
+                binding.nextButton.visibility = View.VISIBLE
+                activity?.let {
+                    binding.title.text=it.baseContext.getString(R.string.text_please_read_and_sign_the_contract)
+                }
+            }
 
 
             val filename = "contract-${if (language.trim().toLowerCase(Locale.ROOT)

@@ -1,12 +1,9 @@
 package com.ronaker.app.ui.selectCategory
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.model.Category
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 
 class AddProductCategorySelectViewModel : BaseViewModel() {

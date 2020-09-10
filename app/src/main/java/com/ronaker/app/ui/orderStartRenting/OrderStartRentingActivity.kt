@@ -12,9 +12,9 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
@@ -79,9 +79,14 @@ class OrderStartRentingActivity : BaseActivity() {
 
 
 
-        viewModel.finish.observe(this, { _ ->
-            setResult(Activity.RESULT_OK)
-            finish()
+        viewModel.finish.observe(this, {
+
+            if(it){
+                succeccSend()
+            }else {
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }
         })
 
 
@@ -92,10 +97,16 @@ class OrderStartRentingActivity : BaseActivity() {
                     OrderAuthorizationActivity.newInstance(
                         this@OrderStartRentingActivity,
                         it,
-                        canSign = true,startRenting = true
+                        canSign = true,startRenting = false
                     ), OrderAuthorizationActivity.REQUEST_CODE
                 )
             }
+        })
+
+
+
+        viewModel.startRentingConfirm.observe(this, {
+            startRentingConfirmation(it)
         })
 
 
@@ -114,6 +125,13 @@ class OrderStartRentingActivity : BaseActivity() {
         binding.toolbar.cancelClickListener = View.OnClickListener {
 
             finish()
+        }
+
+
+        binding.signButton.setOnClickListener {
+
+            viewModel.onClickSign()
+
         }
 
         initLink()
@@ -260,6 +278,9 @@ class OrderStartRentingActivity : BaseActivity() {
             binding.acceptButton.isEnabled = isChecked
 
 
+            if(isChecked){
+                viewModel.checkedAgreement()
+            }
 
 
         }
@@ -289,6 +310,47 @@ class OrderStartRentingActivity : BaseActivity() {
 
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+    private fun succeccSend() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage(getString(R.string.text_success_sign_and_start_renting))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            this.setResult(Activity.RESULT_OK)
+            dialog?.dismiss()
+        }
+
+
+        builder.setOnDismissListener {
+            this.setResult(Activity.RESULT_OK)
+            this.finish()
+        }
+
+        builder.setCancelable(true)
+
+        builder.show()
+    }
+
+
+    private fun startRentingConfirmation(address:String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setMessage(String.format( getString(R.string.text_confirm_start_renting),address))
+        builder.setPositiveButton(
+            getString(android.R.string.ok)
+
+        ) { dialog, _ ->
+            dialog?.dismiss()
+        }
+
+        builder.setCancelable(true)
+
+        builder.show()
+    }
+
 
 
 

@@ -1,10 +1,8 @@
 package com.ronaker.app.ui.profilePaymentHistoryList
 
-import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
-import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.model.Transaction
 import com.ronaker.app.utils.toCurrencyFormat

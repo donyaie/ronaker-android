@@ -43,7 +43,7 @@
                             android:layout_height="match_parent"
                             android:background="@color/colorPlatinGrey"
                             android:contentDescription="@string/text_content"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitCenter"
                             app:layout_constraintTop_toTopOf="parent"
                             app:mutableImage="@{viewModel.getProductImage()}" />
 

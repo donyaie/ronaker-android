@@ -15,6 +15,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.FileUtils
 import com.ronaker.app.utils.FileUtils.getCacheCameraPath
 import com.ronaker.app.utils.IntentManeger
@@ -145,7 +146,7 @@ class ImagePickerActivity : BaseActivity() {
             UCrop.RESULT_ERROR -> {
                 data?.let {
                     val cropError = UCrop.getError(it)
-                    com.ronaker.app.utils.AppDebug.log(TAG, "Crop error: $cropError")
+                    AppDebug.log(TAG, "Crop error: $cropError")
                     setResultCancelled()
                 }
             }
@@ -158,7 +159,7 @@ class ImagePickerActivity : BaseActivity() {
 
 
 
-        val destinationUri = Uri.fromFile(File(cacheDir, System.currentTimeMillis().toString()+FileUtils.queryName(contentResolver, sourceUri)))
+        val destinationUri = Uri.fromFile(File(cacheDir, System.currentTimeMillis().toString()+FileUtils.queryName(contentResolver, sourceUri)+".jpeg"))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
         options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -229,6 +230,7 @@ class ImagePickerActivity : BaseActivity() {
             intent.putExtra(INTENT_LOCK_ASPECT_RATIO, true)
             intent.putExtra(INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
             intent.putExtra(INTENT_ASPECT_RATIO_Y, 1)
+
             activity.startActivityForResult(intent, requestCode)
 
         }

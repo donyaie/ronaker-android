@@ -6,11 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.transition.Explode
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
-import android.view.Window
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -114,15 +112,6 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-//
-//        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-//// set an enter transition
-//// set an enter transition
-//        window.enterTransition =  android.transition.Fade()
-//
-//// set an exit transition
-//// set an exit transition
-//        window.exitTransition = android.transition.Fade()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_explore)
         binding.viewModel = viewModel
@@ -347,6 +336,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
     }
 
 
+
+
     private fun getData() {
 
 
@@ -529,6 +520,7 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
             .setCanonicalIdentifier("product/${it.suid}")
             .setTitle(it.name.toString())
             .setContentDescription(it.description)
+
             .setContentImageUrl(BASE_URL + it.avatar)
             .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
             .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
@@ -542,8 +534,8 @@ class ExploreProductActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedL
 
 
         val lp = LinkProperties()
-            .setChannel("androidApp")
-            .setFeature("product sharing")
+            .setChannel("product")
+            .setFeature("product_sharing")
 
             .setCampaign("content product id")
 //                .addControlParameter("$desktop_url", "http://example.com/home")

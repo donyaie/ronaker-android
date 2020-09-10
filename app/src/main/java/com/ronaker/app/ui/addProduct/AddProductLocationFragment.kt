@@ -97,21 +97,22 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         var mheight = 0
 
         val vtObserver = binding.root.viewTreeObserver
-        vtObserver.addOnGlobalLayoutListener {
+           vtObserver.addOnGlobalLayoutListener {
 
-            if (mheight != requireActivity().window.decorView.measuredHeight) {
-                mheight = requireActivity().window.decorView.measuredHeight
-                val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
+               activity?.let {
+               if (mheight != it.window.decorView.measuredHeight) {
+                   mheight = it.window.decorView.measuredHeight
+                   val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
 
-                binding.containerMap.layoutParams.height =
-                    (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
-                binding.scrollView.layoutParams.height =
-                    (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
+                   binding.containerMap.layoutParams.height =
+                       (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
+                   binding.scrollView.layoutParams.height =
+                       (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
 
-            }
+               }
+               }
 
-        }
-
+           }
 
 
 

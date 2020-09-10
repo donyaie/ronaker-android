@@ -10,17 +10,15 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
-import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
-import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
-import com.ronaker.app.utils.*
+import com.ronaker.app.utils.Alert
+import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.KeyboardManager
+import com.ronaker.app.utils.ScreenCalculator
 import com.ronaker.app.utils.view.ToolbarComponent
 import dagger.hilt.android.AndroidEntryPoint
-import io.branch.referral.Branch
 
 
 @AndroidEntryPoint
@@ -89,28 +87,15 @@ class LoginActivity : BaseActivity() {
 
     companion object {
 
-        val INVITECODE_KEY="invite-code"
+        var inviteCode: String? = null
+
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             return intent
         }
 
-        fun newInstance(context: Context,inviteCode:String?): Intent {
-            val intent = Intent(context, LoginActivity::class.java)
 
-            val boundle = Bundle()
-            boundle.putString(INVITECODE_KEY, inviteCode)
-
-            intent.putExtras(boundle)
-            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-            return intent
-        }
-    }
-
-
-    private fun getInviteCode(mIntent:Intent): String? {
-        return mIntent.getStringExtra(INVITECODE_KEY)
     }
 
 
@@ -128,12 +113,12 @@ class LoginActivity : BaseActivity() {
 
 
 
-        viewModel.actionState.observe(this, {action ->
+        viewModel.actionState.observe(this, { action ->
             loginAction = action
 
         })
 
-        viewModel.viewState.observe(this, {state ->
+        viewModel.viewState.observe(this, { state ->
             loginState = state
 
         })
@@ -160,16 +145,16 @@ class LoginActivity : BaseActivity() {
         binding.scrollView.setOnTouchListener { _, _ -> true }
 
 
-        viewModel.errorMessage.observe(this, {errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
-        viewModel.successMessage.observe(this, {errorMessage ->
+        viewModel.successMessage.observe(this, { errorMessage ->
             Alert.makeTextSuccess(this, errorMessage)
         })
 
-        viewModel.goNext.observe(this, {value ->
+        viewModel.goNext.observe(this, { value ->
             if (value == true) {
                 startActivity(DashboardActivity.newInstance(this@LoginActivity))
                 AnimationHelper.setFadeTransition(this)
@@ -181,6 +166,12 @@ class LoginActivity : BaseActivity() {
         viewModel.gotoSignUp.observe(this, {
             loginAction = LoginViewModel.LoginActionEnum.register
             currentPosition = 1
+        })
+
+        viewModel.checkInviteCode.observe(this, {
+            inviteCode?.let {
+                viewModel.setInviteCode(it)
+            }
         })
 
 
@@ -197,10 +188,10 @@ class LoginActivity : BaseActivity() {
         viewModel.gotoSignIn.observe(this, {
 
             loginAction = LoginViewModel.LoginActionEnum.login
-            currentPosition = 4
+            currentPosition = 3
         })
 
-        viewModel.loading.observe(this, {value ->
+        viewModel.loading.observe(this, { value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
@@ -208,13 +199,20 @@ class LoginActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
-        handleIntent(intent)
-
         init()
         loginAction = LoginViewModel.LoginActionEnum.register
         loginState = LoginViewModel.LoginStateEnum.home
     }
 
+
+    override fun onStart() {
+        super.onStart()
+
+
+        inviteCode?.let {
+            viewModel.setInviteCode(it)
+        }
+    }
 
     private fun init() {
 
@@ -222,23 +220,6 @@ class LoginActivity : BaseActivity() {
         overlayShow(false)
         showBack(false)
         binding.loading.hideLoading()
-
-    }
-
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.let { handleIntent(it) }
-    }
-
-
-    private fun handleIntent(intent: Intent) {
-
-
-        getInviteCode(intent)?.let {
-            viewModel.setInviteCode(it)
-        }
-
 
     }
 
@@ -322,7 +303,7 @@ class LoginActivity : BaseActivity() {
                     }
                 }
 
-                val x = ((binding.frameContainer.width*value) * computeFactor()).toInt()
+                val x = ((binding.frameContainer.width * value) * computeFactor()).toInt()
 
 
                 val animator =

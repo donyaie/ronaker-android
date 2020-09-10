@@ -1,15 +1,12 @@
 package com.ronaker.app.ui.profilePaymentList
 
 
-import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.PaymentCard
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
 class ProfilePaymentListViewModel @ViewModelInject constructor(
     private val paymentInfoRepository: PaymentInfoRepository

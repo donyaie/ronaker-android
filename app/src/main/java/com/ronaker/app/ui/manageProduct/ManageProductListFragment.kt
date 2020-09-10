@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseFragment
 import com.ronaker.app.ui.addProduct.AddProductActivity
 import com.ronaker.app.ui.profileCompleteEdit.ProfileCompleteActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AppDebug
-import com.ronaker.app.utils.view.EndlessRecyclerViewScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -220,11 +217,6 @@ class ManageProductListFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         viewModel.retry()
-    }
-
-    override fun onDetach() {
-
-        super.onDetach()
     }
 
 

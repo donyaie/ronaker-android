@@ -85,7 +85,7 @@ class OrderCreateActivity : BaseActivity() {
 
         init()
 
-        viewModel.viewState.observe(this, {state ->
+        viewModel.viewState.observe(this, { state ->
             fragmentState = state
 
         })
@@ -118,7 +118,7 @@ class OrderCreateActivity : BaseActivity() {
         initViewPager()
 
 
-        viewModel.errorMessage.observe(this, {errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 

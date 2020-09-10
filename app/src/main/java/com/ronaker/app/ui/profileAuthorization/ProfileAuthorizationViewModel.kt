@@ -1,16 +1,13 @@
 package com.ronaker.app.ui.profileAuthorization
 
-import android.app.Application
 import android.os.CountDownTimer
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
-import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 
 class ProfileAuthorizationViewModel @ViewModelInject constructor(

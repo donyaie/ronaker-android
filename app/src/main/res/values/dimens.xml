@@ -23,6 +23,7 @@
     <dimen name="margin_half">12dp</dimen>
     <dimen name="dot_size">9dp</dimen>
     <dimen name="image_thumbnail_size">180dp</dimen>
+    <dimen name="max_width">420dp</dimen>
 
 
 </resources>

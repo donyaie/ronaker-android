@@ -1,7 +1,5 @@
 package com.ronaker.app.ui.login
 
-import android.app.Application
-import android.content.Context
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -9,21 +7,22 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
-import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.*
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
+
 
 class LoginViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,
     private val resourcesRepository: ResourcesRepository,
     private val analytics: FirebaseAnalytics
-)  : BaseViewModel() {
+) : BaseViewModel() {
 
+    var mInviteCode: String? = null
 
     private var signinSubscription: Disposable? = null
+    private var signinGoogleSubscription: Disposable? = null
     private var signUpSubscription: Disposable? = null
     private var emailVerificationSubscription: Disposable? = null
 
@@ -49,6 +48,9 @@ class LoginViewModel @ViewModelInject constructor(
     val gotoSignIn: MutableLiveData<Boolean> = MutableLiveData()
     val keyboardDown: MutableLiveData<Boolean> = MutableLiveData()
 
+
+    val checkInviteCode: MutableLiveData<Boolean> = MutableLiveData()
+
     enum class LoginActionEnum {
         login,
         register
@@ -69,7 +71,8 @@ class LoginViewModel @ViewModelInject constructor(
     enum class LoginStateEnum constructor(position: Int) {
         home(0),
         email(1),
-//        info(2),
+
+        //        info(2),
         password(2),
         login(3),
         forget(4);
@@ -128,7 +131,8 @@ class LoginViewModel @ViewModelInject constructor(
                 userInfo.password = password
                 signUp()
             } else {
-                errorMessage.value = resourcesRepository.getString(R.string.text_repeated_password_not_match)
+                errorMessage.value =
+                    resourcesRepository.getString(R.string.text_repeated_password_not_match)
             }
         }
 
@@ -221,9 +225,11 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun onClickGotoSignUp() {
-        if (!mInviteCode.isNullOrBlank())
-            inviteCodeText.postValue(mInviteCode)
+
+
         gotoSignUp.postValue(true)
+
+        checkInviteCode.postValue(true)
 
     }
 
@@ -233,7 +239,6 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun onClickGotoSignIn() {
-
         gotoSignIn.postValue(true)
     }
 
@@ -257,8 +262,6 @@ class LoginViewModel @ViewModelInject constructor(
 
 
     val loginClickListener = View.OnClickListener {
-
-
         actionState.value = LoginActionEnum.login
         viewState.value = LoginStateEnum.login
     }
@@ -267,6 +270,7 @@ class LoginViewModel @ViewModelInject constructor(
 
         actionState.value = LoginActionEnum.register
         viewState.value = LoginStateEnum.email
+        checkInviteCode.postValue(true)
     }
 
 
@@ -302,14 +306,34 @@ class LoginViewModel @ViewModelInject constructor(
         super.onCleared()
         signUpSubscription?.dispose()
         signinSubscription?.dispose()
+        signinGoogleSubscription?.dispose()
     }
 
-
-    var mInviteCode: String? = null
 
     fun setInviteCode(inviteCode: String) {
 
         mInviteCode = inviteCode
+        if (!mInviteCode.isNullOrBlank())
+            inviteCodeText.postValue(mInviteCode)
+
+    }
+
+    fun loginGoogle(userId: String) {
+
+        signinGoogleSubscription?.dispose()
+        signinGoogleSubscription =
+            userRepository.loginUserWithGoogle(userId).doOnSubscribe { loading.postValue(true) }
+                .doOnTerminate { loading.postValue(false) }
+                .subscribe { result ->
+                    loading.postValue(false)
+                    if (result.isSuccess()) {
+                        AppDebug.log("Login", result?.data.toString())
+                        analytics.actionLogin(AnalyticsManager.Param.LOGIN_METHOD_GOOGLE)
+                        goNext.postValue(true)
+                    } else {
+                        errorMessage.postValue(result.error?.message)
+                    }
+                }
 
 
     }

@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.orderPreview
 
 
-import android.app.Application
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,6 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.OrderRepository
-import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
@@ -21,7 +19,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class OrderPreviewViewModel @ViewModelInject constructor(
     private val orderRepository: OrderRepository,
@@ -503,7 +500,7 @@ class OrderPreviewViewModel @ViewModelInject constructor(
 
 
                 dayNumber.value = String.format(
-                    "%s %s for %d days",
+                    resourcesRepository.getString(R.string.text_for_day),
                     resourcesRepository.getString(R.string.text_you_earn),
                     total.toCurrencyFormat(),
                     days
