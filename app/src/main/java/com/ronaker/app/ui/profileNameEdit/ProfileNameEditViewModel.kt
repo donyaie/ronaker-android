@@ -16,7 +16,6 @@ class ProfileNameEditViewModel @ViewModelInject constructor(
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val loading: MutableLiveData<Boolean> = MutableLiveData()
 
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -32,15 +31,16 @@ class ProfileNameEditViewModel @ViewModelInject constructor(
 
 
     init {
-        userRepository.getUserInfo()?.apply {
-            fillUser(this)
+
+    }
+
+
+    fun loadData(){
+        userRepository.getUserInfo()?.let {
+            fillUser(it)
         }
     }
 
-    fun loadData() {
-
-
-    }
 
     fun saveInfo(firstName: String?, lastName: String?) {
 
@@ -75,16 +75,12 @@ class ProfileNameEditViewModel @ViewModelInject constructor(
 
         mUser = user
 
-        userFirstName.value = user.first_name ?: ""
-        userLastName.value = user.last_name ?: ""
+        userFirstName.postValue(user.first_name ?: "")
+        userLastName.postValue(user.last_name ?: "")
 
 
     }
 
-
-    fun onRetry() {
-        loadData()
-    }
 
 
     override fun onCleared() {

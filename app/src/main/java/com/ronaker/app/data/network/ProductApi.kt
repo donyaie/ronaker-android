@@ -32,7 +32,7 @@ interface ProductApi {
     ): Observable<ListResponseModel<ProductItemResponseModel>>
 
     /**
-     * create new mProduct
+     * create new Product
      */
     @POST("/api/v1/products/")
     @Headers("Content-Type:application/json; charset=UTF-8")
@@ -43,7 +43,7 @@ interface ProductApi {
 
 
     /**
-     * create new mProduct
+     * Update  Product
      */
     @PATCH("/api/v1/products/{suid}/")
     @Headers("Content-Type:application/json; charset=UTF-8")

@@ -7,10 +7,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallState
+import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
@@ -37,7 +42,12 @@ import io.branch.referral.Branch.BranchReferralInitListener
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
-    FragNavController.RootFragmentListener, EmailVerifyDialog.OnDialogResultListener {
+    FragNavController.RootFragmentListener, EmailVerifyDialog.OnDialogResultListener,
+    InstallStateUpdatedListener {
+
+
+    var availableVersionCode = 0
+    lateinit var appUpdateManager: AppUpdateManager
 
 
     private val viewModel: DashboardViewModel by viewModels()
@@ -46,7 +56,7 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         FragNavController(supportFragmentManager, R.id.container)
     override val numberOfRootFragments: Int = 4
 
-    private val UPDATE_REQUEST_CODE=645
+    private val UPDATE_REQUEST_CODE = 645
 
     private val INDEX_EXPLORE = FragNavController.TAB1
     private val INDEX_ORDERS = FragNavController.TAB2
@@ -124,6 +134,21 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             .withData(if (intent != null) intent.data else null).init()
 
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                // If the update is downloaded but not installed,
+                // notify the user to complete the update.
+                if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                    popupSnackbarForCompleteUpdate()
+                }
+            }
     }
 
 
@@ -273,10 +298,16 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             ExploreProductActivity.REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     binding.navigation.postDelayed({ binding.navigation.select(1) }, 50)
+
+
                 }
             }
-            UPDATE_REQUEST_CODE ->{
-                if (resultCode == RESULT_CANCELED) {
+            UPDATE_REQUEST_CODE -> {
+                if (resultCode == RESULT_OK) {
+
+                    appUpdateManager.registerListener(this)
+//                    appUpdateManager.completeUpdate()
+                } else if (resultCode == RESULT_CANCELED) {
 
                     viewModel.setSkipVersion(availableVersionCode)
 
@@ -345,18 +376,10 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
     }
 
 
-    interface MainaAtivityListener {
-        fun onBackPressed(): Boolean
-    }
-
-
-    var availableVersionCode=0
-
-
-    fun checkForUpdate() {
+    private fun checkForUpdate() {
 
         // Creates instance of the manager.
-        val appUpdateManager = AppUpdateManagerFactory.create(this)
+        appUpdateManager = AppUpdateManagerFactory.create(this)
 
         // Returns an intent object that you use to check for an update.
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
@@ -369,25 +392,60 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
             ) {
 
 
-                availableVersionCode=appUpdateInfo.availableVersionCode()
+                availableVersionCode = appUpdateInfo.availableVersionCode()
 
-              if( ! viewModel.isSkipVersion(appUpdateInfo.availableVersionCode())) {
+                if (!viewModel.isSkipVersion(appUpdateInfo.availableVersionCode())) {
 
 
-                  appUpdateManager.startUpdateFlowForResult(
-                      // Pass the intent that is returned by 'getAppUpdateInfo()'.
-                      appUpdateInfo,
-                      // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                      AppUpdateType.FLEXIBLE,
-                      // The current activity making the update request.
-                      this,
-                      // Include a request code to later monitor this update request.
-                      UPDATE_REQUEST_CODE
-                  )
+                    appUpdateManager.startUpdateFlowForResult(
+                        // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                        appUpdateInfo,
+                        // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                        AppUpdateType.FLEXIBLE,
+                        // The current activity making the update request.
+                        this,
+                        // Include a request code to later monitor this update request.
+                        UPDATE_REQUEST_CODE
+                    )
 
-              }
+                }
             }
         }
+
+    }
+
+
+    interface MainaAtivityListener {
+        fun onBackPressed(): Boolean
+    }
+
+    override fun onStateUpdate(state: InstallState) {
+
+
+        if (state.installStatus() == InstallStatus.DOWNLOADED) {
+            popupSnackbarForCompleteUpdate()
+
+        }
+
+
+    }
+
+
+   private fun popupSnackbarForCompleteUpdate() {
+
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage( "An update has just been downloaded.")
+        builder.setPositiveButton(
+            "RESTART"
+        ) { dialog, _ ->
+            appUpdateManager.completeUpdate()
+
+            dialog?.cancel()
+        }
+
+        builder.show()
+
 
     }
 

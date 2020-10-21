@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
+import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
+import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
 import com.ronaker.app.utils.Alert
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,13 +43,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
 
-
         binding.viewModel = viewModel
-
-
-
-
-
 
         viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
@@ -89,7 +85,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.nameLayout.setOnClickListener {
 
-//            startActivity(ProfileNameEditActivity.newInstance(this))
+            startActivity(ProfileNameEditActivity.newInstance(this))
 
         }
 
@@ -98,6 +94,25 @@ class ProfileEditActivity : BaseActivity() {
 //            startActivity(ProfileEmailEditActivity.newInstance(this))
 //
 //        }
+
+
+        viewModel.smartIDComplete.observe(this, {value ->
+            if (value == true) {
+
+                binding.authLayout.isClickable = false
+                binding.authImage.setImageResource(R.drawable.ic_complete)
+            } else {
+
+                binding.authLayout.isClickable = true
+                binding.authImage.setImageResource(R.drawable.ic_guid_warning)
+            }
+        })
+
+        binding.authLayout.setOnClickListener {
+
+
+            startActivity(ProfileAuthorizationActivity.newInstance(this))
+        }
 
 
     }

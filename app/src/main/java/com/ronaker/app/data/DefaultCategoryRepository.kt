@@ -29,8 +29,12 @@ class DefaultCategoryRepository @Inject constructor(
             .map {
 
 
-                it.results?.toCategoryList().apply {
-                    saveCategories(this)
+                it.results?.toCategoryList()
+                    .apply {
+                    this?.let {
+
+                        saveCategories(ArrayList(this))
+                    }
                 }
 
 
@@ -39,12 +43,12 @@ class DefaultCategoryRepository @Inject constructor(
     }
 
 
-    override fun saveCategories(value: List<Category>?) {
-        preferencesProvider.putObject(CategoryKey, value)
+    override fun saveCategories(value: ArrayList<Category>?) {
+        preferencesProvider.putObjectList(CategoryKey, value)
     }
 
-    override fun getCategoriesLocal(): List<Category>? {
-        return preferencesProvider.getObject(CategoryKey, User::class.java)
+    override fun getCategoriesLocal(): ArrayList<Category>? {
+        return preferencesProvider.getObjectList(CategoryKey)
     }
 
 

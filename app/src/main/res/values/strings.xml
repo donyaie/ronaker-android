@@ -5,28 +5,28 @@
     <string name="title_defult_price" translatable="false">€0</string>
     <string name="google_api_key_me" translatable="false">AIzaSyDkts8M7csFpvL_WMulqK2WJaXiJhYV0yo</string>
     <string name="versionNameFormat" formatted="true" translatable="false">--Version V%1$s--</string>
-    <string name="text_lend_request_accepted" formatted="true">Your Request Accepted By %1$s</string>
-    <string name="text_lend_request_started" formatted="true">You Started Renting %1$s Item</string>
-    <string name="text_rent_request_accepted" formatted="true">You Accepted %1$s Request</string>
-    <string name="text_rent_request_started" formatted="true">%1$s Started Renting Your Item</string>
-    <string name="text_lend_request_pending" formatted="true">Pending To Accept From %1$s</string>
-    <string name="text_rent_request_pending">Someone Requested To Rent Your Item</string>
+    <string name="text_lend_request_accepted" formatted="true">Your request was accepted by %1$s</string>
+    <string name="text_lend_request_started" formatted="true">You started renting %1$s item</string>
+    <string name="text_rent_request_accepted" formatted="true">You accepted %1$s request</string>
+    <string name="text_rent_request_started" formatted="true">%1$s started renting your item</string>
+    <string name="text_lend_request_pending" formatted="true">Pending to accept from %1$s</string>
+    <string name="text_rent_request_pending">Someone requested to rent your item</string>
     <string name="text_order_message" formatted="true">Hi I\'m %1$s\n I want to rent your %2$s for %3$s day\'s.\nThank you.</string>
-    <string name="text_rent_canceled">List | Canceled Order</string>
-    <string name="text_rent_complete">List | Completed Order</string>
-    <string name="text_rent_rejected">List | Rejected Order</string>
+    <string name="text_rent_canceled">List | Canceled order</string>
+    <string name="text_rent_complete">List | Completed order</string>
+    <string name="text_rent_rejected">List | Rejected order</string>
 
-    <string name="text_lend_canceled">Rent | Canceled Order</string>
-    <string name="text_lend_complete">Rent | Completed Order</string>
-    <string name="text_lend_rejected">Rent | Rejected Order</string>
+    <string name="text_lend_canceled">Rent | Canceled order</string>
+    <string name="text_lend_complete">Rent | Completed order</string>
+    <string name="text_lend_rejected">Rent | Rejected order</string>
 
 
     <string name="hint_0000_0000_0000_0000" translatable="false">0000 0000 0000 0000</string>
     <string name="email">Email</string>
     <string name="email_hint">Enter your email</string>
-    <string name="first_name_title">First Name</string>
+    <string name="first_name_title">First name</string>
     <string name="first_name_hint">Enter your first name</string>
-    <string name="last_name_title">Last Name</string>
+    <string name="last_name_title">Last name</string>
     <string name="last_name_hint">Enter your last name</string>
     <string name="password_title">Password</string>
     <string name="password_hint">Enter your password</string>
@@ -35,12 +35,12 @@
     <string name="title_menu_items">Items</string>
     <string name="title_menu_inbox">Inbox</string>
     <string name="title_menu_profile">Profile</string>
-    <string name="title_button_set_dates">Set Dates</string>
+    <string name="title_button_set_dates">Set dates</string>
     <string name="title_search_here">Search here …</string>
-    <string name="title_button_check_out">Check Out</string>
-    <string name="title_your_inbox">Your Inbox</string>
+    <string name="title_button_check_out">Check out</string>
+    <string name="title_your_inbox">Your inbox</string>
     <string name="title_what_s_your_email_address">What’s your email address?</string>
-    <string name="title_button_create_account">Create Account</string>
+    <string name="title_button_create_account">Create account</string>
     <string name="titile_button_login">Login</string>
     <string name="title_and_what_s_your_name">And what’s your name?</string>
     <string name="title_done_njust_choice_a_password">Just choose a password.</string>
@@ -49,27 +49,27 @@
     <string name="titile_button_login_to_your_account">Login to your account</string>
     <string name="title_is_item_available">Is the item available?</string>
     <string name="title_active">Active</string>
-    <string name="title_name_and_description">Name and Description</string>
+    <string name="title_name_and_description">Name and description</string>
     <string name="title_images_gallery">Images gallery</string>
     <string name="title_asking_price">Asking price</string>
     <string name="title_location">Location</string>
-    <string name="title_your_listings">Your Listings</string>
+    <string name="title_your_listings">Your listings</string>
     <string name="title_start_to_make_money_from_your_items">Start to make money from your items.</string>
-    <string name="title_button_add_first_item">Add First Item</string>
+    <string name="title_button_add_first_item">Add first item</string>
     <string name="title_add_item">+ Add Item</string>
-    <string name="title_send_a_meesage_to_owner">Send a Message to owner</string>
-    <string name="title_send_request">Send Request</string>
+    <string name="title_send_a_meesage_to_owner">Send a message to owner</string>
+    <string name="title_send_request">Send request</string>
     <string name="title_all">All</string>
     <string name="title_renting">Renting</string>
     <string name="title_lending">Listing</string>
     <string name="title_archive">Archive</string>
-    <string name="title_verify_your_phone">Verify Your Phone</string>
+    <string name="title_verify_your_phone">Verify your phone</string>
     <string name="title_please_enter_the_code_we_texted_to_your_number">Please enter the code we texted to your number</string>
     <string name="title_seconds_to_resend">seconds to resend</string>
     <string name="title_did_not_get_the_code_yet">Did not get the code yet?</string>
     <string name="title_resend">Resend</string>
-    <string name="title_please_enter_your_phone">Please Enter Your Phone</string>
-    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will Text you a 5 digit code to verify your phone number.</string>
+    <string name="title_please_enter_your_phone">Please enter your phone</string>
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">We will text you a 4 digit code to verify your phone number.</string>
     <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Add few images from your item. please use good quality and clear image…</string>
     <string name="title_button_next">Next</string>
     <string name="title_tell_about_your_item">Tell about your item</string>
@@ -81,84 +81,84 @@
     <string name="title_logout">Log out</string>
     <string name="error_set_price">please set price</string>
     <string name="error_add_image">add images</string>
-    <string name="title_borrow_day">Borrow Day</string>
-    <string name="title_return_day">Return Day</string>
+    <string name="title_borrow_day">Borrow day</string>
+    <string name="title_return_day">Return day</string>
     <string name="title_per_day">Per day</string>
     <string name="title_per_week">Per week</string>
     <string name="title_per_month">Per month</string>
     <string name="title_pers_day">/d</string>
     <string name="title_pers_week">/w</string>
     <string name="title_pers_month">/m</string>
-    <string name="title_add_images_of_item">Add Images of item</string>
+    <string name="title_add_images_of_item">Add images of item</string>
     <string name="title_add_new_image">Add new image</string>
-    <string name="title_phone_number">Phone Number</string>
+    <string name="title_phone_number">Phone number</string>
     <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Please input the price you ask for renting out the item.</string>
     <string name="title_you_have_not_any_item_yet">You have not any item yet.</string>
-    <string name="title_select_category">Select Category</string>
-    <string name="error_set_location">Select Location</string>
+    <string name="title_select_category">Select category</string>
+    <string name="error_set_location">Select location</string>
     <string name="button_decline">Decline</string>
     <string name="button_accept">Accept</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_finish">Finish</string>
-    <string name="text_per_day">Per Day</string>
+    <string name="text_per_day">Per day</string>
     <string name="text_complete_your_profile">Complete your profile</string>
     <string name="title_complete_profile_description">To complete your profile and start using Ronaker features, please complete the steps below.</string>
-    <string name="title_add_profile_image">Add Profile Image</string>
+    <string name="title_add_profile_image">Add profile image</string>
     <string name="title_add_and_verify_phone_number">Add and verify phone number</string>
     <string name="title_add_a_payment_method">Add a payment method</string>
     <string name="title_verify_your_identity">Verify your Identity</string>
     <string name="title_add_a_identity_document">Add a identity document</string>
-    <string name="title_please_upload_one_of_your_identity_document_to_authentication">Please Upload one of your Identity document to Authentication.</string>
+    <string name="title_please_upload_one_of_your_identity_document_to_authentication">Please upload one of your identity document to authentication.</string>
     <string name="title_done">Done</string>
-    <string name="title_enter_your_card_details">Enter your Card details</string>
-    <string name="title_card_number">Card Number</string>
+    <string name="title_enter_your_card_details">Enter your card details</string>
+    <string name="title_card_number">Card number</string>
     <string name="title_cancel">Cancel</string>
-    <string name="title_select_item_category">Select Item Category</string>
-    <string name="title_edit_profile">Edit Profile</string>
-    <string name="title_complete_profile">Complete Your Profile</string>
+    <string name="title_select_item_category">Select item category</string>
+    <string name="title_edit_profile">Edit profile</string>
+    <string name="title_complete_profile">Complete your profile</string>
     <string name="title_setting">Settings</string>
     <string name="title_categories">Category</string>
     <string name="text_you_have_not_any_order_hear">You have not any order here</string>
     <string name="title_order">Orders</string>
     <string name="text_not_found_item">Nothing found any item</string>
-    <string name="button_start_renting">Start Renting</string>
+    <string name="button_start_renting">Start renting</string>
     <string name="title_deactive">Deactivated</string>
     <string name="text_rejected">Rejected</string>
     <string name="text_pending">Pending</string>
     <string name="title_email_verification">Verify your email</string>
     <string name="title_notification">Notifications</string>
-    <string name="title_download_user_data">Download User Data</string>
-    <string name="title_change_language">Change Language</string>
+    <string name="title_download_user_data">Download user data</string>
+    <string name="title_change_language">Change language</string>
     <string name="title_support">Support</string>
     <string name="title_favorites">Saved</string>
     <string name="text_clear">Clear</string>
-    <string name="text_add_a_profile_image">Add a Profile Image</string>
-    <string name="text_please_upload_a_image_of_you_for_identify_you">Please upload a image of you for identify you</string>
+    <string name="text_add_a_profile_image">Add a profile image</string>
+    <string name="text_please_upload_a_image_of_you_for_identify_you">Please upload a photo of you for identification</string>
     <string name="text_add_a_image">Add a image</string>
-    <string name="text_your_request_sent">Your Request Has Been Sent.</string>
-    <string name="text_are_you_sure">Are you Sure?</string>
-    <string name="text_send_a_instruction_to_who_rent_your_item">Send a Instruction to who rent your item</string>
-    <string name="text_why_decline_this_order">Why decline this order?</string>
-    <string name="text_finish_order">Finish Order</string>
-    <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please Pickup the item at provided address and ensure that the rented goods are functioning properly.\nFees for the Item shuold be paid before pressed “Start renting” button.</string>
+    <string name="text_your_request_sent">Your request has been sent.</string>
+    <string name="text_are_you_sure">Are you sure to log out?</string>
+    <string name="text_send_a_instruction_to_who_rent_your_item">Send a instruction to who rent your item</string>
+    <string name="text_why_decline_this_order">Why do you want to decline this order?</string>
+    <string name="text_finish_order">Finish order</string>
+    <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Please pickup the item at provided address and ensure that the rented goods are functioning properly.\nFees for the item should be paid before pressed “Start renting” button.</string>
     <string name="text_start_renting_instruction">Renting instruction</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Please confirm, that the rented item is functioning properly.</string>
-    <string name="text_accept_and_start_renting">Next Step</string>
+    <string name="text_accept_and_start_renting">Next step</string>
     <string name="text_version" translatable="false">Version</string>
-    <string name="text_try_again">Try Again</string>
-    <string name="text_rate_product">Rate Product</string>
+    <string name="text_try_again">Try again</string>
+    <string name="text_rate_product">Rate product</string>
     <string name="text_user_request">Request</string>
-    <string name="text_pickup_address">Pickup Address</string>
-    <string name="text_whay_canceled">Rejected Reason</string>
+    <string name="text_pickup_address">Pickup address</string>
+    <string name="text_whay_canceled">Rejected reason</string>
     <string name="text_reviews">Reviews</string>
     <string name="text_not_have_comment_yet">Not have comment yet</string>
-    <string name="text_service_fee">Service Fee</string>
-    <string name="text_insurance_fee">Insurance Fee</string>
-    <string name="text_product_fee">Rental Fee</string>
+    <string name="text_service_fee">Service fee</string>
+    <string name="text_insurance_fee">Insurance fee</string>
+    <string name="text_product_fee">Rental fee</string>
     <string name="text_total_fee">Total</string>
-    <string name="text_cancel_order">Cancel Order</string>
-    <string name="text_why_you_cancel_this_order">Why You Cancel This Order?</string>
-    <string name="text_explain_why_cancel">Explain Why Cancel</string>
+    <string name="text_cancel_order">Cancel order</string>
+    <string name="text_why_you_cancel_this_order">Why do you want to cancel this order??</string>
+    <string name="text_explain_why_cancel">Explain why cancel</string>
     <string name="text_you_earn">You will earn</string>
     <string name="text_payments_terms">I agree to Ronaker\&apos;s &quot;Terms &amp; Conditions&quot; &amp; &quot;Privacy Policy&quot;.</string>
     <string name="text_billing_address">Billing Address</string>
@@ -166,58 +166,58 @@
     <string name="text_name">Name :</string>
     <string name="text_number">Number :</string>
     <string name="text_email">Email :</string>
-    <string name="text_edit_payment_methods">Payment Methods</string>
-    <string name="text_payment_list">Payment List</string>
-    <string name="text_add_new_method">+ Add New Method</string>
+    <string name="text_edit_payment_methods">Payment methods</string>
+    <string name="text_payment_list">Payment list</string>
+    <string name="text_add_new_method">+ Add new method</string>
     <string name="text_repeated_password_not_match">Repeated password not match</string>
-    <string name="text_enter_your_invite_code">Enter Your Invite Code</string>
-    <string name="text_invite_code">Invite Code (Optional)</string>
+    <string name="text_enter_your_invite_code">Enter your invite code</string>
+    <string name="text_invite_code">Invite code (Optional)</string>
     <string name="text_repeat_your_password">Repeat your password</string>
-    <string name="text_repeat">Repeat Password</string>
+    <string name="text_repeat">Repeat password</string>
     <string name="text_new_to_ronaker">New to Ronaker? </string>
     <string name="text_sign_up">Sign up</string>
-    <string name="text_goto_sign_in">Sign In</string>
-    <string name="text_payment_history">Payment History</string>
-    <string name="text_resend_email">Resend Email</string>
+    <string name="text_goto_sign_in">Sign in</string>
+    <string name="text_payment_history">Payment history</string>
+    <string name="text_resend_email">Resend email</string>
     <string name="text_go_to_your_mail_box">Go to your mail box</string>
-    <string name="text_verify_your_email">Verify Your Email</string>
-    <string name="text_please_check_your_inbox_and_verify_your_email">Please check your inbox and verify your email</string>
+    <string name="text_verify_your_email">Verify your email</string>
+    <string name="text_please_check_your_inbox_and_verify_your_email">An email has been sent to your email. Please check your Inbox!</string>
     <string name="text_balance">Balance :</string>
     <string name="text_add_document_image">Add document image</string>
     <string name="text_order_detail">Order Detail</string>
     <string name="text_of_5">" of 4"</string>
-    <string name="text_please_tell_us_about_your_experience_using_this_item">Please, Tell us about your experience using this item</string>
+    <string name="text_please_tell_us_about_your_experience_using_this_item">Please, tell us about your experience using this item</string>
     <string name="text_please_write_your_experience_here">Please write your experience here</string>
     <string name="text_title_send">Send</string>
     <string name="text_title_save">Save</string>
-    <string name="text_choice_payment_type">Choose Payment Type</string>
-    <string name="text_nothing_saved_yet">Nothing Saved Yet</string>
-    <string name="texy_you_haven_t_payment_method">You Haven\&apos;t Payment Method</string>
-    <string name="text_add_insurance_of_item">Add Insurance Of Item</string>
-    <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Add Insurance Image for you item. please use clear image from title and signature.</string>
+    <string name="text_choice_payment_type">Choose payment type</string>
+    <string name="text_nothing_saved_yet">Nothing saved yet</string>
+    <string name="texy_you_haven_t_payment_method">You haven\&apos;t payment method</string>
+    <string name="text_add_insurance_of_item">Add insurance of item</string>
+    <string name="text_add_insurance_image_for_you_item_please_use_clear_image_from_title_and_signature">Add insurance image for you item. please use clear image from title and signature.</string>
     <string name="text_privacy_policy">Privacy Policy</string>
     <string name="text_license_agreement">Terms &amp; Conditions</string>
     <string name="text_check_the_provided_control_code">Check the provided control code</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Please check the provided control code on your phone\n\nConfirm by entering PIN1:</string>
     <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Please check the provided control code on your phone\n\nConfirm by entering PIN2:</string>
     <string name="text_time_remaining">Time remaining</string>
-    <string name="text_please_enter_your_personal_code">Please Enter your Personal Code</string>
+    <string name="text_please_enter_your_personal_code">Please enter your personal code</string>
     <string name="text_we_will_authorize_you_with_your_smart_id">To ensure your security and prevent malicious behavior, we need to verify your identity information.</string>
     <string name="text_smart_id">Smart ID</string>
     <string name="textauthorize_your_identity">Verify your identity</string>
     <string name="text_instruction_text">Instruction how to pick up and use item</string>
-    <string name="text_Instruction">Instruction</string>
-    <string name="text_tell_pickup_address">Enter Pickup address</string>
+    <string name="text_Instruction">Rules &amp; Instruction</string>
+    <string name="text_tell_pickup_address">Enter pickup address</string>
     <string name="text_explan_why_decline">Explain why decline</string>
-    <string name="text_enter_title">Enter Title</string>
+    <string name="text_enter_title">Enter title</string>
     <string name="text_title">Title</string>
     <string name="text_item_description">Describe your item like model or color and…</string>
     <string name="text_description">Description</string>
     <string name="text_select_item_category">Select item category</string>
     <string name="text_category">Category</string>
-    <string name="text_select_item_sub_category">Select item Sub-Category</string>
-    <string name="text_sub_category">Sub-Category</string>
-    <string name="text_rent_fee">Rent Fee (€)</string>
+    <string name="text_select_item_sub_category">Select item sub-category</string>
+    <string name="text_sub_category">sub-category</string>
+    <string name="text_rent_fee">Rent fee (€)</string>
     <string name="text_daily">Daily</string>
     <string name="format_you_will_pay" formatted="true">You will pay %1$s for %2$s days</string>
     <string name="text_rate_it">Rate it</string>
@@ -225,14 +225,14 @@
     <string name="text_contract">Contract</string>
     <string name="text_please_sign_the_contract">Please sign the contract before start renting</string>
     <string name="text_sign_the_contract">Sign the contract</string>
-    <string name="text_please_read_and_sign_the_contract">Please Read and Sign the contract</string>
+    <string name="text_please_read_and_sign_the_contract">Please read and sign the contract</string>
     <string name="text_send_activation_success">We\'ll send you an activation email </string>
     <string name="text_this_password_is_too_short_it_must_contain_at_least_8_characters">This password is too short. It must contain at least 8 characters.</string>
     <string name="text_this_password_is_entirely_numeric">This password is entirely numeric.</string>
     <string name="text_choose_new_password_to_reset_password">Choose new password to reset password</string>
     <string name="text_the_password_and_repeat_password_must_same">The password and repeat password must be the same.</string>
     <string name="text_reset_password">Reset password</string>
-    <string name="text_explore_items">Explore the Items</string>
+    <string name="text_explore_items">Explore the items</string>
     <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Rent any item you need straight from it\'s owner safely and easily, Select the rental start and end dates to check the availability of the item. If available, book it!</string>
     <string name="text_rent">Rent</string>
     <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">We\&apos;ll exchange your contacts soon. You can contact the owner, pick-up and enjoy your item!</string>
@@ -243,9 +243,9 @@
     <string name="text_reset_may_password">Reset my password</string>
     <string name="text_you_signed_the_contract">You signed the contract</string>
     <string name="text_signed_the_contract" formatted="true">%1$s signed the contract</string>
-    <string name="text_waite_for_sign" formatted="true">Wait for %1$s sign</string>
+    <string name="text_waite_for_sign" formatted="true">Wait for %1$s to sign</string>
     <string name="text_you_must_sign_the_contract_exactly_before_start_renting">You must sign the contract exactly before start Renting and goods exchange.</string>
-    <string name="text_contract_preview">Contract Preview</string>
+    <string name="text_contract_preview">Contract preview</string>
     <string name="text_make_sure_sign_the_contract">Please make sure the item owner signed the contract.</string>
     <string name="error_login_email_or_password_wrong">your email or password is incorrect. please try again.</string>
     <string name="text_location_near_by">Ronaker help you find items nearby.\nyour location is required to make these work!</string>
@@ -256,19 +256,19 @@
     <string name="text_pending_message">Your item is begin reviewed. We\'ll get back to you soon!</string>
     <string name="text_pending_dialog">Your item has been successfully submitted.\nWe will look into it and get back to you shortly!</string>
     <string name="text_reject_message">Unfortunately, your item has been rejected. For more information, please read our terms and conditions.</string>
-    <string name="text_location_disabled">Your Location service seems to be disabled, do you want to enable it?</string>
+    <string name="text_location_disabled">Your location service seems to be disabled, do you want to enable it?</string>
     <string name="text_preview">Preview</string>
 
-    <string name="text_please_read_the_contract">Please Read the contract</string>
+    <string name="text_please_read_the_contract">Please read the contract</string>
 
 
-    <string name="button_start_renting_sign">Start Renting</string>
-    <string name="text_for_day" formatted="true">%1$s %2$s for %3$d days</string>
+    <string name="button_start_renting_sign">Start renting</string>
+    <string name="text_for_day" formatted="true">%1$s %2$s for %3$s days</string>
     <string name="text_success_sign_and_start_renting">Done. Reach out to owner and enjoy your item.</string>
     <string name="button_confirm">Confirm</string>
     <string name="text_or">or</string>
     <string name="text_signin_with_google">Sign in with Google</string>
-    <string name="text_smart_id_intro_1">Smart ID helps people to deal in the secure &amp; safe environment.</string>
+    <string name="text_smart_id_intro_1">Smart-ID helps people to deal in the secure &amp; safe environment.</string>
     <string name="text_smart_id_intro_2">Smart-ID works in Latvia, Estonia &amp; Lithuania for users who live or have business in these countries.</string>
     <string name="text_smart_id_intro_3">Using Smart-ID is very easy:\nget started by downloading the Smart-ID app.</string>
     <string name="text_confirm_start_renting" formatted="true">For picking up the item, you should go to this address:\n\"%1$s\"\nand after check the item you can push the \"start renting\" button.</string>

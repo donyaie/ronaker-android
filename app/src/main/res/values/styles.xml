@@ -13,7 +13,7 @@
 
 
         <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
-        <item name="android:windowActivityTransitions" tools:ignore="NewApi">true</item>
+        <item name="android:windowActivityTransitions" >true</item>
 
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>

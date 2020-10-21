@@ -16,21 +16,19 @@ class AppNotificationOpenedHandler(private val app: Application) :
         result?.let {
 
             val actionType = result.action.type
-            val data = result.notification.payload.additionalData
+            val data = it.notification?.payload?.additionalData
 
 
-            Log.i(
-                "OSNotificationPayload",
-                "result.notification.payload.toJSONObject().toString(): " + result.notification.payload.toJSONObject()
-                    .toString()
-            )
 
-            val isLogin=! (PreferencesProvider(app).getString("tokenKey",null)?.isNullOrEmpty()?:true)
+            val isLogin=! (PreferencesProvider(app).getString("tokenKey",null).isNullOrEmpty())
 
 
 
 
-            OneSignalHelper.handleNotificationClick(app,data,actionType, isLogin,result)
+            data?.let { it1 ->
+                OneSignalHelper.handleNotificationClick(app,
+                    it1,actionType, isLogin,it)
+            }
 
 
 

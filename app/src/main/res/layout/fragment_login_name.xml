@@ -55,6 +55,8 @@
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginTop="40dp"
 
+                   app:inputMutableText="@{viewModel.getUserFirstName()}"
+
                     android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="given-name"
 
@@ -65,12 +67,14 @@
                     app:input_title="@string/first_name_title"
                     app:input_transparent="true"
                     app:layout_constraintTop_toBottomOf="@id/title"
-                    tools:ignore="UnusedAttribute" />
+                     />
 
                 <com.ronaker.app.utils.view.InputComponent
                     android:id="@+id/lastName_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
+                    app:inputMutableText="@{viewModel.getUserLastName()}"
                     android:layout_marginLeft="@dimen/margin_default"
 
                     android:layout_marginRight="@dimen/margin_default"
@@ -82,7 +86,7 @@
                     app:input_title="@string/last_name_title"
                     app:input_transparent="true"
                     app:layout_constraintTop_toBottomOf="@id/name_input"
-                    tools:ignore="UnusedAttribute" />
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

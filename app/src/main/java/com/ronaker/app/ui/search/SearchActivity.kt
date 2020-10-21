@@ -105,14 +105,14 @@ class SearchActivity : BaseActivity() {
 
 
 
-//
-//        disposable = RxTextView.textChanges(binding.searchEdit)
-//            .debounce(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-//            .subscribe {
-//
-//                viewModel.search(it.toString())
-//            }
-//
+
+        disposable = RxTextView.textChanges(binding.searchEdit)
+            .debounce(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .subscribe {
+
+                viewModel.search(it.toString())
+            }
+
 
 
         binding.clearText.setOnClickListener {
@@ -129,6 +129,8 @@ class SearchActivity : BaseActivity() {
 
 
         viewModel.listView.observe(this, {
+
+
             productAdapter.submitList(it.toList())
         })
     }

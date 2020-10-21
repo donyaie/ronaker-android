@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.ronaker.app",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 118,
+      "versionName": "0.1.18",
+      "enabled": true,
+      "outputFile": "ronaker-0.1.18-release.apk"
+    }
+  ]
+}

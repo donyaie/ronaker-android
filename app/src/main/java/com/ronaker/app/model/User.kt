@@ -29,9 +29,10 @@ data class User(
     , var avatar: String? = null
     , var password: String? = null
     , var promotionCode: String? = null
-    , var balance: Double = 0.0
-    , val smart_id_national_code: String? = null
-    , val smart_id_personal_code: String? = null
+    , var balance: Double? = null
+    , var smart_id_national_code: String? = null
+    , var smart_id_personal_code: String? = null
+,  var completed:Int =0
 
 ) : Parcelable {
     constructor() : this(
@@ -43,27 +44,27 @@ data class User(
 
 
     fun isComplete(): Boolean {
-        complete = 0
+        completed = 0
 
 
         if (!avatar.isNullOrBlank())
-            complete++
+            completed++
 
-        if (!smart_id_personal_code.isNullOrBlank())
-            complete++
+//        if (!smart_id_personal_code.isNullOrBlank())
+//            completed++
 
-        if (is_email_verified) complete++
-        if (is_phone_number_verified) complete++
+        if (is_email_verified) completed++
+        if (is_phone_number_verified) completed++
 //        user.is_payment_info_verified?.let { if (it) complete++ }
 //        user.is_identity_info_verified?.let { if (it) complete++ }
 
 
-        return complete == 4
+        return completed == 3
     }
 
-
-    @IgnoredOnParcel
-    var complete = 0
+//
+//    @IgnoredOnParcel
+//    var completed = 0
 
 
 }
@@ -72,7 +73,6 @@ data class User(
 fun UserInfoResponceModel.toUserModel(): User {
 
 
-    smart_id_national_code
     return User(
         suid = suid,
         email = email,

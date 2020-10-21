@@ -68,15 +68,13 @@ class DefaultUserRepository @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .map {
 
-//                AppDebug.log("loginUser",it.toString())
-
-
                 it.user.toUserModel().apply {
 
 
-                    accessToken = it.token
-                    saveUserInfo(this)
+                    this.accessToken = it.token
+
                     saveUserToken(it.token)
+                    saveUserInfo(this)
                 }
             }
 
@@ -94,9 +92,10 @@ class DefaultUserRepository @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .map {
                 it.user.toUserModel().apply {
-                    accessToken = it.token
-                    saveUserInfo(this)
+                    this.accessToken = it.token
+
                     saveUserToken(it.token)
+                    saveUserInfo(this)
                 }
             }
 
@@ -330,7 +329,8 @@ class DefaultUserRepository @Inject constructor(
     }
 
     override fun getUserInfo(): User? {
-        return preferencesProvider.getObject(UserInfoKey, User::class.java)
+
+        return  preferencesProvider.getObject(UserInfoKey,User::class.java)
     }
 
     override fun saveUserToken(token: String?) {
@@ -392,7 +392,7 @@ class DefaultUserRepository @Inject constructor(
 
     override fun isLogin(): Boolean {
         val token = getUserToken()
-        return token != null && token.trim().isNotEmpty()
+        return !token.isNullOrBlank()
     }
 
 }

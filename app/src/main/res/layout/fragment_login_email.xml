@@ -59,6 +59,8 @@
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginTop="40dp"
 
+
+                    app:inputMutableText="@{viewModel.getUserEmailName()}"
                     android:layout_marginRight="@dimen/margin_default"
                     android:autofillHints="emailAddress"
                     android:imeOptions="actionDone"
@@ -69,7 +71,7 @@
                     app:input_transparent="true"
                     app:input_validation_mode="AUTO"
                     app:layout_constraintTop_toBottomOf="@id/title"
-                    tools:ignore="UnusedAttribute" />
+              />
 
 
 

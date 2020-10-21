@@ -41,34 +41,16 @@ class ProfileNameEditActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
-
-
-
-
-
         viewModel.errorMessage.observe(this, {errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, {value ->
-            if (value == true) {
-                binding.loading.visibility = View.VISIBLE
-                binding.loading.showLoading()
-            } else
-                binding.loading.hideLoading()
-        })
 
         viewModel.goNext.observe(this, {value ->
             if (value == true) {
                 finish()
             }
         })
-
-
-        binding.loading.oClickRetryListener = View.OnClickListener {
-
-            viewModel.onRetry()
-        }
 
 
         binding.toolbar.cancelClickListener = View.OnClickListener { onBackPressed() }
@@ -83,15 +65,11 @@ class ProfileNameEditActivity : BaseActivity() {
         }
 
 
-    }
-
-    override fun onStart() {
-
-        super.onStart()
         viewModel.loadData()
 
-
     }
+
+
 
 
 }

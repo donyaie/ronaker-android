@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ronaker.app.General
 import com.ronaker.app.R
-import com.ronaker.app.databinding.AdapterExploreItemBinding
+import com.ronaker.app.databinding.AdapterSearchCategoryBinding
 import com.ronaker.app.databinding.AdapterSearchItemBinding
+import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.extension.getParentActivity
@@ -17,31 +18,67 @@ import com.ronaker.app.utils.itemSelect
 
 
 class ItemSearchAdapter :
-    ListAdapter<Product, ItemSearchAdapter.ViewHolder>(ItemDiffCallback()) {
+    ListAdapter<Any, RecyclerView.ViewHolder>(ItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AdapterSearchItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.adapter_search_item,
-            parent,
-            false
-        )
 
-        return ViewHolder(binding)
+    private val TYPE_PRODUCT = 0
+    private val TYPE_CATEGORY = 1
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        if (viewType == TYPE_PRODUCT) {
+            val binding: AdapterSearchItemBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.adapter_search_item,
+                parent,
+                false
+            )
+            return ProductViewHolder(binding)
+        } else {
+            val binding: AdapterSearchCategoryBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.adapter_search_category,
+                parent,
+                false
+            )
+
+            return CategoryViewHolder(binding)
+        }
+
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+        if (holder is CategoryViewHolder)
+            holder.bind(getItem(position) as Category)
+        if (holder is ProductViewHolder)
+            holder.bind(getItem(position) as Product)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+
+        return when {
+            getItem(position) is Category -> return TYPE_CATEGORY
+            getItem(position) is Product -> return TYPE_PRODUCT
+            else -> super.getItemViewType(position)
+        }
+
+
     }
 
 
-    override fun onViewRecycled(holder: ViewHolder) {
-        holder.onViewRecycled()
-        super.onViewRecycled(holder)
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+
+        when (holder) {
+            is ProductViewHolder -> holder.onViewRecycled()
+            is CategoryViewHolder -> holder.onViewRecycled()
+            else -> super.onViewRecycled(holder)
+        }
     }
 
 
-    class ViewHolder(
+    class ProductViewHolder(
         private val binding: AdapterSearchItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -53,30 +90,9 @@ class ItemSearchAdapter :
 
 
             binding.image.transitionName = "${product.avatar}"
-//            binding.title.transitionName = "${product.name}"
-
 
             binding.root.setOnClickListener {
                 binding.root.getParentActivity()?.let { activity ->
-
-//
-//                    val pair1: androidx.core.util.Pair<View, String> = androidx.core.util.Pair<View, String> (
-//                        binding.image as View,
-//                        binding.image.transitionName
-//                    )
-//
-////                    val pair2: androidx.core.util.Pair<View, String> = androidx.core.util.Pair<View, String> (
-////                        binding.title as View,
-////                        binding.title.transitionName
-////                    )
-//
-//                    val optionsCompat: ActivityOptionsCompat =
-//                        ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                            activity,
-//                            pair1
-//                           // ,pair2
-//                        )
-//                    activity.startActivityForResult( ExploreProductActivity.newInstance(activity, product), ExploreProductActivity.REQUEST_CODE, optionsCompat.toBundle(),)
 
                     (activity.application as General).analytics.itemSelect(product)
 
@@ -99,12 +115,56 @@ class ItemSearchAdapter :
     }
 
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<Product>() {
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean =
-            oldItem.suid == newItem.suid
+    class CategoryViewHolder(
+        private val binding: AdapterSearchCategoryBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean =
-            oldItem == newItem
+        private val viewModel = CategorySearchViewModel()
+
+        fun bind(item: Category) {
+            viewModel.bind(item)
+            binding.viewModel = viewModel
+
+
+//            binding.root.setOnClickListener {
+//                binding.root.getParentActivity()?.let { activity ->
+//
+//
+//                }
+//            }
+        }
+
+        fun onViewRecycled() {
+            binding.image.setImageResource(0)
+
+        }
+    }
+
+
+    class ItemDiffCallback : DiffUtil.ItemCallback<Any>() {
+        override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+
+            return if (oldItem is Category && newItem is Category) {
+                oldItem.suid == newItem.suid
+            } else if (oldItem is Product && newItem is Product) {
+                oldItem.suid == newItem.suid
+            } else {
+                false
+            }
+
+
+        }
+
+        override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+            return if (oldItem is Category && newItem is Category) {
+                oldItem.suid == newItem.suid
+            } else if (oldItem is Product && newItem is Product) {
+                oldItem.suid == newItem.suid
+            } else {
+                false
+            }
+
+        }
 
     }
 

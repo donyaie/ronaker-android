@@ -118,7 +118,12 @@ class ExploreViewModel @ViewModelInject constructor(
                                     categoryListAdapter.reset()
                                     categoryListAdapter.updateList()
 
+
                                 }
+
+
+                                categoryRepository.saveCategories(cachCategoryList)
+
 
 
                             }

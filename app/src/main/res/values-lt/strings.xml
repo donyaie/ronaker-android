@@ -3,7 +3,7 @@
     <string name="text_lend_request_accepted" formatted="true">By %1$s patvirtino Jūsų užklausą</string>
     <string name="text_lend_request_started" formatted="true">Jūs pradėjote %1$s daikto nuomą</string>
     <string name="text_rent_request_accepted" formatted="true">Jūs patvirtinote %1$s užklausą</string>
-    <string name="text_rent_request_started" formatted="true"> %1$s pradėjo Jūsų daikto nuomą</string>
+    <string name="text_rent_request_started" formatted="true">%1$s pradėjo Jūsų daikto nuomą</string>
     <string name="text_lend_request_pending" formatted="true">Laukiama %1$s patvirtinimo</string>
     <string name="text_rent_request_pending">Gavote užklausą išnuomoti savo daiktą</string>
     <string name="text_order_message" formatted="true">Sveiki, aš, %1$s,\n norėčiau išsinuomoti Jūsų %2$s %3$s dienoms.\n Ačiū.</string>
@@ -28,16 +28,16 @@
     <string name="title_menu_inbox">Žinutės</string>
     <string name="title_menu_profile">Profilis</string>
     <string name="title_button_set_dates">Pasirinkite datas</string>
-    <string name="title_search_here">Ieškokite čia</string>
+    <string name="title_search_here">Ieškokite čia…</string>
     <string name="title_button_check_out">Užsakyti</string>
     <string name="title_your_inbox">Jūsų žinutės</string>
-    <string name="title_what_s_your_email_address">Koks Jūsų el. pašto adresas ?</string>
+    <string name="title_what_s_your_email_address">Koks Jūsų el. pašto adresas?</string>
     <string name="title_button_create_account">Susikurti paskyrą</string>
     <string name="titile_button_login">Prisijungti</string>
     <string name="title_and_what_s_your_name">Koks Jūsų vardas?</string>
-    <string name="title_done_njust_choice_a_password">Susikurkite slaptažodį</string>
-    <string name="title_button_done">Baigta !</string>
-    <string name="title_welcome_back">Sveiki sugrįžę</string>
+    <string name="title_done_njust_choice_a_password">Susikurkite slaptažodį.</string>
+    <string name="title_button_done">Baigta!</string>
+    <string name="title_welcome_back">Sveiki sugrįžę.</string>
     <string name="titile_button_login_to_your_account">Prisijunti prie paskyros</string>
     <string name="title_is_item_available">Ar daiktas laisvas?</string>
     <string name="title_active">Aktyvuoti</string>
@@ -46,9 +46,9 @@
     <string name="title_asking_price">Nurodykite kainą</string>
     <string name="title_location">Vieta</string>
     <string name="title_your_listings">Jūsų sąrašas</string>
-    <string name="title_start_to_make_money_from_your_items">Užsidirbkite išnuomodami savo daiktus</string>
+    <string name="title_start_to_make_money_from_your_items">Užsidirbkite išnuomodami savo daiktus.</string>
     <string name="title_button_add_first_item">Įkelkite pirmą daiktą</string>
-    <string name="title_add_item">Įkelti  daiktą</string>
+    <string name="title_add_item">+ Įkelti  daiktą</string>
     <string name="title_send_a_meesage_to_owner">Siųskite žinutę nuomotojui</string>
     <string name="title_send_request">Siųskite užklausą</string>
     <string name="title_all">Visi</string>
@@ -58,18 +58,18 @@
     <string name="title_verify_your_phone">Patvirtinkite telefono numerį</string>
     <string name="title_please_enter_the_code_we_texted_to_your_number">Įveskite sms žinute gautą kodą</string>
     <string name="title_seconds_to_resend"> sekundės atsiųsti dar kartą</string>
-    <string name="title_did_not_get_the_code_yet">Negavote kodo ?</string>
+    <string name="title_did_not_get_the_code_yet">Negavote kodo?</string>
     <string name="title_resend">Atsiųsti dar kartą</string>
     <string name="title_please_enter_your_phone">Įrašykite savo telefono numerį</string>
-    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">Telefono numerio patvirtinimui  atsiųsime Jums 5 skaitmenų kodą sms žinute.</string>
+    <string name="title_we_will_text_you_a_5_digit_code_to_verify_your_phone_number">Telefono numerio patvirtinimui  atsiųsime Jums 4 skaitmenų kodą sms žinute.</string>
     <string name="title_add_few_images_from_your_item_please_use_clear_image_from_proper_angle">Įkelkite kelias aiškias ir kokybiškas savo daikto nuotraukas.</string>
     <string name="title_button_next">Sekantis</string>
     <string name="title_tell_about_your_item">Aprašykite savo daiktą</string>
     <string name="title_button_set_your_location">Nustatykite buvimo vietą</string>
-    <string name="title_we_will_not_show_your_exact_address_to_users">Jūsų tikslus adresas nebus matomas kitiems vartotojams</string>
+    <string name="title_we_will_not_show_your_exact_address_to_users">Jūsų tikslus adresas nebus matomas kitiems vartotojams.</string>
     <string name="title_search_your_location">Ieškokite buvimo vietos</string>
     <string name="title_button_set_location">Įsiminti</string>
-    <string name="title_set_your_asking_price">Nurodykite kainą</string>
+    <string name="title_set_your_asking_price">Nurodykite kainą.</string>
     <string name="title_logout">Atsijungti</string>
     <string name="error_set_price">Prašome nurodyti kainą</string>
     <string name="error_add_image">Įkelkite nuotraukų</string>
@@ -81,8 +81,8 @@
     <string name="title_add_images_of_item">Įkelkite daikto nuotraukas</string>
     <string name="title_add_new_image">Įkelkite naują nuotrauką</string>
     <string name="title_phone_number">Telefono numeris</string>
-    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Prašome nurodyti nuomojamo daikto kainą</string>
-    <string name="title_you_have_not_any_item_yet">Daiktų nėra</string>
+    <string name="title_please_input_the_price_you_ask_for_renting_out_the_item">Prašome nurodyti nuomojamo daikto kainą.</string>
+    <string name="title_you_have_not_any_item_yet">Daiktų nėra.</string>
     <string name="title_select_category">Pasirinkite kategoriją</string>
     <string name="error_set_location">Pasirinkite vietovę</string>
     <string name="button_decline">Atmesti</string>
@@ -119,18 +119,18 @@
     <string name="title_download_user_data">Atsisiųskite vartotojo duomenis</string>
     <string name="title_change_language">Pasirinkite kalbą</string>
     <string name="title_support">Pagalba</string>
-    <string name="title_favorites"> Įsiminti</string>
+    <string name="title_favorites">Įsiminti</string>
     <string name="text_clear">Ištrinti</string>
     <string name="text_add_a_profile_image">Įkelti profilio nuotrauką</string>
-    <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo nuotrauką</string>
+    <string name="text_please_upload_a_image_of_you_for_identify_you">Įkelkite savo nuotrauką.</string>
     <string name="text_add_a_image">Įkelkite nuotrauką</string>
     <string name="text_your_request_sent">Jūsų užklausa išsiųsta</string>
-    <string name="text_are_you_sure">Ar esate tikras ?</string>
+    <string name="text_are_you_sure">Ar esate tikras?</string>
     <string name="text_send_a_instruction_to_who_rent_your_item">Išsiųskite instrukciją nuomininkui</string>
-    <string name="text_why_decline_this_order">Kodėl atmetėte užsakymą ? </string>
+    <string name="text_why_decline_this_order">Kodėl atmetėte užsakymą?</string>
     <string name="text_finish_order">Baigti užsakymą</string>
     <string name="text_please_make_sure_your_product_is_functioning_properly_and_delivered_to_you_without_damage">Pasiimkite daiktą nurodytu adresu ir įsitikinkite, kad daiktas atitinka aprašymą ir yra tinkamas naudoti.\nApmokėjimas turi būti atliktas prieš paspaudžiant mygtuką “Pradėti nuomą”.</string>
-    <string name="text_start_renting_instruction">Kaip išsinuomoti ?</string>
+    <string name="text_start_renting_instruction">Kaip išsinuomoti</string>
     <string name="text_please_ensure_that_the_rented_goods_are_functioning_properly">Patvirtinkite, kad daiktas atitinka aprašymą ir yra tinkamas naudoti.</string>
     <string name="text_accept_and_start_renting">Sekantis</string>
     <string name="text_try_again">Bandykite dar kartą</string>
@@ -145,7 +145,7 @@
     <string name="text_product_fee">Nuomos mokestis</string>
     <string name="text_total_fee">Iš viso</string>
     <string name="text_cancel_order">Atšaukti užsakymą</string>
-    <string name="text_why_you_cancel_this_order">Kodėl Jūs atšaukėte užsakymą ? </string>
+    <string name="text_why_you_cancel_this_order">Kodėl Jūs atšaukėte užsakymą?</string>
     <string name="text_explain_why_cancel">Paaiškinimas</string>
     <string name="text_you_earn">Jūs uždirbsite</string>
     <string name="text_payments_terms">Sutinku su Ronaker &quot;Naudojimosi sąlygomis&quot; ir &quot;Privatumo politika&quot;</string>
@@ -186,8 +186,8 @@
     <string name="text_privacy_policy">Privatumo politika</string>
     <string name="text_license_agreement">Naudojimosi sąlygos</string>
     <string name="text_check_the_provided_control_code">Patikrinkite Smart-ID programėlės pranešimus</string>
-    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Patikrinkite Smart-ID programėlės pranešimus telefone \n\n ir įveskite PIN1:</string>
-    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Patikrinkite Smart-ID programėlės pranešimus telefone \n\n ir įveskite PIN2:</string>
+    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin1">Patikrinkite Smart-ID programėlės pranešimus telefone \n ir įveskite PIN1:</string>
+    <string name="text_please_check_the_provided_control_code_on_your_phone_n_nconfirm_by_entering_pin2">Patikrinkite Smart-ID programėlės pranešimus telefone \n ir įveskite PIN2:</string>
     <string name="text_time_remaining">Liko laiko</string>
     <string name="text_please_enter_your_personal_code">Įrašykite savo asmens kodą</string>
     <string name="text_we_will_authorize_you_with_your_smart_id">Norime užtikrinti saugumą ir išvengti nesklandumų, todėl mums reikia patvirtinti tavo tapatybę.</string>
@@ -221,8 +221,8 @@
     <string name="text_the_password_and_repeat_password_must_same">Slaptažodžiai nesutampa.</string>
     <string name="text_reset_password">Pakeisti slaptažodį</string>
     <string name="text_explore_items">Ieškoti daiktų</string>
-    <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Saugiai ir paprastai išsinuomokite Jums reikalingą daiktą tiesiai iš savininko. Pasirinkite nuomos laikotarpį ir jei daiktas laisvas - rezervuokite jį.</string>
-    <string name="text_rent">Is it noun or verb ?</string>
+    <string name="text_rent_any_item_you_need_straight_from_its_owner_safely_and_easily_select_the_rental_start_and_end_dates_to_check_rhe_availability_of_the_item_if_available_book_it">Saugiai ir paprastai išsinuomokite Jums reikalingą daiktą tiesiai iš savininko. Pasirinkite nuomos laikotarpį ir jei daiktas laisvas - rezervuokite jį!</string>
+    <string name="text_rent">Išsinuomoti</string>
     <string name="text_we_ll_exchange_your_contacts_soon_after_the_rental_contact_the_owner_and_arrange_the_meeting_after_meeting_with_the_owner_enjoy_your_item">Pasidalinsime kontaktais su Jumis, kad galėtumėte susisiekti su savininku, atsiimti daiktą ir juo naudotis!</string>
     <string name="text_return_and_evaluate">Grąžinimas ir įvertinimas</string>
     <string name="text_when_your_rental_period_comes_to_an_end_all_you_need_to_do_is_return_the_item_to_the_owner_evaluations_are_very_important_for_community_safety">Pasibaigus nuomos laikotarpiui prašome įvertinti daiktą - tai labai svarbu bendruomenės saugumui.</string>
@@ -248,7 +248,7 @@
     <string name="text_preview">Peržiūra</string>
 
     <string name="button_start_renting_sign">Pradėti nuomą</string>
-    <string name="text_for_day">%1$s %2$s už %3$d dienas</string>
+    <string name="text_for_day">%1$s %2$s už %3$s dienas</string>
     <string name="text_please_read_the_contract">Perskaitykite sutartį</string>
     <string name="text_success_sign_and_start_renting">Baigta! Susisiekite su savininku ir sėkmingai naudokitės daiktu.</string>
     <string name="button_confirm">Patvirtinti</string>

@@ -5,12 +5,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.google.gson.internal.`$Gson$Types`
+import com.google.gson.reflect.TypeToken
+import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.byteArrayOfInts
 import com.securepreferences.SecurePreferences
 import java.lang.reflect.Type
 
 class PreferencesProvider(context: Context) : PreferencesDataSource {
 
+    private val TAG = PreferencesProvider::class.java.simpleName
 
     private lateinit var preferences: SharedPreferences
 
@@ -31,9 +35,9 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
                 context,
                 byteArrayOfInts(0xA1, 0x2E, 0x39, 0xF4, 0x89, 0xC3).contentToString()
             )
-//            preferences = context.getSharedPreferences("user_data", MODE_PRIVATE)
         } catch (e: Exception) {
-            e.printStackTrace()
+//            preferences = context.getSharedPreferences("user_data", MODE_PRIVATE)
+            AppDebug.log(TAG, e)
         }
 
     }
@@ -48,7 +52,8 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
 
             edit()?.putString(key, value)
         } catch (e: Exception) {
-            e.printStackTrace()
+
+            AppDebug.log(TAG, e)
         }
 
         edit()?.commit()
@@ -58,7 +63,7 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
         try {
             edit()?.putInt(key, value)
         } catch (e: Exception) {
-            e.printStackTrace()
+            AppDebug.log(TAG, e)
         }
 
         edit()?.commit()
@@ -68,7 +73,7 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
         try {
             edit()?.putLong(key, value)
         } catch (e: Exception) {
-            e.printStackTrace()
+            AppDebug.log(TAG, e)
         }
 
         edit()?.commit()
@@ -78,7 +83,7 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
         try {
             edit()?.putBoolean(key, value)
         } catch (e: Exception) {
-            e.printStackTrace()
+            AppDebug.log(TAG, e)
         }
 
         edit()?.commit()
@@ -88,7 +93,7 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
         try {
             edit()?.putFloat(key, value)
         } catch (e: Exception) {
-            e.printStackTrace()
+            AppDebug.log(TAG, e)
         }
 
         edit()?.commit()
@@ -101,14 +106,19 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
     }
 
 
-    override fun <T> getObject(key: String, type: Type): T? {
+    override fun <T> getObject(key: String,type: Type): T? {
+        return try {
 
-
-        val json = preferences.getString(key, null)
-        return if (json == null)
+            val json = preferences.getString(key, null)
+            if (json == null)
+                null
+            else {
+              return  Gson().fromJson(json, type) as T
+            }
+        } catch (e: Exception) {
+            AppDebug.log(TAG, e)
             null
-        else
-            Gson().fromJson(json, type)
+        }
     }
 
 
@@ -120,10 +130,43 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
                 json = Gson().toJson(obj)
             edit()?.putString(key, json)
         } catch (e: Exception) {
-            e.printStackTrace()
+            AppDebug.log(TAG, e)
+
         }
 
         edit()?.commit()
+    }
+
+
+    override fun <T> putObjectList(key: String, obj: ArrayList<T>?) {
+        try {
+
+            var json: String? = null
+            if (obj != null)
+                json = Gson().toJson(obj)
+            edit()?.putString(key, json)
+        } catch (e: Exception) {
+            AppDebug.log(TAG, e)
+
+        }
+
+        edit()?.commit()
+    }
+
+    override fun <T> getObjectList(key: String): ArrayList<T>? {
+        return try {
+            val json = preferences.getString(key, null)
+            if (json == null)
+                null
+            else {
+
+                val listType: Type = object : TypeToken<ArrayList<T>>() {}.type
+                Gson().fromJson(json, listType)
+            }
+        } catch (e: Exception) {
+            AppDebug.log(TAG, e)
+            null
+        }
     }
 
 
@@ -146,8 +189,8 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
     override fun clearAll() {
         try {
             edit()?.clear()?.commit()
-        } catch (ex: Exception) {
-
+        } catch (e: Exception) {
+            AppDebug.log(TAG, e)
         }
 
     }

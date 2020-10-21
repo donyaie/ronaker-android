@@ -13,7 +13,7 @@ data class UserInfoResponceModel(
     , @SerializedName("avatar") val avatar: String?
     , @SerializedName("is_payment_info_verified") val is_payment_info_verified: Boolean
     , @SerializedName("is_identity_info_verified") val is_identity_info_verified: Boolean
-    , @SerializedName("balance") val balance: Double
+    , @SerializedName("balance") val balance: Double?
     , @SerializedName("smart_id_national_code") val smart_id_national_code: String?
     , @SerializedName("smart_id_personal_code") val smart_id_personal_code: String?
 

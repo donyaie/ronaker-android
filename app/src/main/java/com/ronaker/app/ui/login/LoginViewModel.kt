@@ -27,6 +27,11 @@ class LoginViewModel @ViewModelInject constructor(
     private var emailVerificationSubscription: Disposable? = null
 
 
+    val userFirstName:MutableLiveData<String> = MutableLiveData()
+    val  userLastName:MutableLiveData<String> = MutableLiveData()
+    val  userEmailName:MutableLiveData<String> = MutableLiveData()
+
+
     var forgetSubscription: Disposable? = null
     val actionState: MutableLiveData<LoginActionEnum> = MutableLiveData()
     val viewState: MutableLiveData<LoginStateEnum> = MutableLiveData()
@@ -72,10 +77,10 @@ class LoginViewModel @ViewModelInject constructor(
         home(0),
         email(1),
 
-        //        info(2),
-        password(2),
-        login(3),
-        forget(4);
+        info(2),
+        password(3),
+        login(4),
+        forget(5);
 
         var position: Int = 0
             internal set
@@ -103,7 +108,7 @@ class LoginViewModel @ViewModelInject constructor(
             userInfo.email = email
             userInfo.promotionCode = if (inviteCode.isNotBlank()) inviteCode else null
 
-            viewState.value = LoginStateEnum.password
+            viewState.value = LoginStateEnum.info
         }
 
     }
@@ -116,6 +121,8 @@ class LoginViewModel @ViewModelInject constructor(
     ) {
 
         if (nameIsValid && lastNameValid) {
+            userFirstName.postValue(name)
+            userLastName.postValue(lastName)
             userInfo.first_name = name
             userInfo.last_name = lastName
             viewState.value = LoginStateEnum.password
@@ -149,6 +156,7 @@ class LoginViewModel @ViewModelInject constructor(
 
         if (passwordValid && emailIsValid) {
 
+            userEmailName.postValue(email)
             userInfo.password = password
             userInfo.email = email
 
@@ -203,6 +211,8 @@ class LoginViewModel @ViewModelInject constructor(
     ) {
 
         if (emailIsValid && email != null) {
+
+            userEmailName.postValue(email)
             forgetSubscription =
                 userRepository.forgetPassword(email).doOnSubscribe { loadingButton.postValue(true) }
                     .doOnTerminate { loadingButton.postValue(false) }

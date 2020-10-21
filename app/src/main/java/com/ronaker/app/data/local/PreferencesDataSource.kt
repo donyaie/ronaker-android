@@ -18,7 +18,7 @@ interface PreferencesDataSource {
 
     fun getString(key: String, defValue: String?): String?
 
-    fun <T> getObject(key: String, type: Type): T?
+    fun <T> getObject(key: String,type: Type): T?
 
     fun <T> putObject(key: String, obj: T?)
 
@@ -33,4 +33,6 @@ interface PreferencesDataSource {
     fun clearAll()
 
 
+    fun <T> getObjectList(key: String): ArrayList<T>?
+    fun <T> putObjectList(key: String, obj: ArrayList<T>?)
 }

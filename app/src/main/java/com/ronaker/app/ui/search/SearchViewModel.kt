@@ -9,6 +9,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.CategoryRepository
 import com.ronaker.app.data.ProductRepository
+import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
@@ -31,9 +32,7 @@ class SearchViewModel @ViewModelInject constructor(
     val itemRecentVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-    var dataList: ArrayList<Product> = ArrayList()
-
-    var listView: MutableLiveData<ArrayList<Product>> = MutableLiveData()
+    var listView: MutableLiveData<ArrayList<Any>> = MutableLiveData()
 
 
     lateinit var query: String
@@ -43,6 +42,16 @@ class SearchViewModel @ViewModelInject constructor(
 
 
     private var location: LatLng? = null
+
+
+    private var tempCategory: ArrayList<Category> = ArrayList()
+
+    init {
+
+        categoryRepository.getCategoriesLocal()?.let { tempCategory = it }
+
+    }
+
 
     suspend fun loadProduct(query: String) =
 
@@ -72,11 +81,7 @@ class SearchViewModel @ViewModelInject constructor(
                 }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        dataList.clear()
-                        result.data?.results?.let { dataList.addAll(it) }
-
-                        listView.postValue(dataList)
-
+                        result.data?.results?.let { fillSearch(it, query) }
 
                     } else {
 
@@ -88,26 +93,34 @@ class SearchViewModel @ViewModelInject constructor(
         }
 
 
+    private fun fillSearch(itemList: List<Product>, query: String) {
+        val result = ArrayList<Any>()
+
+        result.addAll(tempCategory.filter { it.title?.contains(query, true) == true })
+        result.addAll(itemList)
+
+        listView.postValue(result)
+    }
+
+
     override fun onCleared() {
         super.onCleared()
         itemSearchSubscription?.dispose()
     }
 
 
-
     fun search(query: String?) {
-       if(query.isNullOrBlank()){
-           itemSearchVisibility.postValue(View.GONE)
-       }
-        else{
-           itemSearchVisibility.postValue(View.VISIBLE)
-           uiScope.launch {
+        if (query.isNullOrBlank()) {
+            itemSearchVisibility.postValue(View.GONE)
+        } else {
+            itemSearchVisibility.postValue(View.VISIBLE)
+            uiScope.launch {
 
-               loadProduct(query)
-           }
+                loadProduct(query)
+            }
 
 
-       }
+        }
     }
 
 

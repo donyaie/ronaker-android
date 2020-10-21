@@ -115,8 +115,8 @@ class ProfileViewModel @ViewModelInject constructor(
             isComplete=false
 
             completeProgressVisibility.postValue(View.VISIBLE)
-            completeProgress.postValue(user.complete)
-            userStep.postValue(user.complete.toString())
+            completeProgress.postValue(user.completed)
+            userStep.postValue(user.completed.toString())
 
             completeVisibility.postValue(View.VISIBLE)
             editVisibility.postValue(View.GONE)

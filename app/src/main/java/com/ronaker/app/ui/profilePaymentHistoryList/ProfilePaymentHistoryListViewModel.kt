@@ -34,7 +34,7 @@ class ProfilePaymentHistoryListViewModel @ViewModelInject constructor(
     fun loadData() {
 
         userRepository.getUserInfo()?.let {
-            walletBalance.value = (it.balance / 100).toCurrencyFormat()
+            walletBalance.value = ((it.balance?:0.0) / 100.0).toCurrencyFormat()
 
         }
 

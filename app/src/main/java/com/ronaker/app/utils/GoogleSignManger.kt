@@ -17,8 +17,6 @@ object GoogleSignManger{
    private fun loginOption(context:Context):GoogleSignInOptions{
        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestProfile()
-            .requestId()
            .requestIdToken(context.getString(R.string.default_web_client_id))
             .build()
 

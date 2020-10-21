@@ -15,7 +15,6 @@ class ProfileEditViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
 
-
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -24,6 +23,7 @@ class ProfileEditViewModel @ViewModelInject constructor(
     val userEmail: MutableLiveData<String> = MutableLiveData()
     val userName: MutableLiveData<String> = MutableLiveData()
 
+    val smartIDComplete: MutableLiveData<Boolean> = MutableLiveData()
 
     val userAvatar: MutableLiveData<String> = MutableLiveData()
 
@@ -76,7 +76,11 @@ class ProfileEditViewModel @ViewModelInject constructor(
             userAvatar.value = BASE_URL + it
         }
 
-        userName.value = nameFormat (user.first_name ,user.last_name )
+        userName.value = nameFormat(user.first_name, user.last_name)
+
+
+        smartIDComplete.postValue(!user.smart_id_personal_code.isNullOrBlank())
+
 
 
         userNumber.value = user.phone_number ?: ""

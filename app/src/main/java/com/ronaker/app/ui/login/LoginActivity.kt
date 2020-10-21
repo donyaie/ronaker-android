@@ -28,7 +28,7 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
-    private val Max_size = 5
+    private val Max_size = 6
 
     private lateinit var screenLibrary: ScreenCalculator
 
@@ -69,10 +69,10 @@ class LoginActivity : BaseActivity() {
                 LoginViewModel.LoginStateEnum.home -> {
                     currentPosition = LoginViewModel.LoginStateEnum.home.position
                 }
-//                LoginViewModel.LoginStateEnum.info -> {
-//
-//                    currentPosition = LoginViewModel.LoginStateEnum.info.position
-//                }
+                LoginViewModel.LoginStateEnum.info -> {
+
+                    currentPosition = LoginViewModel.LoginStateEnum.info.position
+                }
                 LoginViewModel.LoginStateEnum.password -> {
 
                     currentPosition = LoginViewModel.LoginStateEnum.password.position
@@ -188,7 +188,7 @@ class LoginActivity : BaseActivity() {
         viewModel.gotoSignIn.observe(this, {
 
             loginAction = LoginViewModel.LoginActionEnum.login
-            currentPosition = 3
+            currentPosition = LoginViewModel.LoginStateEnum.login.position
         })
 
         viewModel.loading.observe(this, { value ->
@@ -248,7 +248,7 @@ class LoginActivity : BaseActivity() {
             LoginViewModel.LoginStateEnum.home -> LoginHomeFragment()
             LoginViewModel.LoginStateEnum.email -> LoginEmailFragment()
             LoginViewModel.LoginStateEnum.password -> LoginPasswordFragment()
-//            LoginViewModel.LoginStateEnum.info -> LoginNameFragment()
+            LoginViewModel.LoginStateEnum.info -> LoginNameFragment()
             LoginViewModel.LoginStateEnum.login -> LoginSignInFragment()
             LoginViewModel.LoginStateEnum.forget -> LoginForgetFragment()
         }

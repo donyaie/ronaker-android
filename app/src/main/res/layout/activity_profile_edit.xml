@@ -96,12 +96,14 @@
                     android:layout_height="76dp"
                     android:layout_marginTop="20dp"
 
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
+
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/margin_default"
@@ -138,7 +140,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
 
                         android:layout_marginLeft="@dimen/margin_default"
                         android:layout_marginRight="@dimen/margin_default"
@@ -162,8 +164,6 @@
                 <LinearLayout
                     android:id="@+id/mail_layout"
                     android:layout_width="match_parent"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:layout_height="76dp"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -225,21 +225,13 @@
                     android:background="@color/colorPlatinGrey" />
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/margin_default"
-                    android:layout_marginRight="@dimen/margin_default"
-                    android:background="@color/colorPlatinGrey" />
-
-
                 <LinearLayout
                     android:id="@+id/number_layout"
                     android:clickable="true"
                     android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="76dp"
-                    android:background="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -298,6 +290,63 @@
                     android:background="@color/colorPlatinGrey" />
 
 
+
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:visibility="visible"
+                    android:id="@+id/auth_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_default"
+                    android:paddingEnd="@dimen/margin_default"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/caption_title"
+
+                        android:src="@drawable/ic_smart_id_logo" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".95"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:singleLine="true"
+
+                        android:text="@string/textauthorize_your_identity"
+                        android:textAppearance="@style/TextAppearance.Large.Regular"
+                        android:textColor="@color/colorTextDark"
+
+                        />
+
+
+                    <ImageView
+                        android:contentDescription="@string/caption_title"
+                        android:id="@+id/auth_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+
                 <LinearLayout
                     android:id="@+id/payment_layout"
                     android:clickable="true"
@@ -346,7 +395,6 @@
 
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
