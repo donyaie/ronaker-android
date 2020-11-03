@@ -31,6 +31,8 @@ class SearchViewModel @ViewModelInject constructor(
 
     val itemRecentVisibility: MutableLiveData<Int> = MutableLiveData()
 
+    val emptyVisibility: MutableLiveData<Int> = MutableLiveData()
+
 
     var listView: MutableLiveData<ArrayList<Any>> = MutableLiveData()
 
@@ -48,7 +50,17 @@ class SearchViewModel @ViewModelInject constructor(
 
     init {
 
-        categoryRepository.getCategoriesLocal()?.let { tempCategory = it }
+        categoryRepository.getCategoriesLocal()?.forEach {
+
+            tempCategory.add(it)
+            it.sub_categories?.forEach {sub->
+
+                tempCategory.add(sub.apply { this.title= "${sub.title} in ${it.title}"})
+
+
+            }
+
+        }
 
     }
 
@@ -59,6 +71,7 @@ class SearchViewModel @ViewModelInject constructor(
 
 
             itemSearchSubscription?.dispose()
+
 
 
 
@@ -81,11 +94,17 @@ class SearchViewModel @ViewModelInject constructor(
                 }
                 .subscribe { result ->
                     if (result.isSuccess()) {
-                        result.data?.results?.let { fillSearch(it, query) }
+
+
+                       fillSearch(result.data?.results, query)
+
+
+
 
                     } else {
-
+                        fillSearch(null, query)
                         errorMessage.postValue(result.error?.message)
+
 
                     }
                 }
@@ -93,11 +112,29 @@ class SearchViewModel @ViewModelInject constructor(
         }
 
 
-    private fun fillSearch(itemList: List<Product>, query: String) {
+    private fun fillSearch(itemList: List<Product>?, query: String) {
         val result = ArrayList<Any>()
 
-        result.addAll(tempCategory.filter { it.title?.contains(query, true) == true })
-        result.addAll(itemList)
+        result.addAll(tempCategory.filter {  it.title?.contains(query, true)  == true })
+
+
+
+        itemList?.let { result.addAll(it) }
+
+
+
+        if(result.isNullOrEmpty()){
+
+            itemSearchVisibility.postValue(View.GONE)
+            itemRecentVisibility.postValue(View.GONE)
+            emptyVisibility.postValue(View.VISIBLE)
+        }else{
+
+            itemSearchVisibility.postValue(View.VISIBLE)
+            itemRecentVisibility.postValue(View.GONE)
+            emptyVisibility.postValue(View.GONE)
+        }
+
 
         listView.postValue(result)
     }
@@ -111,9 +148,12 @@ class SearchViewModel @ViewModelInject constructor(
 
     fun search(query: String?) {
         if (query.isNullOrBlank()) {
+
             itemSearchVisibility.postValue(View.GONE)
+            itemRecentVisibility.postValue(View.VISIBLE)
+            emptyVisibility.postValue(View.GONE)
+
         } else {
-            itemSearchVisibility.postValue(View.VISIBLE)
             uiScope.launch {
 
                 loadProduct(query)

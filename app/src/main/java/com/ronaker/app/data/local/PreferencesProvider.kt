@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.google.gson.internal.`$Gson$Types`
 import com.google.gson.reflect.TypeToken
 import com.ronaker.app.utils.AppDebug
 import com.ronaker.app.utils.byteArrayOfInts
@@ -106,7 +105,7 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
     }
 
 
-    override fun <T> getObject(key: String,type: Type): T? {
+    override fun <T> getObject(key: String, type: Type): T? {
         return try {
 
             val json = preferences.getString(key, null)
@@ -153,15 +152,15 @@ class PreferencesProvider(context: Context) : PreferencesDataSource {
         edit()?.commit()
     }
 
-    override fun <T> getObjectList(key: String): ArrayList<T>? {
+    override fun <T> getObjectList(key: String,listType: Type): ArrayList<T>? {
         return try {
             val json = preferences.getString(key, null)
             if (json == null)
                 null
             else {
 
-                val listType: Type = object : TypeToken<ArrayList<T>>() {}.type
-                Gson().fromJson(json, listType)
+               Gson().fromJson(json, listType) as ArrayList<T>?
+
             }
         } catch (e: Exception) {
             AppDebug.log(TAG, e)

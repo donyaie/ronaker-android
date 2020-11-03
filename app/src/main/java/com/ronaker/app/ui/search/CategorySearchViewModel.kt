@@ -14,6 +14,8 @@ class CategorySearchViewModel {
     ) {
         data = post
 
+        title.postValue(data.title)
+
 
     }
 

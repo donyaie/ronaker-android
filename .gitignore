@@ -7,5 +7,5 @@
 /captures
 .externalNativeBuild
 log.txt
-/keys.properties
-/ronaker.keystore
+keys.properties
+ronaker.keystore

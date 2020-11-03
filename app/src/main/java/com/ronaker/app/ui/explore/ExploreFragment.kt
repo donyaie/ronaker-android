@@ -39,7 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
-    private val TAG=ExploreFragment::class.java.simpleName
+    private val TAG = ExploreFragment::class.java.simpleName
     private lateinit var binding: com.ronaker.app.databinding.FragmentExploreBinding
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
@@ -164,13 +164,21 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
         viewModel.nearByChecked.observe(viewLifecycleOwner, {
-           if(it){
+            if (it) {
 
-               ShapeDrawableHelper.changeSvgDrawableColor(requireContext(),R.color.colorAccent, binding.nearByImage)
-           }else{
+                ShapeDrawableHelper.changeSvgDrawableColor(
+                    requireContext(),
+                    R.color.colorAccent,
+                    binding.nearByImage
+                )
+            } else {
 
-               ShapeDrawableHelper.changeSvgDrawableColor(requireContext(),R.color.colorTextGreyLight, binding.nearByImage)
-           }
+                ShapeDrawableHelper.changeSvgDrawableColor(
+                    requireContext(),
+                    R.color.colorTextGreyLight,
+                    binding.nearByImage
+                )
+            }
 
         })
 
@@ -192,12 +200,12 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
                 binding.searchText.text = getString(R.string.title_search_here)
                 binding.backImage.visibility = View.VISIBLE
-                binding.backImage.isClickable=false
+                binding.backImage.isClickable = false
                 binding.backImage.setImageResource(R.drawable.ic_search_white)
 
             } else {
                 binding.searchText.text = text
-                binding.backImage.isClickable=true
+                binding.backImage.isClickable = true
 
                 binding.backImage.visibility = View.VISIBLE
                 binding.backImage.setImageResource(R.drawable.ic_back_white)
@@ -274,11 +282,17 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             visibleItemCount = mnager.childCount
             totalItemCount = mnager.itemCount
             pastVisiblesItems = mnager.findFirstVisibleItemPosition()
-            AppDebug.log(TAG,"visibleItemCount: $visibleItemCount, totalItemCount: $totalItemCount , pastVisiblesItems: $pastVisiblesItems ")
+            AppDebug.log(
+                TAG,
+                "visibleItemCount: $visibleItemCount, totalItemCount: $totalItemCount , pastVisiblesItems: $pastVisiblesItems "
+            )
 
 
             if (v.getChildAt(v.childCount - 1) != null) {
-                AppDebug.log(TAG,"scrollY: $scrollY, current: ${v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight} ")
+                AppDebug.log(
+                    TAG,
+                    "scrollY: $scrollY, current: ${v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight} "
+                )
 
 
                 if (scrollY >= v.getChildAt(v.childCount - 1)
@@ -289,7 +303,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
 
-                        AppDebug.log(TAG,"loadMore")
+                        AppDebug.log(TAG, "loadMore")
 
                         viewModel.loadMore()
                     }
@@ -378,15 +392,20 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             if (data != null) {
                 val searchValue = data.getStringExtra(SearchActivity.Search_KEY)
+                val categorySuid = data.getStringExtra(SearchActivity.Category_KEY)
 
-                if (searchValue.isNullOrBlank())
-                    viewModel.search("")
-                else
 
-                    viewModel.search(searchValue)
+                val nearBy = data.getBooleanExtra(SearchActivity.Near_KEY,false)
+
+                if(nearBy)
+                    viewModel.locationCheck.postValue(true)
+
+
+
+                viewModel.search(searchValue, categorySuid)
+
+
             }
-
-
         }
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -395,7 +414,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
     }
 
 
-    private fun showLocationEnableDialog() {
+    fun showLocationEnableDialog() {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setMessage(getString(R.string.text_location_disabled))
@@ -413,7 +432,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
     }
 
 
-    private fun showLocationPermissionDialog(token: PermissionToken?) {
+    fun showLocationPermissionDialog(token: PermissionToken?) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setMessage(getString(R.string.text_location_near_by))
         builder.setPositiveButton(
@@ -424,6 +443,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             if (token == null)
                 chech()
+
         }
         builder.setOnDismissListener {
             token?.cancelPermissionRequest()
@@ -469,21 +489,25 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
                             } else if (lastLocation != null) {
+
+
+
+
                                 viewModel.setLocation(lastLocation)
                             } else {
                                 showLocationEnableDialog()
-                                viewModel.emptyVisibility.postValue(View.VISIBLE)
+//                                viewModel.emptyVisibility.postValue(View.VISIBLE)
                             }
 
 
                         }.addOnCanceledListener {
-                            viewModel.emptyVisibility.postValue(View.VISIBLE)
+//                            viewModel.emptyVisibility.postValue(View.VISIBLE)
 
                         }
 
 
                     } else {
-                        viewModel.emptyVisibility.postValue(View.VISIBLE)
+//                        viewModel.emptyVisibility.postValue(View.VISIBLE)
                     }
                 }
 

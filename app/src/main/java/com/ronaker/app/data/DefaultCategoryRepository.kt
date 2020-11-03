@@ -1,6 +1,7 @@
 package com.ronaker.app.data
 
 
+import com.google.gson.reflect.TypeToken
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.local.PreferencesDataSource
@@ -11,6 +12,7 @@ import com.ronaker.app.model.toCategoryList
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.lang.reflect.Type
 import javax.inject.Inject
 
 class DefaultCategoryRepository @Inject constructor(
@@ -44,11 +46,14 @@ class DefaultCategoryRepository @Inject constructor(
 
 
     override fun saveCategories(value: ArrayList<Category>?) {
-        preferencesProvider.putObjectList(CategoryKey, value)
+
+        preferencesProvider.putObjectList<Category>(CategoryKey, value)
     }
 
     override fun getCategoriesLocal(): ArrayList<Category>? {
-        return preferencesProvider.getObjectList(CategoryKey)
+
+        val listType: Type = object : TypeToken<ArrayList<Category>>() {}.type
+        return preferencesProvider.getObjectList(CategoryKey,listType)
     }
 
 

@@ -17,7 +17,7 @@ import com.ronaker.app.utils.extension.getParentActivity
 import com.ronaker.app.utils.itemSelect
 
 
-class ItemSearchAdapter :
+class ItemSearchAdapter(val listener:Listener) :
     ListAdapter<Any, RecyclerView.ViewHolder>(ItemDiffCallback()) {
 
 
@@ -33,7 +33,7 @@ class ItemSearchAdapter :
                 parent,
                 false
             )
-            return ProductViewHolder(binding)
+            return ProductViewHolder(binding,listener)
         } else {
             val binding: AdapterSearchCategoryBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -42,7 +42,7 @@ class ItemSearchAdapter :
                 false
             )
 
-            return CategoryViewHolder(binding)
+            return CategoryViewHolder(binding,listener)
         }
 
     }
@@ -68,6 +68,7 @@ class ItemSearchAdapter :
     }
 
 
+
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
 
         when (holder) {
@@ -79,7 +80,7 @@ class ItemSearchAdapter :
 
 
     class ProductViewHolder(
-        private val binding: AdapterSearchItemBinding
+        private val binding: AdapterSearchItemBinding,val listener:Listener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = ItemSearchViewModel()
@@ -92,19 +93,10 @@ class ItemSearchAdapter :
             binding.image.transitionName = "${product.avatar}"
 
             binding.root.setOnClickListener {
-                binding.root.getParentActivity()?.let { activity ->
 
-                    (activity.application as General).analytics.itemSelect(product)
-
-                    activity.startActivityForResult(
-                        ExploreProductActivity.newInstance(
-                            activity,
-                            product
-                        ), ExploreProductActivity.REQUEST_CODE
-                    )
+                listener.onItemSelect(product)
 
 
-                }
             }
         }
 
@@ -116,7 +108,7 @@ class ItemSearchAdapter :
 
 
     class CategoryViewHolder(
-        private val binding: AdapterSearchCategoryBinding
+        private val binding: AdapterSearchCategoryBinding,val listener:Listener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = CategorySearchViewModel()
@@ -126,12 +118,12 @@ class ItemSearchAdapter :
             binding.viewModel = viewModel
 
 
-//            binding.root.setOnClickListener {
-//                binding.root.getParentActivity()?.let { activity ->
-//
-//
-//                }
-//            }
+            binding.root.setOnClickListener {
+
+                    listener.onCategorySelect(item)
+
+
+            }
         }
 
         fun onViewRecycled() {
@@ -166,6 +158,13 @@ class ItemSearchAdapter :
 
         }
 
+    }
+
+
+
+    interface Listener{
+        fun onItemSelect(item:Product)
+        fun onCategorySelect(category: Category)
     }
 
 

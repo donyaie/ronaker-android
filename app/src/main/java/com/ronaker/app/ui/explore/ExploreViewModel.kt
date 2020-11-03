@@ -42,7 +42,7 @@ class ExploreViewModel @ViewModelInject constructor(
     private var cachCategoryList: ArrayList<Category> = ArrayList()
 
 
-    private var query: String = ""
+    private var query: String? = null
 
 
     var categoryListAdapter: CategoryExploreAdapter = CategoryExploreAdapter(categoryList, this)
@@ -125,7 +125,6 @@ class ExploreViewModel @ViewModelInject constructor(
                                 categoryRepository.saveCategories(cachCategoryList)
 
 
-
                             }
 
 
@@ -136,7 +135,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
         }
 
-    suspend fun loadProduct() =
+    private suspend fun loadProduct() =
 
         withContext(Dispatchers.Unconfined) {
 
@@ -153,16 +152,12 @@ class ExploreViewModel @ViewModelInject constructor(
                 subscription?.dispose()
 
 
-                var searchValue: String? = query
-
-                if (searchValue.isNullOrBlank())
-                    searchValue = null
 
 
                 subscription = productRepository
                     .productSearch(
 
-                        query = searchValue,
+                        query = query,
                         page = page,
                         location = if (isNearBy) location else null,
                         radius = 50,
@@ -258,14 +253,19 @@ class ExploreViewModel @ViewModelInject constructor(
 
     }
 
-    fun search(search: String) {
+    fun search(search: String?, category: String? = null) {
 
-        if (search.isNotEmpty()) {
+        if (!search.isNullOrBlank()) {
             analytics.actionSearch(search)
         }
 
         reset()
         query = search
+
+
+
+
+        searchCategory(category)
 
         updateSearchCaption()
 
@@ -277,13 +277,56 @@ class ExploreViewModel @ViewModelInject constructor(
 
     }
 
+
+   private fun searchCategory(category_id: String? = null){
+        var temp: Category? = null
+        var parent: Category? = null
+        if (category_id != null) {
+            cachCategoryList.forEach {
+
+                if (it.suid.compareTo(category_id) == 0)
+                    temp = it
+
+
+                it.sub_categories?.forEach { sub ->
+                    if (sub.suid.compareTo(category_id) == 0) {
+                        parent = it
+                        temp = sub
+                    }
+                }
+                if (temp != null)
+                    return@forEach
+            }
+        }
+
+        temp?.let {
+
+
+            parent?.let { it1 -> updateSelectCategory(it1, false) }
+            updateSelectCategory(it, false)
+
+
+        }
+    }
+
+
+
     fun clearSearch() {
 
         clearSelectCategory()
-        search("")
+        search(null)
     }
 
+
     override fun onSelectCategory(selected: Category) {
+
+        updateSelectCategory(selected)
+
+
+    }
+
+
+    private fun updateSelectCategory(selected: Category, refreshResult: Boolean = true) {
 
 
         if (selected == selectedCategory)
@@ -325,10 +368,12 @@ class ExploreViewModel @ViewModelInject constructor(
 
         selectedCategory = selected
 
-        search(query)
+        if (refreshResult)
+            search(query)
 
 
     }
+
 
     private fun clearSelectCategory() {
 
@@ -347,7 +392,8 @@ class ExploreViewModel @ViewModelInject constructor(
     private fun updateSearchCaption() {
 
         searchText.postValue(
-            query + (selectedCategory?.let { " in " + selectedCategory?.title } ?: run { "" })
+            (query ?: "") + (selectedCategory?.let { " in " + selectedCategory?.title }
+                ?: run { "" })
         )
 
 
@@ -357,7 +403,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
         var handle = false
 
-        if (selectedCategory != null || query.isNotEmpty()) {
+        if (selectedCategory != null || !query.isNullOrBlank()) {
             clearSearch()
             handle = true
         }

@@ -33,6 +33,6 @@ interface PreferencesDataSource {
     fun clearAll()
 
 
-    fun <T> getObjectList(key: String): ArrayList<T>?
+    fun <T> getObjectList(key: String,listType: Type): ArrayList<T>?
     fun <T> putObjectList(key: String, obj: ArrayList<T>?)
 }

@@ -120,6 +120,8 @@
             mutableVisibility="@{viewModel.getItemSearchVisibility()}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header">
 
@@ -135,6 +137,7 @@
         <androidx.core.widget.NestedScrollView
             mutableVisibility="@{viewModel.getItemRecentVisibility()}"
             android:layout_width="match_parent"
+            android:fillViewport="true"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header">
@@ -148,6 +151,68 @@
 
 
 
+                <LinearLayout
+                    android:id="@+id/near_by"
+                    android:paddingRight="@dimen/margin_default"
+                    android:paddingLeft="@dimen/margin_default"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/near_by_image"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+
+                        android:clickable="true"
+                        android:contentDescription="@string/text_content"
+                        android:focusable="true"
+
+                        android:padding="15dp"
+
+                        app:srcCompat="@drawable/ic_pin_empty"
+                        app:tint="@color/colorTextGreyLight" />
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:textAppearance="@style/TextAppearance.Medium.Regular"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextDark"
+                        android:text="Near by"
+                        android:layout_weight=".95"
+                        />
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPlatinGrey"
+                    app:layout_constraintTop_toBottomOf="@id/near_by"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/category_recycler"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/near_by"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_half"
+                    android:layout_marginRight="@dimen/margin_default"
+
+
+                    />
+
+
+
 
 
 
@@ -156,6 +221,42 @@
 
 
         </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/empty_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:mutableVisibility="@{viewModel.getEmptyVisibility()}">
+
+            <ImageView
+                android:id="@+id/empty_image"
+                android:layout_width="280dp"
+                android:layout_height="180dp"
+                android:contentDescription="@string/text_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_empty_product" />
+
+
+            <TextView
+                android:id="@+id/empty_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/text_not_found_item"
+                android:textAppearance="@style/TextAppearance.Large.SB"
+                app:layout_constraintTop_toBottomOf="@id/empty_image" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <com.ronaker.app.utils.view.LoadingComponent

@@ -15,7 +15,7 @@ object AnalyticsManager {
     object Param {
         const val PRODUCT = "product"
         const val LOGIN_METHOD_NORMAL = "normal"
-        const val LOGIN_METHOD_GOOGLE= "normal"
+        const val LOGIN_METHOD_GOOGLE= "google"
         const val LOGIN_METHOD_FACEBOOK = "facebook"
         const val NAME= "name"
         const val SUID= "suid"

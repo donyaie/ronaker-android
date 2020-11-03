@@ -31,15 +31,16 @@
 
             />
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <ImageView
             android:id="@+id/image"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="40dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="40dp"
+            android:padding="16dp"
+            android:src="@drawable/background_accent_corner"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="20dp" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
 
@@ -56,7 +57,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="@string/caption_title"
-            android:textAppearance="@style/TextAppearance.Large.SB"
+            android:textAppearance="@style/TextAppearance.Medium.SB"
             android:textColor="@color/colorTextDark"
             app:layout_constraintTop_toBottomOf="@id/image"
             app:mutableText="@{viewModel.getTitle()}" />

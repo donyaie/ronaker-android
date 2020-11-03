@@ -11,11 +11,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.ronaker.app.General
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.Category
+import com.ronaker.app.model.Product
 import com.ronaker.app.ui.explore.ItemExploreAdapter
+import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.utils.Alert
 import com.ronaker.app.utils.AnimationHelper
+import com.ronaker.app.utils.extension.getParentActivity
+import com.ronaker.app.utils.itemSelect
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,7 +29,7 @@ import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
-class SearchActivity : BaseActivity() {
+class SearchActivity : BaseActivity(), ItemSearchAdapter.Listener {
 
     private val TAG = SearchActivity::class.java.simpleName
 
@@ -34,6 +40,8 @@ class SearchActivity : BaseActivity() {
     companion object {
         const val ResultCode = 333
         const val Search_KEY = "searchValue"
+        const val Category_KEY = "categoryValue"
+        const val Near_KEY = "NearValue"
 
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, SearchActivity::class.java)
@@ -86,6 +94,13 @@ class SearchActivity : BaseActivity() {
         binding.backImage.setOnClickListener {
             finishAfterTransition()
         }
+        binding.nearBy.setOnClickListener {
+
+            intent.putExtra(Near_KEY, true)
+            setResult(0, intent)
+            finishAfterTransition()
+
+        }
 
         binding.searchEdit.setOnEditorActionListener { _, actionId, _ ->
 
@@ -107,7 +122,7 @@ class SearchActivity : BaseActivity() {
 
 
         disposable = RxTextView.textChanges(binding.searchEdit)
-            .debounce(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .subscribe {
 
                 viewModel.search(it.toString())
@@ -122,7 +137,7 @@ class SearchActivity : BaseActivity() {
 
         val mnager = LinearLayoutManager(this)
 
-        val productAdapter = ItemSearchAdapter()
+        val productAdapter = ItemSearchAdapter(this)
         binding.itemRecycler.layoutManager = mnager
 
         binding.itemRecycler.adapter = productAdapter
@@ -156,6 +171,33 @@ class SearchActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         disposable?.dispose()
+    }
+
+    override fun onItemSelect(item: Product) {
+
+
+
+          getAnalytics()?.itemSelect(item)
+
+            this.startActivityForResult(
+                ExploreProductActivity.newInstance(
+                    this,
+                    item
+                ), ExploreProductActivity.REQUEST_CODE
+            )
+
+
+
+
+
+
+    }
+
+    override fun onCategorySelect(category: Category) {
+        intent.putExtra(Category_KEY, category.suid)
+        setResult(0, intent)
+        finishAfterTransition()
+
     }
 
 }
