@@ -20,9 +20,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.Task
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -50,13 +50,13 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
     private var visibleItemCount: Int = 0
     private var totalItemCount: Int = 0
     private var pastVisiblesItems: Int = 0
-
+    private lateinit var locationCallback: LocationCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
 
@@ -376,6 +376,47 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
             (activity as DashboardActivity).addFragmentListener(this, this)
 
 
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult?.lastLocation ?: return
+
+                val newLocation = LatLng(locationResult.lastLocation.latitude,locationResult.lastLocation.longitude)
+                lastLocation = newLocation
+                viewModel.setLocation(lastLocation)
+                stopLocationUpdates()
+
+//                for (location in locationResult.locations){
+//                    // Update UI with location data
+//                    // ...
+//                    locationResult.
+//
+//                }
+            }
+        }
+
+
+    }
+    private fun stopLocationUpdates() {
+        mFusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+        mFusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
     }
 
 
@@ -495,7 +536,9 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
                                 viewModel.setLocation(lastLocation)
                             } else {
-                                showLocationEnableDialog()
+//                                showLocationEnableDialog()
+                                startLocationUpdates()
+
 //                                viewModel.emptyVisibility.postValue(View.VISIBLE)
                             }
 
@@ -514,6 +557,9 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
             }).check()
     }
+
+
+
 
 
     override fun onDetach() {
