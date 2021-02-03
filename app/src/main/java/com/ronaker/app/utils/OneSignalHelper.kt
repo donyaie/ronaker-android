@@ -82,7 +82,7 @@ object OneSignalHelper {
         data: JSONObject,
         actionType: OSNotificationAction.ActionType,
         isLogin: Boolean,
-        result: OSNotificationOpenResult? = null
+        result: OSNotificationOpenedResult? = null
     ) {
 
 
@@ -120,7 +120,7 @@ object OneSignalHelper {
 
             if (actionType == OSNotificationAction.ActionType.ActionTaken) Log.i(
                 "OneSignalExample",
-                "Button pressed with id: " + result?.action?.actionID
+                "Button pressed with id: " + result?.action?.actionId
             )
 
 

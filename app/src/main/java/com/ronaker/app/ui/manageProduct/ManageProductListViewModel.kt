@@ -32,10 +32,13 @@ class ManageProductListViewModel @ViewModelInject constructor(
     val retry: MutableLiveData<String> = MutableLiveData()
     val emptyView: MutableLiveData<Boolean> = MutableLiveData()
     val addNewView: MutableLiveData<Boolean> = MutableLiveData()
+    val addNewProduct: MutableLiveData<Boolean> = MutableLiveData()
+    val completeProfile: MutableLiveData<String> = MutableLiveData()
 
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
     private var subscription: Disposable? = null
+    private var stripeSubscription: Disposable? = null
 
     init {
         reset()
@@ -59,7 +62,7 @@ class ManageProductListViewModel @ViewModelInject constructor(
 
                 subscription?.dispose()
                 subscription = productRepository
-                    .getMyProduct( page)
+                    .getMyProduct(page)
 
                     .doOnSubscribe {
                         retry.postValue(null)
@@ -100,7 +103,7 @@ class ManageProductListViewModel @ViewModelInject constructor(
                             }
 
 
-                            if(hasNextPage && page==2){
+                            if (hasNextPage && page == 2) {
                                 loadMore()
                             }
 
@@ -119,6 +122,7 @@ class ManageProductListViewModel @ViewModelInject constructor(
     override fun onCleared() {
         super.onCleared()
         subscription?.dispose()
+        stripeSubscription?.dispose()
     }
 
     fun loadMore() {
@@ -139,11 +143,39 @@ class ManageProductListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun profileIsComplete(): Boolean {
+    fun checkIsComplete() {
 
-       return  userRepository.getUserInfo()?.isComplete()==true
-
+        uiScope.launch {
+            checkStripe()
+        }
 
     }
+
+
+    suspend fun checkStripe() =
+        withContext(Dispatchers.IO) {
+
+            stripeSubscription?.dispose()
+            stripeSubscription = userRepository
+                .stripeSetup()
+
+                .doOnSubscribe {
+
+                }
+                .doOnTerminate { }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+
+                       if( result.data?.is_ready ==true && userRepository.getUserInfo()?.isComplete() == true)
+                       {
+                           addNewProduct.postValue(true)
+                       }else
+                           completeProfile.postValue(result.data?.link )
+                    } else {
+                        errorMessage.postValue(result.error?.message)
+                    }
+                }
+        }
+
 
 }

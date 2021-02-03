@@ -1,6 +1,7 @@
 package com.ronaker.app.data
 
 import com.ronaker.app.base.Result
+import com.ronaker.app.data.network.response.StripeSetupResponseModel
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
 import io.reactivex.Observable
@@ -41,6 +42,11 @@ interface UserRepository {
         national_code: String,
         personal_code: String
     ): Observable<Result<Boolean>>
+
+
+    fun stripeSetup(
+    ): Observable<Result<StripeSetupResponseModel>>
+
 
     fun forgetPassword(email: String): Observable<Result<Boolean>>
     fun forgetPasswordConfirm(token: String, password: String): Observable<Result<Boolean>>

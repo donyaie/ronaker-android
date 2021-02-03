@@ -21,6 +21,7 @@ class ProfileCompleteViewModel @ViewModelInject constructor(
 
     val phoneComplete: MutableLiveData<Boolean> = MutableLiveData()
     val imageComplete: MutableLiveData<Boolean> = MutableLiveData()
+    val stripeComplete: MutableLiveData<Boolean> = MutableLiveData()
     val signComplete: MutableLiveData<Boolean> = MutableLiveData()
     val peymentComplete: MutableLiveData<Boolean> = MutableLiveData()
     val identityComplete: MutableLiveData<Boolean> = MutableLiveData()

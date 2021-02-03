@@ -25,7 +25,6 @@ class ManageProductListFragment : BaseFragment() {
     private val viewModel: ManageProductListViewModel by viewModels()
 
 
-
     private var visibleItemCount: Int = 0
     private var totalItemCount: Int = 0
     private var pastVisiblesItems: Int = 0
@@ -35,7 +34,7 @@ class ManageProductListFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -59,8 +58,6 @@ class ManageProductListFragment : BaseFragment() {
         binding.loading.hideLoading()
 
 
-
-
         val itemsize = requireContext().resources.getDimensionPixelSize(R.dimen.adapter_width)
         var screensize = binding.container.measuredWidth
         AppDebug.log("mnager", "screenSize : $screensize")
@@ -68,15 +65,15 @@ class ManageProductListFragment : BaseFragment() {
 
         if (count < 2)
             count = 2
-         val productAdapter=  ManageProductAdapter()
-        var  mnager=  GridLayoutManager(context, count)
+        val productAdapter = ManageProductAdapter()
+        var mnager = GridLayoutManager(context, count)
         binding.recycler.layoutManager = mnager
-        binding.recycler.adapter=productAdapter
+        binding.recycler.adapter = productAdapter
 
         val vtObserver = binding.root.viewTreeObserver
         vtObserver.addOnGlobalLayoutListener {
 
-            if(screensize==0) {
+            if (screensize == 0) {
                 screensize = binding.container.measuredWidth
 
                 AppDebug.log("mnager", "screenSize 2 : $screensize")
@@ -91,10 +88,6 @@ class ManageProductListFragment : BaseFragment() {
         }
 
 
-
-
-
-
 //        binding.recycler.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         ViewCompat.setNestedScrollingEnabled(binding.recycler, false)
@@ -102,10 +95,25 @@ class ManageProductListFragment : BaseFragment() {
         viewModel.loading.observe(viewLifecycleOwner, { loading ->
             binding.refreshLayout.isRefreshing = loading
         })
+
+
         viewModel.listView.observe(viewLifecycleOwner, {
-           productAdapter.submitList(it.toList())
+            productAdapter.submitList(it.toList())
         })
 
+        viewModel.completeProfile.observe(viewLifecycleOwner, {
+
+
+            requireActivity().startActivity( ProfileCompleteActivity.newInstance(requireActivity(),it) )
+
+
+
+
+        })
+        viewModel.addNewProduct.observe(viewLifecycleOwner, {
+            requireActivity().startActivity( AddProductActivity.newInstance(requireActivity()) )
+
+        })
 
 
         binding.refreshLayout.setOnRefreshListener {
@@ -147,23 +155,14 @@ class ManageProductListFragment : BaseFragment() {
 
 
         binding.addNewProductButton.setOnClickListener {
-            if(viewModel.profileIsComplete()) {
-
-                activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
-            }else{
-
-                activity?.startActivity(activity?.let { it1 -> ProfileCompleteActivity.newInstance(it1) })
-            }
+            viewModel.checkIsComplete()
         }
+
+
         binding.addProductButton.setOnClickListener {
 
-            if(viewModel.profileIsComplete()) {
+            viewModel.checkIsComplete()
 
-                activity?.startActivity(activity?.let { it1 -> AddProductActivity.newInstance(it1) })
-            }else{
-
-                activity?.startActivity(activity?.let { it1 -> ProfileCompleteActivity.newInstance(it1) })
-            }
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner, { errorMessage ->

@@ -68,7 +68,7 @@ class NotificationHistoryAdapter(
 
             binding.container.setOnClickListener {
 
-                item.ANDROID_NOTIFICATION_ID?.let { it1 -> OneSignal.cancelNotification(it1) }
+                item.ANDROID_NOTIFICATION_ID?.let { it1 -> OneSignal.removeNotification(it1) }
                 val data = try {
                     item.FULL_DATA?.let {
 

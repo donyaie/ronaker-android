@@ -17,6 +17,15 @@ interface UserApi {
     fun registerUser(@Header("Accept-Language") language: String,@Body user: UserRegisterRequestModel): Observable<UserRegisterResponseModel>
 
     /**
+     * Setup stripe
+     */
+    @GET("/api/v1/users/stripe/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun stripeSetup(@Header("Accept-Language") language: String,@Header("Authorization") authToken: String): Observable<StripeSetupResponseModel>
+
+
+
+    /**
      * log in user with user and password
      */
     @POST("/api/v1/users/token_auth/")

@@ -2,8 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ronaker.app">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -27,8 +29,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup,android:supportsRtl"
-        >
+        tools:replace="android:allowBackup,android:supportsRtl">
 
         <!--        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"-->
 
@@ -53,8 +54,6 @@
             android:value="@string/google_api_key" />
 
 
-
-
         <activity
             android:name=".ui.orderCreate.OrderCreateActivity"
             android:launchMode="singleTask"
@@ -77,8 +76,6 @@
         </activity>
 
 
-
-
         <activity
             android:name=".ui.manageProduct.ManageProductActivity"
             android:launchMode="singleTask"
@@ -88,8 +85,6 @@
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
 
         </activity>
-
-
 
 
         <activity
@@ -120,8 +115,6 @@
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
-
-
 
 
         <activity
@@ -174,9 +167,6 @@
         </activity>
 
 
-
-
-
         <activity
             android:name=".ui.profileEmailEdit.ProfileEmailEditActivity"
 
@@ -204,7 +194,6 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
 
 
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -217,7 +206,6 @@
 
 
         </activity>
-
 
 
         <activity
@@ -325,6 +313,28 @@
                 <data
                     android:host="install"
                     android:scheme="ronaker" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="stripe.ronaker.com"
+                    android:path="/reauth" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="stripe.ronaker.com"
+                    android:path="/return" />
             </intent-filter>
 
 
@@ -482,7 +492,9 @@
         <meta-data
             android:name="io.branch.sdk.BranchKey"
             android:value="key_live_pnSHm0Vi1768h8kzrkl3ciacqCm89MHa" />
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_ngTMl9Op4988m1iyyegG9glbsymXWQuY" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_test_ngTMl9Op4988m1iyyegG9glbsymXWQuY" />
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
         <meta-data
             android:name="io.branch.sdk.TestMode"

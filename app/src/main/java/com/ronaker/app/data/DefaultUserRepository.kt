@@ -5,6 +5,7 @@ import com.ronaker.app.base.toResult
 import com.ronaker.app.data.local.PreferencesDataSource
 import com.ronaker.app.data.network.UserApi
 import com.ronaker.app.data.network.request.*
+import com.ronaker.app.data.network.response.StripeSetupResponseModel
 import com.ronaker.app.data.network.response.UserGoogleLoginResponseModel
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.model.User
@@ -83,7 +84,7 @@ class DefaultUserRepository @Inject constructor(
     }
 
 
-    override fun loginUserWithGoogle(token:String): Observable<Result<User>> {
+    override fun loginUserWithGoogle(token: String): Observable<Result<User>> {
         val info = UserGoogleLoginResponseModel(
             token
         )
@@ -246,6 +247,14 @@ class DefaultUserRepository @Inject constructor(
 
     }
 
+    override fun stripeSetup(): Observable<Result<StripeSetupResponseModel>> {
+
+        return userApi.stripeSetup(getUserLanguage(), getUserAuthorization())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .toResult()
+    }
+
 
     override fun forgetPassword(
         email: String
@@ -313,9 +322,6 @@ class DefaultUserRepository @Inject constructor(
     }
 
 
-
-
-
     override fun saveUpdateSkipVersion(updateVersion: Int) {
         preferencesProvider.putInt(SkipKey, updateVersion)
     }
@@ -330,7 +336,7 @@ class DefaultUserRepository @Inject constructor(
 
     override fun getUserInfo(): User? {
 
-        return  preferencesProvider.getObject(UserInfoKey,User::class.java)
+        return preferencesProvider.getObject(UserInfoKey, User::class.java)
     }
 
     override fun saveUserToken(token: String?) {
@@ -382,8 +388,6 @@ class DefaultUserRepository @Inject constructor(
 
         }
     }
-
-
 
 
     override fun getUserToken(): String? {

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -114,10 +115,13 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
             initNavigation(savedInstanceState)
 
+            newIntentHandler(intent)
         }
 
 
         checkForUpdate()
+
+
     }
 
 
@@ -125,7 +129,27 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
         super.onNewIntent(intent)
         viewModel.checklogin()
         Branch.sessionBuilder(this).withCallback(branchReferralInitListener).reInit()
+
+
+        newIntentHandler(intent)
+
+
     }
+
+
+    fun newIntentHandler(intent: Intent?){
+
+        val action: String? = intent?.action
+        val data: Uri? = intent?.data
+
+
+        AppDebug.log("DeepLink","action: $action , data : ${data.toString()}")
+
+    }
+
+
+
+
 
 
     override fun onStart() {

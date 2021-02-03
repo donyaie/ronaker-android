@@ -2,12 +2,16 @@ package com.ronaker.app.ui.profileCompleteEdit
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.model.Order
+import com.ronaker.app.ui.orderPreview.OrderPreviewActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationActivity
 import com.ronaker.app.ui.profileEmailVerify.EmailVerifyDialog
@@ -28,15 +32,37 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
 
     companion object {
+
+        var Stripe_KEY = "stripeLink"
+
         fun newInstance(context: Context): Intent {
             val intent = Intent(context, ProfileCompleteActivity::class.java)
             val boundle = Bundle()
+
             intent.putExtras(boundle)
 
             return intent
         }
 
 
+        fun newInstance(context: Context ,stripeLink:String?): Intent {
+            val intent = Intent(context, ProfileCompleteActivity::class.java)
+            val boundle = Bundle()
+            boundle.putString(Stripe_KEY,stripeLink)
+            intent.putExtras(boundle)
+
+            return intent
+        }
+
+    }
+
+    private fun getStripeLink(): String? {
+        if (intent.hasExtra(Stripe_KEY)) {
+
+            return intent.getStringExtra(Stripe_KEY)
+
+        }
+        return null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +76,13 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
 
 
 
+        if(getStripeLink().isNullOrEmpty())
+            binding.stripeLayout.visibility=View.GONE
+        else{
+            binding.stripeLayout.visibility=View.VISIBLE
+            binding.stripeLayout.isClickable = true
+            binding.stripeLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
+        }
 
 
 
@@ -92,6 +125,21 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
                 binding.imageLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
             }
         })
+
+
+//        viewModel.stripeComplete.observe(this, {value ->
+//            if (value == true) {
+////                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
+//
+//                binding.stripeLayout.isClickable = true
+//                binding.stripeLayout.setEndDrawableRes(R.drawable.ic_complete)
+//            } else {
+//
+//                binding.stripeLayout.isClickable = true
+////                binding.imageLayout.setText(R.string.title_add_profile_image)
+//                binding.stripeLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
+//            }
+//        })
 
         viewModel.signComplete.observe(this, {value ->
             if (value == true) {
@@ -176,6 +224,17 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         binding.signLayout.setOnClickListener {
 
             EmailVerifyDialog.DialogBuilder(supportFragmentManager).setListener(this).show()
+
+
+        }
+
+
+        binding.stripeLayout.setOnClickListener {
+            getStripeLink()?.let {url->
+                val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(this, Uri.parse(url))
+            }
 
 
         }

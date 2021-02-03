@@ -1,33 +1,32 @@
 package com.ronaker.app.utils
 
 import android.app.Application
-import android.util.Log
-import com.onesignal.OSNotificationOpenResult
+import com.onesignal.OSNotificationOpenedResult
 import com.onesignal.OneSignal
 import com.onesignal.OneSignalHelper
 import com.ronaker.app.data.local.PreferencesProvider
 
 
-class AppNotificationOpenedHandler(private val app: Application) :
-    OneSignal.NotificationOpenedHandler {
-    override fun notificationOpened(result: OSNotificationOpenResult?) {
+class AppNotificationOpenedHandler(private val app: Application) : OneSignal.OSNotificationOpenedHandler {
 
-
+    override fun notificationOpened(result: OSNotificationOpenedResult?){
         result?.let {
 
             val actionType = result.action.type
-            val data = it.notification?.payload?.additionalData
+            val data = it.notification?.additionalData
 
 
 
-            val isLogin=! (PreferencesProvider(app).getString("tokenKey",null).isNullOrEmpty())
+            val isLogin=! (PreferencesProvider(app).getString("tokenKey", null).isNullOrEmpty())
 
 
 
 
             data?.let { it1 ->
-                OneSignalHelper.handleNotificationClick(app,
-                    it1,actionType, isLogin,it)
+                OneSignalHelper.handleNotificationClick(
+                    app,
+                    it1, actionType, isLogin, it
+                )
             }
 
 
@@ -50,4 +49,6 @@ class AppNotificationOpenedHandler(private val app: Application) :
         </application>
      */
     }
+
+
 }
