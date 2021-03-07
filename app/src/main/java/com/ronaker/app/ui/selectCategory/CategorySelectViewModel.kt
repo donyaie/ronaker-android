@@ -6,7 +6,7 @@ import com.ronaker.app.model.Category
 
 
 class CategorySelectViewModel {
-    private val productTitle = MutableLiveData<String>()
+    private val productTitle = MutableLiveData<String?>()
 
     lateinit var data: Category
     lateinit var mParentViewModel: AddProductCategorySelectViewModel
@@ -24,7 +24,7 @@ class CategorySelectViewModel {
         mBinder = binder
         mParentViewModel = parentViewModel
 
-        productTitle.value = data.title
+        productTitle.postValue(data.title)
 
 
     }
@@ -37,7 +37,7 @@ class CategorySelectViewModel {
 
     }
 
-    fun getProductTitle(): MutableLiveData<String> {
+    fun getProductTitle(): MutableLiveData<String?> {
         return productTitle
     }
 

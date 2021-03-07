@@ -477,7 +477,6 @@
 
 
                         <ImageView
-                            android:visibility="gone"
                             android:id="@+id/renter_sign_state_image"
                             android:layout_width="@dimen/margin_default"
                             android:layout_height="@dimen/margin_default"
@@ -492,7 +491,6 @@
                         <TextView
                             android:id="@+id/renter_sign_state_text"
                             android:layout_width="0dp"
-android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text=" "
@@ -515,7 +513,6 @@ android:visibility="gone"
                             android:layout_marginTop="@dimen/margin_half"
                             android:contentDescription="@string/caption_title"
                             android:padding="4dp"
-                            android:visibility="gone"
 
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/renter_sign_state_image"
@@ -530,7 +527,6 @@ android:visibility="gone"
 
                             android:text=" "
 
-                            android:visibility="gone"
                             android:textAppearance="@style/TextAppearance.Medium.SB"
                             android:textColor="@color/colorTextDark"
                             app:layout_constraintBottom_toBottomOf="@id/lister_sign_state_image"
@@ -864,9 +860,8 @@ android:visibility="gone"
                     android:onClick="@{()->viewModel.onListerSign()}"
                     android:text="@string/text_sign_the_contract"
                     android:visibility="gone"
-
+                    app:mutableVisibility="@{viewModel.getListerSignVisibility()}"
                     />
-<!--                app:mutableVisibility="@{viewModel.getListerSignVisibility()}"-->
 
 
 

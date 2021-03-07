@@ -12,13 +12,13 @@ import com.ronaker.app.utils.toCurrencyFormat
 
 
 class ItemSearchViewModel {
-    private val productTitle = MutableLiveData<String>()
+    private val productTitle = MutableLiveData<String?>()
     private val productPrice = MutableLiveData<String>()
     private val productPricePostfix = MutableLiveData<String>()
 
 
     private val productImage = MutableLiveData<String>()
-    private val productAddress = MutableLiveData<String>()
+    private val productAddress = MutableLiveData<String?>()
 
     lateinit var data: Product
 
@@ -75,7 +75,7 @@ class ItemSearchViewModel {
         return productPricePostfix
     }
 
-    fun getProductTitle(): MutableLiveData<String> {
+    fun getProductTitle(): MutableLiveData<String?> {
         return productTitle
     }
 
@@ -83,7 +83,7 @@ class ItemSearchViewModel {
         return productPrice
     }
 
-    fun getProductAddress(): MutableLiveData<String> {
+    fun getProductAddress(): MutableLiveData<String?> {
         return productAddress
     }
 

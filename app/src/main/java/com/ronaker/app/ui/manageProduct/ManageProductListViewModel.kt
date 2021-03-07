@@ -146,7 +146,16 @@ class ManageProductListViewModel @ViewModelInject constructor(
     fun checkIsComplete() {
 
         uiScope.launch {
-            checkStripe()
+            // TODO Strip
+//            checkStripe()
+
+            if( userRepository.getUserInfo()?.isComplete() == true)
+            {
+                addNewProduct.postValue(true)
+            }else
+                completeProfile.postValue(null )
+
+
         }
 
     }

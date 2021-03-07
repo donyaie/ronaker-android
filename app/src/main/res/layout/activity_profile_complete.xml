@@ -160,12 +160,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
 
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/stripe_layout"
                     style="@style/Button.transparent.width"
                     android:text="Stripe"

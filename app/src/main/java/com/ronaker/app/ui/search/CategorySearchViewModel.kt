@@ -5,7 +5,7 @@ import com.ronaker.app.model.Category
 
 
 class CategorySearchViewModel {
-    private val title = MutableLiveData<String>()
+    private val title = MutableLiveData<String?>()
     lateinit var data: Category
 
 
@@ -21,7 +21,7 @@ class CategorySearchViewModel {
 
 
 
-    fun getTitle(): MutableLiveData<String> {
+    fun getTitle(): MutableLiveData<String?> {
         return title
     }
 

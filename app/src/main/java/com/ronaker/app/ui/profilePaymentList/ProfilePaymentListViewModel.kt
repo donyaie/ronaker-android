@@ -19,7 +19,7 @@ class ProfilePaymentListViewModel @ViewModelInject constructor(
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val retry: MutableLiveData<String> = MutableLiveData()
+    val retry: MutableLiveData<String?> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -31,8 +31,8 @@ class ProfilePaymentListViewModel @ViewModelInject constructor(
             .getPaymentInfoList()
 
             .doOnSubscribe {
-                retry.value = null
-                loading.value = true
+                retry.postValue( "")
+                loading.postValue( true)
             }
             .doOnTerminate {
                 loading.value = false

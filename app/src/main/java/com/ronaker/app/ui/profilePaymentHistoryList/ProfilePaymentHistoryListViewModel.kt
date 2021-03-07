@@ -20,7 +20,7 @@ class ProfilePaymentHistoryListViewModel @ViewModelInject constructor(
 
     val walletBalance: MutableLiveData<String> = MutableLiveData()
 
-    val retry: MutableLiveData<String> = MutableLiveData()
+    val retry: MutableLiveData<String?> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -43,8 +43,8 @@ class ProfilePaymentHistoryListViewModel @ViewModelInject constructor(
             .getFinancialTransactions()
 
             .doOnSubscribe {
-                retry.value = null
-                loading.value = true
+                retry.postValue( "")
+                loading.postValue( true)
             }
             .doOnTerminate {
                 loading.value = false

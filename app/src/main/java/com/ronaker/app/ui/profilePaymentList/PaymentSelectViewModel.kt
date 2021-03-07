@@ -6,7 +6,7 @@ import com.ronaker.app.model.PaymentCard
 
 class PaymentSelectViewModel {
     val cardTypeImage = MutableLiveData<Int>()
-    val title = MutableLiveData<String>()
+    val title = MutableLiveData<String?>()
 
     val selected = MutableLiveData<Boolean>()
 
@@ -47,7 +47,7 @@ class PaymentSelectViewModel {
                 title.value = name.toString()
             }
             PaymentCard.PaymentType.PayPal -> {
-                title.value = data.cardNumber
+                title.postValue( data.cardNumber?:"")
             }
             else -> {
 

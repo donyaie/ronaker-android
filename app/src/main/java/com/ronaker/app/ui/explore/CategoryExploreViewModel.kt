@@ -7,8 +7,8 @@ import com.ronaker.app.model.Category
 import com.ronaker.app.utils.BASE_URL
 
 class CategoryExploreViewModel {
-    private val productTitle = MutableLiveData<String>()
-    private val productImage = MutableLiveData<String>()
+    private val productTitle = MutableLiveData<String?>()
+    private val productImage = MutableLiveData<String?>()
 
     lateinit var data: Category
 
@@ -22,7 +22,7 @@ class CategoryExploreViewModel {
         data = post
 
         mBinder = binder
-        productTitle.value = post.title
+        productTitle.postValue(post.title)
 
         productImage.value = BASE_URL + post.avatar
 
@@ -52,12 +52,12 @@ class CategoryExploreViewModel {
     }
 
 
-    fun getCategoryTitle(): MutableLiveData<String> {
+    fun getCategoryTitle(): MutableLiveData<String?> {
         return productTitle
     }
 
 
-    fun getCategoryImage(): MutableLiveData<String> {
+    fun getCategoryImage(): MutableLiveData<String?> {
         return productImage
     }
 }

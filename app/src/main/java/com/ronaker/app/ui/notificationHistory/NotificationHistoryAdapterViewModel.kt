@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.onesignal.OneSignalHelper
 
 class NotificationHistoryAdapterViewModel{
-    val title = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
+    val title = MutableLiveData<String?>()
+    val description = MutableLiveData<String?>()
 
     val readVisibility= MutableLiveData<Int>()
 

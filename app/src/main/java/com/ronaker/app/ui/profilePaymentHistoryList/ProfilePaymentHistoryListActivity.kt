@@ -68,7 +68,14 @@ class ProfilePaymentHistoryListActivity : BaseActivity() {
 
         viewModel.retry.observe(this, {value ->
 
-            value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
+            value?.let {  } ?: run { }
+
+
+            if(value.isNullOrEmpty()){
+                binding.loading.hideRetry()
+            }else{
+                binding.loading.showRetry(value)
+            }
         })
 
         binding.loading.oClickRetryListener = View.OnClickListener {

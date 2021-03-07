@@ -21,7 +21,7 @@ class OrderItemViewModel(
 
 
 
-    private val productTitle = MutableLiveData<String>()
+    private val productTitle = MutableLiveData<String?>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
     private val productDate = MutableLiveData<String>()
@@ -290,7 +290,7 @@ class OrderItemViewModel(
 //        activity?.let { it.startActivity(ProductRateActivity.newInstance(it, data)) }
     }
 
-    fun getProductTitle(): MutableLiveData<String> {
+    fun getProductTitle(): MutableLiveData<String?> {
         return productTitle
     }
 

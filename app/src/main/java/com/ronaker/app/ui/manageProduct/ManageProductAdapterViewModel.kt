@@ -11,7 +11,7 @@ import com.ronaker.app.utils.extension.getParentActivity
 import com.ronaker.app.utils.toCurrencyFormat
 
 class ManageProductAdapterViewModel {
-    private val productTitle = MutableLiveData<String>()
+    private val productTitle = MutableLiveData<String?>()
     private val productPrice = MutableLiveData<String>()
     private val productImage = MutableLiveData<String>()
 
@@ -91,7 +91,7 @@ class ManageProductAdapterViewModel {
     }
 
 
-    fun getProductTitle(): MutableLiveData<String> {
+    fun getProductTitle(): MutableLiveData<String?> {
         return productTitle
     }
 

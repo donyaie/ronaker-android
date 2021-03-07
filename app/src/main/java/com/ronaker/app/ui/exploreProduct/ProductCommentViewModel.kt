@@ -25,9 +25,9 @@ class ProductCommentViewModel{
         data = post
         mBinder = binder
 
-        comment.value = data.comment
+        comment.value = data.comment?:""
 
-        rate.value = data.stars
+        rate.value = data.stars?:0.0f
 
         data.user?.let {
 

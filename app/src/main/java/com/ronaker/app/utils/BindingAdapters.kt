@@ -93,7 +93,7 @@ fun setMutableFastVisibility(view: View, visibility: MutableLiveData<Int>?) {
 
 
 @BindingAdapter("mutableText")
-fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
+fun setMutableText(view: TextView, text: MutableLiveData<String?>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && text != null) {
@@ -106,7 +106,7 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
 
 
 @BindingAdapter("mutableTextFade")
-fun setMutableTextFade(view: TextView, text: MutableLiveData<String>?) {
+fun setMutableTextFade(view: TextView, text: MutableLiveData<String?>?) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && text != null) {
@@ -116,7 +116,7 @@ fun setMutableTextFade(view: TextView, text: MutableLiveData<String>?) {
             val lastText = view.text.toString()
 
 
-            if (value.compareTo(lastText) == 0)
+            if (value?.compareTo(lastText) == 0)
                 view.text = value
             else {
 

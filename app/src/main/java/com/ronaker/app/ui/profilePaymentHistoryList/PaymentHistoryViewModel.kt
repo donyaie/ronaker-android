@@ -13,7 +13,7 @@ class PaymentHistoryViewModel{
     val amount = MutableLiveData<String>()
     val transactionType = MutableLiveData<Int>()
     val transactionStatus = MutableLiveData<Int>()
-    val description = MutableLiveData<String>()
+    val description = MutableLiveData<String?>()
 
     val cardNumber = MutableLiveData<String>()
 
@@ -31,7 +31,7 @@ class PaymentHistoryViewModel{
         data: Transaction
     ) {
 
-        description.value = data.description
+        description.postValue( data.description?:"")
 
         if (data.description.isNullOrBlank()) {
             descriptionVisibility.value = View.GONE

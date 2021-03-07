@@ -562,6 +562,7 @@ class OrderPreviewViewModel @ViewModelInject constructor(
                 declineVisibility.value = View.GONE
                 finishVisibility.value = View.GONE
                 cancelVisibility.value = View.GONE
+
                 userContactVisibility.value = View.GONE
 
                 contractVisibility.postValue(View.GONE)
