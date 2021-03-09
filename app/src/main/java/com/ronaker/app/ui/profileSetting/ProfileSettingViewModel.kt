@@ -1,13 +1,14 @@
 package com.ronaker.app.ui.profileSetting
 
-
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class ProfileSettingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProfileSettingViewModel @Inject constructor(
     private val userRepository: UserRepository
 )  : BaseViewModel() {
 

@@ -1,16 +1,18 @@
 package com.ronaker.app.ui.profileEdit
 
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.nameFormat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class ProfileEditViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProfileEditViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 

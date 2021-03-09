@@ -1,14 +1,16 @@
 package com.ronaker.app.ui.searchLocationDialog
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.GoogleMapRepository
 import com.ronaker.app.model.Place
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
 
-class AddProductLocationSearchViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AddProductLocationSearchViewModel @Inject constructor(
     private val googleMapRepository: GoogleMapRepository
 ) : BaseViewModel() {
 

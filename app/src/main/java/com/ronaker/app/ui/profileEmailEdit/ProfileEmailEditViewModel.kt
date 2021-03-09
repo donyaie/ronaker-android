@@ -1,14 +1,16 @@
 package com.ronaker.app.ui.profileEmailEdit
 
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class ProfileEmailEditViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProfileEmailEditViewModel @Inject constructor(
     private val userRepository: UserRepository
 )  : BaseViewModel() {
 

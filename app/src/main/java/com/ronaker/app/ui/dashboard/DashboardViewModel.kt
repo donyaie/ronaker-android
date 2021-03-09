@@ -1,14 +1,16 @@
 package com.ronaker.app.ui.dashboard
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.utils.AnalyticsManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class DashboardViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
     val userRepository: UserRepository, val analytics: FirebaseAnalytics
 ) : BaseViewModel() {
 

@@ -1,16 +1,18 @@
 package com.ronaker.app.ui.profilePaymentHistoryList
 
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.PaymentInfoRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Transaction
 import com.ronaker.app.utils.toCurrencyFormat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class ProfilePaymentHistoryListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProfilePaymentHistoryListViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val paymentInfoRepository: PaymentInfoRepository
 )  : BaseViewModel() {

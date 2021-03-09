@@ -4,8 +4,9 @@ import android.os.Parcelable
 import com.ronaker.app.R
 import com.ronaker.app.data.network.request.PaymentInfoCreateRequestModel
 import com.ronaker.app.data.network.response.PaymentInfoListResponseModel
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.android.parcel.Parcelize
+
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import java.util.regex.Pattern
 
 

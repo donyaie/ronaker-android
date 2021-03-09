@@ -2,7 +2,6 @@ package com.ronaker.app.ui.explore
 
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -12,12 +11,15 @@ import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.model.Category
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.actionSearch
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ExploreViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ExploreViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
     private val analytics: FirebaseAnalytics

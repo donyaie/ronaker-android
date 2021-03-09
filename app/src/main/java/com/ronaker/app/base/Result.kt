@@ -35,12 +35,8 @@ open class Result<T>(val data: T? = null, val error: NetworkError? = null) {
 }
 
 fun <T> Observable<T>.toResult(): Observable<Result<T>> {
-    return map {
-
-
+    return map {it->
         Result.fromData(it)
-
-
     }
         .onErrorResumeNext(Function { Observable.just(Result.fromError(it)) })
 }

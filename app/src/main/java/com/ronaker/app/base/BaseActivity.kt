@@ -42,10 +42,10 @@ abstract class BaseActivity : SwipeBackActivity() {
         AnimationHelper.setStartSlideTransition(this)
     }
 
-    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
-        super.startActivityForResult(intent, requestCode)
-        AnimationHelper.setStartSlideTransition(this)
-    }
+//    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+//        super.startActivityForResult(intent, requestCode)
+//        AnimationHelper.setStartSlideTransition(this)
+//    }
 
 
     fun enableKeyboardAnimator() {

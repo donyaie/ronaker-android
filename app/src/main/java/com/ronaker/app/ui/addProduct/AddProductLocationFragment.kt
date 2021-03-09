@@ -67,7 +67,7 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -88,31 +88,30 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
         return binding.root
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
 
         var mheight = 0
 
         val vtObserver = binding.root.viewTreeObserver
-           vtObserver.addOnGlobalLayoutListener {
+        vtObserver.addOnGlobalLayoutListener {
 
-               activity?.let {
-               if (mheight != it.window.decorView.measuredHeight) {
-                   mheight = it.window.decorView.measuredHeight
-                   val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
+            activity?.let {
+                if (mheight != it.window.decorView.measuredHeight) {
+                    mheight = it.window.decorView.measuredHeight
+                    val mstatusSize = ScreenCalculator.getStatusBarSize(requireActivity())
 
-                   binding.containerMap.layoutParams.height =
-                       (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
-                   binding.scrollView.layoutParams.height =
-                       (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
+                    binding.containerMap.layoutParams.height =
+                        (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
+                    binding.scrollView.layoutParams.height =
+                        (mheight - mstatusSize - requireContext().resources.getDimension(R.dimen.toolbar_size)).toInt()
 
-               }
-               }
+                }
+            }
 
-           }
+        }
 
 
 
@@ -202,9 +201,8 @@ class AddProductLocationFragment : BaseFragment(), IPagerFragment,
 
 
 
-
-
     }
+
 
     override fun onDialogResult(
         result: AddProductLocationSearchDialog.DialogResultEnum,

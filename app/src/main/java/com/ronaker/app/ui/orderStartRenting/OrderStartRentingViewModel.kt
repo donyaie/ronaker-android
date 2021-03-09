@@ -2,7 +2,6 @@ package com.ronaker.app.ui.orderStartRenting
 
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -14,10 +13,13 @@ import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
 import com.ronaker.app.utils.nameFormat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import java.util.*
+import javax.inject.Inject
 
-class OrderStartRentingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OrderStartRentingViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
     private val  paymentInfoRepository: PaymentInfoRepository,
     private val  resourcesRepository: ResourcesRepository

@@ -2,17 +2,19 @@ package com.ronaker.app.ui.notificationHistory
 
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.onesignal.OneSignalHelper
 import com.ronaker.app.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class NotificationHistoryViewModel @ViewModelInject constructor(
+@HiltViewModel
+class NotificationHistoryViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 

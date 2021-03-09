@@ -1,18 +1,20 @@
 package com.ronaker.app.ui.manageProduct
 
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ManageProductListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ManageProductListViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val productRepository: ProductRepository
 ) : BaseViewModel() {

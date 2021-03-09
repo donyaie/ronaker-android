@@ -2,14 +2,15 @@ package com.ronaker.app.ui.phoneNumberValidation
 
 import android.os.CountDownTimer
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-
-class PhoneNumberViewModel @ViewModelInject constructor(
+@HiltViewModel
+class PhoneNumberViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): BaseViewModel() {
 

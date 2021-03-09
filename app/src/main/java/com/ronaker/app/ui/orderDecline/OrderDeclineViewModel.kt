@@ -1,14 +1,14 @@
 package com.ronaker.app.ui.orderDecline
-
-
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.model.Order
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class OrderDeclineViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OrderDeclineViewModel @Inject constructor(
     private val orderRepository: OrderRepository
 ) : BaseViewModel() {
 

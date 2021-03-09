@@ -1,48 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:padding="16dp"
-              android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <LinearLayout  android:minHeight="48dp" android:id="@+id/englishLan" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/englishLan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
-        <ImageView  android:layout_marginEnd="16dp" app:srcCompat="@drawable/ic_united_kingdom"  android:layout_width="30dp" android:layout_height="30dp"
-            android:contentDescription="@string/text_content" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/text_content"
+            app:srcCompat="@drawable/ic_united_kingdom" />
 
-        <TextView android:text="English" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
-                tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".95"
+            android:text="English"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
-    <RelativeLayout android:visibility="gone" android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPlatinGrey"
+        android:visibility="gone" />
 
 
-
-    <LinearLayout android:visibility="gone"
-        android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
         tools:ignore="UseCompoundDrawables">
 
-        <ImageView android:layout_marginEnd="16dp" app:srcCompat="@drawable/ic_netherlands" android:layout_width="30dp" android:layout_height="30dp"
-            android:contentDescription="@string/text_content" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/text_content"
+            app:srcCompat="@drawable/ic_netherlands" />
 
-        <TextView android:text="Dutch" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".95"
+            android:text="Dutch"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorPlatinGrey"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPlatinGrey" />
 
-    <LinearLayout android:id="@+id/lithuaniaLan" android:minHeight="48dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/lithuaniaLan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
-        <ImageView android:layout_marginEnd="16dp" app:srcCompat="@drawable/ic_lithuania" android:layout_width="30dp" android:layout_height="30dp"
-            android:contentDescription="@string/text_content" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/text_content"
+            app:srcCompat="@drawable/ic_lithuania" />
 
-        <TextView android:text="Lithuanian" android:layout_width="0dp" android:layout_weight=".95" android:layout_height="wrap_content"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".95"
+            android:text="Lithuanian"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>

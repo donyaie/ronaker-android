@@ -2,7 +2,6 @@ package com.ronaker.app.ui.orderAuthorization
 
 import android.os.CountDownTimer
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -10,11 +9,14 @@ import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Order
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class OrderAuthorizationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OrderAuthorizationViewModel @Inject constructor(
     userRepository: UserRepository,
     private val orderRepository: OrderRepository,
     private val resourcesRepository: ResourcesRepository

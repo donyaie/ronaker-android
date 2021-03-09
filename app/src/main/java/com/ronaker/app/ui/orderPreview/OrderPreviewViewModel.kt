@@ -2,7 +2,6 @@ package com.ronaker.app.ui.orderPreview
 
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -14,13 +13,16 @@ import com.ronaker.app.model.Product
 import com.ronaker.app.utils.BASE_URL
 import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class OrderPreviewViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OrderPreviewViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
     private val contentRepository: ContentRepository,
     private val resourcesRepository: ResourcesRepository

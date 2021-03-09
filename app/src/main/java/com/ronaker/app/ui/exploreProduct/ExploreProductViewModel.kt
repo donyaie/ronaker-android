@@ -2,7 +2,6 @@ package com.ronaker.app.ui.exploreProduct
 
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -13,14 +12,16 @@ import com.ronaker.app.data.ProductRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.system.measureTimeMillis
-
-class ExploreProductViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ExploreProductViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val resourcesRepository: ResourcesRepository,
     private val userRepository: UserRepository,

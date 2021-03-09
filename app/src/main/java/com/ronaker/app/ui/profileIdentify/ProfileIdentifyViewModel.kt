@@ -3,16 +3,18 @@ package com.ronaker.app.ui.profileIdentify
 
 import android.net.Uri
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.ContentRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.DocumentTypeEnum
 import com.ronaker.app.ui.dialog.SelectDialog
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class ProfileIdentifyViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProfileIdentifyViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val contentRepository: ContentRepository
 )  : BaseViewModel() {

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
@@ -145,7 +146,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.viewState.observe(this, {state ->
+        viewModel.viewState.observe(this, { state ->
 
             actionState = state
 
@@ -154,7 +155,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.parentCategory.observe(this, {categoies ->
+        viewModel.parentCategory.observe(this, { categoies ->
 
             AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
                 .setParent(null).setCategories(categoies).show()
@@ -162,10 +163,11 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        viewModel.childCategory.observe(this, {category ->
+        viewModel.childCategory.observe(this, { category ->
 
             category?.sub_categories?.let {
-                AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager).setListener(this)
+                AddProductCategorySelectDialog.DialogBuilder(supportFragmentManager)
+                    .setListener(this)
                     .setParent(category).setCategories(it).show()
             }
 
@@ -173,7 +175,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.showImagePicker.observe(this, {state ->
+        viewModel.showImagePicker.observe(this, { state ->
 
             if (state)
                 pickImage(REQUEST_IMAGE)
@@ -181,7 +183,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         })
 
-        viewModel.showInsurancePicker.observe(this, {state ->
+        viewModel.showInsurancePicker.observe(this, { state ->
 
             if (state)
                 pickImage(REQUEST_INSURNCE)
@@ -190,13 +192,13 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         })
 
 
-        viewModel.errorMessage.observe(this, {errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
 
 
-        viewModel.loading.observe(this, {value ->
+        viewModel.loading.observe(this, { value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
 //                binding.loading.showLoading()
@@ -212,7 +214,7 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
 
 
-        viewModel.goNext.observe(this, {value ->
+        viewModel.goNext.observe(this, { value ->
             if (value)
                 startActivity(ProfileCompleteActivity.newInstance(this@AddProductActivity))
             else
@@ -534,7 +536,15 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 2048)
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 2048)
 
-        startActivityForResult(intent, requset)
+//        startActivityForResult(intent, requset)
+
+
+
+        if (requset == REQUEST_IMAGE)
+            getImage.launch(intent)
+        else if (requset == REQUEST_INSURNCE)
+            getInsurance.launch(intent)
+
     }
 
     private fun launchGalleryIntent(requset: Int) {
@@ -556,15 +566,19 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 2048)
 
 
-        startActivityForResult(intent, requset)
+        if (requset == REQUEST_IMAGE)
+            getImage.launch(intent)
+        else if (requset == REQUEST_INSURNCE)
+            getInsurance.launch(intent)
 
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                val uri: Uri? = data?.getParcelableExtra("path")
+    val getImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
+            // Handle the returned Uri
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = it.data?.getParcelableExtra("path")
                 try {
 
                     uri?.toFile()
@@ -576,9 +590,12 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
             }
         }
 
-        if (requestCode == REQUEST_INSURNCE) {
-            if (resultCode == Activity.RESULT_OK) {
-                val uri: Uri? = data?.getParcelableExtra("path")
+    val getInsurance =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
+            // Handle the returned Uri
+
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = it.data?.getParcelableExtra("path")
                 try {
 
                     uri?.toFile()
@@ -588,18 +605,12 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
                 }
 
             }
+
         }
 
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-
-
-
-
-    private fun showReviewDialog( ) {
+    private fun showReviewDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage( getString(R.string.text_pending_dialog))
+        builder.setMessage(getString(R.string.text_pending_dialog))
         builder.setPositiveButton(
             getString(android.R.string.ok)
         ) { dialog, _ ->
@@ -612,7 +623,6 @@ class AddProductActivity : BaseActivity(), AddProductCategorySelectDialog.OnDial
 
         builder.show()
     }
-
 
 
     private fun showSettingsDialog() {

@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.login
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ronaker.app.R
@@ -10,10 +9,12 @@ import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.User
 import com.ronaker.app.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-
-class LoginViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val resourcesRepository: ResourcesRepository,
     private val analytics: FirebaseAnalytics

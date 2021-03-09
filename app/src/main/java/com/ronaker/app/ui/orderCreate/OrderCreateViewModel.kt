@@ -1,7 +1,6 @@
 package com.ronaker.app.ui.orderCreate
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseViewModel
@@ -11,13 +10,15 @@ import com.ronaker.app.data.UserRepository
 import com.ronaker.app.model.Product
 import com.ronaker.app.utils.nameFormat
 import com.ronaker.app.utils.toCurrencyFormat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-
-class OrderCreateViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OrderCreateViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val orderRepository: OrderRepository,
     private val  resourceRepository: ResourcesRepository

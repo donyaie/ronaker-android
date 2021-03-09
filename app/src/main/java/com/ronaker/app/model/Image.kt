@@ -3,8 +3,8 @@ package com.ronaker.app.model
 import android.net.Uri
 import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Image(

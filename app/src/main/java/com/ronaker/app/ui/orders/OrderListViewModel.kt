@@ -2,18 +2,19 @@ package com.ronaker.app.ui.orders
 
 
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.data.OrderRepository
 import com.ronaker.app.model.Order
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-class OrderListViewModel @ViewModelInject constructor(
+import javax.inject.Inject
+@HiltViewModel
+class OrderListViewModel @Inject constructor(
     private val orderRepository: OrderRepository
 )  : BaseViewModel(),
     OrderItemAdapter.OrderItemListener {

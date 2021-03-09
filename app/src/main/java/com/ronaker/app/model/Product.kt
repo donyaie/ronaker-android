@@ -4,7 +4,9 @@ import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.data.network.request.ProductCreateRequestModel
 import com.ronaker.app.data.network.response.*
-import kotlinx.android.parcel.Parcelize
+
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 
 @Parcelize

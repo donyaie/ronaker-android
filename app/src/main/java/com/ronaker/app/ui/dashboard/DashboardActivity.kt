@@ -342,10 +342,6 @@ class DashboardActivity : BaseActivity(), FragNavController.TransactionListener,
 
         }
 
-
-
-
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 

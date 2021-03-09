@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 import com.ronaker.app.R
 import com.ronaker.app.utils.extension.getParentActivity
 import com.wang.avi.AVLoadingIndicatorView
-import kotlinx.android.synthetic.main.component_button.view.*
 
 
 @BindingAdapter("mutableButtonLoading")
@@ -39,6 +38,7 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
     var loadinView: AVLoadingIndicatorView
 
 
+
     var text: String? = null
         set(value) {
             textView.text = value
@@ -58,7 +58,7 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
 
     var loadingColor: Int = Color.WHITE
         set(value) {
-            progress.setIndicatorColor(value)
+            loadinView.setIndicatorColor(value)
             field = value
         }
 
@@ -68,11 +68,11 @@ class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
             if (value) {
                 this.isEnabled = false
                 this.isClickable = false
-                progress.visibility = View.VISIBLE
+                loadinView.visibility = View.VISIBLE
                 imageView.visibility = View.GONE
                 textView.visibility = View.GONE
             } else {
-                progress.visibility = View.GONE
+                loadinView.visibility = View.GONE
 
                 this.isEnabled = true
                 this.isClickable = true

@@ -46,6 +46,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
     private val viewModel: ExploreViewModel by viewModels()
 
+    var lastLocation: LatLng? = null
 
     private var visibleItemCount: Int = 0
     private var totalItemCount: Int = 0
@@ -69,12 +70,8 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
     }
 
 
-    var lastLocation: LatLng? = null
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val itemsize = requireContext().resources.getDimensionPixelSize(R.dimen.adapter_width)
         var screensize = binding.container.measuredWidth
@@ -396,6 +393,7 @@ class ExploreFragment : BaseFragment(), DashboardActivity.MainaAtivityListener {
 
 
     }
+
     private fun stopLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(locationCallback)
     }

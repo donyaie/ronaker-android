@@ -1,6 +1,5 @@
 package com.ronaker.app.ui.addProduct
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ronaker.app.R
@@ -8,9 +7,12 @@ import com.ronaker.app.base.BaseViewModel
 import com.ronaker.app.base.ResourcesRepository
 import com.ronaker.app.data.GoogleMapRepository
 import com.ronaker.app.model.Place
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class AddProductLocationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AddProductLocationViewModel @Inject constructor(
     private val googleMapRepository: GoogleMapRepository,
     private val resourcesRepository: ResourcesRepository
 )  : BaseViewModel() {
