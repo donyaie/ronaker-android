@@ -75,13 +75,16 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         binding.viewModel = viewModel
 
 
-
-        if(getStripeLink().isNullOrEmpty())
-            binding.stripeLayout.visibility=View.GONE
+        if(getStripeLink().isNullOrEmpty()) {
+            binding.stripeLayout.visibility = View.GONE
+            binding.stripeDivider.visibility=View.GONE
+        }
         else{
             binding.stripeLayout.visibility=View.VISIBLE
             binding.stripeLayout.isClickable = true
             binding.stripeLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
+
+            binding.stripeDivider.visibility=View.VISIBLE
         }
 
 
@@ -127,19 +130,19 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
         })
 
 
-//        viewModel.stripeComplete.observe(this, {value ->
-//            if (value == true) {
-////                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
-//
-//                binding.stripeLayout.isClickable = true
-//                binding.stripeLayout.setEndDrawableRes(R.drawable.ic_complete)
-//            } else {
-//
-//                binding.stripeLayout.isClickable = true
-////                binding.imageLayout.setText(R.string.title_add_profile_image)
-//                binding.stripeLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
-//            }
-//        })
+        viewModel.stripeComplete.observe(this, {value ->
+            if (value == true) {
+//                binding.imageLayout.setText(R.string.title_add_profile_image_edit)
+
+                binding.stripeLayout.isClickable = true
+                binding.stripeLayout.setEndDrawableRes(R.drawable.ic_complete)
+            } else {
+
+                binding.stripeLayout.isClickable = true
+//                binding.imageLayout.setText(R.string.title_add_profile_image)
+                binding.stripeLayout.setEndDrawableRes(R.drawable.ic_guid_warning)
+            }
+        })
 
         viewModel.signComplete.observe(this, {value ->
             if (value == true) {
@@ -235,9 +238,8 @@ class ProfileCompleteActivity : BaseActivity(), EmailVerifyDialog.OnDialogResult
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(this, Uri.parse(url))
             }
-
-
         }
+
 
         binding.imageLayout.setOnClickListener {
 

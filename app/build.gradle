@@ -13,7 +13,7 @@ plugins {
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 20
+def versionPatch = 21
 
 
 def keysPropertiesFile = rootProject.file("keys.properties")
@@ -205,7 +205,7 @@ dependencies {
 
 
     implementation "com.google.android.material:material:$materialVersion"
-    implementation 'com.google.android.play:core-ktx:1.8.1'
+    implementation "com.google.android.play:core-ktx:$corektxVerion"
 
     // Data binding
     kapt "com.android.databinding:compiler:$databindingVersion"
@@ -213,9 +213,6 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
             {
-                // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
-//                exclude module: 'okhttp'
-
                 exclude group: "com.squareup.okhttp3", module: "okhttp"
             }
 
@@ -231,8 +228,6 @@ dependencies {
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
-//    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
 
     compileOnly "org.glassfish:javax.annotation:$annotationVersion"
 
@@ -266,9 +261,6 @@ dependencies {
 
     //Image Loader
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-//    implementation 'jp.wasabeef:glide-transformations:4.1.0'
-    // If you want to use the GPU Filters
-//    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
@@ -314,10 +306,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
 
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
-//    implementation 'com.google.android.gms:play-services-plus:17.0.0'
-
-//    implementation 'com.google.apis:google-api-services-people:v1-rev537-1.25.0'
-
     //Alert
     implementation "com.irozon.sneaker:sneaker:$sneakerVersion"
 
@@ -333,11 +321,8 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$stethoVersion"
     implementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 
     implementation "io.branch.sdk.android:library:$branchVersion"
-
-//    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.

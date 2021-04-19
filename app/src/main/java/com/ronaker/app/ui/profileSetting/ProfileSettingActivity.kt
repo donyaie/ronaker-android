@@ -11,6 +11,7 @@ import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.ui.dashboard.DashboardActivity
 import com.ronaker.app.ui.language.LanguageDialog
+import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import io.branch.referral.Branch
@@ -56,7 +57,7 @@ class ProfileSettingActivity : BaseActivity() {
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, {value ->
+        viewModel.loading.observe(this, { value ->
             if (value == true) {
                 binding.loading.showLoading()
             } else
@@ -65,7 +66,7 @@ class ProfileSettingActivity : BaseActivity() {
 
 
 
-        viewModel.retry.observe(this, {value ->
+        viewModel.retry.observe(this, { value ->
 
             value?.let { binding.loading.showRetry(it) } ?: run { binding.loading.hideRetry() }
         })
@@ -85,6 +86,10 @@ class ProfileSettingActivity : BaseActivity() {
 
         }
 
+        binding.paymentLayout.setOnClickListener {
+          startActivity(  ProfilePaymentListActivity.newInstance(this))
+
+        }
 
         binding.languageLayout.setOnClickListener {
             LanguageDialog.showDialog(this)

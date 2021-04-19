@@ -254,7 +254,7 @@
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey"
-                    android:visibility="gone" />
+                     />
 
 
                 <LinearLayout
@@ -263,8 +263,7 @@
                     android:layout_height="66dp"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <ImageView

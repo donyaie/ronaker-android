@@ -161,6 +161,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:visibility="gone"
+
+                    android:id="@+id/stripe_divider"
                     android:layout_marginLeft="@dimen/margin_default"
                     android:layout_marginRight="@dimen/margin_default"
                     android:background="@color/colorPlatinGrey" />
@@ -170,7 +172,7 @@
                     android:visibility="gone"
                     android:id="@+id/stripe_layout"
                     style="@style/Button.transparent.width"
-                    android:text="Stripe"
+                    android:text="Verify payment receive account"
                     android:textColor="@color/colorTextDark" />
 
 

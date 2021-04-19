@@ -1,6 +1,7 @@
 package com.ronaker.app.data
 
 import com.ronaker.app.base.Result
+import com.ronaker.app.data.network.response.InitialPaymentResponseModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import io.reactivex.Observable
@@ -52,5 +53,7 @@ interface OrderRepository {
 
     fun startSmartIDCert( orderSuid: String): Observable<Result<Boolean>>
     fun checkSmartIDSessionCert( orderSuid: String): Observable<Result<Boolean>>
+    fun initialPayment(orderSuid: String): Observable<Result<InitialPaymentResponseModel>>
+    fun recheckPaymentAuth(orderSuid: String, payment_id:String ): Observable<Result<Boolean>>
 }
 

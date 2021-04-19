@@ -149,13 +149,13 @@ class ManageProductListViewModel @Inject constructor(
 
         uiScope.launch {
             // TODO Strip
-//            checkStripe()
-
-            if( userRepository.getUserInfo()?.isComplete() == true)
-            {
-                addNewProduct.postValue(true)
-            }else
-                completeProfile.postValue(null )
+            checkStripe()
+//
+//            if( userRepository.getUserInfo()?.isComplete() == true)
+//            {
+//                addNewProduct.postValue(true)
+//            }else
+//                completeProfile.postValue(null )
 
 
         }

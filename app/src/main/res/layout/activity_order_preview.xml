@@ -480,7 +480,7 @@
                             android:id="@+id/renter_sign_state_image"
                             android:layout_width="@dimen/margin_default"
                             android:layout_height="@dimen/margin_default"
-                            android:layout_marginTop="@dimen/margin_medium"
+                            android:layout_marginTop="20dp"
                             android:contentDescription="@string/caption_title"
                             android:padding="4dp"
                             app:layout_constraintStart_toStartOf="parent"

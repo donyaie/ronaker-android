@@ -13,6 +13,10 @@ import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
 import com.ronaker.app.utils.nameFormat
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.Stripe
+import com.stripe.android.model.ConfirmPaymentIntentParams
+import com.stripe.android.model.PaymentMethodCreateParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import java.util.*
@@ -21,9 +25,9 @@ import javax.inject.Inject
 @HiltViewModel
 class OrderStartRentingViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
-    private val  paymentInfoRepository: PaymentInfoRepository,
-    private val  resourcesRepository: ResourcesRepository
-)  : BaseViewModel() {
+    private val paymentInfoRepository: PaymentInfoRepository,
+    private val resourcesRepository: ResourcesRepository
+) : BaseViewModel() {
 
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -31,7 +35,6 @@ class OrderStartRentingViewModel @Inject constructor(
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
     val doSignContract: MutableLiveData<Boolean> = MutableLiveData()
     val startRentingConfirm: MutableLiveData<String> = MutableLiveData()
-
 
 
     val contractPreview: MutableLiveData<Boolean> = MutableLiveData()
@@ -42,26 +45,21 @@ class OrderStartRentingViewModel @Inject constructor(
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
     val listerSignImage: MutableLiveData<Int> = MutableLiveData()
     val listerSignText: MutableLiveData<String> = MutableLiveData()
+    val paymentInit: MutableLiveData<String> = MutableLiveData()
     val renterSignImage: MutableLiveData<Int> = MutableLiveData()
     val renterSignText: MutableLiveData<String> = MutableLiveData()
     val contractSignVisibility: MutableLiveData<Int> = MutableLiveData()
     val contractSignMessageVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
-
-
-
-
-
-
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
 
-    var priceListAdapter: OrderPreviewPriceAdapter
+    var priceListAdapter: OrderPreviewPriceAdapter = OrderPreviewPriceAdapter(dataList)
 
 
     var cardDataList: ArrayList<PaymentCard> = ArrayList()
 
-    var cardListAdapter: PaymentSelectAdapter
+    var cardListAdapter: PaymentSelectAdapter = PaymentSelectAdapter(cardDataList)
 
     val finish: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -69,16 +67,11 @@ class OrderStartRentingViewModel @Inject constructor(
 
 
     private var subscription: Disposable? = null
+    private var initPaysubscription: Disposable? = null
+    private var checkPaysubscription: Disposable? = null
     private var orderSubscription: Disposable? = null
 
     private var acceptSubscription: Disposable? = null
-
-
-    init {
-
-        priceListAdapter = OrderPreviewPriceAdapter(dataList)
-        cardListAdapter = PaymentSelectAdapter(cardDataList)
-    }
 
 
     override fun onCleared() {
@@ -86,9 +79,9 @@ class OrderStartRentingViewModel @Inject constructor(
         subscription?.dispose()
         acceptSubscription?.dispose()
         orderSubscription?.dispose()
+        initPaysubscription?.dispose()
+        checkPaysubscription?.dispose();
     }
-
-
 
 
     fun loadData(suid: String) {
@@ -120,7 +113,7 @@ class OrderStartRentingViewModel @Inject constructor(
 
             dataList.clear()
             dataList.addAll(it)
-            dataList.removeAll { price -> Order.OrderPriceEnum[price.key] == Order.OrderPriceEnum.InsuranceFee }
+//            dataList.removeAll { price -> Order.OrderPriceEnum[price.key] == Order.OrderPriceEnum.InsuranceFee }
             priceListAdapter.notifyDataSetChanged()
         }
 
@@ -176,13 +169,13 @@ class OrderStartRentingViewModel @Inject constructor(
 
 
         cardDataList.clear()
-
-        cardDataList.add(
-            PaymentCard(
-                paymentInfoType = PaymentCard.PaymentType.Cash.key,
-                fullName = "By Cash",
-                isVerified = true
-            ).apply { selected = true })
+//
+//        cardDataList.add(
+//            PaymentCard(
+//                paymentInfoType = PaymentCard.PaymentType.Cash.key,
+//                fullName = "By Cash",
+//                isVerified = true
+//            ).apply { selected = true })
         cardListAdapter.notifyDataSetChanged()
         subscription?.dispose()
         subscription = paymentInfoRepository.getPaymentInfoList(
@@ -195,6 +188,9 @@ class OrderStartRentingViewModel @Inject constructor(
                     result.data?.let {
                         if (it.isNotEmpty()) {
                             cardDataList.addAll(it)
+                            if (cardDataList.isNotEmpty()) {
+                                cardDataList[0].selected = true
+                            }
                             cardListAdapter.notifyDataSetChanged()
                         }
 
@@ -209,14 +205,70 @@ class OrderStartRentingViewModel @Inject constructor(
 
     }
 
+    var paymentSecret: String? = null
+    var isPaymentChecked: Boolean = false
 
-    fun checkedAgreement(){
+    fun checkedAgreement() {
         mOrder.address?.let { startRentingConfirm.postValue(it) }
+    }
+
+    //{"payment_id":["This field is required."]}
+    fun chechPayment(paymentId: String) {
+        checkPaysubscription?.dispose()
+        checkPaysubscription = orderRepository.recheckPaymentAuth(mOrder.suid, paymentId)
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
+            .subscribe { result ->
+                if (result.isAcceptable()) {
+                    isPaymentChecked = true;
+                    startRenting()
+//                    errorMessage.value = "isAcceptable"
+                } else {
+                    errorMessage.value = result?.error?.message
+                }
+            }
     }
 
     fun onClickAccept() {
 
+//        if(!isPaymentChecked){
+//            checkPaysubscription?.dispose()
+//            checkPaysubscription= orderRepository.recheckPaymentAuth(mOrder.suid)
+//                .doOnSubscribe { loadingButton.value = true }
+//                .doOnTerminate { loadingButton.value = false }
+//                .subscribe { result ->
+//                    if (result.isSuccess()) {
+//                        isPaymentChecked=true;
+//                        onClickAccept();
+//
+//                    } else {
+//                        errorMessage.value = result?.error?.message
+//                    }
+//                }
+//        }else
 
+        if (paymentSecret == null) {
+            initPaysubscription?.dispose()
+            initPaysubscription = orderRepository.initialPayment(mOrder.suid)
+                .doOnSubscribe { loadingButton.value = true }
+                .doOnTerminate { loadingButton.value = false }
+                .subscribe { result ->
+                    if (result.isSuccess()) {
+
+                        paymentSecret = result?.data?.client_secret
+
+
+                        paymentInit.postValue(paymentSecret)
+
+                    } else {
+                        errorMessage.value = result?.error?.message
+                    }
+                }
+        } else {
+
+            paymentInit.postValue(paymentSecret)
+
+        }
 
 
 //        if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
@@ -226,9 +278,11 @@ class OrderStartRentingViewModel @Inject constructor(
 //            loadData(mOrder.suid)
 //        }
 
-        startRenting()
-    }
 
+//        startRenting()
+
+
+    }
 
 
     private fun startRenting() {
@@ -266,7 +320,6 @@ class OrderStartRentingViewModel @Inject constructor(
 
         doSignContract.postValue(true)
     }
-
 
 
 }

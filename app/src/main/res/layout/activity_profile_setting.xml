@@ -110,6 +110,22 @@
                     android:background="@color/colorPlatinGrey"
                     android:visibility="gone" />
 
+                <Button
+                    android:id="@+id/payment_layout"
+                    style="@style/Button.transparent.width"
+                    android:text="@string/text_payment_methods"
+                    android:textColor="@color/colorTextDark"
+
+                    app:drawableEndCompat="@drawable/ic_chevron_right" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey"
+                    />
+
 
                 <Button
                     android:id="@+id/license_layout"

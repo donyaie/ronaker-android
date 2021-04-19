@@ -79,7 +79,7 @@ class PaymentSelectAdapter(
             binding.container.setOnClickListener(this)
 
 
-            binding.checkbox.isEnabled = item.isVerified == true
+//            binding.checkbox.isEnabled = item.isVerified == true
 
             if (item.isVerified != true)
                 binding.checkbox.isSelected = false

@@ -3,9 +3,11 @@ package com.ronaker.app.data
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.OrderApi
+import com.ronaker.app.data.network.request.CheckPaymentRequestModel
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.request.ProductRateRequestModel
+import com.ronaker.app.data.network.response.InitialPaymentResponseModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
 import com.ronaker.app.model.toOrderList
@@ -194,6 +196,32 @@ class DefaultOrderRepository @Inject constructor(private val api: OrderApi,
             .toResult()
 
     }
+
+
+    override fun initialPayment(
+        orderSuid: String
+    ): Observable<Result<InitialPaymentResponseModel>> {
+        return api.initialPayment(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .toResult()
+
+    }
+
+    override fun recheckPaymentAuth(
+        orderSuid: String,payment_id:String
+    ): Observable<Result<Boolean>> {
+        return api.recheckPaymentAuth(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid,
+            CheckPaymentRequestModel(payment_id))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
 
 
 }

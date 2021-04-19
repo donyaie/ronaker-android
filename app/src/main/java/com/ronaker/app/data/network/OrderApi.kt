@@ -1,12 +1,10 @@
 package com.ronaker.app.data.network
 
+import com.ronaker.app.data.network.request.CheckPaymentRequestModel
 import com.ronaker.app.data.network.request.OrderCreateRequestModel
 import com.ronaker.app.data.network.request.OrderUpdateRequestModel
 import com.ronaker.app.data.network.request.ProductRateRequestModel
-import com.ronaker.app.data.network.response.FreeResponseModel
-import com.ronaker.app.data.network.response.ListResponseModel
-import com.ronaker.app.data.network.response.OrderResponseModel
-import com.ronaker.app.data.network.response.UserSmartIdVerificationResponseModel
+import com.ronaker.app.data.network.response.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -125,6 +123,29 @@ interface OrderApi {
     ): Observable<FreeResponseModel>
 
 
+    /**
+     * Setup stripe initial payment
+     */
+    @POST("/api/v1/orders/{order_suid}/stripe/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun initialPayment(
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
+        @Path("order_suid") suid: String
+    ): Observable<InitialPaymentResponseModel>
+
+
+
+
+    /**
+     * Recheck payment auth
+     */
+    @PATCH("/api/v1/orders/{order_suid}/stripe/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun recheckPaymentAuth(
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
+        @Path("order_suid") suid: String,
+        @Body request: CheckPaymentRequestModel
+    ): Observable<FreeResponseModel>
 
 
 
