@@ -24,7 +24,7 @@ keysProperties.load(new FileInputStream(keysPropertiesFile))
 android {
 
     compileSdkVersion 30
-    buildToolsVersion = '30.0.3'
+    buildToolsVersion = '31.0.0-rc3'
 
     defaultConfig {
         applicationId "com.ronaker.app"
@@ -160,6 +160,22 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
+
+
+        }
+
+
+        stagingRelease {
+
+            buildConfigField "String", "hostAPI", "\"https://staging.ronaker.com\""
+
+            versionNameSuffix ".staging"
+            resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
+
+
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
 
         }
@@ -303,7 +319,7 @@ dependencies {
     implementation "com.google.firebase:firebase-invites:$firebaseInvitesVersion"
     implementation "com.google.firebase:firebase-perf:$firebasePerf"
 
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.4.1'
 
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     //Alert

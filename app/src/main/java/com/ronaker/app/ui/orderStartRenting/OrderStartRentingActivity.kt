@@ -66,6 +66,9 @@ class OrderStartRentingActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
+
+        stripe = Stripe(applicationContext, PaymentConfiguration.getInstance(applicationContext).publishableKey)
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         ViewCompat.setNestedScrollingEnabled(binding.recyclerView, false)
 
@@ -169,7 +172,7 @@ class OrderStartRentingActivity : BaseActivity() {
                     .createWithPaymentMethodCreateParams(binding.cardInputWidget.paymentMethodCreateParams!!, secret)
 
 
-                stripe = Stripe(applicationContext, PaymentConfiguration.getInstance(applicationContext).publishableKey)
+//                stripe = Stripe(applicationContext, PaymentConfiguration.getInstance(applicationContext).publishableKey)
 
                 stripe.confirmPayment(this, confirmParams)
             }

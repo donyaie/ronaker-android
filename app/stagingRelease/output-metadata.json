@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.ronaker.app",
+  "variantName": "processStagingReleaseResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 121,
+      "versionName": "0.1.21.staging",
+      "outputFile": "ronaker-0.1.21-stagingRelease.apk"
+    }
+  ]
+}

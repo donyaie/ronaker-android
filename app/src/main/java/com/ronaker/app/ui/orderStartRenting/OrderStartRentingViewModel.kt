@@ -247,7 +247,7 @@ class OrderStartRentingViewModel @Inject constructor(
 //                }
 //        }else
 
-        if (paymentSecret == null) {
+//        if (paymentSecret == null) {
             initPaysubscription?.dispose()
             initPaysubscription = orderRepository.initialPayment(mOrder.suid)
                 .doOnSubscribe { loadingButton.value = true }
@@ -264,11 +264,11 @@ class OrderStartRentingViewModel @Inject constructor(
                         errorMessage.value = result?.error?.message
                     }
                 }
-        } else {
-
-            paymentInit.postValue(paymentSecret)
-
-        }
+//        } else {
+//
+//            paymentInit.postValue(paymentSecret)
+//
+//        }
 
 
 //        if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
