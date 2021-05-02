@@ -245,11 +245,12 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+
     compileOnly "org.glassfish:javax.annotation:$annotationVersion"
 
     implementation "com.wang.avi:library:$aviVersion"
 
-
+    implementation 'com.docusign:androidsdk:1.1.10'
 
     // Stripe Android SDK
     implementation 'com.stripe:stripe-android:16.3.0'

@@ -241,68 +241,6 @@
             </intent-filter>
 
 
-            <!-- ronaker://product/RncWkrhjT3BFPkHjMNueoR -->
-            <!-- ronaker.test-app.link/product/RncWkrhjT3BFPkHjMNueoR -->
-
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="ronaker.com"
-                    android:pathPrefix="/product"
-                    android:scheme="https" />
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="www.ronaker.com"
-                    android:pathPrefix="/product"
-                    android:scheme="https" />
-            </intent-filter>
-
-
-            <!-- Branch URI scheme -->
-            <intent-filter>
-                <data
-                    android:host="open"
-                    android:scheme="ronaker" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-
-            <!-- Branch App Links -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="ronaker.app.link"
-                    android:scheme="https" />
-            </intent-filter>
-
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "ronaker://product” -->
-                <data
-                    android:host="product"
-                    android:scheme="ronaker" />
-            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -313,37 +251,57 @@
                 <data
                     android:host="install"
                     android:scheme="ronaker" />
+                <data
+                    android:host="product"
+                    android:scheme="ronaker" />
+
+
+                <data
+                    android:host="open"
+                    android:scheme="ronaker" />
+
+                <data
+                    android:host="docusign"
+                    android:scheme="ronaker" />
+
             </intent-filter>
-            <intent-filter>
+
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+
+                <data
+                    android:host="www.ronaker.com"
+                    android:pathPrefix="/product"
+                    android:scheme="https" />
+                <data
+                    android:scheme="https"
+                    android:host="ronaker.com"
+                    android:path="/stripe-reauth" />
 
                 <data
                     android:scheme="https"
-                    android:host="stripe.ronaker.com"
-                    android:path="/reauth" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                    android:host="ronaker.com"
+                    android:path="/stripe-return" />
 
                 <data
-                    android:scheme="http"
-                    android:host="stripe.ronaker.com"
-                    android:path="/return" />
+                    android:scheme="https"
+                    android:host="ronaker.com"
+
+                    android:path="/docusign"/>
+
+
+                <data
+                    android:host="ronaker.app.link"
+                    android:scheme="https" />
+
+
             </intent-filter>
 
-
         </activity>
-        <!--        <activity-->
-        <!--            android:name=".ui.exploreProduct.ExploreProductActivity"-->
-        <!--            android:screenOrientation="portrait"-->
-        <!--            android:theme="@style/ProductPreviewTheme"-->
-        <!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
 
         <activity
             android:name=".ui.profilePaymentHistoryList.ProfilePaymentHistoryListActivity"
@@ -359,6 +317,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.docusign.DocusignActivity"
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustResize" >
+
+
+
+        </activity>
+
 
 
         <activity

@@ -18,6 +18,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okio.BufferedSink
 import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
@@ -70,7 +72,7 @@ class DefaultContentRepository @Inject constructor(
                         if (file.exists())
                             file.delete()
 
-                        val sink: BufferedSink = Okio.buffer(Okio.sink(file))
+                        val sink: BufferedSink = file.sink().buffer()
                         // you can access body of response
 
                         responseBodyResponse.body()?.source()?.let {

@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
+import com.docusign.androidsdk.DSEnvironment
+import com.docusign.androidsdk.DocuSign
+import com.docusign.androidsdk.util.DSMode
 import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
@@ -37,6 +40,18 @@ class General : Application() {
             STRIPE_PUBLISH_KEY
         )
 
+
+
+        DocuSign.init(
+
+
+            this, // the Application Context
+            "f8cd5587-58e6-408d-abc6-b4ad0f088207", // Same as Client Id
+            "5b6e2992-41f0-4fb5-afb2-cec52ec3c0f2",
+            "ronaker://docusign",
+            DSMode.DEBUG
+        );
+        DocuSign.getInstance().setEnvironment(DSEnvironment.DEMO_ENVIRONMENT);
 
 
 

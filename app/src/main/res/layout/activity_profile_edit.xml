@@ -338,7 +338,6 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/margin_default"
@@ -351,7 +350,6 @@
                     android:id="@+id/payment_layout"
                     android:clickable="true"
                     android:focusable="true"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="76dp"
                     android:background="?attr/selectableItemBackground"
@@ -372,6 +370,61 @@
 
                             android:layout_height="wrap_content"
                             android:text="@string/text_edit_payment_methods"
+                            android:textAppearance="@style/TextAppearance.Large.SB"
+
+                            android:textColor="@color/colorTextDark" />
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+
+                        android:layout_marginLeft="@dimen/margin_default"
+                        android:layout_marginRight="@dimen/margin_default"
+                        android:contentDescription="@string/title_button_next"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorTextDark" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:background="@color/colorPlatinGrey" />
+
+
+
+                <LinearLayout
+                    android:id="@+id/docusign_layout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="76dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_weight=".95"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:text="Docusign"
                             android:textAppearance="@style/TextAppearance.Large.SB"
 
                             android:textColor="@color/colorTextDark" />

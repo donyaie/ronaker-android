@@ -8,13 +8,14 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
+import com.ronaker.app.ui.docusign.DocusignActivity
 import com.ronaker.app.ui.phoneNumberValidation.PhoneNumberActivity
 import com.ronaker.app.ui.profileAuthorization.ProfileAuthorizationActivity
 import com.ronaker.app.ui.profileImage.ProfileImageActivity
 import com.ronaker.app.ui.profileNameEdit.ProfileNameEditActivity
+import com.ronaker.app.ui.profilePaymentList.ProfilePaymentListActivity
 import com.ronaker.app.utils.Alert
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class ProfileEditActivity : BaseActivity() {
@@ -45,11 +46,11 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
-        viewModel.errorMessage.observe(this, {errorMessage ->
+        viewModel.errorMessage.observe(this, { errorMessage ->
             Alert.makeTextError(this, errorMessage)
         })
 
-        viewModel.loading.observe(this, {value ->
+        viewModel.loading.observe(this, { value ->
             if (value == true) {
                 binding.loading.visibility = View.VISIBLE
                 binding.loading.showLoading()
@@ -74,7 +75,7 @@ class ProfileEditActivity : BaseActivity() {
 
         binding.paymentLayout.setOnClickListener {
 
-//            startActivity(ProfilePaymentListActivity.newInstance(this))
+            startActivity(ProfilePaymentListActivity.newInstance(this))
 
         }
         binding.numberLayout.setOnClickListener {
@@ -96,7 +97,7 @@ class ProfileEditActivity : BaseActivity() {
 //        }
 
 
-        viewModel.smartIDComplete.observe(this, {value ->
+        viewModel.smartIDComplete.observe(this, { value ->
             if (value == true) {
 
                 binding.authLayout.isClickable = false
@@ -113,6 +114,14 @@ class ProfileEditActivity : BaseActivity() {
 
             startActivity(ProfileAuthorizationActivity.newInstance(this))
         }
+
+        binding.docusignLayout.setOnClickListener {
+
+
+            startActivity(DocusignActivity.newInstance(this))
+        }
+
+
 
 
     }
