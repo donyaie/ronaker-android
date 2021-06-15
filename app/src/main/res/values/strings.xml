@@ -186,7 +186,7 @@
     <string name="text_balance">Balance :</string>
     <string name="text_add_document_image">Add document image</string>
     <string name="text_order_detail">Order Detail</string>
-    <string name="text_of_5">" of 3"</string>
+    <string name="text_of_5">" of 4"</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Please, tell us about your experience using this item</string>
     <string name="text_please_write_your_experience_here">Please write your experience here</string>
     <string name="text_title_send">Send</string>
@@ -264,6 +264,7 @@
 
 
     <string name="button_start_renting_sign">Start renting</string>
+    <string name="button_start_renting_sign_and_pay">Pay &amp; Start renting</string>
     <string name="text_for_day" formatted="true">%1$s %2$s for %3$s days</string>
     <string name="text_success_sign_and_start_renting">Done. Reach out to owner and enjoy your item.</string>
     <string name="button_confirm">Confirm</string>

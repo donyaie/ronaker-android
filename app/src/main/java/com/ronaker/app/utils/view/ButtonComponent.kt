@@ -29,6 +29,17 @@ fun setMutableRadioChecked(view: ButtonComponent, url: MutableLiveData<Boolean>?
 }
 
 
+@BindingAdapter("mutableButtonTextRes")
+fun setMutableButtonTextRes(view: ButtonComponent, text: MutableLiveData<Int>?) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && text != null) {
+        text.observe(
+            parentActivity,
+            Observer { value -> view.text = parentActivity.applicationContext.getString(value) })
+    }
+}
+
 class ButtonComponent constructor(context: Context, attrs: AttributeSet) :
     RelativeLayout(context, attrs) {
 

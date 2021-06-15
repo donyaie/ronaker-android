@@ -104,7 +104,7 @@ class ManageProductListFragment : BaseFragment() {
         viewModel.completeProfile.observe(viewLifecycleOwner, {
 
 
-            requireActivity().startActivity( ProfileCompleteActivity.newInstance(requireActivity(),it) )
+            requireActivity().startActivity( ProfileCompleteActivity.newInstance(requireActivity()) )
 
 
 

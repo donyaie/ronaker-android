@@ -1,6 +1,7 @@
 package com.ronaker.app.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import com.ronaker.app.data.network.response.OrderPriceResponseModel
 import com.ronaker.app.data.network.response.OrderResponseModel
 
@@ -25,8 +26,14 @@ data class Order(
     val isArchived: Boolean = false,
     val smart_id_creator_session_id: String?,
     val smart_id_owner_session_id: String?,
-    val signPdf_EN: String? ,
-    val signPdf_LT: String?
+    val signPdf_EN: String?,
+    val signPdf_LT: String?,
+    val is_charge_placed: Boolean = false,
+    val envelope_id: String?,
+    val lister_signed: Boolean = false,
+    val renter_signed: Boolean = false
+
+
 ) : Parcelable {
 
 
@@ -187,8 +194,15 @@ fun OrderResponseModel.toOrderModel(): Order {
         isArchived = is_archived,
         smart_id_creator_session_id = smart_id_creator_session_id,
         smart_id_owner_session_id = this.smart_id_owner_session_id,
-        signPdf_EN = sign_pdf?.en,
-        signPdf_LT = sign_pdf?.lt
+        signPdf_EN = latest_signed_pdf?.en,
+        signPdf_LT = latest_signed_pdf?.lt,
+
+
+        is_charge_placed = is_charge_placed,
+        envelope_id = envelope_id,
+        lister_signed = lister_signed,
+        renter_signed = renter_signed
+
 
     )
 

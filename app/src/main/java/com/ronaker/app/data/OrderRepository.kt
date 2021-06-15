@@ -23,6 +23,7 @@ interface OrderRepository {
         price: Double
     ): Observable<Result<Boolean>>
 
+
     fun updateOrderStatus(
         suid: String,
         status: String? = null,
@@ -55,5 +56,20 @@ interface OrderRepository {
     fun checkSmartIDSessionCert( orderSuid: String): Observable<Result<Boolean>>
     fun initialPayment(orderSuid: String): Observable<Result<InitialPaymentResponseModel>>
     fun recheckPaymentAuth(orderSuid: String, payment_id:String ): Observable<Result<Boolean>>
+
+
+     fun getPaypalLink(
+        orderSuid: String
+    ): Observable<Result<String>>
+
+
+     fun setPaypalPayerID(
+        orderSuid: String,
+        payerID:String
+    ): Observable<Result<Boolean>>
+
+    fun signDocusign(
+        orderSuid: String
+    ): Observable<Result<String>>
 }
 

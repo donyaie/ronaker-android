@@ -10,27 +10,23 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.AttributeSet
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.GsonBuilder
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
+import com.ronaker.app.ui.docusignSign.DocusignSignActivity
 import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
+import com.ronaker.app.ui.paypal.PaypalCheckoutActivity
 import com.ronaker.app.ui.profilePayment.ProfilePaymentActivity
 import com.ronaker.app.utils.*
-import com.stripe.android.ApiResultCallback
-import com.stripe.android.PaymentConfiguration
-import com.stripe.android.PaymentIntentResult
-import com.stripe.android.Stripe
-import com.stripe.android.model.ConfirmPaymentIntentParams
-import com.stripe.android.model.StripeIntent
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 class OrderStartRentingActivity : BaseActivity() {
@@ -38,8 +34,6 @@ class OrderStartRentingActivity : BaseActivity() {
 
     private lateinit var binding: com.ronaker.app.databinding.ActivityOrderStartRentingBinding
     private val viewModel: OrderStartRentingViewModel by viewModels()
-
-    private lateinit var stripe: Stripe
 
     companion object {
         var Order_KEY = "order"
@@ -55,6 +49,17 @@ class OrderStartRentingActivity : BaseActivity() {
             return intent
         }
     }
+    val paypalLink =
+        this.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
+            // Handle the returned Uri
+            if (it.resultCode == Activity.RESULT_OK) {
+                val token: String? = it.data?.getStringExtra(PaypalCheckoutActivity.TOKEN_KEY)
+
+                viewModel.payByPaypal(token);
+
+
+            }
+        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,8 +71,6 @@ class OrderStartRentingActivity : BaseActivity() {
 
         binding.viewModel = viewModel
 
-
-        stripe = Stripe(applicationContext, PaymentConfiguration.getInstance(applicationContext).publishableKey)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         ViewCompat.setNestedScrollingEnabled(binding.recyclerView, false)
@@ -89,6 +92,12 @@ class OrderStartRentingActivity : BaseActivity() {
                 binding.loading.hideLoading()
         })
 
+        viewModel.paypalPayLink.observe(this, { value ->
+
+            paypalLink.launch(PaypalCheckoutActivity.newInstance(this@OrderStartRentingActivity,value))
+
+        })
+
 
 
 
@@ -106,13 +115,17 @@ class OrderStartRentingActivity : BaseActivity() {
 
         viewModel.doSignContract.observe(this, { _ ->
             getOrder()?.let {
-                startActivityForResult(
-                    OrderAuthorizationActivity.newInstance(
-                        this@OrderStartRentingActivity,
-                        it,
-                        canSign = true,startRenting = false
-                    ), OrderAuthorizationActivity.REQUEST_CODE
-                )
+
+               startActivity(DocusignSignActivity.newInstance(this@OrderStartRentingActivity,it.suid))
+
+
+//                startActivityForResult(
+//                    OrderAuthorizationActivity.newInstance(
+//                        this@OrderStartRentingActivity,
+//                        it,
+//                        canSign = true,startRenting = false
+//                    ), OrderAuthorizationActivity.REQUEST_CODE
+//                )
             }
         })
 
@@ -162,23 +175,6 @@ class OrderStartRentingActivity : BaseActivity() {
 
         }
 
-        viewModel.paymentInit.observe(this, { secret ->
-
-            if(binding.cardInputWidget.paymentMethodCreateParams!=null && secret!=null){
-
-
-
-                val confirmParams = ConfirmPaymentIntentParams//.createWithPaymentMethodCreateParams()
-                    .createWithPaymentMethodCreateParams(binding.cardInputWidget.paymentMethodCreateParams!!, secret)
-
-
-//                stripe = Stripe(applicationContext, PaymentConfiguration.getInstance(applicationContext).publishableKey)
-
-                stripe.confirmPayment(this, confirmParams)
-            }
-
-
-        })
 
 
 
@@ -188,6 +184,17 @@ class OrderStartRentingActivity : BaseActivity() {
 
 
         getOrder()?.let { viewModel.loadData(it) } ?: run { finish() }
+
+
+
+
+    }
+
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        return super.onCreateView(name, context, attrs)
+
+
 
 
     }
@@ -360,31 +367,6 @@ class OrderStartRentingActivity : BaseActivity() {
 
 
         }
-
-        val weakActivity = WeakReference<Activity>(this)
-
-        // Handle the result of stripe.confirmPayment
-        stripe.onPaymentResult(requestCode, data, object : ApiResultCallback<PaymentIntentResult> {
-            override fun onSuccess(result: PaymentIntentResult) {
-                val paymentIntent = result.intent
-                val status = paymentIntent.status
-                if (status == StripeIntent.Status.RequiresCapture ||status == StripeIntent.Status.Succeeded ) {
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    paymentIntent.id?.let { viewModel.chechPayment(it) };
-
-                    AppDebug.log(TAG,"Payment succeeded "+ gson.toJson(paymentIntent))
-//                    displayAlert(weakActivity.get(), "Payment succeeded", gson.toJson(paymentIntent), restartDemo = true)
-                } else {
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    AppDebug.log(TAG, "Payment failed "+ gson.toJson(paymentIntent) ?: "")
-//                    displayAlert(weakActivity.get(), "Payment failed", paymentIntent.lastPaymentError?.message ?: "")
-                }
-            }
-
-            override fun onError(e: Exception) {
-                AppDebug.log(TAG, "Payment failed "+ e.toString())
-            }
-        })
 
         super.onActivityResult(requestCode, resultCode, data)
     }

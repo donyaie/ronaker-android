@@ -115,7 +115,26 @@
                     android:background="@color/colorPlatinGrey" />
 
 
+
+                <Button
+                    android:id="@+id/docusign_layout"
+                    style="@style/Button.transparent.width"
+                    android:text="Docusign Account"
+                    android:textColor="@color/colorTextDark"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:visibility="gone"
+                    android:background="@color/colorPlatinGrey" />
+
+
                 <LinearLayout
+
+
+                    android:visibility="gone"
                     android:id="@+id/auth_layout"
                     android:layout_width="match_parent"
                     android:layout_height="66dp"

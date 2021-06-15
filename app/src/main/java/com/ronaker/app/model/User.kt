@@ -33,6 +33,7 @@ data class User(
     , var balance: Double? = null
     , var smart_id_national_code: String? = null
     , var smart_id_personal_code: String? = null
+    ,var docusign_is_last_valid:Boolean=false
 ,  var completed:Int =0
 
 ) : Parcelable {
@@ -56,11 +57,12 @@ data class User(
 
         if (is_email_verified) completed++
         if (is_phone_number_verified) completed++
+        if(docusign_is_last_valid==true) completed++
 //        user.is_payment_info_verified?.let { if (it) complete++ }
 //        user.is_identity_info_verified?.let { if (it) complete++ }
 
 
-        return completed == 3
+        return completed == 4
     }
 
 //
@@ -87,7 +89,8 @@ fun UserInfoResponceModel.toUserModel(): User {
         avatar = avatar,
         balance = balance,
         smart_id_national_code = smart_id_national_code,
-        smart_id_personal_code = smart_id_personal_code
+        smart_id_personal_code = smart_id_personal_code,
+        docusign_is_last_valid = docusign_is_last_valid
     )
 
 }

@@ -156,6 +156,8 @@ fun setMutableTextRes(view: TextView, text: MutableLiveData<Int>?) {
     }
 }
 
+
+
 @BindingAdapter("mutableTextColorRes")
 fun setMutableTextColorRes(view: TextView, text: MutableLiveData<Int>?) {
 

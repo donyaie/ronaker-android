@@ -3,10 +3,7 @@ package com.ronaker.app.data
 import com.ronaker.app.base.Result
 import com.ronaker.app.base.toResult
 import com.ronaker.app.data.network.OrderApi
-import com.ronaker.app.data.network.request.CheckPaymentRequestModel
-import com.ronaker.app.data.network.request.OrderCreateRequestModel
-import com.ronaker.app.data.network.request.OrderUpdateRequestModel
-import com.ronaker.app.data.network.request.ProductRateRequestModel
+import com.ronaker.app.data.network.request.*
 import com.ronaker.app.data.network.response.InitialPaymentResponseModel
 import com.ronaker.app.data.network.response.ListResponseModel
 import com.ronaker.app.model.Order
@@ -222,6 +219,55 @@ class DefaultOrderRepository @Inject constructor(private val api: OrderApi,
 
     }
 
+
+    override fun getPaypalLink(
+        orderSuid: String
+    ): Observable<Result<String>> {
+        return api.getPayLink(userRepository.getUserAuthorization(),userRepository.getUserLanguage(), orderSuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.url
+            }
+            .toResult()
+
+    }
+
+
+
+    override fun setPaypalPayerID(
+        orderSuid: String,
+        payerID:String
+    ): Observable<Result<Boolean>> {
+        return api.setPaypalPayerID(userRepository.getUserAuthorization(),userRepository.getUserLanguage(),
+//            orderSuid,
+            PaypaySetIDRequestModel(payerID)
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                true
+            }
+            .toResult()
+
+    }
+
+
+
+    override fun signDocusign(
+        orderSuid: String
+    ): Observable<Result<String>> {
+        return api.signDocusign(userRepository.getUserAuthorization(),userRepository.getUserLanguage(),
+            orderSuid
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.url
+            }
+            .toResult()
+
+    }
 
 
 }

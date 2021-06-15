@@ -71,7 +71,7 @@ class OrderItemViewModel(
 
 
             data.price?.forEach {
-                if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.ProductFee)
+                if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.Total)
                     total = if (it.price == 0.0) 0.0 else it.price / 100.0
             }
 

@@ -398,7 +398,9 @@ class ExploreProductViewModel @Inject constructor(
     }
 
     fun userProfileIsComplete(): Boolean {
-        return userRepository.getUserInfo()?.isComplete() == true
+
+        return true;
+//        return userRepository.getUserInfo()?.isComplete() == true
 
     }
 

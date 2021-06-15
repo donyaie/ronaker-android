@@ -29,12 +29,11 @@ class OrderPreviewViewModel @Inject constructor(
 )   : BaseViewModel() {
 
 
-
-    private val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
+     val recieptVisibility: MutableLiveData<Int> = MutableLiveData()
 
     var dataList: ArrayList<Order.OrderPrices> = ArrayList()
 
-    var priceListAdapter: OrderPreviewPriceAdapter
+    var priceListAdapter: OrderPreviewPriceAdapter = OrderPreviewPriceAdapter(dataList)
 
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -125,12 +124,6 @@ class OrderPreviewViewModel @Inject constructor(
 
     private var subscription: Disposable? = null
     private var fileSubscription: Disposable? = null
-
-
-    init {
-
-        priceListAdapter = OrderPreviewPriceAdapter(dataList)
-    }
 
 
     override fun onCleared() {
@@ -322,13 +315,12 @@ class OrderPreviewViewModel @Inject constructor(
             contractViewLTVisibility.postValue(View.GONE)
         }
 
-        if (order.signPdf_LT.isNullOrEmpty() && order.signPdf_EN.isNullOrEmpty())
+        if (order.signPdf_EN.isNullOrEmpty())
             contractPreviewVisibility.postValue(View.VISIBLE)
         else
             contractPreviewVisibility.postValue(View.GONE)
 
 
-//        contractPreviewVisibility.postValue(View.VISIBLE)
 
 
         listerSignVisibility.postValue(View.GONE)
@@ -363,7 +355,7 @@ class OrderPreviewViewModel @Inject constructor(
                     days
                 )
 
-                if (order.smart_id_creator_session_id.isNullOrBlank()) {
+                if (!order.renter_signed) {
 
                     renterSignImage.postValue(R.drawable.ic_guide_red)
 
@@ -376,7 +368,7 @@ class OrderPreviewViewModel @Inject constructor(
                     renterSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
-                if (order.smart_id_owner_session_id.isNullOrBlank()) {
+                if (!order.lister_signed) {
 
                     listerSignText.postValue(
                         String.format(
@@ -493,10 +485,11 @@ class OrderPreviewViewModel @Inject constructor(
 
                 }
 
+                recieptVisibility.value = View.VISIBLE
 
                 var total = 0.0
                 order.price?.forEach {
-                    if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.ProductFee)
+                    if (Order.OrderPriceEnum[it.key] == Order.OrderPriceEnum.Total)
                         total = if (it.price == 0.0) 0.0 else it.price / 100.0
                 }
 
@@ -512,7 +505,7 @@ class OrderPreviewViewModel @Inject constructor(
 
 
 
-                if (order.smart_id_owner_session_id.isNullOrBlank()) {
+                if (!order.lister_signed) {
 
                     lenderSignImage.postValue(R.drawable.ic_guide_red)
 
@@ -527,7 +520,7 @@ class OrderPreviewViewModel @Inject constructor(
                     lenderSignImage.postValue(R.drawable.ic_guide_success)
                 }
 
-                if (order.smart_id_creator_session_id.isNullOrBlank()) {
+                if (!order.renter_signed) {
 
                     renterSignText.postValue(
                         String.format(
@@ -558,7 +551,6 @@ class OrderPreviewViewModel @Inject constructor(
                 startRatingVisibility.value = View.GONE
 
                 actionVisibility.value = View.GONE
-                recieptVisibility.value = View.GONE
                 startRentingVisibility.value = View.GONE
                 acceptVisibility.value = View.GONE
                 declineVisibility.value = View.GONE
