@@ -1,4 +1,4 @@
-package com.ronaker.app.ui.docusign
+package com.ronaker.app.ui.docusignSign
 
 import android.app.Activity
 import android.content.Context
@@ -17,53 +17,49 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DocusignActivity : BaseActivity() {
+class DocusignSignActivity : BaseActivity() {
     companion object {
-        fun newInstance(context: Context): Intent {
-            val intent = Intent(context, DocusignActivity::class.java)
+
+        const val SUID_KEY = "suid"
+
+        fun newInstance(context: Context,id:String): Intent {
+            val intent = Intent(context, DocusignSignActivity::class.java)
             val boundle = Bundle()
+            boundle.putString(SUID_KEY,id)
             intent.putExtras(boundle)
 
             return intent
         }
     }
 
-    private lateinit var binding: com.ronaker.app.databinding.ActivityDocusginBinding
+    private lateinit var binding: com.ronaker.app.databinding.ActivityDocusginSignBinding
 
-    private val viewModel: DocusignViewModel by viewModels()
+    private val viewModel: DocusignSignViewModel by viewModels()
 
-    val TAG: String = "DocusignActivity"
+    val TAG:String ="DocusignActivity"
 
     val baseUrl="https://api.ronaker.com/api/v1/"
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_docusgin)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_docusgin_sign)
         binding.viewModel = viewModel
 
-
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.flush()
-        cookieManager.removeAllCookies { it ->
-
-        }
-
-        this.deleteDatabase("webviewCache.db")
-        this.deleteDatabase("webview.db")
         binding.webView.clearHistory()
-        binding.webView.clearFormData()
         binding.webView.clearCache(true)
-
+        binding.webView.clearFormData()
 
 
         binding.webView.settings.javaScriptCanOpenWindowsAutomatically
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.settings.loadWithOverviewMode = true
-        binding.webView.settings.useWideViewPort = true
+        binding.webView.settings.javaScriptEnabled=true
+        binding.webView.settings.loadWithOverviewMode=true
+        binding.webView.settings.useWideViewPort=true
 
-        binding.webView.webViewClient = object : WebViewClient() {
+        binding.webView.webViewClient=object : WebViewClient(){
 
             override fun onReceivedSslError(
                 view: WebView?,
@@ -74,20 +70,25 @@ class DocusignActivity : BaseActivity() {
             }
 
 
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
-                if (url?.startsWith(baseUrl) == true) {
-                    binding.loading.visibility = View.VISIBLE
-                    setResult(Activity.RESULT_OK)
-                    this@DocusignActivity.finish()
 
-                } else {
-                    binding.loading.visibility = View.GONE
+                if(url?.startsWith(baseUrl)==true){
+                    binding.loading.visibility= View.VISIBLE
+                    setResult(Activity.RESULT_OK)
+
+                    this@DocusignSignActivity.finish()
+
+
+                }
+                else{
+                    binding.loading.visibility= View.GONE
                 }
 
-
             }
+
 
 
             override fun onReceivedHttpError(
@@ -96,13 +97,16 @@ class DocusignActivity : BaseActivity() {
                 errorResponse: WebResourceResponse?
             ) {
                 if(request?.url.toString().startsWith(baseUrl))
-                    Toast.makeText(
-                        this@DocusignActivity,
-                        "Something is wrong",
-                        Toast.LENGTH_LONG
-                    ).show()
+                Toast.makeText(
+                    this@DocusignSignActivity,
+                    "Something is wrong",
+                    Toast.LENGTH_LONG
+                ).show()
+
                 super.onReceivedHttpError(view, request, errorResponse)
             }
+
+
 
             override fun onLoadResource(view: WebView?, url: String?) {
 
@@ -113,15 +117,6 @@ class DocusignActivity : BaseActivity() {
 
         }
 
-
-        viewModel.loadUrl.observe(this, { url ->
-            binding.webView.loadUrl(url)
-
-
-        })
-
-
-
         viewModel.error.observe(this, { message ->
 
             Toast.makeText(this,message,Toast.LENGTH_LONG).show()
@@ -129,7 +124,28 @@ class DocusignActivity : BaseActivity() {
 
         })
 
+        viewModel.loadUrl.observe(this, { url ->
+
+
+            binding.webView.loadUrl(url.replace("172.98.197.76","staging.ronaker.com"))
+
+
+        })
+
+        getSUID()?.let {
+
+
+            viewModel.getUrl(it)
+        }
+
+
     }
+
+    private fun getSUID(): String? {
+        return intent?.getStringExtra(SUID_KEY)
+
+    }
+
 
 
 }

@@ -173,7 +173,7 @@
     <string name="text_balance">Balansas</string>
     <string name="text_add_document_image">Pridėti dokumento atvaizdą</string>
     <string name="text_order_detail">Informacija apie užsakymą</string>
-    <string name="text_of_5">" iš 3"</string>
+    <string name="text_of_5">" iš 4"</string>
     <string name="text_please_tell_us_about_your_experience_using_this_item">Prašome įvertinti daiktą</string>
     <string name="text_please_write_your_experience_here">Įvertinimą rašykite čia</string>
     <string name="text_title_send">Išsiųsti</string>
@@ -248,6 +248,9 @@
     <string name="text_preview">Peržiūra</string>
 
     <string name="button_start_renting_sign">Pradėti nuomą</string>
+    <string name="button_start_renting_sign_and_pay">Pay &amp; Pradėti nuomą</string>
+
+
     <string name="text_for_day">%1$s %2$s už %3$s dienas</string>
     <string name="text_please_read_the_contract">Perskaitykite sutartį</string>
     <string name="text_success_sign_and_start_renting">Baigta! Susisiekite su savininku ir sėkmingai naudokitės daiktu.</string>

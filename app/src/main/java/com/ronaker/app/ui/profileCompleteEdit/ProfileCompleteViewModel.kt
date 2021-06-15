@@ -22,6 +22,7 @@ class ProfileCompleteViewModel @Inject constructor(
 
     val phoneComplete: MutableLiveData<Boolean> = MutableLiveData()
     val imageComplete: MutableLiveData<Boolean> = MutableLiveData()
+    val docusignComplete: MutableLiveData<Boolean> = MutableLiveData()
     val stripeComplete: MutableLiveData<Boolean> = MutableLiveData()
     val signComplete: MutableLiveData<Boolean> = MutableLiveData()
     val peymentComplete: MutableLiveData<Boolean> = MutableLiveData()
@@ -66,17 +67,17 @@ class ProfileCompleteViewModel @Inject constructor(
 
     fun fillView(user: User){
         mUser = user
-        signComplete.value = user.is_email_verified
+        signComplete.postValue(  user.is_email_verified)
 
-        phoneComplete.value = user.is_phone_number_verified
+        phoneComplete.postValue( user.is_phone_number_verified)
 
 //                    peymentComplete.value = result.data?.is_payment_info_verified
 //                    identityComplete.value = result.data?.is_identity_info_verified
 
-        imageComplete.value = !user.avatar.isNullOrEmpty()
+        imageComplete.postValue( !user.avatar.isNullOrEmpty())
 
-
-        smartIDComplete.value = !user.smart_id_personal_code.isNullOrEmpty()
+        docusignComplete.postValue(user.docusign_is_last_valid)
+        smartIDComplete.postValue( !user.smart_id_personal_code.isNullOrEmpty())
 
     }
 

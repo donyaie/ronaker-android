@@ -18,8 +18,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okio.BufferedSink
 import okio.Okio
-import okio.buffer
-import okio.sink
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
@@ -59,21 +57,12 @@ class DefaultContentRepository @Inject constructor(
 
 
                     try {
-                        // you can access headers of response
-//                        val header: String? = responseBodyResponse.headers().get("Content-Disposition")
-                        // this is specific case, it's up to you how you want to save your file
-                        // if you are not downloading file from direct link, you might be lucky to obtain file name from header
-//                        val fileName = header?.replace("attachment; filename=", "")
-                        // will create file in global Music directory, can be any other directory, just don't forget to handle permissions
-
-//File()
                         val file = FileUtils.getCacheContractFile(context, fileName)
 
                         if (file.exists())
                             file.delete()
 
-                        val sink: BufferedSink = file.sink().buffer()
-                        // you can access body of response
+                        val sink: BufferedSink = Okio.buffer(Okio.sink(file))
 
                         responseBodyResponse.body()?.source()?.let {
                             sink.writeAll(it)

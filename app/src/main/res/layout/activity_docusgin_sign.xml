@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.ronaker.app.ui.docusign.DocusignViewModel" />
+            type="com.ronaker.app.ui.docusignSign.DocusignSignViewModel" />
     </data>
 
     <RelativeLayout

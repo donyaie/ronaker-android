@@ -16,6 +16,8 @@ data class UserInfoResponceModel(
     , @SerializedName("balance") val balance: Double?
     , @SerializedName("smart_id_national_code") val smart_id_national_code: String?
     , @SerializedName("smart_id_personal_code") val smart_id_personal_code: String?
+    , @SerializedName("docusign_is_last_valid") val docusign_is_last_valid: Boolean=false
+
 
 
 )

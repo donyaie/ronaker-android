@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ronaker.app.R
 import com.ronaker.app.base.BaseActivity
 import com.ronaker.app.model.Order
+import com.ronaker.app.ui.docusignSign.DocusignSignActivity
 import com.ronaker.app.ui.exploreProduct.ExploreProductActivity
 import com.ronaker.app.ui.orderAccept.OrderAcceptActivity
 import com.ronaker.app.ui.orderAuthorization.OrderAuthorizationActivity
@@ -190,10 +191,17 @@ class OrderPreviewActivity : BaseActivity(), ViewTreeObserver.OnScrollChangedLis
 
         viewModel.signContractShow.observe(this, {
 
-            startActivityForResult(
-                OrderAuthorizationActivity.newInstance(this, viewModel.getOrder()),
-                OrderAuthorizationActivity.REQUEST_CODE
-            )
+            viewModel.getOrder()?.suid.let {
+
+                startActivity(DocusignSignActivity.newInstance(this@OrderPreviewActivity,it))
+
+            }
+
+
+//            startActivityForResult(
+//                OrderAuthorizationActivity.newInstance(this, viewModel.getOrder()),
+//                OrderAuthorizationActivity.REQUEST_CODE
+//            )
         })
 
         viewModel.contractPreview.observe(this, {

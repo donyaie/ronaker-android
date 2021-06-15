@@ -66,7 +66,7 @@ interface ProductApi {
     /**
      * get rate List
      */
-    @GET("/api/v1/products/{product_suid}/ratings")
+    @GET("/api/v1/products/{product_suid}/ratings/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun getProductRate(
         @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
@@ -76,7 +76,7 @@ interface ProductApi {
     /**
      * save product to fave item
      */
-    @POST("/api/v1/products/{product_suid}/favourite")
+    @POST("/api/v1/products/{product_suid}/favourite/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSave(
         @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
@@ -86,7 +86,7 @@ interface ProductApi {
     /**
      * save product to fave item
      */
-    @DELETE("/api/v1/products/{product_suid}/favourite")
+    @DELETE("/api/v1/products/{product_suid}/favourite/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun productSavedRemove(
         @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,

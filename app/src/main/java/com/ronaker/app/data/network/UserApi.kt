@@ -115,6 +115,7 @@ interface UserApi {
 
 
 
+
     /**
      * Forget password
      */
@@ -143,4 +144,17 @@ interface UserApi {
     fun forgetPasswordConfirm(@Header("Accept-Language") language: String,
         @Body request: UserForgetPasswordConfirmRequestModel
     ): Observable<FreeResponseModel>
+
+
+
+    /**
+     * Docusign Auth
+     */
+    @GET("/api/v1/users/docusign/auth/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun docusignAuth(@Header("Authorization") authToken: String,@Header("Accept-Language") language: String): Observable<DocusignAuthResponseModel>
+
+
+
+
 }

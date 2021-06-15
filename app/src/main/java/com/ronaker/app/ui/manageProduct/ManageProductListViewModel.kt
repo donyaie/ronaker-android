@@ -35,7 +35,7 @@ class ManageProductListViewModel @Inject constructor(
     val emptyView: MutableLiveData<Boolean> = MutableLiveData()
     val addNewView: MutableLiveData<Boolean> = MutableLiveData()
     val addNewProduct: MutableLiveData<Boolean> = MutableLiveData()
-    val completeProfile: MutableLiveData<String> = MutableLiveData()
+    val completeProfile: MutableLiveData<Boolean> = MutableLiveData()
 
     val resetList: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -149,13 +149,13 @@ class ManageProductListViewModel @Inject constructor(
 
         uiScope.launch {
             // TODO Strip
-            checkStripe()
+//            checkStripe()
 //
-//            if( userRepository.getUserInfo()?.isComplete() == true)
-//            {
-//                addNewProduct.postValue(true)
-//            }else
-//                completeProfile.postValue(null )
+            if( userRepository.getUserInfo()?.isComplete() == true)
+            {
+                addNewProduct.postValue(true)
+            }else
+                completeProfile.postValue( true)
 
 
         }
@@ -163,30 +163,30 @@ class ManageProductListViewModel @Inject constructor(
     }
 
 
-    suspend fun checkStripe() =
-        withContext(Dispatchers.IO) {
-
-            stripeSubscription?.dispose()
-            stripeSubscription = userRepository
-                .stripeSetup()
-
-                .doOnSubscribe {
-
-                }
-                .doOnTerminate { }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-
-                       if( result.data?.is_ready ==true && userRepository.getUserInfo()?.isComplete() == true)
-                       {
-                           addNewProduct.postValue(true)
-                       }else
-                           completeProfile.postValue(result.data?.link )
-                    } else {
-                        errorMessage.postValue(result.error?.message)
-                    }
-                }
-        }
+//    suspend fun checkStripe() =
+//        withContext(Dispatchers.IO) {
+//
+//            stripeSubscription?.dispose()
+//            stripeSubscription = userRepository
+//                .stripeSetup()
+//
+//                .doOnSubscribe {
+//
+//                }
+//                .doOnTerminate { }
+//                .subscribe { result ->
+//                    if (result.isSuccess()) {
+//
+//                       if( result.data?.is_ready ==true && userRepository.getUserInfo()?.isComplete() == true)
+//                       {
+//                           addNewProduct.postValue(true)
+//                       }else
+//                           completeProfile.postValue(result.data?.link )
+//                    } else {
+//                        errorMessage.postValue(result.error?.message)
+//                    }
+//                }
+//        }
 
 
 }

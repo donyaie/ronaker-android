@@ -324,6 +324,23 @@
 
             android:screenOrientation="portrait"
             android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.docusignSign.DocusignSignActivity"
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+
+
+        <activity
+            android:name=".ui.paypal.PaypalCheckoutActivity"
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/PopTheme"
             android:windowSoftInputMode="adjustResize" >
 
 

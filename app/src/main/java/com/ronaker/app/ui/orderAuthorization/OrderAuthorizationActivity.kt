@@ -71,8 +71,8 @@ class OrderAuthorizationActivity : BaseActivity() {
             val intent = Intent(context, OrderAuthorizationActivity::class.java)
             val boundle = Bundle()
             boundle.putParcelable(Order_KEY, order)
-            boundle.putBoolean(CANSIGN_KEY, canSign)
-            boundle.putBoolean(START_RENTING_KEY, startRenting)
+            boundle.putBoolean(CANSIGN_KEY, false)
+            boundle.putBoolean(START_RENTING_KEY, false)
             intent.putExtras(boundle)
 
             return intent

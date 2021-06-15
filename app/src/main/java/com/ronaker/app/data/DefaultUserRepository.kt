@@ -144,6 +144,21 @@ class DefaultUserRepository @Inject constructor(
 
     }
 
+    override fun docusignAuth(): Observable<Result<String>> {
+        return userApi.docusignAuth(getUserAuthorization(),getUserLanguage())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .map {
+
+                it.url
+
+            }
+
+            .toResult()
+
+    }
+
 
     override fun sendEmailVerification(): Observable<Result<Boolean>> {
         return userApi.sendEmailVerification(getUserAuthorization(), getUserLanguage())

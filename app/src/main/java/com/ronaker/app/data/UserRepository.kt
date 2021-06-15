@@ -11,9 +11,9 @@ interface UserRepository {
 
     fun registerUser(user: User): Observable<Result<User>>
     fun loginUser(user: User): Observable<Result<User>>
-    fun updateUserInfo( user: User): Observable<Result<User>>
+    fun updateUserInfo(user: User): Observable<Result<User>>
     fun getUserInfo(user_auth: String): Observable<Result<User>>
-    fun addUserPhoneNumber( phone_number: String): Observable<Result<String>>
+    fun addUserPhoneNumber(phone_number: String): Observable<Result<String>>
     fun activeUserPhoneNumber(
         phone_number: String,
         code: String
@@ -57,5 +57,7 @@ interface UserRepository {
     fun loginUserWithGoogle(token: String): Observable<Result<User>>
     fun saveUpdateSkipVersion(updateVersion: Int)
     fun getUpdateSkipVersion(): Int
+
+    fun docusignAuth(): Observable<Result<String>>
 }
 

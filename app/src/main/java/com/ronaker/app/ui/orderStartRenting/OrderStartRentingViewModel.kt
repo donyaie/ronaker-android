@@ -13,10 +13,6 @@ import com.ronaker.app.model.PaymentCard
 import com.ronaker.app.ui.orderPreview.OrderPreviewPriceAdapter
 import com.ronaker.app.ui.profilePaymentList.PaymentSelectAdapter
 import com.ronaker.app.utils.nameFormat
-import com.stripe.android.PaymentConfiguration
-import com.stripe.android.Stripe
-import com.stripe.android.model.ConfirmPaymentIntentParams
-import com.stripe.android.model.PaymentMethodCreateParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
 import java.util.*
@@ -33,8 +29,14 @@ class OrderStartRentingViewModel @Inject constructor(
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val loadingButton: MutableLiveData<Boolean> = MutableLiveData()
+
+    val payButtomText: MutableLiveData<Int> = MutableLiveData()
     val doSignContract: MutableLiveData<Boolean> = MutableLiveData()
     val startRentingConfirm: MutableLiveData<String> = MutableLiveData()
+
+
+    val paypalPayLink: MutableLiveData<String> = MutableLiveData()
+
 
 
     val contractPreview: MutableLiveData<Boolean> = MutableLiveData()
@@ -45,7 +47,6 @@ class OrderStartRentingViewModel @Inject constructor(
     val contractPreviewVisibility: MutableLiveData<Int> = MutableLiveData()
     val listerSignImage: MutableLiveData<Int> = MutableLiveData()
     val listerSignText: MutableLiveData<String> = MutableLiveData()
-    val paymentInit: MutableLiveData<String> = MutableLiveData()
     val renterSignImage: MutableLiveData<Int> = MutableLiveData()
     val renterSignText: MutableLiveData<String> = MutableLiveData()
     val contractSignVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -120,7 +121,7 @@ class OrderStartRentingViewModel @Inject constructor(
 
 
 
-        if (order.smart_id_owner_session_id.isNullOrBlank()) {
+        if (!order.lister_signed) {
 
             listerSignText.postValue(
                 String.format(
@@ -142,7 +143,7 @@ class OrderStartRentingViewModel @Inject constructor(
 
 
 
-        if (order.smart_id_creator_session_id.isNullOrBlank()) {
+        if (!order.renter_signed) {
 
 
             contractSignVisibility.postValue(View.VISIBLE)
@@ -162,6 +163,12 @@ class OrderStartRentingViewModel @Inject constructor(
 
         }
 
+
+        if(order.is_charge_placed){
+            payButtomText.postValue(R.string.button_start_renting)
+        }else{
+            payButtomText.postValue(R.string.button_start_renting_sign_and_pay)
+        }
 
 
 
@@ -205,81 +212,54 @@ class OrderStartRentingViewModel @Inject constructor(
 
     }
 
-    var paymentSecret: String? = null
-    var isPaymentChecked: Boolean = false
-
     fun checkedAgreement() {
         mOrder.address?.let { startRentingConfirm.postValue(it) }
     }
 
-    //{"payment_id":["This field is required."]}
-    fun chechPayment(paymentId: String) {
-        checkPaysubscription?.dispose()
-        checkPaysubscription = orderRepository.recheckPaymentAuth(mOrder.suid, paymentId)
+
+
+
+    fun getPayerID() {
+
+        initPaysubscription?.dispose()
+        initPaysubscription = orderRepository.getPaypalLink(mOrder.suid)
             .doOnSubscribe { loadingButton.value = true }
             .doOnTerminate { loadingButton.value = false }
             .subscribe { result ->
-                if (result.isAcceptable()) {
-                    isPaymentChecked = true;
-                    startRenting()
-//                    errorMessage.value = "isAcceptable"
+                if (result.isSuccess()) {
+
+
+                    result?.data?.let {
+                        paypalPayLink.postValue(it)
+                    }
+
+
                 } else {
                     errorMessage.value = result?.error?.message
                 }
             }
+
     }
 
     fun onClickAccept() {
 
-//        if(!isPaymentChecked){
-//            checkPaysubscription?.dispose()
-//            checkPaysubscription= orderRepository.recheckPaymentAuth(mOrder.suid)
-//                .doOnSubscribe { loadingButton.value = true }
-//                .doOnTerminate { loadingButton.value = false }
-//                .subscribe { result ->
-//                    if (result.isSuccess()) {
-//                        isPaymentChecked=true;
-//                        onClickAccept();
-//
-//                    } else {
-//                        errorMessage.value = result?.error?.message
-//                    }
-//                }
-//        }else
-
-//        if (paymentSecret == null) {
-            initPaysubscription?.dispose()
-            initPaysubscription = orderRepository.initialPayment(mOrder.suid)
-                .doOnSubscribe { loadingButton.value = true }
-                .doOnTerminate { loadingButton.value = false }
-                .subscribe { result ->
-                    if (result.isSuccess()) {
-
-                        paymentSecret = result?.data?.client_secret
 
 
-                        paymentInit.postValue(paymentSecret)
 
-                    } else {
-                        errorMessage.value = result?.error?.message
-                    }
-                }
-//        } else {
-//
-//            paymentInit.postValue(paymentSecret)
-//
-//        }
+        if(mOrder.lister_signed&& mOrder.renter_signed){
+            if(mOrder.is_charge_placed) {
+                startRenting()
+            }
+            else
+                getPayerID()
 
 
-//        if(!mOrder.smart_id_creator_session_id.isNullOrBlank() && !mOrder.smart_id_owner_session_id.isNullOrBlank()){
-//            startRenting()
-//        }else{
-//            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
-//            loadData(mOrder.suid)
-//        }
 
+        }else{
+            errorMessage.postValue(resourcesRepository.getString(R.string.text_make_sure_sign_the_contract))
+            loadData(mOrder.suid)
+        }
 
-//        startRenting()
 
 
     }
@@ -319,6 +299,32 @@ class OrderStartRentingViewModel @Inject constructor(
     fun onClickSign() {
 
         doSignContract.postValue(true)
+    }
+
+    fun payByPaypal(token: String?) {
+
+
+
+        if(token .isNullOrEmpty())
+            return
+
+        initPaysubscription?.dispose()
+        initPaysubscription = orderRepository.setPaypalPayerID(mOrder.suid,token)
+            .doOnSubscribe { loadingButton.value = true }
+            .doOnTerminate { loadingButton.value = false }
+            .subscribe { result ->
+                if (result.isSuccess() || result.isAcceptable()) {
+
+                        startRenting()
+
+
+
+                } else {
+                    errorMessage.value = result?.error?.message
+                }
+            }
+
+
     }
 
 

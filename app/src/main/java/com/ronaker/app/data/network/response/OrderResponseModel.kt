@@ -20,7 +20,22 @@ data class OrderResponseModel(
     @SerializedName("is_archived") val is_archived: Boolean = false,
     @SerializedName("smart_id_owner_session_id") val smart_id_owner_session_id: String ?,
     @SerializedName("smart_id_creator_session_id") val smart_id_creator_session_id: String?,
-    @SerializedName("sign_pdf") val sign_pdf: OrderResponsePDFSignModel?
+    @SerializedName("sign_pdf") val sign_pdf: OrderResponsePDFSignModel?,
+
+
+    @SerializedName("is_charge_placed") val is_charge_placed: Boolean=false,
+
+    @SerializedName("envelope_id") val envelope_id: String?,
+    @SerializedName("lister_signed") val lister_signed: Boolean=false,
+    @SerializedName("renter_signed") val renter_signed: Boolean=false,
+    @SerializedName("latest_signed_pdf") val latest_signed_pdf: OrderResponsePDFSignModel?,
+
+
+
+
+
+
+
 
 
 

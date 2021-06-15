@@ -1,9 +1,6 @@
 package com.ronaker.app.data.network
 
-import com.ronaker.app.data.network.request.CheckPaymentRequestModel
-import com.ronaker.app.data.network.request.OrderCreateRequestModel
-import com.ronaker.app.data.network.request.OrderUpdateRequestModel
-import com.ronaker.app.data.network.request.ProductRateRequestModel
+import com.ronaker.app.data.network.request.*
 import com.ronaker.app.data.network.response.*
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -61,7 +58,7 @@ interface OrderApi {
     /**
      * Order Rate
      */
-    @POST("/api/v1/orders/{order_suid}/rate")
+    @POST("/api/v1/orders/{order_suid}/rate/")
     @Headers("Content-Type:application/json; charset=UTF-8")
     fun orderRate(
         @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
@@ -124,6 +121,43 @@ interface OrderApi {
 
 
     /**
+     *set PayPal Order PayerID
+     */
+    @POST("/api/v1/orders/paypal/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun setPaypalPayerID(
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
+//        @Path("order_suid") suid: String,
+
+        @Body request: PaypaySetIDRequestModel
+
+    ): Observable<FreeResponseModel>
+
+
+    /**
+     * get PayPal Link
+     */
+    @GET("/api/v1/orders/{order_suid}/paypal/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun getPayLink(
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
+        @Path("order_suid") suid: String,
+    ): Observable<PaypalLinkResponseModel>
+
+    /**
+     *sign Docusign
+     */
+    @GET("/api/v1/orders/{order_suid}/sign/")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    fun signDocusign(
+        @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
+        @Path("order_suid") suid: String,
+    ): Observable<DocusignSignResponseModel>
+
+
+
+
+    /**
      * Setup stripe initial payment
      */
     @POST("/api/v1/orders/{order_suid}/stripe/")
@@ -132,7 +166,6 @@ interface OrderApi {
         @Header("Authorization") authToken: String,@Header("Accept-Language") language: String,
         @Path("order_suid") suid: String
     ): Observable<InitialPaymentResponseModel>
-
 
 
 
